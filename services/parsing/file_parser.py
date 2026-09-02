@@ -103,7 +103,8 @@ class FileParser:
         if enable_jet_tagging:
             obj_events = FileParser._calculate_btagging_and_split(obj_events, jet_btagging_thresholds)
         # Strip out DirectObjects -- they are not physics objects!
-        obj_events.pop("DirectObjects")
+        if "DirectObjects" in obj_events.keys():
+            obj_events.pop("DirectObjects")
 
         # Pull the scalar per-event identity fields out before zipping the object
         # collections, then re-attach them as top-level scalar columns. Kept after
