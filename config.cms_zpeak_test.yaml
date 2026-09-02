@@ -1,0 +1,159 @@
+# ---------------------------------------------------------------------------
+# config.cms_zpeak_test.yaml
+#
+# Small, local smoke test of the CMS data path. Purpose: check that pairs of
+# electrons and pairs of muons from real CMS collision data show the expected
+# Z-boson invariant-mass peak near ~91.2 GeV.
+#
+# Derived from config.cms_records_master.yaml. Differences from that file:
+#   * tasks: only parsing + mass_calculating are enabled. post_processing is
+#     OFF on purpose - that stage removes the Z peak, which is exactly what we
+#     want to look at here.
+#   * run_metadata.base_output_dir -> ./output   (local, inside the repo)
+#   * run_metadata.run_name        -> cms_zpeak_test
+#   * parsing_task_config.max_files_to_process -> 1  (fast smoke test)
+#   * mass_calculation_task_config.objects_to_calculate -> Electrons, Muons only
+#   * mass_calculation_task_config.input_dir -> relative ./output/parsed_data
+#     (master pins an absolute cluster path; relative lets the pipeline point
+#      it at this run's parsed_data automatically)
+#   * mass_calculation_task_config.min_particles_in_combination -> 1
+#   * mass_calculation_task_config.min_events_per_fs -> 1
+#     (see the block comment above that section for the reasoning)
+#
+# Kinematic cuts (pt/eta) and the parsing particle-count ranges are left
+# exactly as in config.cms_records_master.yaml, as instructed.
+# ---------------------------------------------------------------------------
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: atlas_full_120
+  histogram_filename: atlas_opendata_full_bumpnet.root
+run_metadata:
+  run_name: cms_zpeak_test
+  base_output_dir: ./output
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: true
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years: []
+  specific_record_ids:
+  - 30529
+  - 30562
+  - 30530
+  - 30563
+  parse_mc: false
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 8
+  env_threshold_memory_mb: 8000
+  chunk_yield_threshold_bytes: 2147483648
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  max_files_to_process: 1
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  - mini
+  - analysis
+  create_dirs: true
+  show_progress_bar: true
+  particle_counts:
+    electrons:
+      min: 1
+      max: 4
+    muons:
+      min: 0
+      max: 4
+    jets:
+      min: 0
+      max: 10
+    photons:
+      min: 0
+      max: 4
+  kinematic_cuts:
+    electrons:
+      pt_min: 25.0
+      eta_max: 2.47
+    muons:
+      pt_min: 25.0
+      eta_max: 2.5
+    jets:
+      pt_min: 30.0
+      eta_max: 4.5
+    photons:
+      pt_min: 25.0
+      eta_max: 2.37
+mass_calculation_task_config:
+  input_dir: ./output/parsed_data
+  output_dir: ./output/im_arrays
+  field_to_slice_by: pt
+  use_multiprocessing: true
+  parallel_processes: 4
+  fs_chunk_threshold_bytes: 2000000000
+  objects_to_calculate:
+  - Electrons
+  - Muons
+  # --- Combination / final-state selection -------------------------------
+  # How these interact (from services/calculations/combinatorics.py and
+  # services/calculations/im_calculator.py):
+  #
+  #  * get_all_combinations() builds particle-type combinations. "particles"
+  #    here means the number of particle TYPES in a combination. With
+  #    objects_to_calculate = [Electrons, Muons], min_particles_in_combination
+  #    must be 1 for a single-type combination like {Electrons: 2} (the
+  #    electron pair) or {Muons: 2} (the muon pair) to be generated at all.
+  #    With the master value of 2 every combination would need BOTH an
+  #    electron and a muon, so no same-flavour lepton pair would ever be
+  #    computed.
+  #  * min/max_count_particle_in_combination bound the per-type count. Left at
+  #    1..4 (as in master); the pair needs count = 2, which is inside that.
+  #    Combinations whose particle count sums to < 2 are dropped automatically
+  #    (a 1-particle invariant mass is meaningless), so count = 1 never
+  #    produces output on its own.
+  #  * IMCalculator._is_valid_fs() also uses these as min_n/max_n (type count)
+  #    and min_k/max_k (per-type count) to decide whether an event's final
+  #    state is even considered. A clean Z->ee event is "2e_0m_0j_0g_0t_0b":
+  #    one type present, count 2. That needs min_n <= 1, so again
+  #    min_particles_in_combination = 1 is required or the whole final state
+  #    is discarded before any mass is computed.
+  #  * min_events_per_fs: group_by_final_state() drops any final state seen in
+  #    fewer than this many events. A 1-file smoke sample has relatively few
+  #    events left after the pt/eta cuts and the exact-count final-state
+  #    split, so the master value of 100 could delete the 2e (and especially
+  #    the sparse 2m) final states outright. Set to 1 so nothing is dropped
+  #    by the count filter for this diagnostic.
+  min_particles_in_combination: 1
+  max_particles_in_combination: 4
+  min_count_particle_in_combination: 1
+  max_count_particle_in_combination: 4
+  min_events_per_fs: 1
+post_processing_task_config:
+  input_dir: ./output/im_arrays
+  output_dir: ./output/im_arrays_processed
+  peak_detection_bin_width_gev: 10.0
+histogram_creation_task_config:
+  input_dir: ./output/im_arrays_processed
+  output_dir: ./output/histograms
+  bin_width_gev: 10.0
+  single_output_file: true
+  output_filename: atlas_opendata_full_bumpnet.root
+  exclude_outliers: true
+  use_bumpnet_naming: true
