@@ -14,6 +14,7 @@ import numpy as np
 
 from services.calculations.im_calculator import IMCalculator
 from services.calculations.combinatorics import get_count, get_start
+from services.parsing.schemas import schema_needs_mev_to_gev_conversion
 
 
 def process_final_state(
@@ -25,16 +26,26 @@ def process_final_state(
     output_dir: str,
     logger: logging.Logger,
     calculator: IMCalculator,
-    worker_num: Optional[int] = None
+    worker_num: Optional[int] = None,
+    release_year: Optional[str] = None,
 ) -> Tuple[Dict, List[str]]:
     """
     Process all combinations for a given final state.
+
+    ``release_year`` is the release/schema identifier for the data in
+    ``fs_events`` (e.g. ``"2024r-pp"`` or ``"record_30529"``). It decides
+    whether the MeV->GeV (x1e-3) scaling is applied to the invariant masses:
+    it is for MeV-native releases (ATLAS DAOD), and skipped for GeV-native
+    ones (CMS NanoAOD). ``None`` / unknown keeps the historical behaviour of
+    applying the scaling.
 
     Returns:
         Tuple of (statistics dict, list of created artifact identifiers)
     """
     if len(fs_events) == 0:
         return None, []
+
+    apply_mev_to_gev = schema_needs_mev_to_gev_conversion(release_year)
 
     prefix = f"[Worker {worker_num}]" if worker_num is not None else ""
     num_combinations = sum(
@@ -44,7 +55,8 @@ def process_final_state(
 
     logger.info(
         f"{prefix} [{filename}] Computing final state '{final_state}': "
-        f"{len(fs_events):,} events, {num_combinations} combinations"
+        f"{len(fs_events):,} events, {num_combinations} combinations "
+        f"(release={release_year or 'unknown'}, MeV->GeV scaling={'on' if apply_mev_to_gev else 'off'})"
     )
 
     fs_mapping_threshold_bytes = config["fs_chunk_threshold_bytes"]
@@ -100,7 +112,8 @@ def process_final_state(
                 stats['skip_reasons'][skip_reason] += 1
             continue
 
-        inv_mass = _convert_array_to_gev(inv_mass)
+        if apply_mev_to_gev:
+            inv_mass = _convert_array_to_gev(inv_mass)
 
         stats['calculated'] += 1
         combination_name = prepare_im_combination_name(filename, final_state, combination)
@@ -131,6 +144,8 @@ def process_final_state(
 
 
 def _convert_array_to_gev(inv_mass: ak.Array) -> ak.Array:
+    """MeV -> GeV. Only valid for MeV-native releases; callers must gate this
+    on schema_needs_mev_to_gev_conversion(release_year)."""
     return inv_mass * 1e-3
 
 

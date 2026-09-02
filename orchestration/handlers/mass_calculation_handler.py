@@ -6,6 +6,7 @@ mass calculations using the combinatorics and IM calculator modules.
 """
 
 import os
+import re
 import logging
 from datetime import datetime
 from pathlib import Path
@@ -19,6 +20,24 @@ from orchestration.context import PipelineContext
 from orchestration.states import PipelineState
 from .base import StateHandler
 from services.storage.sqlite_shards import SqliteArrayShardWriter
+from services.parsing.schemas import schema_needs_mev_to_gev_conversion
+
+
+# Parsed files are named by ParsingHandler as
+#   parsed_<release>[_batch<n>](_final|_chunk<n>).root
+# where <release> is an ATLAS release id ("2024r-pp", possibly "..._mc") or a
+# CMS record key ("record_30529"). Recover <release> so the mass-calc stage
+# knows which unit the values are in.
+_PARSED_NAME_RE = re.compile(r"^parsed_(?P<release>.+?)(?:_batch\d+)?(?:_final|_chunk\d+)$")
+
+
+def release_year_from_parsed_filename(name: str) -> Optional[str]:
+    """Return the release/schema id baked into a parsed ROOT filename, or None
+    if the name is not in the parser's ``parsed_*`` form (e.g. a raw ATLAS file
+    read directly), in which case callers keep the historic MeV->GeV behaviour."""
+    stem = name[:-5] if name.lower().endswith(".root") else name
+    m = _PARSED_NAME_RE.match(stem)
+    return m.group("release") if m else None
 
 
 class MassCalculationHandler(StateHandler):
@@ -222,6 +241,16 @@ class MassCalculationHandler(StateHandler):
         """Read one parsed ROOT file and compute invariant masses."""
         self.logger.info(f"Reading parsed file: {root_file_path.name}")
 
+        # Which release/schema produced this file, and therefore whether its
+        # invariant masses need the MeV->GeV (x1e-3) scaling. Derived per file
+        # so a single run that mixes releases stays correct.
+        release_year = release_year_from_parsed_filename(root_file_path.name)
+        needs_scaling = schema_needs_mev_to_gev_conversion(release_year)
+        self.logger.info(
+            f"{root_file_path.name}: release='{release_year or 'unknown'}', "
+            f"MeV->GeV mass scaling {'ENABLED' if needs_scaling else 'DISABLED (native GeV)'}"
+        )
+
         with uproot.open(str(root_file_path)) as f:
             if "events" in f:
                 tree = f["events"]
@@ -268,6 +297,7 @@ class MassCalculationHandler(StateHandler):
                 output_dir,
                 self.logger,
                 calculator,
+                release_year=release_year,
             )
             if result is None:
                 continue

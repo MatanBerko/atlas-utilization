@@ -1,0 +1,131 @@
+# ---------------------------------------------------------------------------
+# config.atlas_scale_test.yaml
+#
+# Fast ATLAS-side regression check for the per-schema MeV->GeV scaling fix.
+# Adapted from config.yaml (which targets the "2024r-pp" ATLAS release).
+#
+# Purpose: after making the MeV->GeV (x1e-3) conversion schema-aware, confirm
+# it is STILL applied to ATLAS DAOD_PHYSLITE data, i.e. ATLAS invariant masses
+# still come out on the GeV scale and were not accidentally left in MeV.
+#
+# Differences from config.yaml:
+#   * only parsing + mass_calculating are enabled
+#   * base_output_dir -> ./output   (local)
+#   * parse_mc: true  -- the "2024r-pp" release exposes only MC datasets through
+#     atlasopenmagic.available_datasets(); with parse_mc:false the run would
+#     parse zero files. The first dataset (dsid 301204) is
+#     "Pythia8 Zprime -> ee, SSM, M = 3000 GeV" DAOD_PHYSLITE. Good for a
+#     scale check: raw electron pt ~1e6 MeV, so the di-electron mass should
+#     reconstruct at ~3000 GeV WITH the x1e-3 conversion and ~3e6 without it
+#     (a clean 1000x discriminator), and the peak should sit at the generated
+#     Z' mass of 3000 GeV.
+#   * max_files_to_process: 1  (one PHYSLITE file)
+#   * mass_calc input_dir -> relative ./output/parsed_data
+#   * objects_to_calculate -> Electrons, Muons, Jets. Jets are included because
+#     the 2024r-pp parser currently drops the Electron/Muon collections for
+#     this MC PHYSLITE file (a separate, pre-existing parser issue), so the
+#     di-jet channel is what actually carries the order-of-magnitude scale
+#     check here. Jets in 2024r-pp are MeV-native just like the leptons.
+#   * min_particles_in_combination: 1 and min_events_per_fs: 1 so same-flavour
+#     2-object final states (2e / 2m / 2j) are actually computed in a tiny
+#     sample (same rationale as config.cms_zpeak_test.yaml)
+#   * kinematic cuts kept in MeV (pt_min 25000 etc.) exactly as config.yaml
+# ---------------------------------------------------------------------------
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: atlas_scale_test
+  histogram_filename: atlas_opendata_full_bumpnet.root
+run_metadata:
+  run_name: atlas_scale_test
+  base_output_dir: ./output
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: true
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years:
+  - "2024r-pp"
+  specific_record_ids: null
+  parse_mc: true
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 8
+  env_threshold_memory_mb: 8000
+  chunk_yield_threshold_bytes: 2147483648
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  max_files_to_process: 1
+  enable_jet_tagging: false
+  jet_btagging_thresholds:
+    btagDeepFlavB: 0.5
+    DL1d: 2.51
+  possible_data_tree_names:
+  - "CollectionTree"
+  - "mini"
+  - "analysis"
+  - "Events"
+  create_dirs: true
+  show_progress_bar: true
+  particle_counts:
+    electrons: { min: 0, max: 4 }
+    muons:     { min: 0, max: 4 }
+    jets:      { min: 0, max: 4 }
+    bjets:     { min: 0, max: 4 }
+    photons:   { min: 0, max: 4 }
+    taus:      { min: 0, max: 4 }
+  kinematic_cuts:
+    electrons: { pt_min: 25000.0, eta_max: 2.47, rel_isolation_max: 0.06 }
+    muons:     { pt_min: 25000.0, eta_max: 2.5 }
+    jets:      { pt_min: 30000.0, eta_max: 4.5 }
+    bjets:     { pt_min: 30000.0, eta_max: 4.5 }
+    photons:   { pt_min: 25000.0, eta_max: 2.37 }
+    taus:      { pt_min: 20000.0, eta_max: 2.5 }
+mass_calculation_task_config:
+  input_dir: ./output/parsed_data
+  output_dir: ./output/im_arrays
+  field_to_slice_by: "pt"
+  use_multiprocessing: true
+  parallel_processes: 4
+  fs_chunk_threshold_bytes: 2000000000
+  objects_to_calculate: [Electrons, Muons, Jets]
+  min_particles_in_combination: 1
+  max_particles_in_combination: 4
+  min_count_particle_in_combination: 1
+  max_count_particle_in_combination: 4
+  max_total_particles_in_combination: 4
+  min_events_per_fs: 1
+  include_subleading: false
+  max_subleading_index: 1
+post_processing_task_config:
+  input_dir: ./output/im_arrays
+  output_dir: ./output/im_arrays_processed
+  peak_detection_bin_width_gev: 10.0
+  z_peak_cutoff: 115.0
+  max_mass_cutoff: 10000.0
+histogram_creation_task_config:
+  input_dir: ./output/im_arrays_processed
+  output_dir: ./output/histograms
+  bin_width_gev: 10.0
+  single_output_file: true
+  output_filename: atlas_opendata_full_bumpnet.root
+  exclude_outliers: false
+  use_bumpnet_naming: true
+  apply_peak_removal_at_histogram_level: false

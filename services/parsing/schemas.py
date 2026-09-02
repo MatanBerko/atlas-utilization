@@ -56,10 +56,16 @@ RECORD_ID_TO_SCHEMA = {
 # - "objects": dict of canonical object names to required fields
 # - "direct_objects": Objects which are accessed *directly*, with no naming
 #    pattern / suffix / prefix. Intended for internal use only!
+# - "native_pt_unit": momentum/energy unit of the *raw* files for this release:
+#    "MeV", "GeV", or "unknown". Consumed by
+#    schema_needs_mev_to_gev_conversion() to decide whether the mass-calculation
+#    stage must scale invariant masses by 1e-3 (MeV -> GeV). Naming pattern is
+#    NOT a proxy for this: both "dotted" and "flat" releases exist in each unit.
 
 RELEASE_SCHEMAS = {
     "2024r-pp": {
         "naming_pattern": "dotted",  # AnalysisElectronsAuxDyn.pt
+        "native_pt_unit": "MeV",  # DAOD_PHYSLITE; verified on real data (lepton pt in the 1e3-2e6 range)
         "branch_prefix": "Analysis",
         "branch_suffix": "AuxDyn",
         "object_mappings": {
@@ -74,6 +80,7 @@ RELEASE_SCHEMAS = {
     },
     "cms-nanoaod": {
         "naming_pattern": "flat",  # Electron_pt, Electron_eta, Muon_pt, etc.
+        "native_pt_unit": "GeV",  # CMS NanoAOD; verified on real data (e-pair inv mass ~91 before any 1e-3 scaling)
         "branch_prefix": "",
         "branch_suffix": "",
         "object_mappings": {
@@ -94,6 +101,7 @@ RELEASE_SCHEMAS = {
     },
     "2024r-hi": {
         "naming_pattern": "dotted",  # MuonsAuxDyn.pt
+        "native_pt_unit": "MeV",  # ATLAS heavy-ion DAOD; verified on real data (muon pt median ~2.6e3, max ~4.6e6)
         "branch_prefix": "",  # No prefix for Muons
         "branch_suffix": "AuxDyn",
         "object_mappings": {
@@ -106,6 +114,10 @@ RELEASE_SCHEMAS = {
     },
     "2020e-13tev": {
         "naming_pattern": "dotted",  # Assumed similar to 2024r-pp
+        # Not data-verified (no sample file URL available via atlasopenmagic).
+        # Inferred MeV: byte-identical Analysis*AuxDyn PHYSLITE schema to the
+        # data-verified 2024r-pp entry. Conversion behaviour therefore unchanged.
+        "native_pt_unit": "MeV",
         "branch_prefix": "Analysis",
         "branch_suffix": "AuxDyn",
         "object_mappings": {
@@ -120,6 +132,9 @@ RELEASE_SCHEMAS = {
     },
     "2016e-8tev": {
         "naming_pattern": "flat",  # lep_pt, jet_pt
+        # Flat naming but MeV - verified on real data (lep_pt median ~4.3e4,
+        # min ~5.1e3). Do not infer GeV from the flat pattern.
+        "native_pt_unit": "MeV",
         "branch_prefix": "",
         "branch_suffix": "",
         "object_mappings": {
@@ -139,6 +154,11 @@ RELEASE_SCHEMAS = {
     },
     "2025e-13tev-beta": {
         "naming_pattern": "flat",  # lep_pt, jet_pt, photon_pt, tau_pt
+        # Flat naming AND GeV - verified on real data: for MC dsid 301204 (a Z'
+        # sample) lep_pt median ~1.08e3 / max ~2.25e3, i.e. the same physical
+        # values as 2024r-pp's MeV numbers for the same sample divided by 1000.
+        # The 1e-3 MeV->GeV scaling must NOT be applied to this release.
+        "native_pt_unit": "GeV",
         "branch_prefix": "",
         "branch_suffix": "",
         "object_mappings": {
@@ -161,6 +181,10 @@ RELEASE_SCHEMAS = {
     },
     "2025r-evgen-13tev": {
         "naming_pattern": "dotted",  # Assumed similar to 2024r-pp
+        # Could not verify: metadata fetch timed out, and this schema is itself
+        # only "inferred from similar releases". Left "unknown" so the historical
+        # 1e-3 conversion still applies (behaviour unchanged).
+        "native_pt_unit": "unknown",
         "branch_prefix": "Analysis",
         "branch_suffix": "AuxDyn",
         "object_mappings": {
@@ -175,6 +199,10 @@ RELEASE_SCHEMAS = {
     },
     "2025r-evgen-13p6tev": {
         "naming_pattern": "dotted",  # Assumed similar to 2024r-pp
+        # Could not verify: this release ships gzipped HepMC tarballs, not ROOT
+        # files, and this schema is only "inferred". Left "unknown" so the
+        # historical 1e-3 conversion still applies (behaviour unchanged).
+        "native_pt_unit": "unknown",
         "branch_prefix": "Analysis",
         "branch_suffix": "AuxDyn",
         "object_mappings": {
@@ -530,6 +558,39 @@ def get_schema_for_release(release_year: str, record_id: int = None) -> dict:
             f"Available releases: {list(RELEASE_SCHEMAS.keys())}"
         )
     return RELEASE_SCHEMAS[normalized_year]
+
+
+def get_native_pt_unit(release_year: str, record_id: int = None) -> str:
+    """
+    Return the raw momentum/energy unit for a release/schema: "MeV", "GeV" or
+    "unknown". Falls back to "unknown" for any release that cannot be resolved.
+    """
+    try:
+        schema = get_schema_for_release(release_year, record_id=record_id)
+    except (KeyError, ValueError, IndexError, TypeError, AttributeError):
+        return "unknown"
+    return str(schema.get("native_pt_unit", "unknown"))
+
+
+def schema_needs_mev_to_gev_conversion(release_year: str, record_id: int = None) -> bool:
+    """
+    Whether the invariant-mass stage must scale masses by 1e-3 (MeV -> GeV) for
+    data from this release/schema.
+
+    Driven by the schema's explicit ``native_pt_unit``. The conversion is
+    skipped ONLY when the native unit is unambiguously "GeV". Everything else --
+    "MeV", "unknown", an unmapped release, a missing/blank key, or a lookup
+    failure -- keeps the historical behaviour of applying the conversion, so
+    data is never silently left on the wrong scale.
+
+    Args:
+        release_year: Release identifier (e.g. "2024r-pp"), a "record_<id>"
+            string, or a bare "<id>" with ``record_id`` supplied.
+        record_id:    Optional CERN record id for the record_* path.
+    """
+    if not release_year:
+        return True
+    return get_native_pt_unit(release_year, record_id=record_id).strip().lower() != "gev"
 
 
 def build_branch_name(obj_name: str, release_year: str = "2024r-pp", field: str = None, record_id: int = None) -> str:
