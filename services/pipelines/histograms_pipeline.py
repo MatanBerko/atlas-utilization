@@ -189,10 +189,6 @@ def _create_histograms_from_sqlite(
     output_dir = histograms_config["output_dir"]
     os.makedirs(output_dir, exist_ok=True)
 
-    # Load global ranges if available
-    global_ranges_path = histograms_config.get("global_ranges_path")
-    global_ranges = load_global_ranges(global_ranges_path) if global_ranges_path else None
-
     bin_width_gev = histograms_config["bin_width_gev"]
     bin_widths_gev = [bin_width_gev] if isinstance(bin_width_gev, (int, float)) else bin_width_gev
     use_bumpnet_naming = histograms_config.get("use_bumpnet_naming", False)
@@ -202,9 +198,42 @@ def _create_histograms_from_sqlite(
 
     db_paths = [os.path.join(input_dir, f) for f in sqlite_files]
 
-    # Split SQLite files across histogram batch jobs
     batch_job_index = histograms_config.get("batch_job_index")
     total_batch_jobs = histograms_config.get("total_batch_jobs")
+
+    # Resolve the global per-signature ranges used to fix histogram binning.
+    #   * Multi-job cluster workflow: a separate `--scan-only` pass writes
+    #     logs/global_ranges.json before any histogram job runs, so it is simply
+    #     loaded here (unchanged behaviour).
+    #   * Single-machine "run all stages" invocation: that scan pass never runs.
+    #     Instead of failing, compute the identical ranges in-process from the
+    #     full set of processed shards and persist them, so the histograms come
+    #     out exactly as they would after a scan. Only safe when this is not a
+    #     per-batch job (a batch only sees its own slice of the data).
+    global_ranges_path = histograms_config.get("global_ranges_path")
+    if global_ranges_path and os.path.exists(global_ranges_path):
+        global_ranges = load_global_ranges(global_ranges_path)
+    elif global_ranges_path and batch_job_index is None:
+        logger.info(
+            f"global_ranges file not found at {global_ranges_path}; computing "
+            f"ranges in-process from {len(sqlite_files)} processed shard(s)"
+        )
+        global_ranges = compute_global_ranges(
+            sqlite_files, input_dir, exclude_outliers=exclude_outliers
+        )
+        try:
+            os.makedirs(os.path.dirname(global_ranges_path) or ".", exist_ok=True)
+            save_global_ranges(global_ranges, global_ranges_path)
+        except OSError as exc:
+            logger.warning(f"Could not persist computed global_ranges: {exc}")
+    elif global_ranges_path:
+        # Per-batch job with no pre-scan: keep the original fail-loud behaviour;
+        # the cluster workflow is expected to run the scan pass first.
+        global_ranges = load_global_ranges(global_ranges_path)
+    else:
+        global_ranges = None
+
+    # Split SQLite files across histogram batch jobs
     if batch_job_index is not None and total_batch_jobs is not None:
         sqlite_files = _get_batch_files(
             sorted(sqlite_files), batch_job_index, total_batch_jobs
