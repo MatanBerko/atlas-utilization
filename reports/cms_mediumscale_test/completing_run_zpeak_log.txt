@@ -1,0 +1,39 @@
+2026-09-03 18:17:22,001 - MassCalculationHandler - INFO - Reading parsed file: parsed_record_30530_chunk0.root
+2026-09-03 18:17:22,903 - MassCalculationHandler - INFO - parsed_record_30530_chunk0.root: 830,255 events loaded (particle types: ['Electrons', 'Muons', 'Jets', 'Photons', 'Taus'])
+2026-09-03 18:18:40,754 - MassCalculationHandler - INFO - parsed_record_30530_chunk0.root: created 800 IM array(s)
+2026-09-03 18:18:40,756 - MassCalculationHandler - INFO - Reading parsed file: parsed_record_30530_chunk1.root
+2026-09-03 18:18:43,155 - MassCalculationHandler - INFO - parsed_record_30530_chunk1.root: 2,246,402 events loaded (particle types: ['Electrons', 'Muons', 'Jets', 'Photons', 'Taus'])
+2026-09-03 18:21:48,645 - MassCalculationHandler - INFO - parsed_record_30530_chunk1.root: created 967 IM array(s)
+2026-09-03 18:21:48,646 - MassCalculationHandler - INFO - Reading parsed file: parsed_record_30562_chunk4.root
+2026-09-03 18:21:50,573 - MassCalculationHandler - INFO - parsed_record_30562_chunk4.root: 1,814,482 events loaded (particle types: ['Electrons', 'Muons', 'Jets', 'Photons', 'Taus'])
+2026-09-03 18:24:42,635 - MassCalculationHandler - INFO - parsed_record_30562_chunk4.root: created 972 IM array(s)
+2026-09-03 18:24:42,637 - MassCalculationHandler - INFO - Reading parsed file: parsed_record_30562_chunk5.root
+2026-09-03 18:24:47,039 - MassCalculationHandler - INFO - parsed_record_30562_chunk5.root: 2,036,003 events loaded (particle types: ['Electrons', 'Muons', 'Jets', 'Photons', 'Taus'])
+2026-09-03 18:28:23,296 - MassCalculationHandler - INFO - parsed_record_30562_chunk5.root: created 734 IM array(s)
+2026-09-03 18:28:23,298 - MassCalculationHandler - INFO - Reading parsed file: parsed_record_30562_chunk6.root
+2026-09-03 18:28:28,782 - MassCalculationHandler - INFO - parsed_record_30562_chunk6.root: 2,493,405 events loaded (particle types: ['Electrons', 'Muons', 'Jets', 'Photons', 'Taus'])
+2026-09-03 18:32:46,110 - MassCalculationHandler - INFO - parsed_record_30562_chunk6.root: created 751 IM array(s)
+2026-09-03 18:32:46,110 - MassCalculationHandler - INFO - Reading parsed file: parsed_record_30562_final.root
+2026-09-03 18:32:51,040 - MassCalculationHandler - INFO - parsed_record_30562_final.root: 2,040,888 events loaded (particle types: ['Electrons', 'Muons', 'Jets', 'Photons', 'Taus'])
+2026-09-03 18:36:30,418 - MassCalculationHandler - INFO - parsed_record_30562_final.root: created 778 IM array(s)
+2026-09-03 18:36:30,421 - MassCalculationHandler - INFO - Reading parsed file: parsed_record_30563_chunk2.root
+2026-09-03 18:36:34,980 - MassCalculationHandler - INFO - parsed_record_30563_chunk2.root: 2,474,148 events loaded (particle types: ['Electrons', 'Muons', 'Jets', 'Photons', 'Taus'])
+2026-09-03 18:41:45,289 - MassCalculationHandler - INFO - parsed_record_30563_chunk2.root: created 1065 IM array(s)
+2026-09-03 18:41:45,290 - MassCalculationHandler - INFO - Reading parsed file: parsed_record_30563_chunk3.root
+2026-09-03 18:41:45,598 - MassCalculationHandler - INFO - parsed_record_30563_chunk3.root: 52,747 events loaded (particle types: ['Electrons', 'Muons', 'Jets', 'Photons', 'Taus'])
+2026-09-03 18:42:13,100 - MassCalculationHandler - INFO - parsed_record_30563_chunk3.root: created 347 IM array(s)
+2026-09-03 18:42:13,219 - StateMachine - INFO - Transition: MASS_CALCULATION → POST_PROCESSING
+2026-09-03 18:43:22,643 - PostProcessingHandler - INFO - Post-processing complete: 1 processed arrays in 69.4s
+2026-09-03 18:43:22,643 - StateMachine - INFO - Transition: POST_PROCESSING → HISTOGRAM_CREATION
+2026-09-03 18:43:38,194 - services.pipelines.histograms_pipeline - INFO - Excluded 568 outlier signatures (exclude_outliers=true)
+2026-09-03 18:44:25,589 - services.pipelines.histograms_pipeline - INFO - Wrote 1469 histograms to shared file /workspace/output/zpeak_rerun/histograms/atlas_opendata_full_bumpnet.root
+2026-09-03 18:44:25,590 - StateMachine - INFO - Transition: HISTOGRAM_CREATION → COMPLETED
+2026-09-03 18:44:25,590 - StateMachine - INFO - ✓ Pipeline completed successfully
+2026-09-03 18:44:38,265 - __main__ - INFO - ✓ Pipeline completed successfully
+
+=== Z-peak checks (scripts/zpeak_check.py, zpeak_postproc_check.py on output/zpeak_rerun) ===
+RAW e0e1: 453,801 pairs; CLEAR Z peak 90-92 GeV, 68,056 entries (~21%, ~11.7x off-peak); median 91.6 GeV
+RAW m0m1: 707,153 pairs; CLEAR Z peak 90-92 GeV, 99,654 entries (~26%, ~16.7x off-peak); median 87.8 GeV
+AFTER post-processing e0e1_main: 0 entries < 115 GeV, 0 in Z window -> PASS
+AFTER post-processing m0m1_main: 0 entries < 115 GeV, 0 in Z window -> PASS
+m0m1 raw min/max = -16384 / 39168 (known NanoAOD sentinel tail; excluded from _main; out of scope)

@@ -1,0 +1,15 @@
+2026-09-03 17:29:46,697 - StateMachine - INFO - Transition: FETCHING_METADATA → PARSING
+2026-09-03 17:43:46,755 - ParsingHandler - INFO - Retention record_30530: 5,550,805 / 7,279,257 events kept (76.3%)
+2026-09-03 17:43:46,755 - ParsingHandler - INFO - Retention record_30563: 1,867,229 / 2,453,914 events kept (76.1%)
+2026-09-03 17:43:46,755 - ParsingHandler - INFO - Retention record_30562: 6,570,296 / 7,534,950 events kept (87.2%)
+2026-09-03 17:43:46,755 - ParsingHandler - INFO - de-duplication: 89 duplicate event(s) removed of 13988419 seen (run 282037: 89)
+2026-09-03 17:43:46,762 - ParsingHandler - INFO - Parsing complete: 9/9 files, 17268121 events, 100.0% success rate
+2026-09-03 17:43:47,609 - StateMachine - INFO - Transition: PARSING → MASS_CALCULATION
+2026-09-03 18:06:50,382 - StateMachine - INFO - Transition: MASS_CALCULATION → POST_PROCESSING
+2026-09-03 18:09:48,214 - PostProcessingHandler - INFO - Post-processing complete: 1 processed arrays in 177.8s
+2026-09-03 18:09:48,214 - StateMachine - INFO - Transition: POST_PROCESSING → HISTOGRAM_CREATION
+2026-09-03 18:12:03,735 - services.pipelines.histograms_pipeline - INFO - Wrote 2786 histograms to shared file ./output/cms_mediumscale_complete_20260903_172914/histograms/atlas_opendata_full_bumpnet.root
+2026-09-03 18:12:03,736 - StateMachine - INFO - Transition: HISTOGRAM_CREATION → COMPLETED
+2026-09-03 18:12:20,649 - StatisticsPlotter - INFO - Creating all statistical plots...
+2026-09-03 18:12:23,175 - StatisticsPlotter - INFO - Created 4 statistical plots
+2026-09-03 18:12:23,175 - PipelineExecutor - INFO - Created 4 statistical plots:

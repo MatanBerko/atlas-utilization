@@ -1,0 +1,106 @@
+# ---------------------------------------------------------------------------
+# config.cms_mediumscale_zpeak.yaml
+#
+# Re-runs ONLY mass-calc -> post-proc -> histograms on the parsed data already
+# produced by config.cms_mediumscale_complete.yaml (no re-parsing), with
+# dilepton-friendly settings so the pure di-electron (e0e1) and di-muon (m0m1)
+# invariant-mass channels are produced for the Z-peak sanity check.
+#
+# The master-config settings (min_particles_in_combination: 2,
+# min_events_per_fs: 100) do NOT emit a bare m0m1 / e0e1 channel - every object
+# type in a final state must appear in the combination, and the pure
+# "2 leptons, nothing else" final state does not clear 100 events/chunk. So this
+# uses min_particles_in_combination: 1 and min_events_per_fs: 1, matching the
+# earlier 2-file Z-peak checks. Electrons + Muons only, to keep it quick.
+#
+# Point input_dir at the existing parsed_data directory before running.
+# ---------------------------------------------------------------------------
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: atlas_full_120
+  histogram_filename: atlas_opendata_full_bumpnet.root
+run_metadata:
+  run_name: cms_mediumscale_zpeak
+  base_output_dir: ./output
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: false
+  do_mass_calculating: true
+  do_post_processing: true
+  do_histogram_creation: true
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years: []
+  specific_record_ids:
+  - 30529
+  - 30562
+  - 30530
+  - 30563
+  parse_mc: false
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 2
+  env_threshold_memory_mb: 4500
+  chunk_yield_threshold_bytes: 268435456
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  max_files_to_process: 3
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  - mini
+  - analysis
+  create_dirs: true
+  show_progress_bar: true
+  particle_counts:
+    electrons: {min: 1, max: 4}
+    muons: {min: 0, max: 4}
+    jets: {min: 0, max: 10}
+    photons: {min: 0, max: 4}
+  kinematic_cuts:
+    electrons: {pt_min: 25.0, eta_max: 2.47}
+    muons: {pt_min: 25.0, eta_max: 2.5}
+    jets: {pt_min: 30.0, eta_max: 4.5}
+    photons: {pt_min: 25.0, eta_max: 2.37}
+mass_calculation_task_config:
+  input_dir: ./output/cms_mediumscale_complete_20260903_172914/parsed_data
+  output_dir: ./output/im_arrays
+  field_to_slice_by: pt
+  use_multiprocessing: true
+  parallel_processes: 4
+  fs_chunk_threshold_bytes: 2000000000
+  objects_to_calculate:
+  - Electrons
+  - Muons
+  min_particles_in_combination: 1
+  max_particles_in_combination: 4
+  min_count_particle_in_combination: 1
+  max_count_particle_in_combination: 4
+  min_events_per_fs: 1
+post_processing_task_config:
+  input_dir: ./output/im_arrays
+  output_dir: ./output/im_arrays_processed
+  peak_detection_bin_width_gev: 10.0
+histogram_creation_task_config:
+  input_dir: ./output/im_arrays_processed
+  output_dir: ./output/histograms
+  bin_width_gev: 10.0
+  single_output_file: true
+  output_filename: atlas_opendata_full_bumpnet.root
+  exclude_outliers: true
+  use_bumpnet_naming: true
