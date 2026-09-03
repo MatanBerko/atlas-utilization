@@ -1,0 +1,72 @@
+run dir: output/cms_bjet_test_20260903_124711
+
+==========================================================================
+1. PARSE LEVEL  -  are some jets tagged as b-jets?
+==========================================================================
+  parsed_record_30562_chunk0.root: events=3042589  Jets=5811892  BJets=482389
+  parsed_record_30562_final.root: events=2493471  Jets=4771862  BJets=399303
+--------------------------------------------------------------------------
+  TOTAL over 5536060 events:
+    non-b jets (Jets)     : 10583754
+    b-tagged jets (BJets) : 881692
+    b-tag fraction        : 7.69%  of all reconstructed jets
+    VERDICT: plausible. A SingleElectron sample is mostly light/gluon jets with a minority of real b-jets (ttbar, single-top, b-quark QCD).
+
+==========================================================================
+2/3. MASS-CALC LEVEL  -  b-jet combinations and their invariant masses
+==========================================================================
+  b-jet-involving FS_IM signatures : 4434
+  total entries in them            : 1618653
+
+  sample of b-jet channels (signature : n, median, min, max) [GeV]:
+    ..._30562_chunk0_FS_1e_0m_2j_1g_0t_1b_IM_e0j0              n=23254  med=    23.1  [    0.0,   3964.9]
+    ..._30562_chunk0_FS_1e_0m_2j_1g_0t_1b_IM_e0j0j1            n=23254  med=   331.5  [   21.4,   4552.3]
+    ..._30562_chunk0_FS_1e_0m_2j_1g_0t_1b_IM_e0b0              n=23254  med=    91.1  [    2.4,   2543.9]
+    ..._30562_chunk0_FS_1e_0m_2j_1g_0t_1b_IM_j0b0              n=23254  med=   183.8  [   14.0,   4380.1]
+    ..._30562_chunk0_FS_1e_0m_2j_1g_0t_1b_IM_j0j1b0            n=23254  med=   401.3  [   55.0,   4680.8]
+    ..._30562_chunk0_FS_1e_0m_2j_1g_0t_1b_IM_e0j0b0            n=23254  med=   265.1  [   18.0,   5908.1]
+    ..._30562_chunk0_FS_1e_0m_2j_1g_0t_1b_IM_e0j0j1b0          n=23254  med=   499.9  [   69.2,   6076.4]
+    ..._30562_chunk0_FS_1e_0m_1j_1g_0t_1b_IM_e0j0              n=23035  med=    14.6  [   -0.4,   3082.1]
+    ..._30562_chunk0_FS_1e_0m_1j_1g_0t_1b_IM_e0b0              n=23035  med=    66.0  [   -0.1,   2230.7]
+    ..._30562_chunk0_FS_1e_0m_1j_1g_0t_1b_IM_j0b0              n=23035  med=   158.2  [   15.0,   3395.6]
+    ..._30562_chunk0_FS_1e_0m_1j_1g_0t_1b_IM_e0j0b0            n=23035  med=   204.7  [   20.1,   4585.7]
+    ..._30562_chunk0_FS_1e_0m_0j_1g_1t_1b_IM_e0b0              n=19244  med=     7.6  [   -0.1,    168.4]
+
+  by IM-combination type (the b-jet ones):
+    e0b0       n=260358  median=    59.8  p05=    6.1  p95=   435.3  <5GeV=5773  <0=23
+    e0b0b1     n=42775   median=   193.2  p05=   63.9  p95=   747.0  <5GeV=0  <0=0
+    e0b0b1b2   n=4015    median=   343.2  p05=  124.6  p95=  1043.8  <5GeV=0  <0=0
+    e0e1b0     n=17593   median=   318.1  p05=   80.4  p95=   930.6  <5GeV=0  <0=0
+    e0e1b0b1   n=3747    median=   437.4  p05=  150.9  p95=  1251.5  <5GeV=0  <0=0
+    e0e1e2b0   n=644     median=   428.7  p05=  172.9  p95=  1207.1  <5GeV=0  <0=0
+    e0e1j0b0   n=17177   median=   596.0  p05=  256.1  p95=  1581.3  <5GeV=0  <0=0
+    e0j0b0     n=203835  median=   313.5  p05=   80.0  p95=  1044.1  <5GeV=0  <0=0
+    e0j0b0b1   n=29129   median=   516.1  p05=  174.3  p95=  1358.1  <5GeV=0  <0=0
+    e0j0j1b0   n=137123  median=   604.8  p05=  202.8  p95=  1649.8  <5GeV=0  <0=0
+    e0m0b0     n=551     median=   264.8  p05=   27.1  p95=  1070.0  <5GeV=0  <0=0
+    e0m0b0b1   n=202     median=   510.7  p05=  148.9  p95=  1636.4  <5GeV=0  <0=0
+    e0m0j0b0   n=290     median=   570.1  p05=  178.4  p95=  1803.4  <5GeV=0  <0=0
+    e0m0m1b0   n=14      median=   539.5  p05=   53.5  p95=  1071.0  <5GeV=0  <0=0
+    j0b0       n=203835  median=   219.9  p05=   57.5  p95=   793.1  <5GeV=0  <0=0
+    j0b0b1     n=29129   median=   412.7  p05=  135.1  p95=  1080.1  <5GeV=0  <0=0
+    j0b0b1b2   n=2872    median=   544.2  p05=  222.8  p95=  1296.8  <5GeV=0  <0=0
+    j0j1b0     n=137123  median=   489.9  p05=  162.6  p95=  1325.9  <5GeV=0  <0=0
+    j0j1b0b1   n=19486   median=   635.1  p05=  271.5  p95=  1573.7  <5GeV=0  <0=0
+    j0j1j2b0   n=66616   median=   712.0  p05=  302.1  p95=  1801.5  <5GeV=0  <0=0
+    m0b0       n=551     median=    88.0  p05=   13.3  p95=   597.0  <5GeV=1  <0=0
+    m0b0b1     n=202     median=   370.2  p05=   91.3  p95=  1237.9  <5GeV=0  <0=0
+    m0b0b1b2   n=19      median=   553.1  p05=  227.7  p95=  1191.8  <5GeV=0  <0=0
+    m0j0b0     n=290     median=   424.0  p05=  131.7  p95=  1442.6  <5GeV=0  <0=0
+    m0j0b0b1   n=40      median=   582.8  p05=  338.8  p95=  1311.4  <5GeV=0  <0=0
+    m0j0j1b0   n=202     median=   690.7  p05=  306.7  p95=  2263.7  <5GeV=0  <0=0
+    m0m1b0     n=14      median=    57.7  p05=   23.5  p95=   553.0  <5GeV=0  <0=0
+    m0m1b0b1   n=8       median=   672.6  p05=  556.2  p95=  1382.1  <5GeV=0  <0=0
+    m0m1j0b0   n=6       median=   903.4  p05=  368.9  p95=  2763.6  <5GeV=0  <0=0
+
+  DI-B-JET (b0b1) sanity:
+    no b0b1 pairs at all in this small run (rare final state; not alarming).
+
+  OVERALL b-jet mass range:
+    n=1618653  min=-0.71  p01=5.5  median=308.0  p99=1977.5  max=7541.0
+
+==========================================================================

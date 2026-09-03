@@ -37,6 +37,10 @@ Per supervisor **Maryna**, the **final delivery must use all available CMS
 data**, not SingleElectron only. This is a **confirmed project requirement**,
 not an optional improvement.
 
+**Status (2026-09-03):** the per-trigger-stream selection work below is now
+**planned, active upcoming work** — it is scheduled as the next task, not
+parked indefinitely.
+
 Bringing the SingleMuon records back in requires, at minimum:
 
 1. **Per-trigger-stream event selection** — apply an electron requirement to
@@ -67,4 +71,22 @@ Bringing the SingleMuon records back in requires, at minimum:
   jet collections), 2-body combinations such as electron+photon or
   electron+jet are dominated by ~0 GeV "self-pairs", producing spike-shaped
   histograms. This is an upstream reconstruction/selection gap, not a
-  post-processing bug. Noted for a future decision on adding overlap removal.
+  post-processing bug.
+
+  Discussed with **Maryna** (2026-09-03): the tau-specific instance of this
+  (tau objects overlapping electrons/jets) is a **known issue that is already
+  tracked separately**, and the broader team has likewise **deprioritised** it.
+  So this is **intentionally deferred**, consistent with the team's stance —
+  not an oversight. Adding delta-R overlap removal remains a future decision.
+
+## CMS b-jet tagging — now exercised
+
+The CMS b-tagging path (`Jet_btagDeepFlavB` DeepJet discriminant → split
+`Jets` into `Jets` + `BJets`) was **run for the first time on 2026-09-03**
+(`config.cms_bjet_test.yaml`, DeepJet Medium WP 0.2598, parsing + mass-calc on
+~5.5M SingleElectron events). Outcome: it runs end to end, tags ~7.7% of jets
+(plausible for this sample), feeds `BJets` through the combinatorics, and the
+b-jet invariant masses have sane shape and scale. Reported as "looks like real
+physics", **not** validated — no known-resonance cross-check yet, and the
+working point has not been tuned for these files. Full write-up:
+`reports/cms_bjet_first_test/summary.md`.
