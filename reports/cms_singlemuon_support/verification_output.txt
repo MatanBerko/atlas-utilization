@@ -1,0 +1,111 @@
+de-duplication: 3 duplicate event(s) removed of 7 seen (run 278820: 3)
+SELFTEST: PASS
+
+==========================================================================
+parsed-data inspection: output/cms_fourrecord_test_20260903_150605
+==========================================================================
+  parsed_record_30529_chunk0.root: 3,225,778 events
+  parsed_record_30562_chunk1.root: 2,946,132 events
+  parsed_record_30562_final.root: 2,493,429 events
+
+total events in parsed_data : 8,665,339
+events per source_record (real per-event origin):
+    record 30529: 1,006,482
+    record 30530: 3,076,657
+    record 30562: 4,529,453
+    record 30563: 52,747
+
+residual (run,lumi,event) duplicates across all parsed files: 0
+RESULT: PASS - no duplicate collision events remain after parsing.
+
+==========================================================================
+CMS Z-peak sanity check  (di-lepton invariant mass, post-processing OFF)
+==========================================================================
+invariant-mass source : output/cms_fourrecord_test_20260903_150605/im_arrays
+  sqlite shards       : ['im_batch_1.sqlite']
+  loose .npy files    : 0
+binning               : 60-120 GeV in 2 GeV steps
+Z-peak search window  : 85-97 GeV  (PDG Z mass 91.1876 GeV)
+
+SCALE CHECK (regression guard)
+  OK - raw electron-pair median is 91.61 GeV - already at the GeV scale, no correction needed (this is the expected result after the per-schema MeV/GeV fix).
+
+--------------------------------------------------------------------------
+CHANNEL: electron pairs (e+e-)   (IM signature 'e0e1')
+  total pairs found (all final states)   : 367566
+  RAW values in 60-120 GeV               : 261052
+  pairs in pure '2e_0m_0j_0g_0t_0b' final state : 0
+  RAW candidate Z bin (all final states) : 90-92 GeV  with 54652 entries
+  interpretation (RAW): CLEAR Z peak at 90-92 GeV (54652 of 261052 in-range entries, ~21%, ~11.6x the off-peak bin average). Matches the Z boson (~91.2 GeV): parsing and mass calculation are working for this channel, and the mass scale is correct.
+
+--------------------------------------------------------------------------
+CHANNEL: muon pairs (mu+ mu-)   (IM signature 'm0m1')
+  total pairs found (all final states)   : 301023
+  RAW values in 60-120 GeV               : 161991
+  pairs in pure '0e_2m_0j_0g_0t_0b' final state : 604
+  RAW candidate Z bin (all final states) : 90-92 GeV  with 42319 entries
+  RAW candidate Z bin (pure final state) : 84-86 GeV  with 7 entries
+  interpretation (RAW): CLEAR Z peak at 90-92 GeV (42319 of 161991 in-range entries, ~26%, ~16.8x the off-peak bin average). Matches the Z boson (~91.2 GeV): parsing and mass calculation are working for this channel, and the mass scale is correct.
+
+==========================================================================
+chart written to: output/cms_fourrecord_test_20260903_150605/im_arrays/zpeak_check.png
+==========================================================================
+
+==========================================================================
+CMS muon-pair Z-peak: BEFORE vs AFTER post-processing
+==========================================================================
+run dir : output/cms_fourrecord_test_20260903_150605
+raw     : output/cms_fourrecord_test_20260903_150605/im_arrays
+processed: output/cms_fourrecord_test_20260903_150605/im_arrays_processed
+z_peak_cutoff assumed: 115.0 GeV  (post-processing default)
+
+BEFORE  (raw im_arrays, signatures *_IM_m0m1)   [1 final-state(s)]
+  m0m1 (all final states, summed): n=301023  min=-16384.000  max=39167.6  median=87.7
+      entries < 115 GeV : 272220   |   entries in 85-97 GeV (Z window) : 120971
+      60|.....+#.............|160  (fullest bin 90-95 GeV)
+
+AFTER   (im_arrays_processed, *_IM_m0m1_main)   [1 final-state(s)]
+  m0m1_main (all final states, summed): n=25454  min=115.003  max=9643.0  median=170.9
+      entries < 115 GeV : 0   |   entries in 85-97 GeV (Z window) : 0
+      60|...........#++++++++|160  (fullest bin 115-120 GeV)
+  m0m1_outliers (all final states, summed): n=2277  min=147.215  max=9759.9  median=582.4
+      entries < 115 GeV : 0   |   entries in 85-97 GeV (Z window) : 0
+      60|.................###|160  (fullest bin 145-150 GeV)
+
+--------------------------------------------------------------------------
+raw m0m1 has 120971 entries in the 85-97 GeV Z window (40% of all raw m0m1).
+AFTER: m0m1_main has 0 entries below 115 GeV and 0 in the Z window -> Z-peak cleanup works for this channel.
+--------------------------------------------------------------------------
+RESULT: PASS
+
+==========================================================================
+CMS electron-pair Z-peak: BEFORE vs AFTER post-processing
+==========================================================================
+run dir : output/cms_fourrecord_test_20260903_150605
+raw     : output/cms_fourrecord_test_20260903_150605/im_arrays
+processed: output/cms_fourrecord_test_20260903_150605/im_arrays_processed
+z_peak_cutoff assumed: 115.0 GeV  (post-processing default)
+
+BEFORE  (raw im_arrays, signatures *_IM_e0e1)   [1 final-state(s)]
+  e0e1 (all final states, summed): n=367566  min=0.177  max=3226.3  median=91.6
+      entries < 115 GeV : 271175   |   entries in 85-97 GeV (Z window) : 187911
+      60|.....+#.............|160  (fullest bin 90-95 GeV)
+
+AFTER   (im_arrays_processed, *_IM_e0e1_main)   [1 final-state(s)]
+  e0e1_main (all final states, summed): n=87817  min=115.001  max=1607.9  median=205.9
+      entries < 115 GeV : 0   |   entries in 85-97 GeV (Z window) : 0
+      60|...........++++++#++|160  (fullest bin 145-150 GeV)
+  e0e1_outliers (all final states, summed): n=2820  min=151.560  max=3226.3  median=591.1
+      entries < 115 GeV : 0   |   entries in 85-97 GeV (Z window) : 0
+      60|..................#+|160  (fullest bin 150-155 GeV)
+
+--------------------------------------------------------------------------
+raw e0e1 has 187911 entries in the 85-97 GeV Z window (51% of all raw e0e1).
+AFTER: e0e1_main has 0 entries below 115 GeV and 0 in the Z window -> Z-peak cleanup works for this channel.
+--------------------------------------------------------------------------
+RESULT: PASS
+2026-09-03 15:12:39,036 - ParsingHandler - INFO - Retention record_30530: 3,076,657 / 4,030,719 events kept (76.3%)
+2026-09-03 15:12:39,037 - ParsingHandler - INFO - Retention record_30563: 52,747 / 70,254 events kept (75.1%)
+2026-09-03 15:12:39,038 - ParsingHandler - INFO - Retention record_30529: 1,006,482 / 1,195,734 events kept (84.2%)
+2026-09-03 15:12:39,039 - ParsingHandler - INFO - Retention record_30562: 4,529,453 / 5,197,838 events kept (87.1%)
+2026-09-03 15:12:39,039 - ParsingHandler - INFO - de-duplication: 35 duplicate event(s) removed of 8665374 seen (run 279024: 9, run 279841: 6, run 280016: 9, run 280017: 7, run 280191: 4)

@@ -38,6 +38,16 @@ NANOAOD_BTAGGING_OBJECTS = [
     "Jet_btagDeepFlavB"
 ]
 
+# Scalar per-event branches that uniquely identify a real collision event.
+# Read (like direct_objects) as flat, one-value-per-event branches and kept as
+# top-level scalar fields on the parsed event record. Used for cross-trigger-
+# stream de-duplication when SingleElectron + SingleMuon records are combined.
+NANOAOD_EVENT_ID_BRANCHES = [
+    "run",
+    "luminosityBlock",
+    "event",
+]
+
 # Mapping from specific record IDs to their release year/schema identifier
 # This will be populated when schemas are extracted from record IDs
 RECORD_ID_TO_SCHEMA = {
@@ -97,7 +107,8 @@ RELEASE_SCHEMAS = {
             "Photons": ["pt", "eta", "phi", "mass"],  # NanoAOD includes Photon_mass
             "Taus": ["pt", "eta", "phi", "mass", "charge", "decayMode", "idDeepTau2017v2p1VSjet"]
         },
-        "direct_objects": NANOAOD_BTAGGING_OBJECTS.copy()
+        "direct_objects": NANOAOD_BTAGGING_OBJECTS.copy(),
+        "event_id_branches": NANOAOD_EVENT_ID_BRANCHES.copy()
     },
     "2024r-hi": {
         "naming_pattern": "dotted",  # MuonsAuxDyn.pt

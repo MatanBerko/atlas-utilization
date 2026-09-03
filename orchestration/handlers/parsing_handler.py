@@ -22,7 +22,22 @@ from services.parsing.threaded_processor import ThreadedFileProcessor, ParsingSt
 from domain.statistics import ParsingStatistics
 from domain.events import EventBatch
 from services.parsing.event_selection import apply_parsing_event_selection
+from services.parsing.event_deduplication import EventDeduplicator
 from utils.batching import get_batch_slice_by_year
+
+
+def _record_key_from_release_year(release_year: str) -> str:
+    """'record_30530' -> '30530'; anything else returned unchanged."""
+    if release_year.startswith("record_"):
+        return release_year.split("_", 1)[1]
+    return release_year
+
+
+def _profile_requires_muon(profile: dict) -> bool:
+    """True when a selection_by_record profile requires >=1 muon."""
+    pc = (profile or {}).get("particle_counts", {}) or {}
+    muons = pc.get("muons", {}) or {}
+    return int(muons.get("min", 0)) >= 1
 
 
 class ParsingHandler(StateHandler):
@@ -141,8 +156,29 @@ class ParsingHandler(StateHandler):
                         f"(was {original}, max_files_to_process={max_files})"
                     )
         
+        # ---- Per-trigger-stream selection + cross-record de-duplication setup ----
+        # selection_by_record maps a record id (str) to a profile with its own
+        # particle_counts. Records not listed use the global particle_counts.
+        sel_by_record = {
+            str(k): v for k, v in (parsing_config.selection_by_record or {}).items()
+        }
+        # De-duplication is only meaningful (and only switched on) when multiple
+        # trigger streams are combined, i.e. when selection_by_record is present.
+        deduplicator = EventDeduplicator() if sel_by_record else None
+        # Process the muon-requirement records first so that, for an event that
+        # fired both triggers, the SingleMuon copy is the one kept and the
+        # SingleElectron copy is dropped.
+        ordered_metadata = sorted(
+            metadata.items(),
+            key=lambda kv: 0 if _profile_requires_muon(
+                sel_by_record.get(_record_key_from_release_year(kv[0]), {})
+            ) else 1,
+        )
+        # release_year -> [events_in, events_kept] for a per-record retention report
+        retention: dict[str, list[int]] = {}
+
         # Parse each release year
-        for release_year, file_urls in metadata.items():
+        for release_year, file_urls in ordered_metadata:
             # ── Skip MC keys when parse_mc=False ─────────────────────────────────────
             # The fetcher always separates data and MC into separate keys (e.g.
             # '2024r-pp' and '2024r-pp_mc'). parse_mc controls whether MC is
@@ -150,6 +186,19 @@ class ParsingHandler(StateHandler):
             if release_year.endswith("_mc") and not parsing_config.parse_mc:
                 self.logger.info(f"Skipping MC key '{release_year}' (parse_mc=False)")
                 continue
+
+            record_key = _record_key_from_release_year(release_year)
+            record_profile = sel_by_record.get(record_key)
+            record_particle_counts = (
+                (record_profile or {}).get("particle_counts")
+                or parsing_config.particle_counts
+            )
+            retention.setdefault(release_year, [0, 0])
+            if record_profile is not None:
+                self.logger.info(
+                    f"Record {record_key}: per-stream selection "
+                    f"(particle_counts={record_particle_counts})"
+                )
 
             self.logger.info(
                 f"Parsing {len(file_urls)} files for release year: {release_year}"
@@ -173,22 +222,38 @@ class ParsingHandler(StateHandler):
                 on_success=on_success,
                 on_error=on_error
             ):
-                if parsing_config.kinematic_cuts or parsing_config.particle_counts:
-                    filtered = apply_parsing_event_selection(
+                retention[release_year][0] += len(batch.events)
+
+                if parsing_config.kinematic_cuts or record_particle_counts:
+                    working_events = apply_parsing_event_selection(
                         batch.events,
-                        particle_counts=parsing_config.particle_counts,
+                        particle_counts=record_particle_counts,
                         kinematic_cuts=parsing_config.kinematic_cuts,
                     )
+                else:
+                    working_events = batch.events
+
+                if deduplicator is not None:
+                    working_events, n_dropped = deduplicator.filter_new(working_events)
+                    if n_dropped:
+                        self.logger.info(
+                            f"  {release_year}: dropped {n_dropped} duplicate event(s) "
+                            f"already seen in a higher-priority trigger stream"
+                        )
+
+                retention[release_year][1] += len(working_events)
+
+                if working_events is not batch.events:
                     batch = EventBatch(
-                        events=filtered,
+                        events=working_events,
                         file_id=batch.file_id,
                         release_year=batch.release_year,
                         size_bytes=(
-                            filtered.layout.nbytes
-                            if hasattr(filtered, "layout")
+                            working_events.layout.nbytes
+                            if hasattr(working_events, "layout")
                             else batch.size_bytes
                         ),
-                        event_count=len(filtered),
+                        event_count=len(working_events),
                         processing_time_sec=batch.processing_time_sec,
                     )
 
@@ -235,7 +300,18 @@ class ParsingHandler(StateHandler):
             )
             del final_chunk;
             gc.collect()
-        
+
+        # ---- Per-record retention report (events surviving selection + dedup) ----
+        for ry, (n_in, n_kept) in retention.items():
+            if n_in == 0:
+                continue
+            pct = 100.0 * n_kept / n_in
+            self.logger.info(
+                f"Retention {ry}: {n_kept:,} / {n_in:,} events kept ({pct:.1f}%)"
+            )
+        if deduplicator is not None:
+            self.logger.info(deduplicator.summary())
+
         # Create parsing statistics
         end_time = datetime.now()
         stats_summary = stats_collector.get_summary()

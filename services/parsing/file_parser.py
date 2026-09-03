@@ -90,6 +90,8 @@ class FileParser:
             logging.warning(f"No accessible particles found in file {file_path}")
             return None
         
+        expects_event_ids = "EventIds" in obj_branches
+
         all_branches = set(itertools.chain.from_iterable(obj_branches.values()))
         obj_events = FileParser._read_file_in_batches(
             tree,
@@ -102,7 +104,43 @@ class FileParser:
             obj_events = FileParser._calculate_btagging_and_split(obj_events, jet_btagging_thresholds)
         # Strip out DirectObjects -- they are not physics objects!
         obj_events.pop("DirectObjects")
-        return ak.zip(obj_events, depth_limit=1)
+
+        # Pull the scalar per-event identity fields out before zipping the object
+        # collections, then re-attach them as top-level scalar columns. Kept after
+        # the physics objects so events.fields[0] is still a particle collection
+        # (downstream selection code relies on that).
+        event_id_fields = obj_events.pop("EventIds", None)
+        if expects_event_ids and (
+            event_id_fields is None or len(event_id_fields.fields) == 0
+        ):
+            raise ValueError(
+                f"{file_path}: schema declares per-event id branches "
+                f"(run / luminosityBlock / event) but none were readable; "
+                f"refusing to parse so de-duplication never runs on missing keys"
+            )
+
+        zipped = ak.zip(obj_events, depth_limit=1)
+
+        if event_id_fields is not None:
+            for id_field in event_id_fields.fields:
+                zipped = ak.with_field(
+                    zipped, event_id_fields[id_field], where=id_field
+                )
+
+        record_id = None
+        if release_year.startswith("record_"):
+            try:
+                record_id = int(release_year.split("_")[1])
+            except (ValueError, IndexError):
+                record_id = None
+        if record_id is not None:
+            zipped = ak.with_field(
+                zipped,
+                np.full(len(zipped), record_id, dtype=np.int64),
+                where="source_record",
+            )
+
+        return zipped
 
     @staticmethod
     def _calculate_btagging_and_split(
@@ -184,6 +222,7 @@ class FileParser:
         obj_branches = {}
         objects = schema_config["objects"]
         direct_objects = schema_config.get("direct_objects", [])
+        event_id_branches = schema_config.get("event_id_branches", [])
         naming_pattern = schema_config.get("naming_pattern", "dotted")
         
         for obj_name, fields in objects.items():
@@ -200,6 +239,11 @@ class FileParser:
                 obj_branches[obj_name] = obj_branches_for_obj
         # Keep direct object names as-is, but store them under the "DirectObjects" key.
         obj_branches.update({"DirectObjects": {k: k for k in direct_objects}})
+        # Scalar per-event identity branches (run / luminosityBlock / event), read
+        # verbatim and stored under "EventIds". Only added when the schema declares
+        # them, so non-CMS releases are unaffected.
+        if event_id_branches:
+            obj_branches["EventIds"] = {k: k for k in event_id_branches}
         return obj_branches
     
     @staticmethod
@@ -417,7 +461,7 @@ class FileParser:
             }
             if accessible_branches and FileParser._can_calculate_inv_mass(
                 list(accessible_branches.values())
-            ) or obj_name == "DirectObjects":
+            ) or obj_name in ("DirectObjects", "EventIds"):
                 accessible_obj_branches[obj_name] = accessible_branches
         
         return accessible_obj_branches

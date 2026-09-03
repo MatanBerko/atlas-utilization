@@ -1,3 +1,23 @@
+# ---------------------------------------------------------------------------
+# config.cms_fourrecord_test.yaml
+#
+# Part C verification for CMS SingleMuon support: all FOUR CMS records with
+# per-trigger-stream selection + cross-record de-duplication.
+#
+#   * 30529 /SingleElectron/Run2016G   -> global particle_counts (electron req.)
+#   * 30562 /SingleElectron/Run2016H   -> global particle_counts (electron req.)
+#   * 30530 /SingleMuon/Run2016G       -> selection_by_record (muon requirement)
+#   * 30563 /SingleMuon/Run2016H       -> selection_by_record (muon requirement)
+#
+# The parsing handler processes the muon-requirement records first, so an event
+# that fired both triggers keeps its SingleMuon copy and the SingleElectron copy
+# is dropped by de-duplication on (run, luminosityBlock, event).
+#
+# Small: 2 files per record. Parsing + mass-calc + post-processing, so the
+# dimuon (m0m1) Z-peak can be checked before and after cleanup. Parse memory
+# knobs reduced (threads 4, chunk 512 MB) so a handful of ~2 GB NANOAOD files
+# fit the 7 GB Docker container.
+# ---------------------------------------------------------------------------
 paths:
   parsed_data_path: ./output/parsed_data
   im_arrays_path: ./output/im_arrays
@@ -9,14 +29,14 @@ names:
   run_name: atlas_full_120
   histogram_filename: atlas_opendata_full_bumpnet.root
 run_metadata:
-  run_name: cms_records_master
-  base_output_dir: /storage/agrp/netalev/data/cms_records_master_runs
+  run_name: cms_fourrecord_test
+  base_output_dir: ./output
   batch_job_index: null
   total_batch_jobs: null
 tasks:
   do_parsing: true
-  do_mass_calculating: false
-  do_post_processing: false
+  do_mass_calculating: true
+  do_post_processing: true
   do_histogram_creation: false
 testing_config:
   is_on: false
@@ -29,11 +49,6 @@ parsing_task_config:
   file_urls_path: ./output/metadata_cache.json
   jobs_logs_path: ./output/logs
   release_years: []
-  # All four CMS records, with per-trigger-stream selection (below):
-  #   30529, 30562 = /SingleElectron/Run2016G,H  -> electron requirement (global particle_counts)
-  #   30530, 30563 = /SingleMuon/Run2016G,H      -> muon requirement (selection_by_record)
-  # Events that fired both triggers are de-duplicated on (run, luminosityBlock,
-  # event); the SingleMuon copy is kept. See docs/CMS_KNOWN_LIMITATIONS.md.
   specific_record_ids:
   - 30529
   - 30562
@@ -42,9 +57,9 @@ parsing_task_config:
   parse_mc: false
   use_multiprocessing: false
   parallel_processes: 4
-  threads: 8
-  env_threshold_memory_mb: 8000
-  chunk_yield_threshold_bytes: 2147483648
+  threads: 4
+  env_threshold_memory_mb: 5000
+  chunk_yield_threshold_bytes: 536870912
   count_retries_failed_files: 3
   fetching_metadata_timeout: 60
   max_files_to_process: 2
@@ -55,8 +70,8 @@ parsing_task_config:
   - analysis
   create_dirs: true
   show_progress_bar: true
-  # Default selection: >=1 electron. Applies to the two SingleElectron records
-  # (30529, 30562), i.e. any record NOT listed in selection_by_record below.
+  # Default selection: >=1 electron. Applies to any record NOT listed in
+  # selection_by_record (i.e. the two SingleElectron records).
   particle_counts:
     electrons:
       min: 1
@@ -70,10 +85,8 @@ parsing_task_config:
     photons:
       min: 0
       max: 4
-  # Per-trigger-stream override for the SingleMuon records: require >=1 muon and
-  # drop the electron requirement. Kinematic cuts stay global (unchanged).
-  # Records processed muon-first so a double-triggered event keeps its SingleMuon
-  # copy; the SingleElectron duplicate is removed by (run, lumi, event) matching.
+  # Per-trigger-stream override for the SingleMuon records: require >=1 muon,
+  # no electron requirement. Kinematic cuts stay global (below), unchanged.
   selection_by_record:
     "30530":
       particle_counts:
@@ -117,7 +130,7 @@ parsing_task_config:
       pt_min: 25.0
       eta_max: 2.37
 mass_calculation_task_config:
-  input_dir: /storage/agrp/netalev/data/atlas_pp_root_files
+  input_dir: ./output/parsed_data
   output_dir: ./output/im_arrays
   field_to_slice_by: pt
   use_multiprocessing: true
@@ -126,13 +139,11 @@ mass_calculation_task_config:
   objects_to_calculate:
   - Electrons
   - Muons
-  - Jets
-  - Photons
-  min_particles_in_combination: 2
+  min_particles_in_combination: 1
   max_particles_in_combination: 4
   min_count_particle_in_combination: 1
   max_count_particle_in_combination: 4
-  min_events_per_fs: 100
+  min_events_per_fs: 1
 post_processing_task_config:
   input_dir: ./output/im_arrays
   output_dir: ./output/im_arrays_processed

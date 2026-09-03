@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """
 zpeak_postproc_check.py - before/after post-processing check for the CMS
-electron-pair Z-peak cleanup.
+same-flavour di-lepton Z-peak cleanup.
 
 Companion to scripts/zpeak_check.py. That script only looks at the RAW
-invariant-mass arrays (post-processing OFF) and confirms the di-electron mass
+invariant-mass arrays (post-processing OFF) and confirms the di-lepton mass
 piles up at ~91 GeV. This script additionally reads the POST-PROCESSED arrays
-and confirms the post-processing stage still strips that Z region out:
+and confirms the post-processing stage still strips that Z region out. Pick the
+channel with --channel (e0e1 = di-electron, default; m0m1 = di-muon):
 
-  * raw   im_arrays/*.sqlite            -> signatures ending  _IM_e0e1
-  * final im_arrays_processed/*.sqlite  -> signatures ending  _IM_e0e1_main
-                                          and                 _IM_e0e1_outliers
+  * raw   im_arrays/*.sqlite            -> signatures ending  _IM_<channel>
+  * final im_arrays_processed/*.sqlite  -> signatures ending  _IM_<channel>_main
+                                          and                 _IM_<channel>_outliers
 
 Expected (unchanged) behaviour: post_processing_pipeline._apply_z_peak_cut drops
 every same-flavour di-lepton mass below `z_peak_cutoff` (default 115.0 GeV), so
@@ -101,7 +102,10 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run-dir", default=None)
     ap.add_argument("--base-output", default="./output")
+    ap.add_argument("--channel", default="e0e1",
+                    help="IM signature to check (e0e1 = di-electron, m0m1 = di-muon)")
     args = ap.parse_args()
+    ch = args.channel
 
     run_dir = Path(args.run_dir) if args.run_dir else find_latest_run_dir(args.base_output)
     if run_dir is None or not run_dir.is_dir():
@@ -109,8 +113,9 @@ def main() -> int:
 
     raw_dir = run_dir / "im_arrays"
     proc_dir = run_dir / "im_arrays_processed"
+    label = {"e0e1": "electron-pair", "m0m1": "muon-pair"}.get(ch, ch)
     print("=" * 74)
-    print("CMS electron-pair Z-peak: BEFORE vs AFTER post-processing")
+    print(f"CMS {label} Z-peak: BEFORE vs AFTER post-processing")
     print("=" * 74)
     print(f"run dir : {run_dir}")
     print(f"raw     : {raw_dir}")
@@ -118,49 +123,49 @@ def main() -> int:
     print(f"z_peak_cutoff assumed: {Z_PEAK_CUTOFF:.1f} GeV  (post-processing default)")
     print()
 
-    raw = collect(raw_dir, re.compile(r"_IM_e0e1$"))
-    print(f"BEFORE  (raw im_arrays, signatures *_IM_e0e1)   [{len(raw)} final-state(s)]")
+    raw = collect(raw_dir, re.compile(rf"_IM_{ch}$"))
+    print(f"BEFORE  (raw im_arrays, signatures *_IM_{ch})   [{len(raw)} final-state(s)]")
     raw_all = np.concatenate(list(raw.values())) if raw else np.array([])
-    describe("e0e1 (all final states, summed)", raw_all)
+    describe(f"{ch} (all final states, summed)", raw_all)
     print()
 
     if not proc_dir.is_dir():
         print("AFTER   : no im_arrays_processed/ directory -> post-processing did not run")
         return 1
 
-    main_a = collect(proc_dir, re.compile(r"_IM_e0e1_main$"))
-    out_a = collect(proc_dir, re.compile(r"_IM_e0e1_outliers$"))
-    print(f"AFTER   (im_arrays_processed, *_IM_e0e1_main)   [{len(main_a)} final-state(s)]")
+    main_a = collect(proc_dir, re.compile(rf"_IM_{ch}_main$"))
+    out_a = collect(proc_dir, re.compile(rf"_IM_{ch}_outliers$"))
+    print(f"AFTER   (im_arrays_processed, *_IM_{ch}_main)   [{len(main_a)} final-state(s)]")
     main_all = np.concatenate(list(main_a.values())) if main_a else np.array([])
-    describe("e0e1_main (all final states, summed)", main_all)
+    describe(f"{ch}_main (all final states, summed)", main_all)
     out_all = np.concatenate(list(out_a.values())) if out_a else np.array([])
-    describe("e0e1_outliers (all final states, summed)", out_all)
+    describe(f"{ch}_outliers (all final states, summed)", out_all)
     print()
 
     print("-" * 74)
     verdict_ok = True
     if raw_all.size == 0:
-        print("INCONCLUSIVE: no raw e0e1 pairs found.")
+        print(f"INCONCLUSIVE: no raw {ch} pairs found.")
         verdict_ok = False
     else:
         raw_zwin = int(((raw_all >= 85) & (raw_all <= 97)).sum())
-        print(f"raw e0e1 has {raw_zwin} entries in the 85-97 GeV Z window "
-              f"({100*raw_zwin/raw_all.size:.0f}% of all raw e0e1).")
+        print(f"raw {ch} has {raw_zwin} entries in the 85-97 GeV Z window "
+              f"({100*raw_zwin/raw_all.size:.0f}% of all raw {ch}).")
     if main_all.size:
         m_below = int((main_all < Z_PEAK_CUTOFF).sum())
         m_zwin = int(((main_all >= 85) & (main_all <= 97)).sum())
         if m_below == 0 and m_zwin == 0:
-            print(f"AFTER: e0e1_main has 0 entries below {Z_PEAK_CUTOFF:.0f} GeV and 0 in the "
-                  f"Z window -> Z-peak cleanup STILL WORKS as before.")
+            print(f"AFTER: {ch}_main has 0 entries below {Z_PEAK_CUTOFF:.0f} GeV and 0 in the "
+                  f"Z window -> Z-peak cleanup works for this channel.")
         else:
             verdict_ok = False
-            print(f"AFTER: e0e1_main has {m_below} entries below {Z_PEAK_CUTOFF:.0f} GeV "
-                  f"({m_zwin} in the Z window) -> UNEXPECTED, cleanup changed.")
+            print(f"AFTER: {ch}_main has {m_below} entries below {Z_PEAK_CUTOFF:.0f} GeV "
+                  f"({m_zwin} in the Z window) -> UNEXPECTED, cleanup did not fully apply.")
     else:
-        print("AFTER: no e0e1_main array -> nothing survived the cut "
+        print(f"AFTER: no {ch}_main array -> nothing survived the cut "
               "(also acceptable if raw had only Z-region entries).")
     print("-" * 74)
-    print("RESULT:", "PASS - unchanged" if verdict_ok else "CHECK - see above")
+    print("RESULT:", "PASS" if verdict_ok else "CHECK - see above")
     return 0 if verdict_ok else 2
 
 

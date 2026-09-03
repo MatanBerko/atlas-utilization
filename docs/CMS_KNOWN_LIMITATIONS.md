@@ -1,64 +1,62 @@
 # CMS pipeline — known limitations and future requirements
 
-## Current scope: SingleElectron-only CMS data
+## Current scope: all four CMS records (SingleElectron + SingleMuon)
 
-The CMS configuration (`config.cms_records_master.yaml`) is **currently and
-intentionally scoped to SingleElectron data only** — CERN Open Data records
-**30529** (`/SingleElectron/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD`)
-and **30562** (`/SingleElectron/Run2016H-...`).
+`config.cms_records_master.yaml` now uses **all four** CERN Open Data records:
 
-This is a **temporary decision for the current phase**, not a permanent one.
+| Record | Dataset | Selection |
+|---|---|---|
+| 30529 | `/SingleElectron/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD` | ≥1 electron (global `particle_counts`) |
+| 30562 | `/SingleElectron/Run2016H-...` | ≥1 electron |
+| 30530 | `/SingleMuon/Run2016G-...` | ≥1 muon (`selection_by_record`) |
+| 30563 | `/SingleMuon/Run2016H-...` | ≥1 muon |
 
-### Why the SingleMuon records are excluded
+This replaces the earlier SingleElectron-only scope, which existed because a
+single blanket "≥1 electron" cut applied to every record discarded ~97% of the
+SingleMuon data.
 
-The other two records originally listed —
-**30530** (`/SingleMuon/Run2016G-...`) and
-**30563** (`/SingleMuon/Run2016H-...`) — are **SingleMuon** primary datasets:
-events were recorded because a muon fired the trigger, with no electron
-requirement.
+### How SingleMuon data is now included
 
-The pipeline's event selection applies a hard "at least one electron"
-requirement (`parsing_task_config.particle_counts.electrons.min = 1`, with
-pt > 25 GeV, |eta| < 2.47) **identically to every record**, with no awareness
-of which trigger stream an event came from. Measured on real data, that cut:
+1. **Per-trigger-stream selection.** `parsing_task_config.selection_by_record`
+   maps a record id to its own `particle_counts` block. The SingleMuon records
+   require ≥1 muon and drop the electron requirement; records not listed use the
+   global block (≥1 electron). Kinematic cuts (pt/eta per lepton type) are
+   unchanged and stay global. Implemented in
+   `orchestration/handlers/parsing_handler.py`.
 
-- keeps ~85–89% of the SingleElectron records, but
-- **discards ~97% of the SingleMuon records**, and the ~3% that survive are a
-  biased electron+muon subsample rather than representative muon-triggered
-  events.
+2. **Per-event source tracking.** The parser now reads the CMS event id
+   branches (`run`, `luminosityBlock`, `event`) and tags every event with an
+   integer `source_record` field, *before* any chunk merging
+   (`services/parsing/schemas.py`, `services/parsing/file_parser.py`). This
+   replaces the old filename-only record labelling, which mislabelled events
+   whenever multiple records shared an output chunk.
 
-Including the SingleMuon records under the current selection therefore throws
-away almost all of that data and biases what remains. They are left out until
-the pipeline can select them correctly.
+3. **De-duplication.** SingleElectron and SingleMuon datasets of the same run
+   era share run-number ranges, so an event that fired both triggers appears in
+   both. `services/parsing/event_deduplication.py` keys on
+   `(run, luminosityBlock, event)` and keeps the first copy seen; the handler
+   processes the muon-requirement records first, so the **SingleMuon copy is
+   kept** and the SingleElectron duplicate is dropped.
 
-## Required before final delivery
+Verified 2026-09-03 (`config.cms_fourrecord_test.yaml`, 2 files/record):
+SingleMuon retention **~75–76%** (was ~3%); a clear dimuon Z-peak at 90–92 GeV
+(~17× off-peak, much stronger than the old electron-only muon sample); the
+SingleElectron path byte-for-byte unchanged; duplicate events identified and
+removed with correct priority. Full write-up:
+`reports/cms_singlemuon_support/summary.md`.
 
-Per supervisor **Maryna**, the **final delivery must use all available CMS
-data**, not SingleElectron only. This is a **confirmed project requirement**,
-not an optional improvement.
+### Still to do at full scale
 
-**Status (2026-09-03):** the per-trigger-stream selection work below is now
-**planned, active upcoming work** — it is scheduled as the next task, not
-parked indefinitely.
-
-Bringing the SingleMuon records back in requires, at minimum:
-
-1. **Per-trigger-stream event selection** — apply an electron requirement to
-   the SingleElectron records and a muon requirement to the SingleMuon
-   records, instead of one blanket electron requirement for all four. The
-   selection stage currently takes a single `particle_counts` block and
-   applies it to every record with no branch on record / trigger-stream
-   origin; that origin (which the parser does encode in the output filenames)
-   would need to be threaded into the selection.
-
-2. **De-duplication of events that fired both triggers** — the SingleElectron
-   and SingleMuon datasets of the same run era share identical run-number
-   ranges, so an event that fired both an electron and a muon trigger appears
-   in *both* datasets. Without run/event-number-based de-duplication, combining
-   all four records double-counts those events (~2% of events).
-
-3. Then re-add records 30530 and 30563 to
-   `config.cms_records_master.yaml`.
+- The de-dup overlap rate seen in the small verification run (~0.003%) is far
+  below the ~2% expected for the full datasets, because the 2-files-per-record
+  subsets barely share lumisections. A full or lumi-aligned run is needed to
+  confirm the ~2% figure.
+- `EventDeduplicator` holds a plain Python set of event keys. At full scale
+  (~2e8 events) this needs a more memory-frugal structure (packed keys /
+  per-era `np.unique`).
+- Raw `m0m1` has a small unphysical tail (a NanoAOD bad-value sentinel,
+  `min = −16384`); pre-existing in the muon data, fully excluded from the
+  post-processed `_main` output. Not yet investigated.
 
 ## Related, separately tracked
 

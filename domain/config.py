@@ -61,6 +61,12 @@ class ParsingConfig:
     # Optional selection (from YAML): applied after reading each file, before chunking
     particle_counts: Optional[dict] = None
     kinematic_cuts: Optional[dict] = None
+    # Optional per-record selection overrides, keyed by record id (as string or
+    # int), e.g. {"30530": {"particle_counts": {"muons": {"min": 1, ...}, ...}}}.
+    # A record listed here uses its own particle_counts instead of the global
+    # block above (kinematic_cuts stay global). Records not listed are unchanged.
+    # Presence of this key also turns on cross-record event de-duplication.
+    selection_by_record: Optional[dict] = None
     
     def __post_init__(self):
         """Validate parsing configuration."""
@@ -308,6 +314,7 @@ class PipelineConfig:
                 jet_btagging_thresholds=parsing_dict.get("jet_btagging_thresholds", None),
                 particle_counts=parsing_dict.get("particle_counts"),
                 kinematic_cuts=parsing_dict.get("kinematic_cuts"),
+                selection_by_record=parsing_dict.get("selection_by_record"),
             )
         
         # Parse mass calculation config if enabled
