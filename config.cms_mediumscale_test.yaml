@@ -1,0 +1,165 @@
+# ---------------------------------------------------------------------------
+# config.cms_mediumscale_test.yaml
+#
+# Medium-scale four-record CMS test: 15 files per record (well above the 2-file
+# smoke test in config.cms_fourrecord_test.yaml, well below the full dataset).
+#
+# Records / files available (checked 2026-09-03 via CMS_RECID_FILEPAGE_URL):
+#   30529 /SingleElectron/Run2016G : 71 files (~138 GB)  -> use 15
+#   30562 /SingleElectron/Run2016H : 80 files (~119 GB)  -> use 15
+#   30530 /SingleMuon/Run2016G     : 70 files (~120 GB)  -> use 15
+#   30563 /SingleMuon/Run2016H     : 82 files (~140 GB)  -> use 15
+# All four records have >= 15 files, so 15/record for all. 60 files, ~100 GB.
+#
+# Purpose (diagnostic):
+#   1. Real SingleElectron/SingleMuon duplicate rate (the 2-file run only shared
+#      a handful of lumisections and saw ~0.003%; expectation ~2%).
+#   2. How the in-memory de-dup key set (services/parsing/event_deduplication.py)
+#      scales -- timing + memory vs the 2-file run. MEASURE ONLY.
+#   3. Data for a full-scale (~2e8 events) runtime/memory extrapolation.
+#   + dimuon Z-peak sanity check at this scale, plus representative histograms.
+#
+# Memory: the Docker VM is capped at ~7.4 GB. Parse knobs are turned DOWN
+# (threads 2, 256 MB chunk flush, env threshold 4500 MB) to leave as much room
+# as possible for the growing de-dup set -- the whole point of this test is to
+# see whether that set becomes the limiting factor before full scale.
+#
+# Based on config.cms_records_master.yaml (same records, same per-stream
+# selection + de-dup, same objects_to_calculate). NOT a replacement for it.
+# ---------------------------------------------------------------------------
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: atlas_full_120
+  histogram_filename: atlas_opendata_full_bumpnet.root
+run_metadata:
+  run_name: cms_mediumscale_test
+  base_output_dir: ./output
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: true
+  do_post_processing: true
+  do_histogram_creation: true
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years: []
+  specific_record_ids:
+  - 30529
+  - 30562
+  - 30530
+  - 30563
+  parse_mc: false
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 2
+  env_threshold_memory_mb: 4500
+  chunk_yield_threshold_bytes: 268435456
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  max_files_to_process: 15
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  - mini
+  - analysis
+  create_dirs: true
+  show_progress_bar: true
+  particle_counts:
+    electrons:
+      min: 1
+      max: 4
+    muons:
+      min: 0
+      max: 4
+    jets:
+      min: 0
+      max: 10
+    photons:
+      min: 0
+      max: 4
+  selection_by_record:
+    "30530":
+      particle_counts:
+        muons:
+          min: 1
+          max: 4
+        electrons:
+          min: 0
+          max: 4
+        jets:
+          min: 0
+          max: 10
+        photons:
+          min: 0
+          max: 4
+    "30563":
+      particle_counts:
+        muons:
+          min: 1
+          max: 4
+        electrons:
+          min: 0
+          max: 4
+        jets:
+          min: 0
+          max: 10
+        photons:
+          min: 0
+          max: 4
+  kinematic_cuts:
+    electrons:
+      pt_min: 25.0
+      eta_max: 2.47
+    muons:
+      pt_min: 25.0
+      eta_max: 2.5
+    jets:
+      pt_min: 30.0
+      eta_max: 4.5
+    photons:
+      pt_min: 25.0
+      eta_max: 2.37
+mass_calculation_task_config:
+  input_dir: ./output/parsed_data
+  output_dir: ./output/im_arrays
+  field_to_slice_by: pt
+  use_multiprocessing: true
+  parallel_processes: 4
+  fs_chunk_threshold_bytes: 2000000000
+  objects_to_calculate:
+  - Electrons
+  - Muons
+  - Jets
+  - Photons
+  min_particles_in_combination: 2
+  max_particles_in_combination: 4
+  min_count_particle_in_combination: 1
+  max_count_particle_in_combination: 4
+  min_events_per_fs: 100
+post_processing_task_config:
+  input_dir: ./output/im_arrays
+  output_dir: ./output/im_arrays_processed
+  peak_detection_bin_width_gev: 10.0
+histogram_creation_task_config:
+  input_dir: ./output/im_arrays_processed
+  output_dir: ./output/histograms
+  bin_width_gev: 10.0
+  single_output_file: true
+  output_filename: atlas_opendata_full_bumpnet.root
+  exclude_outliers: true
+  use_bumpnet_naming: true
