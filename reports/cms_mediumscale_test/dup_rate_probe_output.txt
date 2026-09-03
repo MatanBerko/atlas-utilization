@@ -1,0 +1,83 @@
+==============================================================================
+SingleElectron / SingleMuon event-overlap probe  (15 files/record, id branches only)
+==============================================================================
+
+[Run2016G]  SingleElectron 30529  vs  SingleMuon 30530
+    (fetch 30530 attempt 1/6: ConnectionError; retrying)
+    muon 30530 file 1/15: 2,939,781 events (set now 2,939,781)
+    muon 30530 file 2/15: 1,090,938 events (set now 4,030,719)
+    muon 30530 file 3/15: 3,248,538 events (set now 7,279,257)
+    !! 30530 file 4: OSError: Failed to open file: [ERROR] Server responded with an error: [3012] Unable to open file /eos/opendat
+    muon 30530 file 5/15: 2,186,320 events (set now 9,465,577)
+    muon 30530 file 6/15: 2,741,466 events (set now 12,207,043)
+    muon 30530 file 7/15: 3,288,666 events (set now 15,495,709)
+    muon 30530 file 8/15: 1,100,480 events (set now 16,596,189)
+    muon 30530 file 9/15: 2,187,222 events (set now 18,783,411)
+    muon 30530 file 10/15: 1,483,434 events (set now 20,266,845)
+    muon 30530 file 11/15: 2,596,848 events (set now 22,863,693)
+    muon 30530 file 12/15: 2,141,735 events (set now 25,005,428)
+    muon 30530 file 13/15: 3,269,596 events (set now 28,275,024)
+    muon 30530 file 14/15: 2,915,206 events (set now 31,190,230)
+    muon 30530 file 15/15: 1,501,125 events (set now 32,691,355)
+    electron 30529 file 1/15: 112,955 events (raw hits 124, proxy hits 114)
+    electron 30529 file 2/15: 1,082,779 events (raw hits 519, proxy hits 463)
+    electron 30529 file 3/15: 1,731,255 events (raw hits 1,376, proxy hits 1,231)
+    electron 30529 file 4/15: 2,735,505 events (raw hits 2,544, proxy hits 2,260)
+    electron 30529 file 5/15: 1,527,664 events (raw hits 2,933, proxy hits 2,612)
+    electron 30529 file 6/15: 2,015,392 events (raw hits 4,008, proxy hits 3,560)
+    electron 30529 file 7/15: 2,401,980 events (raw hits 4,890, proxy hits 4,360)
+    electron 30529 file 8/15: 2,718,367 events (raw hits 5,486, proxy hits 4,893)
+    electron 30529 file 9/15: 2,315,180 events (raw hits 6,503, proxy hits 5,803)
+    electron 30529 file 10/15: 2,180,501 events (raw hits 7,417, proxy hits 6,617)
+    electron 30529 file 11/15: 2,561,672 events (raw hits 9,069, proxy hits 8,108)
+    electron 30529 file 12/15: 2,892,736 events (raw hits 10,726, proxy hits 9,597)
+    electron 30529 file 13/15: 2,864,171 events (raw hits 12,151, proxy hits 10,871)
+    electron 30529 file 14/15: 1,246,165 events (raw hits 12,853, proxy hits 11,486)
+    electron 30529 file 15/15: 1,324,894 events (raw hits 13,612, proxy hits 12,160)
+
+  Run2016G RESULT:
+    SingleElectron 30529: 15 files, 29,711,216 events (26,771,923 with >=1 electron)
+    SingleMuon     30530: 14 files, 32,691,355 events (32,691,355 unique keys)
+    raw overlap:         13,612 / 29,711,216 = 0.046% of SingleElectron events
+    count-proxy overlap: 12,160 / 26,771,923 = 0.045%  (>=1e vs >=1mu, no pt/eta cuts -> upper bound on pipeline de-dup)
+
+[Run2016H]  SingleElectron 30562  vs  SingleMuon 30563
+    muon 30563 file 1/15: 14,113 events (set now 14,113)
+    muon 30563 file 2/15: 56,141 events (set now 70,254)
+    muon 30563 file 3/15: 2,383,660 events (set now 2,453,914)
+    muon 30563 file 4/15: 2,885,430 events (set now 5,339,344)
+    muon 30563 file 5/15: 2,191,218 events (set now 7,530,562)
+    muon 30563 file 6/15: 2,563,701 events (set now 10,094,263)
+    muon 30563 file 7/15: 2,786,216 events (set now 12,880,479)
+    muon 30563 file 8/15: 2,645,457 events (set now 15,525,936)
+    muon 30563 file 9/15: 2,412,449 events (set now 17,938,385)
+    muon 30563 file 10/15: 1,204,643 events (set now 19,143,028)
+    muon 30563 file 11/15: 3,232,428 events (set now 22,375,456)
+    muon 30563 file 12/15: 1,846,656 events (set now 24,222,112)
+    muon 30563 file 13/15: 3,343,380 events (set now 27,565,492)
+    muon 30563 file 14/15: 2,530,619 events (set now 30,096,111)
+    muon 30563 file 15/15: 2,134,752 events (set now 32,230,863)
+    electron 30562 file 1/15: 2,338,304 events (raw hits 674, proxy hits 613)
+    electron 30562 file 2/15: 2,859,534 events (raw hits 1,714, proxy hits 1,558)
+    electron 30562 file 3/15: 2,337,112 events (raw hits 2,673, proxy hits 2,433)
+    electron 30562 file 4/15: 1,912,497 events (raw hits 3,487, proxy hits 3,169)
+    !! 30562 file 5: OSError: Failed to open file: [ERROR] Server responded with an error: [3012] Unable to open file /eos/opendat
+    electron 30562 file 6/15: 3,095,046 events (raw hits 4,363, proxy hits 3,970)
+    electron 30562 file 7/15: 864,865 events (raw hits 4,639, proxy hits 4,220)
+    electron 30562 file 8/15: 2,264,331 events (raw hits 5,545, proxy hits 5,051)
+    electron 30562 file 9/15: 2,122,136 events (raw hits 6,632, proxy hits 6,055)
+    electron 30562 file 10/15: 1,669,593 events (raw hits 7,322, proxy hits 6,682)
+    electron 30562 file 11/15: 2,548,828 events (raw hits 8,284, proxy hits 7,559)
+    !! 30562 file 12: OSError: Failed to open file: [ERROR] Server responded with an error: [3012] Unable to open file /eos/opendat
+    electron 30562 file 13/15: 1,917,332 events (raw hits 8,877, proxy hits 8,086)
+    !! 30562 file 14: OSError: Failed to open file: [ERROR] Server responded with an error: [3012] Unable to open file /eos/opendat
+    !! 30562 file 15: OSError: Failed to open file: [ERROR] Server responded with an error: [3012] Unable to open file /eos/opendat
+
+  Run2016H RESULT:
+    SingleElectron 30562: 11 files, 23,929,578 events (21,863,632 with >=1 electron)
+    SingleMuon     30563: 15 files, 32,230,863 events (32,230,863 unique keys)
+    raw overlap:         8,877 / 23,929,578 = 0.037% of SingleElectron events
+    count-proxy overlap: 8,086 / 21,863,632 = 0.037%  (>=1e vs >=1mu, no pt/eta cuts -> upper bound on pipeline de-dup)
+
+probe wall time: 840s
+==============================================================================

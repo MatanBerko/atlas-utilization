@@ -1,0 +1,18 @@
+2026-09-03 16:45:37,701 - FetchMetadataHandler - INFO - Entering state: FETCHING_METADATA
+2026-09-03 16:45:40,478 - StateMachine - INFO - Transition: FETCHING_METADATA → PARSING
+2026-09-03 16:45:40,479 - ParsingHandler - INFO - Entering state: PARSING
+2026-09-03 16:45:40,479 - ParsingHandler - INFO - Limiting record_30529 to 15 files (was 71, max_files_to_process=15)
+2026-09-03 16:45:40,479 - ParsingHandler - INFO - Limiting record_30562 to 15 files (was 80, max_files_to_process=15)
+2026-09-03 16:45:40,479 - ParsingHandler - INFO - Limiting record_30530 to 15 files (was 70, max_files_to_process=15)
+2026-09-03 16:45:40,479 - ParsingHandler - INFO - Limiting record_30563 to 15 files (was 82, max_files_to_process=15)
+2026-09-03 16:45:40,479 - ParsingHandler - INFO - Record 30530: per-stream selection (particle_counts={'muons': {'min': 1, 'max': 4}, 'electrons': {'min': 0, 'max': 4}, 'jets': {'min': 0, 'max': 10}, 'photons': {'min': 0, 'max': 4}})
+2026-09-03 16:45:40,479 - ParsingHandler - INFO - Parsing 15 files for release year: record_30530
+Processing files:   0%|          | 0/15 [00:00<?, ?file/s]Processing files:   7%|▋         | 1/15 [01:23<19:22, 83.01s/file]2026-09-03 16:48:49,660 - ParsingHandler - INFO - Saved chunk 0: 830255 events, 115.0 MB → output/cms_mediumscale_test_20260903_164537/parsed_data/parsed_record_30530_chunk0.root
+Processing files:  13%|█▎        | 2/15 [03:09<20:57, 96.74s/file]2026-09-03 16:50:09,220 - ParsingHandler - INFO - Saved chunk 1: 2246402 events, 311.1 MB → output/cms_mediumscale_test_20260903_164537/parsed_data/parsed_record_30530_chunk1.root
+Processing files:  20%|██        | 3/15 [04:29<17:48, 89.01s/file]2026-09-03 16:52:26,259 - ParsingHandler - INFO - Saved chunk 2: 2474148 events, 342.1 MB → output/cms_mediumscale_test_20260903_164537/parsed_data/parsed_record_30530_chunk2.root
+Processing files:  27%|██▋       | 4/15 [06:46<19:48, 108.00s/file]2026-09-03 16:53:33,924 - ParsingHandler - INFO - Saved chunk 3: 2080270 events, 288.3 MB → output/cms_mediumscale_test_20260903_164537/parsed_data/parsed_record_30530_chunk3.root
+Processing files:  33%|███▎      | 5/15 [07:53<15:34, 93.44s/file] 2026-09-03 16:56:18,578 - ParsingHandler - INFO - Saved chunk 4: 1665620 events, 230.8 MB → output/cms_mediumscale_test_20260903_164537/parsed_data/parsed_record_30530_chunk4.root
+Processing files:  40%|████      | 6/15 [10:40<17:43, 118.14s/file]2026-09-03 16:57:30,267 - ParsingHandler - INFO - Saved chunk 5: 2106140 events, 291.6 MB → output/cms_mediumscale_test_20260903_164537/parsed_data/parsed_record_30530_chunk5.root
+Processing files:  47%|████▋     | 7/15 [11:50<13:40, 102.59s/file]2026-09-03 16:57:49,103 - ParsingHandler - INFO - Saved chunk 6: 2501268 events, 345.8 MB → output/cms_mediumscale_test_20260903_164537/parsed_data/parsed_record_30530_chunk6.root
+Processing files:  53%|█████▎    | 8/15 [12:09<08:51, 75.96s/file] 2026-09-03 16:59:00,603 - ParsingHandler - INFO - Saved chunk 7: 832195 events, 115.4 MB → output/cms_mediumscale_test_20260903_164537/parsed_data/parsed_record_30530_chunk7.root
+Processing files:  60%|██████    | 9/15 [13:21<07:27, 74.59s/file]2026-09-03 16:59:09,554 - ParsingHandler - INFO - Saved chunk 8: 1649753 events, 228.2 MB → output/cms_mediumscale_test_20260903_164537/parsed_data/parsed_record_30530_chunk8.root
