@@ -1,3 +1,28 @@
+# ---------------------------------------------------------------------------
+# config.cms_production_test.yaml
+#
+# Larger-scale end-to-end run of the full 5-stage pipeline on SingleElectron-
+# only CMS data (records 30529, 30562). A local copy of
+# config.cms_records_master.yaml with only these changes:
+#   * tasks: all four do_* toggles on
+#   * run_metadata.run_name        -> cms_production_singleelectron
+#   * run_metadata.base_output_dir -> ./output  (local, inside the repo)
+#   * parsing_task_config.max_files_to_process -> 4  (per record; = 8 files),
+#     up from the earlier 1-2-file smoke test
+#   * mass_calculation_task_config.input_dir -> relative ./output/parsed_data
+#   * memory knobs, so the parse stage fits the 7.4 GB local Docker container
+#     (an earlier attempt with 5 files/record + the master defaults was
+#     OOM-killed while accumulating parsed events in RAM):
+#       threads 8 -> 4
+#       env_threshold_memory_mb 8000 -> 5000
+#       chunk_yield_threshold_bytes 2 GB -> 512 MB  (flush parsed chunks to
+#         disk far more often instead of holding them in memory)
+#     These are operational/memory settings only - they do not affect the
+#     physics selection or the results.
+#
+# specific_record_ids, particle_counts, kinematic_cuts, min_events_per_fs and
+# all combination bounds are left exactly as config.cms_records_master.yaml.
+# ---------------------------------------------------------------------------
 paths:
   parsed_data_path: ./output/parsed_data
   im_arrays_path: ./output/im_arrays
@@ -9,15 +34,15 @@ names:
   run_name: atlas_full_120
   histogram_filename: atlas_opendata_full_bumpnet.root
 run_metadata:
-  run_name: cms_records_master
-  base_output_dir: /storage/agrp/netalev/data/cms_records_master_runs
+  run_name: cms_production_singleelectron
+  base_output_dir: ./output
   batch_job_index: null
   total_batch_jobs: null
 tasks:
   do_parsing: true
-  do_mass_calculating: false
-  do_post_processing: false
-  do_histogram_creation: false
+  do_mass_calculating: true
+  do_post_processing: true
+  do_histogram_creation: true
 testing_config:
   is_on: false
   test_run_index: null
@@ -29,25 +54,20 @@ parsing_task_config:
   file_urls_path: ./output/metadata_cache.json
   jobs_logs_path: ./output/logs
   release_years: []
-  # SingleElectron-only for this phase (records 30529, 30562 = /SingleElectron/Run2016G,H).
-  # SingleMuon records 30530 and 30563 are intentionally excluded: the current
-  # electron-based event selection (particle_counts.electrons.min = 1) discards
-  # ~97% of SingleMuon data and biases what survives. Revisit only once
-  # per-trigger-stream selection is implemented (electron requirement for
-  # SingleElectron records, muon requirement for SingleMuon records) plus
-  # de-duplication of events firing both triggers. See docs/CMS_KNOWN_LIMITATIONS.md.
+  # SingleElectron-only (see config.cms_records_master.yaml and
+  # docs/CMS_KNOWN_LIMITATIONS.md for why the SingleMuon records are excluded).
   specific_record_ids:
   - 30529
   - 30562
   parse_mc: false
   use_multiprocessing: false
   parallel_processes: 4
-  threads: 8
-  env_threshold_memory_mb: 8000
-  chunk_yield_threshold_bytes: 2147483648
+  threads: 4
+  env_threshold_memory_mb: 5000
+  chunk_yield_threshold_bytes: 536870912
   count_retries_failed_files: 3
   fetching_metadata_timeout: 60
-  max_files_to_process: 2
+  max_files_to_process: 4
   possible_data_tree_names:
   - Events
   - CollectionTree
@@ -82,7 +102,7 @@ parsing_task_config:
       pt_min: 25.0
       eta_max: 2.37
 mass_calculation_task_config:
-  input_dir: /storage/agrp/netalev/data/atlas_pp_root_files
+  input_dir: ./output/parsed_data
   output_dir: ./output/im_arrays
   field_to_slice_by: pt
   use_multiprocessing: true

@@ -78,8 +78,15 @@ def parse_name(name: str):
 def read_histograms(root_path: Path):
     f = uproot.open(root_path)
     rows = []
+    # A ROOT file written more than once holds several cycles of the same
+    # histogram (name;1, name;2, ...). Keep only the highest cycle per name.
+    latest = {}
     for key in f.keys():
-        name = key[:-2] if key.endswith(";1") else key
+        base, _, cyc = key.partition(";")
+        c = int(cyc) if cyc else 1
+        if base not in latest or c > latest[base][0]:
+            latest[base] = (c, key)
+    for name, (_, key) in sorted(latest.items()):
         h = f[key]
         if not (hasattr(h, "values") and hasattr(h, "axis")):
             continue
@@ -109,7 +116,8 @@ def passes(row) -> bool:
     return row["entries"] >= MIN_ENTRIES and row["nbins"] > MIN_BINS
 
 
-def write_summary(rows, out_md: Path, run_dir: str, root_name: str):
+def write_summary(rows, out_md: Path, run_dir: str, root_name: str,
+                  title: str = "CMS full-pipeline test", run_params: str = ""):
     total = len(rows)
     good = [r for r in rows if passes(r)]
     bad = [r for r in rows if not r["entries"] >= MIN_ENTRIES or not r["nbins"] > MIN_BINS]
@@ -117,14 +125,21 @@ def write_summary(rows, out_md: Path, run_dir: str, root_name: str):
     fail_entries = sum(1 for r in rows if not passes(r) and not r["entries"] >= MIN_ENTRIES)
     good.sort(key=lambda r: r["entries"], reverse=True)
     spiky = [r for r in good if r["modal_frac"] >= 0.9]
+    peaky = [r for r in good if 0.5 <= r["modal_frac"] < 0.9]
+    real = [r for r in good if r["modal_frac"] < 0.5]
 
     lines = []
-    lines.append("# CMS full-pipeline test - histogram results")
+    lines.append(f"# {title} - histogram results")
     lines.append("")
     lines.append(f"- Source run: `{run_dir}`")
     lines.append(f"- Histogram file: `histograms/{root_name}` (one ROOT file, one TH1F per channel)")
     lines.append(f"- BumpNet usability bar (arXiv:2501.05603): **at least {MIN_ENTRIES} entries "
                  f"AND more than {MIN_BINS} bins**")
+    if run_params:
+        lines.append("")
+        lines.append("## Run parameters")
+        lines.append("")
+        lines.append(run_params)
     lines.append("")
     lines.append("## Totals")
     lines.append("")
@@ -138,12 +153,28 @@ def write_summary(rows, out_md: Path, run_dir: str, root_name: str):
     lines.append("")
     lines.append("_(A histogram can be short on both; the two sub-rows overlap.)_")
     lines.append("")
-    lines.append(f"> Note: of the {len(good)} that meet the numeric bar, **{len(spiky)}** have "
-                 f"90%+ of their entries piled into a single low-mass bin (a flat spike, not a "
-                 f"real distribution). These pass the entry/bin count but are not useful BumpNet "
-                 f"inputs. It looks like the post-processing outlier-split is sending the real "
-                 f"mass distribution to the discarded \"outliers\" side for some 2-body "
-                 f"combinations - flagged for a later look, not touched here.")
+    lines.append("### Shape of the passing histograms")
+    lines.append("")
+    lines.append(f"| | count |")
+    lines.append(f"|---|---:|")
+    lines.append(f"| real distribution (tallest bin < 50% of entries) | {len(real)} |")
+    lines.append(f"| peaky (tallest bin 50-90%) | {len(peaky)} |")
+    lines.append(f"| **single-bin spike** (tallest bin >= 90%, ~0 GeV) | **{len(spiky)}** |")
+    lines.append("")
+    if spiky:
+        lines.append(
+            f"> The {len(spiky)} spike histograms are **still present** in this run. Cause "
+            f"(now understood): in CMS NanoAOD an electron is normally also reconstructed as a "
+            f"photon and often as a jet (same calorimeter cluster), so 2-body combinations like "
+            f"electron+photon or electron+jet are dominated by ~0 GeV \"self-pairs\". This is an "
+            f"**upstream reconstruction/object-overlap issue, not a post-processing bug** - "
+            f"post-processing keeps essentially all the real (>15 GeV) signal in the histogrammed "
+            f"\"main\" array; it is just swamped by the self-pair spike. Fixing it needs overlap "
+            f"removal (delta-R cleaning between the electron/photon/jet collections), which is a "
+            f"physics-analysis design decision - see docs/CMS_KNOWN_LIMITATIONS.md."
+        )
+    else:
+        lines.append("> No single-bin spike histograms in this run.")
     lines.append("")
     lines.append("## Passing histograms (usable as BumpNet input)")
     lines.append("")
@@ -230,6 +261,9 @@ def main() -> int:
     ap.add_argument("--run-dir", required=True)
     ap.add_argument("--report-name", default="cms_production_test")
     ap.add_argument("--reports-root", default="reports")
+    ap.add_argument("--title", default="CMS full-pipeline test")
+    ap.add_argument("--run-params", default="",
+                    help="markdown snippet describing the run (files, events, runtime)")
     args = ap.parse_args()
 
     run_dir = Path(args.run_dir)
@@ -241,7 +275,8 @@ def main() -> int:
 
     rows = read_histograms(root_path)
     out_base = Path(args.reports_root) / args.report_name
-    good = write_summary(rows, out_base / "summary.md", str(run_dir), root_path.name)
+    good = write_summary(rows, out_base / "summary.md", str(run_dir), root_path.name,
+                         title=args.title, run_params=args.run_params)
 
     chosen = pick_representative(good)
     plotted = []
