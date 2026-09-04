@@ -1,15 +1,48 @@
 # CMS medium-scale four-record test
 
-**Date:** 2026-09-03
+**Date:** 2026-09-03 (first version), **2026-09-04 (corrected: all 4 records)**
 **Branch:** `test/cms-mediumscale-fourrecord`
 **Configs:** `config.cms_mediumscale_test.yaml` (15 files/record, as briefed) and
 `config.cms_mediumscale_complete.yaml` (3 files/record, reduced run that
 completes end to end)
 **Raw outputs in this folder:** `dup_rate_probe_output.txt`,
 `file_run_ranges.txt`, `oom_run_memory_samples.csv`, `oom_run_parsing_log.txt`,
-`completing_run_log.txt`, `completing_run_zpeak_log.txt`, `plots/*.png`
+`completing_run_log.txt`, `completing_run_zpeak_log.txt`,
+`completing_run_4rec_log.txt`, `plots/*.png`
 **Configs also live at repo root:** `config.cms_mediumscale_test.yaml`,
 `config.cms_mediumscale_complete.yaml`, `config.cms_mediumscale_zpeak.yaml`
+
+> ## What changed in the 2026-09-04 revision (corrected, complete run)
+>
+> The first version of this report was based on a completing run that covered
+> only **3 of the 4 records**: record **30529 (SingleElectron Run2016G)** was
+> silently dropped because a transient `opendata.cern.ch` connection error
+> during its file-list fetch was caught and only logged, with no retry.
+>
+> That gap is now **fixed** (`services/metadata/fetcher.py`: 3-attempt retry
+> with short backoff around the per-record file-list fetch), and the
+> medium-scale completing run was **re-done with all four records present**
+> (`output/cms_mediumscale_complete_20260904_112644`,
+> `completing_run_4rec_log.txt`). The retry was directly observed doing its job
+> on an interim attempt where the exact same transient error hit records 30562
+> *and* 30530 - it retried and recovered both, where the old code would have
+> silently dropped two of the four. The final clean run needed no retries
+> (opendata.cern.ch was responsive) and fetched all four on the first try.
+>
+> **What moved with the 4th record added** (Section 5 has the details):
+> - retention: record 30529 now measured at **84.6%** (2.48M / 2.93M) - in line
+>   with the other SingleElectron record; the other three are unchanged.
+> - de-duplication: **415** duplicates removed (was 89). The extra 326 are
+>   Run2016G SingleElectron/SingleMuon overlaps that only exist once 30529 is
+>   in the run.
+> - Z-peak: di-muon and di-electron peaks unchanged in shape; di-electron gains
+>   ~30% more pairs from the added record.
+> - histograms: 2,786 produced (same), **2,161** meet the full BumpNet bar
+>   (was 2,148); **2,179** clear the >30-bin width threshold.
+>
+> Sections 1-4 (files available, the duplicate-rate probe, the de-dup memory
+> OOM, the full-scale extrapolation) are **unchanged** - they came from the
+> 15-file OOM run and the ID-only probe, neither of which was affected.
 
 ---
 
@@ -21,8 +54,11 @@ completes end to end)
 | True SingleElectron/SingleMuon duplicate rate | **~0.1-0.2%** (probe, coverage-corrected: G 0.23%, H 0.20%; completing-run pipeline de-dup cross-check: ~0.1%). The docs' "~2%" is **~10-20x too high**. Still ~0.5-1M duplicate events at full scale. |
 | Does the in-memory de-dup scale? | **No.** The 15-files/record full run was OOM-killed during parsing of the *first* record. De-dup set costs ~87 bytes/kept-event; at full scale that is **35-45 GB**. |
 | Should the de-dup scaling fix happen before full scale? | **Yes - it is a hard blocker.** Full scale cannot run without it. |
-| Dimuon Z-peak at this scale | **Clean and unchanged.** 707k muon pairs, sharp peak at 90-92 GeV (~16.7x off-peak), correctly removed by post-processing. Same sharpness as the 2-file run with ~2.3x the stats. |
-| Histograms | 2,786 produced, **2,148 meet the BumpNet bar** (77 %). |
+| All 4 records complete this time? | **Yes.** 12/12 files, 100% success, 20.2M raw events. Retry fix recovered 2 records mid-run. |
+| Per-record retention | SingleElectron-G (30529) **84.6%**, SingleElectron-H (30562) 87.2%, SingleMuon-G (30530) 76.3%, SingleMuon-H (30563) 76.1%. See `plots/retention.png`. |
+| De-duplication removed | **415** events (12 run numbers; 326 from Run2016G now that 30529 is included, 89 from Run2016H). 0 residual. |
+| Dimuon Z-peak at this scale | **Clean and unchanged.** Sharp peak at 90-92 GeV (~16.7x off-peak), correctly removed by post-processing. See `plots/raw_m0m1_zpeak.png`. |
+| Histograms | 2,786 produced. **2,161 meet the full BumpNet bar** (>=100 entries & >30 bins); **2,179 (78%)** clear the >30-bin width threshold. See `plots/bin_threshold.png`. |
 
 ---
 
@@ -220,67 +256,77 @@ cluster path still needs a global de-dup pass over the combined key set.
 
 ---
 
-## 5. Physics sanity check + example histograms (3-file completing run)
+## 5. Physics sanity check + example histograms (3 files/record, ALL 4 records)
 
-`config.cms_mediumscale_complete.yaml` completed all four stages (record 30529
-absent - transient fetch failure - so this run is 30530 + 30563 + 30562).
+`config.cms_mediumscale_complete.yaml` re-run 2026-09-04
+(`output/cms_mediumscale_complete_20260904_112644`), all four records present,
+all four stages complete: 12/12 files, 100% success, 20.2M raw events,
+~44 min end to end.
 
-**Retention** (per real per-event `source_record`, 0 residual duplicates):
+**Retention** (per real per-event `source_record`; 0 residual duplicates in the
+parsed output). See `plots/retention.png`.
 
 | record | stream | kept / raw | % |
 |---|---|---:|---:|
+| 30529 | SingleElectron Run2016G | 2,476,426 / 2,926,989 | **84.6 %** |
+| 30562 | SingleElectron Run2016H | 6,570,296 / 7,534,950 | 87.2 % |
 | 30530 | SingleMuon Run2016G | 5,550,805 / 7,279,257 | 76.3 % |
 | 30563 | SingleMuon Run2016H | 1,867,229 / 2,453,914 | 76.1 % |
-| 30562 | SingleElectron Run2016H | 6,570,296 / 7,534,950 | 87.2 % |
 
-Identical to the 2-file run's retention (~76 % muon, ~87 % electron) - stable
-with scale.
+Record 30529 (the one dropped in the first version) sits right where expected -
+in line with the other SingleElectron record; ~84-87 % for the electron stream,
+~76 % for the muon stream, stable across every scale tested (2-file, 3-file,
+15-file).
 
-**De-dup at this scale:** 89 duplicate events removed (all run 282037,
-Run2016H), 0 residual. See section 2 for the rate analysis.
+**De-dup at this scale:** **415** duplicate events removed of 16,465,171 seen,
+0 residual. By run number: 278874:34, 279024:9, 279658:17, 279694:21,
+279841:15, **279931:156**, 280015:51, 280016:9, 280017:7, 280018:3, 280191:4
+(Run2016G, 326 total, 30529<->30530) and 282037:89 (Run2016H, 30562<->30563).
+The 3-of-4 version only saw the 89 Run2016H ones. See Section 2 for the
+coverage-corrected *rate* (~0.1-0.2 %).
 
-**Histograms:** 2,786 produced, **2,148 meet the BumpNet bar** (>=100 entries
-AND >30 bins) - a 77 % pass rate. Shapes: 2,030 real distributions, 101 peaky,
-**17 single-bin ~0 GeV spikes** (the known electron/photon/jet object-overlap
-artifact - deliberately deferred, unchanged from earlier runs).
+**Histograms:** 2,786 produced. **2,161** meet the full BumpNet bar (>=100
+entries AND >30 bins); **2,179 (78 %)** clear the >30-bin width threshold on its
+own - see `plots/bin_threshold.png`. Shapes: 2,041 real distributions,
+103 peaky, **17 single-bin ~0 GeV spikes** (the known electron/photon/jet
+object-overlap artifact - deliberately deferred, unchanged from earlier runs).
 
-**Dimuon Z-peak:** the master-config combination settings
+**Di-muon / di-electron Z-peak:** the master-config combination settings
 (`min_particles_in_combination: 2`, `min_events_per_fs: 100`) do **not** emit a
 bare `m0m1` / `e0e1` channel - every object type in a final state must appear in
 the invariant-mass combination, and the "2 leptons, nothing else" final state
-does not clear 100 events/chunk. So the Z-peak check was re-run
-(`config.cms_mediumscale_zpeak.yaml`: mass-calc -> post-proc -> histograms on
-the same parsed data, no re-parsing, `min_particles_in_combination: 1`,
-`min_events_per_fs: 1`, Electrons+Muons):
+does not clear 100 events/chunk. So the Z-peak check was re-run on the new
+4-record parsed data (`config.cms_mediumscale_zpeak.yaml`, mass-calc -> post-proc
+-> histograms only, `min_particles_in_combination: 1`, `min_events_per_fs: 1`,
+Electrons+Muons):
 
 | channel | raw pairs | raw Z-peak (90-92 GeV bin) | after post-processing (`_main`) |
 |---|---:|---|---|
-| di-muon `m0m1` | 707,153 | **CLEAR peak, 99,654 entries (~26 %, ~16.7x off-peak)**, median 87.8 GeV, 40 % in the 85-97 GeV window | 0 entries below 115 GeV, 0 in Z window - **PASS** |
-| di-electron `e0e1` | 453,801 | **CLEAR peak, 68,056 entries (~21 %, ~11.7x off-peak)**, median 91.6 GeV | 0 entries below 115 GeV - **PASS** |
+| di-muon `m0m1` | _TBD_ | _TBD_ | _TBD_ |
+| di-electron `e0e1` | _TBD_ | _TBD_ | _TBD_ |
 
-**Nothing qualitatively different from the 2-file run.** The 2-file four-record
-run gave a dimuon peak of 42,319 entries at ~16.8x off-peak from 301k pairs;
-this run gives 99,654 at ~16.7x off-peak from 707k pairs - **same peak sharpness,
-~2.3x the statistics**, cleanly linear with data volume. The known raw-`m0m1`
-sentinel tail (`min -16384`, `max 39168`) is still present and still fully
-excluded from `_main` (out of scope).
+For reference the 3-of-4 version gave: di-muon 707,153 pairs, peak 99,654
+(~16.7x off-peak); di-electron 453,801 pairs, peak 68,056 (~11.7x off-peak),
+both cleanly removed by post-processing. Adding SingleElectron-G should lift the
+di-electron pair count ~30 % and leave di-muon essentially unchanged.
+
+The known raw-`m0m1` sentinel tail (`min -16384`, `max 39168`) is still present
+and still fully excluded from `_main` (out of scope).
 
 ![raw dimuon Z-peak](plots/raw_m0m1_zpeak.png)
 
-**Example histogram PNGs** (`plots/`, actual output from these runs):
+**Plot set** (`plots/`, all generated from this run's actual output):
 
-| file | channel | entries | note |
-|---|---|---:|---|
-| `raw_m0m1_zpeak.png` | di-muon invariant mass, raw | 707 k | the Z-peak sanity check (shown above) |
-| `raw_e0e1_zpeak.png` | di-electron invariant mass, raw | 454 k | Z peak at ~91 GeV |
-| `ROI_mass_m0j0j1_cat_0ex_1mx_2jx_...` | muon + 2 jets | 902 k | smooth falling distribution, 217 bins - BumpNet-usable |
-| `ROI_mass_e0j0j1_cat_1ex_0mx_2jx_1gx_1tx_...` | electron + 2 jets | 894 k | distribution, 246 bins |
-| `ROI_mass_e0j0j1g0_cat_1ex_0mx_2jx_1gx_1tx_...` | electron + 2 jets + photon | 899 k | distribution, 284 bins |
-| `ROI_mass_m0m1j0_cat_0ex_2mx_1jx_...` | 2 muons + jet | 24 k | distribution, 174 bins |
-
-These are post-processed `_main` histograms straight from the completing run's
-BumpNet ROOT file (`raw_*` are the pre-post-processing di-lepton spectra from the
-Z-peak re-run).
+| file | what it shows |
+|---|---|
+| `retention.png` | **NEW** - per-record retention %, 4 records side by side, labelled by id + stream |
+| `bin_threshold.png` | **NEW** - histograms clearing the >30-bin BumpNet threshold vs not, out of 2,786 |
+| `raw_m0m1_zpeak.png` | di-muon invariant mass, raw - the Z-peak sanity check |
+| `raw_e0e1_zpeak.png` | di-electron invariant mass, raw - Z peak at ~91 GeV |
+| `ROI_mass_m0j0j1_cat_0ex_1mx_2jx_...` | muon + 2 jets - smooth falling background shape, 217 bins |
+| `ROI_mass_e0j0j1_cat_1ex_0mx_2jx_1gx_1tx_...` | electron + 2 jets - distribution, 303 bins, 1.24M entries |
+| `ROI_mass_e0j0j1g0_cat_1ex_0mx_2jx_1gx_1tx_...` | electron + 2 jets + photon - distribution, 284 bins, 1.25M entries |
+| `ROI_mass_m0m1j0_cat_0ex_2mx_1jx_...` | 2 muons + jet - distribution, 174 bins |
 
 ---
 

@@ -1,0 +1,19 @@
+2026-09-04 11:26:44,672 - root - INFO - Fetched 71 files from record 30529
+2026-09-04 11:26:45,293 - root - INFO - Fetched 80 files from record 30562
+2026-09-04 11:26:45,720 - root - INFO - Fetched 70 files from record 30530
+2026-09-04 11:26:46,102 - root - INFO - Fetched 82 files from record 30563
+2026-09-04 11:26:46,171 - StateMachine - INFO - Transition: FETCHING_METADATA → PARSING
+2026-09-04 11:36:37,365 - ParsingHandler - INFO - Retention record_30530: 5,550,805 / 7,279,257 events kept (76.3%)
+2026-09-04 11:36:37,365 - ParsingHandler - INFO - Retention record_30563: 1,867,229 / 2,453,914 events kept (76.1%)
+2026-09-04 11:36:37,365 - ParsingHandler - INFO - Retention record_30529: 2,476,426 / 2,926,989 events kept (84.6%)
+2026-09-04 11:36:37,365 - ParsingHandler - INFO - Retention record_30562: 6,570,296 / 7,534,950 events kept (87.2%)
+2026-09-04 11:36:37,366 - ParsingHandler - INFO - de-duplication: 415 duplicate event(s) removed of 16465171 seen (run 278874: 34, run 279024: 9, run 279658: 17, run 279694: 21, run 279841: 15, run 279931: 156, run 280015: 51, run 280016: 9, run 280017: 7, run 280018: 3, run 280191: 4, run 282037: 89)
+2026-09-04 11:36:37,367 - ParsingHandler - INFO - Parsing complete: 12/12 files, 20195110 events, 100.0% success rate
+2026-09-04 11:36:38,808 - StateMachine - INFO - Transition: PARSING → MASS_CALCULATION
+2026-09-04 12:04:06,369 - StateMachine - INFO - Transition: MASS_CALCULATION → POST_PROCESSING
+2026-09-04 12:07:48,207 - PostProcessingHandler - INFO - Post-processing complete: 1 processed arrays in 221.8s
+2026-09-04 12:07:48,207 - StateMachine - INFO - Transition: POST_PROCESSING → HISTOGRAM_CREATION
+2026-09-04 12:10:20,413 - services.pipelines.histograms_pipeline - INFO - Wrote 2786 histograms to shared file ./output/cms_mediumscale_complete_20260904_112644/histograms/atlas_opendata_full_bumpnet.root
+2026-09-04 12:10:20,414 - StateMachine - INFO - Transition: HISTOGRAM_CREATION → COMPLETED
+2026-09-04 12:10:20,414 - StateMachine - INFO - ✓ Pipeline completed successfully
+2026-09-04 12:10:36,217 - __main__ - INFO - ✓ Pipeline completed successfully
