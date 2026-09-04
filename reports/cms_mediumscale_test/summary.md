@@ -302,13 +302,15 @@ Electrons+Muons):
 
 | channel | raw pairs | raw Z-peak (90-92 GeV bin) | after post-processing (`_main`) |
 |---|---:|---|---|
-| di-muon `m0m1` | _TBD_ | _TBD_ | _TBD_ |
-| di-electron `e0e1` | _TBD_ | _TBD_ | _TBD_ |
+| di-muon `m0m1` | 708,695 | **CLEAR peak, 99,660 entries (~26 %, ~16.7x off-peak)**, median 87.7 GeV, 40 % in the 85-97 GeV window | 0 entries below 115 GeV, 0 in Z window - **PASS** |
+| di-electron `e0e1` | 591,253 | **CLEAR peak, 87,649 entries (~21 %, ~11.6x off-peak)**, median 91.6 GeV, 51 % in the Z window | 0 entries below 115 GeV, 0 in Z window - **PASS** |
 
-For reference the 3-of-4 version gave: di-muon 707,153 pairs, peak 99,654
-(~16.7x off-peak); di-electron 453,801 pairs, peak 68,056 (~11.7x off-peak),
-both cleanly removed by post-processing. Adding SingleElectron-G should lift the
-di-electron pair count ~30 % and leave di-muon essentially unchanged.
+**Exactly the expected change from adding SingleElectron-G:** di-electron pairs
+went 453,801 -> **591,253 (+30 %)**; di-muon went 707,153 -> **708,695
+(+0.2 %, unchanged)** because SingleElectron-G events almost never contain a
+muon pair. Peak sharpness is identical in both channels (di-muon ~16.7x
+off-peak, di-electron ~11.6x), and post-processing removes the whole Z region
+in both. No qualitative difference from any smaller run.
 
 The known raw-`m0m1` sentinel tail (`min -16384`, `max 39168`) is still present
 and still fully excluded from `_main` (out of scope).
