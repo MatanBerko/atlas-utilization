@@ -7,6 +7,7 @@ Single responsibility: Interact with ATLAS API to get file URLs.
 import logging
 import json
 import re
+import time
 import requests
 import io
 from contextlib import redirect_stdout
@@ -284,10 +285,27 @@ class MetadataFetcher:
             List of file URLs
         """
         url = consts.CMS_RECID_FILEPAGE_URL.format(record_id)
-        response = requests.get(url)
-        response.raise_for_status()
-        
-        data = json.loads(response.text)
+
+        # Small retry around this one metadata call: a single transient
+        # connection/DNS blip to opendata.cern.ch here otherwise drops an entire
+        # record (the caller catches and only warns). This is unrelated to the
+        # per-file retry mechanism (count_retries_failed_files).
+        attempts = 3
+        for attempt in range(1, attempts + 1):
+            try:
+                response = requests.get(url, timeout=30)
+                response.raise_for_status()
+                data = json.loads(response.text)
+                break
+            except (requests.RequestException, ValueError) as e:
+                if attempt == attempts:
+                    raise
+                logging.warning(
+                    f"Record {record_id} file-list fetch attempt {attempt}/{attempts} "
+                    f"failed ({type(e).__name__}); retrying in {2 * attempt}s"
+                )
+                time.sleep(2 * attempt)
+
         file_list = []
         
         for index_file in data["index_files"]["files"]:
