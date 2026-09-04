@@ -38,7 +38,10 @@ completes end to end)
 > - Z-peak: di-muon and di-electron peaks unchanged in shape; di-electron gains
 >   ~30% more pairs from the added record.
 > - histograms: 2,786 produced (same), **2,161** meet the full BumpNet bar
->   (was 2,148); **2,179** clear the >30-bin width threshold.
+>   (was 2,148). `plots/bin_threshold.png` was corrected on 2026-09-04 to show
+>   all 4 combinations of the two BumpNet requirements together (previously it
+>   only showed the >30-bin condition on its own, which didn't match the
+>   2,161 figure already used in the text) - see Section 5.
 >
 > Sections 1-4 (files available, the duplicate-rate probe, the de-dup memory
 > OOM, the full-scale extrapolation) are **unchanged** - they came from the
@@ -58,7 +61,7 @@ completes end to end)
 | Per-record retention | SingleElectron-G (30529) **84.6%**, SingleElectron-H (30562) 87.2%, SingleMuon-G (30530) 76.3%, SingleMuon-H (30563) 76.1%. See `plots/retention.png`. |
 | De-duplication removed | **415** events (12 run numbers; 326 from Run2016G now that 30529 is included, 89 from Run2016H). 0 residual. |
 | Dimuon Z-peak at this scale | **Clean and unchanged.** Sharp peak at 90-92 GeV (~16.7x off-peak), correctly removed by post-processing. See `plots/raw_m0m1_zpeak.png`. |
-| Histograms | 2,786 produced. **2,161 meet the full BumpNet bar** (>=100 entries & >30 bins); **2,179 (78%)** clear the >30-bin width threshold. See `plots/bin_threshold.png`. |
+| Histograms | 2,786 produced. **2,161 (77.6%) meet the full BumpNet bar** (>30 bins AND >=100 entries together); 387 fail on bins only, 18 on entries only, 220 fail both. See `plots/bin_threshold.png`. |
 
 ---
 
@@ -285,9 +288,18 @@ in line with the other SingleElectron record; ~84-87 % for the electron stream,
 The 3-of-4 version only saw the 89 Run2016H ones. See Section 2 for the
 coverage-corrected *rate* (~0.1-0.2 %).
 
-**Histograms:** 2,786 produced. **2,161** meet the full BumpNet bar (>=100
-entries AND >30 bins); **2,179 (78 %)** clear the >30-bin width threshold on its
-own - see `plots/bin_threshold.png`. Shapes: 2,041 real distributions,
+**Histograms:** 2,786 produced. BumpNet requires **both** >30 bins **and**
+>=100 entries together, not either alone - `plots/bin_threshold.png` breaks all
+2,786 into the 4 combinations of the two conditions:
+
+| | passes >30 bins | fails >30 bins (<=30) |
+|---|---:|---:|
+| **passes >=100 entries** | **2,161 (77.6%) - usable** | 387 (13.9%) - fails on bins only |
+| **fails >=100 entries (<100)** | 18 (0.6%) - fails on entries only | 220 (7.9%) - fails both |
+
+So **2,161 (77.6%)** meet the full bar; the rest fall short mostly on bin count
+(607 = 387+220 have <=30 bins) rather than statistics (238 = 18+220 have <100
+entries). Shapes among the passing 2,161: 2,041 real distributions,
 103 peaky, **17 single-bin ~0 GeV spikes** (the known electron/photon/jet
 object-overlap artifact - deliberately deferred, unchanged from earlier runs).
 
@@ -322,7 +334,7 @@ and still fully excluded from `_main` (out of scope).
 | file | what it shows |
 |---|---|
 | `retention.png` | **NEW** - per-record retention %, 4 records side by side, labelled by id + stream |
-| `bin_threshold.png` | **NEW** - histograms clearing the >30-bin BumpNet threshold vs not, out of 2,786 |
+| `bin_threshold.png` | **NEW** - all 2,786 histograms split into the 4 combinations of BumpNet's two requirements (>30 bins AND >=100 entries), not just one |
 | `raw_m0m1_zpeak.png` | di-muon invariant mass, raw - the Z-peak sanity check |
 | `raw_e0e1_zpeak.png` | di-electron invariant mass, raw - Z peak at ~91 GeV |
 | `ROI_mass_m0j0j1_cat_0ex_1mx_2jx_...` | muon + 2 jets - smooth falling background shape, 217 bins |
