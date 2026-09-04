@@ -1,0 +1,31 @@
+2026-09-04 12:41:08,622 - root - INFO - Fetched 71 files from record 30529
+2026-09-04 12:41:09,016 - root - INFO - Fetched 80 files from record 30562
+2026-09-04 12:41:09,041 - StateMachine - INFO - Transition: FETCHING_METADATA → PARSING
+2026-09-04 12:41:09,041 - ParsingHandler - INFO - Parsing 3 files for release year: record_30529
+2026-09-04 12:42:23,469 - ParsingHandler - INFO - Parsing 3 files for release year: record_30562
+Processing files:   0%|          | 0/3 [00:00<?, ?file/s]2026-09-04 12:43:52,017 - ParsingHandler - INFO - Saved chunk 0: 2476780 events, 378.6 MB → output/cms_bjet_with_histograms_20260904_124107/parsed_data/parsed_record_30562_chunk0.root
+Processing files:  33%|███▎      | 1/3 [01:28<02:57, 88.62s/file]2026-09-04 12:44:00,611 - ParsingHandler - INFO - Saved chunk 1: 2036058 events, 317.3 MB → output/cms_bjet_with_histograms_20260904_124107/parsed_data/parsed_record_30562_chunk1.root
+Processing files:  67%|██████▋   | 2/3 [01:37<00:41, 41.53s/file]2026-09-04 12:44:22,457 - ParsingHandler - INFO - Saved chunk 2: 2040968 events, 317.4 MB → output/cms_bjet_with_histograms_20260904_124107/parsed_data/parsed_record_30562_chunk2.root
+2026-09-04 12:44:31,257 - ParsingHandler - INFO - Saved final chunk: 2493471 events, 388.1 MB → output/cms_bjet_with_histograms_20260904_124107/parsed_data/parsed_record_30562_final.root
+2026-09-04 12:44:31,294 - ParsingHandler - INFO - Parsing complete: 6/6 files, 10461939 events, 100.0% success rate
+2026-09-04 12:44:31,307 - StateMachine - INFO - Transition: PARSING → MASS_CALCULATION
+2026-09-04 12:44:31,442 - MassCalculationHandler - INFO - Reading parsed file: parsed_record_30562_chunk0.root
+2026-09-04 12:53:45,265 - MassCalculationHandler - INFO - parsed_record_30562_chunk0.root: created 3433 IM array(s)
+2026-09-04 12:53:45,268 - MassCalculationHandler - INFO - Reading parsed file: parsed_record_30562_chunk1.root
+2026-09-04 13:01:33,412 - MassCalculationHandler - INFO - parsed_record_30562_chunk1.root: created 3411 IM array(s)
+2026-09-04 13:01:33,415 - MassCalculationHandler - INFO - Reading parsed file: parsed_record_30562_chunk2.root
+2026-09-04 13:09:13,086 - MassCalculationHandler - INFO - parsed_record_30562_chunk2.root: created 3296 IM array(s)
+2026-09-04 13:09:13,090 - MassCalculationHandler - INFO - Reading parsed file: parsed_record_30562_final.root
+2026-09-04 13:18:26,593 - MassCalculationHandler - INFO - parsed_record_30562_final.root: created 3507 IM array(s)
+2026-09-04 13:18:26,656 - StateMachine - INFO - Transition: MASS_CALCULATION → POST_PROCESSING
+2026-09-04 13:19:08,651 - services.pipelines.post_processing_pipeline - INFO - Post-processing progress: 1000/4041 signatures committed
+2026-09-04 13:19:29,984 - services.pipelines.post_processing_pipeline - INFO - Post-processing progress: 2000/4041 signatures committed
+2026-09-04 13:19:59,818 - services.pipelines.post_processing_pipeline - INFO - Post-processing progress: 3000/4041 signatures committed
+2026-09-04 13:20:20,412 - services.pipelines.post_processing_pipeline - INFO - Post-processing progress: 4000/4041 signatures committed
+2026-09-04 13:20:20,839 - PostProcessingHandler - INFO - Post-processing complete: 1 processed arrays in 114.2s
+2026-09-04 13:20:20,839 - StateMachine - INFO - Transition: POST_PROCESSING → HISTOGRAM_CREATION
+2026-09-04 13:20:50,044 - services.pipelines.histograms_pipeline - INFO - Excluded 2490 outlier signatures (exclude_outliers=true)
+2026-09-04 13:22:46,438 - services.pipelines.histograms_pipeline - INFO - Wrote 4039 histograms to shared file ./output/cms_bjet_with_histograms_20260904_124107/histograms/atlas_opendata_full_bumpnet.root
+2026-09-04 13:22:46,439 - StateMachine - INFO - Transition: HISTOGRAM_CREATION → COMPLETED
+2026-09-04 13:22:46,439 - StateMachine - INFO - ✓ Pipeline completed successfully
+2026-09-04 13:23:02,342 - __main__ - INFO - ✓ Pipeline completed successfully
