@@ -16,6 +16,19 @@ from services.parsing import schemas
 from services import consts
 
 
+class PartialFileReadError(RuntimeError):
+    """A ROOT file failed after a usable prefix of its events was parsed."""
+
+    def __init__(self, file_path: str, events: ak.Array, read_error: Exception):
+        self.file_path = file_path
+        self.events = events
+        self.read_error = read_error
+        super().__init__(
+            f"ROOT read failed for {file_path}: {read_error}; "
+            f"retaining {len(events)} events parsed before the failure"
+        )
+
+
 class FileParser:
     """
     Service for parsing individual ROOT files.
@@ -55,8 +68,10 @@ class FileParser:
                     enable_jet_tagging,
                     jet_btagging_thresholds,
                 )
+        except PartialFileReadError:
+            raise
         except Exception as e:
-            logging.warning(f"Failed to open file {file_path}: {e}")
+            logging.warning(f"Failed to parse file {file_path}: {e}")
             return None
     
     @staticmethod
@@ -93,7 +108,7 @@ class FileParser:
         expects_event_ids = "EventIds" in obj_branches
 
         all_branches = set(itertools.chain.from_iterable(obj_branches.values()))
-        obj_events = FileParser._read_file_in_batches(
+        obj_events, read_error = FileParser._read_file_in_batches(
             tree,
             all_branches,
             obj_branches,
@@ -141,6 +156,9 @@ class FileParser:
                 np.full(len(zipped), record_id, dtype=np.int64),
                 where="source_record",
             )
+
+        if read_error is not None:
+            raise PartialFileReadError(file_path, zipped, read_error) from read_error
 
         return zipped
 
@@ -512,10 +530,11 @@ class FileParser:
         obj_branches: dict[str, dict[str, str]],
         n_entries: int,
         batch_size: int
-    ) -> dict[str, ak.Array]:
+    ) -> tuple[dict[str, ak.Array], Optional[Exception]]:
         obj_events_by_quantities = {
             obj_name: [] for obj_name in obj_branches.keys()
         }
+        read_error = None
         
         is_file_big = n_entries > batch_size
         if is_file_big:
@@ -535,8 +554,12 @@ class FileParser:
                     library="ak"
                 )
             except Exception as e:
-                logging.warning(f"Error reading batch {entry_start}-{entry_stop}: {e}")
-                continue
+                read_error = RuntimeError(
+                    f"batch {entry_start}-{entry_stop} failed with "
+                    f"{type(e).__name__}: {e}"
+                )
+                logging.warning("Stopping partial ROOT read: %s", read_error)
+                break
             
             for obj_name, branch_mapping in obj_branches.items():
                 available_branches = [
@@ -556,7 +579,7 @@ class FileParser:
                     for full_branch, quantity in obj_branches[obj_name].items()
                 })
         
-        return result
+        return result, read_error
     
     @staticmethod
     def _auto_detect_branches(tree_branches: set[str]) -> dict[str, dict[str, str]]:
