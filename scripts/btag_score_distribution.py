@@ -43,10 +43,10 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-MEDIUM_WP = 0.2598  # DeepJet Medium WP, UL2016 post-VFP - the b-jet test's cut
-# CMS defines this WP by a target light-flavour mistag rate (~1%); the resulting
-# b-jet efficiency, from CMS's own ttbar-based measurements, is ~75-80%.
-MEDIUM_WP_LABEL = "DeepJet Medium WP = 0.2598 (~75-80% b-eff in ttbar MC, per CMS BTV)"
+# The b-jet test's cut value, kept only so stats.json can report how many jets
+# fall above it. It is NOT drawn on the plots - they show the raw, unannotated
+# distribution only.
+MEDIUM_WP = 0.2598
 
 RECORDS = {
     30529: "SingleElectron Run2016G",
@@ -145,17 +145,14 @@ def plot_all(counts: np.ndarray, all_desc: dict, files_per_record: int, out_png:
     centers = 0.5 * (BINS[:-1] + BINS[1:])
     ax.bar(centers, counts, width=0.01, align="center", color="#3b7dd8",
            edgecolor="#1f3f6e", lw=0.3)
-    ax.axvline(MEDIUM_WP, color="#c0392b", ls="--", lw=1.8, label=MEDIUM_WP_LABEL)
     ax.set_yscale("log")
     ax.set_xlabel("Jet_btagDeepFlavB  (raw DeepJet b-vs-all discriminant)")
     ax.set_ylabel("jets / 0.01  (log scale)")
     ax.set_title(
         f"CMS raw b-tag discriminant - {all_desc['n_jets']:,} jets, "
         f"{files_per_record} files x 2 SingleElectron records\n"
-        f"{all_desc['frac_above_wp'] * 100:.2f}% of all jets above the WP  |  "
         f"{_outside_note(all_desc)}",
         fontsize=9)
-    ax.legend(fontsize=8)
     ax.set_xlim(0, 1)
     fig.tight_layout()
     fig.savefig(out_png, dpi=120)
@@ -171,7 +168,6 @@ def plot_by_record(per_counts: dict, per_desc: dict, out_png: Path):
         ax.stairs(dens, BINS, lw=1.7, color=colors[int(rid)],
                   label=f"{rid}  {per_desc[str(rid)]['name']}  "
                         f"({per_desc[str(rid)]['n_jets']:,} jets)")
-    ax.axvline(MEDIUM_WP, color="#c0392b", ls="--", lw=1.8, label=MEDIUM_WP_LABEL)
     ax.set_yscale("log")
     ax.set_xlabel("Jet_btagDeepFlavB  (raw DeepJet b-vs-all discriminant)")
     ax.set_ylabel("normalised density / 0.01  (log scale)")
@@ -248,8 +244,7 @@ def main() -> int:
         f"out of {all_scores.size:,} jets")
 
     stats = {
-        "medium_wp": MEDIUM_WP,
-        "medium_wp_label": MEDIUM_WP_LABEL,
+        "medium_wp": MEDIUM_WP,  # reference cut value only; not drawn on the plots
         "files_per_record": args.files_per_record,
         "records": {str(k): v for k, v in RECORDS.items()},
         "n_events_per_record": {str(k): int(v) for k, v in n_events.items()},

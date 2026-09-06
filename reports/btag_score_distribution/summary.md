@@ -1,7 +1,8 @@
 # CMS raw b-tag discriminant (`Jet_btagDeepFlavB`) distribution
 
-**Date:** 2026-09-06 (revised same day: WP-line label + ATLAS-comparison note +
-explicit negative/sentinel-value check)
+**Date:** 2026-09-06 (revised same day: the plots now show only the raw,
+unannotated distribution - no working-point line and no threshold/efficiency
+text; the explicit negative/sentinel-value check is kept)
 **Branch:** `analysis/btag-score-distribution`
 **Script:** `scripts/btag_score_distribution.py` (run under the WSL venv
 `~/btag_work/venv` - XRootD has no Windows wheel)
@@ -14,9 +15,8 @@ branch `test/cms-bjet-with-histograms`) confirms b-tagging runs and tags
 ~7.69 % of jets at the DeepJet **Medium** working point
 (`Jet_btagDeepFlavB > 0.2598`). Before b-tagging is considered for real
 production scope, Maryna asked to see the **raw discriminant score itself** -
-its shape, and where the 0.2598 cut sits in it - so it can be eyeballed against
-how ATLAS defines its own operating points (efficiency-defined, e.g. "77 %";
-this repo's `config.yaml` uses a DL1d threshold of 2.51 for that purpose).
+its shape - and, for reference, where the 0.2598 cut used by the b-jet test
+falls within it.
 
 The pipeline parser only ever stores the final tagged/untagged split, so the
 score was re-read directly from the CERN NanoAOD source files - **the exact same
@@ -50,8 +50,8 @@ never-expected `score > 1`:
 
 `min` = 0.00093, `max` = 0.99951. So nothing had to be excluded and the
 histogram below covers the complete jet set. (`stats.json` records this per
-record too; the script would annotate the plot and exclude them from the [0, 1]
-histogram if any were present.)
+record too; the plot subtitle states the count, and any out-of-range jets would
+be excluded from the [0, 1] histogram - here there are none.)
 
 ## The distribution - all 28.65M jets
 
@@ -70,35 +70,14 @@ light-jet peak at ~0 and a much smaller genuine b-jet accumulation near 1,
 separated by a low-density valley. This is the textbook shape of a well-behaved
 b-vs-all discriminant on real data.
 
-**Where the Medium WP (0.2598) sits:** out on the falling tail of the light-jet
-peak, between the 95th and 99th percentile of all jets. At that point the
-light-jet contribution has dropped ~2 orders of magnitude from its peak but is
-still well above the valley floor, so the selected region (score > 0.2598) is a
-mix - the tail of the light-jet fall-off plus the rising b-jet population, with
-b's only clearly dominating above ~0.85. The dashed line is labelled
-"DeepJet Medium WP = 0.2598 (~75-80% b-eff in ttbar MC, per CMS BTV)" - see the
-comparison note below for what that efficiency figure means.
+**For reference, where the b-jet test's 0.2598 cut falls** (not marked on the
+plot): out on the falling tail of the light-jet peak, between the 95th and 99th
+percentile of all jets. At that point the light-jet contribution has dropped
+~2 orders of magnitude from its peak but is still well above the valley floor,
+so the region above 0.2598 is a mix - the tail of the light-jet fall-off plus
+the rising b-jet population, with b's only clearly dominating above ~0.85.
 
-### How the CMS Medium WP compares to ATLAS's 77% operating point
-
-CMS and ATLAS define their "medium"-style b-tag cuts with **different design
-philosophies but land in a similar practical zone**. CMS's DeepJet Medium
-working point is fixed by a **target light-flavour mistag rate (~1%)**, not by a
-b-jet efficiency directly; the b-jet efficiency that results from that choice,
-per CMS's own published ttbar-based measurements, works out to roughly
-**75-80%**. ATLAS's DL1d 77% operating point (`config.yaml`, `DL1d: 2.51`) is
-instead defined **directly as a target b-efficiency of 77%**. So the two are
-comparable in spirit and end up in a similar practical efficiency range, even
-though one is anchored on mistag rate and the other on b-efficiency.
-
-We **cannot** draw a matching "77%-of-true-b-jets" line on this histogram
-ourselves: that requires generator-level (MC truth) flavour labels to know which
-jets are really b-jets, and real CMS Open Data collision events do not carry
-them. The ~75-80% figure above comes from each experiment's own
-separately-published, simulation-based efficiency measurements - it is **not**
-derived from this real-data plot.
-
-**How many the cut selects:**
+**How many jets fall above 0.2598:**
 
 | | jets | above 0.2598 | below |
 |---|---:|---:|---:|
@@ -126,29 +105,27 @@ scope. The split that *is* available is the two SingleElectron run eras:
 
 ![raw discriminant, by record](plots/btag_score_by_record.png)
 
-| | jets | median | p99 | frac > WP |
+| | jets | median | p99 | frac > 0.2598 |
 |---|---:|---:|---:|---:|
 | 30529 SingleElectron Run2016G | 5,207,157 | 0.0459 | 0.717 | 3.58 % |
 | 30562 SingleElectron Run2016H | 23,446,299 | 0.0467 | 0.736 | 3.67 % |
 
 **The two shapes are indistinguishable.** Normalised, the two histogram traces
 sit on top of each other across the whole 0-1 range (see plot). Median differs
-by 0.0008; the fraction above the WP differs by 0.09 percentage points. There is
+by 0.0008; the fraction above 0.2598 differs by 0.09 percentage points. There is
 **no meaningful difference between the two run eras** - stated plainly, not
 manufactured.
 
 ## Caveat - what this plot is and is not
 
-This is **real collision data with no generator-level (MC truth) labels**. We
-can see exactly where the CMS Medium-WP cut falls in the discriminant
-distribution and what fraction of jets it selects - a useful visual and sanity
-check of *where the cut sits*. It is **not** a cross-experiment calibration
-proof and it does **not** show *that* the CMS and ATLAS "medium" cuts are
-efficiency-equivalent. The ~75-80% b-efficiency for CMS's Medium WP and the 77%
-for ATLAS's DL1d point (see the comparison note above) both come from each
-experiment's own separately-published, MC-calibrated measurements - neither is
-derivable from this real-data histogram, and we did not compute any new
-threshold from the data (the 0.2598 cut is unchanged).
+This is **real collision data with no generator-level (MC truth) labels**. The
+plots show the raw `Jet_btagDeepFlavB` distribution and nothing else - no
+working-point line, no efficiency numbers. We can *describe* the shape and, in
+the text, note where the b-jet test's 0.2598 cut would fall, but we **cannot**
+turn that into a b-tagging efficiency from this data: knowing what fraction of
+*true* b-jets a cut keeps needs MC truth flavour labels, which real Open Data
+events do not carry. No new threshold was computed or changed here - the 0.2598
+value is quoted only as the existing b-jet test's cut, for orientation.
 
 ## Connectivity note
 
