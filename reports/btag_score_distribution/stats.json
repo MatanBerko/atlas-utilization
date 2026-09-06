@@ -1,5 +1,6 @@
 {
   "medium_wp": 0.2598,
+  "medium_wp_label": "DeepJet Medium WP = 0.2598 (~75-80% b-eff in ttbar MC, per CMS BTV)",
   "files_per_record": 2,
   "records": {
     "30529": "SingleElectron Run2016G",
@@ -39,12 +40,19 @@
       "jets_pt_eta": 5864176
     }
   ],
+  "negative_sentinel_check": {
+    "n_score_lt_0": 0,
+    "n_score_gt_1": 0,
+    "note": "NanoAOD stores -1 for Jet_btagDeepFlavB on jets where DeepJet was not evaluated; these are counted here and excluded from the [0,1] histogram if present."
+  },
   "all_jets": {
     "name": "all jets (no selection)",
     "n_jets": 28653456,
     "above_wp": 1046614,
     "below_wp": 27606842,
     "frac_above_wp": 0.03652662352492488,
+    "n_negative_sentinel": 0,
+    "n_gt_1": 0,
     "outside_0_1": 0,
     "min": 0.000934600830078125,
     "max": 0.99951171875,
@@ -70,6 +78,8 @@
     "above_wp": 610932,
     "below_wp": 12466360,
     "frac_above_wp": 0.04671701144243013,
+    "n_negative_sentinel": 0,
+    "n_gt_1": 0,
     "outside_0_1": 0,
     "min": 0.000934600830078125,
     "max": 0.99951171875,
@@ -96,6 +106,8 @@
       "above_wp": 186561,
       "below_wp": 5020596,
       "frac_above_wp": 0.03582780392448317,
+      "n_negative_sentinel": 0,
+      "n_gt_1": 0,
       "outside_0_1": 0,
       "min": 0.0010309219360351562,
       "max": 0.99951171875,
@@ -121,6 +133,8 @@
       "above_wp": 860053,
       "below_wp": 22586246,
       "frac_above_wp": 0.03668182342978736,
+      "n_negative_sentinel": 0,
+      "n_gt_1": 0,
       "outside_0_1": 0,
       "min": 0.000934600830078125,
       "max": 0.99951171875,
