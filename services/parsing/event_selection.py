@@ -52,6 +52,14 @@ def normalize_yaml_kinematic_cuts(raw: Dict[str, Any]) -> Dict[str, Any]:
     if "rel_isolation_max" in raw:
         out["rel_isolation_max"] = float(raw["rel_isolation_max"])
 
+    # CMS photon ID/veto (Stage 1 H->gamma gamma selection). See
+    # services/calculations/consts.py for the confirmed field meanings.
+    if "electron_veto_required" in raw:
+        out["electron_veto_required"] = bool(raw["electron_veto_required"])
+
+    if "cut_based_min" in raw:
+        out["cut_based_min"] = int(raw["cut_based_min"])
+
     return out
 
 

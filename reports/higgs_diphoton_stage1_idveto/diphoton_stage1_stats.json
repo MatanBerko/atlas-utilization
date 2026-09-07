@@ -1,0 +1,97 @@
+{
+  "run_dir": "output/cms_higgs_diphoton_stage1_20260907_141553",
+  "config": "config.cms_higgs_diphoton_stage1.yaml",
+  "cutbased_threshold_used": 1,
+  "cutbased_wp_meaning": "Fall17V2 ordinal ID confirmed from the Photon_cutBased branch's own ROOT title on real files from both records: 'cut-based ID bitmap, Fall17V2, (0:fail, 1:loose, 2:medium, 3:tight)'. cutBased>=1 = loose.",
+  "consistency_check_raw_events_vs_stage0": {
+    "30521": {
+      "stage1_raw": 18962247,
+      "stage0_raw": 18962247,
+      "matches": true
+    },
+    "30554": {
+      "stage1_raw": 9998279,
+      "stage0_raw": 9998279,
+      "matches": true
+    }
+  },
+  "records": {
+    "30521": {
+      "label": "DoubleEG Run2016G",
+      "files_total": 47,
+      "files_processed": 10,
+      "events_full_dataset": 78797031,
+      "events_raw_processed": 18962247,
+      "events_ge2photon_kinematic_only_stage0": 12740818,
+      "events_ge2photon_id_stage1": 428391,
+      "diphoton_pairs_formed_stage1": 428391
+    },
+    "30554": {
+      "label": "DoubleEG Run2016H",
+      "files_total": 86,
+      "files_processed": 10,
+      "events_full_dataset": 85388673,
+      "events_raw_processed": 9998279,
+      "events_ge2photon_kinematic_only_stage0": 7178538,
+      "events_ge2photon_id_stage1": 254822,
+      "diphoton_pairs_formed_stage1": 254822
+    }
+  },
+  "combined": {
+    "events_raw_processed": 28960526,
+    "events_ge2photon_kinematic_only_stage0": 19919356,
+    "events_ge2photon_id_stage1": 683213,
+    "diphoton_pairs_formed_stage1": 683213,
+    "dedup_removed": 0
+  },
+  "diphoton_mass_stage1": {
+    "n_pairs_total": 683213,
+    "n_pairs_in_hist_range": 680177,
+    "n_pairs_above_400_gev": 3036,
+    "min_gev": 0.6810779571533203,
+    "max_gev": 2353.133544921875,
+    "median_gev": 87.17554473876953,
+    "mean_gev": 100.41449033372164,
+    "n_in_80_100_gev_Zwindow": 201385,
+    "n_in_115_135_gev": 48719,
+    "pairs_per_record_direct": {
+      "30521": 428391,
+      "30554": 254822
+    }
+  },
+  "before_after_vs_stage0": {
+    "n_pairs_total": {
+      "stage0": 19919356,
+      "stage1": 683213,
+      "retained_fraction": 0.03429895022710574
+    },
+    "n_in_80_100_gev_Zwindow": {
+      "stage0": 4735893,
+      "stage1": 201385,
+      "retained_fraction": 0.04252313132919177
+    },
+    "n_in_115_135_gev": {
+      "stage0": 1844952,
+      "stage1": 48719,
+      "retained_fraction": 0.026406649061872612
+    }
+  },
+  "bumpnet_histogram": {
+    "root_file": "reports/higgs_diphoton_stage1_idveto/histograms/diphoton_stage1_bumpnet.root",
+    "hist_name": "mass_g0g1_cat_0ex_0mx_0jx_2gx_0tx_0bx_width_10.0",
+    "bin_width_gev": 10.0,
+    "range_gev": [
+      0.0,
+      400.0
+    ],
+    "n_bins": 40,
+    "n_nonempty_bins": 40,
+    "entries": 680177,
+    "meets_bin_bar": true,
+    "meets_entry_bar": true,
+    "min_bins_required": 30,
+    "min_entries_required": 100
+  },
+  "files_ok": 20,
+  "files_attempted": 20
+}

@@ -1,0 +1,187 @@
+# ---------------------------------------------------------------------------
+# config.cms_higgs_diphoton_stage1.yaml
+#
+# Stage 1 of the H -> gamma gamma rediscovery exercise, building on Stage 0
+# (config.cms_higgs_diphoton_stage0.yaml, branch analysis/higgs-diphoton-stage0-stats).
+#
+# Stage 0 found: with only a basic pT/eta acceptance cut, ~19.9M "diphoton"
+# pairs (10 files/record), dominated by a large Z->ee peak (~90 GeV) from
+# electrons misreconstructed as photons, no visible structure at 125 GeV.
+#
+# Stage 1 adds real photon identification on top of the SAME kinematic cuts,
+# to see whether that Z->ee contamination goes away and the spectrum starts
+# looking physically sane:
+#   * Photon_electronVeto == True   -- CMS's pixel-seed-based check that the
+#     candidate is not actually an electron. Directly targets the Z->ee peak.
+#   * Photon_cutBased >= 1 (loose)  -- CMS's official combined photon ID
+#     working point (already folds in shower-shape, H/E and isolation, so no
+#     separate isolation variable is added). Removes jet/pileup fake photons.
+#
+# Both fields were confirmed on a REAL file from each DoubleEG record before
+# being hard-coded (see services/calculations/consts.py and
+# reports/higgs_diphoton_stage1_idveto/summary.md for the exact check and
+# values found): Photon_cutBased's own ROOT branch title reads "cut-based ID
+# bitmap, Fall17V2, (0:fail, 1:loose, 2:medium, 3:tight)" -- a 4-tier 0-3
+# ordinal scheme (NOT a 5-tier fail/veto/loose/medium/tight 0-4 scheme -- there
+# is no separate "veto" tier for photon ID, only electron ID has one). Only
+# {0,1,2,3} were ever observed on the full first file of both records.
+# "Loose" = cutBased >= 1, the recommended baseline CMS photon ID WP.
+#
+# Records (same two DoubleEG records as Stage 0, UL2016 MiniAODv2 NanoAODv9):
+#   30521  /DoubleEG/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD  (78,797,031 evt, 47 files)
+#   30554  /DoubleEG/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD  (85,388,673 evt, 86 files)
+#
+# Scale: SAME 10 files/record as Stage 0, unchanged on purpose, so the funnel
+# numbers are directly, apples-to-apples comparable. Not scaled up here.
+#
+# Still NOT in this config (deliberately deferred, same as Stage 0):
+#   * ECAL barrel/endcap gap exclusion (1.44 < |eta| < 1.57).
+#   * asymmetric leading/subleading photon pT thresholds.
+#   * merging with SingleElectron/SingleMuon/DoubleMuon; cross-record de-dup
+#     (still present via selection_by_record for the per-record photon
+#     requirement, still a no-op: the two DoubleEG run ranges are disjoint).
+#   * feeding the histogram to BumpNet.
+#
+# Post-processing and histogram-creation stages are OFF, same reasoning as
+# Stage 0: post-processing's rightmost-peak removal would reshape the raw
+# spectrum. The BumpNet-format diphoton mass histogram is built directly from
+# the raw im_arrays output by scripts/higgs_diphoton_stage1_report.py instead.
+# ---------------------------------------------------------------------------
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: atlas_full_120
+  histogram_filename: atlas_opendata_full_bumpnet.root
+run_metadata:
+  run_name: cms_higgs_diphoton_stage1
+  base_output_dir: ./output
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: true
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years: []
+  specific_record_ids:
+  - 30521
+  - 30554
+  parse_mc: false
+  use_multiprocessing: false
+  parallel_processes: 4
+  # One file at a time: the 7.4 GiB Docker VM OOMs when several ~1.5 GB NanoAOD
+  # files are read concurrently. Same as Stage 0.
+  threads: 1
+  env_threshold_memory_mb: 5000
+  chunk_yield_threshold_bytes: 536870912
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  # SAME as Stage 0 -- do not scale up, results must stay apples-to-apples.
+  max_files_to_process: 10
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  - mini
+  - analysis
+  create_dirs: true
+  show_progress_bar: true
+  # Fallback block (unused: every record has a selection_by_record entry).
+  # Unchanged from Stage 0 -- the >=2 photon requirement is a per-event COUNT
+  # cut, separate from the per-photon ID/veto kinematic cuts below.
+  particle_counts:
+    photons:
+      min: 2
+      max: 10
+    electrons:
+      min: 0
+      max: 10
+    muons:
+      min: 0
+      max: 10
+    jets:
+      min: 0
+      max: 20
+  # Per-record selection: >= 2 photons on each DoubleEG record. Unchanged from
+  # Stage 0.
+  selection_by_record:
+    "30521":
+      particle_counts:
+        photons:
+          min: 2
+          max: 10
+        electrons:
+          min: 0
+          max: 10
+        muons:
+          min: 0
+          max: 10
+        jets:
+          min: 0
+          max: 20
+    "30554":
+      particle_counts:
+        photons:
+          min: 2
+          max: 10
+        electrons:
+          min: 0
+          max: 10
+        muons:
+          min: 0
+          max: 10
+        jets:
+          min: 0
+          max: 20
+  # Stage 1: same pT/eta acceptance as Stage 0, PLUS the new ID/veto cuts.
+  kinematic_cuts:
+    photons:
+      pt_min: 20.0
+      eta_max: 2.5
+      electron_veto_required: true   # Photon_electronVeto == True
+      cut_based_min: 1               # Photon_cutBased >= 1 (Fall17V2 loose WP)
+mass_calculation_task_config:
+  input_dir: ./output/parsed_data
+  output_dir: ./output/im_arrays
+  field_to_slice_by: pt
+  use_multiprocessing: true
+  parallel_processes: 4
+  fs_chunk_threshold_bytes: 2000000000
+  objects_to_calculate:
+  - Photons
+  # Unchanged from Stage 0 -- see that config's comment block for the full
+  # explanation of why min/max_particles and min/max_count are opened up
+  # (1..6 types, 1..50 per type) while max_total_particles_in_combination=2
+  # still pins the emitted combination to exactly {Photons: 2}.
+  min_particles_in_combination: 1
+  max_particles_in_combination: 6
+  min_count_particle_in_combination: 1
+  max_count_particle_in_combination: 50
+  max_total_particles_in_combination: 2
+  min_events_per_fs: 1
+post_processing_task_config:
+  input_dir: ./output/im_arrays
+  output_dir: ./output/im_arrays_processed
+  peak_detection_bin_width_gev: 10.0
+histogram_creation_task_config:
+  input_dir: ./output/im_arrays_processed
+  output_dir: ./output/histograms
+  bin_width_gev: 10.0
+  single_output_file: true
+  output_filename: atlas_opendata_full_bumpnet.root
+  exclude_outliers: true
+  use_bumpnet_naming: true

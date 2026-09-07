@@ -51,10 +51,12 @@ NANOAOD_EVENT_ID_BRANCHES = [
 # Mapping from specific record IDs to their release year/schema identifier
 # This will be populated when schemas are extracted from record IDs
 RECORD_ID_TO_SCHEMA = {
-    30529: "cms-nanoaod",  # NanoAOD format
-    30562: "cms-nanoaod",  # NanoAOD format
-    30530: "cms-nanoaod",  # NanoAOD format
-    30563: "cms-nanoaod",  # NanoAOD format
+    30529: "cms-nanoaod",  # /SingleElectron/Run2016G  NanoAODv9
+    30562: "cms-nanoaod",  # /SingleElectron/Run2016H  NanoAODv9
+    30530: "cms-nanoaod",  # /SingleMuon/Run2016G      NanoAODv9
+    30563: "cms-nanoaod",  # /SingleMuon/Run2016H      NanoAODv9
+    30521: "cms-nanoaod",  # /DoubleEG/Run2016G        NanoAODv9
+    30554: "cms-nanoaod",  # /DoubleEG/Run2016H        NanoAODv9
 }
 
 # Release-specific branch naming templates
@@ -104,7 +106,12 @@ RELEASE_SCHEMAS = {
             "Electrons": ["pt", "eta", "phi", "mass"],
             "Muons": ["pt", "eta", "phi", "mass"],
             "Jets": ["pt", "eta", "phi", "mass"],
-            "Photons": ["pt", "eta", "phi", "mass"],  # NanoAOD includes Photon_mass
+            # electronVeto (bool) + cutBased (Fall17V2 cut-based ID, 0-3) added
+            # for the H->gamma gamma Stage 1 ID/veto selection. Confirmed on
+            # real UL2016 NanoAODv9 files (records 30521/30554) before adding:
+            # see services/calculations/consts.py PHOTON_CUTBASED_FIELD comment
+            # and reports/higgs_diphoton_stage1_idveto/summary.md.
+            "Photons": ["pt", "eta", "phi", "mass", "electronVeto", "cutBased"],
             "Taus": ["pt", "eta", "phi", "mass", "charge", "decayMode", "idDeepTau2017v2p1VSjet"]
         },
         "direct_objects": NANOAOD_BTAGGING_OBJECTS.copy(),

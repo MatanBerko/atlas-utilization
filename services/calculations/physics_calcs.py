@@ -230,7 +230,8 @@ def filter_events_by_kinematics(
     kinematic_cuts: Optional[Dict[str, Dict]],
 ) -> ak.Array:
     """
-    Mask particles within each event by kinematics (and optional electron isolation).
+    Mask particles within each event by kinematics (and optional electron
+    isolation / photon ID+veto).
 
     ``kinematic_cuts`` may be either:
 
@@ -240,6 +241,14 @@ def filter_events_by_kinematics(
 
     - **Legacy (same cuts for every collection)**: ``{"pt": {"min": ...}, "eta": {...}}``
       Applied to every particle array that has the corresponding attributes.
+
+    Photon-specific keys (only applied when ``obj == "Photons"``):
+
+    - ``electron_veto_required`` (bool): keep only photons with
+      ``Photon_electronVeto == True`` (CMS pixel-seed electron veto).
+    - ``cut_based_min`` (int): keep only photons with
+      ``Photon_cutBased >= cut_based_min`` (Fall17V2 ordinal ID: 0=fail,
+      1=loose, 2=medium, 3=tight — see consts.PHOTON_CUTBASED_FIELD).
     """
     if not kinematic_cuts:
         return events
@@ -287,6 +296,32 @@ def filter_events_by_kinematics(
         if "phi" in cuts and hasattr(particles, "phi"):
             phi_vals = ak.values_astype(particles.phi, float)
             mask = mask & (phi_vals >= cuts["phi"]["min"]) & (phi_vals <= cuts["phi"]["max"])
+
+        if obj == "Photons" and cuts.get("electron_veto_required"):
+            veto_name = consts.PHOTON_ELECTRON_VETO_FIELD
+            if hasattr(particles, veto_name):
+                veto = getattr(particles, veto_name)
+                mask = mask & (ak.values_astype(veto, bool) == True)  # noqa: E712
+            else:
+                import logging
+                logging.getLogger(__name__).warning(
+                    "Photon electron_veto_required requested but field %r not "
+                    "present; skipping electron-veto cut",
+                    veto_name,
+                )
+
+        if obj == "Photons" and cuts.get("cut_based_min") is not None:
+            cb_name = consts.PHOTON_CUTBASED_FIELD
+            if hasattr(particles, cb_name):
+                cb_vals = ak.values_astype(getattr(particles, cb_name), np.int32)
+                mask = mask & (cb_vals >= int(cuts["cut_based_min"]))
+            else:
+                import logging
+                logging.getLogger(__name__).warning(
+                    "Photon cut_based_min requested but field %r not present; "
+                    "skipping cut-based ID cut",
+                    cb_name,
+                )
 
         if obj == "Electrons" and cuts.get("rel_isolation_max") is not None:
             iso_name = consts.ELECTRON_REL_ISOLATION_FIELD
