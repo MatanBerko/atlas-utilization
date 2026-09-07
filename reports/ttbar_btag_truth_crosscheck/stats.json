@@ -1,0 +1,84 @@
+{
+  "record_id": 67993,
+  "dataset": "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+  "threshold": 0.25,
+  "files_used": 3,
+  "files_total_in_record": 138,
+  "n_events": 4000000,
+  "files": [
+    {
+      "file": "08FCB2ED-176B-064B-85AB-37B898773B98.root",
+      "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/08FCB2ED-176B-064B-85AB-37B898773B98.root",
+      "events": 1233000,
+      "jets": 9163488
+    },
+    {
+      "file": "0BD60695-8388-5141-B157-32AE1A3B4885.root",
+      "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/0BD60695-8388-5141-B157-32AE1A3B4885.root",
+      "events": 1365000,
+      "jets": 10146749
+    },
+    {
+      "file": "4F3C361D-258C-1D41-AEEA-48CB87D3839A.root",
+      "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/4F3C361D-258C-1D41-AEEA-48CB87D3839A.root",
+      "events": 1402000,
+      "jets": 10417706
+    }
+  ],
+  "score_check": {
+    "n_jets": 29727943,
+    "min": 0.0009617805480957031,
+    "max": 0.99951171875,
+    "n_negative_sentinel": 0,
+    "n_gt_1": 0
+  },
+  "all_jets_no_cut": {
+    "b": {
+      "hadronFlavour": 5,
+      "n_jets": 7379260,
+      "n_tagged": 5249019,
+      "rate": 0.7113205118128376
+    },
+    "c": {
+      "hadronFlavour": 4,
+      "n_jets": 2371551,
+      "n_tagged": 348080,
+      "rate": 0.14677314550688558
+    },
+    "light/gluon": {
+      "hadronFlavour": 0,
+      "n_jets": 19977132,
+      "n_tagged": 480991,
+      "rate": 0.024077079732966675
+    },
+    "n_jets_total": 29727943,
+    "n_unknown_hadronFlavour": 0
+  },
+  "eligible_pt_gt_20_abseta_lt_2.4": {
+    "b": {
+      "hadronFlavour": 5,
+      "n_jets": 6526050,
+      "n_tagged": 5017244,
+      "rate": 0.7688025681691069
+    },
+    "c": {
+      "hadronFlavour": 4,
+      "n_jets": 1908811,
+      "n_tagged": 307287,
+      "rate": 0.16098346038450115
+    },
+    "light/gluon": {
+      "hadronFlavour": 0,
+      "n_jets": 11714711,
+      "n_tagged": 304470,
+      "rate": 0.025990397885188973
+    },
+    "n_jets_total": 20149572,
+    "n_unknown_hadronFlavour": 0
+  },
+  "eligible_cut_definition": {
+    "pt_min_gev": 20.0,
+    "abseta_max": 2.4,
+    "why": "DeepJet is only calibrated/recommended inside the tracker acceptance and above a minimum jet pT; this is the standard region official b-tag POG efficiency numbers quote, used here only as a cross-check against the no-cut headline numbers above."
+  }
+}
