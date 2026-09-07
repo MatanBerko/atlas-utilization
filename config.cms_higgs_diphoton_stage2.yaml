@@ -1,0 +1,175 @@
+# ---------------------------------------------------------------------------
+# config.cms_higgs_diphoton_stage2.yaml
+#
+# Stage 2 of the H -> gamma gamma rediscovery exercise: scale Stage 1's
+# VALIDATED selection (branch analysis/higgs-diphoton-stage1-idveto, commit
+# 961a95c) up to full statistics -- ALL files in both DoubleEG records,
+# instead of the 10/record used for Stage 0 and Stage 1.
+#
+# Selection is IDENTICAL to Stage 1, unchanged, not redesigned:
+#   * >= 2 photons per record (selection_by_record, particle_counts).
+#   * photon kinematics: pT > 20 GeV, |eta| < 2.5.
+#   * Photon_electronVeto == True   (pixel-seed electron veto).
+#   * Photon_cutBased >= 1 (loose, Fall17V2 0-3 ordinal, confirmed on real
+#     files in Stage 1 -- see reports/higgs_diphoton_stage1_idveto/summary.md).
+#   * combinatorics: exactly the 2 leading photons -> diphoton mass.
+# The only change from config.cms_higgs_diphoton_stage1.yaml is scale
+# (max_files_to_process removed -> every file in both records is processed)
+# and run_name/tasks (see below).
+#
+# Records (same two DoubleEG records as Stage 0/1, UL2016 MiniAODv2 NanoAODv9):
+#   30521  /DoubleEG/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD  (78,797,031 evt, 47 files, 75.71 GB)
+#   30554  /DoubleEG/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD  (85,388,673 evt, 86 files, 83.81 GB)
+# 133 files, 159.52 GB total (exact sizes from the CERN Open Data filepage API,
+# not estimated) -- see reports/higgs_diphoton_stage2_fullscale/summary.md for
+# the runtime estimate derived from this figure and Stage 1's actually
+# observed throughput.
+#
+# threads: 1, unchanged from Stage 0/1 -- kept deliberately conservative for
+# this run precisely BECAUSE it is long and unattended: the 7.4 GiB Docker VM
+# has OOM-killed concurrent-file reads of NanoAOD files this size before
+# (documented on the diphoton Stage 0 investigation), and a crash partway
+# through a ~4 hour run is far more costly than a slower but reliable
+# single-threaded one.
+#
+# tasks: parsing + mass-calculation only, run via this config directly. The
+# real histogram_creation stage is run as a SEPARATE, fast follow-up
+# invocation once mass-calculation's output exists (see the report) --
+# because utils/paths.update_config_paths_with_run_dir only respects an
+# ABSOLUTE input_dir override for histogram_creation_task_config (relative
+# paths are always rewritten to <run_dir>/im_arrays_processed, i.e.
+# post-processing's output), and post-processing is deliberately OFF here for
+# the same reason as Stage 0/1: its rightmost-peak removal would reshape the
+# raw diphoton spectrum we actually want to look at. The follow-up run points
+# histogram_creation directly at this run's raw im_arrays output instead.
+#
+# do_post_processing: false, same reasoning as Stage 0/1.
+# ---------------------------------------------------------------------------
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: atlas_full_120
+  histogram_filename: atlas_opendata_full_bumpnet.root
+run_metadata:
+  run_name: cms_higgs_diphoton_stage2
+  base_output_dir: ./output
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: true
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years: []
+  specific_record_ids:
+  - 30521
+  - 30554
+  parse_mc: false
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 1
+  env_threshold_memory_mb: 5000
+  chunk_yield_threshold_bytes: 536870912
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  # Full scale: no cap. Was 10 for Stage 0/1; both records' full file counts
+  # (47 + 86 = 133) are processed this time.
+  max_files_to_process: null
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  - mini
+  - analysis
+  create_dirs: true
+  show_progress_bar: true
+  particle_counts:
+    photons:
+      min: 2
+      max: 10
+    electrons:
+      min: 0
+      max: 10
+    muons:
+      min: 0
+      max: 10
+    jets:
+      min: 0
+      max: 20
+  selection_by_record:
+    "30521":
+      particle_counts:
+        photons:
+          min: 2
+          max: 10
+        electrons:
+          min: 0
+          max: 10
+        muons:
+          min: 0
+          max: 10
+        jets:
+          min: 0
+          max: 20
+    "30554":
+      particle_counts:
+        photons:
+          min: 2
+          max: 10
+        electrons:
+          min: 0
+          max: 10
+        muons:
+          min: 0
+          max: 10
+        jets:
+          min: 0
+          max: 20
+  # Identical to Stage 1 -- the validated selection, unchanged.
+  kinematic_cuts:
+    photons:
+      pt_min: 20.0
+      eta_max: 2.5
+      electron_veto_required: true
+      cut_based_min: 1
+mass_calculation_task_config:
+  input_dir: ./output/parsed_data
+  output_dir: ./output/im_arrays
+  field_to_slice_by: pt
+  use_multiprocessing: true
+  parallel_processes: 4
+  fs_chunk_threshold_bytes: 2000000000
+  objects_to_calculate:
+  - Photons
+  min_particles_in_combination: 1
+  max_particles_in_combination: 6
+  min_count_particle_in_combination: 1
+  max_count_particle_in_combination: 50
+  max_total_particles_in_combination: 2
+  min_events_per_fs: 1
+post_processing_task_config:
+  input_dir: ./output/im_arrays
+  output_dir: ./output/im_arrays_processed
+  peak_detection_bin_width_gev: 10.0
+histogram_creation_task_config:
+  input_dir: ./output/im_arrays_processed
+  output_dir: ./output/histograms
+  bin_width_gev: 10.0
+  single_output_file: true
+  output_filename: atlas_opendata_full_bumpnet.root
+  exclude_outliers: true
+  use_bumpnet_naming: true

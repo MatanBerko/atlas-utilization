@@ -89,14 +89,25 @@ class ThreadedFileProcessor:
             
             with progress_bar as pbar:
                 for future in as_completed(futures):
-                    file_url = futures[future]
-                    
+                    # Pop (not index) -- a completed concurrent.futures.Future
+                    # caches its return value internally (the FULL raw parsed
+                    # array for that file, before any selection). `futures`
+                    # lives for this whole generator's lifetime, so leaving
+                    # consumed Futures in it keeps every processed file's raw
+                    # array pinned in memory for the entire run regardless of
+                    # thread count or selection tightness -- an unbounded,
+                    # file-count-scaled memory leak. Popping drops the last
+                    # reference to the Future (and its cached result) as soon
+                    # as we're done with it, so refcounting frees it
+                    # immediately without waiting on a cyclic-GC pass.
+                    file_url = futures.pop(future)
+
                     try:
                         result = future.result(timeout=300)  # 5 minute timeout per file
-                        
+
                         if result is not None:
                             events, processing_time = result
-                            
+
                             # Create EventBatch
                             batch = self._create_event_batch(
                                 events=events,
@@ -104,18 +115,18 @@ class ThreadedFileProcessor:
                                 release_year=release_year,
                                 processing_time=processing_time
                             )
-                            
+
                             # Callback
                             if on_success:
                                 on_success(file_url, batch.event_count, processing_time)
-                            
+
                             yield batch
-                    
+
                     except Exception as e:
                         logging.warning(f"Error processing file {file_url}: {e}")
                         if on_error:
                             on_error(file_url, e)
-                    
+
                     finally:
                         if self.show_progress:
                             pbar.update(1)
