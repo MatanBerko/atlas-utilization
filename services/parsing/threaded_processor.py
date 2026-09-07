@@ -50,25 +50,28 @@ class ThreadedFileProcessor:
         batch_size: int = 40_000,
         enable_jet_tagging: bool = False,
         jet_btagging_thresholds: Optional[dict[str, float]] = None,
+        include_truth_flavour: bool = False,
         on_success: Optional[Callable[[str, int, float], None]] = None,
         on_error: Optional[Callable[[str, Exception], None]] = None
     ) -> Iterator[EventBatch]:
         """
         Process multiple files concurrently and yield EventBatch objects.
-        
+
         Args:
             file_urls: List of file URLs to process
             tree_names: List of possible tree names
             release_year: Release year for schema lookup
             batch_size: Batch size for reading large files
+            include_truth_flavour: opt-in, default False (no effect on any
+                existing caller) -- see FileParser.parse_file.
             on_success: Optional callback(file_url, event_count, time_sec) on success
             on_error: Optional callback(file_url, exception) on error
-            
+
         Yields:
             EventBatch objects as files are successfully parsed
         """
         total_files = len(file_urls)
-        
+
         with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
             # Submit all parse jobs
             futures = {
@@ -80,6 +83,7 @@ class ThreadedFileProcessor:
                     batch_size,
                     enable_jet_tagging,
                     jet_btagging_thresholds,
+                    include_truth_flavour,
                 ): file_url
                 for file_url in file_urls
             }
@@ -128,22 +132,23 @@ class ThreadedFileProcessor:
         batch_size: int,
         enable_jet_tagging: bool,
         jet_btagging_thresholds: Optional[dict[str, float]],
+        include_truth_flavour: bool = False,
     ) -> Optional[tuple]:
         """
         Parse a single file (runs in thread).
-        
+
         Args:
             file_url: File URL to parse
             tree_names: List of possible tree names
             release_year: Release year
             batch_size: Batch size for reading
-            
+
         Returns:
             Tuple of (events, processing_time) or None if parsing failed
         """
         import time
         start_time = time.time()
-        
+
         events = self.file_parser.parse_file(
             file_path=file_url,
             tree_names=tree_names,
@@ -151,6 +156,7 @@ class ThreadedFileProcessor:
             batch_size=batch_size,
             enable_jet_tagging=enable_jet_tagging,
             jet_btagging_thresholds=jet_btagging_thresholds,
+            include_truth_flavour=include_truth_flavour,
         )
         
         processing_time = time.time() - start_time

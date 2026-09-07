@@ -1,0 +1,142 @@
+{
+  "config_files": [
+    "config.cms_ttbar_truth_crosscheck.yaml",
+    "config.cms_ttbar_truth_crosscheck_eta4p5.yaml"
+  ],
+  "threshold": 0.25,
+  "real_pipeline_results": {
+    "eta2p5": {
+      "run_dir": "output/cms_ttbar_truth_crosscheck_eta2p5_20260907_184239",
+      "eta_max": 2.5,
+      "pt_min": 30.0,
+      "n_events": 4000000,
+      "n_jets_raw_pipeline_output": 17480691,
+      "windowed_pt_gt_30_eta_window_applied_to_both_collections": {
+        "b": {
+          "hadronFlavour": 5,
+          "n_jets": 5931873,
+          "n_tagged": 4604229,
+          "rate": 0.7761846890518391
+        },
+        "c": {
+          "hadronFlavour": 4,
+          "n_jets": 1604713,
+          "n_tagged": 248307,
+          "rate": 0.15473608053278062
+        },
+        "light/gluon": {
+          "hadronFlavour": 0,
+          "n_jets": 8870316,
+          "n_tagged": 156959,
+          "rate": 0.01769486002527982
+        },
+        "n_jets_total": 16406902
+      },
+      "as_delivered_by_pipeline_no_extra_window": {
+        "b": {
+          "hadronFlavour": 5,
+          "n_jets": 6577185,
+          "n_tagged": 5249019,
+          "rate": 0.7980646735647545
+        },
+        "c": {
+          "hadronFlavour": 4,
+          "n_jets": 1704984,
+          "n_tagged": 348080,
+          "rate": 0.20415440848711777
+        },
+        "light/gluon": {
+          "hadronFlavour": 0,
+          "n_jets": 9198522,
+          "n_tagged": 480991,
+          "rate": 0.05229003094192741
+        },
+        "n_jets_total": 17480691
+      }
+    },
+    "eta4p5": {
+      "run_dir": "output/cms_ttbar_truth_crosscheck_eta4p5_20260907_184804",
+      "eta_max": 4.5,
+      "pt_min": 30.0,
+      "n_events": 4000000,
+      "n_jets_raw_pipeline_output": 19071322,
+      "windowed_pt_gt_30_eta_window_applied_to_both_collections": {
+        "b": {
+          "hadronFlavour": 5,
+          "n_jets": 6271216,
+          "n_tagged": 4627455,
+          "rate": 0.7378879949279374
+        },
+        "c": {
+          "hadronFlavour": 4,
+          "n_jets": 1719636,
+          "n_tagged": 249607,
+          "rate": 0.14515106685368298
+        },
+        "light/gluon": {
+          "hadronFlavour": 0,
+          "n_jets": 10034336,
+          "n_tagged": 160418,
+          "rate": 0.015986907354906193
+        },
+        "n_jets_total": 18025188
+      },
+      "as_delivered_by_pipeline_no_extra_window": {
+        "b": {
+          "hadronFlavour": 5,
+          "n_jets": 6893238,
+          "n_tagged": 5249019,
+          "rate": 0.7614736354671056
+        },
+        "c": {
+          "hadronFlavour": 4,
+          "n_jets": 1818595,
+          "n_tagged": 348080,
+          "rate": 0.1914005042354125
+        },
+        "light/gluon": {
+          "hadronFlavour": 0,
+          "n_jets": 10359489,
+          "n_tagged": 480991,
+          "rate": 0.04642999283072746
+        },
+        "n_jets_total": 19071322
+      }
+    }
+  },
+  "standalone_script_result_for_comparison": {
+    "label": "Earlier standalone script (pT>20, |eta|<2.4; NOT services/parsing)",
+    "b": {
+      "n_jets": 6526050,
+      "n_tagged": 5017244,
+      "rate": 0.7688025681691069
+    },
+    "c": {
+      "n_jets": 1908811,
+      "n_tagged": 307287,
+      "rate": 0.16098346038450115
+    },
+    "light/gluon": {
+      "n_jets": 11714711,
+      "n_tagged": 304470,
+      "rate": 0.025990397885188973
+    }
+  },
+  "three_way_comparison": {
+    "b_efficiency": {
+      "standalone_script_pt20_eta2p4": 0.7688025681691069,
+      "real_pipeline_eta2p5": 0.7761846890518391,
+      "real_pipeline_eta4p5": 0.7378879949279374
+    },
+    "c_mistag": {
+      "standalone_script_pt20_eta2p4": 0.16098346038450115,
+      "real_pipeline_eta2p5": 0.15473608053278062,
+      "real_pipeline_eta4p5": 0.14515106685368298
+    },
+    "light_mistag": {
+      "standalone_script_pt20_eta2p4": 0.025990397885188973,
+      "real_pipeline_eta2p5": 0.01769486002527982,
+      "real_pipeline_eta4p5": 0.015986907354906193
+    }
+  }
+}

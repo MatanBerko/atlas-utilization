@@ -313,3 +313,243 @@ does **not** reproduce the real per-event distribution - not in the zero-tag
 bin, not in the two-tag bin, and not at all in the 3+ tag bins that mistags and
 acceptance losses populate but the model cannot. That mismatch is reported
 plainly here rather than smoothed over.
+
+---
+
+## Real-pipeline cross-check (2026-09-07) - using services/parsing verbatim
+
+Everything above this line used a standalone script reading raw NanoAOD
+branches directly, with its own ad hoc jet cut (pT>20 GeV, |eta|<2.4) - **not**
+the actual production parsing/tagging code. Per Maryna, this section redoes the
+measurement through the **real** `services/parsing` selection/tagging path,
+unmodified, with generator truth carried through additively. This section adds
+to the report; nothing above is overwritten.
+
+### Step 1 - what the real jet selection/tagging code actually does
+
+Read in full: `services/parsing/file_parser.py` (`FileParser.parse_file`,
+`_parse_opened_file`, `_extract_branches_by_schema`,
+`_calculate_btagging_and_split`), `services/parsing/event_selection.py`
+(`apply_parsing_event_selection`), `services/calculations/physics_calcs.py`
+(`filter_events_by_kinematics`, `filter_events_by_particle_counts`), and
+`services/parsing/schemas.py` (the `cms-nanoaod` `Jets` field list). Also
+grepped the whole repository for jet-quality-flag names (`jetId`, `puId`,
+pileup-jet-ID, tight/loose lepton-veto ID, clean-jet masks) - **zero matches
+anywhere**.
+
+**Every cut/requirement actually applied to a jet, end to end, exactly as
+coded:**
+
+1. **Branch read.** `Jet_pt`, `Jet_eta`, `Jet_phi`, `Jet_mass` (the `Jets`
+   schema object) plus `Jet_btagDeepFlavB` as a separate "direct object" (not
+   part of the `Jets` field list). **No jet ID flag, no pileup-jet ID, no
+   quality flag of any kind is read or applied anywhere in this codebase** -
+   confirmed by both reading every relevant function and an exhaustive
+   case-insensitive grep for the standard flag names across the whole repo.
+2. **Tagging split** (`FileParser._calculate_btagging_and_split`, only runs
+   when `enable_jet_tagging: true`): `is_bjet = Jet_btagDeepFlavB > threshold`,
+   computed on **every** jet in the event, straight off the raw branch, with
+   **no pT/eta pre-cut of any kind**. Tagged jets move to a new `BJets`
+   collection; the rest stay in `Jets`.
+3. **Kinematic cut** (`event_selection.apply_parsing_event_selection` ->
+   `physics_calcs.filter_events_by_kinematics`), applied **after** step 2,
+   separately per named collection. `kinematic_cuts.jets: {pt_min, eta_max}`
+   is looked up by the canonical collection name `"Jets"`.
+4. **Finding, verified three independent ways (code reading, a synthetic unit
+   test, and the real production output itself - see below): the `"jets"`
+   kinematic cut is NEVER applied to the `"BJets"` collection.**
+   `filter_events_by_kinematics` looks up cuts by exact collection name (with
+   only a `.lower()`/`.capitalize()` fallback); nothing in the config or code
+   ever maps a `"jets"` cut onto `"BJets"`. So **as this pipeline stands
+   today, tagged jets receive no pT or eta cut at all, regardless of what
+   `pt_min`/`eta_max` a config sets.** This is existing, unmodified production
+   behaviour - not something this task changed or fixed (see Step 2/3 - it was
+   deliberately left alone and worked around only at analysis time).
+5. **Event-count filter** (`filter_events_by_particle_counts`), only applied
+   if a config sets `particle_counts` - filters whole events by object
+   multiplicity; does not touch which individual jets are kept once an event
+   survives.
+
+**Live confirmation on real production output** (not just code reading):
+reading the actual parsed ROOT file from this task's own run
+(`jets.pt_min: 30`, `eta_max: 2.5`):
+
+| | `Jets` (untagged) | `BJets` (tagged) |
+|---|---:|---:|
+| min pT | 30.0 GeV (cut enforced) | **15.0 GeV** (below the 30 GeV cut) |
+| max \|eta\| | 2.5 (cut enforced) | **2.90** (above the 2.5 cut) |
+
+This is real, not hypothetical: the tagged-jet collection this pipeline
+produces today genuinely contains jets below the configured pT floor and
+outside the configured eta window, because the cut is structurally never
+matched against it.
+
+### Step 2 - additive truth-carrying capability (no production behaviour changed)
+
+New opt-in flag, `parsing_task_config.include_truth_flavour` (default `false`,
+absent from every existing config/branch):
+
+- `domain/config.py`: `ParsingConfig.include_truth_flavour: bool = False`.
+- `services/parsing/schemas.py`: new `NANOAOD_TRUTH_OBJECTS = ["Jet_hadronFlavour"]`,
+  only added to the direct-object read list when the flag is set.
+- `services/parsing/file_parser.py`: `parse_file` / `_parse_opened_file` /
+  `_extract_branches_by_schema` / `_calculate_btagging_and_split` all gained an
+  `include_truth_flavour` parameter (default `False`), threaded through
+  `services/parsing/threaded_processor.py` and
+  `orchestration/handlers/parsing_handler.py` the same way
+  `enable_jet_tagging`/`jet_btagging_thresholds` already are. When `True`,
+  `_calculate_btagging_and_split` attaches `hadronFlavour` (generator truth,
+  simulated samples only) **and** `btagScore` (the raw discriminant) onto
+  **both** resulting collections, split with the exact same `is_bjet`/`~is_bjet`
+  mask already used for the real tag decision - no parallel/reimplemented
+  selection logic of any kind.
+- `btagScore` was added alongside `hadronFlavour`, slightly beyond the task's
+  literal example, because the real production path **discards**
+  `Jet_btagDeepFlavB` after computing the tag split (`obj_events.pop("DirectObjects")`)
+  - without also carrying the raw score through, Step 5's flavour-split score
+    plot could not be built from real pipeline output at all. Same opt-in
+    pattern, same single flag, zero effect when unset.
+
+**Verified additive/non-invasive** with a Docker unit test before running on
+real data: (a) with the flag omitted, `_calculate_btagging_and_split` output
+is byte-identical to before (only `pt/eta/phi/mass` on `Jets`/`BJets`); (b)
+with the flag set on synthetic data with a fake truth branch, `hadronFlavour`
+and `btagScore` appear correctly split per jet; (c) with the flag set but no
+truth branch present (i.e. accidentally used on real data), it degrades
+gracefully - `btagScore` is added, `hadronFlavour` is simply absent, no crash.
+This did not require anything more invasive than the additive pattern the task
+asked for, so no SAFETY stop was needed.
+
+### Step 3 - the config, and confirming MC input works the same way
+
+`config.cms_ttbar_truth_crosscheck.yaml` (`eta_max: 2.5`) and
+`config.cms_ttbar_truth_crosscheck_eta4p5.yaml` (`eta_max: 4.5`, otherwise
+identical), both based on `config.cms_bjet_test.yaml`, pointing at record
+**67993** (`/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM`),
+`max_files_to_process: 3` (reproduces the exact same 3 files already used
+elsewhere on this branch - `08FCB2ED...`, `0BD60695...`, `4F3C361D...` -
+verified in the run logs), `enable_jet_tagging: true`,
+`jet_btagging_thresholds.Jet_btagDeepFlavB: 0.25`, `include_truth_flavour: true`.
+Both configs are documented in full in their own header comments, including
+every deliberate deviation from `config.cms_bjet_test.yaml` and why (dropped
+the `>=1 electron` particle-count requirement so every event's jets are read,
+matching the earlier standalone script's universe; `do_mass_calculating: false`
+since only parsed jet-level output is needed; `threads: 1` to avoid the
+Docker-VM OOM other large-file work on this project has hit).
+
+**Two discrepancies against the task's own framing, reported rather than
+silently "corrected":**
+
+- The task described `eta_max: 2.5` as "matching real production config."
+  **It does not** - `config.cms_bjet_test.yaml`'s actual jet cut is
+  `eta_max: 4.5`; `2.5` is that config's **muon** eta cut, not the jet cut.
+  Both requested values (2.5 and 4.5) were run exactly as specified regardless.
+- **Confirming MC access works the same way as real data, checked directly
+  rather than assumed:** it does, with one clarification worth knowing.
+  `services/metadata/fetcher.py`'s `fetch_by_record_ids` (the code path every
+  `specific_record_ids` config, including this one, uses) has **no MC/data
+  branching at all** - the `_mc`-suffix key-splitting logic
+  (`_separate_mc_files`) only ever runs on the ATLAS release-year fetch path
+  (`fetch_by_release_years`), never on the CMS record-ID path. Record 67993 is
+  fetched into the plain key `"record_67993"` (confirmed in the run log: `1
+  release year(s), 138 total files`), parsed by the identical
+  `FileParser`/`ThreadedFileProcessor` code as any real CMS record, through
+  the identical schema lookup (once registered - see below). **`parse_mc` has
+  no effect whatsoever for this record**, in either direction; it was left
+  `false` to match `config.cms_bjet_test.yaml`; changing it would change
+  nothing. The only actual difference between MC and real input here is data
+  content, not code path: this file has extra generator-truth branches
+  (`Jet_hadronFlavour`) that real NanoAOD never has, which is exactly what
+  Step 2's opt-in flag exists to read.
+- One required infrastructure addition, same pattern as every previous new CMS
+  record on this project: registered `67993: "cms-nanoaod"` in
+  `services/parsing/schemas.py`'s `RECORD_ID_TO_SCHEMA` (without it, the
+  parser can't resolve a schema for an unregistered record ID at all and falls
+  back to auto-detection, which fails for NanoAOD's flat branch naming).
+
+Both parsing-only runs completed 3/3 files, 100% success, 4,000,000 events,
+**0 events dropped** (no `particle_counts` filtering configured, by design -
+every event's jets are read).
+
+### Step 4 - the three-way comparison
+
+Computed from the **real, actually-parsed pipeline output** (the `Jets` +
+`BJets` collections as the real code split them, with truth carried through) -
+not re-derived. Per the Step 1 finding, `BJets` never receives the config's
+pT/eta cut from the pipeline itself, so the analysis script
+(`scripts/ttbar_truth_crosscheck_real_pipeline.py`) applies the SAME
+(pT>30 GeV, |eta|<eta_max) window to both `Jets` and `BJets` using their own
+real, carried-through pt/eta fields when computing these numbers - a
+reporting-time slice of already-decided real fields, not a new selection rule.
+
+| | b-tagging efficiency | c-jet mistag | **light-jet mistag** |
+|---|---:|---:|---:|
+| Earlier standalone script (pT>20, \|eta\|<2.4; **not** services/parsing) | 76.88 % | 16.10 % | **2.60 %** |
+| **Real pipeline, eta<2.5** (pT>30, production-matching label) | **77.62 %** | 15.47 % | **1.77 %** |
+| **Real pipeline, eta<4.5** (pT>30, Maryna's ATLAS-parity window) | **73.79 %** | 14.52 % | **1.60 %** |
+
+**Does moving to the real pipeline resolve the earlier elevated light-jet
+mistag? Substantially, yes - but not completely, stated plainly:**
+
+- Light mistag drops from **2.60 % to 1.60-1.77 %** - a real ~32-38 %
+  reduction, not a rounding effect (these are ratios of millions of jets, so
+  statistical noise is negligible). This moves it much closer to the commonly
+  quoted ~1 %, but it still sits **~1.6-1.8x above** that figure, not at it.
+- b-tagging efficiency stays broadly consistent (73.8-77.6 %) with the
+  official ~75-80 % range - the eta<2.5 window (77.6 %) sits comfortably
+  inside it; the wider eta<4.5 window (73.8 %) falls just **below** it,
+  plausibly because it admits more forward jets with weaker tracking coverage
+  (consistent with this branch's earlier finding that b-tagging depends on
+  tracker acceptance).
+- **A cross-check that increases confidence in both approaches:** the real
+  pipeline's raw tagged-jet counts, taken with no extra window at all (the
+  "as delivered" numbers in `stats_real_pipeline.json`), are **b: 5,249,019,
+  c: 348,080, light: 480,991 tagged jets - identical in both eta-window runs,
+  and identical to the very first truth cross-check's "no cut" tagged counts**
+  earlier in this report. That is expected (same 3 files, same 0.25 threshold,
+  same tagging formula, computed on the full unfiltered jet population either
+  way) and confirms both code paths compute the same underlying tag decision
+  correctly.
+- **Most likely driver of the improvement (plausible, not separately proven
+  here):** the pT floor differs, 20 GeV (standalone) vs 30 GeV (real
+  production config, per the task's own instruction to keep it unchanged).
+  Raising the pT floor removes a chunk of the softest light jets, which are
+  disproportionately prone to instrumental/pileup-related mistags - a
+  well-known pT dependence of light-jet mistag rates. This was not separately
+  re-tested at pT>20 through the real pipeline (the task fixed pT at 30 GeV
+  for both requested runs, and the `Jets` collection from these runs has
+  already had anything below 30 GeV removed at parse time, so isolating the
+  pT effect alone would need a third run outside this task's scope). The
+  honest conclusion is: real-pipeline fidelity plus the production pT cut
+  together materially improve the light-mistag figure and bring it much closer
+  to the textbook ~1 %, but do not fully close the gap on these 3 files.
+
+### Step 5 - plots
+
+- **`plots/btag_score_by_true_flavour.png`** - regenerated as the new primary
+  plot, eta<2.5, sourced from the real pipeline's `Jets`/`BJets` output (this
+  overwrites the file of the same name from the earlier standalone-script
+  version; the numbers/table above are what changed, nothing was hidden).
+- **`plots/btag_score_by_true_flavour_eta4p5.png`** - new, same real-pipeline
+  source, eta<4.5.
+
+Both show the same qualitative shape as before (light jets peak sharply near
+0 and fall fastest; b-jets are broad and rise toward 1; c-jets sit between) -
+confirming the tagger behaves sensibly under the real selection too - with a
+visibly lower light-jet curve above the 0.25 line than the original
+standalone-script plot, consistent with the improved light-mistag numbers
+above.
+
+### Production behaviour confirmed unchanged
+
+`include_truth_flavour` defaults to `False` and is absent from every existing
+config (`config.cms_bjet_test.yaml`, `config.cms_records_master.yaml`, all
+CMS/ATLAS configs on every other branch). No existing config sets it. The
+Docker unit test above confirms the code path is byte-identical when it is
+unset. Only five files were touched, all additive: `domain/config.py`,
+`orchestration/handlers/parsing_handler.py`,
+`services/parsing/file_parser.py`, `services/parsing/schemas.py`, and
+`services/parsing/threaded_processor.py` - each gained a new optional
+parameter/field with a `False`/absent default and a registration for record
+67993; no existing `kinematic_cuts`/`particle_counts`/tagging behaviour, code
+path, or default was modified.

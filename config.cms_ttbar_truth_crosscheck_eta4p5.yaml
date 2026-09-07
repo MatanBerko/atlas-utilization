@@ -1,0 +1,174 @@
+# ---------------------------------------------------------------------------
+# config.cms_ttbar_truth_crosscheck_eta4p5.yaml   (WIDE: jets.eta_max = 4.5)
+#
+# Identical to config.cms_ttbar_truth_crosscheck.yaml (read that file's header
+# for the full explanation) except jets.eta_max is 4.5 instead of 2.5 and
+# run_name differs so the two runs write to separate output directories. Per
+# the task: 2.5 was described as "matching real production config" and 4.5 as
+# "matching Maryna's own ATLAS validation window" -- NOTE (Step 1 finding,
+# also called out in the report): config.cms_bjet_test.yaml's actual jets
+# kinematic cut is eta_max: 4.5, not 2.5 (2.5 is that config's MUON eta cut).
+# So, strictly, 4.5 -- this file -- is what current production actually uses;
+# 2.5 is the narrower window. Both requested values were run exactly as
+# specified regardless; this discrepancy is reported plainly rather than
+# silently relabelled.
+#
+# Real-pipeline version of the ttbar b-tag truth cross-check on branch
+# analysis/ttbar-btag-truth-crosscheck. The earlier version of this check used
+# a standalone script with its own ad hoc jet cut (pT>20, |eta|<2.4), reading
+# raw branches directly -- NOT services/parsing. Per Maryna, this version uses
+# the REAL, unmodified jet selection/tagging code path in services/parsing
+# (FileParser._calculate_btagging_and_split + event_selection's kinematic-cut
+# filter), driven only by this config, with generator truth carried through
+# via the new opt-in `include_truth_flavour` flag (additive; see
+# services/parsing/file_parser.py -- no existing config/branch is affected).
+#
+# Dataset: CERN Open Data record 67993,
+#   /TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-
+#   106X_mcRun2_asymptotic_v17-v1/NANOAODSIM  (simulated, NOT real collision
+#   data -- carries Jet_hadronFlavour, which real NANOAOD never has).
+#
+# Confirmed via services/metadata/fetcher.py (MetadataFetcher.fetch_by_record_ids,
+# the code path specific_record_ids always uses): it fetches this MC record
+# through the EXACT SAME code as any real CMS record -- no MC/data branching
+# exists on that path at all (the data/MC key-splitting in
+# _separate_mc_files is only ever applied on the ATLAS release-year fetch
+# path, fetch_by_release_years; fetch_by_record_ids never calls it). So
+# `parse_mc` below has NO effect either way for this record -- left False to
+# match config.cms_bjet_test.yaml, not because it matters. See
+# reports/ttbar_btag_truth_crosscheck/summary.md for the full investigation.
+#
+# Same 3 files already used elsewhere on this branch (08FCB2ED..., 0BD60695...,
+# 4F3C361D...) -- max_files_to_process: 3 reproduces them because
+# fetch_by_record_ids returns a stable file order (already verified empirically
+# across multiple independent fetches earlier on this branch).
+#
+# Deviations from config.cms_bjet_test.yaml, and why:
+#   * do_mass_calculating: false -- this check only needs per-jet
+#     tag-status + truth from the PARSING stage output; no invariant-mass
+#     combinatorics are computed or needed.
+#   * jet_btagging_thresholds: 0.25, not 0.2598 -- the project standardized on
+#     0.25 everywhere (see config.cms_bjet_test.yaml on branch
+#     analysis/btag-score-distribution and this branch's own earlier ttbar
+#     cross-check commits, which already use 0.25). Using 0.2598 here would
+#     make the "three-way comparison" table inconsistent with itself.
+#   * particle_counts: removed entirely -- config.cms_bjet_test.yaml requires
+#     >=1 electron per event (a SingleElectron trigger-matching filter, unrelated
+#     to jet selection). The earlier standalone script applied NO event-level
+#     filter at all before reading jets. Keeping the electron requirement here
+#     would silently restrict which events' jets enter the sample in a way the
+#     comparison baseline never did, making the three-way table apples-to-oranges.
+#     Removing it means every event's jets are read, matching the standalone
+#     script's universe exactly, while the jet-level cuts and the tagging split
+#     itself remain the real, untouched services/parsing code.
+#   * kinematic_cuts: only "jets" kept (electrons/muons/photons cuts dropped) --
+#     irrelevant here now that particle_counts no longer gates on them.
+#   * threads: 1, not 4 -- ttbar NANOAODSIM files here run ~2.6-2.9 GB each,
+#     larger than the SingleElectron files config.cms_bjet_test.yaml was tuned
+#     for; threads>1 concurrent reads of files this size have caused Docker VM
+#     (7.4 GiB) OOMs in other work on this project. threads: 1 avoids that.
+#   * include_truth_flavour: true (new) -- see services/parsing/file_parser.py.
+#
+# IMPORTANT (Step 1 finding, see the report): FileParser._calculate_btagging_and_split
+# computes the tagging decision on the FULL, not-yet-kinematically-cut Jets
+# collection (kinematic cuts run later, per-collection). And because
+# filter_events_by_kinematics keys cuts by canonical collection name, a
+# "jets:" kinematic_cuts entry is only ever matched against the "Jets"
+# (untagged) collection -- the "BJets" collection this split produces never
+# receives ANY kinematic cut in this pipeline, regardless of this file's
+# pt_min/eta_max values. This is existing, unchanged production behaviour; it
+# is why the analysis script re-applies the same (pt, eta) window to BOTH
+# Jets and BJets at read time using their real, carried-through pt/eta fields,
+# rather than relying on the pipeline to have already restricted BJets by eta.
+# ---------------------------------------------------------------------------
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: atlas_full_120
+  histogram_filename: atlas_opendata_full_bumpnet.root
+run_metadata:
+  run_name: cms_ttbar_truth_crosscheck_eta4p5
+  base_output_dir: ./output
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: false
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years: []
+  specific_record_ids:
+  - 67993
+  parse_mc: false
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 1
+  env_threshold_memory_mb: 5000
+  chunk_yield_threshold_bytes: 536870912
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  max_files_to_process: 3
+  # --- CMS b-jet tagging: same real path as config.cms_bjet_test.yaml ---
+  enable_jet_tagging: true
+  jet_btagging_thresholds:
+    Jet_btagDeepFlavB: 0.25   # project-standardized value (see header comment)
+  # --- Opt-in truth carry-through (additive; see services/parsing/file_parser.py) ---
+  include_truth_flavour: true
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  - mini
+  - analysis
+  create_dirs: true
+  show_progress_bar: true
+  # No event-level particle-count filtering (see header comment) -- every
+  # event's jets are read, matching the earlier standalone script's universe.
+  particle_counts: null
+  kinematic_cuts:
+    jets:
+      pt_min: 30.0
+      eta_max: 4.5
+mass_calculation_task_config:
+  input_dir: ./output/parsed_data
+  output_dir: ./output/im_arrays
+  field_to_slice_by: pt
+  use_multiprocessing: true
+  parallel_processes: 4
+  fs_chunk_threshold_bytes: 2000000000
+  objects_to_calculate:
+  - Electrons
+  - Muons
+  - Jets
+  - BJets
+  min_particles_in_combination: 2
+  max_particles_in_combination: 4
+  min_count_particle_in_combination: 1
+  max_count_particle_in_combination: 4
+  min_events_per_fs: 5
+post_processing_task_config:
+  input_dir: ./output/im_arrays
+  output_dir: ./output/im_arrays_processed
+  peak_detection_bin_width_gev: 10.0
+histogram_creation_task_config:
+  input_dir: ./output/im_arrays_processed
+  output_dir: ./output/histograms
+  bin_width_gev: 10.0
+  single_output_file: true
+  output_filename: atlas_opendata_full_bumpnet.root
+  exclude_outliers: true
+  use_bumpnet_naming: true

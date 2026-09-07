@@ -38,6 +38,17 @@ NANOAOD_BTAGGING_OBJECTS = [
     "Jet_btagDeepFlavB"
 ]
 
+# Generator-level truth, present only in simulated (NANOAODSIM) samples, never
+# in real collision data. Read as an additional "direct object" (same
+# mechanism as NANOAOD_BTAGGING_OBJECTS above) ONLY when a parsing run opts in
+# via ParsingConfig.include_truth_flavour -- see FileParser._extract_branches_by_schema
+# and FileParser._calculate_btagging_and_split. Absent/false (the default,
+# unchanged for every existing config) means this is never even attempted, so
+# real-data parsing is byte-for-byte unaffected.
+NANOAOD_TRUTH_OBJECTS = [
+    "Jet_hadronFlavour"
+]
+
 # Scalar per-event branches that uniquely identify a real collision event.
 # Read (like direct_objects) as flat, one-value-per-event branches and kept as
 # top-level scalar fields on the parsed event record. Used for cross-trigger-
@@ -51,10 +62,11 @@ NANOAOD_EVENT_ID_BRANCHES = [
 # Mapping from specific record IDs to their release year/schema identifier
 # This will be populated when schemas are extracted from record IDs
 RECORD_ID_TO_SCHEMA = {
-    30529: "cms-nanoaod",  # NanoAOD format
-    30562: "cms-nanoaod",  # NanoAOD format
-    30530: "cms-nanoaod",  # NanoAOD format
-    30563: "cms-nanoaod",  # NanoAOD format
+    30529: "cms-nanoaod",  # /SingleElectron/Run2016G  NanoAODv9
+    30562: "cms-nanoaod",  # /SingleElectron/Run2016H  NanoAODv9
+    30530: "cms-nanoaod",  # /SingleMuon/Run2016G      NanoAODv9
+    30563: "cms-nanoaod",  # /SingleMuon/Run2016H      NanoAODv9
+    67993: "cms-nanoaod",  # /TTToSemiLeptonic_.../NANOAODSIM  (simulated; same NanoAOD flat schema)
 }
 
 # Release-specific branch naming templates

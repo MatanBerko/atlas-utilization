@@ -57,6 +57,12 @@ class ParsingConfig:
     max_files_to_process: Optional[int] = None  # Limit files (for testing)
     enable_jet_tagging: bool = False
     jet_btagging_thresholds: Optional[dict] = None
+    # Opt-in only (default False everywhere): additionally read
+    # Jet_hadronFlavour (generator truth, simulated samples only) and carry it
+    # + the raw tagging discriminant through onto the split Jets/BJets
+    # collections. No effect on parsing behaviour/output/performance when
+    # False -- see services/parsing/file_parser.py.
+    include_truth_flavour: bool = False
 
     # Optional selection (from YAML): applied after reading each file, before chunking
     particle_counts: Optional[dict] = None
@@ -312,6 +318,7 @@ class PipelineConfig:
                 max_files_to_process=parsing_dict.get("max_files_to_process"),
                 enable_jet_tagging=parsing_dict.get("enable_jet_tagging", False),
                 jet_btagging_thresholds=parsing_dict.get("jet_btagging_thresholds", None),
+                include_truth_flavour=parsing_dict.get("include_truth_flavour", False),
                 particle_counts=parsing_dict.get("particle_counts"),
                 kinematic_cuts=parsing_dict.get("kinematic_cuts"),
                 selection_by_record=parsing_dict.get("selection_by_record"),

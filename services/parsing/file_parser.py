@@ -31,16 +31,23 @@ class FileParser:
         batch_size: int = 40_000,
         enable_jet_tagging: bool = False,
         jet_btagging_thresholds: Optional[dict[str, float]] = None,
+        include_truth_flavour: bool = False,
     ) -> Optional[ak.Array]:
         """
         Parse a single ROOT file and return events.
-        
+
         Args:
             file_path: Path or URI to ROOT file
             tree_names: List of possible tree names to search for
             release_year: Release year identifier (e.g., "2024r-pp")
             batch_size: Number of entries to process per batch
-            
+            include_truth_flavour: Opt-in (default False everywhere). When True
+                AND enable_jet_tagging is True, also reads Jet_hadronFlavour
+                (generator truth, simulated samples only) and carries it, plus
+                the raw tagging discriminant, through onto the split Jets/BJets
+                collections. No effect of any kind when False/absent -- every
+                existing config leaves this unset.
+
         Returns:
             Awkward array of events with particle objects, or None if parsing failed
         """
@@ -54,11 +61,12 @@ class FileParser:
                     file_path,
                     enable_jet_tagging,
                     jet_btagging_thresholds,
+                    include_truth_flavour,
                 )
         except Exception as e:
             logging.warning(f"Failed to open file {file_path}: {e}")
             return None
-    
+
     @staticmethod
     def _parse_opened_file(
         root_file,
@@ -67,17 +75,19 @@ class FileParser:
         batch_size: int,
         file_path: str,
         enable_jet_tagging: bool,
-        jet_btagging_thresholds: Optional[dict[str, float]]
+        jet_btagging_thresholds: Optional[dict[str, float]],
+        include_truth_flavour: bool = False,
     ) -> Optional[ak.Array]:
         """Parse an already-opened ROOT file."""
         tree_name = FileParser._get_data_tree_name(root_file.keys(), tree_names)
         tree = root_file[tree_name]
         all_tree_branches = set(tree.keys())
         n_entries = tree.num_entries
-        
+
         obj_branches = FileParser._extract_branches_by_schema(
             all_tree_branches,
-            release_year
+            release_year,
+            include_truth_flavour,
         )
 
         if not obj_branches:
@@ -101,7 +111,9 @@ class FileParser:
             batch_size
         )
         if enable_jet_tagging:
-            obj_events = FileParser._calculate_btagging_and_split(obj_events, jet_btagging_thresholds)
+            obj_events = FileParser._calculate_btagging_and_split(
+                obj_events, jet_btagging_thresholds, include_truth_flavour
+            )
         # Strip out DirectObjects -- they are not physics objects!
         obj_events.pop("DirectObjects")
 
@@ -145,12 +157,32 @@ class FileParser:
     @staticmethod
     def _calculate_btagging_and_split(
         obj_events: dict[str, ak.Array],
-        jet_btagging_thresholds: Optional[dict[str, float]]
+        jet_btagging_thresholds: Optional[dict[str, float]],
+        include_truth_flavour: bool = False,
     ) -> dict[str, ak.Array]:
         """
         For each Jet objects in each event, calculates the b-tagging discriminant.
         Then, decides if each jet is a bjet or not, using the per-algorithm threshold in `jet_btagging_thresholds`.
         If bjet, stores in obj_events["BJet"] and removes from obj_events["Jets"]. Otherwise, leaves the Jet be.
+
+        The tagging decision itself (is_bjet) is computed here on the FULL,
+        not-yet-kinematically-cut Jets collection -- kinematic cuts (pT/eta)
+        are only applied later, per-collection, by
+        services.parsing.event_selection.apply_parsing_event_selection. Note
+        that filter_events_by_kinematics keys cuts by canonical collection
+        name (e.g. "Jets"), so a "jets" cut in kinematic_cuts is never matched
+        against the "BJets" collection produced by this split -- BJets
+        currently receive no kinematic cut at all in this pipeline, regardless
+        of config. This is existing behaviour, unchanged here; documented for
+        anyone reasoning about jet-selection fidelity.
+
+        include_truth_flavour (opt-in, default False -- no effect on any
+        existing config): when True, additionally carries the raw tagging
+        discriminant (as "btagScore") and, if the sample provides it
+        (simulated samples only), the generator-level truth flavour (as
+        "hadronFlavour") through onto BOTH resulting collections, split with
+        the exact same is_bjet/~is_bjet mask used for the real tagging
+        decision -- no separate/parallel selection logic.
         """
         # TODO Find a cleaner way to determine if dealing with nanoAOD, PHYSLITE, etc.
         # TODO Maybe add an explicit check if the algorithm-specific threshold exists in the configuration dict before
@@ -158,7 +190,8 @@ class FileParser:
         if "Jet_btagDeepFlavB" in obj_events["DirectObjects"].fields:
             # CMS: Discriminant is pre-calculated as the Jet_btagDeepFlavB field. Can change to a different algorithm if needed.
             # See https://cms-opendata-workshop.github.io/workshop2024-lesson-physics-objects/instructor/05-btagging.html
-            is_bjet = obj_events["DirectObjects"]["Jet_btagDeepFlavB"] > jet_btagging_thresholds["Jet_btagDeepFlavB"]
+            score = obj_events["DirectObjects"]["Jet_btagDeepFlavB"]
+            is_bjet = score > jet_btagging_thresholds["Jet_btagDeepFlavB"]
         elif "BTagging_AntiKt4EMPFlowAuxDyn.DL1dv01_pb" in obj_events["DirectObjects"].fields:
             # ATLAS
             indices = obj_events["DirectObjects"]["AnalysisJetsAuxDyn.btaggingLink/AnalysisJetsAuxDyn.btaggingLink.m_persIndex"]
@@ -167,12 +200,24 @@ class FileParser:
             pu = obj_events["DirectObjects"]["BTagging_AntiKt4EMPFlowAuxDyn.DL1dv01_pu"][indices]
             # DL1d score: log(pb / (fc*pc + (1-fc)*pu)), fc=0.018 is standard ATLAS.
             fc = 0.018
-            dl1d = np.log(pb / (fc * pc + (1 - fc) * pu))
-            is_bjet = dl1d > jet_btagging_thresholds["DL1d"]
+            score = np.log(pb / (fc * pc + (1 - fc) * pu))
+            is_bjet = score > jet_btagging_thresholds["DL1d"]
         else:
             return obj_events
-        obj_events["BJets"] = obj_events["Jets"][is_bjet]
-        obj_events["Jets"] = obj_events["Jets"][~is_bjet]
+
+        bjets = obj_events["Jets"][is_bjet]
+        jets = obj_events["Jets"][~is_bjet]
+
+        if include_truth_flavour:
+            bjets = ak.with_field(bjets, score[is_bjet], where="btagScore")
+            jets = ak.with_field(jets, score[~is_bjet], where="btagScore")
+            if "Jet_hadronFlavour" in obj_events["DirectObjects"].fields:
+                flavour = obj_events["DirectObjects"]["Jet_hadronFlavour"]
+                bjets = ak.with_field(bjets, flavour[is_bjet], where="hadronFlavour")
+                jets = ak.with_field(jets, flavour[~is_bjet], where="hadronFlavour")
+
+        obj_events["BJets"] = bjets
+        obj_events["Jets"] = jets
         return obj_events
     
     @staticmethod
@@ -194,11 +239,19 @@ class FileParser:
     @staticmethod
     def _extract_branches_by_schema(
         tree_branches: set[str],
-        release_year: str
+        release_year: str,
+        include_truth_flavour: bool = False,
     ) -> dict[str, dict[str, str]]:
         """
         Extract branches by object based on release-specific schema.
-        
+
+        include_truth_flavour: opt-in (default False, no effect on any
+            existing config). When True, also attempts schemas.NANOAOD_TRUTH_OBJECTS
+            (currently just Jet_hadronFlavour) as additional direct-object
+            branches -- harmless no-op on real data, where they don't exist
+            and are silently dropped by _filter_accessible_branches, same as
+            any other absent optional branch.
+
         Returns:
             Dict mapping object names to their branch mappings
             Format: {obj_name: {full_branch: quantity, ...}}
@@ -210,7 +263,7 @@ class FileParser:
                     record_id = int(release_year.split("_")[1])
                 except (ValueError, IndexError):
                     pass
-            
+
             schema_config = schemas.get_schema_for_release(release_year, record_id=record_id)
         except KeyError:
             logging.warning(
@@ -218,10 +271,12 @@ class FileParser:
                 "Attempting auto-detection."
             )
             return FileParser._auto_detect_branches(tree_branches)
-        
+
         obj_branches = {}
         objects = schema_config["objects"]
-        direct_objects = schema_config.get("direct_objects", [])
+        direct_objects = list(schema_config.get("direct_objects", []))
+        if include_truth_flavour:
+            direct_objects = direct_objects + list(schemas.NANOAOD_TRUTH_OBJECTS)
         event_id_branches = schema_config.get("event_id_branches", [])
         naming_pattern = schema_config.get("naming_pattern", "dotted")
         
