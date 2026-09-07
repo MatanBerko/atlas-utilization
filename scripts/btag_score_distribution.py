@@ -5,15 +5,15 @@ b-tagging discriminant `Jet_btagDeepFlavB`, read straight from the CERN
 NanoAOD source files.
 
 The pipeline parser only ever stores the final tagged / untagged split, not the
-score itself, so this re-reads the branch from the same small set of files the
-existing CMS b-jet test used: records 30529 + 30562 (/SingleElectron/Run2016G,H),
-first N files each - N matches config.cms_bjet_test.yaml's max_files_to_process
-(2). No tagging cut applied, no expansion of scope.
+score itself, so this re-reads the branch from all four CMS records used
+elsewhere in this repo - 30529 + 30562 (/SingleElectron/Run2016G,H) and
+30530 + 30563 (/SingleMuon/Run2016G,H) - first N files each (default 3, matching
+the medium-scale and b-jet-with-histograms runs). No tagging cut applied.
 
 Needs XRootD -> run under the WSL venv (~/btag_work/venv), not Docker/Windows:
 
     ~/btag_work/venv/bin/python -u scripts/btag_score_distribution.py \
-        --out-dir reports/btag_score_distribution --files-per-record 2
+        --out-dir reports/btag_score_distribution --files-per-record 3
 
 Plain HTTPS with normal certificate verification is used for the file-list
 lookup; TLS verification is never disabled anywhere.
@@ -51,6 +51,16 @@ MEDIUM_WP = 0.2598
 RECORDS = {
     30529: "SingleElectron Run2016G",
     30562: "SingleElectron Run2016H",
+    30530: "SingleMuon Run2016G",
+    30563: "SingleMuon Run2016H",
+}
+# per-record plot styling: colour + line style. Line style groups the trigger
+# stream (SingleElectron solid, SingleMuon dashed), colour distinguishes the era.
+REC_STYLE = {
+    30529: ("#1b7837", "-"),   # SingleElectron Run2016G
+    30562: ("#762a83", "-"),   # SingleElectron Run2016H
+    30530: ("#e08214", "--"),  # SingleMuon Run2016G
+    30563: ("#2166ac", "--"),  # SingleMuon Run2016H
 }
 # b-jet test jet kinematic cuts (config.cms_bjet_test.yaml), used only for the
 # reconcile-with-7.69% cross-check:
@@ -150,7 +160,8 @@ def plot_all(counts: np.ndarray, all_desc: dict, files_per_record: int, out_png:
     ax.set_ylabel("jets / 0.01  (log scale)")
     ax.set_title(
         f"CMS raw b-tag discriminant - {all_desc['n_jets']:,} jets, "
-        f"{files_per_record} files x 2 SingleElectron records\n"
+        f"{files_per_record} files x {len(RECORDS)} CMS records "
+        f"(2 SingleElectron + 2 SingleMuon)\n"
         f"{_outside_note(all_desc)}",
         fontsize=9)
     ax.set_xlim(0, 1)
@@ -162,17 +173,17 @@ def plot_all(counts: np.ndarray, all_desc: dict, files_per_record: int, out_png:
 
 def plot_by_record(per_counts: dict, per_desc: dict, out_png: Path):
     fig, ax = plt.subplots(figsize=(9.5, 5.6))
-    colors = {30529: "#2e7d32", 30562: "#6a1b9a"}
     for rid, counts in per_counts.items():
         dens = counts / counts.sum() / 0.01   # normalised density per unit score
-        ax.stairs(dens, BINS, lw=1.7, color=colors[int(rid)],
+        color, style = REC_STYLE.get(int(rid), ("#555555", "-"))
+        ax.stairs(dens, BINS, lw=1.7, color=color, linestyle=style,
                   label=f"{rid}  {per_desc[str(rid)]['name']}  "
                         f"({per_desc[str(rid)]['n_jets']:,} jets)")
     ax.set_yscale("log")
     ax.set_xlabel("Jet_btagDeepFlavB  (raw DeepJet b-vs-all discriminant)")
     ax.set_ylabel("normalised density / 0.01  (log scale)")
-    ax.set_title("CMS raw b-tag discriminant, split by SingleElectron record "
-                 "(Run2016G vs Run2016H)", fontsize=10)
+    ax.set_title("CMS raw b-tag discriminant by record - SingleElectron (solid) "
+                 "vs SingleMuon (dashed), Run2016G vs Run2016H", fontsize=9.5)
     ax.legend(fontsize=8)
     ax.set_xlim(0, 1)
     fig.tight_layout()
@@ -199,7 +210,7 @@ def main() -> int:
     global _LOG_PATH
     ap = argparse.ArgumentParser()
     ap.add_argument("--out-dir", required=True)
-    ap.add_argument("--files-per-record", type=int, default=2)
+    ap.add_argument("--files-per-record", type=int, default=3)
     ap.add_argument("--log", default=None, help="also append progress to this file")
     ap.add_argument("--replot-from", metavar="OUT_DIR",
                     help="redraw plots from an existing hist_cache.json (no XRootD)")

@@ -8,6 +8,25 @@ text; the explicit negative/sentinel-value check is kept)
 `~/btag_work/venv` - XRootD has no Windows wheel)
 **Raw stats:** `stats.json`; cached bin counts for re-plotting: `hist_cache.json`
 
+> ## Status: 4-record extension is coded but NOT yet run (2026-09-07)
+>
+> `scripts/btag_score_distribution.py` has been extended to cover **all four CMS
+> records** - 30529 + 30562 (SingleElectron) **and** 30530 + 30563 (SingleMuon) -
+> at **3 files per record**, with the per-record plot restyled to overlay all
+> four (SingleElectron solid, SingleMuon dashed). That code change is committed.
+>
+> **The actual data run has not been executed.** It needs a fresh XRootD read of
+> the source files, and XRootD port 1094 to `eospublic.cern.ch` is currently
+> unreachable from this machine (a network-path issue on this side, not CERN's).
+> `--replot-from` cannot substitute here because both the record set and the file
+> count are changing, and the raw score is not cached anywhere.
+>
+> **So there are no new plots or numbers for the 4-record scope yet.** Everything
+> below - the plots, `stats.json`, `hist_cache.json`, and all the numbers - is
+> still the earlier **2-record / 2-file SingleElectron-only** run. When port 1094
+> is reachable again, one command produces the full four-record output:
+> `python scripts/btag_score_distribution.py --out-dir reports/btag_score_distribution --files-per-record 3`
+
 ## Why this exists
 
 The existing CMS b-jet work (`reports/cms_bjet_first_test/`,
