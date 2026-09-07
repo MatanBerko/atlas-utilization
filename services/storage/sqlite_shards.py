@@ -49,6 +49,14 @@ class SqliteArrayShardWriter:
             )
             """
         )
+        self.conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS shard_metadata (
+                key TEXT PRIMARY KEY,
+                value TEXT NOT NULL
+            )
+            """
+        )
 
     def append_array(self, signature: str, arr: np.ndarray) -> None:
         """Append one numpy array chunk under a signature."""
@@ -83,6 +91,13 @@ class SqliteArrayShardWriter:
         self.conn.execute(
             "INSERT INTO final_state_counts(final_state, n_events) VALUES (?, ?)",
             (final_state, int(n_events)),
+        )
+
+    def set_metadata(self, key: str, value: object) -> None:
+        """Persist structured metadata alongside the shard's arrays."""
+        self.conn.execute(
+            "INSERT OR REPLACE INTO shard_metadata(key, value) VALUES (?, ?)",
+            (key, str(value)),
         )
 
     def close(self) -> None:
