@@ -6,6 +6,43 @@
 `~/btag_work/venv` - XRootD has no Windows wheel)
 **Raw stats:** `stats.json`; cached bin counts for re-plotting: `hist_cache.json`
 
+> ## Correction (2026-09-07): DeepJet Medium threshold standardized 0.2598 -> 0.25
+>
+> Per Maryna Borysova, the project has standardized on **0.25** as the single
+> DeepJet Medium working-point value to use everywhere going forward, replacing
+> **0.2598** (the number quoted throughout the rest of this report and in
+> `config.cms_bjet_test.yaml`, now updated to 0.25). This note documents the
+> change and gives the corrected "fraction above threshold" figures
+> side by side with the original ones - nothing below is silently overwritten.
+>
+> Recomputed directly from the already-cached `hist_cache.json` (0.01-wide
+> score-histogram bins; no new XRootD fetch) - the bin edges land exactly on
+> 0.25, so "fraction >= 0.25" is an exact sum of cached bins, not an estimate:
+>
+> | | jets | above **0.2598** (old) | above **0.25** (new) |
+> |---|---:|---:|---:|
+> | **all jets, combined** | 86,020,481 | 4,880,504 (5.67 %) | **5,040,823 (5.86 %)** |
+> | 30529 SingleElectron Run2016G | 12,860,026 | 458,453 (3.56 %) | 480,705 (3.74 %) |
+> | 30562 SingleElectron Run2016H | 33,697,310 | 1,240,400 (3.68 %) | 1,299,150 (3.86 %) |
+> | 30530 SingleMuon Run2016G | 29,150,581 | 2,379,814 (8.16 %) | 2,438,042 (8.36 %) |
+> | 30563 SingleMuon Run2016H | 10,312,564 | 801,837 (7.78 %) | 822,926 (7.98 %) |
+>
+> The combined figure moves from **5.67 % to 5.86 %** (+0.19 pp) - a small rise,
+> as expected for lowering the cut by 0.0098 into a region of the falling tail.
+> The "jets with pt > 30 GeV & \|eta\| < 4.5" subset (8.66 % at 0.2598,
+> elsewhere in this report) is **not** recomputed here: only the all-jets
+> (no kinematic cut) histogram was cached at this bin width, and recomputing
+> the pt/eta-cut subset would need the raw per-jet arrays again - out of scope
+> for this correction.
+>
+> **The earlier b-jet-with-histograms demonstration** (branch
+> `test/cms-bjet-with-histograms`, `reports/cms_bjet_first_test/`, reported
+> **~7.69 %** tag rate) used the old 0.2598 threshold on a different, smaller
+> SingleElectron-only dataset. That reported number is now based on a
+> **superseded threshold value**. Per the current task's scope, that branch and
+> report are **not** being re-run or edited here - only flagged, so the ~7.69 %
+> figure isn't mistaken for a same-threshold comparison to the numbers above.
+
 ## Why this exists
 
 The existing CMS b-jet work (`reports/cms_bjet_first_test/`,
@@ -78,7 +115,8 @@ p95 = 0.303, p99 = 0.981. So 0.2598 sits around the ~94th percentile of the
 combined sample - the region above it is a mix of the light-jet tail and the
 rising b-jet population.
 
-**How many jets fall above 0.2598:**
+**How many jets fall above 0.2598** (superseded by 0.25 - see the Correction
+note at the top of this report for the recomputed figures)**:**
 
 | | jets | above 0.2598 | fraction |
 |---|---:|---:|---:|
@@ -101,6 +139,9 @@ other; but SingleMuon jets have a **substantially heavier high-score tail** than
 SingleElectron jets.
 
 ![raw discriminant, by record](plots/btag_score_by_record.png)
+
+(the `frac > 0.2598` column below predates the 0.25 standardization - see the
+Correction note at the top of this report for the corresponding 0.25 figures)
 
 | record | stream | jets | median | p90 | p95 | p99 | frac > 0.2598 |
 |---|---|---:|---:|---:|---:|---:|---:|

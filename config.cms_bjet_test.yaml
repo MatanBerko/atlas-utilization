@@ -12,9 +12,13 @@
 #   * tagged jets move to the BJets collection, the rest stay in Jets
 #   * BJets must be listed in objects_to_calculate to get b-jet combinations
 #
-# Threshold 0.2598 = the CMS DeepJet (DeepFlavour) *Medium* working point for
-# UL2016 post-VFP (Run2016G/H, which is exactly records 30529/30562). Medium is
-# the standard analysis choice: ~70-80% b efficiency, ~1% light mistag, so we
+# Threshold 0.25 = the CMS DeepJet (DeepFlavour) *Medium* working point, as
+# standardized project-wide on 2026-09-07 (per Maryna Borysova) — previously
+# 0.2598 (the official UL2016 post-VFP calibration value for Run2016G/H,
+# records 30529/30562) everywhere in this project, including in this file and
+# in reports/btag_score_distribution/summary.md's original numbers; see that
+# report's dated correction note for old-vs-new figures. Medium is the
+# standard analysis choice: ~70-80% b efficiency, ~1% light mistag, so we
 # expect *some* jets tagged, not none and not all.
 #
 # Based on config.cms_records_master.yaml, with:
@@ -75,7 +79,7 @@ parsing_task_config:
   # --- CMS b-jet tagging (first-ever enable for a CMS run) ---
   enable_jet_tagging: true
   jet_btagging_thresholds:
-    Jet_btagDeepFlavB: 0.2598   # DeepJet Medium WP, UL2016 post-VFP
+    Jet_btagDeepFlavB: 0.25    # DeepJet Medium WP, standardized value (was 0.2598)
   possible_data_tree_names:
   - Events
   - CollectionTree
