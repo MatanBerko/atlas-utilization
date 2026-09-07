@@ -1,0 +1,193 @@
+# ---------------------------------------------------------------------------
+# config.cms_higgs_diphoton_stage0.yaml
+#
+# Stage 0 statistics check for a Higgs rediscovery exercise: H -> gamma gamma.
+#
+# Question this config answers: how many diphoton candidate events do we
+# realistically have in the CMS Open Data DoubleEG datasets, with only a basic
+# photon pT/eta acceptance cut and BEFORE any photon ID / isolation / pixel-seed
+# veto / ECAL-gap handling is built?
+#
+# Records (both DoubleEG, UL2016 MiniAODv2 NanoAODv9, 13 TeV):
+#   30521  /DoubleEG/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD  (78,797,031 evt, 47 files)
+#   30554  /DoubleEG/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD  (85,388,673 evt, 86 files)
+#
+# DoubleEG is the CMS 2016 primary dataset whose own description says its events
+# were "selected because of the presence of different combinations of energetic
+# photons, electrons and/or jets" (HLT diphoton / dielectron / photon+jet paths)
+# -- i.e. the stream relevant to a diphoton analysis.
+#
+# Selection (per-event, at parse time):
+#   * >= 2 photons required on each record (selection_by_record).
+#   * photon kinematics: pT > 20 GeV, |eta| < 2.5  (basic ECAL acceptance).
+#   * NO photon ID, NO isolation, NO pixel-seed electron veto, NO ECAL
+#     barrel/endcap gap (1.44 < |eta| < 1.57) exclusion, NO asymmetric
+#     leading/subleading pT thresholds -- all deferred to a later stage.
+#
+# Combinatorics: exactly one combination, the 2 leading photons -> diphoton
+# invariant mass.
+#
+# NOT in this config (deliberately deferred):
+#   * photon ID (shower shape / cutBased), isolation, pixel-seed veto, ECAL gap.
+#   * merging with SingleElectron / SingleMuon / DoubleMuon; cross-record de-dup.
+#     (selection_by_record is present only to carry the per-record photon
+#     requirement; the two DoubleEG run ranges are disjoint -- G: 278820-280385,
+#     H: 281613-284044 -- so the de-dup pass it switches on removes 0 events.)
+#   * feeding the histogram to BumpNet.
+#
+# Post-processing and histogram-creation stages are OFF: post-processing's
+# same-flavour-dilepton Z-peak cut does not apply to a diphoton channel, but the
+# rightmost-peak removal would still reshape the spectrum. The BumpNet-format
+# diphoton mass histogram is built directly from the raw im_arrays output by
+# scripts/higgs_diphoton_stage0_report.py instead.
+# ---------------------------------------------------------------------------
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: atlas_full_120
+  histogram_filename: atlas_opendata_full_bumpnet.root
+run_metadata:
+  run_name: cms_higgs_diphoton_stage0
+  base_output_dir: ./output
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: true
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years: []
+  specific_record_ids:
+  - 30521
+  - 30554
+  parse_mc: false
+  use_multiprocessing: false
+  parallel_processes: 4
+  # One file at a time: the 7.4 GiB Docker VM OOMs when several ~1.5 GB NanoAOD
+  # files are read concurrently.
+  threads: 1
+  env_threshold_memory_mb: 5000
+  chunk_yield_threshold_bytes: 536870912
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  # null => all files per record (full scale). Set to an integer to cap; see the
+  # report for the exact file/event fraction processed.
+  max_files_to_process: 10
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  - mini
+  - analysis
+  create_dirs: true
+  show_progress_bar: true
+  # Fallback block (unused: every record has a selection_by_record entry).
+  particle_counts:
+    photons:
+      min: 2
+      max: 10
+    electrons:
+      min: 0
+      max: 10
+    muons:
+      min: 0
+      max: 10
+    jets:
+      min: 0
+      max: 20
+  # Per-record selection: >= 2 photons on each DoubleEG record.
+  selection_by_record:
+    "30521":
+      particle_counts:
+        photons:
+          min: 2
+          max: 10
+        electrons:
+          min: 0
+          max: 10
+        muons:
+          min: 0
+          max: 10
+        jets:
+          min: 0
+          max: 20
+    "30554":
+      particle_counts:
+        photons:
+          min: 2
+          max: 10
+        electrons:
+          min: 0
+          max: 10
+        muons:
+          min: 0
+          max: 10
+        jets:
+          min: 0
+          max: 20
+  # Basic ECAL acceptance only. No ID / isolation / pixel-seed veto / gap cut.
+  kinematic_cuts:
+    photons:
+      pt_min: 20.0
+      eta_max: 2.5
+mass_calculation_task_config:
+  input_dir: ./output/parsed_data
+  output_dir: ./output/im_arrays
+  field_to_slice_by: pt
+  use_multiprocessing: true
+  parallel_processes: 4
+  fs_chunk_threshold_bytes: 2000000000
+  objects_to_calculate:
+  - Photons
+  # --- Combination / final-state selection -----------------------------------
+  # Goal: ONE combination, the 2 leading photons -> diphoton invariant mass,
+  # computed for every parsed event that has >=2 photons.
+  #
+  # get_all_combinations() is fed objects_to_calculate = [Photons] only, and
+  # max_total_particles_in_combination = 2 caps sum(counts) at 2, so the ONLY
+  # combination it can emit is {Photons: 2}. min/max_particles and
+  # min/max_count are therefore NOT doing combination selection here.
+  #
+  # They ARE reused by IMCalculator._is_valid_fs() as min_n/max_n (number of
+  # particle TYPES present in an event) and min_k/max_k (per-type object count):
+  # an event is only considered if every present type's count is in [min_k,
+  # max_k] and the number of present types is in [min_n, max_n]. Because this
+  # run applies a kinematic cut to PHOTONS ONLY, real DoubleEG events still
+  # carry uncut electrons / muons / jets / taus, so 3-5 types are present with
+  # up to ~10-20 jets. The ranges below are opened up (1..6 types, 1..50 per
+  # type) so those events are not silently dropped before the diphoton mass is
+  # computed. does_final_state_contain_combination() still requires g >= 2, so
+  # only events with >=2 photons contribute, and slice-by-pt takes the 2
+  # leading photons.
+  min_particles_in_combination: 1
+  max_particles_in_combination: 6
+  min_count_particle_in_combination: 1
+  max_count_particle_in_combination: 50
+  max_total_particles_in_combination: 2
+  min_events_per_fs: 1
+post_processing_task_config:
+  input_dir: ./output/im_arrays
+  output_dir: ./output/im_arrays_processed
+  peak_detection_bin_width_gev: 10.0
+histogram_creation_task_config:
+  input_dir: ./output/im_arrays_processed
+  output_dir: ./output/histograms
+  bin_width_gev: 10.0
+  single_output_file: true
+  output_filename: atlas_opendata_full_bumpnet.root
+  exclude_outliers: true
+  use_bumpnet_naming: true

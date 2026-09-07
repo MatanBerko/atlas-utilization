@@ -1,0 +1,67 @@
+{
+  "run_dir": "output/cms_higgs_diphoton_stage0_20260907_105829",
+  "config": "config.cms_higgs_diphoton_stage0.yaml",
+  "records": {
+    "30521": {
+      "label": "DoubleEG Run2016G",
+      "files_total": 47,
+      "files_processed": 10,
+      "files_fraction": 0.2127659574468085,
+      "events_full_dataset": 78797031,
+      "events_raw_processed": 18962247,
+      "events_fraction": 0.24064671929073064,
+      "events_ge2photon": 12740818,
+      "diphoton_pairs_formed": 12740818
+    },
+    "30554": {
+      "label": "DoubleEG Run2016H",
+      "files_total": 86,
+      "files_processed": 10,
+      "files_fraction": 0.11627906976744186,
+      "events_full_dataset": 85388673,
+      "events_raw_processed": 9998279,
+      "events_fraction": 0.11709139688820319,
+      "events_ge2photon": 7178538,
+      "diphoton_pairs_formed": 7178538
+    }
+  },
+  "combined": {
+    "events_raw_processed": 28960526,
+    "events_ge2photon": 19919356,
+    "diphoton_pairs_formed": 19919356,
+    "dedup_removed": 0
+  },
+  "diphoton_mass": {
+    "n_pairs_total": 19919356,
+    "n_pairs_in_hist_range": 19447027,
+    "n_pairs_above_400_gev": 472328,
+    "min_gev": -0.125,
+    "max_gev": 5825.796875,
+    "median_gev": 100.56889724731445,
+    "mean_gev": 131.65419108854374,
+    "n_in_80_100_gev_Zwindow": 4735893,
+    "n_in_115_135_gev": 1844952,
+    "pairs_per_record_direct": {
+      "30521": 12740818,
+      "30554": 7178538
+    }
+  },
+  "bumpnet_histogram": {
+    "root_file": "reports/higgs_diphoton_stage0/histograms/diphoton_stage0_bumpnet.root",
+    "hist_name": "mass_g0g1_cat_0ex_0mx_0jx_2gx_0tx_0bx_width_10.0",
+    "bin_width_gev": 10.0,
+    "range_gev": [
+      0.0,
+      400.0
+    ],
+    "n_bins": 40,
+    "n_nonempty_bins": 40,
+    "entries": 19447027,
+    "meets_bin_bar": true,
+    "meets_entry_bar": true,
+    "min_bins_required": 30,
+    "min_entries_required": 100
+  },
+  "files_ok": 20,
+  "files_attempted": 20
+}

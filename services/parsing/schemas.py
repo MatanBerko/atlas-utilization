@@ -51,10 +51,12 @@ NANOAOD_EVENT_ID_BRANCHES = [
 # Mapping from specific record IDs to their release year/schema identifier
 # This will be populated when schemas are extracted from record IDs
 RECORD_ID_TO_SCHEMA = {
-    30529: "cms-nanoaod",  # NanoAOD format
-    30562: "cms-nanoaod",  # NanoAOD format
-    30530: "cms-nanoaod",  # NanoAOD format
-    30563: "cms-nanoaod",  # NanoAOD format
+    30529: "cms-nanoaod",  # /SingleElectron/Run2016G  NanoAODv9
+    30562: "cms-nanoaod",  # /SingleElectron/Run2016H  NanoAODv9
+    30530: "cms-nanoaod",  # /SingleMuon/Run2016G      NanoAODv9
+    30563: "cms-nanoaod",  # /SingleMuon/Run2016H      NanoAODv9
+    30521: "cms-nanoaod",  # /DoubleEG/Run2016G        NanoAODv9
+    30554: "cms-nanoaod",  # /DoubleEG/Run2016H        NanoAODv9
 }
 
 # Release-specific branch naming templates
