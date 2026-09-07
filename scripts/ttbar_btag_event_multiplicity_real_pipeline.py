@@ -7,22 +7,30 @@ instead of the earlier standalone script's raw-branch reimplementation.
 
 This redoes scripts/ttbar_btag_event_multiplicity.py's measurement (same
 branch) on real, already-parsed pipeline output from
-config.cms_ttbar_truth_crosscheck.yaml (eta_max: 2.5, pt_min: 30.0) -- the
-same production-matching window used for the per-jet three-way comparison
-already on this branch (reports/ttbar_btag_truth_crosscheck/stats_real_pipeline.json).
+config.cms_ttbar_truth_crosscheck.yaml (eta_max: 2.5) or
+config.cms_ttbar_truth_crosscheck_eta4p5.yaml (eta_max: 4.5), pt_min: 30.0
+either way -- the same production-matching windows used for the per-jet
+three-way comparison already on this branch
+(reports/ttbar_btag_truth_crosscheck/stats_real_pipeline.json).
 
 "Tagged" here is exactly what the real pipeline decided: a jet landed in the
 BJets collection. Per the Step 1 finding already documented on this branch,
 BJets carries NO kinematic cut from the pipeline itself, so this script
-applies the SAME (pT>30, |eta|<2.5) window to both Jets- and BJets-origin jets
-at read time, using their own real, carried-through pt/eta fields -- a
+applies the SAME (pT>30, |eta|<eta_max) window to both Jets- and BJets-origin
+jets at read time, using their own real, carried-through pt/eta fields -- a
 reporting-time slice of already-decided fields, not new selection logic.
 
 Needs no XRootD -- reads the already-parsed local ROOT chunks directly:
 
     python scripts/ttbar_btag_event_multiplicity_real_pipeline.py \
         --run-dir output/cms_ttbar_truth_crosscheck_eta2p5_TIMESTAMP \
-        --out-dir reports/ttbar_btag_truth_crosscheck
+        --out-dir reports/ttbar_btag_truth_crosscheck \
+        --window-key eta2p5
+
+    python scripts/ttbar_btag_event_multiplicity_real_pipeline.py \
+        --run-dir output/cms_ttbar_truth_crosscheck_eta4p5_TIMESTAMP \
+        --out-dir reports/ttbar_btag_truth_crosscheck \
+        --window-key eta4p5
 """
 from __future__ import annotations
 
@@ -37,11 +45,16 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 THRESHOLD = 0.25
-PT_MIN, ETA_MAX = 30.0, 2.5
+PT_MIN = 30.0
+DEFAULT_ETA_MAX = {"eta2p5": 2.5, "eta4p5": 4.5}
+CONFIG_FILE = {
+    "eta2p5": "config.cms_ttbar_truth_crosscheck.yaml",
+    "eta4p5": "config.cms_ttbar_truth_crosscheck_eta4p5.yaml",
+}
 N_TRUE_B_QUARKS_PER_EVENT = 2  # semileptonic ttbar: t->Wb, tbar->Wbar bbar
 
 
-def load_per_event_counts(run_dir: Path):
+def load_per_event_counts(run_dir: Path, eta_max: float):
     """Per event: (n_eligible, n_tagged_eligible, n_true_b_tagged_eligible),
     from the real parsed Jets/BJets collections, window applied to both."""
     import awkward as ak
@@ -63,8 +76,8 @@ def load_per_event_counts(run_dir: Path):
         n_events += n_ev
         file_rows.append({"file": chunk.name, "events": n_ev})
 
-        elig_jets = (arr["Jets_pt"] > PT_MIN) & (abs(arr["Jets_eta"]) < ETA_MAX)
-        elig_bjets = (arr["BJets_pt"] > PT_MIN) & (abs(arr["BJets_eta"]) < ETA_MAX)
+        elig_jets = (arr["Jets_pt"] > PT_MIN) & (abs(arr["Jets_eta"]) < eta_max)
+        elig_bjets = (arr["BJets_pt"] > PT_MIN) & (abs(arr["BJets_eta"]) < eta_max)
         true_b = arr["BJets_hadronFlavour"] == 5
 
         n_elig = ak.sum(elig_jets, axis=1) + ak.sum(elig_bjets, axis=1)
@@ -101,7 +114,8 @@ def binomial_pmf(n_trials: int, p: float) -> list[float]:
 
 
 def plot_multiplicity_vs_binomial(dist: dict, binom: list[float], p: float,
-                                   n_events: int, out_png: Path) -> None:
+                                   n_events: int, eta_max: float,
+                                   out_png: Path) -> None:
     cats = ["0", "1", "2", "3", ">=4"]
     observed_pct = [dist[c]["frac"] * 100 for c in cats]
     binom_pct = [binom[0] * 100, binom[1] * 100, binom[2] * 100, 0.0, 0.0]
@@ -124,8 +138,8 @@ def plot_multiplicity_vs_binomial(dist: dict, binom: list[float], p: float,
     ax.set_ylabel("% of events")
     ax.set_title(
         "Tagged-jet multiplicity per event, REAL services/parsing pipeline output\n"
-        "(pT>30 GeV, |eta|<2.5 applied to Jets AND BJets at read time) vs a "
-        "simple 2-b-quark binomial model",
+        f"(pT>{PT_MIN:.0f} GeV, |eta|<{eta_max} applied to Jets AND BJets at "
+        "read time) vs a simple 2-b-quark binomial model",
         fontsize=9.3)
     ax.legend(fontsize=8)
     fig.tight_layout()
@@ -137,26 +151,33 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run-dir", required=True, type=Path)
     ap.add_argument("--out-dir", required=True, type=Path)
+    ap.add_argument("--window-key", default="eta2p5", choices=["eta2p5", "eta4p5"],
+                     help="which window this run corresponds to in "
+                          "stats_real_pipeline.json (real_pipeline_results.<key>) "
+                          "and in output filenames")
     args = ap.parse_args()
+    window_key = args.window_key
+    eta_max = DEFAULT_ETA_MAX[window_key]
+    suffix = "" if window_key == "eta2p5" else f"_{window_key}"
 
     out = args.out_dir
     (out / "plots").mkdir(parents=True, exist_ok=True)
 
     # p (b-efficiency) comes from this branch's own already-computed real-
-    # pipeline eta<2.5 result -- not retyped or assumed.
+    # pipeline result for this window -- not retyped or assumed.
     prior = json.loads((out / "stats_real_pipeline.json").read_text())
-    r = prior["real_pipeline_results"]["eta2p5"]
-    assert r["eta_max"] == ETA_MAX and r["pt_min"] == PT_MIN, (
-        f"stats_real_pipeline.json eta2p5 window ({r['eta_max']}, {r['pt_min']}) "
-        f"doesn't match this script's ({ETA_MAX}, {PT_MIN})"
+    r = prior["real_pipeline_results"][window_key]
+    assert r["eta_max"] == eta_max and r["pt_min"] == PT_MIN, (
+        f"stats_real_pipeline.json {window_key} window ({r['eta_max']}, {r['pt_min']}) "
+        f"doesn't match this script's ({eta_max}, {PT_MIN})"
     )
     p_b_eff = r["windowed_pt_gt_30_eta_window_applied_to_both_collections"]["b"]["rate"]
-    print(f"p (b-efficiency, real pipeline, eta<2.5) = {p_b_eff:.6f} "
+    print(f"p (b-efficiency, real pipeline, eta<{eta_max}) = {p_b_eff:.6f} "
           f"(source: {out/'stats_real_pipeline.json'} -> "
-          f"real_pipeline_results.eta2p5..., run_dir={r['run_dir']})")
+          f"real_pipeline_results.{window_key}..., run_dir={r['run_dir']})")
 
     run_dir = args.run_dir
-    n_events, n_elig, n_tag, n_trueb, file_rows = load_per_event_counts(run_dir)
+    n_events, n_elig, n_tag, n_trueb, file_rows = load_per_event_counts(run_dir, eta_max)
     print(f"loaded {n_events:,} events from {len(file_rows)} chunk(s) in {run_dir}")
 
     tag_dist = multiplicity_dist(n_tag, cap=4)
@@ -175,9 +196,9 @@ def main() -> int:
         "source": "real services/parsing pipeline output (Jets + BJets, "
                    "include_truth_flavour), NOT the standalone script",
         "run_dir": str(run_dir),
-        "config": "config.cms_ttbar_truth_crosscheck.yaml",
+        "config": CONFIG_FILE[window_key],
         "threshold": THRESHOLD,
-        "window": {"pt_min_gev": PT_MIN, "abseta_max": ETA_MAX,
+        "window": {"pt_min_gev": PT_MIN, "abseta_max": eta_max,
                    "applied_to": "both Jets- and BJets-origin jets (BJets "
                                   "receives no kinematic cut from the "
                                   "pipeline itself -- see Step 1 finding)"},
@@ -197,7 +218,7 @@ def main() -> int:
             "n_trials": N_TRUE_B_QUARKS_PER_EVENT,
             "p_used": p_b_eff,
             "p_source": "reports/ttbar_btag_truth_crosscheck/stats_real_pipeline.json "
-                        "-> real_pipeline_results.eta2p5."
+                        f"-> real_pipeline_results.{window_key}."
                         "windowed_pt_gt_30_eta_window_applied_to_both_collections.b.rate",
             "P0": binom[0], "P1": binom[1], "P2": binom[2],
         },
@@ -206,14 +227,13 @@ def main() -> int:
             "distribution": trueb_dist,
         },
     }
-    (out / "event_multiplicity_stats_real_pipeline.json").write_text(
-        json.dumps(stats, indent=2)
-    )
+    stats_filename = f"event_multiplicity_stats_real_pipeline{suffix}.json"
+    (out / stats_filename).write_text(json.dumps(stats, indent=2))
     print(json.dumps(stats, indent=2))
 
     plot_multiplicity_vs_binomial(
-        tag_dist, binom, p_b_eff, n_events,
-        out / "plots" / "btag_event_multiplicity_vs_binomial_real_pipeline.png",
+        tag_dist, binom, p_b_eff, n_events, eta_max,
+        out / "plots" / f"btag_event_multiplicity_vs_binomial_real_pipeline{suffix}.png",
     )
     print("DONE")
     return 0

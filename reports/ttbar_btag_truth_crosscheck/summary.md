@@ -648,3 +648,83 @@ thanks to the lower real-pipeline mistag rate; if anything a wider gap in the
 core finding - real per-event tagging is messier than a fixed-trial coin-flip
 model, in both directions - holds under the real, production-matching
 selection just as it did under the standalone script.
+
+---
+
+## Per-event tagged-jet multiplicity, real pipeline, eta<4.5 (2026-09-07)
+
+**Counterpart to the "Per-event tagged-jet multiplicity, real pipeline"
+section above (eta<2.5)** - same script, same method, run against the
+eta<4.5 real-pipeline output instead, so both production-relevant windows now
+have fully consistent, real-pipeline-based per-event reporting.
+
+**Data:** the parsed output directory from the eta<4.5 real-pipeline run
+(`output/cms_ttbar_truth_crosscheck_eta4p5_20260907_184804/`) was still
+present on disk from the earlier task, so it was reused directly - **no
+re-fetch, no re-parse.** Window: pT>30 GeV, |eta|<4.5, applied to both `Jets`-
+and `BJets`-origin jets (same reasoning as the eta<2.5 section - BJets gets no
+kinematic cut from the pipeline itself).
+
+**Script:** `scripts/ttbar_btag_event_multiplicity_real_pipeline.py
+--window-key eta4p5` (the eta<2.5 section's script, generalized with a
+`--window-key` argument rather than duplicated; `--window-key eta2p5`, its
+default, reproduces the eta<2.5 section's files under their original
+filenames unchanged).
+
+**Raw stats:** [`event_multiplicity_stats_real_pipeline_eta4p5.json`](event_multiplicity_stats_real_pipeline_eta4p5.json)
+
+### b-efficiency used for the binomial model - confirmed, not assumed
+
+Same self-check as the eta<2.5 section: the script asserts its window matches
+`stats_real_pipeline.json`'s `eta4p5` entry before using its `b.rate` as `p`.
+Result: **p = 0.737888**, matching the ~0.7379 real-pipeline eta<4.5
+b-efficiency already on this branch - confirmed, not assumed.
+
+### Observed vs binomial, real pipeline, eta<4.5
+
+![tagged-jet multiplicity vs binomial, real pipeline, eta<4.5](plots/btag_event_multiplicity_vs_binomial_real_pipeline_eta4p5.png)
+
+4,000,000 events (same 3 files as every other number on this branch):
+
+| tagged jets | eta<4.5 (this section) | binomial model (p=0.7379) | eta<2.5 (for reference) |
+|---|---:|---:|---:|
+| 0 | **16.27 %** | 6.87 % | 16.53 % |
+| 1 | **45.55 %** | 38.68 % | 45.65 % |
+| 2 | **34.36 %** | 54.45 % | 34.06 % |
+| 3 | **3.63 %** | 0 % (model cannot produce this) | 3.56 % |
+| >= 4 | **0.20 %** | 0 % (model cannot produce this) | 0.19 % |
+
+Mean tagged jets/event: **1.259** (eta<4.5) vs **1.252** (eta<2.5) vs a
+binomial expectation of `2 x 0.7379 =` **1.476** (eta<4.5) / `2 x 0.7762 =`
+**1.552** (eta<2.5). Mean true-b-jets-correctly-tagged/event: **1.157**
+(eta<4.5) vs **1.151** (eta<2.5).
+
+### How does eta<4.5 compare to eta<2.5?
+
+**The two windows' *observed* per-event distributions are almost identical**
+- 0/1/2/3/>=4 tags differ by at most 0.3 percentage points between the two
+windows, and the mean tagged/event differs by only 0.007. This makes sense:
+widening the eta acceptance from 2.5 to 4.5 mostly admits additional forward
+jets, and most ttbar jets in this sample are already central, so relatively
+few extra jets enter the per-event count either way.
+
+**The binomial model's fit looks slightly *better* at eta<4.5 - but for a
+reason that has nothing to do with the model describing per-event tagging any
+better.** The eta<4.5 window's measured b-efficiency (0.7379) is lower than
+eta<2.5's (0.7762) - already established in the three-way comparison, from
+admitting more forward jets with weaker tracking coverage - and a lower `p`
+mechanically shifts the binomial P0 up and P2 down. That happens to narrow the
+gap to the (essentially unchanged) observed distribution: the 0-tag gap
+shrinks from 11.5 points (eta<2.5) to 9.4 points (eta<4.5), and the 2-tag gap
+shrinks from 26.2 points to 20.1 points. **This narrowing is an artifact of a
+lower input efficiency, not evidence the simple 2-trial model fits real
+per-event tagging better at wider eta** - the real per-event distribution
+itself barely moved. Both windows still show the same qualitative mismatch
+(binomial under-predicts 0-tag, over-predicts 2-tag, cannot produce the ~3.8%
+of events with 3+ tags that both windows show almost identically).
+
+**Bottom line:** the per-event finding is robust to the choice of eta window.
+Whether restricted to |eta|<2.5 or widened to |eta|<4.5, the real, actually
+-parsed pipeline output shows the same real per-event tag-multiplicity
+pattern, and a simple fixed-trial binomial model does not reproduce it in
+either case.

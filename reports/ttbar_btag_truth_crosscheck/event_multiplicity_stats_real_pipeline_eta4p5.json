@@ -1,0 +1,85 @@
+{
+  "source": "real services/parsing pipeline output (Jets + BJets, include_truth_flavour), NOT the standalone script",
+  "run_dir": "output/cms_ttbar_truth_crosscheck_eta4p5_20260907_184804",
+  "config": "config.cms_ttbar_truth_crosscheck_eta4p5.yaml",
+  "threshold": 0.25,
+  "window": {
+    "pt_min_gev": 30.0,
+    "abseta_max": 4.5,
+    "applied_to": "both Jets- and BJets-origin jets (BJets receives no kinematic cut from the pipeline itself -- see Step 1 finding)"
+  },
+  "files": [
+    {
+      "file": "parsed_record_67993_chunk0.root",
+      "events": 1233000
+    },
+    {
+      "file": "parsed_record_67993_chunk1.root",
+      "events": 1365000
+    },
+    {
+      "file": "parsed_record_67993_final.root",
+      "events": 1402000
+    }
+  ],
+  "n_events": 4000000,
+  "n_eligible_jets_total": 18025188,
+  "n_tagged_jets_total": 5037480,
+  "n_untagged_jets_total": 12987708,
+  "overall_tagged_fraction": 0.2794689298108846,
+  "mean_tagged_jets_per_event": 1.25937,
+  "pct_events_0_tags": 16.2722,
+  "pct_events_1_tag": 45.5487,
+  "pct_events_ge2_tags": 38.1791,
+  "tagged_jet_multiplicity_any_flavour": {
+    "0": {
+      "n_events": 650888,
+      "frac": 0.162722
+    },
+    "1": {
+      "n_events": 1821948,
+      "frac": 0.455487
+    },
+    "2": {
+      "n_events": 1374210,
+      "frac": 0.3435525
+    },
+    "3": {
+      "n_events": 145073,
+      "frac": 0.03626825
+    },
+    ">=4": {
+      "n_events": 7881,
+      "frac": 0.00197025
+    }
+  },
+  "binomial_model": {
+    "n_trials": 2,
+    "p_used": 0.7378879949279374,
+    "p_source": "reports/ttbar_btag_truth_crosscheck/stats_real_pipeline.json -> real_pipeline_results.eta4p5.windowed_pt_gt_30_eta_window_applied_to_both_collections.b.rate",
+    "P0": 0.06870270320289695,
+    "P1": 0.3868186037383312,
+    "P2": 0.5444786930587718
+  },
+  "true_b_jets_correctly_tagged_per_event": {
+    "mean": 1.15686375,
+    "distribution": {
+      "0": {
+        "n_events": 723920,
+        "frac": 0.18098
+      },
+      "1": {
+        "n_events": 1944774,
+        "frac": 0.4861935
+      },
+      "2": {
+        "n_events": 1312820,
+        "frac": 0.328205
+      },
+      ">=3": {
+        "n_events": 18486,
+        "frac": 0.0046215
+      }
+    }
+  }
+}
