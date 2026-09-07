@@ -1,0 +1,100 @@
+{
+  "run_dir": "output/cms_higgs_diphoton_stage2_20260907_201708",
+  "config": "config.cms_higgs_diphoton_stage2.yaml",
+  "scale": "FULL: 133/133 files (47 + 86)",
+  "records": {
+    "30521": {
+      "label": "DoubleEG Run2016G",
+      "files_total": 47,
+      "files_processed": 47,
+      "events_full_dataset": 78797031,
+      "events_raw_processed": 78797031,
+      "events_final_candidates": 1793599,
+      "diphoton_pairs_formed": 1793599,
+      "retention_pct": 0.022762266258483776
+    },
+    "30554": {
+      "label": "DoubleEG Run2016H",
+      "files_total": 86,
+      "files_processed": 86,
+      "events_full_dataset": 85388673,
+      "events_raw_processed": 85388673,
+      "events_final_candidates": 2038238,
+      "diphoton_pairs_formed": 2038238,
+      "retention_pct": 0.023870121508973444
+    }
+  },
+  "combined": {
+    "events_raw_processed": 164185704,
+    "events_final_candidates": 3831837,
+    "diphoton_pairs_formed": 3831837,
+    "dedup_removed": 0
+  },
+  "vs_stage1_partial_scale": {
+    "raw_events": {
+      "stage1": 28960526,
+      "stage2": 164185704,
+      "scale_factor": 5.6692928850808855
+    },
+    "final_candidates": {
+      "stage1": 683213,
+      "stage2": 3831837,
+      "scale_factor": 5.608553994142383
+    }
+  },
+  "diphoton_mass": {
+    "n_pairs_total": 3831837,
+    "n_pairs_in_hist_range": 3814851,
+    "n_pairs_above_400_gev": 16986,
+    "min_gev": 0.5014626979827881,
+    "max_gev": 2761.900390625,
+    "median_gev": 87.10604858398438,
+    "mean_gev": 100.39298491382105,
+    "n_in_80_100_gev_Zwindow": 1119963,
+    "n_in_115_135_gev": 275032,
+    "pairs_per_record_direct": {
+      "30521": 1793599,
+      "30554": 2038238
+    }
+  },
+  "before_after_vs_stage1": {
+    "n_pairs_total": {
+      "stage1": 680177,
+      "stage2": 3814851,
+      "ratio": 5.608615110478596
+    },
+    "n_in_80_100_gev_Zwindow": {
+      "stage1": 201385,
+      "stage2": 1119963,
+      "ratio": 5.561302976885071
+    },
+    "n_in_115_135_gev": {
+      "stage1": 48719,
+      "stage2": 275032,
+      "ratio": 5.645271865186067
+    }
+  },
+  "bumpnet_histogram": {
+    "root_file": "reports/higgs_diphoton_stage2_fullscale/histograms/diphoton_stage2_bumpnet.root",
+    "hist_name": "mass_g0g1_cat_0ex_0mx_0jx_2gx_0tx_0bx_width_10.0",
+    "bin_width_gev": 10.0,
+    "range_gev": [
+      0.0,
+      400.0
+    ],
+    "n_bins": 40,
+    "n_nonempty_bins": 40,
+    "entries": 3814851,
+    "meets_bin_bar": true,
+    "meets_entry_bar": true,
+    "min_bins_required": 30,
+    "min_entries_required": 100
+  },
+  "mass_calculation_stage": {
+    "attempted": true,
+    "outcome": "interrupted -- impractically slow at full scale, same final-state-proliferation limitation Stage 0/1 already documented, now confirmed at full scale: chunk 0 alone (2,412,355 events) had already enumerated 1,648 distinct raw final-state signatures after ~12 minutes at a steady ~1.8/s with no sign of finishing",
+    "diphoton_mass_source": "computed directly from parsed photon collections instead, same method as Stage 0/1"
+  },
+  "files_ok": 133,
+  "files_attempted": 133
+}
