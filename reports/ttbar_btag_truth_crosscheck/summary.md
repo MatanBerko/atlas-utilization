@@ -182,6 +182,12 @@ precise mistag *rate*, not in whether the tagger is working.
 
 ## Per-event tagged-jet multiplicity - a complementary sanity check (2026-09-07)
 
+> **Superseded for reporting purposes** by the real-pipeline version of this
+> same check near the end of this report (search for "Per-event tagged-jet
+> multiplicity, real pipeline"). This section used the same standalone,
+> non-production-matching script (pT>20 GeV, |eta|<2.4) as the rest of this
+> part of the report; kept here unchanged for the record, not deleted.
+
 The section above looks at individual jets. This section looks at how tags
 **cluster within events** - a standard ttbar b-tagging sanity check: how many
 tagged jets show up per event, compared against a simple model of "2 true
@@ -553,3 +559,92 @@ unset. Only five files were touched, all additive: `domain/config.py`,
 parameter/field with a `False`/absent default and a registration for record
 67993; no existing `kinematic_cuts`/`particle_counts`/tagging behaviour, code
 path, or default was modified.
+
+---
+
+## Per-event tagged-jet multiplicity, real pipeline (2026-09-07)
+
+The earlier per-event tagged-jet multiplicity / binomial-model check (above,
+"Per-event tagged-jet multiplicity - a complementary sanity check") was only
+ever computed from the standalone script's data (pT>20 GeV, |eta|<2.4) - it
+was never redone on the real `services/parsing` output at the corrected
+pT>30 window used everywhere else in the real-pipeline section of this
+report. This closes that gap.
+
+**Script:** `scripts/ttbar_btag_event_multiplicity_real_pipeline.py`. **Data:**
+the parsed output directory from the eta<2.5 real-pipeline run
+(`output/cms_ttbar_truth_crosscheck_eta2p5_20260907_184239/`) was still present
+on disk from the prior task, so it was reused directly - **no re-fetch, no
+re-parse, no new files touched.** Same window as the rest of the real-pipeline
+section: pT>30 GeV, |eta|<2.5, applied to **both** `Jets`- and `BJets`-origin
+jets (BJets receives no kinematic cut from the pipeline itself - see the Step 1
+finding above), using their real, carried-through pt/eta fields.
+
+**Raw stats:** [`event_multiplicity_stats_real_pipeline.json`](event_multiplicity_stats_real_pipeline.json)
+
+### b-efficiency used for the binomial model - confirmed, not assumed
+
+The script asserts the window it reads matches `stats_real_pipeline.json`'s
+`eta2p5` entry before using its `b.rate` as `p`, and prints the exact value and
+its source. Result: **p = 0.776185**, read directly from
+`reports/ttbar_btag_truth_crosscheck/stats_real_pipeline.json ->
+real_pipeline_results.eta2p5...b.rate` - matches the ~0.776 real-pipeline
+eta<2.5 b-efficiency already on this branch, confirmed rather than assumed
+(same run directory, same number, to 6 decimal places).
+
+### Observed vs binomial, real pipeline
+
+![tagged-jet multiplicity vs binomial, real pipeline](plots/btag_event_multiplicity_vs_binomial_real_pipeline.png)
+
+4,000,000 events (same 3 files, same as every other number on this branch):
+
+| tagged jets | real pipeline (this section) | binomial model (p=0.7762) | earlier standalone script (for reference) |
+|---|---:|---:|---:|
+| 0 | **16.53 %** | 5.01 % | 12.33 % |
+| 1 | **45.65 %** | 34.74 % | 41.74 % |
+| 2 | **34.06 %** | 60.25 % | 39.32 % |
+| 3 | **3.56 %** | 0 % (model cannot produce this) | 6.11 % |
+| >= 4 | **0.19 %** | 0 % (model cannot produce this) | 0.49 % |
+
+Mean tagged jets/event: **1.252** (real pipeline) vs **1.407** (standalone
+script) vs a binomial expectation of `2 x 0.7762 =` **1.552**.
+
+### Does the mismatch pattern look similar to before, or different?
+
+**Same pattern, same direction, if anything a bit more pronounced on the
+0-tag/2-tag split; the long tail shrank.** As before, the binomial model
+under-predicts 0-tag events and over-predicts 2-tag events, and cannot produce
+the observed 3+ tag events at all:
+
+- The 0-tag gap is **larger** here: observed 16.53 % vs predicted 5.01 % (11.5
+  percentage points) compared to the standalone version's 12.33 % vs 5.35 %
+  (7.0 points).
+- The 2-tag gap is also larger: observed 34.06 % vs predicted 60.25 % (26.2
+  points) vs the standalone version's 39.32 % vs 59.11 % (19.8 points).
+- The 3+ tag tail is **smaller** here (3.56 %+0.19 %=3.75 % vs 6.11 %+0.49 %=6.60 %
+  before) - consistent with the real pipeline's lower light/c-jet mistag rate
+  (already established in the three-way comparison above): fewer non-b jets
+  get spuriously tagged, so fewer events pick up a 3rd or 4th "extra" tag.
+
+**A real, honestly-reported wrinkle: mean true-b-jets-correctly-tagged per
+event is *lower* here (1.151) than in the standalone version (1.254), even
+though b-tagging efficiency is slightly *higher* (77.62 % vs 76.88 %).** This
+is not a contradiction - it means fewer true b-jets qualify for the window at
+all under the real pipeline's pT>30 GeV cut than under the standalone script's
+pT>20 GeV cut (some true b-jets are soft enough to pass 20 GeV but not 30 GeV),
+and that drop in *how many b-jets are available to tag* outweighs the small
+efficiency gain *per jet that is available*. The same pT effect plausibly
+identified earlier as the main driver of the improved light-mistag rate is
+visible here from a different angle: raising the pT floor shrinks the eligible
+jet population on all sides (signal and background alike), not just the
+mistag-prone tail.
+
+**Bottom line:** moving to the real pipeline does not change the qualitative
+conclusion of the earlier per-event check - a simple "2 independent trials"
+binomial model still does not describe the real per-event tag-multiplicity
+distribution, in either version. The specific numbers shift (a smaller 3+ tail,
+thanks to the lower real-pipeline mistag rate; if anything a wider gap in the
+0- and 2-tag bins, from fewer eligible b-jets at the higher pT floor), but the
+core finding - real per-event tagging is messier than a fixed-trial coin-flip
+model, in both directions - holds under the real, production-matching
+selection just as it did under the standalone script.
