@@ -177,3 +177,139 @@ in the correct pT/eta comparison region, **DeepJet's b-tagging efficiency
 score-vs-truth plot itself is unambiguous: the tagger clearly separates b from
 light, with c in between, exactly as it should - the discrepancy is in the
 precise mistag *rate*, not in whether the tagger is working.
+
+---
+
+## Per-event tagged-jet multiplicity - a complementary sanity check (2026-09-07)
+
+The section above looks at individual jets. This section looks at how tags
+**cluster within events** - a standard ttbar b-tagging sanity check: how many
+tagged jets show up per event, compared against a simple model of "2 true
+b-quarks per event, each independently tagged."
+
+**Script:** `scripts/ttbar_btag_event_multiplicity.py` (same WSL venv/XRootD
+setup). **Data:** the earlier `ttbar_btag_truth_crosscheck.py` run never saved
+local ROOT copies - it streams each file straight from XRootD into arrays and
+keeps none of the raw files on disk - so there was nothing to reuse from disk.
+This re-reads the **exact same 3 files** (same record 67993, same filenames,
+pulled programmatically from `stats.json` rather than retyped) - no new
+record, no file-count increase. All numbers below use the **same eligible
+region** as the earlier cross-check: jets with pT > 20 GeV and |eta| < 2.4.
+
+**Raw stats:** [`event_multiplicity_stats.json`](event_multiplicity_stats.json)
+
+### The binomial model
+
+Semileptonic ttbar produces exactly **2 true b-quarks** per event
+(`t -> Wb`, `tbar -> Wbar bbar`). A simple sanity model: treat each event as 2
+independent trials, each tagged with probability **p = 0.7688** - **this
+project's own measured b-tagging efficiency in the eligible region**, from the
+cross-check above (`eligible_pt_gt_20_abseta_lt_2.4.b.rate` in `stats.json`;
+not an external or ATLAS number). Binomial(n=2, p=0.7688):
+
+| tagged | P(k) |
+|---|---:|
+| 0 | 5.35 % |
+| 1 | 35.55 % |
+| 2 | 59.11 % |
+
+### Observed vs binomial
+
+![tagged-jet multiplicity vs binomial model](plots/btag_event_multiplicity_vs_binomial.png)
+
+Observed distribution of eligible jets with `Jet_btagDeepFlavB > 0.25`,
+**counting any true flavour** - exactly how a real analysis with no truth
+information would count "tagged jets" per event (4,000,000 events):
+
+| tagged jets | observed | binomial model |
+|---|---:|---:|
+| 0 | **12.33 %** | 5.35 % |
+| 1 | **41.74 %** | 35.55 % |
+| 2 | **39.32 %** | 59.11 % |
+| 3 | **6.11 %** | 0 % (model cannot produce this) |
+| >= 4 | **0.49 %** | 0 % (model cannot produce this) |
+
+**They do not agree well, and the mismatch is real, not forced closed:**
+
+- The model **under-predicts 0-tag events** (5.35 % vs an observed 12.33 %) and
+  **over-predicts 2-tag events** (59.11 % vs an observed 39.32 %).
+- The model cannot produce 3 or >=4 tagged jets at all, yet **6.6 % of real
+  events** have 3 or more tagged jets.
+- Mean tagged jets/event: observed **1.407**, model expectation
+  `2 x 0.7688 =` **1.538**. Even the mean does not match.
+
+**Why, in plain terms:** the binomial model assumes every event reliably
+offers exactly 2 taggable b-jets, each an independent p=0.7688 coin flip, and
+nothing else ever gets tagged. Reality has two effects working in opposite
+directions that the model ignores entirely: (1) not every event actually has 2
+b-quarks landing on a reconstructed jet inside the eligible pT/eta window (a
+b-quark can be lost to acceptance, merging, or reconstruction) - this pushes
+events toward *fewer* tags than the model expects; (2) light/c jets in the same
+event can also be mistagged (the light mistag rate measured above, ~2.6 %,
+applied across the many extra light/c jets in a ttbar event adds up) - this
+pushes events toward *more* tags than a pure 2-trial model allows, which is
+exactly the source of the 3 and >=4 categories the model cannot produce at
+all. Both effects are visible in the same plot, in opposite directions.
+
+### The more apt comparison: TRUE b-jets correctly tagged (optional richer breakdown)
+
+Since this sample carries truth, it's cheap to also count, per event, only the
+true b-jets (`Jet_hadronFlavour == 5`) that passed the tag - the quantity the
+binomial model actually describes, without light/c contamination:
+
+| true b-jets tagged | fraction of events |
+|---|---:|
+| 0 | 14.38 % |
+| 1 | 46.55 % |
+| 2 | 38.40 % |
+| >= 3 | 0.67 % |
+
+Mean true-b-jets-tagged/event: **1.254** - still well below the model's 1.538,
+and still not a close match to the binomial P(0)/P(1)/P(2) above (5.35/35.55/
+59.11 %). Removing the mistag contamination narrows the gap in the tail (only
+0.67 % of events show >=3 true-b tags, vs 6.6 % for "any flavour" - some real
+events genuinely do have a 3rd true b-jet, plausibly from gluon splitting) but
+does **not** fix the low-multiplicity side: **more events show 0 or 1 correctly
+-tagged true b-jet than the simple "2 fixed opportunities" model predicts.**
+This points at the acceptance/reconstruction effect (1) above as the dominant
+real-world departure from the naive model, not the mistag effect (2), even
+though both effects are real and both are visible in the "any flavour" plot.
+
+### Tagged vs untagged jets, overall
+
+![tagged vs untagged jets](plots/btag_tagged_vs_untagged_jets.png)
+
+| | eligible jets |
+|---|---:|
+| tagged (score > 0.25) | 5,629,001 |
+| untagged (score <= 0.25) | 14,520,571 |
+| **total** | **20,149,572** |
+| **overall tagged fraction** | **27.94 %** |
+
+(This 27.94 % is the fraction of *all* eligible jets - b, c, and light mixed
+together - that get tagged; it is not the b-tagging efficiency, which is a
+per-true-flavour number computed separately above. It is dominated by the
+light-jet population, which is the large majority of jets in this sample.)
+
+### Summary block (all real numbers, this run)
+
+| | |
+|---|---:|
+| Total events | 4,000,000 |
+| Mean tagged jets / event (any flavour) | 1.407 |
+| Mean true-b-jets correctly tagged / event | 1.254 |
+| % events with 0 tagged jets | 12.33 % |
+| % events with 1 tagged jet | 41.74 % |
+| % events with >=2 tagged jets | 45.93 % |
+| Overall tagged fraction (all eligible jets) | 27.94 % |
+
+### Bottom line for this section
+
+The per-event view tells a consistent story with the per-jet view above: the
+tagger works and produces physically sensible per-event patterns (most events
+land at 1-2 tags, as expected for a 2-b-quark final state), but a naive
+"2 independent trials" binomial model built from our own measured efficiency
+does **not** reproduce the real per-event distribution - not in the zero-tag
+bin, not in the two-tag bin, and not at all in the 3+ tag bins that mistags and
+acceptance losses populate but the model cannot. That mismatch is reported
+plainly here rather than smoothed over.

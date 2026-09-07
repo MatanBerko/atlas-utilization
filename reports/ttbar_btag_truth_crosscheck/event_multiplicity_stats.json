@@ -1,0 +1,83 @@
+{
+  "record_id": 67993,
+  "dataset": "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+  "threshold": 0.25,
+  "eligible_cut": {
+    "pt_min_gev": 20.0,
+    "abseta_max": 2.4
+  },
+  "files": [
+    {
+      "file": "08FCB2ED-176B-064B-85AB-37B898773B98.root",
+      "events": 1233000
+    },
+    {
+      "file": "0BD60695-8388-5141-B157-32AE1A3B4885.root",
+      "events": 1365000
+    },
+    {
+      "file": "4F3C361D-258C-1D41-AEEA-48CB87D3839A.root",
+      "events": 1402000
+    }
+  ],
+  "n_events": 4000000,
+  "n_eligible_jets_total": 20149572,
+  "n_tagged_jets_total": 5629001,
+  "n_untagged_jets_total": 14520571,
+  "overall_tagged_fraction": 0.2793608221554284,
+  "mean_tagged_jets_per_event": 1.40725025,
+  "pct_events_0_tags": 12.3285,
+  "pct_events_1_tag": 41.74425,
+  "pct_events_ge2_tags": 45.92725,
+  "tagged_jet_multiplicity_any_flavour": {
+    "0": {
+      "n_events": 493140,
+      "frac": 0.123285
+    },
+    "1": {
+      "n_events": 1669770,
+      "frac": 0.4174425
+    },
+    "2": {
+      "n_events": 1572981,
+      "frac": 0.39324525
+    },
+    "3": {
+      "n_events": 244393,
+      "frac": 0.06109825
+    },
+    ">=4": {
+      "n_events": 19716,
+      "frac": 0.004929
+    }
+  },
+  "binomial_model": {
+    "n_trials": 2,
+    "p_used": 0.7688025681691069,
+    "p_source": "reports/ttbar_btag_truth_crosscheck/stats.json -> eligible_pt_gt_20_abseta_lt_2.4.b.rate (this branch's own measured b-tagging efficiency)",
+    "P0": 0.05345225248520048,
+    "P1": 0.35549035869138534,
+    "P2": 0.5910573888234142
+  },
+  "true_b_jets_correctly_tagged_per_event": {
+    "mean": 1.254311,
+    "distribution": {
+      "0": {
+        "n_events": 575160,
+        "frac": 0.14379
+      },
+      "1": {
+        "n_events": 1862172,
+        "frac": 0.465543
+      },
+      "2": {
+        "n_events": 1535811,
+        "frac": 0.38395275
+      },
+      ">=3": {
+        "n_events": 26857,
+        "frac": 0.00671425
+      }
+    }
+  }
+}
