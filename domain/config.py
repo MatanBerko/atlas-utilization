@@ -89,6 +89,26 @@ class ParsingConfig:
         if self.enable_jet_tagging and not self.jet_btagging_thresholds:
             # TODO add algorithm-specific validation
             raise ValueError("jet_btagging_thresholds must be specified when enable_jet_tagging is set")
+        if self.enable_jet_tagging and isinstance(self.kinematic_cuts, dict):
+            # Guard against the config omission found in production (see
+            # docs/CMS_KNOWN_LIMITATIONS.md): filter_events_by_kinematics
+            # (services/calculations/physics_calcs.py) applies a "jets:" cut
+            # only to the "Jets" collection, never to "BJets" -- a
+            # kinematic_cuts block with a "jets" entry but no "bjets" entry
+            # silently leaves the tagged-jet collection completely uncut,
+            # with no error of any kind. This is a WARNING, not a
+            # validation error: it does not change behavior or break any
+            # existing run, it only makes an easy-to-repeat mistake visible
+            # at parse time instead of requiring manual code tracing to find.
+            cut_keys_lower = {str(k).lower() for k in self.kinematic_cuts.keys()}
+            if "jets" in cut_keys_lower and "bjets" not in cut_keys_lower:
+                import logging
+                logging.getLogger(__name__).warning(
+                    "jet tagging is enabled and kinematic cuts exist for "
+                    "'jets' but not 'bjets'; the BJets collection will "
+                    "receive NO kinematic cuts (see "
+                    "docs/CMS_KNOWN_LIMITATIONS.md)"
+                )
 
 
 @dataclass(frozen=True)

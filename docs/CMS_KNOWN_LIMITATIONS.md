@@ -88,3 +88,36 @@ b-jet invariant masses have sane shape and scale. Reported as "looks like real
 physics", **not** validated — no known-resonance cross-check yet, and the
 working point has not been tuned for these files. Full write-up:
 `reports/cms_bjet_first_test/summary.md`.
+
+### Fixed, and now guarded: `BJets` silently missing kinematic cuts
+
+`services/calculations/physics_calcs.py`'s `filter_events_by_kinematics`
+applies a `kinematic_cuts` entry only to the collection whose exact name it
+matches — a `jets:` entry is only ever matched against `Jets`, never against
+`BJets` (the tagged-jet collection `FileParser._calculate_btagging_and_split`
+produces). Every CMS config that enabled jet tagging had only a `jets:`
+entry and no `bjets:` entry, so **`BJets` received no pT/eta cut at all, in
+every CMS run to date**, regardless of what the `jets:` block specified.
+Found only by manual code tracing (no error, no warning) during the ttbar
+b-tagging truth cross-check (`analysis/ttbar-btag-truth-crosscheck`), which
+confirmed it on real output: BJets containing a 15 GeV jet and a
+\|eta\|=2.90 jet despite `pt_min: 30`/`eta_max: 2.5`.
+
+**Fixed** in the 9 affected CMS configs
+(`fix/cms-bjets-kinematic-cuts`, merged to master) and on the
+`analysis/ttbar-btag-truth-crosscheck` branch's own two configs, by adding a
+`bjets:` entry matching each file's own `jets:` values. The code itself was
+correct as-is (ATLAS's `config.yaml` already had a matching `bjets:` entry
+and was never affected) — this was a config omission, not a bug fix.
+
+**Guarded against recurring** (`fix/warn-on-missing-bjets-cuts`):
+`domain/config.py`'s `ParsingConfig.__post_init__` now logs a WARNING at
+config-construction time (i.e. before any parsing starts) whenever
+`enable_jet_tagging: true` and `kinematic_cuts` has a `jets` entry but no
+`bjets` entry — e.g. `"jet tagging is enabled and kinematic cuts exist for
+'jets' but not 'bjets'; the BJets collection will receive NO kinematic
+cuts"`. This is a warning only — it does not change parsing behavior or
+raise an error, so an existing config that relies on this gap (there
+shouldn't be any, but none is assumed) keeps running unchanged; it simply
+makes the mistake visible in the log instead of requiring code tracing to
+find, the way it was found this time.
