@@ -131,6 +131,9 @@ parsing_task_config:
     jets:
       pt_min: 30.0
       eta_max: 2.5
+    bjets:
+      pt_min: 30.0
+      eta_max: 2.5
 mass_calculation_task_config:
   input_dir: ./output/parsed_data
   output_dir: ./output/im_arrays

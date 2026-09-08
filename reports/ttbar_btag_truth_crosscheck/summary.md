@@ -390,6 +390,31 @@ produces today genuinely contains jets below the configured pT floor and
 outside the configured eta window, because the cut is structurally never
 matched against it.
 
+> **Update (2026-09-08): config fix applied on this branch, existing results
+> above unaffected.** The missing `bjets:` kinematic-cuts entry described
+> above was fixed on `master` for 9 CMS configs via
+> `fix/cms-bjets-kinematic-cuts` (merged), and has now been applied here too,
+> to `config.cms_ttbar_truth_crosscheck.yaml` and
+> `config.cms_ttbar_truth_crosscheck_eta4p5.yaml` (which only exist on this
+> branch, so master's fix couldn't reach them) plus this branch's own stale
+> copies of the same 9 configs already fixed on master (this branch diverged
+> before that merge). Each got a `bjets:` entry with the same `pt_min`/
+> `eta_max` as its own `jets:` entry — `pt_min: 30.0, eta_max: 2.5` for the
+> eta2p5 config, `pt_min: 30.0, eta_max: 4.5` for the eta4p5 one.
+>
+> **This does not change, invalidate, or require re-running any number
+> already reported on this branch.** Every real-pipeline result above and
+> below that involves `BJets` (the three-way comparison, both per-event
+> multiplicity sections) was already computed by `scripts/ttbar_truth_crosscheck_real_pipeline.py`
+> re-applying the exact same (pT>30 GeV, |eta|<eta_max) window to `BJets`
+> manually, at analysis time, using its real carried-through pt/eta fields —
+> this was the documented workaround for precisely this bug (see Step 4
+> below), not an omission the fix corrects retroactively. The config fix
+> changes what a *future* parsing run of these configs would produce
+> directly; it does not change data already parsed and analyzed under the
+> old configs, which was already correctly windowed by hand. No re-run is
+> needed for the numbers in this report to remain valid.
+
 ### Step 2 - additive truth-carrying capability (no production behaviour changed)
 
 New opt-in flag, `parsing_task_config.include_truth_flavour` (default `false`,
