@@ -193,11 +193,17 @@ class ParsingHandler(StateHandler):
                 (record_profile or {}).get("particle_counts")
                 or parsing_config.particle_counts
             )
+            # Combined (summed-across-collections) count requirement, e.g.
+            # {"fields": ["electrons", "muons"], "min": 4} for H->ZZ->4l --
+            # see event_selection.apply_parsing_event_selection and
+            # physics_calcs.filter_events_by_combined_particle_count.
+            record_combined_counts = (record_profile or {}).get("combined_particle_counts")
             retention.setdefault(release_year, [0, 0])
             if record_profile is not None:
                 self.logger.info(
                     f"Record {record_key}: per-stream selection "
-                    f"(particle_counts={record_particle_counts})"
+                    f"(particle_counts={record_particle_counts}, "
+                    f"combined_particle_counts={record_combined_counts})"
                 )
 
             self.logger.info(
@@ -224,11 +230,12 @@ class ParsingHandler(StateHandler):
             ):
                 retention[release_year][0] += len(batch.events)
 
-                if parsing_config.kinematic_cuts or record_particle_counts:
+                if parsing_config.kinematic_cuts or record_particle_counts or record_combined_counts:
                     working_events = apply_parsing_event_selection(
                         batch.events,
                         particle_counts=record_particle_counts,
                         kinematic_cuts=parsing_config.kinematic_cuts,
+                        combined_particle_counts=record_combined_counts,
                     )
                 else:
                     working_events = batch.events

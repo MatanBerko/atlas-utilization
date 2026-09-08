@@ -1,0 +1,159 @@
+# ---------------------------------------------------------------------------
+# config.cms_higgs_4lepton_fullscale.yaml
+#
+# FULL-SCALE run for the H -> ZZ -> 4l rediscovery exercise
+# (analysis/higgs-4lepton-zz), branched off analysis/higgs-diphoton-stage2-
+# fullscale to inherit the ThreadedFileProcessor memory-leak fix (7f91a1b).
+#
+# All files in all six records below (max_files_to_process: null) -- 238
+# files, ~294 GiB raw, streamed via XRootD (never downloaded wholesale; only
+# the small parsed output is written locally, as in Stage 2). Identical to
+# config.cms_higgs_4lepton_validation.yaml in every selection/kinematic
+# setting -- the only difference is max_files_to_process (2 -> null). Only
+# run after the validation pass (2 files/record) completed cleanly with a
+# non-zero, sane 4-lepton candidate yield -- see
+# reports/higgs_4lepton_zz/validation_pass.md.
+#
+# Six CMS Open Data records (UL2016 MiniAODv2 NanoAODv9, 13 TeV), verified
+# individually against opendata.cern.ch before use (not assumed):
+#   30521  /DoubleEG/Run2016G-...   47 files,  78,797,031 evt,  70.5 GiB
+#   30554  /DoubleEG/Run2016H-...   86 files,  85,388,673 evt,  78.1 GiB
+#   30522  /DoubleMuon/Run2016G-... 29 files,  45,235,604 evt,  39.3 GiB
+#   30555  /DoubleMuon/Run2016H-... 28 files,  48,912,812 evt,  42.9 GiB
+#   30528  /MuonEG/Run2016G-...     29 files,  33,854,612 evt,  33.2 GiB
+#   30561  /MuonEG/Run2016H-...     19 files,  29,236,516 evt,  29.9 GiB
+#   total: 238 files, 321,425,248 events, ~293.9 GiB (~316 GB)
+#
+# PARSE-TIME selection (deliberately loose -- the strict "exactly 4 passing
+# quality cuts, total charge 0, Z1/Z2 windows" requirement is applied later,
+# in the analysis script, per instructions):
+#   * kinematic_cuts (global, applies to all 6 records identically): muon
+#     pT>5 GeV/|eta|<2.4, electron pT>7 GeV/|eta|<2.5. No isolation, no ID
+#     (looseId/cutBased), no charge requirement at this stage.
+#   * combined_particle_counts (new, additive; see
+#     services/calculations/physics_calcs.py::filter_events_by_combined_particle_count
+#     and services/parsing/event_selection.py): Electrons+Muons combined
+#     count, AFTER the above kinematic cuts, must be >= 4 -- inclusive, not
+#     "exactly 4", so 5+-loose-lepton events (where only 4 pass the later
+#     quality cuts) are not lost here. The existing particle_counts mechanism
+#     cannot express a cross-collection sum (each collection's count is
+#     checked independently, AND semantics) -- see the docstring of the new
+#     function for why a real 4l event (4e/4mu/2e2mu) needs a genuine sum.
+#   * selection_by_record is populated identically for all six records --
+#     not because the profiles differ, but because de-duplication only
+#     switches on when selection_by_record is non-empty
+#     (orchestration/handlers/parsing_handler.py), and de-dup is essential
+#     here: unlike the diphoton work's two disjoint DoubleEG records, these
+#     three trigger streams (DoubleEG/DoubleMuon/MuonEG) overlap the same
+#     runs heavily, so the same physical event can appear in more than one
+#     record. Keyed on (run, luminosityBlock, event), as already used for
+#     the H->gg SingleElectron/SingleMuon work.
+#
+# do_mass_calculating/do_post_processing/do_histogram_creation are OFF: the
+# generic mass-calculation stage is impractically slow at this scale
+# (final-state proliferation from jets/taus still varying per event even
+# though only leptons are cut) -- the 4-lepton invariant mass is computed
+# directly from the parsed Electron/Muon collections in the analysis script,
+# exactly as done for the diphoton mass in Stages 0-3.
+#
+# threads: 1, env/chunk knobs matching Stage 2's proven-stable full-scale
+# settings -- these files (~1-3 GB each) have caused Docker-VM (7.4 GiB) OOMs
+# at threads>1 in earlier work on this project.
+# ---------------------------------------------------------------------------
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: atlas_full_120
+  histogram_filename: atlas_opendata_full_bumpnet.root
+run_metadata:
+  run_name: cms_higgs_4lepton_fullscale
+  base_output_dir: ./output
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: false
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years: []
+  specific_record_ids:
+  - 30521
+  - 30554
+  - 30522
+  - 30555
+  - 30528
+  - 30561
+  parse_mc: false
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 1
+  env_threshold_memory_mb: 5000
+  chunk_yield_threshold_bytes: 536870912
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  max_files_to_process: null
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  - mini
+  - analysis
+  create_dirs: true
+  show_progress_bar: true
+  particle_counts:
+    electrons:
+      min: 0
+      max: 20
+    muons:
+      min: 0
+      max: 20
+    jets:
+      min: 0
+      max: 30
+    photons:
+      min: 0
+      max: 10
+  selection_by_record:
+    "30521": &record_profile
+      particle_counts:
+        electrons:
+          min: 0
+          max: 20
+        muons:
+          min: 0
+          max: 20
+        jets:
+          min: 0
+          max: 30
+        photons:
+          min: 0
+          max: 10
+      combined_particle_counts:
+        fields: [electrons, muons]
+        min: 4
+    "30554": *record_profile
+    "30522": *record_profile
+    "30555": *record_profile
+    "30528": *record_profile
+    "30561": *record_profile
+  kinematic_cuts:
+    electrons:
+      pt_min: 7.0
+      eta_max: 2.5
+    muons:
+      pt_min: 5.0
+      eta_max: 2.4

@@ -67,9 +67,18 @@ def apply_parsing_event_selection(
     events: ak.Array,
     particle_counts: Optional[Dict[str, Any]] = None,
     kinematic_cuts: Optional[Dict[str, Any]] = None,
+    combined_particle_counts: Optional[Dict[str, Any]] = None,
 ) -> ak.Array:
     """
     Kinematic cuts are applied per particle type first, then event-level count ranges.
+
+    combined_particle_counts (optional, e.g. {"fields": ["electrons", "muons"],
+    "min": 4}) is applied last, AFTER kinematic_cuts, and checks the SUM of
+    per-event counts across the listed collections -- unlike particle_counts,
+    which only ever checks each collection's own count independently and so
+    cannot express "e.g. >=4 leptons of any electron/muon mix". Added for the
+    H->ZZ->4l parse-time selection (analysis/higgs-4lepton-zz); see
+    services/calculations/physics_calcs.py::filter_events_by_combined_particle_count.
     """
     if kinematic_cuts:
         by_obj: Dict[str, Dict[str, Any]] = {}
@@ -90,6 +99,15 @@ def apply_parsing_event_selection(
             mapped,
             is_exact_count=False,
             is_particle_counts_range=True,
+        )
+
+    if combined_particle_counts:
+        fields = [
+            canonical_particle_field_name(f)
+            for f in combined_particle_counts["fields"]
+        ]
+        events = physics_calcs.filter_events_by_combined_particle_count(
+            events, fields, int(combined_particle_counts["min"])
         )
 
     return events

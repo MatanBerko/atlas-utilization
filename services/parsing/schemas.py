@@ -103,8 +103,22 @@ RELEASE_SCHEMAS = {
             "Taus": "Tau"             # Maps to Tau_pt, Tau_eta, etc.
         },
         "objects": {
-            "Electrons": ["pt", "eta", "phi", "mass"],
-            "Muons": ["pt", "eta", "phi", "mass"],
+            # charge, pfRelIso03_all, cutBased added for the H->ZZ->4l
+            # selection (analysis/higgs-4lepton-zz). cutBased here is the
+            # Fall17V2 ELECTRON scheme, confirmed on a real UL2016 NanoAODv9
+            # file (record 30521) before adding -- this is a DIFFERENT,
+            # 5-tier scheme from the photon cutBased below (0:fail, 1:veto,
+            # 2:loose, 3:medium, 4:tight; branch title "cut-based ID Fall17
+            # V2 (0:fail, 1:veto, 2:loose, 3:medium, 4:tight)"), unlike
+            # photons' 4-tier 0:fail/1:loose/2:medium/3:tight with no veto
+            # tier. "cutBased >= loose" for electrons therefore means >= 2,
+            # not >= 1 -- do not assume the photon convention carries over.
+            "Electrons": ["pt", "eta", "phi", "mass", "charge", "pfRelIso03_all", "cutBased"],
+            # charge, pfRelIso04_all, looseId added for the same H->ZZ->4l
+            # selection. looseId (bool) and pfRelIso04_all (float, PF
+            # relative isolation, dR=0.4 cone) are the standard CMS muon
+            # POG loose-muon quantities.
+            "Muons": ["pt", "eta", "phi", "mass", "charge", "pfRelIso04_all", "looseId"],
             "Jets": ["pt", "eta", "phi", "mass"],
             # electronVeto (bool) + cutBased (Fall17V2 cut-based ID, 0-3) added
             # for the H->gamma gamma Stage 1 ID/veto selection. Confirmed on

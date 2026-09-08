@@ -183,6 +183,51 @@ def filter_events_by_particle_counts(
     return ak.to_packed(filtered_events)
 
 
+def filter_events_by_combined_particle_count(
+    events: ak.Array,
+    fields: list,
+    min_count: int,
+) -> ak.Array:
+    """
+    Filter events by the SUM of per-event particle counts across multiple
+    collections (e.g. Electrons + Muons combined >= 4), unlike
+    filter_events_by_particle_counts, which only checks each collection's
+    own count independently (AND semantics, never a cross-collection sum).
+
+    Added for the H->ZZ->4l parse-time selection (analysis/higgs-4lepton-zz):
+    a real 4-lepton event may be 4e, 4mu, or 2e2mu, so no single collection's
+    count alone can express ">=4 leptons of any flavor mix" -- only the sum
+    across Electrons and Muons can. Intended to run AFTER kinematic cuts have
+    already been applied to `events` (so the count reflects only leptons
+    passing the loose parse-time pT/eta window), and does not itself apply
+    any kinematic or quality cut.
+
+    Args:
+        events: events array (already kinematically filtered, if desired)
+        fields: canonical collection names to sum, e.g. ["Electrons", "Muons"]
+        min_count: minimum combined count required to keep the event
+
+    Returns:
+        events with combined per-event count across `fields` >= min_count
+    """
+    if len(events) == 0:
+        return events
+
+    combined_count = None
+    for obj in fields:
+        if obj not in events.fields:
+            logging.warning(f"Could not find {obj} in event data, skipping!")
+            continue
+        obj_count = ak.num(events[obj])
+        combined_count = obj_count if combined_count is None else combined_count + obj_count
+
+    if combined_count is None:
+        logging.warning(f"None of {fields} found in event data; combined count filter skipped")
+        return events
+
+    return ak.to_packed(events[combined_count >= min_count])
+
+
 def slice_events_by_field(
     events: ak.Array,
     particle_counts: Dict,
