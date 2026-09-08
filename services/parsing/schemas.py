@@ -124,12 +124,34 @@ RELEASE_SCHEMAS = {
             # photons' 4-tier 0:fail/1:loose/2:medium/3:tight with no veto
             # tier. "cutBased >= loose" for electrons therefore means >= 2,
             # not >= 1 -- do not assume the photon convention carries over.
-            "Electrons": ["pt", "eta", "phi", "mass", "charge", "pfRelIso03_all", "cutBased"],
+            # sip3d, dxy, dz added for the H->ZZ->4l Part B primary-vertex
+            # compatibility cuts (analysis/higgs-4lepton-clean), suppressing
+            # leptons from b/c-hadron decays (the dominant reducible
+            # background: Z+jets, ttbar, Zbb). Confirmed on a real UL2016
+            # NanoAODv9 file (record 30521) via the branches' own ROOT
+            # titles before adding -- Electron_dxy/_dz: "dxy (with sign) wrt
+            # first PV, in cm" / "dz (with sign) wrt first PV, in cm" (cm,
+            # as expected); Electron_sip3d: "3D impact parameter
+            # significance wrt first PV, in cm" -- despite the title's
+            # trailing "in cm" (an inconsistent copy-paste from the dxy/dz
+            # titles in CMS's own NanoAOD metadata: a *significance* is a
+            # ratio of a distance to its uncertainty and is dimensionless
+            # by construction), sip3d is used here as the standard
+            # dimensionless impact-parameter significance, per its own
+            # description and universal CMS analysis convention.
+            "Electrons": ["pt", "eta", "phi", "mass", "charge", "pfRelIso03_all", "cutBased",
+                          "sip3d", "dxy", "dz"],
             # charge, pfRelIso04_all, looseId added for the same H->ZZ->4l
             # selection. looseId (bool) and pfRelIso04_all (float, PF
             # relative isolation, dR=0.4 cone) are the standard CMS muon
-            # POG loose-muon quantities.
-            "Muons": ["pt", "eta", "phi", "mass", "charge", "pfRelIso04_all", "looseId"],
+            # POG loose-muon quantities. sip3d/dxy/dz added for Part B (see
+            # the Electrons comment above for verification detail);
+            # Muon_sip3d's own title ("3D impact parameter significance wrt
+            # first PV") has no such "in cm" inconsistency, confirming it
+            # dimensionless as expected. Muon_dxy/_dz: "dxy (with sign) wrt
+            # first PV, in cm" / "dz (with sign) wrt first PV, in cm".
+            "Muons": ["pt", "eta", "phi", "mass", "charge", "pfRelIso04_all", "looseId",
+                      "sip3d", "dxy", "dz"],
             "Jets": ["pt", "eta", "phi", "mass"],
             # electronVeto (bool) + cutBased (Fall17V2 cut-based ID, 0-3) added
             # for the H->gamma gamma Stage 1 ID/veto selection. Confirmed on
