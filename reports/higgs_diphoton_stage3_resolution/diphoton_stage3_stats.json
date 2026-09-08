@@ -1,0 +1,76 @@
+{
+  "stage2_run_dir": "output/cms_higgs_diphoton_stage2_20260907_201708",
+  "n_stage2_candidates": 3831837,
+  "ecal_gap_boundaries": {
+    "low": 1.4442,
+    "high": 1.566,
+    "source": "CMS Collaboration photon-reconstruction performance paper, arXiv:1502.02702 (JINST) - fixed ECAL crystal/trigger-tower geometry, not production-specific. Live NanoAOD cross-check attempted, blocked by a network outage (TCP to eospublic.cern.ch:1094 timed out) -- see report for detail."
+  },
+  "id_variants": {
+    "loose": 1,
+    "medium": 2,
+    "tight": 3
+  },
+  "primary_variant": "medium",
+  "mass_window_gev": [
+    100.0,
+    180.0
+  ],
+  "cutflow": {
+    "n_stage2_candidates": 3831837,
+    "n_after_ecal_gap": 3583609,
+    "loose": {
+      "cutbased_threshold": 1,
+      "n_after_ecal_gap": 3583609,
+      "n_after_id": 3583609,
+      "n_after_asymmetric_pt": 2848402,
+      "n_final_100_180_gev": 420822
+    },
+    "medium": {
+      "cutbased_threshold": 2,
+      "n_after_ecal_gap": 3583609,
+      "n_after_id": 2113527,
+      "n_after_asymmetric_pt": 1725328,
+      "n_final_100_180_gev": 254173
+    },
+    "tight": {
+      "cutbased_threshold": 3,
+      "n_after_ecal_gap": 3583609,
+      "n_after_id": 1522231,
+      "n_after_asymmetric_pt": 1249214,
+      "n_final_100_180_gev": 185500
+    }
+  },
+  "histogram_2gev": {
+    "root_file": "reports/higgs_diphoton_stage3_resolution/histograms/diphoton_stage3_2gev_bumpnet.root",
+    "hist_name": "mass_g0g1_cat_0ex_0mx_0jx_2gx_0tx_0bx_width_2.0",
+    "bin_width_gev": 2.0,
+    "n_bins": 40,
+    "entries": 254173,
+    "n_nonempty_bins": 40,
+    "meets_bin_bar": true,
+    "meets_entry_bar": true
+  },
+  "histogram_1gev": {
+    "root_file": "reports/higgs_diphoton_stage3_resolution/histograms/diphoton_stage3_1gev_bumpnet.root",
+    "hist_name": "mass_g0g1_cat_0ex_0mx_0jx_2gx_0tx_0bx_width_1.0",
+    "bin_width_gev": 1.0,
+    "n_bins": 80,
+    "entries": 254173,
+    "n_nonempty_bins": 80,
+    "meets_bin_bar": true,
+    "meets_entry_bar": true
+  },
+  "background_fit": {
+    "form": "4th-order polynomial (numpy.polyfit, deg=4, weighted by Poisson sqrt(N) per bin)",
+    "why": "matches the ATLAS convention the BumpNet paper's own H->gamma gamma figure (Fig. 15) is based on",
+    "coefficients_highest_degree_first": [
+      0.0009405792154845051,
+      -0.5995148848148493,
+      144.21435902057937,
+      -15588.633713976178,
+      643797.9235044415
+    ],
+    "caveat": "ILLUSTRATIVE ONLY -- no significance, p-value, or sigma computed or implied anywhere in this script."
+  }
+}
