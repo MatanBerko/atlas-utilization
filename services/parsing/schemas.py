@@ -57,6 +57,17 @@ RECORD_ID_TO_SCHEMA = {
     30563: "cms-nanoaod",  # /SingleMuon/Run2016H      NanoAODv9
     30521: "cms-nanoaod",  # /DoubleEG/Run2016G        NanoAODv9
     30554: "cms-nanoaod",  # /DoubleEG/Run2016H        NanoAODv9
+    # H->ZZ->4l (analysis/higgs-4lepton-zz): registered before use, same
+    # pattern as every prior new CMS record on this project (see e.g. the
+    # ttbar truth cross-check's registration of 67993) -- without this, the
+    # parser can't resolve a schema for an unregistered record ID at all and
+    # falls back to auto-detection, which fails for NanoAOD's flat branch
+    # naming (produces "No particles found in schema" and silently drops
+    # every event from that record).
+    30522: "cms-nanoaod",  # /DoubleMuon/Run2016G      NanoAODv9
+    30555: "cms-nanoaod",  # /DoubleMuon/Run2016H      NanoAODv9
+    30528: "cms-nanoaod",  # /MuonEG/Run2016G          NanoAODv9
+    30561: "cms-nanoaod",  # /MuonEG/Run2016H          NanoAODv9
 }
 
 # Release-specific branch naming templates
