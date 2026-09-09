@@ -80,8 +80,11 @@ def plot_split(halves, names, colors, out_png, title):
     for cands, name, color, off in zip(halves, names, colors, offsets):
         m = np.array([c["m4l"] for c in cands]) if cands else np.array([])
         counts, _ = np.histogram(m, bins=edges)
+        # Legend count must match what's actually plotted (in [BIN_LO,BIN_HI]),
+        # not the full-mass-range candidate count for this half -- those two
+        # numbers differ (candidates can fall outside 70-180 GeV).
         ax.bar(centers + off * w, counts, width=w * 0.42, color=color, alpha=0.85,
-               label=f"{name} ({len(cands)} candidates)")
+               label=f"{name} ({int(counts.sum())} in 70-180 GeV, {len(cands)} total)")
     ax.axvline(125.0, color="#333333", ls="--", lw=1)
     ax.set_xlabel("4-lepton invariant mass [GeV]")
     ax.set_ylabel(f"candidates / {w:.2f} GeV")
