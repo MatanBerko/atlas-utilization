@@ -176,6 +176,12 @@ class ParsingHandler(StateHandler):
         )
         # release_year -> [events_in, events_kept] for a per-record retention report
         retention: dict[str, list[int]] = {}
+        # release_year -> [files_opened_ok, files_failed_to_open]
+        file_counts: dict[str, list[int]] = {}
+        # Above this fraction of a record's files failing to open, treat it as a
+        # real failure rather than silently continuing with whatever (possibly
+        # zero) events the surviving files produced -- see MAX_FILE_FAILURE_RATE.
+        MAX_FILE_FAILURE_RATE = 0.20
 
         # Parse each release year
         for release_year, file_urls in ordered_metadata:
@@ -199,6 +205,7 @@ class ParsingHandler(StateHandler):
             # physics_calcs.filter_events_by_combined_particle_count.
             record_combined_counts = (record_profile or {}).get("combined_particle_counts")
             retention.setdefault(release_year, [0, 0])
+            file_counts.setdefault(release_year, [0, 0])
             if record_profile is not None:
                 self.logger.info(
                     f"Record {record_key}: per-stream selection "
@@ -213,9 +220,11 @@ class ParsingHandler(StateHandler):
             # Define callbacks
             def on_success(file_url: str, event_count: int, time_sec: float):
                 stats_collector.record_success(file_url, event_count, 0, time_sec)
-            
+                file_counts[release_year][0] += 1
+
             def on_error(file_url: str, error: Exception):
                 stats_collector.record_failure(file_url, error)
+                file_counts[release_year][1] += 1
             
             # Process files
             for batch in self.processor.process_files(
@@ -286,7 +295,25 @@ class ParsingHandler(StateHandler):
                     )
                     del chunk
                     gc.collect()
-        
+
+            # ---- Fail loudly instead of silently continuing with zero events ----
+            # A record whose files mostly fail to open (network blip, bad
+            # redirector, exhausted connection pool, ...) used to finish this
+            # loop with near-zero retained events and no error -- indistinguishable
+            # from a record that genuinely has low yield. Abort instead.
+            ok_count, fail_count = file_counts[release_year]
+            total_count = ok_count + fail_count
+            if total_count > 0:
+                failure_rate = fail_count / total_count
+                if failure_rate > MAX_FILE_FAILURE_RATE:
+                    raise RuntimeError(
+                        f"Record {record_key}: {fail_count}/{total_count} files failed to "
+                        f"open ({failure_rate:.0%} failure rate, exceeds the "
+                        f"{MAX_FILE_FAILURE_RATE:.0%} threshold). Aborting this run rather "
+                        f"than silently continuing with zero or near-zero events for this "
+                        f"record."
+                    )
+
         # Flush remaining events
         final_chunk = self.accumulator.flush()
         if final_chunk:
@@ -307,6 +334,17 @@ class ParsingHandler(StateHandler):
             )
             del final_chunk;
             gc.collect()
+
+        # ---- Per-record file open success/failure report ----
+        for ry, (ok_count, fail_count) in file_counts.items():
+            total_count = ok_count + fail_count
+            if total_count == 0:
+                continue
+            fail_pct = 100.0 * fail_count / total_count
+            self.logger.info(
+                f"File opens {ry}: {ok_count}/{total_count} succeeded, "
+                f"{fail_count} failed ({fail_pct:.1f}% failure)"
+            )
 
         # ---- Per-record retention report (events surviving selection + dedup) ----
         for ry, (n_in, n_kept) in retention.items():
