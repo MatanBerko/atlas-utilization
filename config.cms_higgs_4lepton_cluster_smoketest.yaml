@@ -1,0 +1,108 @@
+# ---------------------------------------------------------------------------
+# config.cms_higgs_4lepton_cluster_smoketest.yaml
+#
+# SMOKE TEST for the cluster: same six records as
+# config.cms_higgs_4lepton_cluster.yaml, same selection, but capped at 2
+# files/record (12 files total) via max_files_to_process. Purpose: confirm
+# the PBS batch script, conda activation, Lustre output paths, and -- most
+# importantly -- that all six records yield non-zero events on the cluster,
+# before committing to the ~4-6 hour full run. Identical in every other
+# respect to config.cms_higgs_4lepton_cluster.yaml.
+# ---------------------------------------------------------------------------
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: atlas_full_120
+  histogram_filename: atlas_opendata_full_bumpnet.root
+run_metadata:
+  run_name: cms_higgs_4lepton_cluster_smoketest
+  base_output_dir: /storage/agrp/berkom/atlas-utilization/output
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: false
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years: []
+  specific_record_ids:
+  - 30521
+  - 30554
+  - 30522
+  - 30555
+  - 30528
+  - 30561
+  parse_mc: false
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 1
+  env_threshold_memory_mb: 5000
+  chunk_yield_threshold_bytes: 536870912
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  max_files_to_process: 2
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  - mini
+  - analysis
+  create_dirs: true
+  show_progress_bar: true
+  particle_counts:
+    electrons:
+      min: 0
+      max: 20
+    muons:
+      min: 0
+      max: 20
+    jets:
+      min: 0
+      max: 30
+    photons:
+      min: 0
+      max: 10
+  selection_by_record:
+    "30521": &record_profile
+      particle_counts:
+        electrons:
+          min: 0
+          max: 20
+        muons:
+          min: 0
+          max: 20
+        jets:
+          min: 0
+          max: 30
+        photons:
+          min: 0
+          max: 10
+      combined_particle_counts:
+        fields: [electrons, muons]
+        min: 4
+    "30554": *record_profile
+    "30522": *record_profile
+    "30555": *record_profile
+    "30528": *record_profile
+    "30561": *record_profile
+  kinematic_cuts:
+    electrons:
+      pt_min: 7.0
+      eta_max: 2.5
+    muons:
+      pt_min: 5.0
+      eta_max: 2.4
