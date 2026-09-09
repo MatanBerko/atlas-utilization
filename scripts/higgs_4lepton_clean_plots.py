@@ -61,7 +61,9 @@ def plot_cutflow(cutflow, out_png):
     print(f"wrote {out_png}")
 
 
-def plot_baseline_vs_cleaned(baseline_cands, cleaned_cands, out_png):
+def plot_baseline_vs_cleaned(baseline_cands, cleaned_cands, out_png,
+                              baseline_label="baseline (no A1/A2)",
+                              cleaned_label="cleaned (+A1 low-mass veto +A2 ghost removal)"):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -76,9 +78,9 @@ def plot_baseline_vs_cleaned(baseline_cands, cleaned_cands, out_png):
     fig, ax = plt.subplots(figsize=(10, 6))
     w = (edges[1] - edges[0])
     ax.bar(centers - w * 0.22, c_base, width=w * 0.42, color="#cc3311", alpha=0.75,
-           label=f"baseline (no A1/A2), {int(c_base.sum())} in window")
+           label=f"{baseline_label}, {int(c_base.sum())} in window")
     ax.bar(centers + w * 0.22, c_clean, width=w * 0.42, color="#4477aa",
-           label=f"cleaned (+A1 low-mass veto +A2 ghost removal), {int(c_clean.sum())} in window")
+           label=f"{cleaned_label}, {int(c_clean.sum())} in window")
     ax.axvline(91.1876, color="#888888", ls="--", lw=1)
     ax.axvline(125.0, color="#333333", ls="--", lw=1)
     ax.set_xlabel("4-lepton invariant mass [GeV]")

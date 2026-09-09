@@ -254,7 +254,14 @@ def main():
         leps = build_selected_leptons(events, **kwargs)
         cf, cand = run_selection(events, leps)
         s = summarize(name, cf, cand)
-        scan_results[name] = {"summary": s, "cutflow": cf}
+        # Per-record final_candidates too (not just the combined summary), so
+        # the sip3d/dxy/dz-only scan can be shown per-record, not just
+        # combined -- same reasoning as the primary cut-flow.
+        scan_results[name] = {
+            "summary": s,
+            "final_candidates_per_record": cf["final_candidates"],
+            "cutflow": cf,
+        }
         print(f"\n=== {name} ===")
         print(json.dumps(s, indent=2))
         if "PRIMARY" in name:
@@ -265,7 +272,10 @@ def main():
 
     stats = {
         "n_parsed_events": n_events,
-        "ip_cut_scan": {k: v["summary"] for k, v in scan_results.items()},
+        "ip_cut_scan": {
+            k: {"summary": v["summary"], "final_candidates_per_record": v["final_candidates_per_record"]}
+            for k, v in scan_results.items()
+        },
         "primary_cutflow": primary_cutflow,
         "primary_candidates_by_channel": channels,
         "primary_candidates": primary_candidates,
