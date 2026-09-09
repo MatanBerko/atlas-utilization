@@ -11,21 +11,21 @@
 # sip3d<4/|dxy|<0.5/|dz|<1.0 impact-parameter cuts, applied later by the
 # analysis script -- this job only does the PARSING stage).
 #
-# Resource requests (see the accompanying explanation for the full
-# reasoning):
-#   mem=6gb    -- laptop run peaked ~4.1 GiB; ~1.5x headroom, plus margin for
-#                 the cross-record de-duplication set (accumulates across all
-#                 six records in one process, untested at this file count).
-#   walltime=8h -- laptop's last fully-successful 238-file run took ~6h23m;
-#                 the cluster's measured single-file open+read latency is
-#                 ~3.5x faster than the laptop's (5.0s vs 17.7s, same file),
-#                 suggesting a real run could finish in ~2h, but that ratio
-#                 measures connection/metadata latency, not confirmed bulk
-#                 transfer throughput -- 8h keeps real margin above the
-#                 known-good laptop baseline rather than trusting the
-#                 optimistic projection.
-#   io=50      -- ~294 GiB / ~108 min (the ~2h optimistic point estimate)
-#                 ~= 46.5 MB/s, rounded up to 50 MB/s.
+# Resource requests -- revised after the smoke test actually ran (12 files,
+# all six records, job 4999602.pbs on 2026-09-09): exit 0, walltime 00:11:27,
+# mem 4030484kb (~3.84 GiB) peak, throughput 22.1 MB/s measured (15,175 MiB /
+# 687s). These replace the pre-run estimates that were used to size the
+# original request (laptop-baseline projection + single-file latency ratio).
+#   mem=5gb    -- smoke test peaked 3.84 GiB; modest headroom above that,
+#                 not the earlier untested-margin guess.
+#   walltime=8h -- unchanged. 294 GiB / 22.1 MB/s (measured) ~= 3.8h
+#                 projected; 8h leaves real margin (~2.1x the projection)
+#                 without being excessive.
+#   io=25      -- measured throughput was 22.1 MB/s, not the 46.5 MB/s the
+#                 original request assumed (that was based on an optimistic
+#                 latency-ratio projection, not a real measurement).
+#                 Declaring io= at the actually-sustained rate avoids
+#                 reserving shared I/O capacity this job won't use.
 #
 # Run this AFTER pbs_higgs4l_partB_cluster_smoketest.sh has been reviewed and
 # has confirmed non-zero events for all six records.
@@ -34,9 +34,9 @@
 #PBS -q N
 #PBS -m n
 #PBS -S /bin/bash
-#PBS -l select=1:ncpus=1:mem=6gb
+#PBS -l select=1:ncpus=1:mem=5gb
 #PBS -l walltime=08:00:00
-#PBS -l io=50
+#PBS -l io=25
 #PBS -o /storage/agrp/berkom/atlas-utilization/logs/higgs4l_partB_fullscale.out
 #PBS -e /storage/agrp/berkom/atlas-utilization/logs/higgs4l_partB_fullscale.err
 
