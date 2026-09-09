@@ -34,6 +34,20 @@ def setup_logging(level: str = "INFO"):
     )
 
 
+def attach_file_logging(run_dir: str, level: str = "INFO"):
+    """Add a FileHandler so this run's log lines are also written to
+    <run_dir>/logs/pipeline.log, not just stdout. Called once run_dir is
+    known (stdout-only logging up to that point still applies)."""
+    log_dir = os.path.join(run_dir, "logs")
+    os.makedirs(log_dir, exist_ok=True)
+    file_handler = logging.FileHandler(os.path.join(log_dir, "pipeline.log"))
+    file_handler.setLevel(getattr(logging, level.upper()))
+    file_handler.setFormatter(
+        logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    )
+    logging.getLogger().addHandler(file_handler)
+
+
 def load_config(config_path: str) -> dict:
     """Load configuration from YAML file."""
     with open(config_path, 'r') as f:
@@ -163,6 +177,7 @@ def main():
             logger.info(f"Plots-only mode: reading data from {args.run_dir}")
             config_dict = load_config(args.config)
             config_dict = update_config_paths_with_run_dir(config_dict, args.run_dir)
+            attach_file_logging(args.run_dir, args.log_level)
             config = PipelineConfig.from_dict(config_dict)
 
             executor = PipelineExecutor(config)
@@ -177,6 +192,7 @@ def main():
             logger.info(f"Merge-only mode: merging outputs in {args.run_dir}")
             config_dict = load_config(args.config)
             config_dict = update_config_paths_with_run_dir(config_dict, args.run_dir)
+            attach_file_logging(args.run_dir, args.log_level)
             config = PipelineConfig.from_dict(config_dict)
 
             executor = PipelineExecutor(config)
@@ -191,6 +207,7 @@ def main():
             logger.info(f"Scan-only mode: computing global ranges from {args.run_dir}")
             config_dict = load_config(args.config)
             config_dict = update_config_paths_with_run_dir(config_dict, args.run_dir)
+            attach_file_logging(args.run_dir, args.log_level)
             config = PipelineConfig.from_dict(config_dict)
             executor = PipelineExecutor(config)
             executor.scan_global_ranges(args.run_dir)
@@ -241,6 +258,7 @@ def main():
 
         # Update config paths to use run directory
         config_dict = update_config_paths_with_run_dir(config_dict, run_dir)
+        attach_file_logging(run_dir, args.log_level)
 
         # Per-batch histogram filename so batch jobs don't collide
         if args.batch_job_index is not None:
