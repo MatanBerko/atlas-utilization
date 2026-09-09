@@ -88,15 +88,21 @@ def main():
     out = args.out_dir
     (out / "plots").mkdir(parents=True, exist_ok=True)
 
-    plot_cutflow(d["primary_cutflow"], out / "plots" / "partB_cutflow.png")
+    plot_cutflow(
+        d["primary_cutflow"], out / "plots" / "partB_cutflow.png",
+        per_record_title="Cut-flow per record (Part B: Part A + sip3d/dxy/dz added)",
+        suptitle="H->ZZ->4l Part B cut-flow: primary selection (Part A + sip3d<4, |dxy|<0.5, |dz|<1.0)",
+    )
     plot_ip_cut_scan(d["ip_cut_scan"], out / "plots" / "partB_ip_cut_scan.png")
     plot_baseline_vs_cleaned(
         base["candidates"], d["primary_candidates"],
         out / "plots" / "partB_mass_baseline_vs_partB.png",
         baseline_label="pre-Part-B laptop baseline (no A1/A2, no IP cuts)",
         cleaned_label="Part B (A1+A2+sip3d+dxy+dz)",
+        title="H->ZZ->4l mass spectrum: pre-Part-B baseline vs. Part B selection",
     )
-    plot_channel_breakdown(d["primary_candidates_by_channel"], out / "plots" / "partB_channel_breakdown.png")
+    plot_channel_breakdown(d["primary_candidates_by_channel"], out / "plots" / "partB_channel_breakdown.png",
+                            title_prefix="Part B")
     plot_z1_validation(d["primary_candidates"], out / "plots" / "partB_z1_validation.png",
                         "Part B selection (Part A + sip3d/dxy/dz)")
 

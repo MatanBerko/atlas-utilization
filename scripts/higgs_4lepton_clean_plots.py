@@ -13,7 +13,9 @@ RECORD_NAMES = {
 BIN_LO, BIN_HI, N_BINS = 70.0, 180.0, 37
 
 
-def plot_cutflow(cutflow, out_png):
+def plot_cutflow(cutflow, out_png,
+                  per_record_title="Cut-flow per record (Part A: A1 low-mass veto + A2 ghost removal added)",
+                  suptitle="H->ZZ->4l Part A cut-flow: cheap background-rejection cuts on existing parsed data"):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -40,7 +42,7 @@ def plot_cutflow(cutflow, out_png):
     ax.set_xticks(x)
     ax.set_xticklabels([s[0] for s in stages], fontsize=7.5)
     ax.set_ylabel("events")
-    ax.set_title("Cut-flow per record (Part A: A1 low-mass veto + A2 ghost removal added)")
+    ax.set_title(per_record_title)
     ax.legend(fontsize=7, loc="upper right")
 
     ax2 = axes[1]
@@ -55,7 +57,7 @@ def plot_cutflow(cutflow, out_png):
     ax2.set_ylabel("events")
     ax2.set_title("Cut-flow, combined (all 6 records)")
 
-    fig.suptitle("H->ZZ->4l Part A cut-flow: cheap background-rejection cuts on existing parsed data")
+    fig.suptitle(suptitle)
     fig.tight_layout()
     fig.savefig(out_png, dpi=130)
     print(f"wrote {out_png}")
@@ -63,7 +65,8 @@ def plot_cutflow(cutflow, out_png):
 
 def plot_baseline_vs_cleaned(baseline_cands, cleaned_cands, out_png,
                               baseline_label="baseline (no A1/A2)",
-                              cleaned_label="cleaned (+A1 low-mass veto +A2 ghost removal)"):
+                              cleaned_label="cleaned (+A1 low-mass veto +A2 ghost removal)",
+                              title="H->ZZ->4l mass spectrum: baseline vs. Part A cleaned selection"):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -86,7 +89,7 @@ def plot_baseline_vs_cleaned(baseline_cands, cleaned_cands, out_png,
     ax.set_xlabel("4-lepton invariant mass [GeV]")
     ax.set_ylabel(f"candidates / {w:.2f} GeV")
     ax.set_title(
-        "H->ZZ->4l mass spectrum: baseline vs. Part A cleaned selection\n"
+        f"{title}\n"
         "Descriptive only -- no significance, p-value, or sigma computed or implied"
     )
     ax.legend(fontsize=9)
@@ -95,7 +98,7 @@ def plot_baseline_vs_cleaned(baseline_cands, cleaned_cands, out_png,
     print(f"wrote {out_png}")
 
 
-def plot_channel_breakdown(by_channel, out_png):
+def plot_channel_breakdown(by_channel, out_png, title_prefix="Part A cleaned"):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -107,7 +110,7 @@ def plot_channel_breakdown(by_channel, out_png):
     for b, v in zip(bars, vals):
         ax.text(b.get_x() + b.get_width() / 2, v, f"{v:,}", ha="center", va="bottom")
     ax.set_ylabel("final candidates")
-    ax.set_title(f"Part A cleaned candidates by channel (total {sum(vals):,})")
+    ax.set_title(f"{title_prefix} candidates by channel (total {sum(vals):,})")
     fig.tight_layout()
     fig.savefig(out_png, dpi=130)
     print(f"wrote {out_png}")
