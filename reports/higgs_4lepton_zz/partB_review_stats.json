@@ -1,0 +1,206 @@
+{
+  "n_primary_candidates": 535,
+  "channel_summary": {
+    "4mu": {
+      "label": "4mu",
+      "n_candidates_total": 224,
+      "n_70_180": 84,
+      "n_118_130": 20,
+      "n_120_5_123_5_before": 2,
+      "n_123_5_126_5": 14,
+      "n_126_5_129_5_after": 2,
+      "n_zpeak_85_97": 167,
+      "n_z1_total": 224,
+      "zpeak_fraction": 0.7455357142857143
+    },
+    "2e2mu": {
+      "label": "2e2mu",
+      "n_candidates_total": 234,
+      "n_70_180": 52,
+      "n_118_130": 13,
+      "n_120_5_123_5_before": 2,
+      "n_123_5_126_5": 7,
+      "n_126_5_129_5_after": 2,
+      "n_zpeak_85_97": 197,
+      "n_z1_total": 234,
+      "zpeak_fraction": 0.8418803418803419
+    },
+    "4e": {
+      "label": "4e",
+      "n_candidates_total": 77,
+      "n_70_180": 23,
+      "n_118_130": 6,
+      "n_120_5_123_5_before": 2,
+      "n_123_5_126_5": 2,
+      "n_126_5_129_5_after": 1,
+      "n_zpeak_85_97": 55,
+      "n_z1_total": 77,
+      "zpeak_fraction": 0.7142857142857143
+    }
+  },
+  "bin_table_95_180": [
+    {
+      "bin_lo_gev": 93.78,
+      "bin_hi_gev": 96.76,
+      "count": 2
+    },
+    {
+      "bin_lo_gev": 96.76,
+      "bin_hi_gev": 99.73,
+      "count": 1
+    },
+    {
+      "bin_lo_gev": 99.73,
+      "bin_hi_gev": 102.7,
+      "count": 1
+    },
+    {
+      "bin_lo_gev": 102.7,
+      "bin_hi_gev": 105.68,
+      "count": 1
+    },
+    {
+      "bin_lo_gev": 105.68,
+      "bin_hi_gev": 108.65,
+      "count": 2
+    },
+    {
+      "bin_lo_gev": 108.65,
+      "bin_hi_gev": 111.62,
+      "count": 1
+    },
+    {
+      "bin_lo_gev": 111.62,
+      "bin_hi_gev": 114.59,
+      "count": 3
+    },
+    {
+      "bin_lo_gev": 114.59,
+      "bin_hi_gev": 117.57,
+      "count": 3
+    },
+    {
+      "bin_lo_gev": 117.57,
+      "bin_hi_gev": 120.54,
+      "count": 4
+    },
+    {
+      "bin_lo_gev": 120.54,
+      "bin_hi_gev": 123.51,
+      "count": 6
+    },
+    {
+      "bin_lo_gev": 123.51,
+      "bin_hi_gev": 126.49,
+      "count": 23
+    },
+    {
+      "bin_lo_gev": 126.49,
+      "bin_hi_gev": 129.46,
+      "count": 5
+    },
+    {
+      "bin_lo_gev": 129.46,
+      "bin_hi_gev": 132.43,
+      "count": 3
+    },
+    {
+      "bin_lo_gev": 132.43,
+      "bin_hi_gev": 135.41,
+      "count": 0
+    },
+    {
+      "bin_lo_gev": 135.41,
+      "bin_hi_gev": 138.38,
+      "count": 5
+    },
+    {
+      "bin_lo_gev": 138.38,
+      "bin_hi_gev": 141.35,
+      "count": 2
+    },
+    {
+      "bin_lo_gev": 141.35,
+      "bin_hi_gev": 144.32,
+      "count": 3
+    },
+    {
+      "bin_lo_gev": 144.32,
+      "bin_hi_gev": 147.3,
+      "count": 2
+    },
+    {
+      "bin_lo_gev": 147.3,
+      "bin_hi_gev": 150.27,
+      "count": 3
+    },
+    {
+      "bin_lo_gev": 150.27,
+      "bin_hi_gev": 153.24,
+      "count": 4
+    },
+    {
+      "bin_lo_gev": 153.24,
+      "bin_hi_gev": 156.22,
+      "count": 1
+    },
+    {
+      "bin_lo_gev": 156.22,
+      "bin_hi_gev": 159.19,
+      "count": 2
+    },
+    {
+      "bin_lo_gev": 159.19,
+      "bin_hi_gev": 162.16,
+      "count": 2
+    },
+    {
+      "bin_lo_gev": 162.16,
+      "bin_hi_gev": 165.14,
+      "count": 3
+    },
+    {
+      "bin_lo_gev": 165.14,
+      "bin_hi_gev": 168.11,
+      "count": 1
+    },
+    {
+      "bin_lo_gev": 168.11,
+      "bin_hi_gev": 171.08,
+      "count": 4
+    },
+    {
+      "bin_lo_gev": 171.08,
+      "bin_hi_gev": 174.05,
+      "count": 3
+    },
+    {
+      "bin_lo_gev": 174.05,
+      "bin_hi_gev": 177.03,
+      "count": 2
+    },
+    {
+      "bin_lo_gev": 177.03,
+      "bin_hi_gev": 180.0,
+      "count": 9
+    }
+  ],
+  "off_peak_composition": {
+    "definition": "m4l in [70.0,180.0) GeV, excluding [85.0,97.0) (near-91) and [118.0,130.0) (near-125)",
+    "n_off_peak": 70,
+    "n_total_70_180": 159,
+    "by_channel": {
+      "4mu": 35,
+      "2e2mu": 25,
+      "4e": 10
+    },
+    "by_record": {
+      "DoubleEG G": 15,
+      "DoubleMuon G": 19,
+      "MuonEG G": 1,
+      "DoubleEG H": 12,
+      "DoubleMuon H": 23,
+      "MuonEG H": 0
+    }
+  }
+}
