@@ -80,7 +80,7 @@ parsing_task_config:
   parse_mc: false
 
   # ===PERFORMANCE===
-  use_multiprocessing: false
+  use_multiprocessing: true
   parallel_processes: 4
   threads: 8
   env_threshold_memory_mb: 8000
