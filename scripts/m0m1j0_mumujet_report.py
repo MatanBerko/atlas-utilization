@@ -65,6 +65,24 @@ Framing: this script reports observed counts and shapes only. It computes
 no significance, p-value, or sigma, and asserts no cause for any feature in
 the distribution -- that is not what a BumpNet input histogram is for.
 
+FIELD_DROP_WARNING: Muons_looseId / Muons_pfRelIso04_all are declared in
+this pipeline's cms-nanoaod schema (services/parsing/schemas.py) and are
+genuinely present as raw branches on the real NanoAOD files (confirmed
+directly via uproot against a live file), but were observed, on the actual
+m0m1j0 smoke test run, to NOT reliably survive into the parsed output
+chunks -- only Muons_pt/eta/phi/mass are guaranteed present. This is a
+pre-existing pipeline bug (see docs -- BUGS OBSERVED, NOT FIXED), most
+likely in how services/parsing/file_parser.py's per-file branch-
+accessibility check or services/parsing/event_accumulator.py's
+ak.concatenate across many batches handles an optional field that isn't
+uniformly accessible across every batch. This script does NOT silently
+proceed as if the cut were applied: `_select_muons` only applies looseId/
+iso when the field is actually present on a given chunk, and every code
+path that reports the selection (stats JSON's `field_availability` key,
+the plot annotation, stdout warnings) says explicitly whether the cut was
+actually applied everywhere, applied inconsistently, or not applied at
+all -- this is a known, surfaced gap, not a hidden one.
+
 Usage (on the cluster, inside the pipeline's conda env):
     python scripts/m0m1j0_mumujet_report.py \\
         --run-dir /storage/agrp/berkom/atlas-utilization/output/cms_m0m1j0_smoketest_YYYYMMDD_HHMMSS \\
@@ -169,20 +187,34 @@ def parse_log(log_path: Path) -> dict:
 
 
 def _select_muons(arr):
-    """Boolean per-muon mask: pT>5, |eta|<2.4, looseId, pfRelIso04_all<0.35."""
+    """
+    Boolean per-muon mask: pT>5, |eta|<2.4, looseId, pfRelIso04_all<0.35.
+
+    looseId/pfRelIso04_all are applied ONLY if actually present as fields on
+    this chunk -- see module-level FIELD_DROP_WARNING for why they can be
+    missing even though the schema declares them and the raw NanoAOD file
+    genuinely has the branches (a real, pre-existing pipeline bug, not
+    something this script works around silently: `cuts_actually_applied`
+    below is threaded through to the stats JSON and plot annotation so the
+    report never claims a cut was applied when it was not).
+    """
     import awkward as ak
 
     pt = arr["Muons_pt"]
     eta = arr["Muons_eta"]
-    loose = arr["Muons_looseId"]
-    iso = arr["Muons_pfRelIso04_all"]
-    mask = (
-        (pt > MUON_PT_MIN_GEV)
-        & (abs(eta) < MUON_ETA_MAX)
-        & (ak.values_astype(loose, bool) == True)  # noqa: E712
-        & (iso < MUON_ISO_MAX)
-    )
-    return mask
+    mask = (pt > MUON_PT_MIN_GEV) & (abs(eta) < MUON_ETA_MAX)
+    cuts_applied = {"pt": True, "eta": True, "looseId": False, "iso": False}
+
+    if "Muons_looseId" in arr.fields:
+        loose = arr["Muons_looseId"]
+        mask = mask & (ak.values_astype(loose, bool) == True)  # noqa: E712
+        cuts_applied["looseId"] = True
+    if "Muons_pfRelIso04_all" in arr.fields:
+        iso = arr["Muons_pfRelIso04_all"]
+        mask = mask & (iso < MUON_ISO_MAX)
+        cuts_applied["iso"] = True
+
+    return mask, cuts_applied
 
 
 def _select_jets(arr):
@@ -208,20 +240,34 @@ def load_masses(run_dir: Path):
     if not parsed:
         raise FileNotFoundError(f"no parsed .root chunks in {run_dir / 'parsed_data'}")
 
-    branches = [
+    required_branches = [
         "Muons_pt", "Muons_eta", "Muons_phi", "Muons_mass",
-        "Muons_looseId", "Muons_pfRelIso04_all",
         "Jets_pt", "Jets_eta", "Jets_phi", "Jets_mass",
         "source_record",
     ]
+    optional_branches = ["Muons_looseId", "Muons_pfRelIso04_all"]
 
     mumujet_parts: list[np.ndarray] = []
     dimuon_parts: list[np.ndarray] = []
     per_record_candidates: dict[str, int] = {}
     per_record_events_seen: dict[str, int] = {}
+    cuts_applied_by_chunk: list[dict] = []
 
     for chunk in parsed:
-        arr = uproot.open(chunk)["events"].arrays(branches, library="ak")
+        tree = uproot.open(chunk)["events"]
+        # See FIELD_DROP_WARNING: looseId/pfRelIso04_all are declared in the
+        # schema and genuinely present in the raw NanoAOD file, but do not
+        # always survive into the parsed chunk (a real, pre-existing
+        # pipeline bug -- see docstring). Request them only if this specific
+        # chunk actually has them; uproot.arrays() would otherwise raise
+        # KeyInFileError for the whole read.
+        present_optional = [b for b in optional_branches if b in tree.keys()]
+        arr = tree.arrays(required_branches + present_optional, library="ak")
+        if len(present_optional) < len(optional_branches):
+            missing = sorted(set(optional_branches) - set(present_optional))
+            print(f"WARNING: {chunk.name}: missing {missing} -- "
+                  f"looseId/iso cut not applied to this chunk's muons "
+                  f"(see FIELD_DROP_WARNING)")
 
         src_all = np.asarray(arr["source_record"])
         for rid in np.unique(src_all):
@@ -229,7 +275,8 @@ def load_masses(run_dir: Path):
                 per_record_events_seen.get(str(int(rid)), 0) + int((src_all == rid).sum())
             )
 
-        muon_mask = _select_muons(arr)
+        muon_mask, cuts_applied = _select_muons(arr)
+        cuts_applied_by_chunk.append(cuts_applied)
         jet_mask = _select_jets(arr)
 
         mu_pt = arr["Muons_pt"][muon_mask]
@@ -288,7 +335,16 @@ def load_masses(run_dir: Path):
 
     masses = np.concatenate(mumujet_parts) if mumujet_parts else np.array([], dtype=float)
     dimuon_masses = np.concatenate(dimuon_parts) if dimuon_parts else np.array([], dtype=float)
-    return masses, dimuon_masses, per_record_candidates, per_record_events_seen
+    looseid_applied_all_chunks = all(c["looseId"] for c in cuts_applied_by_chunk) if cuts_applied_by_chunk else None
+    iso_applied_all_chunks = all(c["iso"] for c in cuts_applied_by_chunk) if cuts_applied_by_chunk else None
+    field_availability = {
+        "looseId_applied_to_every_chunk": looseid_applied_all_chunks,
+        "iso_applied_to_every_chunk": iso_applied_all_chunks,
+        "n_chunks_total": len(cuts_applied_by_chunk),
+        "n_chunks_missing_looseId": sum(1 for c in cuts_applied_by_chunk if not c["looseId"]),
+        "n_chunks_missing_iso": sum(1 for c in cuts_applied_by_chunk if not c["iso"]),
+    }
+    return masses, dimuon_masses, per_record_candidates, per_record_events_seen, field_availability
 
 
 def build_hist(masses: np.ndarray):
@@ -342,22 +398,33 @@ CAPTION_NOTE = (
 )
 
 
-def _annotate(ax, n_in, nbins, dimuon_median):
+def _annotate(ax, n_in, nbins, dimuon_median, field_availability=None):
     bar_bins = "PASS" if nbins > BUMPNET_MIN_BINS else "FAIL"
     bar_ent = "PASS" if n_in >= BUMPNET_MIN_ENTRIES else "FAIL"
+    fa = field_availability or {}
+    loose_ok = fa.get("looseId_applied_to_every_chunk")
+    iso_ok = fa.get("iso_applied_to_every_chunk")
+    id_iso_str = (
+        "looseId, iso<%.2f (applied to every chunk)" % MUON_ISO_MAX
+        if loose_ok and iso_ok else
+        "looseId/iso NOT fully applied -- see stats JSON field_availability "
+        "(pipeline bug: fields missing from %d/%d chunks)"
+        % (fa.get("n_chunks_missing_looseId", 0), fa.get("n_chunks_total", 0))
+    )
     ax.text(
         0.985, 0.97,
         f"entries={n_in:,}  bins={nbins}\n"
         f">{BUMPNET_MIN_BINS} bins: {bar_bins}   >={BUMPNET_MIN_ENTRIES} entries: {bar_ent}\n"
         f"dimuon median = {dimuon_median:.1f} GeV (sanity check, expect ~91)\n"
-        f"cuts: mu pT>{MUON_PT_MIN_GEV:.0f}, |eta|<{MUON_ETA_MAX}, looseId, iso<{MUON_ISO_MAX} | "
+        f"cuts: mu pT>{MUON_PT_MIN_GEV:.0f}, |eta|<{MUON_ETA_MAX}, {id_iso_str} | "
         f"jet pT>{JET_PT_MIN_GEV:.0f}, |eta|<{JET_ETA_MAX}, NO jet ID cut",
         transform=ax.transAxes, ha="right", va="top", fontsize=6.8,
         bbox=dict(boxstyle="round", fc="white", ec="#999999", alpha=0.9),
     )
 
 
-def plot_mass(edges, counts, out_png: Path, dimuon_median: float, title_suffix: str = "") -> None:
+def plot_mass(edges, counts, out_png: Path, dimuon_median: float, title_suffix: str = "",
+              field_availability=None) -> None:
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -382,7 +449,7 @@ def plot_mass(edges, counts, out_png: Path, dimuon_median: float, title_suffix: 
     ax2.set_ylabel(f"events / {BIN_WIDTH_GEV:.0f} GeV")
     ax2.set_xlim(edges[0], edges[-1])
     ax2.set_title(f"linear scale{title_suffix}", fontsize=9)
-    _annotate(ax2, n_in, nbins, dimuon_median)
+    _annotate(ax2, n_in, nbins, dimuon_median, field_availability)
 
     fig.suptitle(
         f"CMS Open Data DoubleMuon (30522+30555) -- m0m1j0{title_suffix}\n{CAPTION_NOTE}",
@@ -449,14 +516,19 @@ def main() -> int:
         dimuon_masses = z["dimuon_masses"]
         per_record_candidates = {str(k): int(v) for k, v in z["per_record_candidates"].item().items()}
         per_record_events_seen = {str(k): int(v) for k, v in z["per_record_events_seen"].item().items()}
+        field_availability = z["field_availability"].item()
         print(f"loaded {masses.size:,} masses from cache {cache}")
     else:
-        masses, dimuon_masses, per_record_candidates, per_record_events_seen = load_masses(args.run_dir)
+        masses, dimuon_masses, per_record_candidates, per_record_events_seen, field_availability = load_masses(args.run_dir)
         np.savez_compressed(
             cache, masses=masses, dimuon_masses=dimuon_masses,
             per_record_candidates=np.array(per_record_candidates, dtype=object),
             per_record_events_seen=np.array(per_record_events_seen, dtype=object),
+            field_availability=np.array(field_availability, dtype=object),
         )
+    if not field_availability.get("looseId_applied_to_every_chunk") or not field_availability.get("iso_applied_to_every_chunk"):
+        print(f"WARNING: looseId/iso cut was NOT applied to every chunk -- "
+              f"{field_availability}")
 
     dimuon_median = float(np.median(dimuon_masses)) if dimuon_masses.size else float("nan")
 
@@ -467,7 +539,8 @@ def main() -> int:
     hist_name = write_bumpnet_root(
         edges, counts, out / "histograms" / f"{BUMPNET_NAME}_width_{BIN_WIDTH_GEV}.root"
     )
-    plot_mass(edges, counts, out / "plots" / "m0m1j0_mass.png", dimuon_median)
+    plot_mass(edges, counts, out / "plots" / "m0m1j0_mass.png", dimuon_median,
+              field_availability=field_availability)
     plot_funnel(records, out / "plots" / "m0m1j0_funnel.png")
 
     zoom_png = None
@@ -478,7 +551,8 @@ def main() -> int:
         zoom_counts, _ = np.histogram(zoom_in_range, bins=zoom_edges)
         zoom_png = out / "plots" / "m0m1j0_mass_zoomed.png"
         plot_mass(zoom_edges, zoom_counts, zoom_png, dimuon_median,
-                  title_suffix=f" (zoomed to 0-{p99_cutoff:.0f} GeV, >99% of entries)")
+                  title_suffix=f" (zoomed to 0-{p99_cutoff:.0f} GeV, >99% of entries)",
+                  field_availability=field_availability)
 
     stats = {
         "run_dir": str(args.run_dir),
@@ -514,6 +588,7 @@ def main() -> int:
             "note": "2 leading muons only, before adding the jet -- confirms GeV "
                     "(not MeV-scale, i.e. not ~91000) units for this CMS NanoAOD data",
         },
+        "field_availability": field_availability,
         "per_record": {
             rid: {
                 "label": RECORD_LABELS.get(rid, rid),
@@ -549,7 +624,16 @@ def main() -> int:
             },
             "analysis_time": {
                 "muons": {"pt_min": MUON_PT_MIN_GEV, "eta_max": MUON_ETA_MAX,
-                          "looseId": True, "pfRelIso04_all_max": MUON_ISO_MAX},
+                          "looseId_requested": True,
+                          "looseId_actually_applied_every_chunk": field_availability.get("looseId_applied_to_every_chunk"),
+                          "pfRelIso04_all_max_requested": MUON_ISO_MAX,
+                          "iso_actually_applied_every_chunk": field_availability.get("iso_applied_to_every_chunk"),
+                          "note": "See BUGS OBSERVED, NOT FIXED / FIELD_DROP_WARNING: "
+                                  "looseId/pfRelIso04_all are declared in the schema and "
+                                  "present in the raw NanoAOD file, but do not always "
+                                  "survive into the parsed output (pre-existing pipeline "
+                                  "bug). When missing for a chunk, that chunk's muons are "
+                                  "NOT looseId/iso-filtered -- only pT/eta are guaranteed."},
                 "jets": {"pt_min": JET_PT_MIN_GEV, "eta_max": JET_ETA_MAX,
                          "jet_id_cut": "NONE -- no Jet_jetId/Jet_puId field exists "
                                        "in this pipeline's schema (known, accepted gap)"},
