@@ -22,43 +22,48 @@
 # been reviewed, and the pipeline operator has explicitly approved
 # proceeding to full scale.
 #
-# Resource requests -- sized as a PROJECTION from the closest available
-# precedent (the six-record H->ZZ->4l full run, analysis/higgs-4lepton-
-# clean, pbs_higgs4l_partB_cluster_fullscale.sh): 238 files / 293.9 GiB
-# finished in 2h33m (9180s) at a measured ~5.2 GiB peak memory, i.e. an
-# aggregate throughput of ~32.8 MiB/s. This job's 82.2 GiB at that same
-# throughput projects to ~43 minutes of pure I/O time -- but that reference
-# job used the tight H->ZZ->4l >=4-lepton selection (low retention, small
-# per-chunk accumulator contents); THIS job's selection is far looser
-# (>=2mu+1jet), so many more events survive per file, meaning more
-# kinematic-cut/particle-count filtering CPU time and more/larger chunk
-# writes to Lustre than the I/O-only projection captures. Sized with
-# generous headroom over the raw projection for exactly that reason, not
-# because of any specific measurement of this selection's own overhead --
-# the smoke test (pbs_m0m1j0_smoketest.sh) is what will tell us whether
-# this margin was actually needed, and its real numbers should inform a
-# revision here before this script is ever submitted, the same way the
-# H->ZZ->4l fullscale script's own resource comment was revised after ITS
-# smoke test ran.
-#   mem=8gb     -- headroom above the 5.2 GiB reference peak, for the
-#                  larger volume of retained events this looser selection
-#                  keeps in memory between chunk flushes (the same
-#                  chunk_yield_threshold_bytes=2GB config value caps this,
-#                  but with more real events per chunk than the reference
-#                  job saw).
-#   walltime=4h -- ~5.6x the ~43-minute raw I/O-throughput projection above,
-#                  to cover the extra filtering/writing overhead this
-#                  selection's much higher retention implies. Still well
-#                  under queue N's 12h default and 72h hard max.
-#   io=40       -- headroom above the reference job's measured ~32.8 MiB/s
-#                  aggregate throughput.
+# Resource requests -- REVISED after the smoke test actually ran (4 files,
+# both records, job 5036819.pbs on 2026-09-14, AFTER fixing the
+# RECORD_ID_TO_SCHEMA registration bug found by that same smoke test):
+# exit 0, walltime 00:03:38 (218s), mem 6,682,004kb (~6.4 GiB) peak,
+# 9,096,942 raw events processed -> ~41,730 events/sec. These replace the
+# original pre-smoke-test estimates (an I/O-throughput projection from the
+# unrelated, tight-selection H->ZZ->4l reference job), which this real
+# measurement shows were on the right order for walltime but likely
+# understated for memory:
+#   mem=12gb    -- the smoke test's single accumulated chunk (6,495,777
+#                  events, 1,325.3 MB on disk, per the "Saved final chunk"
+#                  log line) already used 6.4 GiB peak process memory --
+#                  roughly a 5x data-size-to-process-memory ratio. It never
+#                  hit chunk_yield_threshold_bytes=2GB (the config's
+#                  per-chunk flush threshold) because it was the run's only/
+#                  final chunk. The full-scale run WILL hit that 2GB
+#                  threshold repeatedly; at the same ~5x ratio that
+#                  projects to ~10 GiB peak. 12gb leaves real margin above
+#                  that, not the untested 8gb guess this comment used to
+#                  make.
+#   walltime=1h30m -- the smoke test's own measured throughput
+#                  (~41,730 events/sec) projects the full run's
+#                  94,148,416 raw events (30522: 45,235,604 + 30555:
+#                  48,912,812, both independently verified in this
+#                  project's earlier H->ZZ->4l work,
+#                  reports/higgs_4lepton_zz/summary.md on
+#                  analysis/higgs-4lepton-clean) to ~38 minutes -- 1h30m is
+#                  ~2.4x that measured projection, real margin without the
+#                  original guess's much larger, untested 4h pad. Still
+#                  well under queue N's 12h default and 72h hard max.
+#   io=40       -- kept unchanged; the smoke test didn't isolate a clean
+#                  bytes/sec throughput figure (only an events/sec rate),
+#                  so there is no better measurement to revise this from
+#                  yet. Still comfortably above the ~32.8 MiB/s aggregate
+#                  the H->ZZ->4l reference job measured.
 # ---------------------------------------------------------------------------
 #PBS -N m0m1j0_fullscale
 #PBS -q N
 #PBS -m n
 #PBS -S /bin/bash
-#PBS -l select=1:ncpus=1:mem=8gb
-#PBS -l walltime=04:00:00
+#PBS -l select=1:ncpus=1:mem=12gb
+#PBS -l walltime=01:30:00
 #PBS -l io=40
 #PBS -o /storage/agrp/berkom/atlas-utilization/logs/m0m1j0_fullscale.out
 #PBS -e /storage/agrp/berkom/atlas-utilization/logs/m0m1j0_fullscale.err
