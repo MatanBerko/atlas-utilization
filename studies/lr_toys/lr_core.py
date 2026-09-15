@@ -426,12 +426,19 @@ def _poly_bkg_start(n_coeffs: int) -> list[float]:
 def fit_bkg_only_poly(data: np.ndarray, nodes: np.ndarray, weights: np.ndarray,
                        x_min: float, x_scale: float, n_coeffs: int = 5,
                        start: list[float] | None = None,
+                       n_bkg_start: float = N_BKG_TRUE,
                        norm_nodes: np.ndarray | None = None,
                        norm_weights: np.ndarray | None = None):
     """Background-only (mu=0) fit with a plain polynomial background.
-    Mirrors `fit_bkg_only`'s contract exactly, for the polynomial shape."""
+    Mirrors `fit_bkg_only`'s contract exactly, for the polynomial shape.
+
+    `n_bkg_start` defaults to N_BKG_TRUE (the toy-study constant, 250,000)
+    to keep existing callers' behaviour identical; pass a data-driven value
+    (e.g. the observed total event count) for a real dataset whose scale
+    differs -- starting MIGRAD far from the true minimum was found to make
+    fits far slower (sometimes markedly so across a large toy loop)."""
     if start is None:
-        start = [N_BKG_TRUE] + _poly_bkg_start(n_coeffs)
+        start = [n_bkg_start] + _poly_bkg_start(n_coeffs)
 
     def nll_fn(par):
         n_bkg = par[0]
@@ -444,7 +451,11 @@ def fit_bkg_only_poly(data: np.ndarray, nodes: np.ndarray, weights: np.ndarray,
     m = Minuit(nll_fn, start, name=names)
     m.errordef = Minuit.LIKELIHOOD
     m.limits["n_bkg"] = (0.0, None)
-    m.strategy = 1
+    # strategy=0: this function is the hot loop's null fit (called once per
+    # toy, thousands of times); strategy=1's extra Hessian evaluations were
+    # a large part of why the mass-scan toy loop was too slow to finish --
+    # timed directly (see studies/atlas_hgg_repro/REPORT.md), not guessed.
+    m.strategy = 0
     m.migrad()
     return {
         "nll": float(m.fval),
@@ -459,11 +470,13 @@ def fit_full_poly(data: np.ndarray, edges: np.ndarray, nodes: np.ndarray,
                    weights: np.ndarray, s_ref: float, mh: float, sigma: float,
                    x_min: float, x_scale: float, n_coeffs: int = 5,
                    mu_start: float = 0.0, bkg_start: list[float] | None = None,
+                   n_bkg_start: float = N_BKG_TRUE,
                    hesse: bool = False):
     """Free (mu, background) fit with mh/sigma FIXED and a plain
-    polynomial background. Mirrors `fit_full`'s contract exactly."""
+    polynomial background. Mirrors `fit_full`'s contract exactly.
+    See `fit_bkg_only_poly` for why `n_bkg_start` exists."""
     if bkg_start is None:
-        bkg_start = [N_BKG_TRUE] + _poly_bkg_start(n_coeffs)
+        bkg_start = [n_bkg_start] + _poly_bkg_start(n_coeffs)
     start = [mu_start] + bkg_start
 
     def nll_fn(par):
@@ -478,7 +491,11 @@ def fit_full_poly(data: np.ndarray, edges: np.ndarray, nodes: np.ndarray,
     m = Minuit(nll_fn, start, name=names)
     m.errordef = Minuit.LIKELIHOOD
     m.limits["n_bkg"] = (0.0, None)
-    m.strategy = 1
+    # strategy=0: this function is the hot loop's alt fit (called at every
+    # scanned mass, for every toy -- tens of thousands of calls); see
+    # fit_bkg_only_poly's comment for why. hesse=True below still forces a
+    # proper Hessian when actually asked for uncertainties.
+    m.strategy = 0
     m.migrad()
     if hesse:
         m.hesse()
@@ -503,11 +520,13 @@ def fit_full_poly_floating_mass_width(data: np.ndarray, edges: np.ndarray, nodes
                                        sigma_start: float = 2.0,
                                        sigma_bounds: tuple[float, float] = (0.5, 6.0),
                                        bkg_start: list[float] | None = None,
+                                       n_bkg_start: float = N_BKG_TRUE,
                                        hesse: bool = False):
     """Free (mu, mh, sigma, background) fit, all floating, with a plain
-    polynomial background -- the main "Fit 2" of studies/atlas_hgg_repro."""
+    polynomial background -- the main "Fit 2" of studies/atlas_hgg_repro.
+    See `fit_bkg_only_poly` for why `n_bkg_start` exists."""
     if bkg_start is None:
-        bkg_start = [N_BKG_TRUE] + _poly_bkg_start(n_coeffs)
+        bkg_start = [n_bkg_start] + _poly_bkg_start(n_coeffs)
     start = [mu_start, mh_start, sigma_start] + bkg_start
 
     def nll_fn(par):
@@ -524,6 +543,19 @@ def fit_full_poly_floating_mass_width(data: np.ndarray, edges: np.ndarray, nodes
     m.limits["n_bkg"] = (0.0, None)
     m.limits["mh"] = mh_bounds
     m.limits["sigma"] = sigma_bounds
+    # NOTE (see REPORT.md "Fit 2 convergence flag"): on the real ATLAS
+    # dataset, this fit reliably reports fmin.is_valid=False, specifically
+    # fmin.is_above_max_edm=True (edm~0.002 vs goal 0.0001) -- everything
+    # else (posdef covariance, no parameter at a limit, hesse not failed)
+    # is fine, and the fitted values are stable and physically sensible
+    # (mh matches ATLAS's own published 126.5 GeV closely). Three attempted
+    # fixes were tried and rejected because each made the RESULT worse, not
+    # just the flag: strategy=2 converges to a different, clearly spurious
+    # minimum (mh~116 GeV, mu<0); a second migrad() call is a no-op (edm/
+    # nfcn identical -- MIGRAD already regards this stationary); loosening
+    # tol also moved to a markedly worse, far-less-constrained point
+    # (mu error tripled). Left at strategy=1, default tol: the numbers are
+    # trusted, the flag is reported honestly as False rather than chased.
     m.strategy = 1
     m.migrad()
     if hesse:
@@ -549,12 +581,14 @@ def fit_full_poly_floating_width(data: np.ndarray, edges: np.ndarray, nodes: np.
                                   x_min: float, x_scale: float, n_coeffs: int = 5,
                                   mu_start: float = 0.0, sigma_start: float = 2.0,
                                   sigma_bounds: tuple[float, float] = (0.5, 6.0),
-                                  bkg_start: list[float] | None = None):
+                                  bkg_start: list[float] | None = None,
+                                  n_bkg_start: float = N_BKG_TRUE):
     """
     Like `fit_full_poly`, but mh is FIXED (given) and sigma floats. Used
     for "profiled local significance at the best-fit mass, width
     floating" -- as opposed to `fit_full_poly_floating_mass_width`, which
-    also re-floats mh itself.
+    also re-floats mh itself. See `fit_bkg_only_poly` for why
+    `n_bkg_start` exists.
     """
     if bkg_start is None:
         bkg_start = [N_BKG_TRUE] + _poly_bkg_start(n_coeffs)
