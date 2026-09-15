@@ -23,7 +23,7 @@ import statistics
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-REPO_ROOT = HERE.parents[2]
+REPO_ROOT = HERE.parents[3]
 GOLDEN_JSON_PATH = REPO_ROOT / "data" / "cms" / "validated_runs" / \
     "Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt"
 CSV_PATH = Path(r"C:\Users\matan\hgg-trigger-20260915\lumi_partA\pp_2016lumibyls.csv")
@@ -183,23 +183,46 @@ def main():
 
     print(json.dumps(summary, indent=2))
 
-    # Plot: distribution of missing-section luminosity vs all certified sections
+    # Plot: fraction of sections in each luminosity bracket, missing vs. all
+    # certified. A log-scale histogram is a poor fit here (661/682 missing
+    # sections are EXACTLY zero, per lumi_decision_data.json's own numbers --
+    # a plain log-x histogram either clips/loses that spike or lets it
+    # swamp the y-axis), so this uses discrete brackets with an explicit
+    # "exactly 0" bucket instead.
     try:
         import matplotlib
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
         import numpy as np
 
-        fig, ax = plt.subplots(figsize=(8, 5))
-        bins = np.logspace(-9, -2, 60)
-        ax.hist(np.clip(all_certified_lumis, 1e-9, None), bins=bins, alpha=0.5,
-                label=f"all certified sections (n={len(all_certified_lumis)})", density=True)
-        ax.hist(np.clip(all_missing_lumis, 1e-9, None), bins=bins, alpha=0.7,
-                label=f"missing sections (n={len(all_missing_lumis)})", density=True)
-        ax.set_xscale("log")
-        ax.set_xlabel("recorded luminosity per lumisection (/fb)")
-        ax.set_ylabel("probability density")
-        ax.set_title("Missing vs. all certified lumisections: recorded luminosity per section")
+        edges = [0, 1e-9, 1e-6, 1e-5, 1e-4, 1e-3, np.inf]
+        labels = ["exactly 0", "(0, 1e-6)", "[1e-6, 1e-5)", "[1e-5, 1e-4)", "[1e-4, 1e-3)", ">= 1e-3"]
+
+        def bracket_fractions(values):
+            values = np.asarray(values)
+            counts = []
+            for lo, hi in zip(edges[:-1], edges[1:]):
+                if lo == 0:
+                    counts.append(int((values == 0).sum()))
+                else:
+                    counts.append(int(((values >= lo) & (values < hi)).sum()))
+            counts = np.array(counts, dtype=float)
+            return 100.0 * counts / len(values)
+
+        cert_frac = bracket_fractions(all_certified_lumis)
+        miss_frac = bracket_fractions(all_missing_lumis)
+
+        fig, ax = plt.subplots(figsize=(9, 5))
+        x = np.arange(len(labels))
+        width = 0.35
+        ax.bar(x - width / 2, cert_frac, width,
+               label=f"all certified sections (n={len(all_certified_lumis)})")
+        ax.bar(x + width / 2, miss_frac, width,
+               label=f"missing sections (n={len(all_missing_lumis)})")
+        ax.set_xticks(x)
+        ax.set_xticklabels(labels, rotation=20, ha="right")
+        ax.set_ylabel("% of sections in this recorded-luminosity bracket (/fb)")
+        ax.set_title("Missing vs. all certified lumisections, by recorded luminosity per section")
         ax.legend()
         fig.tight_layout()
         fig.savefig(HERE / "missing_sections_luminosity_hist.png", dpi=150)
