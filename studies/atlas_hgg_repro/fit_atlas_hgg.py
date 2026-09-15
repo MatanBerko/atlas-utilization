@@ -36,7 +36,13 @@ N_COEFFS = 5  # 4th-order polynomial: c0..c4
 MH_BOUNDS = (110.0, 150.0)
 SIGMA_BOUNDS = (0.5, 6.0)
 SEED_GLOBAL_SIG = 70_001
-N_TOYS_GLOBAL = 3000
+# Reduced from an initial 3000: timed directly on this machine (after fixing
+# the n_bkg-start-value bug and switching the hot-loop fits to
+# Minuit strategy=0) at ~0.82 s/toy for the full 41-point scan, so 3000
+# toys would take ~41 minutes. 700 toys keeps this under ~10 minutes and
+# is still enough for a stable Gross-Vitells estimate; see REPORT.md for
+# the resulting statistical precision on the toy-based global p-value.
+N_TOYS_GLOBAL = 700
 MASS_SCAN = np.arange(110.0, 150.0001, 1.0)  # 1 GeV steps, 110-150 GeV
 
 
@@ -126,11 +132,17 @@ def main():
     plt.close(fig)
 
     # --- Profiled local significance at mh_hat ---
-    null = lc.fit_bkg_only_poly(data, nodes, weights, X_MIN, X_SCALE, n_coeffs=N_COEFFS)
+    # Warm-start every poly fit below from Fit 1/Fit 2's own converged
+    # background (n_bkg ~ 62,000 for this dataset), not the module default
+    # of N_BKG_TRUE=250,000 (the toy study's constant) -- starting MIGRAD
+    # 4x too high on n_bkg was the diagnosed cause of the earlier stuck run.
+    fit2_bkg_start = [fit2["n_bkg"]] + list(fit2["coeffs"])
+    null = lc.fit_bkg_only_poly(data, nodes, weights, X_MIN, X_SCALE, n_coeffs=N_COEFFS,
+                                 n_bkg_start=fit1["n_bkg"])
     alt_floating = lc.fit_full_poly_floating_width(
         data, edges, nodes, weights, s_ref=1.0, mh=fit2["mh_hat"], x_min=X_MIN, x_scale=X_SCALE,
         n_coeffs=N_COEFFS, mu_start=fit2["mu_hat"], sigma_start=fit2["sigma_hat"],
-        sigma_bounds=SIGMA_BOUNDS,
+        sigma_bounds=SIGMA_BOUNDS, bkg_start=fit2_bkg_start,
     )
     q0_floating = lc.q0_from_nll(null["nll"], alt_floating["nll"], alt_floating["mu_hat"])
     z_floating = lc.z_from_q0(q0_floating)
@@ -138,6 +150,7 @@ def main():
     alt_fixed_width = lc.fit_full_poly(
         data, edges, nodes, weights, s_ref=1.0, mh=fit2["mh_hat"], sigma=fit2["sigma_hat"],
         x_min=X_MIN, x_scale=X_SCALE, n_coeffs=N_COEFFS, mu_start=fit2["mu_hat"],
+        bkg_start=fit2_bkg_start,
     )
     q0_fixed = lc.q0_from_nll(null["nll"], alt_fixed_width["nll"], alt_fixed_width["mu_hat"])
     z_fixed = lc.z_from_q0(q0_fixed)
@@ -153,11 +166,16 @@ def main():
     # --- Mass scan for global significance (width fixed at sigma_hat) ---
     print(f"\nScanning {len(MASS_SCAN)} mass points {MASS_SCAN[0]}-{MASS_SCAN[-1]} GeV on real data...")
     local_z_obs = np.zeros(len(MASS_SCAN))
+    scan_bkg_start = fit2_bkg_start
+    scan_mu_start = fit2["mu_hat"]
     for i, mh in enumerate(MASS_SCAN):
         alt = lc.fit_full_poly(data, edges, nodes, weights, s_ref=1.0, mh=mh, sigma=fit2["sigma_hat"],
-                                x_min=X_MIN, x_scale=X_SCALE, n_coeffs=N_COEFFS, mu_start=fit2["mu_hat"])
+                                x_min=X_MIN, x_scale=X_SCALE, n_coeffs=N_COEFFS,
+                                mu_start=max(scan_mu_start, 0.0), bkg_start=scan_bkg_start)
         q0 = lc.q0_from_nll(null["nll"], alt["nll"], alt["mu_hat"])
         local_z_obs[i] = lc.z_from_q0(q0)
+        scan_bkg_start = [alt["n_bkg"]] + list(alt["coeffs"])
+        scan_mu_start = alt["mu_hat"]
     max_z_obs = local_z_obs.max()
     max_z_mh = MASS_SCAN[np.argmax(local_z_obs)]
     print(f"Observed max local Z = {max_z_obs:.3f} at mh = {max_z_mh:.1f} GeV")
@@ -171,9 +189,14 @@ def main():
     t0 = time.time()
     for t in range(N_TOYS_GLOBAL):
         toy = rng.poisson(b1)
-        toy_null = lc.fit_bkg_only_poly(toy, nodes, weights, X_MIN, X_SCALE, n_coeffs=N_COEFFS)
+        # Warm-start at Fit 1's own n_bkg (~data.sum()), not N_BKG_TRUE=250,000.
+        toy_null = lc.fit_bkg_only_poly(toy, nodes, weights, X_MIN, X_SCALE, n_coeffs=N_COEFFS,
+                                         n_bkg_start=fit1["n_bkg"])
         if not toy_null["valid"]:
             continue
+        if (t + 1) % max(1, N_TOYS_GLOBAL // 20) == 0 or t < 5:
+            print(f"  toy {t + 1}/{N_TOYS_GLOBAL} ({time.time() - t0:.1f}s elapsed, "
+                  f"{(time.time() - t0) / (t + 1) * 1000:.1f} ms/toy so far)", flush=True)
         local_q0 = np.full(len(MASS_SCAN), np.nan)
         ok = True
         bkg_start = [toy_null["n_bkg"]] + list(toy_null["coeffs"])
