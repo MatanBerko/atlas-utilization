@@ -1,0 +1,24 @@
+{
+  "n_events_read": 1000,
+  "vertex_match_threshold_cm": 1.0,
+  "n_events_pv_within_1cm_of_true_vertex": 700,
+  "fraction_pv_within_1cm": 0.7,
+  "fraction_pv_within_1cm_stat_err": 0.014491376746189439,
+  "n_events_no_2_higgs_daughter_photons_in_GenPart": 0,
+  "n_events_truth_match_failed_or_lt2_reco_photons": 239,
+  "n_events_truth_matched_diphoton": 761,
+  "right_vertex": {
+    "n": 545,
+    "mean_mgg_GeV": 122.83611398320976,
+    "rms_GeV": 7.335569291708907,
+    "rms_stat_err_GeV": 0.22239211039524376,
+    "effective_sigma68_GeV": 2.543332263150461
+  },
+  "wrong_vertex": {
+    "n": 216,
+    "mean_mgg_GeV": 123.61953729564047,
+    "rms_GeV": 6.371375692604604,
+    "rms_stat_err_GeV": 0.30725501951096085,
+    "effective_sigma68_GeV": 2.733674384001766
+  }
+}

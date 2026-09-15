@@ -1,0 +1,82 @@
+{
+  "trigger_used": "HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90",
+  "n_events_read": 1000,
+  "cutflow": [
+    [
+      "0_all_events_read",
+      1000
+    ],
+    [
+      "1_pass_trigger",
+      246
+    ],
+    [
+      "2_ge2_photons_pt_gt_20",
+      206
+    ],
+    [
+      "3_ge2_in_eta_acceptance_EBorEE",
+      193
+    ],
+    [
+      "4_ge2_pass_mvaID_WP90_and_eta",
+      36
+    ],
+    [
+      "5_ge2_pass_electronVeto_too_leading_pair_formed",
+      11
+    ],
+    [
+      "6_pair_in_100_180_GeV_window_sideband_plus_blinded",
+      6
+    ],
+    [
+      "6a_of_which_in_sidebands_lt115_or_gt135",
+      3
+    ],
+    [
+      "6b_of_which_BLINDED_115_135_not_examined",
+      3
+    ]
+  ],
+  "sideband_check": {
+    "n_sideband_pairs": 3,
+    "min_GeV": 105.37863525518706,
+    "max_GeV": 155.72696525595467,
+    "n_below_115": 1,
+    "n_above_135": 2
+  },
+  "zee_electron_veto_inverted_check": {
+    "n_events_ge2_photons_pt20": 206,
+    "n_events_ge2_in_eta_acceptance": 193,
+    "n_events_ge2_fail_electron_veto_pair_formed": 34,
+    "n_pairs_50_130_GeV": 21,
+    "mean_GeV": 96.0008784286582,
+    "rms_GeV": 9.111139593156322,
+    "effective_sigma68_GeV": 4.469299946167418,
+    "masses_GeV": [
+      93.63,
+      92.76,
+      87.68,
+      110.76,
+      90.94,
+      90.12,
+      91.48,
+      91.12,
+      126.55,
+      92.17,
+      102.65,
+      96.62,
+      93.77,
+      90.95,
+      93.33,
+      101.62,
+      90.5,
+      89.72,
+      92.56,
+      91.61,
+      105.49
+    ]
+  },
+  "blinding_note": "No mass value in [115, 135] GeV was ever computed-and-kept; only a count of how many candidate pairs fell there is reported."
+}
