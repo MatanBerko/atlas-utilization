@@ -34,7 +34,7 @@ paths:
 
 # ===NAMES====================================================================
 names:
-  run_name:           &run_name           "atlas_fixed_ranges"
+  run_name:           &run_name           "atlas_full_fixComb_fixCut"
   histogram_filename: &histogram_filename "atlas_opendata_full_bumpnet.root"
 
 # ===RUN METADATA=============================================================
@@ -75,7 +75,7 @@ parsing_task_config:
 
   # ===DATA SELECTION===
   release_years:
-    - "2024r-pp_mc"
+    - "2024r-pp"
   specific_record_ids: null              # list of CERN record IDs, or null for all
   parse_mc: true
 
@@ -87,8 +87,8 @@ parsing_task_config:
   chunk_yield_threshold_bytes:  2147483648  # 2 GB
   count_retries_failed_files: 3
   fetching_metadata_timeout: 60
-  max_files_to_process: 40             # null = all files; set e.g. 3 for a quick test
-  enable_jet_tagging: false              # when true, split Jets into BJets/LJets. Must give thresholds for btagging discriminants!
+  max_files_to_process: 100              # data files only because parse_mc is false
+  enable_jet_tagging: true              # when true, split Jets into BJets/LJets. Must give thresholds for btagging discriminants!
   jet_btagging_thresholds:
     btagDeepFlavB: 0.5
     DL1d: 2.51
@@ -140,7 +140,7 @@ mass_calculation_task_config:
   max_count_particle_in_combination: 4   # max count per type was 4
   max_total_particles_in_combination: 4
   min_events_per_fs: 100                 # drop final states with fewer events
-  include_subleading: false        # set true to include e1, j1, etc.
+  include_subleading: true        # set true to include e1, j1, etc.
   max_subleading_index: 1          # highest rank index to consider
 
 # --- 3. Post-Processing ------------------------------------------------------
