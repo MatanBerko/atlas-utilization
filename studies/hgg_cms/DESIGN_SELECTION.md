@@ -981,6 +981,86 @@ cuts** (Section 7 #3, updated below).
 
 ---
 
+## Review corrections to the physics-check update (2026-09-15)
+
+A second review of the physics-check "Update" section above found three
+issues, addressed here rather than by rewriting that section:
+
+**1. Vertex (Check B) — the close/far width difference is mostly not
+caused by the vertex choice.** Check B reported effective σ₆₈ = 1.79 GeV
+for events with `|PV_z−GenVtx_z|<1cm` vs. 2.60 GeV for the rest, and
+separately that re-aiming *every* event to the true generated vertex
+(the unreachable ideal) only improves the *inclusive* resolution from
+2.05 to 1.98 GeV (~3%). These two numbers are in tension if read as
+"the vertex causes the width difference": if mismodeling the vertex by
+≥1cm were itself responsible for a 1.79→2.60 GeV degradation, fixing it
+for the ~34% of events that have it should visibly move the inclusive
+number by much more than 3%. It doesn't. **Correct reading**: the
+close/far split is mostly a *correlation*, not a *cause* — events with a
+poorly-reconstructed vertex are disproportionately the same events with
+other resolution-degrading properties (e.g. more likely to have an
+endcap photon, lower-R9 photons, etc.), and it is mostly those other
+properties, not the vertex mismodeling itself, driving the width
+difference between the two groups. The re-aiming test (which isolates
+the vertex's own causal effect by changing *only* the assumed vertex
+position, holding everything else fixed) is the more reliable measure of
+that causal effect, and it says the vertex itself is a **minor**
+contributor (~3%) to the resolution, not the dominant one the close/far
+split alone would suggest. **B1 is unaffected by this correction** and
+remains a clean, separate result: stored photon directions are
+referenced to the default primary vertex `PV_z`, not the detector
+origin (barrel regression slope 0.935±0.001, R²=0.981, vs. slope
+0.360±0.004, R²=0.19 for the origin hypothesis) — the slope's deviation
+from exactly 1 is most likely the fixed-effective-radius (`R_SC`=129cm)
+geometric approximation, not a wrong reference point, given how cleanly
+the PV hypothesis otherwise fits (tight residuals, near-zero residual
+correlation with `PV_z`; see the scatter plots). **Conclusion, corrected:
+use the stored photon directions (no re-aiming) — not because re-aiming
+to `PV_z` would be a no-op (it would, but that's now a secondary point),
+but because the vertex has only a minor (~3%) effect on the achievable
+resolution in the first place.**
+
+**2. Check C3 is invalid as a trigger-efficiency measurement.** The
+diphoton trigger, `HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90`,
+requires a diphoton mass above **~90 GeV online** (that's what the
+trigger name's own "Mass90" encodes). Check C3 selected Z→e⁺e⁻-like pairs
+in the 70–110 GeV window and measured what fraction *also* passed this
+trigger — but pairs below ~90 GeV are then failing the trigger's own
+online mass requirement, not (only) because of any inefficiency in the
+rest of the trigger's photon-identification logic. C3's reported
+34.8%/39.5% therefore mixes a real efficiency effect with an artifact of
+comparing against a mass region the trigger was never going to fully
+accept. **This does not change Check C1's own conclusion** (C1 never
+imposed any Z-mass-like window; it used the full, unbiased offline
+selection and its own scaled-pT/100–180 GeV cuts), so the "apply TM
+cuts" decision (Section 7 #3) stands on C1 alone. C3's numbers are
+retracted as a trigger-efficiency estimate and should be read only as
+"these two cross-checks are not directly comparable," not as evidence
+against C1.
+
+**Added to Section 8 validation task 7**: measure the diphoton-HLT pass
+fraction in data using a tag-and-probe method that avoids the online
+mass cut — e.g. select Z→e⁺e⁻-like pairs via the orthogonal
+`HLT_Ele27_WPTight_Gsf` single-electron trigger, restricted to *offline*
+m_ee above ~95–100 GeV (safely clear of the "Mass90" threshold, unlike
+C3's 70–110 GeV window which straddles it), and compare the resulting
+diphoton-HLT pass fraction between data and DY simulation (recid 35669).
+This is a new item in the task 7 acceptance criteria below, not yet run.
+
+**3. Rough scale estimate (labelled as such).** Combining
+`INVENTORY.md` B.4's ≈2,051 produced H→γγ events (Run2016G+H, all
+production modes) with Check C1's ≈40% ggH offline selection efficiency
+(without TM cuts; 40.0% with TM cuts, C1 above) gives a **rough estimate
+of ≈800 selected Higgs events**, dominated by ggH, **before any
+per-production-mode efficiency is actually measured** (VBF/WH/ZH/ttH
+have different kinematics and were not separately checked) and before
+the trigger-mimicking efficiency cost is folded in mode-by-mode. This is
+an order-of-magnitude sanity number for planning purposes only, not a
+prediction to be quoted elsewhere without redoing it per production
+mode.
+
+---
+
 ## Section 7 — Decisions for review
 
 1. **Photon ID working point default: `mvaID_WP90`**, not `WP80` or
@@ -1037,6 +1117,19 @@ cuts** (Section 7 #3, updated below).
    TO without CMS's own dedicated vertex algorithm), but now backed by a
    real measurement instead of an inconclusive one, and directly informs
    Section 7 #8's signal-model shape.
+   **Correction (2026-09-15, see "Review corrections to the physics-check
+   update" above): point (ii)'s "real, now statistically clear ~45%
+   resolution penalty" is mostly a CORRELATION, not the vertex's own
+   causal effect — the re-aiming test in point (iii) (2.046→1.984 GeV,
+   ~3%) isolates the vertex's actual causal contribution by changing only
+   the assumed vertex position, and it is minor, not ~45%. Point (i) is
+   unaffected and remains the load-bearing result: stored directions
+   already use `PV_z`, so there is nothing to re-aim to. Net effect on
+   the decision: unchanged (still no custom re-pointing), but for a
+   different reason than originally stated — not because "re-aiming
+   would be a no-op that wouldn't matter anyway" (true but secondary),
+   rather because the vertex's own effect on resolution is small to
+   begin with.**
 5. **Combined `VHToGG` sample vs. separate `WplusH`/`WminusH`/`ZH_HToGG`
    samples** (`INVENTORY.md` B.1): default is the **separate** samples
    (matches how cross sections are quoted per-mode); do not mix with the
@@ -1158,6 +1251,17 @@ tested; each is scoped for one implementation session.
    σ₆₈≈2.4 GeV, unaffected by TM cuts (`plots_C2_zpeak_with_without_TM.png`).
    Still outstanding for this task: the actual data-vs-DY-simulation
    (recid 35669) comparison Section 5.2 specifies, at full statistics.
+   **Added (2026-09-15, "Review corrections to the physics-check update"
+   above): Check C3's diphoton-HLT pass fraction (34.8%/39.5%) is invalid
+   as a trigger-efficiency measurement, because the trigger's own
+   "Mass90" online cut biases a 70–110 GeV Z-mass window. This task's
+   acceptance criteria now also include: measure the diphoton-HLT pass
+   fraction in data using a tag-and-probe method that avoids that bias —
+   select Z→e⁺e⁻-like pairs via the orthogonal `HLT_Ele27_WPTight_Gsf`
+   single-electron trigger, restricted to offline m_ee above ~95–100 GeV
+   (clear of the "Mass90" threshold), and compare the resulting
+   diphoton-HLT pass fraction between data and DY simulation (recid
+   35669). Not yet run.**
 8. **Vertex study at full statistics** (repeat Section 3's check on many
    more simulated events, still respecting per-task event/file limits
    where applicable, or as part of a proper batch job once available).
