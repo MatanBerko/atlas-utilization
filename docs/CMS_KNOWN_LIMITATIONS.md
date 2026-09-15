@@ -172,3 +172,74 @@ entry is wrong), not a generic parse failure.
 `Events` tree) and compared against the certified list — see that
 directory's summary for the coverage result and the luminosity this
 implies.
+
+## CMS HLT trigger requirement — new, not enabled anywhere yet
+
+An optional filter, added for the H→γγ study (`studies/hgg_cms/`) but
+general-purpose: keeps only events where one or more configured HLT
+trigger bits fired. Implemented in
+`services/parsing/trigger_requirements.py`; hooked into
+`orchestration/handlers/parsing_handler.py` **after** the validated-runs
+filter above and **before** any `kinematic_cuts`/`particle_counts`
+selection and de-duplication, for the same reason: an event this filter
+rejects must never be counted as "selected" by a later stage, and
+de-duplication's `(run, luminosityBlock, event)` keys must only ever be
+built from events that also pass the trigger requirement.
+
+**New config key**, under `parsing_task_config`:
+
+```yaml
+parsing_task_config:
+  # Optional. Absent/omitted (the default -- every current config) = no-op,
+  # identical behaviour to before this feature existed.
+  trigger_requirements:
+    mode: any            # "any": at least one listed path fired. "all": every listed path fired.
+    paths:
+      - HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90
+```
+
+May also be overridden per record, under `selection_by_record[record]`
+(same shape), analogous to that block's existing `particle_counts`
+override.
+
+**Not set in any existing config file** — this section is documentation
+only.
+
+**Applies to data AND simulation** — unlike `validated_runs_json`, there
+is no simulation guard here: the design (`studies/hgg_cms/DESIGN_SELECTION.md`
+Section 2, step 1) requires the same trigger bit in simulation as in data,
+so that trigger inefficiency becomes part of the simulated signal
+efficiency automatically.
+
+**No branch listed twice.** The listed `paths` are read automatically
+through the general scalar-branch-group mechanism (`services.parsing.
+file_parser.FileParser._resolve_scalar_groups`), under the group name
+`"Trigger"` — no need to also list them in `extra_scalar_branches`. If a
+path happens to also be listed there under the same `"Trigger"` group
+name, the two lists are merged and de-duplicated, not treated as a
+collision.
+
+**Loud failure for a missing required branch.** If `trigger_requirements`
+(or `extra_scalar_branches`) is enabled and a file is missing one of its
+declared branches, parsing no longer silently skips that one file and
+continues — `FileParser` raises a specific
+`RequiredScalarBranchMissingError` (a `ValueError` subclass, so existing
+`except ValueError`/`assertRaises(ValueError)` code is unaffected) that
+`FileParser.parse_file` and `ThreadedFileProcessor.process_files`
+deliberately do not swallow, unlike every other parse failure (network
+errors, corrupt files, ...), which keep today's exact behaviour: logged,
+file skipped, run continues. `ThreadedFileProcessor.process_files`
+aggregates every such error seen while parsing one record's files into a
+single error listing every affected file and branch, raised once parsing
+that record finishes (never before an existing file's real data is
+processed, never silently). Every current config's files all have every
+branch they declare, so this changes no existing configuration's observed
+behaviour — see `studies/hgg_cms/impl_checks/trigger_branch_presence.json`
+for the check confirming this trigger's own branch is present in every
+DoubleEG and postVFP signal file this study uses.
+
+**Verified against the DoubleEG Run2016G/H files and the ggH postVFP
+signal file** (`tests/test_trigger_requirements.py`'s real-data
+cross-check): the pipeline's per-event keep/reject decision matches a
+direct `uproot` read of the trigger branch exactly, on 2,000-event samples
+of each.
