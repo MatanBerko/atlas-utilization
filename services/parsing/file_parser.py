@@ -44,16 +44,23 @@ class FileParser:
         batch_size: int = 40_000,
         enable_jet_tagging: bool = False,
         jet_btagging_thresholds: Optional[dict[str, float]] = None,
+        extra_scalar_branches: Optional[dict[str, list[str]]] = None,
     ) -> Optional[ak.Array]:
         """
         Parse a single ROOT file and return events.
-        
+
         Args:
             file_path: Path or URI to ROOT file
             tree_names: List of possible tree names to search for
             release_year: Release year identifier (e.g., "2024r-pp")
             batch_size: Number of entries to process per batch
-            
+            extra_scalar_branches: Optional extra scalar (per-event, not
+                per-particle) branch groups to read on top of whatever the
+                schema already declares, e.g.
+                ``{"Trigger": ["HLT_SomeBit"]}``. Merged with the schema's
+                own groups (see ``schemas.get_scalar_branch_groups``);
+                absent/``None`` reproduces today's behaviour exactly.
+
         Returns:
             Awkward array of events with particle objects, or None if parsing failed
         """
@@ -67,13 +74,14 @@ class FileParser:
                     file_path,
                     enable_jet_tagging,
                     jet_btagging_thresholds,
+                    extra_scalar_branches=extra_scalar_branches,
                 )
         except PartialFileReadError:
             raise
         except Exception as e:
             logging.warning(f"Failed to parse file {file_path}: {e}")
             return None
-    
+
     @staticmethod
     def _parse_opened_file(
         root_file,
@@ -82,30 +90,38 @@ class FileParser:
         batch_size: int,
         file_path: str,
         enable_jet_tagging: bool,
-        jet_btagging_thresholds: Optional[dict[str, float]]
+        jet_btagging_thresholds: Optional[dict[str, float]],
+        extra_scalar_branches: Optional[dict[str, list[str]]] = None,
     ) -> Optional[ak.Array]:
         """Parse an already-opened ROOT file."""
         tree_name = FileParser._get_data_tree_name(root_file.keys(), tree_names)
         tree = root_file[tree_name]
         all_tree_branches = set(tree.keys())
         n_entries = tree.num_entries
-        
+
         obj_branches = FileParser._extract_branches_by_schema(
             all_tree_branches,
-            release_year
+            release_year,
+            extra_scalar_branches=extra_scalar_branches,
         )
 
         if not obj_branches:
             logging.warning(f"No particles found in schema for file {file_path}")
             return None
-        
-        obj_branches = FileParser._filter_accessible_branches(tree, obj_branches)
-        
+
+        # Resolved independently of _extract_branches_by_schema's return value
+        # (rather than having that method also return the group-name set) so
+        # its signature/return type stays exactly what existing tests mock.
+        scalar_groups = FileParser._resolve_scalar_groups(release_year, extra_scalar_branches)
+        declared_group_names = frozenset(name for name, branches in scalar_groups.items() if branches)
+
+        obj_branches = FileParser._filter_accessible_branches(
+            tree, obj_branches, scalar_group_names=declared_group_names
+        )
+
         if not obj_branches:
             logging.warning(f"No accessible particles found in file {file_path}")
             return None
-        
-        expects_event_ids = "EventIds" in obj_branches
 
         all_branches = set(itertools.chain.from_iterable(obj_branches.values()))
         obj_events, read_error = FileParser._read_file_in_batches(
@@ -122,26 +138,39 @@ class FileParser:
         if "DirectObjects" in obj_events.keys():
             obj_events.pop("DirectObjects")
 
-        # Pull the scalar per-event identity fields out before zipping the object
-        # collections, then re-attach them as top-level scalar columns. Kept after
-        # the physics objects so events.fields[0] is still a particle collection
-        # (downstream selection code relies on that).
-        event_id_fields = obj_events.pop("EventIds", None)
-        if expects_event_ids and (
-            event_id_fields is None or len(event_id_fields.fields) == 0
-        ):
-            raise ValueError(
-                f"{file_path}: schema declares per-event id branches "
-                f"(run / luminosityBlock / event) but none were readable; "
-                f"refusing to parse so de-duplication never runs on missing keys"
-            )
+        # Pull every declared scalar group's fields out before zipping the
+        # object collections, then re-attach them as top-level scalar
+        # columns. Kept after the physics objects so events.fields[0] is
+        # still a particle collection (downstream selection code relies on
+        # that). Generalizes the original EventIds-only logic to any number
+        # of named scalar groups (see schemas.get_scalar_branch_groups).
+        #
+        # A group that was declared but ends up with any branch missing or
+        # unreadable is a hard error, not a silent skip -- matching the
+        # original EventIds behaviour (declared-but-unreadable de-dup keys
+        # used to raise) and extending it to require the FULL declared set,
+        # not just a non-empty subset, per-group.
+        scalar_field_groups: dict[str, ak.Array] = {}
+        for group_name in declared_group_names:
+            group_fields = obj_events.pop(group_name, None)
+            declared_branches = set(scalar_groups[group_name])
+            actual_branches = set(group_fields.fields) if group_fields is not None else set()
+            if actual_branches != declared_branches:
+                missing = sorted(declared_branches - actual_branches)
+                raise ValueError(
+                    f"{file_path}: scalar branch group '{group_name}' declares "
+                    f"{sorted(declared_branches)} but only {sorted(actual_branches)} "
+                    f"were readable (missing: {missing}); refusing to parse so "
+                    f"downstream code never runs on a silently incomplete scalar group"
+                )
+            scalar_field_groups[group_name] = group_fields
 
         zipped = ak.zip(obj_events, depth_limit=1)
 
-        if event_id_fields is not None:
-            for id_field in event_id_fields.fields:
+        for group_fields in scalar_field_groups.values():
+            for field_name in group_fields.fields:
                 zipped = ak.with_field(
-                    zipped, event_id_fields[id_field], where=id_field
+                    zipped, group_fields[field_name], where=field_name
                 )
 
         record_id = None
@@ -249,13 +278,86 @@ class FileParser:
         return "CollectionTree"
     
     @staticmethod
+    def _resolve_scalar_groups(
+        release_year: str,
+        extra_scalar_branches: Optional[dict[str, list[str]]],
+        record_id: Optional[int] = None,
+    ) -> dict[str, list[str]]:
+        """
+        Combine the schema's own scalar branch groups (see
+        ``schemas.get_scalar_branch_groups``) with caller-requested extra
+        ones, validating that no group name or branch name collides with a
+        physics-object collection name or another reserved top-level field.
+
+        Called independently by both ``_extract_branches_by_schema`` (to
+        know what to read) and ``_parse_opened_file`` (to know which
+        ``obj_branches`` entries are scalar groups, for the accessibility-
+        gate exemption and the missing-branch check) -- kept as its own
+        pure, side-effect-free function rather than folded into either, so
+        neither one's signature/return type has to change shape for
+        existing callers (including a test that mocks
+        ``_extract_branches_by_schema`` with a plain dict return value).
+
+        Raises:
+            ValueError: a requested group name or branch name collides with
+                an existing physics-object collection name, "DirectObjects",
+                or "source_record"; or the same branch name is requested by
+                two different groups.
+        """
+        if release_year.startswith("record_") and record_id is None:
+            try:
+                record_id = int(release_year.split("_")[1])
+            except (ValueError, IndexError):
+                pass
+
+        groups = schemas.get_scalar_branch_groups(release_year, record_id=record_id)
+
+        try:
+            schema_config = schemas.get_schema_for_release(release_year, record_id=record_id)
+            object_names = set(schema_config.get("objects", {}).keys())
+        except KeyError:
+            object_names = set()
+
+        if extra_scalar_branches:
+            reserved_group_names = object_names | {"DirectObjects"}
+            for group_name, branches in extra_scalar_branches.items():
+                if group_name in reserved_group_names:
+                    raise ValueError(
+                        f"extra_scalar_branches group name '{group_name}' collides "
+                        f"with an existing object collection or reserved name"
+                    )
+                merged = groups.get(group_name, [])
+                groups[group_name] = list(dict.fromkeys(merged + list(branches)))
+
+        reserved_field_names = object_names | {"DirectObjects", "source_record"}
+        seen_branch_to_group: dict[str, str] = {}
+        for group_name, branches in groups.items():
+            for branch in branches:
+                if branch in reserved_field_names:
+                    raise ValueError(
+                        f"scalar branch '{branch}' in group '{group_name}' collides "
+                        f"with an existing object collection or reserved field name"
+                    )
+                existing_group = seen_branch_to_group.get(branch)
+                if existing_group is not None and existing_group != group_name:
+                    raise ValueError(
+                        f"scalar branch '{branch}' is requested by both group "
+                        f"'{existing_group}' and group '{group_name}' -- ambiguous "
+                        f"top-level field name"
+                    )
+                seen_branch_to_group[branch] = group_name
+
+        return groups
+
+    @staticmethod
     def _extract_branches_by_schema(
         tree_branches: set[str],
-        release_year: str
+        release_year: str,
+        extra_scalar_branches: Optional[dict[str, list[str]]] = None,
     ) -> dict[str, dict[str, str]]:
         """
         Extract branches by object based on release-specific schema.
-        
+
         Returns:
             Dict mapping object names to their branch mappings
             Format: {obj_name: {full_branch: quantity, ...}}
@@ -267,7 +369,7 @@ class FileParser:
                     record_id = int(release_year.split("_")[1])
                 except (ValueError, IndexError):
                     pass
-            
+
             schema_config = schemas.get_schema_for_release(release_year, record_id=record_id)
         except KeyError:
             logging.warning(
@@ -275,13 +377,12 @@ class FileParser:
                 "Attempting auto-detection."
             )
             return FileParser._auto_detect_branches(tree_branches)
-        
+
         obj_branches = {}
         objects = schema_config["objects"]
         direct_objects = schema_config.get("direct_objects", [])
-        event_id_branches = schema_config.get("event_id_branches", [])
         naming_pattern = schema_config.get("naming_pattern", "dotted")
-        
+
         for obj_name, fields in objects.items():
             if naming_pattern == "flat":
                 obj_branches_for_obj = FileParser._extract_flat_branches(
@@ -291,16 +392,19 @@ class FileParser:
                 obj_branches_for_obj = FileParser._extract_dotted_branches(
                     obj_name, fields, tree_branches, release_year, schema_config
                 )
-            
+
             if obj_branches_for_obj:
                 obj_branches[obj_name] = obj_branches_for_obj
         # Keep direct object names as-is, but store them under the "DirectObjects" key.
         obj_branches.update({"DirectObjects": {k: k for k in direct_objects}})
-        # Scalar per-event identity branches (run / luminosityBlock / event), read
-        # verbatim and stored under "EventIds". Only added when the schema declares
-        # them, so non-CMS releases are unaffected.
-        if event_id_branches:
-            obj_branches["EventIds"] = {k: k for k in event_id_branches}
+        # Scalar per-event branch groups (e.g. "EventIds": run/luminosityBlock/
+        # event), read verbatim, one dict entry per group. Only added when the
+        # schema (or the caller, via extra_scalar_branches) declares a
+        # non-empty group, so releases/calls that declare none are unaffected.
+        scalar_groups = FileParser._resolve_scalar_groups(release_year, extra_scalar_branches, record_id=record_id)
+        for group_name, branches in scalar_groups.items():
+            if branches:
+                obj_branches[group_name] = {b: b for b in branches}
         return obj_branches
     
     @staticmethod
@@ -477,13 +581,22 @@ class FileParser:
     @staticmethod
     def _filter_accessible_branches(
         tree,
-        obj_branches: dict[str, dict[str, str]]
+        obj_branches: dict[str, dict[str, str]],
+        scalar_group_names: frozenset = frozenset(),
     ) -> dict[str, dict[str, str]]:
         """
         Test branch accessibility and filter out inaccessible ones.
-        
+
         Reads ONE entry with ALL candidate branches at once to minimize
         HTTP round-trips for remote ROOT files.
+
+        ``scalar_group_names`` (like ``"DirectObjects"``) are exempt from
+        the physics-object pt/eta/phi accessibility requirement below --
+        they're one-value-per-event branches, not particle collections, so
+        that requirement doesn't apply to them. A scalar group that turns
+        out to have zero accessible branches still passes through here
+        (empty dict, same as today's "EventIds"); ``_parse_opened_file``
+        is what turns that into a hard error, not this function.
         """
         all_candidate_branches = []
         for branch_mapping in obj_branches.values():
@@ -518,7 +631,7 @@ class FileParser:
             }
             if accessible_branches and FileParser._can_calculate_inv_mass(
                 list(accessible_branches.values())
-            ) or obj_name in ("DirectObjects", "EventIds"):
+            ) or obj_name == "DirectObjects" or obj_name in scalar_group_names:
                 accessible_obj_branches[obj_name] = accessible_branches
         
         return accessible_obj_branches

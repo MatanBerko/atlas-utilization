@@ -269,6 +269,7 @@ class ParsingHandler(StateHandler):
                 batch_size=40_000,
                 enable_jet_tagging=parsing_config.enable_jet_tagging,
                 jet_btagging_thresholds=parsing_config.jet_btagging_thresholds,
+                extra_scalar_branches=parsing_config.extra_scalar_branches,
                 on_success=on_success,
                 on_error=on_error
             ):

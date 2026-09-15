@@ -67,7 +67,16 @@ class ParsingConfig:
     # block above (kinematic_cuts stay global). Records not listed are unchanged.
     # Presence of this key also turns on cross-record event de-duplication.
     selection_by_record: Optional[dict] = None
-    
+
+    # Optional extra scalar (one-value-per-event, not one-per-particle) branch
+    # groups to read on top of whatever the schema already declares, e.g.
+    # {"Trigger": ["HLT_SomeBit"]}. Merged with the schema's own groups (see
+    # services.parsing.schemas.get_scalar_branch_groups); absent/None (the
+    # default) reproduces existing behaviour exactly for every current
+    # config. See services.parsing.file_parser.FileParser._resolve_scalar_groups
+    # for the collision/missing-branch rules applied to this.
+    extra_scalar_branches: Optional[dict] = None
+
     def __post_init__(self):
         """Validate parsing configuration."""
         if self.threads <= 0:
@@ -109,6 +118,16 @@ class ParsingConfig:
                     "receive NO kinematic cuts (see "
                     "docs/CMS_KNOWN_LIMITATIONS.md)"
                 )
+        if self.extra_scalar_branches is not None:
+            if not isinstance(self.extra_scalar_branches, dict):
+                raise ValueError("extra_scalar_branches must be a dict of group name -> branch list")
+            for group_name, branches in self.extra_scalar_branches.items():
+                if not isinstance(group_name, str) or not group_name:
+                    raise ValueError(f"extra_scalar_branches group names must be non-empty strings, got {group_name!r}")
+                if not isinstance(branches, (list, tuple)) or not all(isinstance(b, str) for b in branches):
+                    raise ValueError(
+                        f"extra_scalar_branches['{group_name}'] must be a list of branch name strings, got {branches!r}"
+                    )
 
 
 @dataclass(frozen=True)
@@ -332,6 +351,7 @@ class PipelineConfig:
                 particle_counts=parsing_dict.get("particle_counts"),
                 kinematic_cuts=parsing_dict.get("kinematic_cuts"),
                 selection_by_record=parsing_dict.get("selection_by_record"),
+                extra_scalar_branches=parsing_dict.get("extra_scalar_branches"),
             )
         
         # Parse mass calculation config if enabled

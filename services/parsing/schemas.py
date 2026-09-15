@@ -656,6 +656,48 @@ def build_branch_name(obj_name: str, release_year: str = "2024r-pp", field: str 
         return f"{prefix}{branch_obj_name}{suffix}"
 
 
+def get_scalar_branch_groups(release_year: str, record_id: int = None) -> dict:
+    """
+    Return the schema-declared scalar (one-value-per-event, not one-per-
+    particle) branch groups for a release, e.g.
+    ``{"EventIds": ["run", "luminosityBlock", "event"]}``.
+
+    Scalar groups are read verbatim (like ``direct_objects``) and kept as
+    top-level scalar columns on the parsed event record, bypassing the
+    physics-object pt/eta/phi accessibility gate -- see
+    ``FileParser._filter_accessible_branches``.
+
+    This merges two declaration styles, both optional and both producing
+    the same result shape:
+
+    - the legacy ``event_id_branches`` key (a flat list), always exposed
+      under the built-in group name ``"EventIds"`` -- kept exactly as
+      before for backward compatibility; and
+    - the newer, general ``scalar_branch_groups`` key (a dict of
+      group name -> branch list), for any additional named groups a
+      schema wants to declare.
+
+    Returns ``{}`` for any release that declares neither (every ATLAS
+    release today), so this function is a strict generalization with no
+    behaviour change for schemas that don't opt in.
+    """
+    try:
+        schema = get_schema_for_release(release_year, record_id=record_id)
+    except KeyError:
+        return {}
+
+    groups: dict = {}
+    event_id_branches = schema.get("event_id_branches")
+    if event_id_branches:
+        groups["EventIds"] = list(event_id_branches)
+
+    for name, branches in schema.get("scalar_branch_groups", {}).items():
+        merged = groups.get(name, [])
+        groups[name] = list(dict.fromkeys(merged + list(branches)))
+
+    return groups
+
+
 def get_available_releases() -> list:
     """Return list of all available release years."""
     return list(RELEASE_SCHEMAS.keys())
