@@ -542,3 +542,45 @@ def fit_full_poly_floating_mass_width(data: np.ndarray, edges: np.ndarray, nodes
         "valid": bool(m.valid),
         "minuit": m,
     }
+
+
+def fit_full_poly_floating_width(data: np.ndarray, edges: np.ndarray, nodes: np.ndarray,
+                                  weights: np.ndarray, s_ref: float, mh: float,
+                                  x_min: float, x_scale: float, n_coeffs: int = 5,
+                                  mu_start: float = 0.0, sigma_start: float = 2.0,
+                                  sigma_bounds: tuple[float, float] = (0.5, 6.0),
+                                  bkg_start: list[float] | None = None):
+    """
+    Like `fit_full_poly`, but mh is FIXED (given) and sigma floats. Used
+    for "profiled local significance at the best-fit mass, width
+    floating" -- as opposed to `fit_full_poly_floating_mass_width`, which
+    also re-floats mh itself.
+    """
+    if bkg_start is None:
+        bkg_start = [N_BKG_TRUE] + _poly_bkg_start(n_coeffs)
+    start = [mu_start, sigma_start] + bkg_start
+
+    def nll_fn(par):
+        mu, sigma = par[0], par[1]
+        n_bkg = par[2]
+        coeffs = par[3:]
+        b = polynomial_bin_expectation(nodes, weights, n_bkg, coeffs, x_min, x_scale)
+        s = signal_bin_expectation(edges, mu, s_ref, mh, sigma)
+        return poisson_nll(data, s + b)
+
+    names = ["mu", "sigma", "n_bkg"] + [f"c{k}" for k in range(n_coeffs)]
+    m = Minuit(nll_fn, start, name=names)
+    m.errordef = Minuit.LIKELIHOOD
+    m.limits["n_bkg"] = (0.0, None)
+    m.limits["sigma"] = sigma_bounds
+    m.strategy = 1
+    m.migrad()
+    return {
+        "nll": float(m.fval),
+        "mu_hat": float(m.values["mu"]),
+        "sigma_hat": float(m.values["sigma"]),
+        "n_bkg": float(m.values["n_bkg"]),
+        "coeffs": np.array([m.values[f"c{k}"] for k in range(n_coeffs)]),
+        "valid": bool(m.valid),
+        "minuit": m,
+    }
