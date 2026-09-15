@@ -55,6 +55,24 @@ RECORD_ID_TO_SCHEMA = {
     30562: "cms-nanoaod",  # NanoAOD format
     30530: "cms-nanoaod",  # NanoAOD format
     30563: "cms-nanoaod",  # NanoAOD format
+    # m0m1j0 (analysis/m0m1j0-mumujet): registered before use, same pattern
+    # as every prior new CMS record on this project (e.g. the H->ZZ->4l
+    # work's registration of 30522/30555/30528/30561 on the unmerged
+    # analysis/higgs-4lepton-clean branch, commit 808e868) -- without this,
+    # the parser can't resolve a schema for an unregistered record ID and
+    # falls back to auto-detection, which fails for NanoAOD's flat branch
+    # naming (produces "No particles found in schema" and silently drops
+    # every event from that record). Confirmed live: the first m0m1j0 smoke
+    # test run on this branch hit exactly this failure mode before this fix
+    # (0/0 files processed, "Release year 'record_30522' not found in
+    # schemas"), even though the loud-failure guard (MAX_FILE_FAILURE_RATE)
+    # did not catch it -- that guard only tracks XRootD file-open failures,
+    # not schema-resolution failures, so this is a distinct failure mode of
+    # the same underlying bug class. Only the two records this task actually
+    # uses are added here (not 30528/30561/30521/30554, which are not
+    # needed for m0m1j0 and were not requested).
+    30522: "cms-nanoaod",  # /DoubleMuon/Run2016G      NanoAODv9
+    30555: "cms-nanoaod",  # /DoubleMuon/Run2016H      NanoAODv9
 }
 
 # Release-specific branch naming templates

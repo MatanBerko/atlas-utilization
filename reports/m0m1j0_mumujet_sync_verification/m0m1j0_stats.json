@@ -1,0 +1,124 @@
+{
+  "run_dir": "/storage/agrp/berkom/atlas-utilization/output/cms_m0m1j0_smoketest_20260914_211743",
+  "records_used": [
+    "30522",
+    "30555"
+  ],
+  "records_excluded": "SingleMuon not used -- see module docstring / task instructions",
+  "bumpnet_histogram": {
+    "root_file": "/storage/agrp/berkom/atlas-utilization/output/reports/m0m1j0_smoketest_synced/histograms/mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_0bx_width_10.0.root",
+    "hist_name": "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_0bx_width_10.0",
+    "bin_width_gev": 10.0,
+    "range_gev": [
+      0.0,
+      1000.0
+    ],
+    "n_bins": 100,
+    "n_nonempty_bins": 100,
+    "entries_in_range": 6025250,
+    "entries_below_range": 0,
+    "entries_above_range": 9160,
+    "entries_total": 6034410,
+    "meets_bin_bar": true,
+    "meets_entry_bar": true,
+    "min_bins_required": 30,
+    "min_entries_required": 100
+  },
+  "mass_range_actual": {
+    "min_gev": 0.34798526763916016,
+    "max_gev": 117273.7109375,
+    "median_gev": 99.17159271240234,
+    "p99_gev": 509.0972683715826,
+    "zoomed_plot": "/storage/agrp/berkom/atlas-utilization/output/reports/m0m1j0_smoketest_synced/plots/m0m1j0_mass_zoomed.png",
+    "zoomed_cutoff_gev": 550.0
+  },
+  "dimuon_sanity_check": {
+    "median_gev": 30.88499164581299,
+    "expected_near_gev": 91.0,
+    "note": "2 leading muons only, before adding the jet -- confirms GeV (not MeV-scale, i.e. not ~91000) units for this CMS NanoAOD data"
+  },
+  "field_availability": {
+    "looseId_applied_to_every_chunk": false,
+    "iso_applied_to_every_chunk": false,
+    "n_chunks_total": 1,
+    "n_chunks_missing_looseId": 1,
+    "n_chunks_missing_iso": 1
+  },
+  "per_record": {
+    "30522": {
+      "label": "DoubleMuon Run2016G",
+      "files_attempted": 2,
+      "files_ok": 2,
+      "files_failed": 0,
+      "file_failure_pct": 0.0,
+      "events_raw": 4782423,
+      "events_retained_parse_time": 3349729,
+      "retention_pct_parse_time": 70.0,
+      "events_seen_by_this_script": 3349729,
+      "m0m1j0_candidates_analysis_time": 3137314
+    },
+    "30555": {
+      "label": "DoubleMuon Run2016H",
+      "files_attempted": 2,
+      "files_ok": 2,
+      "files_failed": 0,
+      "file_failure_pct": 0.0,
+      "events_raw": 4314519,
+      "events_retained_parse_time": 3146048,
+      "retention_pct_parse_time": 72.9,
+      "events_seen_by_this_script": 3146048,
+      "m0m1j0_candidates_analysis_time": 2897096
+    }
+  },
+  "loud_failure_guard": {
+    "present": true,
+    "threshold_pct": 20.0,
+    "aborted_this_run": false,
+    "abort_detail": null
+  },
+  "files_ok_total": 4,
+  "files_attempted_total": 4,
+  "selection": {
+    "records": [
+      "30522",
+      "30555"
+    ],
+    "parse_time": {
+      "particle_counts": {
+        "muons": {
+          "min": 2
+        },
+        "jets": {
+          "min": 1
+        }
+      },
+      "kinematic_cuts": {
+        "muons": {
+          "pt_min": 5.0,
+          "eta_max": 2.4
+        }
+      },
+      "jet_cut_at_parse_time": null,
+      "mechanism": "particle_counts (per-collection, AND-combined) -- NOT combined_particle_counts (that is the >=4-lepton OR/sum machinery, wrong tool here)"
+    },
+    "analysis_time": {
+      "muons": {
+        "pt_min": 5.0,
+        "eta_max": 2.4,
+        "looseId_requested": true,
+        "looseId_actually_applied_every_chunk": false,
+        "pfRelIso04_all_max_requested": 0.35,
+        "iso_actually_applied_every_chunk": false,
+        "note": "See BUGS OBSERVED, NOT FIXED / FIELD_DROP_WARNING: looseId/pfRelIso04_all are declared in the schema and present in the raw NanoAOD file, but do not always survive into the parsed output (pre-existing pipeline bug). When missing for a chunk, that chunk's muons are NOT looseId/iso-filtered -- only pT/eta are guaranteed."
+      },
+      "jets": {
+        "pt_min": 30.0,
+        "eta_max": 2.4,
+        "jet_id_cut": "NONE -- no Jet_jetId/Jet_puId field exists in this pipeline's schema (known, accepted gap)"
+      },
+      "opposite_sign_required": false,
+      "btag_requirement_or_veto": false,
+      "z_candidate_collapsing": "NOT implemented (out of scope) -- see module docstring"
+    }
+  }
+}

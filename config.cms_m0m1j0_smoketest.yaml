@@ -1,0 +1,96 @@
+# ---------------------------------------------------------------------------
+# config.cms_m0m1j0_smoketest.yaml
+#
+# Smoke test (2 files per record) for the m0m1j0 (two leading muons + leading
+# jet) BumpNet histogram, ahead of the full-scale run. See
+# docs/M0M1J0_SPEC_INVESTIGATION.md for the naming-convention background and
+# analysis/m0m1j0_mumujet.py for the standalone mass calculation (the generic
+# mass-calculation stage is NOT used -- see that script's docstring).
+#
+# Records: DoubleMuon Run2016G (30522), DoubleMuon Run2016H (30555) only.
+# No SingleMuon, no de-duplication -- a single trigger-stream pair needs
+# neither, and mixing streams would introduce turn-on structure into the
+# mass spectrum.
+#
+# Parse-time selection is deliberately LOOSE (>=2 muons, >=1 jet; muons
+# pT>5 GeV/|eta|<2.4; no jet pT cut; no charge/isolation/ID cut at parse
+# time) so everything downstream of parsing stays cheap to change without
+# re-running the parse. The tight analysis selection (looseId, isolation,
+# jet pT>30 GeV, etc.) is applied in the standalone script, not here.
+#
+# Uses the per-collection `particle_counts` mechanism (AND-combined, each
+# collection checked independently) -- NOT `combined_particle_counts`, which
+# is the OR/sum-across-collections machinery built for ">=4 leptons of any
+# e/mu mix" (H->ZZ->4l) and is the wrong tool for "muons AND jets".
+#
+# do_mass_calculating / do_post_processing / do_histogram_creation are all
+# OFF: this run only produces parsed ROOT files under parsed_data/, which
+# analysis/m0m1j0_mumujet.py then reads directly.
+# ---------------------------------------------------------------------------
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: atlas_full_120
+  histogram_filename: atlas_opendata_full_bumpnet.root
+run_metadata:
+  run_name: cms_m0m1j0_smoketest
+  base_output_dir: /storage/agrp/berkom/atlas-utilization/output
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: false
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years: []
+  # DoubleMuon Run2016G, Run2016H (UL2016 NanoAODv9). Do not add SingleMuon.
+  specific_record_ids:
+  - 30522
+  - 30555
+  parse_mc: false
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 8
+  env_threshold_memory_mb: 8000
+  chunk_yield_threshold_bytes: 2147483648
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  max_files_to_process: 2
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  - mini
+  - analysis
+  create_dirs: true
+  show_progress_bar: true
+  # Parse-time selection: >=2 muons AND >=1 jet. No electrons/photons/taus/
+  # bjets requirement (keys omitted = unfiltered for that collection, per
+  # services/calculations/physics_calcs.py::filter_events_by_particle_counts).
+  particle_counts:
+    muons:
+      min: 2
+      max: 999
+    jets:
+      min: 1
+      max: 999
+  # Muons: pT>5 GeV, |eta|<2.4. Jets: no pT/eta cut at parse time (applied
+  # later, at analysis time, in analysis/m0m1j0_mumujet.py).
+  kinematic_cuts:
+    muons:
+      pt_min: 5.0
+      eta_max: 2.4
