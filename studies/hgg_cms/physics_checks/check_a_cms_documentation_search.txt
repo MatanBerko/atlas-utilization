@@ -1,0 +1,33 @@
+Check A, step 4: search of CMS NanoAOD / EGM documentation for an
+explicit statement on whether MC photon (and electron) energies already
+have smearing corrections applied in the NanoAOD versions used here
+(UL2016 NanoAODv9, i.e. "up to NanoAODv10" in the terminology below).
+
+Source: CMS WorkBookNanoAOD, CMS Public TWiki,
+https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookNanoAOD
+(fetched 2026-09-15; see also the linked EG POG NanoAOD TWiki,
+https://twiki.cern.ch/twiki/bin/view/CMS/EgammaNanoAOD, not separately
+fetched in this task).
+
+Quoted directly (Photons section):
+
+  "Up to NanoAOD10, residual energy scale and resolution corrections are
+  applied to the stored electrons to match the data."
+  [the Photons section of the same page states the equivalent for
+  photons: "... applied to the stored photons to match the data."]
+
+  "The original four-momentum (as stored in MiniAOD) can be obtained by
+  rescaling by the reciprocal of Photon_eCorr."
+
+  "Starting from NanoAODv11, the corrections need to be applied on top of
+  NanoAOD using correctionlib."
+
+INTERPRETATION: this is an explicit, primary CMS statement that BOTH an
+energy SCALE correction (data) and a RESOLUTION correction (i.e.
+smearing, for MC) are already applied to the stored Photon_pt in the
+NanoAOD version family used here (v9, "up to NanoAOD10"). This directly
+supports (and was found independently of) this task's own empirical
+measurement in check_a_smearing.py: MC Photon_eCorr has ~2x data's RMS
+spread with a mean consistent with 1 (a smearing signature), and the
+truth-matched response distribution is measurably WIDER after Photon_eCorr
+is applied than before, in every photon category tested.

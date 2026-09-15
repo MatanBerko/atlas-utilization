@@ -789,6 +789,198 @@ in this task.
 
 ---
 
+## Update — physics checks (2026-09-15)
+
+Three follow-up physics checks were run after design review, to replace
+assumptions with measurements. Scripts and JSON results are in
+`studies/hgg_cms/physics_checks/`; every file URL and event range read is
+recorded in `physics_checks/file_list.py`. Files read: **1** postVFP ggH
+signal file (50,000 events) and **2** DoubleEG data files (25,000 events
+each from Run2016G and Run2016H, 50,000 total) — within the task's
+5-file/50,000-event limits for each sample. **Blinding was respected
+throughout**: no data diphoton mass in [115, 135] GeV was ever computed
+and kept; only counts of candidates falling there were recorded
+(`check_c_results.json`, `c2_data_sidebands_blinded_and_zee`).
+
+Selection used in all three checks: the "v1 + trigger-mimicking (TM)"
+photon preselection defined in `physics_checks/common.py`'s module
+docstring — v1 (pT>20 GeV, η acceptance, `electronVeto`, `mvaID_WP90`)
+plus Table 1's shower-shape/isolation cuts approximated with NanoAOD's
+`Photon_r9`/`hoe`/`sieie`/`pfRelIso03_all`/`pfRelIso03_chg` branches (doc
+strings quoted and confirmed "full5x5" in
+`physics_checks/branch_docstrings.txt`). **Table 1's numeric values were
+re-verified against the paper's own extracted text before use**
+(`physics_checks/table1_verification.txt`) — exact match, no discrepancy.
+
+### Check A — is simulated photon energy already smeared?
+
+**Yes — confirmed by two independent methods, plus an explicit primary
+source.**
+
+1. **`Photon_eCorr` distribution** (`plots_A2_eCorr_mc_vs_data.png`,
+   `check_a_results.json`): for pT>20 GeV photons, MC's eCorr has RMS
+   **1.19%**, more than double data's **0.55%**, with MC's mean
+   (1.000060) essentially exactly 1 — while data's mean is offset
+   (+0.51% barrel, +0.77% endcap), consistent with data getting a *scale*
+   correction (a real, deterministic shift) and MC getting a *smearing*
+   correction (a zero-mean, broadening, stochastic term). This matches
+   this document's own pre-set rule exactly: RMS ≥0.3% and |mean−1|≤0.3%
+   → **"MC smearing appears applied."**
+2. **Direct response check** (`plots_A3_response_mc.png`): for photons
+   truth-matched to Higgs-daughter gen photons, the corrected
+   `Photon_pt`/`GenPart_pt` response is measurably **wider** than the
+   pre-correction (`pt/eCorr`) response, in every category — effective
+   σ₆₈ barrel-high-R9: 1.26%→1.68%; barrel-other: 2.71%→3.15%; endcap:
+   2.84%→3.26%. The correction *broadens* MC resolution, exactly what a
+   smearing correction (not a pure recalibration) does by construction.
+3. **Primary source, found and quoted**
+   (`physics_checks/check_a_cms_documentation_search.txt`): the CMS
+   WorkBookNanoAOD TWiki states explicitly, "Up to NanoAOD10, residual
+   energy scale and resolution corrections are applied to the stored
+   photons to match the data" — UL2016 NanoAODv9 (this analysis) is
+   within that "up to NanoAOD10" range.
+   [twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookNanoAOD](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookNanoAOD)
+
+### Check B — vertex reference and real mass resolution
+
+**B1 — which point are stored photon directions measured from?**
+(`plots_B1_regression_barrel.png`, `plots_B1_regression_endcap.png`,
+`check_b_results.json`). Regressing Δcotθ·R_SC against `GenVtx_z`
+(hypothesis i, reference = detector origin) vs. against
+`GenVtx_z − PV_z` (hypothesis ii, reference = the default primary
+vertex): **hypothesis (ii) wins clearly and unambiguously.**
+
+| | slope | R² | residual corr. with PV_z |
+|---|---|---|---|
+| (i) origin, barrel | 0.360±0.004 | 0.19 | −0.77 (large — model doesn't fit) |
+| **(ii) default PV, barrel** | **0.935±0.001** | **0.981** | **0.038 (~0, model fits)** |
+| (i) origin, endcap | 0.385±0.008 | 0.18 | — |
+| **(ii) default PV, endcap** | **0.961±0.003** | **0.890** | — |
+
+The origin hypothesis is visibly rejected in the scatter plot itself
+(huge scatter, wrong slope); the default-PV hypothesis produces a tight,
+nearly-diagonal line. The slope is close to but not exactly 1
+(0.94–0.96) — attributed to the simplified fixed-radius geometric model
+(`R_SC`=129cm assumed for every barrel photon), not to a wrong reference
+point, given how cleanly hypothesis (ii) otherwise fits. **Verdict:
+NanoAOD's stored `Photon_eta`/`phi` are already computed relative to the
+default primary vertex (`PV_z`), not the detector origin.** No beamspot
+position branch exists in the file, so hypothesis (iii) was not testable
+(noted, not silently skipped).
+
+**Consequence for re-aiming (revises Section 7 #4 below)**: since
+`Photon_eta` already uses `PV_z`, "re-aiming to `PV_z`" is a **no-op** —
+confirmed numerically in B2 (option (a) "stored" and option (b) "re-aimed
+to PV_z" agree to 6+ significant figures in every category, as they must
+if B1's finding is correct). Only re-aiming to the *true* vertex (option
+(c), unreachable in a real analysis) can do anything, and it does very
+little inclusively (see below) — meaning **re-aiming would not help our
+selection**, because NanoAOD already does the only re-aiming we have the
+information to do.
+
+**B2 — mass resolution after the full selection, truth-matched photons**
+(`plots_B2_mass_abc_inclusive.png`, `plots_B2_mass_abc_by_category.png`,
+n=19,770 truth-matched events out of 19,792 passing the full selection —
+trigger, v1+TM, scaled cuts, 100–180 GeV):
+
+| category | (a) stored / (b) re-aimed to PV_z | (c) re-aimed to true vertex (ideal) |
+|---|---|---|
+| inclusive | σ₆₈ = 2.046 ± 0.016 GeV | σ₆₈ = 1.984 ± 0.015 GeV |
+| both barrel | σ₆₈ = 1.792 ± 0.017 GeV | σ₆₈ = 1.757 ± 0.017 GeV |
+| ≥1 endcap | σ₆₈ = 2.556 ± 0.032 GeV | σ₆₈ = 2.458 ± 0.030 GeV |
+
+Peak (mode) is 124.75–125.25 GeV in every case, consistent with 125 GeV
+within the histogram's 0.5 GeV binning. **Sensitivity check** (R_EFF
+135cm/Z_EFF 320cm instead of 129cm/314cm, `b2_systematic_geometry` in the
+JSON): σ₆₈ changes by <0.2% relative — the geometric-model choice barely
+matters within the stated range.
+
+**Split by vertex quality** (stored value only): **66.1%** of these
+full-selection events have `|PV_z − GenVtx_z| < 1 cm` (13,069/19,770;
+statistical uncertainty ≈0.3%, superseding the earlier
+761-event/no-selection Section 3 estimate of 70.0%±1.4%, which review
+correctly flagged as unrepresentative). For these: **σ₆₈ = 1.787 ± 0.017
+GeV**; for the other 33.9% (`|Δz|≥1cm`): **σ₆₈ = 2.601 ± 0.029 GeV** — a
+large, now statistically clear difference (Section 3's original small
+sample could not resolve this; with proper photon selection and 25× the
+statistics, it is now unambiguous). **The vertex absolutely does matter**
+for events where the default vertex happens to be wrong; it just cannot
+be fixed by re-aiming (see above) since NanoAOD already uses the best
+information available to it.
+
+**Plain leading-pair check (no truth-matching, "what the analysis will
+actually see")**: σ₆₈ = 2.049 ± 0.016 GeV, n=19,792 — statistically
+indistinguishable from the truth-matched inclusive number above,
+confirming truth-matching did not bias the resolution estimate.
+
+**Plain-language conclusion**: the vertex matters — events with a
+mismodeled vertex have ~45% worse mass resolution than events with a
+good one — but NanoAOD's stored photon directions already use the best
+vertex we have (`PV_z`), so there is nothing to gain by "re-aiming"
+within this design's means. The only way to do better is a dedicated
+vertex-finding algorithm like the paper's own (Section 3, Section 1),
+which is out of reach with NanoAOD alone. This directly informs the
+signal-model choice (Section 7 #8): the ~34% wrong-vertex population with
+its ~45%-wider core is the source of the tail that motivates a
+narrow-core-plus-tail shape, not a symmetric single Gaussian.
+
+### Check C — effect of trigger-mimicking (TM) cuts
+
+**C1 — signal MC** (`plots_C1_hlt_pass_fraction.png`,
+`check_c_results.json`, n=50,000 ggH events):
+
+| | offline efficiency (of all events) | HLT-pass fraction (of offline-selected) |
+|---|---|---|
+| without TM | 43.0% ± 0.2% | 93.9% ± 0.16% |
+| **with TM** | **40.0% ± 0.2%** | **99.0% ± 0.07%** |
+| without TM, barrel-barrel | 27.5% ± 0.2% | 96.5% ± 0.16% |
+| with TM, barrel-barrel | 26.2% ± 0.2% | 99.5% ± 0.06% |
+| without TM, other | 15.5% ± 0.2% | 89.4% ± 0.35% |
+| with TM, other | 13.8% ± 0.2% | 98.1% ± 0.16% |
+
+**Signal efficiency cost of TM: 3.0 percentage points absolute (43.0%→
+40.0%), a 7.0% relative reduction.** In exchange, the HLT pass fraction
+among offline-selected events rises from 93.9% to 99.0% overall, and even
+the worst category ("other", i.e. at least one endcap photon) rises from
+89.4% to 98.1% — confirming the review's stated expectation exactly:
+"offline cuts tighter than the trigger make the trigger nearly fully
+efficient."
+
+**C2 — data** (`plots_C2_zpeak_with_without_TM.png`): of 50,000 raw
+trigger-passing events, full-selection candidates in 100–180 GeV drop
+from 97 (without TM: 74 sideband + 23 blinded) to 92 (with TM: 70
+sideband + 22 blinded) — a small (~5%) relative loss, consistent with
+C1's 7% MC estimate given small-number statistics. **Z control region**
+(electron-veto-inverted, 70–110 GeV): 661 events without TM vs. 651 with
+TM (−1.5%) — peak **91.5 GeV in both cases** (matches PDG 91.19 GeV
+closely), effective σ₆₈ 2.430 GeV (without TM) vs. 2.423 GeV (with TM) —
+**statistically indistinguishable**. TM cuts cost almost nothing in this
+control region while (per C1) buying a large trigger-efficiency
+improvement in simulation.
+
+**C3 — orthogonal trigger cross-check (data, rough estimate, as
+labeled)**: using `HLT_Ele27_WPTight_Gsf` (a single-electron trigger,
+confirmed present in both data files, independent of the diphoton path)
+plus the Zee (electron-veto-inverted) selection: 34.8%±1.1% of these
+events also pass the diphoton HLT bit without TM, 39.5%±1.2% with TM — a
+real but much smaller increase than C1's MC-based near-100% result.
+**This is not a contradiction**: this cross-check uses real electrons
+selected by an electron-specific trigger with its own, different
+kinematic/tracking requirements, not photon-like ECAL objects at the
+diphoton trigger's own thresholds — so it is expected to look different
+from C1's same-object-type measurement, and is reported here only as a
+plausibility check, exactly as the task specified.
+
+**Plain-language conclusion**: trigger-mimicking cuts cost about 7% of
+signal efficiency, and in exchange make the trigger almost always fire
+in simulation (93.9%→99.0%) — closing the gap the review flagged
+(requiring the HLT bit in MC "without trigger efficiency corrections").
+In real data, the same cuts cost noticeably less (a few percent) and
+leave the Z-peak position and width unchanged. **Decision: apply the TM
+cuts** (Section 7 #3, updated below).
+
+---
+
 ## Section 7 — Decisions for review
 
 1. **Photon ID working point default: `mvaID_WP90`**, not `WP80` or
@@ -803,10 +995,48 @@ in this task.
    revisit once the analysis-level isolation/shower-shape variables can
    be directly compared to Table 1's definitions (needs care about the
    vertex-dependence of CMS's own I_ph/I_tk/I_ch, Section 2 step 5).
+   **Original: not applied. Updated (2026-09-15, "Update — physics
+   checks" above): APPLY the trigger-mimicking (TM) cuts** — H/E<0.08,
+   the barrel/endcap R9-or-shower-shape-and-isolation cuts, and the
+   combined charged-isolation requirement, using the NanoAOD proxies
+   defined in `physics_checks/common.py` (I_ch≈`pfRelIso03_chg`×pT,
+   I_ph≈(`pfRelIso03_all`−`pfRelIso03_chg`)×pT, I_tk≈I_ch — explicitly
+   NOT CMS's exact vertex-dependent definitions). Reason: without TM
+   cuts, requiring the HLT bit in MC (Section 2 step 1) with no trigger
+   efficiency correction leaves a real gap between offline and trigger
+   selections (93.9% HLT-pass among offline-selected events, worse in
+   categories with an endcap photon: 89.4%); WITH TM cuts this rises to
+   99.0% (98.1% for the endcap category) — measured directly in Check C,
+   at a cost of 3.0 percentage points (7.0% relative) of signal
+   efficiency. Data-side cost is smaller (~5% of candidates) and the
+   Z→ee peak position/width are unaffected by the cuts. See "Update —
+   physics checks" above for full numbers and plots.
 4. **Vertex: use NanoAOD's default (highest sum-pT²) `PV`, no
    custom re-pointing.** *Consequential*, quantified in Section 3: ~70%
    correct-vertex rate (vs. paper's ~81%), with an inconclusive
    (small-sample) resolution penalty that should be re-measured at scale.
+   **Original: inconclusive resolution penalty (Section 3, no photon
+   selection applied, dominated by poorly-measured photons — mean 122.8
+   GeV, RMS 7 GeV, flagged by review as unrepresentative). Updated
+   (2026-09-15): confirmed with proper selection and 25× the statistics
+   (Check B, n=19,770). (i) NanoAOD's stored photon directions ARE
+   already computed relative to the default `PV_z`, not the detector
+   origin — regression slope 0.935–0.961 with R²=0.89–0.98 vs. slope
+   0.36–0.39 with R²≈0.18 for the origin hypothesis (`check_b_results.json`,
+   `plots_B1_regression_*.png`). This means "re-aiming to PV_z" is a
+   no-op — it is already done. (ii) The vertex DOES matter: events with
+   `|PV_z−GenVtx_z|<1cm` (66.1%±0.3% of selected events, an updated,
+   more precise number than Section 3's original 70.0%±1.4%) have
+   σ₆₈=1.79 GeV vs. 2.60 GeV for the rest — a real, now statistically
+   clear ~45% resolution penalty. (iii) There is nothing this design can
+   do about it: re-aiming to the true vertex (only possible with
+   generator truth, unreachable in a real analysis) improves the
+   *inclusive* resolution by just 2.046→1.984 GeV (3%), because NanoAOD
+   already uses the best available (default) vertex. Decision UNCHANGED
+   in effect (still no custom re-pointing — there is nothing to re-point
+   TO without CMS's own dedicated vertex algorithm), but now backed by a
+   real measurement instead of an inconclusive one, and directly informs
+   Section 7 #8's signal-model shape.
 5. **Combined `VHToGG` sample vs. separate `WplusH`/`WminusH`/`ZH_HToGG`
    samples** (`INVENTORY.md` B.1): default is the **separate** samples
    (matches how cross sections are quoted per-mode); do not mix with the
@@ -818,9 +1048,36 @@ in this task.
    plausible from branch-naming convention, **UNVERIFIED** by direct
    documentation. *Consequential* if wrong — would mean signal MC width
    is too narrow relative to data.
+   **Original: UNVERIFIED. Updated (2026-09-15): CONFIRMED, by three
+   independent pieces of evidence (Check A above) — (i) MC `Photon_eCorr`
+   RMS (1.19%) is more than double data's (0.55%) with a mean consistent
+   with exactly 1, the signature of a zero-mean broadening (smearing)
+   correction rather than a deterministic scale shift; (ii) the
+   truth-matched MC response distribution is measurably WIDER after
+   `Photon_eCorr` is applied than before, in every photon category
+   (e.g. barrel high-R9 effective σ₆₈: 1.26%→1.68%); (iii) an explicit
+   primary-source statement, CMS's own WorkBookNanoAOD TWiki: "Up to
+   NanoAOD10, residual energy scale and resolution corrections are
+   applied to the stored photons to match the data" — this analysis uses
+   NanoAODv9, within that range. No longer consequential as an open risk
+   — resolved.
 8. **Signal model shape: narrow core + wide tail** (double Gaussian or
    Crystal Ball), width fixed from simulation. *Consequential*,
    supported by Section 3's tail evidence, but not yet fit or optimized.
+   **Original: motivated by Section 3's small, unrepresentative sample.
+   Updated (2026-09-15): confirmed and quantified by Check B — after the
+   full selection, truth-matched signal has effective σ₆₈ = 2.05±0.02 GeV
+   inclusively (1.79±0.02 GeV both-barrel, 2.56±0.03 GeV with ≥1 endcap
+   photon), with a real, resolvable tail traced directly to the ~34% of
+   events with a mismodeled vertex (their own σ₆₈ = 2.60±0.03 GeV vs.
+   1.79±0.02 GeV for the well-modeled 66%) — not just generic
+   non-Gaussianity. This supports fitting the barrel-barrel and
+   ≥1-endcap categories with SEPARATE signal shapes/widths (not one
+   inclusive shape), each still a narrow-core-plus-tail form, with all
+   widths fixed from this simulation measurement. The plain leading-pair
+   (no-truth-matching) resolution (σ₆₈=2.049±0.016 GeV) matches the
+   truth-matched number closely, so this simulation-based width should
+   transfer reasonably to what the real selection sees.
 9. **Background model: data sidebands only, no MC background
    dependency**, validated by a data-driven bias study across function
    families. *Consequential* — this IS the analysis's core method, so
@@ -857,6 +1114,12 @@ tested; each is scoped for one implementation session.
    *Acceptance*: unit + regression tests as in task 2; a real-file smoke
    test reproduces this design document's own 24.6%/59.3% pass fractions
    (data/signal) within statistical uncertainty on a larger sample.
+   **Updated (2026-09-15)**: also implement the trigger-mimicking (TM)
+   photon cuts (Section 7 #3, "Update — physics checks" above) as part of
+   this task or task 6 (whichever ends up owning photon-level selection
+   cuts) — acceptance should additionally reproduce Check C1's HLT-pass-
+   given-offline-selected fractions (93.9% without TM, 99.0% with TM,
+   `physics_checks/check_c_results.json`) within statistical uncertainty.
 4. **Extend the CMS photon schema field list, plus `bool_cuts` and
    `eta_exclude` cut types** (Section 6.3). *Acceptance*: unit tests for
    both new cut types on synthetic data; regression test confirms
@@ -878,12 +1141,23 @@ tested; each is scoped for one implementation session.
    the per-event output file with the specified columns; explicit
    assertion that no code path ever reads a `Photon_eCorr`-multiplied
    energy (guards against the double-correction failure mode).
+   **Updated (2026-09-15)**: "the diphoton selection itself" now
+   explicitly includes the trigger-mimicking cuts (Section 7 #3) — use
+   `physics_checks/common.py`'s `photon_tm_mask`/`compute_isolation_proxies`
+   as the reference implementation (same NanoAOD-proxy definitions,
+   documented caveats about not matching CMS's exact vertex-dependent
+   isolation included).
 7. **Fine-binned histogram + Z→ee / sideband validation scripts**
    (Section 5), consuming task 6's output. *Acceptance*: Z→ee peak
    position and width measured with real statistics against the ±1 GeV /
    30%-relative-width criterion defined in Section 5.2; sideband-only
    plots (blinding preserved) produced for at least one background
    function family.
+   **Updated (2026-09-15)**: Check C2 already previews this at small
+   statistics — data-only Z peak (electron-veto-inverted), 91.5 GeV,
+   σ₆₈≈2.4 GeV, unaffected by TM cuts (`plots_C2_zpeak_with_without_TM.png`).
+   Still outstanding for this task: the actual data-vs-DY-simulation
+   (recid 35669) comparison Section 5.2 specifies, at full statistics.
 8. **Vertex study at full statistics** (repeat Section 3's check on many
    more simulated events, still respecting per-task event/file limits
    where applicable, or as part of a proper batch job once available).
@@ -892,3 +1166,14 @@ tested; each is scoped for one implementation session.
    confirmed absent — resolving Section 3's open (a)-vs-(b) question —
    before the signal model's tail assumption (Section 7, item 8) is
    locked in for a real fit.
+   **Updated (2026-09-15): LARGELY SUPERSEDED by Check B above**
+   (`physics_checks/check_b_vertex.py`, n=19,770 truth-matched signal
+   events after full selection, 25× Section 3's original sample). The
+   right-vs-wrong-vertex resolution difference is now confirmed with a
+   clear, statistically significant separation (σ₆₈ 1.79 vs. 2.60 GeV),
+   and the vertex-reference question (B1) is fully resolved (stored
+   directions already use `PV_z`). What remains open for a true
+   full-statistics/multi-file pass: repeating this on the OTHER
+   production modes (VBF/WH/ZH/ttH, not just ggH) and on more ggH files/
+   events than the single-file, 50,000-event budget used here, before
+   finalizing per-category signal-model parameters for the real fit.

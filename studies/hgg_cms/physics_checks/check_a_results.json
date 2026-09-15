@@ -1,0 +1,110 @@
+{
+  "files_read": {
+    "signal": [
+      {
+        "url": "https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/3231834B-7A6E-4840-8627-C97FDCF67268.root",
+        "entry_start": 0,
+        "entry_stop": 50000,
+        "record": 37350
+      }
+    ],
+    "data": [
+      {
+        "url": "https://opendata.cern.ch/eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root",
+        "entry_start": 0,
+        "entry_stop": 25000,
+        "record": 30521,
+        "era": "Run2016G"
+      },
+      {
+        "url": "https://opendata.cern.ch/eos/opendata/cms/Run2016H/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/2AD46B56-E1CA-CD44-B30D-C57FE1C35D15.root",
+        "entry_start": 0,
+        "entry_stop": 25000,
+        "record": 30554,
+        "era": "Run2016H"
+      }
+    ]
+  },
+  "step2_ecorr_distribution": {
+    "mc": {
+      "label": "MC (ggH)",
+      "n": 86597,
+      "n_exactly_1p0": 8549,
+      "frac_exactly_1p0": 0.0987216647227964,
+      "mean": 1.0000596046447754,
+      "rms": 0.011904513463377953,
+      "p1": 0.9665883231163025,
+      "p99": 1.0340763807296753,
+      "barrel": {
+        "n": 56389,
+        "mean": 1.0000327825546265,
+        "rms": 0.011741194874048233,
+        "frac_exactly_1p0": 0.0
+      },
+      "endcap": {
+        "n": 21659,
+        "mean": 1.0001534223556519,
+        "rms": 0.014412006363272667,
+        "frac_exactly_1p0": 0.0
+      }
+    },
+    "data": {
+      "label": "data (Run2016G+H)",
+      "n": 89056,
+      "n_exactly_1p0": 8332,
+      "frac_exactly_1p0": 0.0935591088753144,
+      "mean": 1.0051088333129883,
+      "rms": 0.005459625739604235,
+      "p1": 0.9986580014228821,
+      "p99": 1.022947078943246,
+      "barrel": {
+        "n": 56916,
+        "mean": 1.0043590068817139,
+        "rms": 0.004290993791073561,
+        "frac_exactly_1p0": 0.032679738562091505
+      },
+      "endcap": {
+        "n": 26954,
+        "mean": 1.0076748132705688,
+        "rms": 0.006841976661235094,
+        "frac_exactly_1p0": 0.04771091489203829
+      }
+    }
+  },
+  "step3_response_check_truth_matched_mc": {
+    "barrel_highR9": {
+      "n": 37987,
+      "mean": 0.9918932914733887,
+      "rms": 0.04644555598497391,
+      "effective_sigma68": 0.0167483389377594,
+      "precorrection_mean": 0.9918744564056396,
+      "precorrection_rms": 0.04530053213238716,
+      "precorrection_effective_sigma68": 0.012558430433273315
+    },
+    "barrel_other": {
+      "n": 18445,
+      "mean": 0.9762004613876343,
+      "rms": 0.09329380095005035,
+      "effective_sigma68": 0.031544625759124756,
+      "precorrection_mean": 0.9762397408485413,
+      "precorrection_rms": 0.09235986322164536,
+      "precorrection_effective_sigma68": 0.027065515518188477
+    },
+    "endcap": {
+      "n": 21992,
+      "mean": 0.9866966605186462,
+      "rms": 0.0735059529542923,
+      "effective_sigma68": 0.03260350227355957,
+      "precorrection_mean": 0.9866052269935608,
+      "precorrection_rms": 0.07208483666181564,
+      "precorrection_effective_sigma68": 0.02836570143699646
+    }
+  },
+  "step4_preset_interpretation": {
+    "ecorr_frac_exactly_1": 0.0987216647227964,
+    "ecorr_rms": 0.011904513463377953,
+    "ecorr_mean_offset_from_1": 5.9604644775390625e-05,
+    "preset_rule": "RMS>=0.003 and |mean-1|<=0.003 => smearing applied; eCorr==1 always => not applied; otherwise unclear",
+    "verdict": "MC smearing appears applied"
+  }
+}

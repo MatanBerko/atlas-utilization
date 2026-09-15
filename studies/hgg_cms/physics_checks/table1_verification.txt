@@ -1,0 +1,30 @@
+Verification of arXiv:1804.02716 (CMS-HIG-16-040) Table 1 values against
+the paper's own extracted text (Section 5.2, "Photon preselection").
+
+Task's stated Table 1 values:
+  Barrel [0.5, 0.85]: H/E<0.08, sieie<0.015, Iph<4.0 GeV, Itk<6.0 GeV
+  Barrel >0.85:       H/E<0.08
+  Endcap [0.8, 0.90]: H/E<0.08, sieie<0.035, Iph<4.0 GeV, Itk<6.0 GeV
+  Endcap >0.90:       H/E<0.08
+  Combined charged-isolation requirement: (R9>0.8 AND Ich<20 GeV) OR (Ich/pT<0.3)
+
+Extracted directly from the paper's own PDF text (page containing
+"Table 1: Schema of the photon preselection requirements."):
+
+  R9 H/E sigma_eta_eta Iph (GeV) Itk (GeV)
+  Barrel   [0.5, 0.85]  <0.08  <0.015  <4.0  <6.0
+           >0.85        <0.08    --     --    --
+  Endcaps  [0.8, 0.90]  <0.08  <0.035  <4.0  <6.0
+           >0.90        <0.08    --     --    --
+
+  "Additionally, both photons must satisfy either (a) R9 > 0.8 and
+  Ich < 20 GeV, or (b) Ich/pT_gamma < 0.3."
+
+VERDICT: exact match, no discrepancy found. The task's stated values are
+used as given in check_b_vertex.py / check_c_trigger_mimicking.py /
+common.py's photon_tm_mask().
+
+Source file for this extraction: a prior-session PDF-to-text extraction
+of https://arxiv.org/pdf/1804.02716, retained at
+C:\Users\matan\hgg-cms-inventory-20260915-1950\paper_text.txt (lines
+298-306), re-checked directly in this task.

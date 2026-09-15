@@ -1,0 +1,169 @@
+{
+  "files_read": {
+    "signal": [
+      {
+        "url": "https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/3231834B-7A6E-4840-8627-C97FDCF67268.root",
+        "entry_start": 0,
+        "entry_stop": 50000,
+        "record": 37350
+      }
+    ],
+    "data": [
+      {
+        "url": "https://opendata.cern.ch/eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root",
+        "entry_start": 0,
+        "entry_stop": 25000,
+        "record": 30521,
+        "era": "Run2016G"
+      },
+      {
+        "url": "https://opendata.cern.ch/eos/opendata/cms/Run2016H/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/2AD46B56-E1CA-CD44-B30D-C57FE1C35D15.root",
+        "entry_start": 0,
+        "entry_stop": 25000,
+        "record": 30554,
+        "era": "Run2016H"
+      }
+    ]
+  },
+  "orthogonal_trigger_considered": [
+    "HLT_Ele27_WPTight_Gsf",
+    "HLT_Ele23_WPLoose_Gsf",
+    "HLT_Ele25_eta2p1_WPTight_Gsf",
+    "HLT_DoubleEle33_CaloIdL_MW",
+    "HLT_DoubleEle33_CaloIdL_GsfTrkIdVL"
+  ],
+  "orthogonal_trigger_found": "HLT_Ele27_WPTight_Gsf",
+  "c1_signal_efficiency_and_hlt_pass": {
+    "without_TM": {
+      "n_events_read": 50000,
+      "n_offline_selected": 21495,
+      "offline_efficiency_rel_all_events": {
+        "k": 21495,
+        "n": 50000,
+        "frac": 0.4299,
+        "err": 0.0022139827912610343
+      },
+      "offline_efficiency_barrel_barrel": {
+        "k": 13741,
+        "n": 50000,
+        "frac": 0.27482,
+        "err": 0.001996466716977771
+      },
+      "offline_efficiency_other": {
+        "k": 7754,
+        "n": 50000,
+        "frac": 0.15508,
+        "err": 0.0016188279315603618
+      },
+      "hlt_pass_given_offline": {
+        "k": 20186,
+        "n": 21495,
+        "frac": 0.9391021167713421,
+        "err": 0.001631130781762216
+      },
+      "hlt_pass_given_offline_barrel_barrel": {
+        "k": 13254,
+        "n": 13741,
+        "frac": 0.9645586201877593,
+        "err": 0.001577286020986064
+      },
+      "hlt_pass_given_offline_other": {
+        "k": 6932,
+        "n": 7754,
+        "frac": 0.8939901986071704,
+        "err": 0.0034960407873300867
+      }
+    },
+    "with_TM": {
+      "n_events_read": 50000,
+      "n_offline_selected": 19986,
+      "offline_efficiency_rel_all_events": {
+        "k": 19986,
+        "n": 50000,
+        "frac": 0.39972,
+        "err": 0.002190634253361341
+      },
+      "offline_efficiency_barrel_barrel": {
+        "k": 13094,
+        "n": 50000,
+        "frac": 0.26188,
+        "err": 0.0019662088678469537
+      },
+      "offline_efficiency_other": {
+        "k": 6892,
+        "n": 50000,
+        "frac": 0.13784,
+        "err": 0.0015416882590199616
+      },
+      "hlt_pass_given_offline": {
+        "k": 19792,
+        "n": 19986,
+        "frac": 0.9902932052436706,
+        "err": 0.0006935166330511606
+      },
+      "hlt_pass_given_offline_barrel_barrel": {
+        "k": 13028,
+        "n": 13094,
+        "frac": 0.994959523445853,
+        "err": 0.0006188741428540211
+      },
+      "hlt_pass_given_offline_other": {
+        "k": 6764,
+        "n": 6892,
+        "frac": 0.9814277423099246,
+        "err": 0.0016262558848156082
+      }
+    }
+  },
+  "c2_data_sidebands_blinded_and_zee": {
+    "sidebands_and_blinded": {
+      "without_TM": {
+        "n_candidates_100_180": 97,
+        "n_sideband_lt115_or_gt135": 74,
+        "n_blinded_115_135_count_only": 23,
+        "sideband_min_GeV": 100.1050779451878,
+        "sideband_max_GeV": 178.21933597845276
+      },
+      "with_TM": {
+        "n_candidates_100_180": 92,
+        "n_sideband_lt115_or_gt135": 70,
+        "n_blinded_115_135_count_only": 22,
+        "sideband_min_GeV": 100.1050779451878,
+        "sideband_max_GeV": 178.21933597845276
+      }
+    },
+    "zee_control_region": {
+      "without_TM": {
+        "n": 661,
+        "mean": 92.3419882921255,
+        "median": 91.78469225845902,
+        "peak_mode": 91.5,
+        "effective_sigma68": 2.4300326017703284
+      },
+      "with_TM": {
+        "n": 651,
+        "mean": 92.3473430742705,
+        "median": 91.78469225845902,
+        "peak_mode": 91.5,
+        "effective_sigma68": 2.4234148341759294
+      }
+    }
+  },
+  "c3_orthogonal_trigger_crosscheck": {
+    "orthogonal_trigger_used": "HLT_Ele27_WPTight_Gsf",
+    "status": "OK",
+    "without_TM": {
+      "n_pass_orthogonal_trigger_and_zee_selection": 1786,
+      "n_also_pass_diphoton_hlt": 621,
+      "fraction": 0.3477043673012318,
+      "err": 0.011269031190650673
+    },
+    "with_TM": {
+      "n_pass_orthogonal_trigger_and_zee_selection": 1554,
+      "n_also_pass_diphoton_hlt": 614,
+      "fraction": 0.39510939510939513,
+      "err": 0.012401424986770623
+    },
+    "caveat": "Rough estimate: small samples, and the orthogonal trigger's own kinematic/ID requirements are not identical to the diphoton trigger's, so this is a cross-check of plausibility, not a precision measurement."
+  }
+}

@@ -1,0 +1,40 @@
+=== signal file: {'Photon_r9': {'typename': 'float[]', 'title': 'R9 of the supercluster, calculated with full 5x5 region'}, 'Photon_hoe': {'typename': 'float[]', 'title': 'H over E'}, 'Photon_sieie': {'typename': 'float[]', 'title': 'sigma_IetaIeta of the supercluster, calculated with full 5x5 region'}, 'Photon_pfRelIso03_all': {'typename': 'float[]', 'title': 'PF relative isolation dR=0.3, total (with rho*EA PU corrections)'}, 'Photon_pfRelIso03_chg': {'typename': 'float[]', 'title': 'PF relative isolation dR=0.3, charged component (with rho*EA PU corrections)'}, 'Photon_isScEtaEB': {'typename': 'bool[]', 'title': 'is supercluster eta within barrel acceptance'}, 'Photon_isScEtaEE': {'typename': 'bool[]', 'title': 'is supercluster eta within endcap acceptance'}, 'Photon_eCorr': {'typename': 'float[]', 'title': 'ratio of the calibrated energy/miniaod energy'}, 'Photon_dEscaleUp': {'typename': 'float[]', 'title': 'ecal energy scale shifted 1 sigma up (adding gain/stat/syst in quadrature)'}, 'Photon_dEscaleDown': {'typename': 'float[]', 'title': 'ecal energy scale shifted 1 sigma down (adding gain/stat/syst in quadrature)'}, 'Photon_dEsigmaUp': {'typename': 'float[]', 'title': 'ecal energy smearing value shifted 1 sigma up'}, 'Photon_dEsigmaDown': {'typename': 'float[]', 'title': 'ecal energy smearing value shifted 1 sigma up'}, 'Photon_electronVeto': {'typename': 'bool[]', 'title': 'pass electron veto'}, 'Photon_mvaID_WP90': {'typename': 'bool[]', 'title': 'MVA ID WP90, Fall17V2'}} ===
+=== data file: {'Photon_r9': {'typename': 'float[]', 'title': 'R9 of the supercluster, calculated with full 5x5 region'}, 'Photon_hoe': {'typename': 'float[]', 'title': 'H over E'}, 'Photon_sieie': {'typename': 'float[]', 'title': 'sigma_IetaIeta of the supercluster, calculated with full 5x5 region'}, 'Photon_pfRelIso03_all': {'typename': 'float[]', 'title': 'PF relative isolation dR=0.3, total (with rho*EA PU corrections)'}, 'Photon_pfRelIso03_chg': {'typename': 'float[]', 'title': 'PF relative isolation dR=0.3, charged component (with rho*EA PU corrections)'}, 'Photon_isScEtaEB': {'typename': 'bool[]', 'title': 'is supercluster eta within barrel acceptance'}, 'Photon_isScEtaEE': {'typename': 'bool[]', 'title': 'is supercluster eta within endcap acceptance'}, 'Photon_eCorr': {'typename': 'float[]', 'title': 'ratio of the calibrated energy/miniaod energy'}, 'Photon_dEscaleUp': {'typename': 'float[]', 'title': 'ecal energy scale shifted 1 sigma up (adding gain/stat/syst in quadrature)'}, 'Photon_dEscaleDown': {'typename': 'float[]', 'title': 'ecal energy scale shifted 1 sigma down (adding gain/stat/syst in quadrature)'}, 'Photon_dEsigmaUp': {'typename': 'float[]', 'title': 'ecal energy smearing value shifted 1 sigma up'}, 'Photon_dEsigmaDown': {'typename': 'float[]', 'title': 'ecal energy smearing value shifted 1 sigma up'}, 'Photon_electronVeto': {'typename': 'bool[]', 'title': 'pass electron veto'}, 'Photon_mvaID_WP90': {'typename': 'bool[]', 'title': 'MVA ID WP90, Fall17V2'}} ===
+=== signal file ===
+https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/3231834B-7A6E-4840-8627-C97FDCF67268.root
+  Photon_r9 | {'typename': 'float[]', 'title': 'R9 of the supercluster, calculated with full 5x5 region'}
+  Photon_hoe | {'typename': 'float[]', 'title': 'H over E'}
+  Photon_sieie | {'typename': 'float[]', 'title': 'sigma_IetaIeta of the supercluster, calculated with full 5x5 region'}
+  Photon_pfRelIso03_all | {'typename': 'float[]', 'title': 'PF relative isolation dR=0.3, total (with rho*EA PU corrections)'}
+  Photon_pfRelIso03_chg | {'typename': 'float[]', 'title': 'PF relative isolation dR=0.3, charged component (with rho*EA PU corrections)'}
+  Photon_isScEtaEB | {'typename': 'bool[]', 'title': 'is supercluster eta within barrel acceptance'}
+  Photon_isScEtaEE | {'typename': 'bool[]', 'title': 'is supercluster eta within endcap acceptance'}
+  Photon_eCorr | {'typename': 'float[]', 'title': 'ratio of the calibrated energy/miniaod energy'}
+  Photon_dEscaleUp | {'typename': 'float[]', 'title': 'ecal energy scale shifted 1 sigma up (adding gain/stat/syst in quadrature)'}
+  Photon_dEscaleDown | {'typename': 'float[]', 'title': 'ecal energy scale shifted 1 sigma down (adding gain/stat/syst in quadrature)'}
+  Photon_dEsigmaUp | {'typename': 'float[]', 'title': 'ecal energy smearing value shifted 1 sigma up'}
+  Photon_dEsigmaDown | {'typename': 'float[]', 'title': 'ecal energy smearing value shifted 1 sigma up'}
+  Photon_electronVeto | {'typename': 'bool[]', 'title': 'pass electron veto'}
+  Photon_mvaID_WP90 | {'typename': 'bool[]', 'title': 'MVA ID WP90, Fall17V2'}
+
+=== data file ===
+https://opendata.cern.ch/eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root
+  Photon_r9 | {'typename': 'float[]', 'title': 'R9 of the supercluster, calculated with full 5x5 region'}
+  Photon_hoe | {'typename': 'float[]', 'title': 'H over E'}
+  Photon_sieie | {'typename': 'float[]', 'title': 'sigma_IetaIeta of the supercluster, calculated with full 5x5 region'}
+  Photon_pfRelIso03_all | {'typename': 'float[]', 'title': 'PF relative isolation dR=0.3, total (with rho*EA PU corrections)'}
+  Photon_pfRelIso03_chg | {'typename': 'float[]', 'title': 'PF relative isolation dR=0.3, charged component (with rho*EA PU corrections)'}
+  Photon_isScEtaEB | {'typename': 'bool[]', 'title': 'is supercluster eta within barrel acceptance'}
+  Photon_isScEtaEE | {'typename': 'bool[]', 'title': 'is supercluster eta within endcap acceptance'}
+  Photon_eCorr | {'typename': 'float[]', 'title': 'ratio of the calibrated energy/miniaod energy'}
+  Photon_dEscaleUp | {'typename': 'float[]', 'title': 'ecal energy scale shifted 1 sigma up (adding gain/stat/syst in quadrature)'}
+  Photon_dEscaleDown | {'typename': 'float[]', 'title': 'ecal energy scale shifted 1 sigma down (adding gain/stat/syst in quadrature)'}
+  Photon_dEsigmaUp | {'typename': 'float[]', 'title': 'ecal energy smearing value shifted 1 sigma up'}
+  Photon_dEsigmaDown | {'typename': 'float[]', 'title': 'ecal energy smearing value shifted 1 sigma up'}
+  Photon_electronVeto | {'typename': 'bool[]', 'title': 'pass electron veto'}
+  Photon_mvaID_WP90 | {'typename': 'bool[]', 'title': 'MVA ID WP90, Fall17V2'}
+
+Note: Photon_r9's title says 'calculated with full 5x5 region' and
+Photon_sieie's title says the same -- both are the 'full5x5' shower-shape
+variants (the modern, standard CMS EGM definition), confirmed directly
+above, not assumed.
