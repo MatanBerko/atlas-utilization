@@ -10,7 +10,7 @@ from typing import Iterator, Optional, Callable
 from tqdm import tqdm
 
 from domain.events import EventBatch
-from .file_parser import FileParser, PartialFileReadError
+from .file_parser import FileParser, PartialFileReadError, RequiredScalarBranchMissingError
 
 
 class ThreadedFileProcessor:
@@ -91,17 +91,24 @@ class ThreadedFileProcessor:
             
             # Process results as they complete
             progress_bar = self._create_progress_bar(total_files)
-            
+
+            # Missing-required-branch failures (implementation task 3, Part
+            # B3) are collected here instead of being swallowed as ordinary
+            # per-file failures below -- every other exception type (network
+            # errors, corrupt files, ...) keeps today's exact behaviour:
+            # logged, reported via on_error, file skipped, run continues.
+            missing_branch_failures: list[tuple[str, str, list[str]]] = []
+
             with progress_bar as pbar:
                 for future in as_completed(futures):
                     file_url = futures[future]
-                    
+
                     try:
                         result = future.result(timeout=300)  # 5 minute timeout per file
-                        
+
                         if result is not None:
                             events, processing_time, partial_error = result
-                            
+
                             # Create EventBatch
                             batch = self._create_event_batch(
                                 events=events,
@@ -109,7 +116,7 @@ class ThreadedFileProcessor:
                                 release_year=release_year,
                                 processing_time=processing_time
                             )
-                            
+
                             if partial_error is not None:
                                 logging.warning("Partial parse retained: %s", partial_error)
                                 if on_error:
@@ -119,16 +126,25 @@ class ThreadedFileProcessor:
 
                             if batch.event_count > 0:
                                 yield batch
-                    
+
+                    except RequiredScalarBranchMissingError as e:
+                        logging.warning(f"Required scalar branch missing in {file_url}: {e}")
+                        missing_branch_failures.extend(e.failures)
+                        if on_error:
+                            on_error(file_url, e)
+
                     except Exception as e:
                         logging.warning(f"Error processing file {file_url}: {e}")
                         if on_error:
                             on_error(file_url, e)
-                    
+
                     finally:
                         if self.show_progress:
                             pbar.update(1)
-    
+
+            if missing_branch_failures:
+                raise RequiredScalarBranchMissingError(missing_branch_failures)
+
     def _parse_single_file(
         self,
         file_url: str,
@@ -252,6 +268,7 @@ class ParsingStatisticsCollector:
         self.total_size_bytes = 0
         self.failed_files = []
         self.processing_times = []
+        self._failure_reason_counts: dict[str, int] = {}
     
     def record_success(self, file_url: str, event_count: int, size_bytes: int, time_sec: float):
         """Record a successful parse."""
@@ -265,7 +282,16 @@ class ParsingStatisticsCollector:
         """Record a failed parse."""
         with self.lock:
             self.failed_count += 1
+            # Reason (exception type name) is tracked alongside the message,
+            # purely additively, so the final parsing summary/log can report
+            # a breakdown of why files were skipped (implementation task 3,
+            # Part B3) without changing failed_files' existing use as a
+            # (file_url, str(error)) list anywhere it's already consumed --
+            # see get_summary()'s "failure_reason_counts".
             self.failed_files.append((file_url, str(error)))
+            self._failure_reason_counts[type(error).__name__] = (
+                self._failure_reason_counts.get(type(error).__name__, 0) + 1
+            )
             partial_events = getattr(error, "events", None)
             if partial_events is not None:
                 self.total_events += len(partial_events)
@@ -291,5 +317,6 @@ class ParsingStatisticsCollector:
                 "total_events": self.total_events,
                 "total_size_mb": self.total_size_bytes / (1024 * 1024),
                 "average_processing_time_sec": avg_time,
-                "failed_file_list": self.failed_files
+                "failed_file_list": self.failed_files,
+                "failure_reason_counts": dict(self._failure_reason_counts),
             }

@@ -25,6 +25,11 @@ from services.parsing.event_selection import apply_parsing_event_selection
 from services.parsing.event_deduplication import EventDeduplicator
 from services.parsing.schemas import normalize_release_year
 from services.parsing.validated_runs import ValidatedRunsFilter, apply_validated_runs_filter
+from services.parsing.trigger_requirements import (
+    apply_trigger_requirement,
+    trigger_group_branches,
+    validate_trigger_requirements,
+)
 from utils.batching import get_batch_slice_by_year
 
 
@@ -187,6 +192,12 @@ class ParsingHandler(StateHandler):
         # every file/batch of that release, for the per-run retention report.
         validated_runs_report: dict[str, dict[int, dict[str, int]]] = {}
 
+        # release_year -> {"n_before": n, "n_after": n, "per_path": {path: n_passed}},
+        # accumulated across every batch, for the HLT trigger requirement report.
+        # Populated only for release years where trigger_requirements (global
+        # or per-record) is actually configured.
+        trigger_report: dict[str, dict] = {}
+
         # ---- Apply batch splitting if configured ----
         metadata = dict(context.metadata)  # mutable copy
         metadata = select_metadata_for_parsing(
@@ -258,6 +269,33 @@ class ParsingHandler(StateHandler):
                 (record_profile or {}).get("particle_counts")
                 or parsing_config.particle_counts
             )
+            # Per-record HLT trigger requirement override, same shape as the
+            # global parsing_task_config.trigger_requirements key, mirroring
+            # the particle_counts override pattern just above. Unlike the
+            # global key (validated in ParsingConfig.__post_init__),
+            # selection_by_record profiles are freeform dicts not covered by
+            # that validation, so a per-record override is validated here.
+            record_trigger_requirements = (
+                (record_profile or {}).get("trigger_requirements")
+                or parsing_config.trigger_requirements
+            )
+            if record_trigger_requirements:
+                validate_trigger_requirements(record_trigger_requirements)
+
+            # The "Trigger" scalar branch group is only added when a trigger
+            # requirement is actually configured (global or per-record) --
+            # extra_scalar_branches stays byte-identical to
+            # parsing_config.extra_scalar_branches (including being the same
+            # None when both are unset) for every existing configuration.
+            effective_extra_scalar_branches = parsing_config.extra_scalar_branches
+            if record_trigger_requirements:
+                merged = dict(effective_extra_scalar_branches or {})
+                trigger_paths = trigger_group_branches(record_trigger_requirements)
+                merged["Trigger"] = list(dict.fromkeys(
+                    list(merged.get("Trigger", [])) + trigger_paths
+                ))
+                effective_extra_scalar_branches = merged
+
             retention.setdefault(release_year, [0, 0])
             file_counts.setdefault(release_year, [0, 0])
             if record_profile is not None:
@@ -265,11 +303,17 @@ class ParsingHandler(StateHandler):
                     f"Record {record_key}: per-stream selection "
                     f"(particle_counts={record_particle_counts})"
                 )
+            if record_trigger_requirements:
+                self.logger.info(
+                    f"Record {record_key}: HLT trigger requirement enabled "
+                    f"(mode={record_trigger_requirements.get('mode', 'any')}, "
+                    f"paths={trigger_group_branches(record_trigger_requirements)})"
+                )
 
             self.logger.info(
                 f"Parsing {len(file_urls)} files for release year: {release_year}"
             )
-            
+
             # Define callbacks
             def on_success(file_url: str, event_count: int, time_sec: float):
                 stats_collector.record_success(file_url, event_count, 0, time_sec)
@@ -278,7 +322,7 @@ class ParsingHandler(StateHandler):
             def on_error(file_url: str, error: Exception):
                 stats_collector.record_failure(file_url, error)
                 file_counts[release_year][1] += 1
-            
+
             # Process files
             for batch in self.processor.process_files(
                 file_urls=file_urls,
@@ -287,7 +331,7 @@ class ParsingHandler(StateHandler):
                 batch_size=40_000,
                 enable_jet_tagging=parsing_config.enable_jet_tagging,
                 jet_btagging_thresholds=parsing_config.jet_btagging_thresholds,
-                extra_scalar_branches=parsing_config.extra_scalar_branches,
+                extra_scalar_branches=effective_extra_scalar_branches,
                 on_success=on_success,
                 on_error=on_error
             ):
@@ -311,6 +355,30 @@ class ParsingHandler(StateHandler):
                         self.logger.info(
                             f"  {release_year}: validated-runs filter kept "
                             f"{vr_stats['n_after']:,}/{vr_stats['n_before']:,} events in this batch"
+                        )
+
+                # HLT trigger requirement runs AFTER the validated-runs
+                # filter and BEFORE particle/kinematic selection and
+                # de-duplication -- same reasoning as the validated-runs
+                # filter above (dedup's (run, luminosityBlock, event) keys
+                # must only ever be built from events that also pass the
+                # trigger requirement). Applies to data AND simulation
+                # (no simulation guard, unlike validated-runs).
+                if record_trigger_requirements:
+                    working_events, tr_stats = apply_trigger_requirement(
+                        working_events, record_trigger_requirements
+                    )
+                    tr_report = trigger_report.setdefault(
+                        release_year, {"n_before": 0, "n_after": 0, "per_path": {}}
+                    )
+                    tr_report["n_before"] += tr_stats["n_before"]
+                    tr_report["n_after"] += tr_stats["n_after"]
+                    for path, n_passed in tr_stats["per_path"].items():
+                        tr_report["per_path"][path] = tr_report["per_path"].get(path, 0) + n_passed
+                    if tr_stats["n_before"] != tr_stats["n_after"]:
+                        self.logger.info(
+                            f"  {release_year}: trigger requirement kept "
+                            f"{tr_stats['n_after']:,}/{tr_stats['n_before']:,} events in this batch"
                         )
 
                 if parsing_config.kinematic_cuts or record_particle_counts:
@@ -445,10 +513,32 @@ class ParsingHandler(StateHandler):
                             f"  run {run}: {counts['after']:,} / {counts['before']:,} events kept"
                         )
 
+        # ---- HLT trigger requirement report ----
+        for ry, tr in trigger_report.items():
+            pct = 100.0 * tr["n_after"] / tr["n_before"] if tr["n_before"] else 0.0
+            self.logger.info(
+                f"Trigger requirement {ry}: {tr['n_after']:,} / {tr['n_before']:,} "
+                f"events kept ({pct:.1f}%)"
+            )
+            for path, n_passed in sorted(tr["per_path"].items()):
+                self.logger.info(f"  {path}: {n_passed:,} / {tr['n_before']:,} events passed")
+
         # Create parsing statistics
         end_time = datetime.now()
         stats_summary = stats_collector.get_summary()
-        
+
+        # ---- Skipped-file failure-reason breakdown (implementation task 3,
+        # Part B3 -- "count ALL skipped files and their failure reasons").
+        # Purely additive: a new log line only, using a new
+        # ParsingStatisticsCollector.get_summary() key computed from data
+        # (file_url, exception) that was already being collected for every
+        # existing configuration; does not touch parsed_files, parsing_stats,
+        # or any other value written to an output file. ----
+        if stats_summary["failure_reason_counts"]:
+            self.logger.info(
+                f"Skipped-file failure reasons: {stats_summary['failure_reason_counts']}"
+            )
+
         parsing_stats = ParsingStatistics(
             total_files=stats_summary["total_files"],
             successful_files=stats_summary["successful_files"],

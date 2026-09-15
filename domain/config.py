@@ -87,6 +87,20 @@ class ParsingConfig:
     # discarding every event (simulation has no real run to certify).
     validated_runs_json: Optional[str] = None
 
+    # Optional HLT trigger requirement (data AND simulation -- no simulation
+    # guard, unlike validated_runs_json; the design requires the same trigger
+    # bit in MC too, see studies/hgg_cms/DESIGN_SELECTION.md Section 2 step
+    # 1). {"mode": "any"|"all", "paths": ["HLT_..."]}. "any" keeps an event if
+    # at least one listed path fired; "all" requires every listed path.
+    # Absent/None (the default, and every current config) is a complete
+    # no-op. The listed paths are read automatically via the "Trigger"
+    # scalar branch group (see services.parsing.trigger_requirements and
+    # services.parsing.file_parser.FileParser._resolve_scalar_groups) -- no
+    # need to also list them in extra_scalar_branches. May also be
+    # overridden per-record under selection_by_record[record]
+    # ["trigger_requirements"], same shape.
+    trigger_requirements: Optional[dict] = None
+
     def __post_init__(self):
         """Validate parsing configuration."""
         if self.threads <= 0:
@@ -142,6 +156,25 @@ class ParsingConfig:
             raise ValueError(
                 f"validated_runs_json must be a path string, got {self.validated_runs_json!r}"
             )
+        if self.trigger_requirements is not None:
+            if not isinstance(self.trigger_requirements, dict):
+                raise ValueError(
+                    f"trigger_requirements must be a dict, got {self.trigger_requirements!r}"
+                )
+            mode = self.trigger_requirements.get("mode", "any")
+            if mode not in ("any", "all"):
+                raise ValueError(
+                    f"trigger_requirements['mode'] must be 'any' or 'all', got {mode!r}"
+                )
+            paths = self.trigger_requirements.get("paths")
+            if not isinstance(paths, (list, tuple)) or not paths:
+                raise ValueError(
+                    "trigger_requirements['paths'] must be a non-empty list of branch name strings"
+                )
+            if not all(isinstance(p, str) and p for p in paths):
+                raise ValueError(
+                    f"trigger_requirements['paths'] entries must be non-empty strings, got {paths!r}"
+                )
 
 
 @dataclass(frozen=True)
@@ -367,6 +400,7 @@ class PipelineConfig:
                 selection_by_record=parsing_dict.get("selection_by_record"),
                 extra_scalar_branches=parsing_dict.get("extra_scalar_branches"),
                 validated_runs_json=parsing_dict.get("validated_runs_json"),
+                trigger_requirements=parsing_dict.get("trigger_requirements"),
             )
         
         # Parse mass calculation config if enabled

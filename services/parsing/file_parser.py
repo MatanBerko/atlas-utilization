@@ -29,6 +29,41 @@ class PartialFileReadError(RuntimeError):
         )
 
 
+class RequiredScalarBranchMissingError(ValueError):
+    """A declared scalar branch group (e.g. "Trigger", "EventIds", or any
+    ``extra_scalar_branches`` group) is missing one or more of its declared
+    branches in one or more input files.
+
+    Subclasses ``ValueError`` (the type this replaces at the raise site
+    below) so any existing code or test that catches/asserts ``ValueError``
+    is unaffected; the distinct subclass lets ``FileParser.parse_file`` and
+    ``ThreadedFileProcessor.process_files`` deliberately NOT swallow this
+    one as an ordinary per-file parse failure (implementation task 3, Part
+    B3 -- "loud failure for missing required branches", as opposed to e.g. a
+    network error, which keeps today's silent-skip-and-log behaviour
+    exactly).
+
+    ``failures`` is a list of ``(file_path, group_name, missing_branches)``
+    tuples -- usually one entry (raised at a single file), but
+    ``ThreadedFileProcessor.process_files`` aggregates every such error seen
+    while parsing one record into a single instance with multiple entries,
+    so one clear error lists every affected file, not just the first.
+    """
+
+    def __init__(self, failures: list[tuple[str, str, list[str]]]):
+        self.failures = list(failures)
+        lines = [
+            f"  {file_path}: scalar branch group '{group_name}' is missing "
+            f"required branch(es) {sorted(missing)}"
+            for file_path, group_name, missing in self.failures
+        ]
+        super().__init__(
+            f"Required scalar branch(es) missing from {len(self.failures)} "
+            f"file(s); refusing to continue silently with those file(s) "
+            f"skipped:\n" + "\n".join(lines)
+        )
+
+
 class FileParser:
     """
     Service for parsing individual ROOT files.
@@ -77,6 +112,8 @@ class FileParser:
                     extra_scalar_branches=extra_scalar_branches,
                 )
         except PartialFileReadError:
+            raise
+        except RequiredScalarBranchMissingError:
             raise
         except Exception as e:
             logging.warning(f"Failed to parse file {file_path}: {e}")
@@ -157,12 +194,7 @@ class FileParser:
             actual_branches = set(group_fields.fields) if group_fields is not None else set()
             if actual_branches != declared_branches:
                 missing = sorted(declared_branches - actual_branches)
-                raise ValueError(
-                    f"{file_path}: scalar branch group '{group_name}' declares "
-                    f"{sorted(declared_branches)} but only {sorted(actual_branches)} "
-                    f"were readable (missing: {missing}); refusing to parse so "
-                    f"downstream code never runs on a silently incomplete scalar group"
-                )
+                raise RequiredScalarBranchMissingError([(file_path, group_name, missing)])
             scalar_field_groups[group_name] = group_fields
 
         zipped = ak.zip(obj_events, depth_limit=1)
