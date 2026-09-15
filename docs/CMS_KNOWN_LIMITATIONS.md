@@ -121,3 +121,54 @@ raise an error, so an existing config that relies on this gap (there
 shouldn't be any, but none is assumed) keeps running unchanged; it simply
 makes the mistake visible in the log instead of requiring code tracing to
 find, the way it was found this time.
+
+## CMS validated-runs ("golden JSON") filter — new, not enabled anywhere yet
+
+An optional data-quality filter, added for the H→γγ study
+(`studies/hgg_cms/`) but general-purpose: it keeps only events whose
+`(run, luminosityBlock)` falls inside a CMS-certified "good for physics"
+range, per a committed golden-JSON file
+(`data/cms/validated_runs/README.md` has the source, checksum and
+content summary). Implemented in `services/parsing/validated_runs.py`;
+hooked into `orchestration/handlers/parsing_handler.py` **before** any
+`kinematic_cuts`/`particle_counts` selection and before de-duplication,
+so a run/lumisection rejected by this filter is never counted as
+"selected" by either later stage.
+
+**New config key**, under `parsing_task_config`:
+
+```yaml
+parsing_task_config:
+  # Optional. Path resolved from the repository root (or absolute).
+  # Absent/omitted (the default -- every current config) = no-op,
+  # identical behaviour to before this feature existed.
+  validated_runs_json: data/cms/validated_runs/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt
+```
+
+**Not set in any existing config file** — this section is documentation
+only. Enabling it is a deliberate per-config decision for whoever owns
+that config's physics scope.
+
+**Simulation guard.** Simulated NanoAOD always has `run == 1` for every
+event (there is no real accelerator run for a simulated sample), so
+naively applying a real-data run filter to simulation would silently
+discard the entire sample. `apply_validated_runs_filter` raises a clear
+error instead of running in that case, detected via either of two signals
+(the CMS-side truth is `run == 1`; a `genWeight` field, if a caller
+requested it through the general scalar-branch-group mechanism from the
+prior task, is treated as an equally unambiguous signal). Also raises if
+`run`/`luminosityBlock` aren't present at all (e.g. an ATLAS schema),
+rather than silently passing every event through unfiltered.
+
+**Format.** A JSON object, run number (string) → list of `[first, last]`
+inclusive lumisection ranges — CMS's standard golden-JSON shape,
+documented with an example in `data/cms/validated_runs/README.md`.
+Malformed files raise a clear, specific error at load time (which run/
+entry is wrong), not a generic parse failure.
+
+**Verified against the DoubleEG Run2016G/H files this study uses**
+(`studies/hgg_cms/impl_checks/lumi_coverage/`): every file's own
+`LuminosityBlocks` tree was read (run/luminosityBlock only, not the full
+`Events` tree) and compared against the certified list — see that
+directory's summary for the coverage result and the luminosity this
+implies.

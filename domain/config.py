@@ -77,6 +77,16 @@ class ParsingConfig:
     # for the collision/missing-branch rules applied to this.
     extra_scalar_branches: Optional[dict] = None
 
+    # Optional path to a CMS "golden JSON" validated-runs file (see
+    # services.parsing.validated_runs and data/cms/validated_runs/README.md).
+    # Relative paths are resolved from the repository root; absolute paths
+    # are used as-is. Absent/None (the default, and every current config)
+    # means the filter is a complete no-op -- existing behaviour is
+    # unchanged. Loaded once per pipeline run, not once per file. Applying
+    # this to a simulated input raises an error rather than silently
+    # discarding every event (simulation has no real run to certify).
+    validated_runs_json: Optional[str] = None
+
     def __post_init__(self):
         """Validate parsing configuration."""
         if self.threads <= 0:
@@ -128,6 +138,10 @@ class ParsingConfig:
                     raise ValueError(
                         f"extra_scalar_branches['{group_name}'] must be a list of branch name strings, got {branches!r}"
                     )
+        if self.validated_runs_json is not None and not isinstance(self.validated_runs_json, str):
+            raise ValueError(
+                f"validated_runs_json must be a path string, got {self.validated_runs_json!r}"
+            )
 
 
 @dataclass(frozen=True)
@@ -352,6 +366,7 @@ class PipelineConfig:
                 kinematic_cuts=parsing_dict.get("kinematic_cuts"),
                 selection_by_record=parsing_dict.get("selection_by_record"),
                 extra_scalar_branches=parsing_dict.get("extra_scalar_branches"),
+                validated_runs_json=parsing_dict.get("validated_runs_json"),
             )
         
         # Parse mass calculation config if enabled

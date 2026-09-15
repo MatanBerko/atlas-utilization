@@ -24,6 +24,7 @@ from domain.events import EventBatch
 from services.parsing.event_selection import apply_parsing_event_selection
 from services.parsing.event_deduplication import EventDeduplicator
 from services.parsing.schemas import normalize_release_year
+from services.parsing.validated_runs import ValidatedRunsFilter, apply_validated_runs_filter
 from utils.batching import get_batch_slice_by_year
 
 
@@ -168,7 +169,24 @@ class ParsingHandler(StateHandler):
         start_time = datetime.now()
         stats_collector = ParsingStatisticsCollector()
         parsed_files = []
-        
+
+        # ---- Validated-runs ("golden JSON") filter: loaded once per run ----
+        # Absent (the default, and every current config) -> validated_runs is
+        # None and the filter below is a complete no-op. See
+        # services/parsing/validated_runs.py and
+        # data/cms/validated_runs/README.md.
+        validated_runs = None
+        if parsing_config.validated_runs_json:
+            validated_runs = ValidatedRunsFilter(parsing_config.validated_runs_json)
+            self.logger.info(
+                f"Validated-runs filter enabled: {validated_runs.source_path} "
+                f"(sha256={validated_runs.sha256}, {validated_runs.n_runs} runs, "
+                f"{validated_runs.n_certified_lumisections} certified lumisections)"
+            )
+        # release_year -> {run: {"before": n, "after": n}}, accumulated across
+        # every file/batch of that release, for the per-run retention report.
+        validated_runs_report: dict[str, dict[int, dict[str, int]]] = {}
+
         # ---- Apply batch splitting if configured ----
         metadata = dict(context.metadata)  # mutable copy
         metadata = select_metadata_for_parsing(
@@ -275,14 +293,32 @@ class ParsingHandler(StateHandler):
             ):
                 retention[release_year][0] += len(batch.events)
 
+                working_events = batch.events
+
+                # Validated-runs filter runs BEFORE any kinematic/particle-
+                # count selection and BEFORE de-duplication, so an event
+                # rejected here is never counted as "selected" by either of
+                # those later stages, and dedup's (run, luminosityBlock,
+                # event) keys are only ever built from certified events.
+                if validated_runs is not None:
+                    working_events, vr_stats = apply_validated_runs_filter(working_events, validated_runs)
+                    per_run = validated_runs_report.setdefault(release_year, {})
+                    for run, counts in vr_stats["per_run"].items():
+                        entry = per_run.setdefault(run, {"before": 0, "after": 0})
+                        entry["before"] += counts["before"]
+                        entry["after"] += counts["after"]
+                    if vr_stats["n_before"] != vr_stats["n_after"]:
+                        self.logger.info(
+                            f"  {release_year}: validated-runs filter kept "
+                            f"{vr_stats['n_after']:,}/{vr_stats['n_before']:,} events in this batch"
+                        )
+
                 if parsing_config.kinematic_cuts or record_particle_counts:
                     working_events = apply_parsing_event_selection(
-                        batch.events,
+                        working_events,
                         particle_counts=record_particle_counts,
                         kinematic_cuts=parsing_config.kinematic_cuts,
                     )
-                else:
-                    working_events = batch.events
 
                 if deduplicator is not None:
                     working_events, n_dropped = deduplicator.filter_new(working_events)
@@ -391,6 +427,23 @@ class ParsingHandler(StateHandler):
             )
         if deduplicator is not None:
             self.logger.info(deduplicator.summary())
+
+        # ---- Per-run validated-runs filter report ----
+        if validated_runs is not None:
+            for ry, per_run in validated_runs_report.items():
+                total_before = sum(c["before"] for c in per_run.values())
+                total_after = sum(c["after"] for c in per_run.values())
+                pct = 100.0 * total_after / total_before if total_before else 0.0
+                self.logger.info(
+                    f"Validated-runs filter {ry}: {total_after:,} / {total_before:,} "
+                    f"events kept ({pct:.1f}%) across {len(per_run)} run(s)"
+                )
+                for run in sorted(per_run):
+                    counts = per_run[run]
+                    if counts["before"] != counts["after"]:
+                        self.logger.info(
+                            f"  run {run}: {counts['after']:,} / {counts['before']:,} events kept"
+                        )
 
         # Create parsing statistics
         end_time = datetime.now()
