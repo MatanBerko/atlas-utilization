@@ -377,3 +377,168 @@ def asimov_z_closed_form(s: float, b: float) -> float:
         Z_A = sqrt(2[(s+b) ln(1 + s/b) - s])
     """
     return float(np.sqrt(2.0 * ((s + b) * np.log(1.0 + s / b) - s)))
+
+
+# ----------------------------------------------------------------------------
+# Plain-polynomial background model (added for studies/atlas_hgg_repro; does
+# not alter any function above it). Unlike the exp-of-polynomial background
+# used elsewhere in this module, ATLAS's and BumpNet's H->gamma-gamma fits
+# use a plain (e.g. 4th-order) polynomial in a rescaled mass variable
+# directly as the background density -- which is not guaranteed positive
+# everywhere, so it is floored at a tiny positive value wherever the fit's
+# parameter search explores an unphysical region.
+# ----------------------------------------------------------------------------
+
+def polynomial_shape_density(x: np.ndarray, coeffs) -> np.ndarray:
+    """Plain polynomial density sum_k coeffs[k] * x**k, floored at a tiny
+    positive value to guard against negative predicted counts."""
+    coeffs = np.asarray(coeffs, dtype=float)
+    density = np.zeros_like(x, dtype=float)
+    for k, c in enumerate(coeffs):
+        density = density + c * x ** k
+    return np.clip(density, 1e-8, None)
+
+
+def polynomial_bin_expectation(nodes: np.ndarray, weights: np.ndarray,
+                                n_bkg: float, coeffs, x_min: float, x_scale: float,
+                                norm_nodes: np.ndarray | None = None,
+                                norm_weights: np.ndarray | None = None) -> np.ndarray:
+    """
+    Mean background count per bin for a plain-polynomial shape in
+    x = (m - x_min) / x_scale, normalized so n_bkg means "total over
+    norm_nodes" (defaulting to `nodes` itself -- see
+    `background_bin_expectation`'s docstring for why this split exists).
+    """
+    if norm_nodes is None:
+        norm_nodes, norm_weights = nodes, weights
+    x = (nodes - x_min) / x_scale
+    raw = np.sum(weights * polynomial_shape_density(x, coeffs), axis=1)
+    x_norm = (norm_nodes - x_min) / x_scale
+    raw_norm_total = np.sum(norm_weights * polynomial_shape_density(x_norm, coeffs))
+    return n_bkg * raw / raw_norm_total
+
+
+def _poly_bkg_start(n_coeffs: int) -> list[float]:
+    # c0 = 1 (flat shape as a neutral starting point), higher orders at 0.
+    return [1.0] + [0.0] * (n_coeffs - 1)
+
+
+def fit_bkg_only_poly(data: np.ndarray, nodes: np.ndarray, weights: np.ndarray,
+                       x_min: float, x_scale: float, n_coeffs: int = 5,
+                       start: list[float] | None = None,
+                       norm_nodes: np.ndarray | None = None,
+                       norm_weights: np.ndarray | None = None):
+    """Background-only (mu=0) fit with a plain polynomial background.
+    Mirrors `fit_bkg_only`'s contract exactly, for the polynomial shape."""
+    if start is None:
+        start = [N_BKG_TRUE] + _poly_bkg_start(n_coeffs)
+
+    def nll_fn(par):
+        n_bkg = par[0]
+        coeffs = par[1:]
+        b = polynomial_bin_expectation(nodes, weights, n_bkg, coeffs, x_min, x_scale,
+                                        norm_nodes, norm_weights)
+        return poisson_nll(data, b)
+
+    names = ["n_bkg"] + [f"c{k}" for k in range(n_coeffs)]
+    m = Minuit(nll_fn, start, name=names)
+    m.errordef = Minuit.LIKELIHOOD
+    m.limits["n_bkg"] = (0.0, None)
+    m.strategy = 1
+    m.migrad()
+    return {
+        "nll": float(m.fval),
+        "n_bkg": float(m.values["n_bkg"]),
+        "coeffs": np.array([m.values[f"c{k}"] for k in range(n_coeffs)]),
+        "valid": bool(m.valid),
+        "minuit": m,
+    }
+
+
+def fit_full_poly(data: np.ndarray, edges: np.ndarray, nodes: np.ndarray,
+                   weights: np.ndarray, s_ref: float, mh: float, sigma: float,
+                   x_min: float, x_scale: float, n_coeffs: int = 5,
+                   mu_start: float = 0.0, bkg_start: list[float] | None = None,
+                   hesse: bool = False):
+    """Free (mu, background) fit with mh/sigma FIXED and a plain
+    polynomial background. Mirrors `fit_full`'s contract exactly."""
+    if bkg_start is None:
+        bkg_start = [N_BKG_TRUE] + _poly_bkg_start(n_coeffs)
+    start = [mu_start] + bkg_start
+
+    def nll_fn(par):
+        mu = par[0]
+        n_bkg = par[1]
+        coeffs = par[2:]
+        b = polynomial_bin_expectation(nodes, weights, n_bkg, coeffs, x_min, x_scale)
+        s = signal_bin_expectation(edges, mu, s_ref, mh, sigma)
+        return poisson_nll(data, s + b)
+
+    names = ["mu", "n_bkg"] + [f"c{k}" for k in range(n_coeffs)]
+    m = Minuit(nll_fn, start, name=names)
+    m.errordef = Minuit.LIKELIHOOD
+    m.limits["n_bkg"] = (0.0, None)
+    m.strategy = 1
+    m.migrad()
+    if hesse:
+        m.hesse()
+    mu_err = float(m.errors["mu"]) if hesse else float("nan")
+    return {
+        "nll": float(m.fval),
+        "mu_hat": float(m.values["mu"]),
+        "mu_err": mu_err,
+        "n_bkg": float(m.values["n_bkg"]),
+        "coeffs": np.array([m.values[f"c{k}"] for k in range(n_coeffs)]),
+        "valid": bool(m.valid),
+        "minuit": m,
+    }
+
+
+def fit_full_poly_floating_mass_width(data: np.ndarray, edges: np.ndarray, nodes: np.ndarray,
+                                       weights: np.ndarray, s_ref: float,
+                                       x_min: float, x_scale: float, n_coeffs: int = 5,
+                                       mu_start: float = 0.0,
+                                       mh_start: float = 125.0,
+                                       mh_bounds: tuple[float, float] = (110.0, 150.0),
+                                       sigma_start: float = 2.0,
+                                       sigma_bounds: tuple[float, float] = (0.5, 6.0),
+                                       bkg_start: list[float] | None = None,
+                                       hesse: bool = False):
+    """Free (mu, mh, sigma, background) fit, all floating, with a plain
+    polynomial background -- the main "Fit 2" of studies/atlas_hgg_repro."""
+    if bkg_start is None:
+        bkg_start = [N_BKG_TRUE] + _poly_bkg_start(n_coeffs)
+    start = [mu_start, mh_start, sigma_start] + bkg_start
+
+    def nll_fn(par):
+        mu, mh, sigma = par[0], par[1], par[2]
+        n_bkg = par[3]
+        coeffs = par[4:]
+        b = polynomial_bin_expectation(nodes, weights, n_bkg, coeffs, x_min, x_scale)
+        s = signal_bin_expectation(edges, mu, s_ref, mh, sigma)
+        return poisson_nll(data, s + b)
+
+    names = ["mu", "mh", "sigma", "n_bkg"] + [f"c{k}" for k in range(n_coeffs)]
+    m = Minuit(nll_fn, start, name=names)
+    m.errordef = Minuit.LIKELIHOOD
+    m.limits["n_bkg"] = (0.0, None)
+    m.limits["mh"] = mh_bounds
+    m.limits["sigma"] = sigma_bounds
+    m.strategy = 1
+    m.migrad()
+    if hesse:
+        m.hesse()
+
+    def err(name):
+        return float(m.errors[name]) if hesse else float("nan")
+
+    return {
+        "nll": float(m.fval),
+        "mu_hat": float(m.values["mu"]), "mu_err": err("mu"),
+        "mh_hat": float(m.values["mh"]), "mh_err": err("mh"),
+        "sigma_hat": float(m.values["sigma"]), "sigma_err": err("sigma"),
+        "n_bkg": float(m.values["n_bkg"]),
+        "coeffs": np.array([m.values[f"c{k}"] for k in range(n_coeffs)]),
+        "valid": bool(m.valid),
+        "minuit": m,
+    }
