@@ -4,8 +4,10 @@ lr_core's plain-polynomial background model, reproducing the profiled
 local/global significance ATLAS itself would have seen for this single
 histogram (NOT their full multi-category combination -- see REPORT.md).
 
-Model: background = 4th-order plain polynomial in x=(m-100)/55 (guarded
-against negative density, see lr_core.polynomial_shape_density); signal =
+Model: background = 4th-order polynomial (Legendre basis internally, see
+lr_core.polynomial_shape_density -- same function space as a plain
+power-series polynomial, just numerically well-conditioned for MIGRAD) in
+x=(m-100)/55, guarded against negative density; signal =
 Gaussian integrated per bin, with signal-strength parameter mu used
 directly as the signal YIELD in events (s_ref=1.0, so mu_hat IS the fitted
 number of signal events -- there is no separate "reference yield" concept
@@ -36,13 +38,12 @@ N_COEFFS = 5  # 4th-order polynomial: c0..c4
 MH_BOUNDS = (110.0, 150.0)
 SIGMA_BOUNDS = (0.5, 6.0)
 SEED_GLOBAL_SIG = 70_001
-# Reduced from an initial 3000: timed directly on this machine (after fixing
-# the n_bkg-start-value bug and switching the hot-loop fits to
-# Minuit strategy=0) at ~0.82 s/toy for the full 41-point scan, so 3000
-# toys would take ~41 minutes. 700 toys keeps this under ~10 minutes and
-# is still enough for a stable Gross-Vitells estimate; see REPORT.md for
-# the resulting statistical precision on the toy-based global p-value.
-N_TOYS_GLOBAL = 700
+# Timed directly on this machine at ~0.9-1.0 s/toy for the full 41-point
+# scan (robust=False single-attempt fits per toy, warm-started from Fit 1's
+# own converged background shape -- see the "Corrections" section of
+# REPORT.md and fit_bkg_only_poly's/fit_full_poly's docstrings for why a
+# single attempt is reliable here specifically). 2000 toys takes ~30-35 min.
+N_TOYS_GLOBAL = 2000
 MASS_SCAN = np.arange(110.0, 150.0001, 1.0)  # 1 GeV steps, 110-150 GeV
 
 
@@ -187,16 +188,27 @@ def main():
     max_local_z_toys = np.full(N_TOYS_GLOBAL, np.nan)
     n_up = np.full(N_TOYS_GLOBAL, np.nan)
     t0 = time.time()
+    # robust=False below (single fit, no multi-start) is deliberate and
+    # safe HERE specifically, unlike for the real data: every toy is
+    # Poisson-generated FROM b1 (Fit 1's own converged background), so
+    # warm-starting at that exact known-true shape (scaled to the toy's
+    # own total count) is reliable by construction -- multi-start's ~4x
+    # per-fit cost bought no accuracy in direct comparison (see REPORT.md)
+    # and made >=2000 toys impractically slow (~4.3s/toy, ~2.5 hours).
+    fit1_bkg_shape = list(fit1["coeffs"])
+    n_stuck = 0
     for t in range(N_TOYS_GLOBAL):
         toy = rng.poisson(b1)
-        # Warm-start at Fit 1's own n_bkg (~data.sum()), not N_BKG_TRUE=250,000.
+        toy_start = [float(np.sum(toy))] + fit1_bkg_shape
         toy_null = lc.fit_bkg_only_poly(toy, nodes, weights, X_MIN, X_SCALE, n_coeffs=N_COEFFS,
-                                         n_bkg_start=fit1["n_bkg"])
+                                         start=toy_start, robust=False)
         if not toy_null["valid"]:
+            n_stuck += 1
             continue
         if (t + 1) % max(1, N_TOYS_GLOBAL // 20) == 0 or t < 5:
             print(f"  toy {t + 1}/{N_TOYS_GLOBAL} ({time.time() - t0:.1f}s elapsed, "
-                  f"{(time.time() - t0) / (t + 1) * 1000:.1f} ms/toy so far)", flush=True)
+                  f"{(time.time() - t0) / (t + 1) * 1000:.1f} ms/toy so far, "
+                  f"{n_stuck} null-fit failures so far)", flush=True)
         local_q0 = np.full(len(MASS_SCAN), np.nan)
         ok = True
         bkg_start = [toy_null["n_bkg"]] + list(toy_null["coeffs"])
@@ -204,7 +216,7 @@ def main():
         for j, mh in enumerate(MASS_SCAN):
             alt = lc.fit_full_poly(toy, edges, nodes, weights, s_ref=1.0, mh=mh, sigma=fit2["sigma_hat"],
                                     x_min=X_MIN, x_scale=X_SCALE, n_coeffs=N_COEFFS,
-                                    mu_start=max(mu_start, 0.0), bkg_start=bkg_start)
+                                    mu_start=max(mu_start, 0.0), bkg_start=bkg_start, robust=False)
             if not alt["valid"]:
                 ok = False
                 break
@@ -243,6 +255,23 @@ def main():
 
     # Save local Z(mh) curve for A3's overlay reuse
     np.savez(RESULTS_DIR / "_a2_local_z_curve.npz", mass_scan=MASS_SCAN, local_z=local_z_obs)
+
+    # --- Plot: profiled local-Z mass-scan curve (deliverable for the
+    # bug-fix task: shows the full scan behind "observed max local Z", not
+    # just the single peak number) ---
+    fig, ax = plt.subplots(figsize=(8, 4.8))
+    ax.plot(MASS_SCAN, local_z_obs, "b-", lw=1.6, marker="o", ms=3)
+    ax.axhline(0, color="k", lw=0.6)
+    ax.axvline(max_z_mh, color="tab:red", lw=0.8, ls="--",
+               label=f"max Z={max_z_obs:.3f} at {max_z_mh:.0f} GeV")
+    ax.set_xlabel("$m_{\\gamma\\gamma}$ scan point [GeV]")
+    ax.set_ylabel("profiled local $Z$")
+    ax.set_title("A2: profiled local-significance mass scan (real ATLAS data)")
+    ax.legend(fontsize=8)
+    fig.tight_layout()
+    fig.savefig(RESULTS_DIR / "A2_local_z_mass_scan.png", dpi=140)
+    plt.close(fig)
+    print(f"Wrote {RESULTS_DIR / 'A2_local_z_mass_scan.png'}")
 
     with open(RESULTS_DIR / "atlas_hgg_fit_results.json", "w") as f:
         json.dump(results, f, indent=2, default=float)

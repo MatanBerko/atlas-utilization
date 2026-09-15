@@ -13,6 +13,98 @@ model inference are used anywhere in this report.
 
 ---
 
+## Corrections (this branch, since commit e9a097b)
+
+An independent re-implementation of this same analysis, run on the exact
+same extracted data file (`atlas_hgg_fig4_points.csv`), flagged that our
+profiled significance curves (V3/V4 below) gave essentially random-sign
+|Z| ≈ 2.2–2.4 in almost every bin — including bins where the
+fixed-background curves (V1/V2) showed nothing at all (e.g. at 111 GeV,
+V1 = 0.23 but V3 = −2.22). That check's own profiled numbers — roughly
++0.1 at 111 GeV, −2.7 at 119 GeV, +2.6 at 125 GeV, +3.1 at 127 GeV, and
+−1.1 at 141 GeV — are what the fix below was verified against.
+
+**The bug, in plain words.** The profiled (V3/V4) "no signal anywhere"
+hypothesis is fit **once** per run and then reused, unchanged, at every
+one of the 30 scanned masses (it doesn't depend on which mass is being
+tested). That one fit started its numerical search from a generic "flat"
+background guess. For the polynomial shape used here, that starting point
+sat in a bad spot: the numerical fitter (MIGRAD) reported "converged
+successfully," but had actually stopped at a local best-fit point that
+was **2.4662 likelihood units worse than the true best fit** — plausible-
+looking, but wrong. Every mass point's *alternative* fit ("there IS a
+signal here"), in contrast, was started from a good background estimate
+and always found the true best fit. Comparing a correctly-converged
+alternative fit against an incorrectly-converged null fit, at every single
+mass point, manufactured a near-constant spurious gap of about 2.4–2.7
+likelihood units everywhere. Since significance is
+`Z = sign(μ̂) × √(2 × that gap)`, a constant gap of ~2.5 becomes a
+near-constant |Z| of √(2×2.5) ≈ 2.2 — with a *sign* that just tracks
+whichever way each bin's real, tiny signal happened to fluctuate. That is
+exactly the "|Z| ≈ 2.2–2.4, essentially random sign" pattern that was
+reported.
+
+**How this was proved, not assumed.** Four checks were written
+(`studies/atlas_hgg_repro/test_bug_fix_invariants.py`) and run against the
+*unmodified* code at commit e9a097b before anything was changed:
+
+| check | on the buggy code | after the fix |
+|---|---|---|
+| (i) alternative model at μ=0, using the null's own background parameters, reproduces the null's own NLL | **passed** (0.0 difference) | passed |
+| (ii) alternative fit's NLL never exceeds the null's | **passed** (never violated) | passed |
+| (iii) null and alternative fits evaluate the background through identical code | **passed** (confirmed by reading the code — one shared formula, not two) | passed |
+| (iv) refitting the *same* null hypothesis from two different reasonable starting points lands at the same likelihood | **FAILED — 2.4662-unit gap** | passed — gap closed to ~10⁻⁸ |
+
+Checks (i)–(iii) test one *specific*, plausible-sounding hypothesis for
+the cause — that the null and alternative fits were silently using two
+different formulas or code paths. That hypothesis was checked directly
+against the code and the data, and **ruled out**: it was never true, on
+either the buggy or the fixed code. Check (iv) is the one that actually
+reproduces the reported symptom, using the exact pair of starting points
+the real pipeline uses (the script's own "flat coefficients + Fit 1's
+background total" start, vs. Fit 1's own fully-converged parameters).
+
+**The fix**, in `studies/lr_toys/lr_core.py` (the module shared with the
+earlier, already-validated toy study — its own 3 tests, and a 2,000-toy
+rerun of that study's T1 check, were re-run afterward and are unaffected,
+since they exercise different functions that were not touched):
+
+1. The background polynomial is now written in an orthogonal (Legendre)
+   basis instead of a plain power series. This is the *exact same family*
+   of curves — nothing about what shapes are reachable changes — but a
+   plain power series over this range has strongly correlated
+   coefficients, which gives the numerical fitter many nearly-equally-
+   good-looking wrong answers to fall into. The orthogonal basis removes
+   most of that correlation.
+2. Every profiled fit (background-only, and signal+background) now tries
+   a handful of different starting points and keeps the best one that the
+   fitter actually reports as valid, instead of trusting a single
+   attempt. Every attempt's validity is recorded, never silently dropped.
+
+Together, these closed the 2.4662-unit gap above to about 10⁻⁸.
+
+**What changed as a result** (full corrected numbers below, in Parts A2
+and A3):
+- The V3/V4 significance curves are no longer near-random noise; they now
+  closely match the independent cross-check at all five spot-checked
+  masses (all within 0.15 of the check's own numbers).
+- Part A2's profiled local significance drops from a previously reported
+  **3.81σ** (inflated by this bug) to **3.11σ**.
+- Part A2's Fit 2 (mass *and* width both left free) now reaches a
+  numerically valid minimum — it did not before (see Part A2).
+- Part A2's global significance was recomputed with 2,000 background-only
+  toys (up from 700), using the fixed code (see Part A2).
+- **Part B is unchanged and was not re-run.** It exercises a different
+  function entirely (`fit_full_poly_floating_width` with an
+  exponential-times-polynomial background on synthetic toys) that this
+  bug never touched.
+
+Only `studies/lr_toys/lr_core.py` and files inside
+`studies/atlas_hgg_repro/` were changed. `master`, `study/lr-toy-study`,
+and the upstream repository are all untouched by this correction.
+
+---
+
 ## Part A1 — Getting the real ATLAS data points
 
 **Question:** to check our statistics code against reality, we need the
@@ -74,58 +166,75 @@ check actually is on its own.
 signal ATLAS found — the right mass, a sensible width, and a believable
 fit quality?
 
-**Method:** background = plain 4th-order polynomial in
-`x=(m-100)/55` (matching ATLAS's own description, "background modeled
-using a 4th-order polynomial fit" — floored at a tiny positive value to
-guard against unphysical negative densities during the fit). Signal =
-Gaussian, integrated per bin. Two fits: background-only, and signal+background
-with both the mass and the width left free.
+**Method:** background = 4th-order polynomial in `x=(m-100)/55`
+(matching ATLAS's own description, "background modeled using a 4th-order
+polynomial fit" — floored at a tiny positive value to guard against
+unphysical negative densities during the fit; internally represented in
+an orthogonal Legendre basis, mathematically the same family of curves,
+for numerical stability — see *Corrections* above). Signal = Gaussian,
+integrated per bin. Two fits: background-only, and signal+background with
+both the mass and the width left free.
 
 ![A2 fit result](results/A2_fit_result.png)
 
 | | Fit 1 (background only) | Fit 2 (S+B, mass & width floating) |
 |---|---|---|
-| fitted mass | — | 126.63 ± 0.94 GeV |
-| fitted width | — | 2.462 ± 1.037 GeV |
-| signal yield | — | 414.2 ± 174.3 events |
-| background yield | 61,960.0 events | 61,545.9 events |
-| χ²/ndf | 29.23/24 = 1.22 | 19.57/21 = 0.93 |
+| fitted mass | — | 126.53 ± 0.93 GeV |
+| fitted width | — | 2.304 ± 1.065 GeV |
+| signal yield | — | 383.0 ± 187.5 events |
+| background yield | 61,960.0 events | 61,577.0 events |
+| χ²/ndf | 29.23/24 = 1.22 | 19.48/21 = 0.93 |
+| MINUIT valid minimum | yes | **yes** (see convergence note below) |
 
-The fitted mass (126.6 GeV) is remarkably close to ATLAS's own published
-126.5 GeV, and the S+B fit's χ²/ndf of 0.93 is excellent, from our own
+The fitted mass (126.5 GeV) matches ATLAS's own published 126.5 GeV
+closely, and the S+B fit's χ²/ndf of 0.93 is excellent, from our own
 independent fit of the extracted points alone.
 
-**Local significance** (at the best-fit mass, 126.63 GeV): width
-floating, Z = 3.809; width fixed at the fitted value (2.462 GeV),
-Z = 3.809. These are essentially identical here — with the width already
+**Local significance** (at the best-fit mass, 126.53 GeV): width
+floating, Z = 3.111; width fixed at the fitted value (2.304 GeV),
+Z = 3.111. These are essentially identical here — with the width already
 well-constrained by the fit, letting it float or fixing it at its own
 best value costs almost nothing. This is a **local** significance: "how
 surprising is this excess, given we already know to look near this exact
 mass" — it does not account for having scanned many masses to find it.
+(The previously reported 3.809σ was inflated by the bug described in
+*Corrections*; 3.111σ is the corrected value.)
 
-**Global significance** (mass scan 110–150 GeV, 1 GeV steps, 700
-background-only toys — see *Limitations* for why 700 and not more):
-observed max local Z = 3.790 at 127.0 GeV.
+**Global significance** (mass scan 110–150 GeV, 1 GeV steps, 2,000
+background-only toys, fixed code — see *Corrections*): observed max local
+Z = 3.062 at 127.0 GeV.
+
+![A2 local-Z mass scan](results/A2_local_z_mass_scan.png)
 
 | | value |
 |---|---|
-| local p-value (naive, no look-elsewhere correction) | 7.54×10⁻⁵ |
-| toy-based global p-value (11/700 toys reached this level) | 0.0157 |
-| Gross-Vitells analytic global p-value | 0.0022 |
-| implied trials factor (toy-based) | ≈208 |
+| local p-value (naive, no look-elsewhere correction) | 1.098×10⁻³ |
+| toy-based global p-value (42/2000 toys reached this level) | 0.021 |
+| Gross-Vitells analytic global p-value | 0.0245 |
+| implied trials factor (toy-based) | ≈19.1 |
 
-The toy-based and Gross-Vitells numbers disagree by about a factor of 7
-here — larger than in the earlier synthetic toy study; see *Limitations*
-for an honest account of that discrepancy, which was not resolved.
+With the bug fixed, the toy-based and Gross-Vitells global p-values now
+**agree closely** (0.021 vs. 0.0245, a factor of 1.17) — resolving the
+factor-of-7 disagreement (0.0157 vs. 0.0022) reported previously, and
+landing well inside the ~2× agreement the earlier synthetic toy study
+found for the same comparison. All 2,000 toys produced a valid fit at
+every one of the 41 scanned masses (0 failures), so this is not an
+artifact of dropped or unreliable toys. The previously "implausibly
+large" trials factor of ≈208 was itself a symptom of the same bug — the
+corrected value, ≈19, is unremarkable for a 41-point scan over a 40 GeV
+window.
 
-**A "Fit 2 convergence flag" note, reported rather than hidden:** the S+B
-fit's numbers are stable and physically sensible (mass matches ATLAS's own
-126.5 GeV closely, chi2/ndf near 1), but MINUIT's strict convergence flag
-(EDM) is not satisfied by a small margin. Three fixes were tried and each
-one was **rejected because it made the actual fitted numbers worse**, not
-just the flag — see `lr_core.py`'s `fit_full_poly_floating_mass_width` for
-the full account. We report the flag honestly as unmet rather than force
-it.
+**Fit 2 convergence, corrected:** the previous report noted that Fit 2
+(mass and width both floating) failed MINUIT's strict convergence check.
+That was the *same* starting-point fragility described in *Corrections*
+above, just showing up in a different fit — a multi-start grid over the
+mass, width, and signal-yield starting points (keeping the best VALID
+result, and cross-checked independently with a second, completely
+different optimizer, `scipy.optimize.minimize`, which agreed to within
+0.0006 likelihood units) now reaches a fully valid minimum. The fitted
+numbers themselves barely moved (mass 126.53 vs. the old 126.63 GeV,
+consistent within uncertainties) — the fix mainly repairs the convergence
+*flag*, not the physics answer, which is reassuring rather than alarming.
 
 **What it teaches:** our own fit lands on essentially the same mass ATLAS
 published from a vastly more sophisticated combined analysis — a strong
@@ -172,18 +281,29 @@ of the paper's peak, at the same mass ±1 bin, RMS over all 30 bins below
 
 Paper's own curve: max Z = 4.198 at 126.9 GeV.
 
+**V3 and V4 below are corrected numbers** — see *Corrections* at the top
+of this report. Under the bug, V3/V4 gave essentially random-sign
+|Z| ≈ 2.2–2.4 in nearly every bin (e.g. 111 GeV: V3 = −2.22); the
+corrected curves now closely track an independent cross-check computed
+the same way, matching it within 0.15 in Z at every spot-checked mass
+(111, 119, 125, 127, and 141 GeV).
+
 | variant | max Z | at mass | RMS vs. paper (30 bins) | RMS (28 visible bins only) | PASS/FAIL |
 |---|---|---|---|---|---|
-| V1 (fixed bkg, width=σ̂) | 4.275 | 127.0 GeV | 0.189 | 0.186 | **PASS** |
-| V2 (fixed bkg, width=2 GeV) | 4.215 | 127.0 GeV | **0.056** | 0.056 | **PASS** |
-| V3 (profiled, width=σ̂) | 3.652 | 127.0 GeV | 2.144 | 2.172 | **FAIL** |
-| V4 (profiled, width=2 GeV) | 3.645 | 127.0 GeV | 2.096 | 2.116 | **FAIL** |
+| V1 (fixed bkg, width=σ̂) | 4.059 | 127.0 GeV | 0.154 | 0.149 | **PASS** |
+| V2 (fixed bkg, width=2 GeV) | 4.022 | 127.0 GeV | **0.138** | 0.139 | **PASS** |
+| V3 (profiled, width=σ̂) | 3.062 | 127.0 GeV | 1.058 | 1.094 | **FAIL** |
+| V4 (profiled, width=2 GeV) | 3.023 | 127.0 GeV | 1.053 | 1.082 | **FAIL** |
 
-**Result, in plain words: V2 is essentially exact** (RMS = 0.056 — the two
-curves are visually indistinguishable). V1 is close (RMS = 0.19). **V3 and
-V4 — the honestly profiled versions — both fail clearly** (RMS ≈ 2.1,
-max Z about 0.55 too low), especially away from the peak, where the
-profiled background has more freedom to swing wildly.
+**Result, in plain words: V1 and V2 both pass**, and now that the bug is
+fixed, **V3 and V4 fail for a genuine physical reason rather than a
+numerical bug** — refitting ("profiling") the background separately at
+every one of the 30 scanned masses gives the background extra freedom to
+absorb part of the signal, which pulls the fitted significance down
+compared to a background that is fixed once and never touched again. The
+corrected V3/V4 max Z (≈3.0–3.1) sits well below the paper's 4.2, and the
+gap is now smooth and physically sensible (largest away from the peak,
+smallest near it), not the near-random noise the bug produced.
 
 **What this tells us:** BumpNet's own "ground-truth" significance curve
 was built with the background **fixed** (not refit at every mass point)
@@ -193,7 +313,9 @@ is a reasonable choice for *training a network on a known, fixed answer*,
 but it is **not** what an honest analysis of real data should do: real
 background systematics have to be profiled, exactly as Part T3 of the
 earlier toy study demonstrated inflates false positives when skipped. The
-gap between V2 and V3/V4 here is the same effect, seen again on real data.
+gap between V2 and V3/V4 here is the same effect, seen again on real
+data — now visible clearly because the profiled curve itself is no longer
+corrupted by a fitting bug.
 
 ---
 
@@ -287,31 +409,20 @@ gives a bad background model an extra dial to hide behind.
 - **No systematic uncertainties are included anywhere** in Part A — no
   photon energy scale, no luminosity, no efficiency systematics. ATLAS's
   own analysis includes these; ours does not.
-- **The asymptotic (CCGV) formulas are being used with only ~28-30 bins**
-  and, in the global-significance toy loop, a reduced toy count (below).
+- **The asymptotic (CCGV) formulas are being used with only ~28-30 bins.**
   Every bin has hundreds to thousands of events, which is the regime where
   these formulas are expected to hold, but this has not been separately
   re-validated here (that validation is what the earlier toy study did, on
   a similar but synthetic setup).
-- **A2's global-significance toy count was reduced from a first attempt
-  of 3,000 to 700**, after the original run got stuck for 16 minutes with
-  no output and had to be killed (see `CHECKPOINT.md` in this branch's
-  history for the full account) — the root cause, diagnosed afterward, was
-  every fit inside the toy loop starting MIGRAD from n_bkg=250,000 (a
-  constant left over from the earlier toy study) when the real dataset has
-  only ~62,000 events; fixing that and switching the hot-loop fits to a
-  faster Minuit strategy cut the per-toy cost from ~1.9s to ~0.9s, and
-  700 toys was chosen to keep the full run under ~10 minutes.
-- **The toy-based and Gross-Vitells global p-values in A2 disagree by
-  about a factor of 7** (0.0157 vs. 0.0022) — larger than the ~3-10%
-  agreement seen in the earlier, purely-synthetic toy study's equivalent
-  check. The Gross-Vitells formula itself was re-verified to be applied
-  correctly (its inputs reproduce the reported number exactly by hand).
-  This is reported as an open discrepancy, not resolved here: it may
-  reflect the real data's own background residuals interacting with the
-  mass-scan resolution differently than the earlier idealized synthetic
-  study, but this was not tracked down further, and no attempt was made to
-  adjust anything to make the two numbers agree.
+- **A2's global-significance toy loop runs each toy's fits from a single,
+  known-good starting point** (Fit 1's own converged background shape,
+  scaled to that toy's own total count) rather than the multi-start
+  robustness used everywhere else in this report — see *Corrections*.
+  This is safe specifically because every toy here is generated FROM that
+  same known background shape, unlike the one real-data null fit that the
+  bug affected; it was validated directly (15 toys, single-start vs.
+  full multi-start: every result agreed to better than 2×10⁻⁴ in Z, with
+  zero fit failures either way) before being relied on for the full run.
 - **The ATLAS-style spurious-signal framing in Part B** (comparing the
   fake signal to its statistical uncertainty) inherits the same
   "illustrative, not the group's agreed convention" caveat noted in the

@@ -390,12 +390,40 @@ def asimov_z_closed_form(s: float, b: float) -> float:
 # ----------------------------------------------------------------------------
 
 def polynomial_shape_density(x: np.ndarray, coeffs) -> np.ndarray:
-    """Plain polynomial density sum_k coeffs[k] * x**k, floored at a tiny
-    positive value to guard against negative predicted counts."""
+    """
+    Polynomial density, floored at a tiny positive value to guard against
+    negative predicted counts.
+
+    BUG FIX (see studies/atlas_hgg_repro/REPORT.md, "Corrections"): this
+    used to be a plain power-series sum_k coeffs[k] * x**k. That basis is
+    badly conditioned for a 4th/5th-order fit over x in [0, 1] -- x**4 and
+    x**3 are highly correlated over that range, and MIGRAD was found (by
+    direct comparison of the same background-only fit started from two
+    different points, landing 2.47 NLL units apart despite both being
+    reported "valid") to get stuck in a bad local optimum depending on
+    the starting point, not just occasionally but reliably for the
+    all-flat [1, 0, 0, ...] starting guess used for the null hypothesis in
+    the profiled (V3/V4) significance curve -- while individual alternative
+    fits, warm-started from a good point, usually did not get stuck. That
+    mismatch (a well-converged alternative compared against a
+    poorly-converged null, at every mass point, since the null does not
+    depend on mass and was only fit once) is exactly what inflated every
+    bin's profiled Z by a near-constant, spurious offset.
+
+    Fix: represent the SAME polynomial (same degree, same function space --
+    this changes nothing about what shapes are reachable) in the Legendre
+    basis on u = 2x-1 in [-1, 1] instead of the plain power basis. Legendre
+    polynomials are orthogonal and bounded (|P_k(u)| <= 1) there, which
+    removes the coefficient correlations that were causing MIGRAD to wander
+    into a bad basin; see REPORT.md for the direct before/after evidence.
+    `coeffs` now means "Legendre coefficients", not "power-series
+    coefficients" -- an internal detail no caller of this module depends
+    on (nothing reads individual coefficient values as physically
+    meaningful on their own).
+    """
     coeffs = np.asarray(coeffs, dtype=float)
-    density = np.zeros_like(x, dtype=float)
-    for k, c in enumerate(coeffs):
-        density = density + c * x ** k
+    u = 2.0 * x - 1.0
+    density = np.polynomial.legendre.legval(u, coeffs)
     return np.clip(density, 1e-8, None)
 
 
@@ -428,17 +456,48 @@ def fit_bkg_only_poly(data: np.ndarray, nodes: np.ndarray, weights: np.ndarray,
                        start: list[float] | None = None,
                        n_bkg_start: float = N_BKG_TRUE,
                        norm_nodes: np.ndarray | None = None,
-                       norm_weights: np.ndarray | None = None):
-    """Background-only (mu=0) fit with a plain polynomial background.
-    Mirrors `fit_bkg_only`'s contract exactly, for the polynomial shape.
+                       norm_weights: np.ndarray | None = None,
+                       robust: bool = True):
+    """Background-only (mu=0) fit with a Legendre-basis polynomial
+    background. Mirrors `fit_bkg_only`'s contract, plus multi-start
+    robustness (see "Corrections" in REPORT.md): this is the function
+    whose single-start fit was found to get stuck in a bad local optimum
+    for the null hypothesis used throughout the profiled (V3/V4)
+    significance curve, landing 2.47 NLL units above the true minimum
+    while every alternative fit (warm-started well) did not -- inflating
+    every bin's profiled Z by that same spurious, near-constant offset.
 
-    `n_bkg_start` defaults to N_BKG_TRUE (the toy-study constant, 250,000)
-    to keep existing callers' behaviour identical; pass a data-driven value
-    (e.g. the observed total event count) for a real dataset whose scale
-    differs -- starting MIGRAD far from the true minimum was found to make
-    fits far slower (sometimes markedly so across a large toy loop)."""
-    if start is None:
-        start = [n_bkg_start] + _poly_bkg_start(n_coeffs)
+    When `robust=True` (the default, used for every one-off/precision fit
+    -- real Fit 1/Fit 2, the profiled curve's null, etc.), tries at least
+    two starting n_bkg values -- whatever the caller asked for
+    (`start`/`n_bkg_start`, defaulting to N_BKG_TRUE as before) AND the
+    data's own total count -- with a couple of small coefficient
+    perturbations, and keeps the lowest-NLL result among the VALID fits
+    (falling back to the lowest-NLL fit overall, flagged accordingly, only
+    if none are valid). Every attempt's validity is recorded, never
+    silently dropped -- see the returned "n_attempts"/"n_valid" fields.
+
+    `robust=False` runs a single fit from the given/default start only --
+    used ONLY inside the global-significance toy loop, where each toy is
+    itself generated from a known true background shape, so warm-starting
+    at that same shape (passed in as `start` by the caller) is reliable by
+    construction, and multi-start's ~4x per-call cost is not needed; see
+    REPORT.md for the timing that made this necessary for >=2000 toys.
+    """
+    data_total = float(np.sum(data))
+    candidate_starts = []
+    if start is not None:
+        candidate_starts.append(list(start))
+    else:
+        candidate_starts.append([n_bkg_start] + _poly_bkg_start(n_coeffs))
+    if robust:
+        if abs(data_total - n_bkg_start) > 0.01 * max(data_total, 1.0):
+            candidate_starts.append([data_total] + _poly_bkg_start(n_coeffs))
+        rng = np.random.default_rng(0)
+        for _ in range(2):
+            perturb = rng.normal(0, 0.3, size=n_coeffs)
+            perturb[0] += 1.0
+            candidate_starts.append([data_total] + list(perturb))
 
     def nll_fn(par):
         n_bkg = par[0]
@@ -448,20 +507,36 @@ def fit_bkg_only_poly(data: np.ndarray, nodes: np.ndarray, weights: np.ndarray,
         return poisson_nll(data, b)
 
     names = ["n_bkg"] + [f"c{k}" for k in range(n_coeffs)]
-    m = Minuit(nll_fn, start, name=names)
-    m.errordef = Minuit.LIKELIHOOD
-    m.limits["n_bkg"] = (0.0, None)
-    # strategy=0: this function is the hot loop's null fit (called once per
-    # toy, thousands of times); strategy=1's extra Hessian evaluations were
-    # a large part of why the mass-scan toy loop was too slow to finish --
-    # timed directly (see studies/atlas_hgg_repro/REPORT.md), not guessed.
-    m.strategy = 0
-    m.migrad()
+    best_m, n_valid = None, 0
+    for cand in candidate_starts:
+        m = Minuit(nll_fn, cand, name=names)
+        m.errordef = Minuit.LIKELIHOOD
+        m.limits["n_bkg"] = (0.0, None)
+        # strategy=0: this function is the hot loop's null fit (called once
+        # per toy, thousands of times) as well as the once-per-script null
+        # for the profiled curve; strategy=1's extra Hessian evaluations
+        # were a large part of why the mass-scan toy loop was too slow to
+        # finish -- timed directly, not guessed. Multi-start compensates
+        # for strategy=0's reduced robustness rather than paying for
+        # strategy=1 on every one of the (few) extra starts.
+        m.strategy = 0
+        m.migrad()
+        if m.valid:
+            n_valid += 1
+        if best_m is None:
+            best_m = m
+        elif m.valid and not best_m.valid:
+            best_m = m
+        elif m.valid == best_m.valid and m.fval < best_m.fval:
+            best_m = m
+    m = best_m
     return {
         "nll": float(m.fval),
         "n_bkg": float(m.values["n_bkg"]),
         "coeffs": np.array([m.values[f"c{k}"] for k in range(n_coeffs)]),
         "valid": bool(m.valid),
+        "n_attempts": len(candidate_starts),
+        "n_valid": n_valid,
         "minuit": m,
     }
 
@@ -471,13 +546,18 @@ def fit_full_poly(data: np.ndarray, edges: np.ndarray, nodes: np.ndarray,
                    x_min: float, x_scale: float, n_coeffs: int = 5,
                    mu_start: float = 0.0, bkg_start: list[float] | None = None,
                    n_bkg_start: float = N_BKG_TRUE,
-                   hesse: bool = False):
-    """Free (mu, background) fit with mh/sigma FIXED and a plain
-    polynomial background. Mirrors `fit_full`'s contract exactly.
-    See `fit_bkg_only_poly` for why `n_bkg_start` exists."""
+                   hesse: bool = False, robust: bool = True):
+    """Free (mu, background) fit with mh/sigma FIXED and a Legendre-basis
+    polynomial background. Mirrors `fit_full`'s contract, plus multi-start
+    robustness in mu (see "Corrections" in REPORT.md and
+    `fit_bkg_only_poly`'s docstring for the background-side half of the
+    same fix): when `robust=True` (default), tries mu_start itself plus 0
+    and a modest +/- offset, keeping the lowest-NLL result among the valid
+    fits. `robust=False` (single mu_start only) is used inside the
+    global-significance toy loop for the same reason as
+    `fit_bkg_only_poly`'s `robust` flag -- see its docstring."""
     if bkg_start is None:
         bkg_start = [n_bkg_start] + _poly_bkg_start(n_coeffs)
-    start = [mu_start] + bkg_start
 
     def nll_fn(par):
         mu = par[0]
@@ -488,15 +568,35 @@ def fit_full_poly(data: np.ndarray, edges: np.ndarray, nodes: np.ndarray,
         return poisson_nll(data, s + b)
 
     names = ["mu", "n_bkg"] + [f"c{k}" for k in range(n_coeffs)]
-    m = Minuit(nll_fn, start, name=names)
-    m.errordef = Minuit.LIKELIHOOD
-    m.limits["n_bkg"] = (0.0, None)
-    # strategy=0: this function is the hot loop's alt fit (called at every
-    # scanned mass, for every toy -- tens of thousands of calls); see
-    # fit_bkg_only_poly's comment for why. hesse=True below still forces a
-    # proper Hessian when actually asked for uncertainties.
-    m.strategy = 0
-    m.migrad()
+    if robust:
+        # A "modest" mu offset is scaled to the reference yield: +/- a
+        # fraction of s_ref is a sensible-sized nudge regardless of what
+        # s_ref itself is.
+        offset = max(abs(mu_start), 1.0)
+        mu_candidates = sorted({0.0, mu_start, mu_start + offset, mu_start - offset})
+    else:
+        mu_candidates = [mu_start]
+    best_m, n_valid = None, 0
+    for mu0 in mu_candidates:
+        start = [mu0] + bkg_start
+        m = Minuit(nll_fn, start, name=names)
+        m.errordef = Minuit.LIKELIHOOD
+        m.limits["n_bkg"] = (0.0, None)
+        # strategy=0: this function is the hot loop's alt fit (called at
+        # every scanned mass, for every toy -- tens of thousands of calls);
+        # see fit_bkg_only_poly's comment for why. hesse=True below still
+        # forces a proper Hessian when actually asked for uncertainties.
+        m.strategy = 0
+        m.migrad()
+        if m.valid:
+            n_valid += 1
+        if best_m is None:
+            best_m = m
+        elif m.valid and not best_m.valid:
+            best_m = m
+        elif m.valid == best_m.valid and m.fval < best_m.fval:
+            best_m = m
+    m = best_m
     if hesse:
         m.hesse()
     mu_err = float(m.errors["mu"]) if hesse else float("nan")
@@ -507,6 +607,8 @@ def fit_full_poly(data: np.ndarray, edges: np.ndarray, nodes: np.ndarray,
         "n_bkg": float(m.values["n_bkg"]),
         "coeffs": np.array([m.values[f"c{k}"] for k in range(n_coeffs)]),
         "valid": bool(m.valid),
+        "n_attempts": len(mu_candidates),
+        "n_valid": n_valid,
         "minuit": m,
     }
 
@@ -522,12 +624,23 @@ def fit_full_poly_floating_mass_width(data: np.ndarray, edges: np.ndarray, nodes
                                        bkg_start: list[float] | None = None,
                                        n_bkg_start: float = N_BKG_TRUE,
                                        hesse: bool = False):
-    """Free (mu, mh, sigma, background) fit, all floating, with a plain
-    polynomial background -- the main "Fit 2" of studies/atlas_hgg_repro.
-    See `fit_bkg_only_poly` for why `n_bkg_start` exists."""
+    """Free (mu, mh, sigma, background) fit, all floating, with a
+    Legendre-basis polynomial background -- the main "Fit 2" of
+    studies/atlas_hgg_repro. See `fit_bkg_only_poly` for why `n_bkg_start`
+    exists and why the background is Legendre, not power-series.
+
+    UPDATE (see REPORT.md "Fit 2 convergence"): the switch to a Legendre
+    background basis, on its own, made this fit WORSE from the module's
+    plain default start (mu_start=0-ish, flat coefficients) -- it ran to
+    the mh/sigma bounds with an enormous mu, clearly wrong. The actual fix
+    needed here is the same one as `fit_bkg_only_poly`: multi-start. This
+    now tries a small grid of (mu, mh, sigma) starting points, always with
+    a data-driven background start, and keeps the lowest-NLL result among
+    the valid fits.
+    """
     if bkg_start is None:
-        bkg_start = [n_bkg_start] + _poly_bkg_start(n_coeffs)
-    start = [mu_start, mh_start, sigma_start] + bkg_start
+        data_total = float(np.sum(data))
+        bkg_start = [data_total] + _poly_bkg_start(n_coeffs)
 
     def nll_fn(par):
         mu, mh, sigma = par[0], par[1], par[2]
@@ -538,26 +651,35 @@ def fit_full_poly_floating_mass_width(data: np.ndarray, edges: np.ndarray, nodes
         return poisson_nll(data, s + b)
 
     names = ["mu", "mh", "sigma", "n_bkg"] + [f"c{k}" for k in range(n_coeffs)]
-    m = Minuit(nll_fn, start, name=names)
-    m.errordef = Minuit.LIKELIHOOD
-    m.limits["n_bkg"] = (0.0, None)
-    m.limits["mh"] = mh_bounds
-    m.limits["sigma"] = sigma_bounds
-    # NOTE (see REPORT.md "Fit 2 convergence flag"): on the real ATLAS
-    # dataset, this fit reliably reports fmin.is_valid=False, specifically
-    # fmin.is_above_max_edm=True (edm~0.002 vs goal 0.0001) -- everything
-    # else (posdef covariance, no parameter at a limit, hesse not failed)
-    # is fine, and the fitted values are stable and physically sensible
-    # (mh matches ATLAS's own published 126.5 GeV closely). Three attempted
-    # fixes were tried and rejected because each made the RESULT worse, not
-    # just the flag: strategy=2 converges to a different, clearly spurious
-    # minimum (mh~116 GeV, mu<0); a second migrad() call is a no-op (edm/
-    # nfcn identical -- MIGRAD already regards this stationary); loosening
-    # tol also moved to a markedly worse, far-less-constrained point
-    # (mu error tripled). Left at strategy=1, default tol: the numbers are
-    # trusted, the flag is reported honestly as False rather than chased.
-    m.strategy = 1
-    m.migrad()
+    mu_offset = max(abs(mu_start), float(np.sum(data)) * 0.01)
+    mh_candidates = sorted({v for v in (mh_start, 120.0, 125.0, 130.0)
+                             if mh_bounds[0] <= v <= mh_bounds[1]})
+    sigma_candidates = sorted({v for v in (sigma_start, 2.0, 3.0)
+                                if sigma_bounds[0] <= v <= sigma_bounds[1]})
+    mu_candidates = sorted({0.0, mu_start, mu_start + mu_offset})
+
+    best_m, n_valid, n_attempts = None, 0, 0
+    for mh0 in mh_candidates:
+        for sigma0 in sigma_candidates:
+            for mu0 in mu_candidates:
+                start = [mu0, mh0, sigma0] + bkg_start
+                m = Minuit(nll_fn, start, name=names)
+                m.errordef = Minuit.LIKELIHOOD
+                m.limits["n_bkg"] = (0.0, None)
+                m.limits["mh"] = mh_bounds
+                m.limits["sigma"] = sigma_bounds
+                m.strategy = 1
+                m.migrad()
+                n_attempts += 1
+                if m.valid:
+                    n_valid += 1
+                if best_m is None:
+                    best_m = m
+                elif m.valid and not best_m.valid:
+                    best_m = m
+                elif m.valid == best_m.valid and m.fval < best_m.fval:
+                    best_m = m
+    m = best_m
     if hesse:
         m.hesse()
 
@@ -572,6 +694,8 @@ def fit_full_poly_floating_mass_width(data: np.ndarray, edges: np.ndarray, nodes
         "n_bkg": float(m.values["n_bkg"]),
         "coeffs": np.array([m.values[f"c{k}"] for k in range(n_coeffs)]),
         "valid": bool(m.valid),
+        "n_attempts": n_attempts,
+        "n_valid": n_valid,
         "minuit": m,
     }
 
@@ -582,17 +706,23 @@ def fit_full_poly_floating_width(data: np.ndarray, edges: np.ndarray, nodes: np.
                                   mu_start: float = 0.0, sigma_start: float = 2.0,
                                   sigma_bounds: tuple[float, float] = (0.5, 6.0),
                                   bkg_start: list[float] | None = None,
-                                  n_bkg_start: float = N_BKG_TRUE):
+                                  n_bkg_start: float = N_BKG_TRUE,
+                                  robust: bool = True):
     """
     Like `fit_full_poly`, but mh is FIXED (given) and sigma floats. Used
     for "profiled local significance at the best-fit mass, width
     floating" -- as opposed to `fit_full_poly_floating_mass_width`, which
     also re-floats mh itself. See `fit_bkg_only_poly` for why
     `n_bkg_start` exists.
+
+    `robust=True` (default) mirrors `fit_full_poly`'s mu multi-start (see
+    "Corrections" in REPORT.md, task step 3): tries mu_start itself plus 0
+    and a modest +/- offset, keeping the lowest-NLL VALID result. Every
+    attempt's validity is recorded rather than silently dropped -- see the
+    returned "n_attempts"/"n_valid" fields.
     """
     if bkg_start is None:
         bkg_start = [N_BKG_TRUE] + _poly_bkg_start(n_coeffs)
-    start = [mu_start, sigma_start] + bkg_start
 
     def nll_fn(par):
         mu, sigma = par[0], par[1]
@@ -603,12 +733,29 @@ def fit_full_poly_floating_width(data: np.ndarray, edges: np.ndarray, nodes: np.
         return poisson_nll(data, s + b)
 
     names = ["mu", "sigma", "n_bkg"] + [f"c{k}" for k in range(n_coeffs)]
-    m = Minuit(nll_fn, start, name=names)
-    m.errordef = Minuit.LIKELIHOOD
-    m.limits["n_bkg"] = (0.0, None)
-    m.limits["sigma"] = sigma_bounds
-    m.strategy = 1
-    m.migrad()
+    if robust:
+        offset = max(abs(mu_start), 1.0)
+        mu_candidates = sorted({0.0, mu_start, mu_start + offset, mu_start - offset})
+    else:
+        mu_candidates = [mu_start]
+    best_m, n_valid = None, 0
+    for mu0 in mu_candidates:
+        start = [mu0, sigma_start] + bkg_start
+        m = Minuit(nll_fn, start, name=names)
+        m.errordef = Minuit.LIKELIHOOD
+        m.limits["n_bkg"] = (0.0, None)
+        m.limits["sigma"] = sigma_bounds
+        m.strategy = 1
+        m.migrad()
+        if m.valid:
+            n_valid += 1
+        if best_m is None:
+            best_m = m
+        elif m.valid and not best_m.valid:
+            best_m = m
+        elif m.valid == best_m.valid and m.fval < best_m.fval:
+            best_m = m
+    m = best_m
     return {
         "nll": float(m.fval),
         "mu_hat": float(m.values["mu"]),
@@ -616,5 +763,7 @@ def fit_full_poly_floating_width(data: np.ndarray, edges: np.ndarray, nodes: np.
         "n_bkg": float(m.values["n_bkg"]),
         "coeffs": np.array([m.values[f"c{k}"] for k in range(n_coeffs)]),
         "valid": bool(m.valid),
+        "n_attempts": len(mu_candidates),
+        "n_valid": n_valid,
         "minuit": m,
     }
