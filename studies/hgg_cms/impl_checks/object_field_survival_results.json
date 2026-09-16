@@ -1,0 +1,184 @@
+{
+  "photons": {
+    "files": [
+      "https://opendata.cern.ch/eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root",
+      "https://opendata.cern.ch/eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/148C0840-3400-844C-A955-0318E69E353C.root"
+    ],
+    "requested_fields": [
+      "electronVeto",
+      "mvaID_WP90",
+      "isScEtaEB",
+      "isScEtaEE",
+      "r9",
+      "hoe",
+      "sieie",
+      "pfRelIso03_all",
+      "pfRelIso03_chg",
+      "cutBased",
+      "eCorr"
+    ],
+    "n_events_in_chunk": 4000,
+    "fields_present_after_parsing": [
+      "cutBased",
+      "eCorr",
+      "electronVeto",
+      "eta",
+      "hoe",
+      "isScEtaEB",
+      "isScEtaEE",
+      "mass",
+      "mvaID_WP90",
+      "pfRelIso03_all",
+      "pfRelIso03_chg",
+      "phi",
+      "pt",
+      "r9",
+      "sieie"
+    ],
+    "all_requested_fields_present": true,
+    "field_checks_after_parsing": {
+      "electronVeto": {
+        "present": true,
+        "dtype_pipeline": "bool",
+        "dtype_reference": "bool",
+        "values_match": true
+      },
+      "mvaID_WP90": {
+        "present": true,
+        "dtype_pipeline": "bool",
+        "dtype_reference": "bool",
+        "values_match": true
+      },
+      "isScEtaEB": {
+        "present": true,
+        "dtype_pipeline": "bool",
+        "dtype_reference": "bool",
+        "values_match": true
+      },
+      "isScEtaEE": {
+        "present": true,
+        "dtype_pipeline": "bool",
+        "dtype_reference": "bool",
+        "values_match": true
+      },
+      "r9": {
+        "present": true,
+        "dtype_pipeline": "float32",
+        "dtype_reference": "float32",
+        "values_match": true
+      },
+      "hoe": {
+        "present": true,
+        "dtype_pipeline": "float32",
+        "dtype_reference": "float32",
+        "values_match": true
+      },
+      "sieie": {
+        "present": true,
+        "dtype_pipeline": "float32",
+        "dtype_reference": "float32",
+        "values_match": true
+      },
+      "pfRelIso03_all": {
+        "present": true,
+        "dtype_pipeline": "float32",
+        "dtype_reference": "float32",
+        "values_match": true
+      },
+      "pfRelIso03_chg": {
+        "present": true,
+        "dtype_pipeline": "float32",
+        "dtype_reference": "float32",
+        "values_match": true
+      },
+      "cutBased": {
+        "present": true,
+        "dtype_pipeline": "int32",
+        "dtype_reference": "int32",
+        "values_match": true
+      },
+      "eCorr": {
+        "present": true,
+        "dtype_pipeline": "float32",
+        "dtype_reference": "float32",
+        "values_match": true
+      }
+    },
+    "all_values_match_after_parsing": true,
+    "field_checks_after_root_roundtrip": {
+      "electronVeto": {
+        "present_after_roundtrip": true,
+        "values_match_pre_roundtrip": true
+      },
+      "mvaID_WP90": {
+        "present_after_roundtrip": true,
+        "values_match_pre_roundtrip": true
+      },
+      "isScEtaEB": {
+        "present_after_roundtrip": true,
+        "values_match_pre_roundtrip": true
+      },
+      "isScEtaEE": {
+        "present_after_roundtrip": true,
+        "values_match_pre_roundtrip": true
+      },
+      "r9": {
+        "present_after_roundtrip": true,
+        "values_match_pre_roundtrip": true
+      },
+      "hoe": {
+        "present_after_roundtrip": true,
+        "values_match_pre_roundtrip": true
+      },
+      "sieie": {
+        "present_after_roundtrip": true,
+        "values_match_pre_roundtrip": true
+      },
+      "pfRelIso03_all": {
+        "present_after_roundtrip": true,
+        "values_match_pre_roundtrip": true
+      },
+      "pfRelIso03_chg": {
+        "present_after_roundtrip": true,
+        "values_match_pre_roundtrip": true
+      },
+      "cutBased": {
+        "present_after_roundtrip": true,
+        "values_match_pre_roundtrip": true
+      },
+      "eCorr": {
+        "present_after_roundtrip": true,
+        "values_match_pre_roundtrip": true
+      }
+    },
+    "all_fields_survive_root_roundtrip": true
+  },
+  "muons": {
+    "file": "https://opendata.cern.ch/eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/05DD095C-F6C3-9A4F-9FB3-348A5A6403D5.root",
+    "requested_fields": [
+      "looseId",
+      "pfRelIso04_all"
+    ],
+    "n_events_in_chunk": 2000,
+    "fields_present_after_parsing": [
+      "eta",
+      "looseId",
+      "mass",
+      "pfRelIso04_all",
+      "phi",
+      "pt"
+    ],
+    "all_requested_fields_present": true,
+    "bug_reproduced": false,
+    "field_checks": {
+      "looseId": {
+        "dtype": "bool",
+        "values_match": true
+      },
+      "pfRelIso04_all": {
+        "dtype": "float32",
+        "values_match": true
+      }
+    }
+  }
+}

@@ -243,3 +243,162 @@ signal file** (`tests/test_trigger_requirements.py`'s real-data
 cross-check): the pipeline's per-event keep/reject decision matches a
 direct `uproot` read of the trigger branch exactly, on 2,000-event samples
 of each.
+
+## CMS extra object fields + generic boolean object cuts — new, not enabled anywhere yet
+
+Two related, general-purpose (not CMS-specific in mechanism) additions for
+the H→γγ study, letting a config request additional per-object (jagged,
+one-value-per-particle) fields and cut on boolean-valued ones, without
+changing any existing config's parsed output.
+
+**New config key**, under `parsing_task_config`:
+
+```yaml
+parsing_task_config:
+  # Optional. Extra per-object fields, on top of each collection's existing
+  # default list (pt/eta/phi/mass for Photons). Absent/omitted (the
+  # default -- every current config) = no-op, identical fields/dtypes/
+  # values to before this feature existed.
+  extra_object_fields:
+    Photons:
+      - cutBased
+      - mvaID
+      - mvaID_WP80
+      - mvaID_WP90
+      - electronVeto
+      - pixelSeed
+      - r9
+      - sieie
+      - hoe
+      - pfRelIso03_all
+      - pfRelIso03_chg
+      - isScEtaEB
+      - isScEtaEE
+      - eCorr   # bookkeeping only -- see the warning below
+
+kinematic_cuts:
+  photons:
+    pt: {min: 20.0}
+    bool_require: [electronVeto, mvaID_WP90]   # every listed field must be True
+    bool_any_of: [isScEtaEB, isScEtaEE]        # at least one listed field must be True
+```
+
+**`extra_object_fields`** (`services/parsing/file_parser.py`'s
+`_resolve_object_fields`, `FileParser.parse_file`/`_parse_opened_file`):
+merges the requested fields into that collection's existing default list
+(a field already in the default list is harmlessly de-duplicated, not an
+error); naming follows the schema's own existing convention automatically
+(`Photon_<field>` branch → `<field>` in the `Photons` collection), the same
+mechanism that already resolves `pt`/`eta`/`phi`/`mass`. Requesting a
+collection name the schema doesn't declare at all (a typo, e.g.
+`"Jetz"`) is a configuration error. **A field genuinely missing from one
+file's tree is a loud, non-swallowed error**
+(`RequiredObjectFieldMissingError`, a subclass of task 3's
+`RequiredScalarBranchMissingError`, so it's caught by exactly the same
+"abort the run, list every affected file and field" handling already in
+`FileParser.parse_file` and `ThreadedFileProcessor.process_files`) — never
+a silent drop.
+
+**`bool_require` / `bool_any_of`** (`services/calculations/physics_calcs.py`'s
+`filter_events_by_kinematics`): extend the existing `kinematic_cuts`
+mechanism with two new cut types, applied at the same **object level** as
+the existing `pt`/`eta`/`phi` cuts (removing individual particles that fail,
+not whole events — `particle_counts` still applies afterward, unchanged,
+to the surviving particles). `bool_require` keeps a particle only if every
+listed field is `True`; `bool_any_of` keeps it if at least one is. Accepts
+a genuinely boolean field, or an integer field whose only values are 0/1;
+anything else (e.g. `cutBased`'s 0–3 ordinal scale) raises a clear error
+rather than silently truthy-casting a multi-valued field. Referencing a
+field that isn't actually present on the collection raises immediately,
+with a clear message naming the collection and field — the same
+validate-before-computing style already used for `pt`/`eta`/`phi` above,
+not a `KeyError` from deep inside a masking operation.
+
+**The CMS barrel/endcap acceptance gap — use `bool_any_of`, not
+`eta_exclude`.** CMS defines a photon's detector acceptance by its
+**supercluster** η (`|η_SC| < 1.4442` barrel, `1.566 < |η_SC| < 2.5`
+endcap), not by the momentum η NanoAOD stores as `Photon_eta` (which is
+computed relative to the chosen primary vertex, and differs slightly from
+the true supercluster position). NanoAOD provides this as two direct
+boolean flags, verified here against a real DoubleEG file's own branch
+titles and values (not assumed):
+
+- `Photon_isScEtaEB`, doc string **"is supercluster eta within barrel
+  acceptance"** — `True` for momentum `|η|` up to ≈1.451 in the sample
+  checked (`Photon_isScEtaEB`/`_isScEtaEE` are themselves computed from the
+  true supercluster η, so this is the expected small SC-vs-momentum-η
+  difference, not evidence the flag's own boundary is wrong).
+- `Photon_isScEtaEE`, doc string **"is supercluster eta within endcap
+  acceptance"** — confirmed to include the `|η_SC| < 2.5` upper bound as
+  part of its own definition: of 4,366 real photons checked, every one
+  flagged `isScEtaEE=True` had momentum `|η| ≤ 2.516`, with only 3 (0.07%)
+  slightly over the nominal 2.5 (the same small SC-vs-momentum divergence
+  noted above) — not a systematic omission of the bound.
+- The two flags are **never both `True`** in the sample checked (0 of
+  4,366), confirming they're mutually exclusive as expected.
+- Photons with **neither** flag set span momentum `|η|` from 1.428 up to
+  2.933 in the sample checked — a far wider range than just the nominal
+  1.4442–1.566 gap. This confirms `bool_any_of: [isScEtaEB, isScEtaEE]`
+  enforces CMS's **complete** acceptance definition in one check (barrel OR
+  endcap, nothing else) — it is not merely a gap-exclusion filter, it also
+  excludes anything beyond the outer 2.5 edge.
+
+**Do not use `eta_exclude` for this.** A generic `eta_exclude: {min, max}`
+cut type is also added (excludes particles with momentum `|η|` inside the
+given window) as a general-purpose tool, unrelated to any CMS specifics.
+**It acts on momentum η, not supercluster η, and must not be used for CMS
+photon acceptance** — use `bool_any_of: [isScEtaEB, isScEtaEE]` instead, per
+the measurements above.
+
+**`Photon_eCorr` — read for bookkeeping only, never applied.** Its doc
+string is *"ratio of the calibrated energy/miniaod energy"* —
+`Photon_pt`/`mass` are already the calibrated values (confirmed in the
+design document's Check A); multiplying by `eCorr` again would
+double-correct the energy. `extra_object_fields` may read it (e.g. to log
+or sanity-check it), but no code in this pipeline may multiply any
+momentum/energy field by it.
+
+**Not set in any existing config file** — this section is documentation
+only.
+
+**Verified end-to-end** (`studies/hgg_cms/impl_checks/object_field_survival_check.py`):
+requesting 11 extra `Photons` fields and running the real production
+pipeline (file batching, cross-file chunk concatenation, event selection,
+and a save-to-ROOT-and-read-back round trip) on two real DoubleEG files
+from different runs — every requested field survived with the correct
+dtype and values identical to a direct, independent `uproot` read, both
+immediately after parsing and after the round trip.
+
+**A related, pre-existing, NOT fixed by this work: silent per-object
+field loss is possible when files disagree on which optional fields are
+accessible.** Investigating the known `Muon_looseId`/`Muon_pfRelIso04_all`
+drop bug (`scripts/m0m1j0_mumujet_report.py`'s `FIELD_DROP_WARNING`) found
+and directly, empirically confirmed the underlying mechanism: `FileParser.
+_filter_accessible_branches` (`services/parsing/file_parser.py`) decides
+which fields are readable **per file**, via a single best-effort probe
+read with no retry — a genuinely-present field can be wrongly excluded for
+one file due to nothing more than a transient read failure during that one
+probe (this project's remote reads have shown exactly this kind of
+intermittent flakiness throughout tasks 2–4, including one live instance
+during this task's own regression checks). Separately, and independently
+confirmed with a minimal, from-scratch reproduction: `ak.concatenate`
+(used both across a single file's own batches, `file_parser.py`'s
+`_read_file_in_batches`, and across different files' batches merged into
+one output chunk, `domain/events.py`'s `_concatenate_events`) **silently
+keeps only the fields common to every array being combined, with no error
+or warning**, when the same collection (e.g. `Muons`) has a different set
+of sub-fields across the batches/files being merged. Together: one file
+whose probe wrongly excludes an optional field, combined into the same
+output chunk as another file where the field WAS read, silently loses that
+field for the entire merged chunk — even for the events from the file
+where it was read correctly. This was proven as a live capability of the
+existing code, not merely theorized. It was **not** reproduced by this
+task's own end-to-end check (`object_field_survival_check.py`'s Photon and
+Muon checks both showed every requested field surviving intact) — but that
+check's small scale (≤2,000 events/file, so no file was ever split into
+more than one internal batch, and none of the specific files tested
+happened to disagree on accessible fields) does not create the conditions
+needed to trigger it either way, so a clean result there is not evidence
+the hazard is gone. **Not fixed here** — out of this task's scope, and any
+fix touching `_filter_accessible_branches` or `_concatenate_events` could
+affect existing configs' behaviour, which needs its own explicit decision.
