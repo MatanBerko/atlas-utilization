@@ -1,0 +1,43 @@
+{
+  "limitation": "PV_npvsGood is the number of RECONSTRUCTED good primary vertices, not the true number of pileup interactions (Pileup_nTrueInt, MC truth only). Reweighting on this reconstructed proxy is the standard fallback when no official pileup JSON exists for a dataset, but it inherits any data/MC mismodeling of vertex-reconstruction efficiency itself.",
+  "weight_derivation": "w(n) = normalized_data_sideband_fraction(n) / normalized_MC_fraction(n), integer PV_npvsGood bins 0..60, per signal label separately. Bins with <20 raw (unweighted) MC entries get weight=1.0 (no reweighting -- not enough MC statistics to trust a ratio there); every weight is clipped to [0.1, 5.0].",
+  "ggh_selection_efficiency_effect": {
+    "genEventSumw_over_processed_files": 11593651.336800005,
+    "sum_genWeight_selected_before": 4619469.5,
+    "sum_genWeight_selected_after_pu_reweight": 4612303.667197352,
+    "efficiency_before": 0.39844819943283133,
+    "efficiency_after_pu_reweight": 0.3978301169500589,
+    "relative_change_pct": -0.1551224183349953
+  },
+  "ggh_peak_and_sigma_eff_per_category_before_vs_after": {
+    "EBEB": {
+      "n_events": 140245,
+      "mode_before_GeV": 124.75,
+      "sigma_eff68_before_GeV": 2.0,
+      "mode_after_GeV": 124.75,
+      "sigma_eff68_after_GeV": 2.0,
+      "mode_shift_GeV": 0.0,
+      "sigma_eff68_relative_change_pct": 0.0
+    },
+    "notEBEB": {
+      "n_events": 73347,
+      "mode_before_GeV": 124.75,
+      "sigma_eff68_before_GeV": 2.75,
+      "mode_after_GeV": 124.75,
+      "sigma_eff68_after_GeV": 2.75,
+      "mode_shift_GeV": 0.0,
+      "sigma_eff68_relative_change_pct": 0.0
+    }
+  },
+  "per_label_low_stat_fallback_bin_counts": {
+    "ggh": 21,
+    "vbf": 18,
+    "wplush": 26,
+    "wminush": 25,
+    "zh": 26,
+    "tth": 30
+  },
+  "plots": [
+    "part_d_pileup_matching.png"
+  ]
+}

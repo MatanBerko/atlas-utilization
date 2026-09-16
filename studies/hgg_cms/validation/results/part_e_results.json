@@ -1,0 +1,192 @@
+{
+  "luminosity_fb": 16.393380531,
+  "branching_ratio_Hgammagamma": 0.00227,
+  "per_label": {
+    "ggh": {
+      "cross_section_pb": 48.58,
+      "genEventSumw_over_processed_files": 11593651.336800005,
+      "n_effective_MC_events_all_processed_files": 528814.531266667,
+      "inclusive": {
+        "N_expected_before_pu": 720.3171521947667,
+        "N_expected_stat_unc_before_pu": 1.5634926980397157,
+        "N_expected_after_pu": 719.1997788086004
+      },
+      "per_category": {
+        "EBEB": {
+          "n_selected_events": 140245,
+          "N_expected_before_pu": 474.26757708896145,
+          "N_expected_stat_unc_before_pu": 1.2669137847512233,
+          "N_expected_after_pu": 474.6938146720826,
+          "N_expected_stat_unc_after_pu": 1.372219151376559,
+          "n_effective_MC_events_selected": 140136.96875
+        },
+        "notEBEB": {
+          "n_selected_events": 73347,
+          "N_expected_before_pu": 246.04967256249805,
+          "N_expected_stat_unc_before_pu": 0.9162089470230481,
+          "N_expected_after_pu": 244.50596413651786,
+          "N_expected_stat_unc_after_pu": 0.9847191067801657,
+          "n_effective_MC_events_selected": 72120.1328125
+        }
+      }
+    },
+    "vbf": {
+      "cross_section_pb": 3.782,
+      "genEventSumw_over_processed_files": 8111314.056214001,
+      "n_effective_MC_events_all_processed_files": 195023.85672199997,
+      "inclusive": {
+        "N_expected_before_pu": 55.98249920295657,
+        "N_expected_stat_unc_before_pu": 0.20103061398300015,
+        "N_expected_after_pu": 55.92042252185691
+      },
+      "per_category": {
+        "EBEB": {
+          "n_selected_events": 536230,
+          "N_expected_before_pu": 37.49910476242641,
+          "N_expected_stat_unc_before_pu": 0.16501854813085184,
+          "N_expected_after_pu": 37.654500450903974,
+          "N_expected_stat_unc_after_pu": 0.17892960767364358,
+          "n_effective_MC_events_selected": 51638.81640625
+        },
+        "notEBEB": {
+          "n_selected_events": 259581,
+          "N_expected_before_pu": 18.483409622661277,
+          "N_expected_stat_unc_before_pu": 0.11481365508239885,
+          "N_expected_after_pu": 18.265922070952954,
+          "N_expected_stat_unc_after_pu": 0.12329933516298786,
+          "n_effective_MC_events_selected": 25916.54296875
+        }
+      }
+    },
+    "wplush": {
+      "cross_section_pb": 0.84,
+      "genEventSumw_over_processed_files": 140641.6404,
+      "n_effective_MC_events_all_processed_files": 144681.39022222225,
+      "inclusive": {
+        "N_expected_before_pu": 10.188092427769082,
+        "N_expected_stat_unc_before_pu": 0.04649084428342102,
+        "N_expected_after_pu": 10.159672523850322
+      },
+      "per_category": {
+        "EBEB": {
+          "n_selected_events": 30799,
+          "N_expected_before_pu": 6.105138026981308,
+          "N_expected_stat_unc_before_pu": 0.0358325838505166,
+          "N_expected_after_pu": 6.11160357533187,
+          "N_expected_stat_unc_after_pu": 0.03876690371876862,
+          "n_effective_MC_events_selected": 29029.177734375
+        },
+        "notEBEB": {
+          "n_selected_events": 21047,
+          "N_expected_before_pu": 4.08295526898776,
+          "N_expected_stat_unc_before_pu": 0.029621355664951728,
+          "N_expected_after_pu": 4.048068948518454,
+          "N_expected_stat_unc_after_pu": 0.03168761277575228,
+          "n_effective_MC_events_selected": 18999.37890625
+        }
+      }
+    },
+    "wminush": {
+      "cross_section_pb": 0.5328,
+      "genEventSumw_over_processed_files": 79827.28239200002,
+      "n_effective_MC_events_all_processed_files": 132190.4639418513,
+      "inclusive": {
+        "N_expected_before_pu": 7.0876094804172185,
+        "N_expected_stat_unc_before_pu": 0.03241224231240189,
+        "N_expected_after_pu": 7.070146347117252
+      },
+      "per_category": {
+        "EBEB": {
+          "n_selected_events": 32924,
+          "N_expected_before_pu": 4.51813260627527,
+          "N_expected_stat_unc_before_pu": 0.02576572507348099,
+          "N_expected_after_pu": 4.515627285233392,
+          "N_expected_stat_unc_after_pu": 0.027779425353504607,
+          "n_effective_MC_events_selected": 30749.15625
+        },
+        "notEBEB": {
+          "n_selected_events": 19177,
+          "N_expected_before_pu": 2.569476874141949,
+          "N_expected_stat_unc_before_pu": 0.01966420628131881,
+          "N_expected_after_pu": 2.5545190618838594,
+          "N_expected_stat_unc_after_pu": 0.021175324293376183,
+          "n_effective_MC_events_selected": 17074.05078125
+        }
+      }
+    },
+    "zh": {
+      "cross_section_pb": 0.7612,
+      "genEventSumw_over_processed_files": 119031.62316,
+      "n_effective_MC_events_all_processed_files": 133478.2380365823,
+      "inclusive": {
+        "N_expected_before_pu": 9.79925555979135,
+        "N_expected_stat_unc_before_pu": 0.04527099872623155,
+        "N_expected_after_pu": 9.76943182691887
+      },
+      "per_category": {
+        "EBEB": {
+          "n_selected_events": 31755,
+          "N_expected_before_pu": 6.107650140522147,
+          "N_expected_stat_unc_before_pu": 0.03555516277147396,
+          "N_expected_after_pu": 6.0844539836760445,
+          "N_expected_stat_unc_after_pu": 0.038302494602515544,
+          "n_effective_MC_events_selected": 29508.216796875
+        },
+        "notEBEB": {
+          "n_selected_events": 19726,
+          "N_expected_before_pu": 3.6916058840635526,
+          "N_expected_stat_unc_before_pu": 0.02802309589223585,
+          "N_expected_after_pu": 3.6849778432428235,
+          "N_expected_stat_unc_after_pu": 0.030137685555904657,
+          "n_effective_MC_events_selected": 17353.953125
+        }
+      }
+    },
+    "tth": {
+      "cross_section_pb": 0.5071,
+      "genEventSumw_over_processed_files": 39448.7445942,
+      "n_effective_MC_events_all_processed_files": 4640.094732862308,
+      "inclusive": {
+        "N_expected_before_pu": 6.711736086533821,
+        "N_expected_stat_unc_before_pu": 0.1655128013053126,
+        "N_expected_after_pu": 6.659753335486874
+      },
+      "per_category": {
+        "EBEB": {
+          "n_selected_events": 11575,
+          "N_expected_before_pu": 5.032455860065192,
+          "N_expected_stat_unc_before_pu": 0.14488297424206625,
+          "N_expected_after_pu": 5.017911154050621,
+          "N_expected_stat_unc_after_pu": 0.16281294317348197,
+          "n_effective_MC_events_selected": 1206.4942626953125
+        },
+        "notEBEB": {
+          "n_selected_events": 3531,
+          "N_expected_before_pu": 1.679280693617006,
+          "N_expected_stat_unc_before_pu": 0.0800213198977552,
+          "N_expected_after_pu": 1.6418421814362532,
+          "N_expected_stat_unc_after_pu": 0.09058313958542025,
+          "n_effective_MC_events_selected": 440.3877258300781
+        }
+      }
+    }
+  },
+  "total_N_expected_before_pu": 810.0863449522348,
+  "total_N_expected_after_pu": 808.7792053638307,
+  "total_relative_pu_effect_pct": -0.16135805726748265,
+  "category_fraction_of_total_before_pu": {
+    "EBEB": {
+      "N": 533.5300584852317,
+      "fraction": 0.6586088776952417
+    },
+    "notEBEB": {
+      "N": 276.5564009059696,
+      "fraction": 0.3413912635723742
+    }
+  },
+  "ggh_vs_D3_single_file_preview": {
+    "D3_single_file_preview": 720,
+    "full_run_ggh_total_before_pu": 720.3171521947667,
+    "note": "D3's preview used exactly ONE of ggH's 3 files; the full run uses all 3. Close agreement is a consistency check (ggH's per-file selection efficiency is expected to be fairly uniform for a promptly-generated signal sample), not an exact-equality requirement."
+  }
+}

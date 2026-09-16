@@ -1,0 +1,77 @@
+{
+  "n_data_sidebands_total": 182551,
+  "n_data_sidebands_EBEB": 90336,
+  "n_data_sidebands_notEBEB": 92215,
+  "n_data_sidebands_100_115": 119138,
+  "n_data_sidebands_135_180": 63413,
+  "kinematics_data_vs_ggh": {
+    "lead_pt": {
+      "data_median": 60.01520538330078,
+      "data_mean": 65.29617309570312,
+      "data_std": 23.81867790222168,
+      "ggh_median": 66.60599517822266,
+      "ggh_mean_weighted": 72.72525024414062,
+      "ggh_std": 27.48607063293457
+    },
+    "sublead_pt": {
+      "data_median": 43.119346618652344,
+      "data_mean": 45.123748779296875,
+      "data_std": 13.806289672851562,
+      "ggh_median": 50.8822021484375,
+      "ggh_mean_weighted": 50.9131965637207,
+      "ggh_std": 12.107583999633789
+    },
+    "lead_eta": {
+      "data_median": -0.011074066162109375,
+      "data_mean": -0.014875927940011024,
+      "data_std": 1.309923768043518,
+      "ggh_median": 0.005228996276855469,
+      "ggh_mean_weighted": 0.0013472740538418293,
+      "ggh_std": 1.1479151248931885
+    },
+    "sublead_eta": {
+      "data_median": -0.0142059326171875,
+      "data_mean": -0.011848893016576767,
+      "data_std": 1.3110207319259644,
+      "ggh_median": 0.001483321189880371,
+      "ggh_mean_weighted": 4.3237181671429425e-05,
+      "ggh_std": 1.1576343774795532
+    },
+    "lead_r9": {
+      "data_median": 0.9658203125,
+      "data_mean": 0.9308030009269714,
+      "data_std": 0.08791734278202057,
+      "ggh_median": 0.966796875,
+      "ggh_mean_weighted": 0.9343726634979248,
+      "ggh_std": 0.08275511115789413
+    },
+    "sublead_r9": {
+      "data_median": 0.9677734375,
+      "data_mean": 0.9247809648513794,
+      "data_std": 0.10070543736219406,
+      "ggh_median": 0.97021484375,
+      "ggh_mean_weighted": 0.9299452304840088,
+      "ggh_std": 0.09626667946577072
+    },
+    "lead_mvaID": {
+      "data_median": 0.86328125,
+      "data_mean": 0.745067298412323,
+      "data_std": 0.27650147676467896,
+      "ggh_median": 0.90478515625,
+      "ggh_mean_weighted": 0.8216873407363892,
+      "ggh_std": 0.20911280810832977
+    },
+    "sublead_mvaID": {
+      "data_median": 0.79931640625,
+      "data_mean": 0.6719640493392944,
+      "data_std": 0.3127691447734833,
+      "ggh_median": 0.89111328125,
+      "ggh_mean_weighted": 0.8026189208030701,
+      "ggh_std": 0.22133728861808777
+    }
+  },
+  "plots": [
+    "part_a_mgg_panels.png",
+    "part_a_kinematics_grid.png"
+  ]
+}
