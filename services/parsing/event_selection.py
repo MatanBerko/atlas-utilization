@@ -52,6 +52,22 @@ def normalize_yaml_kinematic_cuts(raw: Dict[str, Any]) -> Dict[str, Any]:
     if "rel_isolation_max" in raw:
         out["rel_isolation_max"] = float(raw["rel_isolation_max"])
 
+    # Generic object-level boolean cuts (implementation task 4): "all of
+    # these must be True" / "at least one of these must be True". Passed
+    # through as plain lists -- validated where they're applied
+    # (services.calculations.physics_calcs.filter_events_by_kinematics),
+    # not here, matching pt/eta/phi's own existing validate-at-apply-time
+    # style rather than a separate up-front schema check.
+    if "bool_require" in raw:
+        out["bool_require"] = list(raw["bool_require"])
+    if "bool_any_of" in raw:
+        out["bool_any_of"] = list(raw["bool_any_of"])
+
+    # Generic momentum-|eta| exclusion window -- NOT the CMS supercluster-eta
+    # acceptance gap. See docs/CMS_KNOWN_LIMITATIONS.md.
+    if "eta_exclude" in raw:
+        out["eta_exclude"] = dict(raw["eta_exclude"])
+
     return out
 
 
