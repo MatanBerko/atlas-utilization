@@ -188,6 +188,7 @@ def write_metadata(
     genEventSumw: Optional[Dict] = None,
     luminosity_fb: Optional[float] = None,
     luminosity_uncertainty_pct: Optional[float] = None,
+    cern_input_files: Optional[List[str]] = None,
 ) -> None:
     metadata = {
         "created_utc": datetime.now(timezone.utc).isoformat(),
@@ -203,6 +204,16 @@ def write_metadata(
     if luminosity_fb is not None:
         metadata["luminosity_fb_used"] = luminosity_fb
         metadata["luminosity_uncertainty_pct"] = luminosity_uncertainty_pct
+    if cern_input_files is not None:
+        # Implementation task 6, Part 1 fact 5 / Part 4: the ORIGINAL CERN
+        # Open Data URL(s) this job actually processed -- unlike
+        # "input_files_processed" above (the intermediate PARSED chunk
+        # path), this is the real remote source, logged directly by the
+        # job itself rather than reconstructed after the fact from
+        # metadata_cache.json + batch index (see merge_outputs.py's own
+        # module docstring for why that reconstruction was needed for the
+        # full H->gamma-gamma run, which predates this key existing).
+        metadata["cern_input_files"] = cern_input_files
 
     metadata_path.parent.mkdir(parents=True, exist_ok=True)
     with open(metadata_path, "w", encoding="utf-8") as f:

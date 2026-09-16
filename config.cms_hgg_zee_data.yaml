@@ -1,0 +1,100 @@
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: cms_hgg_zee_data
+  histogram_filename: cms_hgg_zee_data.root
+run_metadata:
+  run_name: cms_hgg_zee_data
+  base_output_dir: /storage/agrp/berkom/atlas-utilization/output/cms_hgg_zee_data
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: false
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years: []
+  # Same two DoubleEG records as the main H->gamma-gamma data config
+  # (config.cms_hgg_data.yaml) -- this is the SAME physical dataset, just
+  # a different analysis-layer selection (studies/hgg_cms/zee_selection.py)
+  # applied to a fresh parsing pass (see that config's own comment for why
+  # the main run's already-parsed output can't be reused: electronVeto==
+  # True was already required at PARSING time there).
+  specific_record_ids:
+  - 30521
+  - 30554
+  parse_mc: false
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 8
+  env_threshold_memory_mb: 8000
+  chunk_yield_threshold_bytes: 2147483648
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  max_files_to_process: null
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  create_dirs: true
+  show_progress_bar: true
+  # Same validated-runs requirement as the main analysis (task 6, Part 4
+  # instruction: "same validated-runs ... cuts").
+  validated_runs_json: data/cms/validated_runs/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt
+  # Main Z->ee sample: filtered on the SAME diphoton trigger as the main
+  # H->gamma-gamma analysis (the whole point of this control sample is to
+  # validate photon-energy modeling for events selected the same way).
+  trigger_requirements:
+    mode: any
+    paths:
+    - HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90
+  read_pileup_info: true
+  read_event_weights: false
+  extra_object_fields:
+    Photons:
+    - electronVeto
+    - mvaID_WP90
+    - isScEtaEB
+    - isScEtaEE
+    - r9
+    - hoe
+    - sieie
+    - pfRelIso03_all
+    - pfRelIso03_chg
+    - mvaID
+    - cutBased
+    - pixelSeed
+  particle_counts:
+    photons:
+      min: 2
+      max: 20
+  kinematic_cuts:
+    photons:
+      pt:
+        min: 20.0
+      # electronVeto DELIBERATELY OMITTED here -- see
+      # studies/hgg_cms/zee_selection.py's module docstring: there is no
+      # "must be False" cut type in services/calculations/physics_calcs.py
+      # (only bool_require="must be True" and bool_any_of="at least one
+      # True" exist), so BOTH electronVeto==True and ==False photons are
+      # deliberately let through parsing; zee_selection.py is what
+      # actually requires electronVeto==False (the inversion).
+      bool_require:
+      - mvaID_WP90
+      bool_any_of:
+      - isScEtaEB
+      - isScEtaEE

@@ -1,0 +1,92 @@
+paths:
+  parsed_data_path: ./output/parsed_data_zee_dy
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache_zee_dy.json
+  jobs_logs_path: ./output/logs_zee_dy
+names:
+  run_name: cms_hgg_zee_dy
+  histogram_filename: cms_hgg_zee_dy.root
+run_metadata:
+  run_name: cms_hgg_zee_dy
+  base_output_dir: /storage/agrp/berkom/atlas-utilization/output/cms_hgg_zee_dy
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: false
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data_zee_dy
+  file_urls_path: ./output/metadata_cache_zee_dy.json
+  jobs_logs_path: ./output/logs_zee_dy
+  release_years: []
+  # DYJetsToLL_M-50 (record 35669) -- confirmed postVFP (run_period
+  # ["Run2016G","Run2016H"], same convention as the two DoubleEG data
+  # records), UL16 NanoAODv9: /DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-
+  # pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/
+  # NANOAODSIM. Re-verified 16 Sep 2026 (see
+  # studies/hgg_cms/impl_checks/mapping_check/cms_zee_dy_file_list.json):
+  # 41 files, 71,839,442 events -- matches DESIGN_SELECTION.md Section 4
+  # exactly.
+  specific_record_ids:
+  - 35669
+  parse_mc: true
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 8
+  env_threshold_memory_mb: 8000
+  chunk_yield_threshold_bytes: 2147483648
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  max_files_to_process: null
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  create_dirs: true
+  show_progress_bar: true
+  # NOT set here (simulation) -- the validated-runs simulation guard would
+  # raise.
+  trigger_requirements:
+    mode: any
+    paths:
+    - HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90
+  read_pileup_info: true
+  read_event_weights: true
+  extra_object_fields:
+    Photons:
+    - electronVeto
+    - mvaID_WP90
+    - isScEtaEB
+    - isScEtaEE
+    - r9
+    - hoe
+    - sieie
+    - pfRelIso03_all
+    - pfRelIso03_chg
+    - mvaID
+    - cutBased
+    - pixelSeed
+  particle_counts:
+    photons:
+      min: 2
+      max: 20
+  kinematic_cuts:
+    photons:
+      pt:
+        min: 20.0
+      # electronVeto omitted -- see config.cms_hgg_zee_data.yaml's comment
+      # (same reasoning, applies identically to simulation).
+      bool_require:
+      - mvaID_WP90
+      bool_any_of:
+      - isScEtaEB
+      - isScEtaEE
