@@ -51,6 +51,7 @@ class ThreadedFileProcessor:
         enable_jet_tagging: bool = False,
         jet_btagging_thresholds: Optional[dict[str, float]] = None,
         extra_scalar_branches: Optional[dict[str, list[str]]] = None,
+        extra_object_fields: Optional[dict[str, list[str]]] = None,
         on_success: Optional[Callable[[str, int, float], None]] = None,
         on_error: Optional[Callable[[str, Exception], None]] = None
     ) -> Iterator[EventBatch]:
@@ -64,6 +65,9 @@ class ThreadedFileProcessor:
             batch_size: Batch size for reading large files
             extra_scalar_branches: Optional extra scalar branch groups to
                 read on every file (see FileParser.parse_file); absent/None
+                reproduces existing behaviour exactly.
+            extra_object_fields: Optional extra per-object fields to read on
+                every file (see FileParser.parse_file); absent/None
                 reproduces existing behaviour exactly.
             on_success: Optional callback(file_url, event_count, time_sec) on success
             on_error: Optional callback(file_url, exception) on error
@@ -85,6 +89,7 @@ class ThreadedFileProcessor:
                     enable_jet_tagging,
                     jet_btagging_thresholds,
                     extra_scalar_branches,
+                    extra_object_fields,
                 ): file_url
                 for file_url in file_urls
             }
@@ -154,6 +159,7 @@ class ThreadedFileProcessor:
         enable_jet_tagging: bool,
         jet_btagging_thresholds: Optional[dict[str, float]],
         extra_scalar_branches: Optional[dict[str, list[str]]] = None,
+        extra_object_fields: Optional[dict[str, list[str]]] = None,
     ) -> tuple:
         """
         Parse a single file (runs in thread).
@@ -180,6 +186,7 @@ class ThreadedFileProcessor:
                 enable_jet_tagging=enable_jet_tagging,
                 jet_btagging_thresholds=jet_btagging_thresholds,
                 extra_scalar_branches=extra_scalar_branches,
+                extra_object_fields=extra_object_fields,
             )
         except PartialFileReadError as error:
             events = error.events

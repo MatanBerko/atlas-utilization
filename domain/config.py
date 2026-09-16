@@ -101,6 +101,21 @@ class ParsingConfig:
     # ["trigger_requirements"], same shape.
     trigger_requirements: Optional[dict] = None
 
+    # Optional extra per-object (jagged, one-value-per-particle) fields to
+    # read on top of whatever the schema's default field list for that
+    # collection already declares, e.g. {"Photons": ["electronVeto",
+    # "mvaID_WP90"]}. Merged with the schema's own default list per
+    # collection (see services.parsing.file_parser.FileParser.
+    # _resolve_object_fields); absent/None (the default, and every current
+    # config) reproduces existing behaviour exactly -- identical fields,
+    # dtypes, and values for every collection. A collection name this
+    # release's schema doesn't declare at all is a configuration error
+    # (raised when the release/schema is resolved, not validated here,
+    # since this dataclass has no schema knowledge). A field genuinely
+    # missing from a specific file's tree is a loud, non-swallowed error
+    # (RequiredObjectFieldMissingError), not a silent drop.
+    extra_object_fields: Optional[dict] = None
+
     def __post_init__(self):
         """Validate parsing configuration."""
         if self.threads <= 0:
@@ -151,6 +166,16 @@ class ParsingConfig:
                 if not isinstance(branches, (list, tuple)) or not all(isinstance(b, str) for b in branches):
                     raise ValueError(
                         f"extra_scalar_branches['{group_name}'] must be a list of branch name strings, got {branches!r}"
+                    )
+        if self.extra_object_fields is not None:
+            if not isinstance(self.extra_object_fields, dict):
+                raise ValueError("extra_object_fields must be a dict of collection name -> field list")
+            for collection_name, fields in self.extra_object_fields.items():
+                if not isinstance(collection_name, str) or not collection_name:
+                    raise ValueError(f"extra_object_fields collection names must be non-empty strings, got {collection_name!r}")
+                if not isinstance(fields, (list, tuple)) or not all(isinstance(f, str) for f in fields):
+                    raise ValueError(
+                        f"extra_object_fields['{collection_name}'] must be a list of field name strings, got {fields!r}"
                     )
         if self.validated_runs_json is not None and not isinstance(self.validated_runs_json, str):
             raise ValueError(
@@ -401,6 +426,7 @@ class PipelineConfig:
                 extra_scalar_branches=parsing_dict.get("extra_scalar_branches"),
                 validated_runs_json=parsing_dict.get("validated_runs_json"),
                 trigger_requirements=parsing_dict.get("trigger_requirements"),
+                extra_object_fields=parsing_dict.get("extra_object_fields"),
             )
         
         # Parse mass calculation config if enabled

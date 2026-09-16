@@ -332,6 +332,7 @@ class ParsingHandler(StateHandler):
                 enable_jet_tagging=parsing_config.enable_jet_tagging,
                 jet_btagging_thresholds=parsing_config.jet_btagging_thresholds,
                 extra_scalar_branches=effective_extra_scalar_branches,
+                extra_object_fields=parsing_config.extra_object_fields,
                 on_success=on_success,
                 on_error=on_error
             ):

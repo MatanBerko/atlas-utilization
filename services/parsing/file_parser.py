@@ -64,6 +64,21 @@ class RequiredScalarBranchMissingError(ValueError):
         )
 
 
+class RequiredObjectFieldMissingError(RequiredScalarBranchMissingError):
+    """A per-object (jagged, one-value-per-particle) field requested via
+    ``extra_object_fields`` (implementation task 4) is missing from one or
+    more files' declared object collection -- e.g. ``Photon_electronVeto``
+    requested but not readable in this particular file.
+
+    Subclasses ``RequiredScalarBranchMissingError`` on purpose: it is caught
+    by exactly the same "do not swallow, abort the run" handling already in
+    ``FileParser.parse_file`` and ``ThreadedFileProcessor.process_files``
+    (implementation task 3), with no changes needed to either. ``failures``
+    entries use the collection name (e.g. ``"Photons"``) as the "group
+    name", for a message consistent in shape with the scalar-group case.
+    """
+
+
 class FileParser:
     """
     Service for parsing individual ROOT files.
@@ -80,6 +95,7 @@ class FileParser:
         enable_jet_tagging: bool = False,
         jet_btagging_thresholds: Optional[dict[str, float]] = None,
         extra_scalar_branches: Optional[dict[str, list[str]]] = None,
+        extra_object_fields: Optional[dict[str, list[str]]] = None,
     ) -> Optional[ak.Array]:
         """
         Parse a single ROOT file and return events.
@@ -95,6 +111,13 @@ class FileParser:
                 ``{"Trigger": ["HLT_SomeBit"]}``. Merged with the schema's
                 own groups (see ``schemas.get_scalar_branch_groups``);
                 absent/``None`` reproduces today's behaviour exactly.
+            extra_object_fields: Optional extra per-object (jagged,
+                one-value-per-particle) fields to read on top of whatever
+                the schema's default field list for that collection
+                already declares, e.g. ``{"Photons": ["electronVeto",
+                "mvaID_WP90"]}``. Merged with the schema's own default list
+                (see ``_resolve_object_fields``); absent/``None`` reproduces
+                today's behaviour exactly (implementation task 4).
 
         Returns:
             Awkward array of events with particle objects, or None if parsing failed
@@ -110,6 +133,7 @@ class FileParser:
                     enable_jet_tagging,
                     jet_btagging_thresholds,
                     extra_scalar_branches=extra_scalar_branches,
+                    extra_object_fields=extra_object_fields,
                 )
         except PartialFileReadError:
             raise
@@ -129,6 +153,7 @@ class FileParser:
         enable_jet_tagging: bool,
         jet_btagging_thresholds: Optional[dict[str, float]],
         extra_scalar_branches: Optional[dict[str, list[str]]] = None,
+        extra_object_fields: Optional[dict[str, list[str]]] = None,
     ) -> Optional[ak.Array]:
         """Parse an already-opened ROOT file."""
         tree_name = FileParser._get_data_tree_name(root_file.keys(), tree_names)
@@ -140,6 +165,7 @@ class FileParser:
             all_tree_branches,
             release_year,
             extra_scalar_branches=extra_scalar_branches,
+            extra_object_fields=extra_object_fields,
         )
 
         if not obj_branches:
@@ -159,6 +185,24 @@ class FileParser:
         if not obj_branches:
             logging.warning(f"No accessible particles found in file {file_path}")
             return None
+
+        # A field requested via extra_object_fields that turns out to be
+        # inaccessible in THIS file is a hard error, not a silent drop --
+        # matching task 3's scalar-group precedent (the object still passes
+        # the pt/eta/phi accessibility gate above on its default fields
+        # alone, so without this check a missing extra field would silently
+        # vanish here with no error at all). Only the extra fields are
+        # required in full; the schema's own default fields keep their
+        # existing (gate-based, not all-or-nothing) accessibility handling.
+        if extra_object_fields:
+            obj_field_failures: list[tuple[str, str, list[str]]] = []
+            for obj_name, declared_extra in extra_object_fields.items():
+                actual_quantities = set(obj_branches.get(obj_name, {}).values())
+                missing = sorted(set(declared_extra) - actual_quantities)
+                if missing:
+                    obj_field_failures.append((file_path, obj_name, missing))
+            if obj_field_failures:
+                raise RequiredObjectFieldMissingError(obj_field_failures)
 
         all_branches = set(itertools.chain.from_iterable(obj_branches.values()))
         obj_events, read_error = FileParser._read_file_in_batches(
@@ -382,10 +426,48 @@ class FileParser:
         return groups
 
     @staticmethod
+    def _resolve_object_fields(
+        objects: dict[str, list[str]],
+        extra_object_fields: Optional[dict[str, list[str]]],
+    ) -> dict[str, list[str]]:
+        """
+        Merge caller-requested extra per-object (jagged, one-value-per-
+        particle) fields into the schema's own default field list per
+        collection, e.g. adding ``"electronVeto"`` to the default
+        ``["pt", "eta", "phi", "mass"]`` for ``"Photons"``
+        (implementation task 4).
+
+        A field already in the default list is harmlessly de-duplicated,
+        not an error. ``extra_object_fields`` naming a collection the
+        schema doesn't declare at all (typo, or a collection this release
+        genuinely doesn't have) is a hard configuration error.
+
+        Returns a new dict (the schema's own ``objects`` dict is never
+        mutated); absent/``None`` ``extra_object_fields`` returns the
+        default list unchanged for every collection, reproducing today's
+        behaviour exactly.
+
+        Raises:
+            ValueError: ``extra_object_fields`` references a collection
+                name not present in ``objects``.
+        """
+        merged = {name: list(fields) for name, fields in objects.items()}
+        if extra_object_fields:
+            for obj_name, fields in extra_object_fields.items():
+                if obj_name not in merged:
+                    raise ValueError(
+                        f"extra_object_fields references unknown collection "
+                        f"'{obj_name}'; this schema declares: {sorted(merged)}"
+                    )
+                merged[obj_name] = list(dict.fromkeys(merged[obj_name] + list(fields)))
+        return merged
+
+    @staticmethod
     def _extract_branches_by_schema(
         tree_branches: set[str],
         release_year: str,
         extra_scalar_branches: Optional[dict[str, list[str]]] = None,
+        extra_object_fields: Optional[dict[str, list[str]]] = None,
     ) -> dict[str, dict[str, str]]:
         """
         Extract branches by object based on release-specific schema.
@@ -411,7 +493,7 @@ class FileParser:
             return FileParser._auto_detect_branches(tree_branches)
 
         obj_branches = {}
-        objects = schema_config["objects"]
+        objects = FileParser._resolve_object_fields(schema_config["objects"], extra_object_fields)
         direct_objects = schema_config.get("direct_objects", [])
         naming_pattern = schema_config.get("naming_pattern", "dotted")
 
