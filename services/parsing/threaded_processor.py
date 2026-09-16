@@ -119,6 +119,27 @@ class ThreadedFileProcessor:
             # logged, reported via on_error, file skipped, run continues.
             missing_branch_failures: list[tuple[str, str, list[str]]] = []
 
+            # Partial reads with weights enabled (implementation task 6,
+            # Part A): a PartialFileReadError used to still be yielded as a
+            # partial batch (its events, including genWeight, get used
+            # downstream) while the file itself was reported only via
+            # on_error, never on_success -- so it never lands in a
+            # "processed_urls" list built from on_success alone, and its
+            # genEventSumw is excluded from the aggregation in
+            # orchestration/handlers/parsing_handler.py, silently biasing
+            # the numerator (genWeight used) vs. denominator (genEventSumw
+            # summed) upward. When read_event_weights is set, a partial
+            # read is a loud, record-aborting failure instead -- reported
+            # the same way as a RequiredScalarBranchMissingError. Any file
+            # that reaches this point as data (not simulation) while
+            # read_event_weights is set would already have raised
+            # SimulationFieldRequestedOnDataError earlier in parsing
+            # (before any batch is ever read), so a PartialFileReadError
+            # seen here with read_event_weights enabled is always for a
+            # simulation file -- data files, and any run with
+            # read_event_weights off, keep today's exact behaviour.
+            partial_read_with_weights_failures: list[tuple[str, str, list[str]]] = []
+
             with progress_bar as pbar:
                 for future in as_completed(futures):
                     file_url = futures[future]
@@ -128,6 +149,20 @@ class ThreadedFileProcessor:
 
                         if result is not None:
                             events, processing_time, partial_error, probe_stats = result
+
+                            if partial_error is not None and read_event_weights:
+                                logging.warning(
+                                    "Partial read of a simulation file with "
+                                    "read_event_weights enabled -- treating as a "
+                                    "loud failure instead of a partial batch: %s",
+                                    partial_error,
+                                )
+                                partial_read_with_weights_failures.append((
+                                    file_url, "PartialFileRead", [str(partial_error)]
+                                ))
+                                if on_error:
+                                    on_error(file_url, partial_error)
+                                continue
 
                             # Create EventBatch
                             batch = self._create_event_batch(
@@ -167,6 +202,8 @@ class ThreadedFileProcessor:
 
             if missing_branch_failures:
                 raise RequiredScalarBranchMissingError(missing_branch_failures)
+            if partial_read_with_weights_failures:
+                raise RequiredScalarBranchMissingError(partial_read_with_weights_failures)
 
     def _parse_single_file(
         self,

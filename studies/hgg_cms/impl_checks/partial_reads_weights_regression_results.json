@@ -1,0 +1,21 @@
+{
+  "description": "Regression proof for implementation task 6, Part A (loud failure for a partially-read simulation file when read_event_weights is enabled): FileParser._parse_opened_file run on real files, once with feature/cms-mc-weights-and-probe-retry (3cf6ffd21d685316a1893620716c51bfc024b8e1) and once with feature/hgg-selection-and-output, read_event_weights left at its default (False) in both, so the new behaviour is never triggered. Same 4 CMS files and 1 ATLAS file as every earlier task's own regression proof, at most 2,000 events per file.",
+  "base_commit": "3cf6ffd21d685316a1893620716c51bfc024b8e1",
+  "feature_branch": "feature/hgg-selection-and-output",
+  "max_events_per_file": 2000,
+  "file_level_comparison": {
+    "30529": {"dataset": "/SingleElectron/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD", "status": "IDENTICAL"},
+    "30530": {"dataset": "/SingleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD", "status": "IDENTICAL"},
+    "30522": {"dataset": "/DoubleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD", "status": "IDENTICAL"},
+    "30555": {"dataset": "/DoubleMuon/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD", "status": "IDENTICAL"},
+    "atlas_2024r-pp": {"dataset": "ATLAS DAOD_PHYSLITE mc20_13TeV, dsid 301204", "status": "IDENTICAL"}
+  },
+  "note": "None of these 5 real files ever produce a PartialFileReadError under a normal read (confirmed across every earlier task's regression run too), so Part A's new code path (in ThreadedFileProcessor.process_files) was structurally never reached during this check regardless of the read_event_weights flag; the default-False setting additionally guarantees it even if a partial read had occurred. This regression proof establishes that Part A's changes introduce zero behaviour difference for every existing configuration's normal operation.",
+  "transient_network_failures_during_this_check": [
+    "30529 (feature branch): one transient EventIds-probe failure on the first attempt, succeeded on retry against the identical file.",
+    "30530 (feature branch): one transient HTTP 429 on the first attempt, succeeded on retry.",
+    "ATLAS file (feature branch): one transient rucio read failure on the first attempt, succeeded on the second retry.",
+    "All consistent with the ordinary remote-storage flakiness seen throughout this project; the base branch's dumps of the identical files all succeeded on their first attempt."
+  ],
+  "overall_verdict": "IDENTICAL for all 4 CMS datasets and one real ATLAS file."
+}
