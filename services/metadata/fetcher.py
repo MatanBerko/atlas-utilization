@@ -41,6 +41,15 @@ def _classify_url(url: str) -> UrlType:
 
     Raises ValueError if the URL matches both patterns or neither — so
     unclassifiable URLs are never silently misrouted.
+
+    ATLAS-ONLY. CMS record URLs never match either pattern (they use an
+    entirely different path convention -- .../eos/opendata/cms/...) --
+    see _classify_cms_url below for the CMS equivalent, used only for
+    "record_<id>" cache keys whose schema is cms-nanoaod (implementation
+    task 6, cache-validation fix -- see
+    orchestration/handlers/fetch_metadata_handler.py's
+    _validate_cache_or_abort). This function's own logic/behavior for
+    ATLAS URLs is UNCHANGED.
     """
     is_mc   = bool(_MC_NAMESPACE_RE.search(url))
     is_data = bool(_DATA_NAMESPACE_RE.search(url))
@@ -52,6 +61,45 @@ def _classify_url(url: str) -> UrlType:
     raise ValueError(
         f"URL matched {'both' if is_mc and is_data else 'neither'} "
         f"MC and DATA patterns — cannot classify: {url}"
+    )
+
+
+# CMS Open Data record files are identified by their EOS path, not a RUCIO
+# namespace -- verified against the actual file lists of all 8 CMS
+# H->gamma-gamma record IDs registered in services.parsing.schemas.
+# RECORD_ID_TO_SCHEMA (see studies/hgg_cms/impl_checks/record_schema_evidence.json):
+#   data (DoubleEG, records 30521/30554):     .../eos/opendata/cms/Run2016G/DoubleEG/...
+#                                              .../eos/opendata/cms/Run2016H/DoubleEG/...
+#   simulation (all 6 signal records):        .../eos/opendata/cms/mc/...
+# Both URL schemes seen in this project (https://opendata.cern.ch/... and
+# root://eospublic.cern.ch//...) share this same "/eos/opendata/cms/..."
+# path suffix, so matching on that suffix (not the scheme/host prefix)
+# works for either transport.
+_CMS_MC_PATH_RE   = re.compile(r'/eos/opendata/cms/mc/', re.IGNORECASE)
+_CMS_DATA_PATH_RE = re.compile(r'/eos/opendata/cms/Run\d{4}[A-Za-z]+/', re.IGNORECASE)
+
+
+def _classify_cms_url(url: str) -> UrlType:
+    """
+    Classify a CMS Open Data URL as DATA or MC by its EOS path (CMS record
+    keys carry no "_mc"-suffix naming convention the way ATLAS release-year
+    keys do, so a RUCIO-namespace-style classifier does not apply -- see
+    _classify_url's own docstring). Raises ValueError if the URL matches
+    both patterns or neither, exactly like _classify_url, so an
+    unrecognized CMS path is never silently misrouted.
+    """
+    is_mc   = bool(_CMS_MC_PATH_RE.search(url))
+    is_data = bool(_CMS_DATA_PATH_RE.search(url))
+
+    if is_mc and not is_data:
+        return UrlType.MC
+    if is_data and not is_mc:
+        return UrlType.DATA
+    raise ValueError(
+        f"CMS URL matched {'both' if is_mc and is_data else 'neither'} "
+        f"the known /eos/opendata/cms/mc/ (simulation) or "
+        f"/eos/opendata/cms/Run<year><era>/ (data) path patterns — cannot "
+        f"classify: {url}"
     )
 
 

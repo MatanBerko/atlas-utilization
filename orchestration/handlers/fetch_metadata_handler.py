@@ -2,11 +2,63 @@
 FetchMetadataHandler - Handles metadata fetching state.
 Fetches file URLs from ATLAS Open Data API.
 """
+from typing import Optional
+
 from orchestration.context import PipelineContext
 from orchestration.states import PipelineState
 from .base import StateHandler
-from services.metadata.fetcher import MetadataFetcher, _classify_url, UrlType
+from services.metadata.fetcher import MetadataFetcher, _classify_url, _classify_cms_url, UrlType
 from services.metadata.cache import MetadataCache
+from services.parsing.schemas import RECORD_ID_TO_SCHEMA
+
+
+def _cms_record_id(key: str) -> Optional[int]:
+    """Returns the record id if `key` is a "record_<id>" cache key for a
+    registered CMS record (schema "cms-nanoaod"), else None. CMS record
+    keys carry no "_mc" naming convention the way ATLAS release-year keys
+    do (services.metadata.fetcher.fetch_by_record_ids never appends "_mc"
+    to a CMS key, whether the record is data or simulation) -- this is
+    how _validate_cache_or_abort tells a CMS key apart from an ATLAS one,
+    rather than guessing from the key's own spelling."""
+    if not key.startswith("record_"):
+        return None
+    try:
+        record_id = int(key.split("_", 1)[1])
+    except (ValueError, IndexError):
+        return None
+    if RECORD_ID_TO_SCHEMA.get(record_id) != "cms-nanoaod":
+        return None
+    return record_id
+
+
+def _cms_key_violations(key: str, urls: list) -> list:
+    """For a CMS record key: classify every URL by its own EOS path
+    (_classify_cms_url) and require ALL of them to agree on one type --
+    the record's "type" is whatever its own URLs consistently indicate
+    (DoubleEG's two records are all-data, all 6 signal records are
+    all-simulation -- verified against the real file lists in
+    studies/hgg_cms/impl_checks/record_schema_evidence.json), not a
+    naming convention on the key. Returns a list of violation
+    description strings (empty if the key is internally consistent)."""
+    violations = []
+    expected_type = None
+    for url in urls:
+        try:
+            url_type = _classify_cms_url(url)
+        except ValueError as e:
+            violations.append(f"  Key '{key}': {e}")
+            continue
+        if expected_type is None:
+            expected_type = url_type
+        elif url_type != expected_type:
+            violations.append(
+                f"  Key '{key}': mixed URL types -- first URL classified as "
+                f"{expected_type.value}, but this URL classified as "
+                f"{url_type.value}: {url}"
+            )
+        if len(violations) >= 5:
+            break
+    return violations
 
 
 class FetchMetadataHandler(StateHandler):
@@ -85,10 +137,29 @@ class FetchMetadataHandler(StateHandler):
 
         To fix a contaminated cache: delete the cache file and re-run.
         The fetcher will rebuild it correctly with the patched _separate_mc_files.
+
+        CMS record keys ("record_<id>" for a registered cms-nanoaod
+        record) are validated separately (_cms_key_violations, using
+        _classify_cms_url's EOS-path classification): ATLAS's "_mc"-
+        suffix key-naming convention does not apply to them at all
+        (fetch_by_record_ids never appends "_mc" to a CMS key, whether
+        the record is data or simulation), so running them through
+        _classify_url's RUCIO-namespace logic would reject every valid
+        CMS URL as unclassifiable -- confirmed live: this is exactly what
+        made the first D3 cluster job (which pins its one file via a
+        pre-written cache, i.e. a cache HIT) abort on a perfectly valid
+        CMS DoubleEG URL. Every other key (ATLAS release-year keys) keeps
+        EXACTLY the prior _classify_url/"_mc"-suffix logic, unchanged.
         """
         contaminated_keys = []
 
         for key, urls in metadata.items():
+            if _cms_record_id(key) is not None:
+                contaminated_keys.extend(_cms_key_violations(key, urls))
+                if len(contaminated_keys) >= 5:
+                    break
+                continue
+
             is_mc_key = key.endswith("_mc")
             for url in urls:
                 try:
