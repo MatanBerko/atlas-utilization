@@ -3,7 +3,9 @@
 # status_zee.sh
 #
 # Implementation task 6, Part 4: status for the Z->e+e- control-region run
-# (4 array jobs -- data/DY x main/trigger-eff, see submit_zee.sh). Same
+# (2 array jobs -- data, DY; see submit_zee.sh -- REVISED 16 Sep 2026,
+# was 4 variants before the trigger-efficiency sample became an offline
+# cut instead of a separate cluster job). Same
 # bulk `qstat -xft` array-status fix as status_full.sh (one call per array
 # job, not one per subjob -- see that script's own header for why the
 # naive per-index approach is broken on this cluster).

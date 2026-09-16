@@ -55,9 +55,14 @@ parsing_task_config:
   show_progress_bar: true
   # NOT set here (simulation) -- the validated-runs simulation guard would
   # raise.
+  # REVISED (16 Sep 2026) -- same fix and same reasoning as
+  # config.cms_hgg_zee_data.yaml's own comment (filtering on ONLY the
+  # diphoton trigger biased the peak-position/width comparison via the
+  # Mass90 online cut; now filters on either trigger, both bits kept).
   trigger_requirements:
     mode: any
     paths:
+    - HLT_Ele27_WPTight_Gsf
     - HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90
   read_pileup_info: true
   read_event_weights: true

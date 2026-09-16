@@ -2,31 +2,28 @@
 # ---------------------------------------------------------------------------
 # pbs_hgg_zee_array.sh
 #
-# Implementation task 6, Part 4: ONE generic array-job template for all
-# four Z->e+e- control-region parsing+selection runs -- data or DY
-# simulation, main sample or trigger-efficiency sample -- one file PER JOB
-# (PBS job array, $PBS_ARRAY_INDEX), exactly the same pattern
-# pbs_hgg_data_array.sh already uses successfully for the main analysis's
-# 133 DoubleEG files (one job per file keeps output in exact 1:1
-# correspondence with one input file, isolates a single bad/slow file's
-# retry to one job, and needs no shared-code change to support -- unlike
-# the H->gamma-gamma SIGNAL jobs, which deliberately bundle each record's
-# files into ONE job because the record-level genEventSumw bookkeeping
-# wants them together; here the per-record sumw is instead summed ACROSS
-# jobs at merge time, the same way the main run's data-side merge already
-# sums per-record EVENT totals across its 133 jobs -- see
-# merge_zee_outputs.py).
+# Implementation task 6, Part 4 (REVISED 16 Sep 2026): ONE generic array-
+# job template for the Z->e+e- control-region parsing+selection run --
+# data OR DY simulation, one file PER JOB (PBS job array,
+# $PBS_ARRAY_INDEX), exactly the same pattern pbs_hgg_data_array.sh
+# already uses successfully for the main analysis's 133 DoubleEG files.
 #
-# Unlike pbs_hgg_data_array.sh (which hardcodes TOTAL_FILES=133 for one
-# specific dataset), everything dataset-specific here is passed via
-# `qsub -v`, so ONE script covers all four runs:
+# REVISED from an earlier 4-variant design (data/DY x main/trigger-
+# efficiency): the "trigger-efficiency" variant was a SEPARATE cluster job
+# filtering on a different trigger AND requiring a fresh parse of the same
+# files a second time. That's no longer needed -- BOTH the energy-scale
+# sample and the trigger-efficiency sample are now OFFLINE CUTS
+# (studies/hgg_cms/validation/zee/) on ONE stored 60-180 GeV table from
+# ONE run per dataset, since both trigger bits are stored per event
+# (config.cms_hgg_zee_{data,dy}.yaml's trigger_requirements now lists BOTH
+# HLT_Ele27_WPTight_Gsf and the diphoton trigger, mode=any -- see those
+# configs' own comments for why filtering on the diphoton trigger ALONE
+# was a bug). So now just TWO qsub calls, not four:
 #
-#   qsub -J 1-133 -v CONFIG=config.cms_hgg_zee_data.yaml,IS_DATA=true,TOTAL_FILES=133,OUTPUT_BASE=...,MASS_LO=70,MASS_HI=110 pbs_hgg_zee_array.sh
-#   qsub -J 1-41  -v CONFIG=config.cms_hgg_zee_dy.yaml,IS_DATA=false,TOTAL_FILES=41,OUTPUT_BASE=...,MASS_LO=70,MASS_HI=110 pbs_hgg_zee_array.sh
-#   qsub -J 1-133 -v CONFIG=config.cms_hgg_zee_trigeff_data.yaml,IS_DATA=true,TOTAL_FILES=133,OUTPUT_BASE=...,MASS_LO=95,MASS_HI=1000000,DIPHOTON_TRIGGER_BRANCH=HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90 pbs_hgg_zee_array.sh
-#   qsub -J 1-41  -v CONFIG=config.cms_hgg_zee_trigeff_dy.yaml,IS_DATA=false,TOTAL_FILES=41,OUTPUT_BASE=...,MASS_LO=95,MASS_HI=1000000,DIPHOTON_TRIGGER_BRANCH=HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90 pbs_hgg_zee_array.sh
+#   qsub -J 1-133 -v CONFIG=config.cms_hgg_zee_data.yaml,IS_DATA=true,TOTAL_FILES=133,OUTPUT_BASE=... pbs_hgg_zee_array.sh
+#   qsub -J 1-41  -v CONFIG=config.cms_hgg_zee_dy.yaml,IS_DATA=false,TOTAL_FILES=41,OUTPUT_BASE=... pbs_hgg_zee_array.sh
 #
-# (submit_zee.sh issues exactly these four qsub calls -- see that script,
+# (submit_zee.sh issues exactly these two qsub calls -- see that script,
 # which this task does NOT run, per this task's own "prepare, don't
 # submit" instruction.)
 #
@@ -36,15 +33,16 @@
 # -event DoubleEG file) rather than a fresh guess, since every job here is
 # STILL exactly one file per job, and DY's own per-file event count
 # (~1.75M average -- 71,839,442 events / 41 files, record 35669) is the
-# same order of magnitude as the DATA files this was measured on. No
-# analysis-layer step here does more per-file work than the main run's
-# equivalent step (same TM-cut/pairing formulas, no cross-file
-# aggregation within a job) -- so these numbers are expected to be, if
-# anything, a slight overestimate, not an underestimate. UNVERIFIED
-# beyond that reasoning -- no Z->ee-specific pilot has actually run (this
-# task explicitly does not submit anything); re-measure with a small
-# array-index pilot (e.g. -J 1-3) before trusting these for the full
-# 133+41+133+41 = 348-subjob submission.
+# same order of magnitude as the DATA files this was measured on. The
+# ONLY extra per-file work now is the DY-only electron-veto-leakage
+# estimate (run_zee_selection_on_chunks.py's compute_hgg_veto_leakage) --
+# a second application of the same TM-cut/pairing formulas to a second,
+# disjoint photon subset already in memory, not a second file read, so it
+# should not meaningfully change these numbers. UNVERIFIED beyond that
+# reasoning -- no Z->ee-specific pilot has actually run (this task
+# explicitly does not submit anything); re-measure with the small
+# --pilot run (2 data + 2 DY subjobs) before trusting these for the full
+# 133+41 = 174-subjob submission.
 #
 # --run-dir (explicit, not main.py's auto-generated one) for the same
 # reason as pbs_hgg_data_array.sh: concurrently-launched array subjobs can
@@ -64,12 +62,14 @@
 
 set -euo pipefail
 
-: "${CONFIG:?must pass -v CONFIG=config.cms_hgg_zee_<variant>.yaml}"
+: "${CONFIG:?must pass -v CONFIG=config.cms_hgg_zee_data.yaml or config.cms_hgg_zee_dy.yaml}"
 : "${IS_DATA:?must pass -v IS_DATA=true|false}"
 : "${TOTAL_FILES:?must pass -v TOTAL_FILES=<133 for data, 41 for DY>}"
-MASS_LO="${MASS_LO:-70}"
-MASS_HI="${MASS_HI:-110}"
-DIPHOTON_TRIGGER_BRANCH="${DIPHOTON_TRIGGER_BRANCH:-}"
+# The stored window is fixed at 60-180 GeV for both datasets (see
+# zee_selection.py's own module docstring for the justification) --
+# overridable only for local testing, never needed in real submission.
+MASS_LO="${MASS_LO:-60}"
+MASS_HI="${MASS_HI:-180}"
 
 REPO_DIR="$HOME/atlas-utilization"
 CONDA_PROFILE="/usr/wipp/conda/24.5.0/etc/profile.d/conda.sh"
@@ -89,7 +89,7 @@ JOB_RUN_DIR="${LUSTRE_BASE}/job_${JOB_INDEX}"
 mkdir -p "$JOB_RUN_DIR"
 
 echo "Job $PBS_JOBID (array index $JOB_INDEX) starting on $(hostname) at $(date)"
-echo "CONFIG=$CONFIG IS_DATA=$IS_DATA TOTAL_FILES=$TOTAL_FILES MASS_LO=$MASS_LO MASS_HI=$MASS_HI DIPHOTON_TRIGGER_BRANCH=${DIPHOTON_TRIGGER_BRANCH:-<none>}"
+echo "CONFIG=$CONFIG IS_DATA=$IS_DATA TOTAL_FILES=$TOTAL_FILES MASS_LO=$MASS_LO MASS_HI=$MASS_HI"
 echo "Run dir: $JOB_RUN_DIR"
 
 python -u main.py \
@@ -102,11 +102,6 @@ python -u main.py \
 
 echo "Parsing done, running Z->e+e- selection on this job's chunk(s)..."
 
-TRIGGER_ARG=()
-if [[ -n "$DIPHOTON_TRIGGER_BRANCH" ]]; then
-    TRIGGER_ARG=(--record-diphoton-trigger-bit "$DIPHOTON_TRIGGER_BRANCH")
-fi
-
 python -u studies/hgg_cms/cluster/run_zee_selection_on_chunks.py \
     --chunks-dir "${JOB_RUN_DIR}/parsed_data" \
     --output-dir "${JOB_RUN_DIR}/selected" \
@@ -116,8 +111,7 @@ python -u studies/hgg_cms/cluster/run_zee_selection_on_chunks.py \
     --batch-job-index "$JOB_INDEX" \
     --total-batch-jobs "$TOTAL_FILES" \
     --mass-lo "$MASS_LO" \
-    --mass-hi "$MASS_HI" \
-    "${TRIGGER_ARG[@]}"
+    --mass-hi "$MASS_HI"
 # --record-id deliberately omitted: read per event from each chunk's own
 # "source_record" field (FileParser attaches this automatically).
 

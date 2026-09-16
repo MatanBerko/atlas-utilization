@@ -95,6 +95,21 @@ with simple acceptance loss. Two more likely explanations:
    turn-on straddling 90 GeV — some residual shape from that turn-on
    could still extend into 100–105) and the offline scaled-pT cuts
    interacting with the steeply-falling photon pT spectrum.
+3. **Added 16 Sep 2026, candidate explanation, to be TESTED by the Z→ee
+   run**: electron-veto leakage. Real Z→e+e− events (including the
+   off-shell Drell-Yan continuum tail, which genuinely extends well above
+   the Z pole) can leak into this sample if an electron happens to pass
+   `Photon_electronVeto == True` despite being a real electron — a
+   `electronVeto`-inefficiency effect, not a resolution effect. This is
+   a real, physically plausible background component distinct from
+   QCD/γ+jet, and its size is not yet measured. The prepared (not yet
+   submitted) Z→ee run computes exactly this: how many DY simulation
+   events would pass the real H→γγ selection (electronVeto REQUIRED
+   True) landing in 100–105 and 105–115 GeV — see
+   `studies/hgg_cms/cluster/ZEE_RUN_README.md`'s "electron-veto leakage
+   estimate" section and `studies/hgg_cms/validation/zee/
+   hgg_leakage_estimate.py`, which will compare its result directly
+   against this ~1,604-event excess once that run has actually happened.
 
 Either way: **the final background-fit range is decided in the
 background-model task, not here** — this result simply supports the
@@ -159,6 +174,19 @@ data shape closely.
 
 Pileup reweighting has essentially no effect on ggH here — small and in
 the direction/size one would expect for a well-simulated 2016 sample.
+
+**Correction, added 16 Sep 2026**: the σ_eff68 values above come from
+`common.weighted_mode_and_sigma68`, a BINNED method (0.5 GeV bins) —
+every value it can return is quantized to a multiple of 0.25 GeV (half
+the bin width), which is why 2.00/2.75 above (and Part F's 1.75/2.75)
+land on suspiciously round numbers. This is a resolution limitation of
+this report's own method, not a real feature of the underlying
+distribution. **The precise, unbinned reference values are D3's own**
+(computed with a true sorted-array effective-σ68, not a histogram):
+**EBEB 1.78 GeV, notEBEB 2.59 GeV**. Use the D3 numbers, not this
+report's, wherever sub-0.25-GeV precision on ggH's width matters; the
+qualitative conclusion here (pileup reweighting doesn't change the
+width) is unaffected by this correction.
 
 ## E — Expected signal yields (not significance)
 
@@ -229,7 +257,14 @@ category, `part_f_combined_signal_shape.png`:
 Both categories peak 0.25 GeV below the nominal 125 GeV (at this task's
 0.5 GeV binning resolution — not treated as a discrepancy without a finer
 scan), and EBEB is visibly narrower than notEBEB (1.75 vs. 2.75 GeV), as
-physically expected from better barrel energy resolution.
+physically expected from better barrel energy resolution. **Same binning
+correction as Part D applies here** — these σ_eff68 values are quantized
+to 0.25 GeV steps by the binned method; D3's own precise, unbinned ggH
+values (EBEB 1.78 GeV, notEBEB 2.59 GeV) are the reference for
+sub-0.25-GeV precision. (This "all modes combined" table is dominated by
+ggH, so the two sets of numbers should be close but are not the same
+sample — D3's is ggH-only, single-file; this table pools all 6 modes,
+full statistics.)
 
 ---
 
@@ -237,7 +272,7 @@ physically expected from better barrel energy resolution.
 
 | check | flag | severity |
 |---|---|---|
-| B (turn-on) | possible turn-on/edge effect, 100–105 GeV | informational — feeds the background-model task's fit-range choice, not a defect |
+| B (turn-on) | possible turn-on/edge effect, 100–105 GeV | informational — feeds the background-model task's fit-range choice, not a defect; electron-veto leakage from Z→ee added as a candidate explanation, to be tested once the prepared Z→ee run actually happens |
 | C (run stability) | χ²/ndf=2.48, 12/156 runs >3σ | mild — mostly low-luminosity-run statistics; worth a light mention if it recurs later |
 
 Nothing else raised a flag. No blinding violation occurred at any point

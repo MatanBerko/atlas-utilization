@@ -2,19 +2,21 @@
 """
 Implementation task 6, Part 4: merge for the Z->e+e- control-region run.
 
-Simpler than merge_outputs.py: every Z->ee job (data or DY, main or
-trigger-eff sample) uses the SAME one-file-per-job array-job layout
-(pbs_hgg_zee_array.sh), so there is only one mode here, not a data/signal
-split. Same verified identity-check method as merge_outputs.py's data
-mode: each job's own metadata_cache.json + its array index, sliced with
-the real utils.batching.get_batch_slice_by_year, checked against a frozen
-expected file list -- cms_hgg_data_file_lists.json (133 DoubleEG files,
-shared with the main run) for data variants, cms_zee_dy_file_list.json
-(41 DY files) for DY variants. No blinding logic anywhere in this script
--- the Z->ee output has no blinded window (studies/hgg_cms/zee_output.py).
+Simpler than merge_outputs.py: both Z->ee jobs (data, DY -- REVISED 16
+Sep 2026, was 4 variants including two "trigger-eff" ones before that
+sample became an offline cut instead of a separate cluster job) use the
+SAME one-file-per-job array-job layout (pbs_hgg_zee_array.sh), so there
+is only one mode here, not a data/signal split. Same verified identity-
+check method as merge_outputs.py's data mode: each job's own
+metadata_cache.json + its array index, sliced with the real
+utils.batching.get_batch_slice_by_year, checked against a frozen expected
+file list -- cms_hgg_data_file_lists.json (133 DoubleEG files, shared
+with the main run) for the data variant, cms_zee_dy_file_list.json (41 DY
+files) for the DY variant. No blinding logic anywhere in this script --
+the Z->ee output has no blinded window (studies/hgg_cms/zee_output.py).
 
 Usage:
-    python merge_zee_outputs.py --variant data_full --total-batches 133 \
+    python merge_zee_outputs.py --total-batches 133 \
         --jobs-base /storage/.../hgg_zee/data_full \
         --expected-json studies/hgg_cms/impl_checks/mapping_check/cms_hgg_data_file_lists.json \
         --merged-out /storage/.../hgg_zee/merged/zee_data.root \

@@ -55,12 +55,37 @@ parsing_task_config:
   # Same validated-runs requirement as the main analysis (task 6, Part 4
   # instruction: "same validated-runs ... cuts").
   validated_runs_json: data/cms/validated_runs/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt
-  # Main Z->ee sample: filtered on the SAME diphoton trigger as the main
-  # H->gamma-gamma analysis (the whole point of this control sample is to
-  # validate photon-energy modeling for events selected the same way).
+  # REVISED (16 Sep 2026): filtering on ONLY the diphoton trigger here
+  # was a bug -- HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90's
+  # own online Mass90 requirement cuts straight through the Z peak
+  # (91.19 GeV), sculpting the lower half of the peak differently in data
+  # vs simulation (simulation's own trigger emulation may not model the
+  # HLT's exact turn-on shape as precisely as data's real hardware
+  # response) -- exactly the kind of shape difference that would bias the
+  # peak-position/width comparison this sample exists to make.
+  #
+  # Fix: filter on EITHER trigger firing (mode: any, both paths), and
+  # keep BOTH trigger bits in the output (they are attached automatically
+  # as soon as they're listed here -- services/parsing/
+  # trigger_requirements.py's own "Trigger" scalar-branch-group mechanism
+  # attaches every listed path regardless of which one(s) actually
+  # contributed to an event passing the "any" filter). The offline
+  # analysis (studies/hgg_cms/validation/zee/) then selects THREE
+  # non-overlapping sub-samples from this one parsed dataset:
+  #   (a) energy-scale/resolution: Ele27-fired events, 70-110 GeV -- an
+  #       HLT_Ele27_WPTight_Gsf-triggered event's mass is untouched by
+  #       the diphoton trigger's Mass90 requirement REGARDLESS of
+  #       whether the diphoton bit also happened to fire, so this
+  #       sub-sample is clean of the Mass90 sculpting bug by construction.
+  #   (b) trigger efficiency: Ele27-fired events with offline mass > 95
+  #       GeV, checking (not filtering on) the diphoton bit.
+  #   (c) a demonstration plot of the SAME sculpting bug this comment
+  #       describes: the diphoton-only-triggered 70-110 GeV distribution,
+  #       expected to show a visible deficit below ~90 GeV.
   trigger_requirements:
     mode: any
     paths:
+    - HLT_Ele27_WPTight_Gsf
     - HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90
   read_pileup_info: true
   read_event_weights: false

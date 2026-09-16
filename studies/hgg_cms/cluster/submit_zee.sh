@@ -2,15 +2,20 @@
 # ---------------------------------------------------------------------------
 # submit_zee.sh
 #
-# Implementation task 6, Part 4: submits the Z->e+e- control-region run --
-# 4 array jobs, all using pbs_hgg_zee_array.sh:
-#   1. data,    main sample      (133 subjobs, config.cms_hgg_zee_data.yaml)
-#   2. DY sim,  main sample      ( 41 subjobs, config.cms_hgg_zee_dy.yaml)
-#   3. data,    trigger-eff      (133 subjobs, config.cms_hgg_zee_trigeff_data.yaml)
-#   4. DY sim,  trigger-eff      ( 41 subjobs, config.cms_hgg_zee_trigeff_dy.yaml)
-# 348 scheduler entries total. All output under a NEW tree,
+# Implementation task 6, Part 4 (REVISED 16 Sep 2026): submits the Z->e+e-
+# control-region run -- TWO array jobs, both using pbs_hgg_zee_array.sh:
+#   1. data (133 subjobs, config.cms_hgg_zee_data.yaml)
+#   2. DY sim ( 41 subjobs, config.cms_hgg_zee_dy.yaml)
+# 174 scheduler entries total. All output under a NEW tree,
 # /storage/agrp/berkom/atlas-utilization/output/hgg_zee/ (logs under
 # .../logs/hgg_zee/) -- entirely separate from hgg_full/.
+#
+# REVISED from an earlier 4-variant design (see pbs_hgg_zee_array.sh's own
+# header for the full story): the "trigger-efficiency" sample is no
+# longer a separate cluster job -- both configs now store BOTH trigger
+# bits and the analysis-layer selects the energy-scale, trigger
+# -efficiency, and Mass90-sculpting-demonstration sub-samples OFFLINE
+# from this one dataset (studies/hgg_cms/validation/zee/).
 #
 # THIS TASK DOES NOT RUN THIS SCRIPT. Prepared only, per the task's own
 # "prepare, don't submit" instruction -- read PILOT_FIRST_RECOMMENDATION
@@ -18,21 +23,23 @@
 #
 # PILOT_FIRST_RECOMMENDATION: no Z->ee-specific pilot has been run on this
 # cluster -- pbs_hgg_zee_array.sh's resource requests are REUSED from the
-# main run's measured data-job numbers (reasoned to be a fair, if not
-# conservative, estimate -- see that script's own header), not directly
-# measured for these 4 configs. Strongly recommended: first run this
-# script with --pilot (submits -J 1-2 for the two data variants and -J 1-2
-# for the two DY variants -- 8 subjobs total, not 348), inspect real
-# wall/mem numbers with `qstat -fx <jobid>` the same way PILOT_CHECKLIST.md
-# describes for the main run, and re-check pbs_hgg_zee_array.sh's
-# mem/walltime against them before ever passing --full.
+# main run's measured data-job numbers (reasoned to be a fair estimate --
+# see that script's own header), not directly measured for these 2
+# configs (DY's own extra per-file work, the electron-veto-leakage
+# estimate, has never run for real either). Strongly recommended: first
+# run this script with --pilot (2 data + 2 DY subjobs, 4 total, not 174),
+# inspect real wall/mem numbers with `qstat -fx <jobid>` the same way
+# PILOT_CHECKLIST.md describes for the main run, and re-check
+# pbs_hgg_zee_array.sh's mem/walltime against them before ever passing
+# --full.
 #
 # PREFLIGHT (same battery as submit_full.sh) runs BEFORE any qsub; nothing
 # is submitted if anything fails: conda activation; python/XRootD package
 # versions; an XRootD metadata-only open of one DoubleEG file and one DY
-# file; $REPO_DIR on this branch at origin's current tip with a clean
-# tree; every log/output directory writable; hgg_zee/ output directories
-# must be empty or not exist yet.
+# file (also checks both trigger branches are present); $REPO_DIR on this
+# branch at origin's current tip with a clean tree; every log/output
+# directory writable; hgg_zee/ output directories must be empty or not
+# exist yet.
 #
 # DRY_RUN=1: skips the checks that need the real cluster, still runs the
 # pure local/filesystem checks, and prints every qsub command instead of
@@ -48,7 +55,6 @@ ZEE_BASE="${ZEE_BASE:-/storage/agrp/berkom/atlas-utilization/output/hgg_zee}"
 ZEE_LOG_BASE="${ZEE_LOG_BASE:-/storage/agrp/berkom/atlas-utilization/logs/hgg_zee}"
 LUSTRE_QUOTA_PATH="${LUSTRE_QUOTA_PATH:-/storage/agrp/berkom}"
 DRY_RUN="${DRY_RUN:-0}"
-DIPHOTON_TRIGGER="HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90"
 
 MODE=""   # "pilot" or "full"
 for arg in "$@"; do
@@ -59,8 +65,8 @@ for arg in "$@"; do
     esac
 done
 if [[ -z "$MODE" ]]; then
-    echo "Usage: bash submit_zee.sh --pilot   (2-file-per-variant sanity check, 8 subjobs)" >&2
-    echo "   or: bash submit_zee.sh --full    (the real run, 348 subjobs -- read PILOT_FIRST_RECOMMENDATION above first)" >&2
+    echo "Usage: bash submit_zee.sh --pilot   (2 data + 2 DY subjobs, 4 total)" >&2
+    echo "   or: bash submit_zee.sh --full    (the real run, 174 subjobs -- read PILOT_FIRST_RECOMMENDATION above first)" >&2
     exit 1
 fi
 
@@ -110,8 +116,9 @@ for label, url in urls.items():
         f = uproot.open(url)
         keys = f['Events'].keys()
         assert 'HLT_Ele27_WPTight_Gsf' in keys, 'HLT_Ele27_WPTight_Gsf missing'
+        assert 'HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90' in keys, 'diphoton trigger missing'
         assert 'Photon_electronVeto' in keys, 'Photon_electronVeto missing'
-        print(f'  {label}: opened OK, {len(keys)} branches, HLT_Ele27_WPTight_Gsf present')
+        print(f'  {label}: opened OK, {len(keys)} branches, both trigger bits present')
     except Exception as e:
         print(f'  {label}: FAILED -- {type(e).__name__}: {e}')
         ok = False
@@ -160,8 +167,7 @@ preflight_dirs() {
 preflight_dirs
 
 preflight_outputs_empty() {
-    local suffix="$1"
-    local check_dirs=("$ZEE_BASE/data_${suffix}" "$ZEE_BASE/dy_${suffix}")
+    local check_dirs=("$ZEE_BASE/data_${MODE}" "$ZEE_BASE/dy_${MODE}")
     local nonempty=() d
     for d in "${check_dirs[@]}"; do
         if [[ -d "$d" ]] && [[ -n "$(ls -A "$d" 2>/dev/null)" ]]; then
@@ -175,8 +181,7 @@ preflight_outputs_empty() {
         exit 1
     fi
 }
-preflight_outputs_empty "$MODE"
-preflight_outputs_empty "trigeff_$MODE"
+preflight_outputs_empty
 
 echo "=== Preflight passed -- submitting ($MODE) ==="
 
@@ -193,12 +198,11 @@ else
 fi
 
 submit_variant() {
-    local name="$1" config="$2" is_data="$3" total_files="$4" array_range="$5" \
-          output_base="$6" mass_lo="$7" mass_hi="$8" trigger_branch="$9"
+    local name="$1" config="$2" is_data="$3" total_files="$4" array_range="$5" output_base="$6"
     echo "--- $name: $array_range of $total_files files ---"
     local jobid
     jobid=$(submit -J "$array_range" \
-        -v CONFIG="$config",IS_DATA="$is_data",TOTAL_FILES="$total_files",OUTPUT_BASE="$output_base",MASS_LO="$mass_lo",MASS_HI="$mass_hi",DIPHOTON_TRIGGER_BRANCH="$trigger_branch" \
+        -v CONFIG="$config",IS_DATA="$is_data",TOTAL_FILES="$total_files",OUTPUT_BASE="$output_base" \
         -o "${ZEE_LOG_BASE}/${name}_^array_index^.out" \
         -e "${ZEE_LOG_BASE}/${name}_^array_index^.err" \
         studies/hgg_cms/cluster/pbs_hgg_zee_array.sh)
@@ -207,16 +211,12 @@ submit_variant() {
 }
 
 submit_variant "data_${MODE}" config.cms_hgg_zee_data.yaml true 133 "$ARRAY_RANGE_DATA" \
-    "${ZEE_BASE}/data_${MODE}" 70 110 ""
+    "${ZEE_BASE}/data_${MODE}"
 submit_variant "dy_${MODE}" config.cms_hgg_zee_dy.yaml false 41 "$ARRAY_RANGE_DY" \
-    "${ZEE_BASE}/dy_${MODE}" 70 110 ""
-submit_variant "data_trigeff_${MODE}" config.cms_hgg_zee_trigeff_data.yaml true 133 "$ARRAY_RANGE_DATA" \
-    "${ZEE_BASE}/data_trigeff_${MODE}" 95 1000000 "$DIPHOTON_TRIGGER"
-submit_variant "dy_trigeff_${MODE}" config.cms_hgg_zee_trigeff_dy.yaml false 41 "$ARRAY_RANGE_DY" \
-    "${ZEE_BASE}/dy_trigeff_${MODE}" 95 1000000 "$DIPHOTON_TRIGGER"
+    "${ZEE_BASE}/dy_${MODE}"
 
 echo ""
-echo "Submitted ($MODE): 4 array jobs."
+echo "Submitted ($MODE): 2 array jobs."
 echo "All output under: $ZEE_BASE/"
 echo "All logs under:    $ZEE_LOG_BASE/"
 echo "Job IDs saved to:  $JOBLIST_FILE"
