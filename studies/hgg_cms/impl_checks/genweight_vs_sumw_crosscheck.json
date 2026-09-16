@@ -1,0 +1,44 @@
+{
+  "ggH (37350)": {
+    "url": "https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/3231834B-7A6E-4840-8627-C97FDCF67268.root",
+    "n_events_in_file": 533000,
+    "genWeight_dtype": "float32",
+    "sum_genWeight_full_branch": 11443170.924007416,
+    "n_runs_tree_entries": 1,
+    "genEventSumw_from_Runs_tree": 11443170.655200005,
+    "genEventCount_from_Runs_tree": 533000,
+    "n_events_matches_genEventCount": true,
+    "relative_difference": 2.3490640775482644e-08,
+    "agrees_to_floating_point_precision": true,
+    "n_negative_weight_events": 2779,
+    "fraction_negative_weight_events": 0.005213883677298311
+  },
+  "VBF (68497)": {
+    "url": "https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/VBFHToGG_M125_TuneCP5_13TeV-amcatnlo-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2520000/99F507FD-FF4B-0E42-8269-48385EDD1CBD.root",
+    "n_events_in_file": 6000,
+    "genWeight_dtype": "float32",
+    "sum_genWeight_full_branch": 25170.16904067993,
+    "n_runs_tree_entries": 1,
+    "genEventSumw_from_Runs_tree": 25170.168414,
+    "genEventCount_from_Runs_tree": 6000,
+    "n_events_matches_genEventCount": true,
+    "relative_difference": 2.4897725020192237e-08,
+    "agrees_to_floating_point_precision": true,
+    "n_negative_weight_events": 2031,
+    "fraction_negative_weight_events": 0.3385
+  },
+  "ttH (67611)": {
+    "url": "https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/ttHJetToGG_M125_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2520000/4AE7677E-0E18-3648-828C-EE3AEC9C5A3C.root",
+    "n_events_in_file": 4378,
+    "genWeight_dtype": "float32",
+    "sum_genWeight_full_branch": 4065.08145236969,
+    "n_runs_tree_entries": 1,
+    "genEventSumw_from_Runs_tree": 4065.0815095999997,
+    "genEventCount_from_Runs_tree": 4378,
+    "n_events_matches_genEventCount": true,
+    "relative_difference": 1.4078514683244645e-08,
+    "agrees_to_floating_point_precision": true,
+    "n_negative_weight_events": 1467,
+    "fraction_negative_weight_events": 0.3350845134764733
+  }
+}

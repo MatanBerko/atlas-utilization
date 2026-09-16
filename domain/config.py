@@ -116,6 +116,22 @@ class ParsingConfig:
     # (RequiredObjectFieldMissingError), not a silent drop.
     extra_object_fields: Optional[dict] = None
 
+    # Optional (default False, and every current config): adds the
+    # per-event genWeight scalar field -- simulation only. Detected per
+    # file (see services.parsing.mc_weights.file_is_simulation), not via a
+    # global data/MC flag, since one run can process a mix of data and
+    # simulation CMS records (specific_record_ids aren't split into a
+    # data/MC pair the way ATLAS release_years are). Requesting this on a
+    # file that looks like real data (no genWeight branch) is a
+    # configuration error, not a silent no-op.
+    read_event_weights: bool = False
+
+    # Optional (default False, and every current config): adds PV_npvsGood
+    # (present in both data and simulation) and, for simulation files only,
+    # Pileup_nTrueInt (a generator-truth quantity that doesn't exist in
+    # data -- simply not requested for a data file, not an error).
+    read_pileup_info: bool = False
+
     def __post_init__(self):
         """Validate parsing configuration."""
         if self.threads <= 0:
@@ -177,6 +193,10 @@ class ParsingConfig:
                     raise ValueError(
                         f"extra_object_fields['{collection_name}'] must be a list of field name strings, got {fields!r}"
                     )
+        if not isinstance(self.read_event_weights, bool):
+            raise ValueError("read_event_weights must be a boolean")
+        if not isinstance(self.read_pileup_info, bool):
+            raise ValueError("read_pileup_info must be a boolean")
         if self.validated_runs_json is not None and not isinstance(self.validated_runs_json, str):
             raise ValueError(
                 f"validated_runs_json must be a path string, got {self.validated_runs_json!r}"
@@ -427,6 +447,8 @@ class PipelineConfig:
                 validated_runs_json=parsing_dict.get("validated_runs_json"),
                 trigger_requirements=parsing_dict.get("trigger_requirements"),
                 extra_object_fields=parsing_dict.get("extra_object_fields"),
+                read_event_weights=parsing_dict.get("read_event_weights", False),
+                read_pileup_info=parsing_dict.get("read_pileup_info", False),
             )
         
         # Parse mass calculation config if enabled
