@@ -82,8 +82,19 @@ def build_output_table(events: ak.Array, selection_result: Dict, is_data: bool, 
     """
     sel = selection_result["selected"]
     ev = events[sel]
-    lead = selection_result["lead"][sel]
-    sublead = selection_result["sublead"][sel]
+    # selection_result["lead"/"sublead"] come from ak.pad_none (see
+    # studies.hgg_cms.selection.leading_pair_mass) and so carry an
+    # option ("?float64" etc.) type on every field, even though no
+    # actual None survives once masked down to `selected` events (every
+    # selected event has has_pair=True, i.e. >=2 real photons). uproot's
+    # ROOT writer refuses to write an option-typed numeric branch at all
+    # (confirmed: "TypeError: cannot write Awkward Array type to ROOT
+    # file: ?float64") -- ak.drop_none removes the option wrapper, and
+    # raises if a real None were somehow still present, which is exactly
+    # the safety property wanted here (would rather crash loudly than
+    # silently write a None as e.g. 0.0).
+    lead = ak.drop_none(selection_result["lead"][sel])
+    sublead = ak.drop_none(selection_result["sublead"][sel])
     mgg = selection_result["mgg"][sel]
     cat = selection_result["category"][sel]
 

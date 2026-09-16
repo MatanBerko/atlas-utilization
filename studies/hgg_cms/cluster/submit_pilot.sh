@@ -2,17 +2,33 @@
 # ---------------------------------------------------------------------------
 # submit_pilot.sh
 #
-# Submits a SMALL PILOT of the H->gamma-gamma cluster run: 2 DATA files
-# (via the data job array, indices 1-2 only) + 1 file per SIGNAL record
-# (via max_files_to_process:1 override configs, generated on the fly
-# here) -- NOT the full run.
+# Submits, together, everything that must pass BEFORE the full run is
+# even considered:
+#   1. D1/D2 -- exact reproduction of check_c_trigger_mimicking.py /
+#      check_b_vertex.py, as a cluster job (pbs_hgg_d1d2_reproduce.sh).
+#   2. D3 -- one full DoubleEG Run2016G file + one full ggH file, through
+#      the real production configs, with the D3 analysis (cutflow,
+#      efficiency, shape, plots, preview yield, timing) attached
+#      (pbs_hgg_d3_data.sh / pbs_hgg_d3_signal.sh).
+#   3. A SMALL PILOT of the full run itself: 2 DATA files (via the data
+#      job array, indices 1-2 only) + 1 file per SIGNAL record (via
+#      max_files_to_process:1 override configs, generated on the fly
+#      here).
+# None of this is the full run.
 #
 # DO NOT extend this to the full submission (pbs_hgg_data_array.sh's full
 # -J 1-133, and pbs_hgg_signal.sh with max_files_to_process left unset)
-# until this pilot's jobs have all finished, their logs and outputs have
-# been reviewed against studies/hgg_cms/cluster/PILOT_CHECKLIST.md, and a
-# human has explicitly decided to proceed. This script does NOT
-# auto-continue to the full run -- it only submits the pilot and stops.
+# until: (a) D1/D2's acceptance criteria (pbs_hgg_d1d2_reproduce.sh's own
+# comment header) are met or any difference has been root-caused and
+# reported -- not forced into agreement; (b) D3's cutflow/efficiency/
+# shape/timing numbers have been reviewed and used to replace the
+# placeholder #PBS -l mem/walltime values in pbs_hgg_data_array.sh and
+# pbs_hgg_signal.sh; (c) this pilot's jobs have all finished and their
+# logs/outputs have been reviewed against
+# studies/hgg_cms/cluster/PILOT_CHECKLIST.md; and (d) a human has
+# explicitly decided to proceed. This script does NOT auto-continue to
+# the full run -- it only submits these validation + pilot jobs and
+# stops.
 #
 # This script itself does not run python/qsub in this repo's own CI or
 # local-development context -- it is meant to be run BY HAND, on the
@@ -27,7 +43,18 @@ REPO_DIR="$HOME/atlas-utilization"
 cd "$REPO_DIR"
 
 LOG_BASE="/storage/agrp/berkom/atlas-utilization/logs"
-mkdir -p "${LOG_BASE}/hgg_data" "${LOG_BASE}/hgg_signal" "${LOG_BASE}/hgg_signal_pilot"
+mkdir -p "${LOG_BASE}/hgg_data" "${LOG_BASE}/hgg_signal" "${LOG_BASE}/hgg_signal_pilot" \
+         "${LOG_BASE}/hgg_d1d2" "${LOG_BASE}/hgg_d3"
+
+echo "=== Submitting D1/D2: exact reproduction of check_c/check_b on the cluster ==="
+D1D2_JOBID=$(qsub studies/hgg_cms/cluster/pbs_hgg_d1d2_reproduce.sh)
+echo "  $D1D2_JOBID"
+
+echo "=== Submitting D3: one full DoubleEG file + one full ggH file ==="
+D3_DATA_JOBID=$(qsub studies/hgg_cms/cluster/pbs_hgg_d3_data.sh)
+echo "  data: $D3_DATA_JOBID"
+D3_SIGNAL_JOBID=$(qsub studies/hgg_cms/cluster/pbs_hgg_d3_signal.sh)
+echo "  signal: $D3_SIGNAL_JOBID"
 
 echo "=== Submitting DATA pilot: 2 files (array indices 1-2) ==="
 qsub -J 1-2 studies/hgg_cms/cluster/pbs_hgg_data_array.sh
@@ -72,8 +99,10 @@ PYEOF
 done
 
 echo ""
-echo "Pilot submitted: 2 data jobs + 6 signal jobs (1 file each)."
+echo "Submitted: D1/D2 (1 job) + D3 (2 jobs: data, signal) + pilot (2 data array"
+echo "jobs + 6 signal jobs, 1 file each)."
 echo "Check status with: qstat -u \$USER"
-echo "When all pilot jobs finish, follow studies/hgg_cms/cluster/PILOT_CHECKLIST.md"
+echo "When ALL of the above finish, follow studies/hgg_cms/cluster/PILOT_CHECKLIST.md"
+echo "(covers D1/D2's acceptance criteria, D3's numbers, and the pilot's own outputs)"
 echo "before submitting the full run (studies/hgg_cms/cluster/submit_full.sh, NOT provided by"
 echo "this task on purpose -- the full submission is a separate, explicit decision)."

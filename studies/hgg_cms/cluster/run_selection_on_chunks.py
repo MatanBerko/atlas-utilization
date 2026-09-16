@@ -70,11 +70,34 @@ def check_dedup_never_active(config_path: str) -> int:
 
 
 def read_chunk(chunk_path: Path) -> ak.Array:
-    """Reads a pipeline-written chunk ROOT file (tree "events", flat
-    branches "Photons_pt" etc. -- see orchestration/handlers/
-    parsing_handler.py's _save_chunk_to_root) back into a jagged awkward
-    array with the same field structure FileParser itself produces."""
-    return uproot.open(str(chunk_path))["events"].arrays(library="ak")
+    """Reads a pipeline-written chunk ROOT file back into an awkward array
+    with a nested "Photons" record field, matching what
+    studies.hgg_cms.selection expects (events["Photons"].pt etc.).
+
+    orchestration/handlers/parsing_handler.py's _save_chunk_to_root writes
+    the "Photons" field (already a jagged record array coming out of
+    FileParser) straight to uproot as one dict entry; uproot's own ROOT
+    writer, in turn, SPLITS a jagged record field into separate flat
+    branches on disk -- "nPhotons" (a counter) plus one "Photons_<field>"
+    branch per sub-field -- the same on-disk convention real CMS NanoAOD
+    files themselves use. Reading those branches back with
+    ``.arrays(library="ak")`` therefore returns them as flat top-level
+    fields, NOT a nested "Photons" record (confirmed directly: a
+    synthetic chunk round-tripped through uproot.recreate/uproot.open came
+    back with "no field 'Photons'" but 17 flat fields including
+    "Photons_pt" etc.) -- so they must be re-zipped here, the same way
+    services/parsing/file_parser.py does for a freshly-read NanoAOD file.
+    """
+    flat = uproot.open(str(chunk_path))["events"].arrays(library="ak")
+    prefix = "Photons_"
+    photon_fields = [f for f in flat.fields if f.startswith(prefix)]
+    if not photon_fields:
+        return flat
+    photons = ak.zip({f[len(prefix):]: flat[f] for f in photon_fields})
+    other_fields = [f for f in flat.fields if f not in photon_fields and f != "nPhotons"]
+    out = {f: flat[f] for f in other_fields}
+    out["Photons"] = photons
+    return ak.zip(out, depth_limit=1)
 
 
 def process_one_chunk(chunk_path: Path, output_dir: Path, record_id, is_data: bool) -> dict:
