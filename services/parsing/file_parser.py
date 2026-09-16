@@ -80,6 +80,29 @@ class RequiredObjectFieldMissingError(RequiredScalarBranchMissingError):
     """
 
 
+class UnregisteredRecordSchemaError(RequiredScalarBranchMissingError):
+    """A CMS record ID (``release_year`` of the form ``"record_<id>"``) has
+    no entry in ``schemas.RECORD_ID_TO_SCHEMA``, so its branch-naming
+    schema is unknown.
+
+    Before implementation task 6, this silently fell back to
+    ``FileParser._auto_detect_branches`` with only a WARNING log line --
+    a fallback ``schemas.RECORD_ID_TO_SCHEMA``'s own comment documents as
+    broken for CMS NanoAOD's flat branch naming (the exact failure mode
+    that silently produced 0 events for the m0m1j0 analysis before its
+    record IDs were registered there). Auto-detection is still attempted
+    for a non-record ``release_year`` with no matching entry in
+    ``RELEASE_SCHEMAS`` (unchanged) -- only the CMS-record-ID case, where
+    auto-detection is known not to work at all, is now a loud, immediate
+    error instead.
+
+    Subclasses ``RequiredScalarBranchMissingError`` so it is caught by the
+    same non-swallowed, run-aborting handling already in
+    ``FileParser.parse_file`` and ``ThreadedFileProcessor.process_files``
+    (implementation task 3), with no further changes needed to either.
+    """
+
+
 class FileParser:
     """
     Service for parsing individual ROOT files.
@@ -212,6 +235,7 @@ class FileParser:
             release_year,
             extra_scalar_branches=extra_scalar_branches,
             extra_object_fields=extra_object_fields,
+            file_path=file_path,
         )
 
         if not obj_branches:
@@ -517,6 +541,7 @@ class FileParser:
         release_year: str,
         extra_scalar_branches: Optional[dict[str, list[str]]] = None,
         extra_object_fields: Optional[dict[str, list[str]]] = None,
+        file_path: str = "<unknown file>",
     ) -> dict[str, dict[str, str]]:
         """
         Extract branches by object based on release-specific schema.
@@ -534,7 +559,26 @@ class FileParser:
                     pass
 
             schema_config = schemas.get_schema_for_release(release_year, record_id=record_id)
-        except KeyError:
+        except KeyError as e:
+            if release_year.startswith("record_"):
+                # implementation task 6, Part B1: a CMS record ID with no
+                # registered schema is a loud, immediate error, not a
+                # silent fall-through to a fallback known not to work for
+                # NanoAOD's flat branch naming -- see
+                # UnregisteredRecordSchemaError's own docstring.
+                raise UnregisteredRecordSchemaError([(
+                    file_path,
+                    "Schema",
+                    [
+                        f"record ID {record_id} (release_year={release_year!r}) is "
+                        f"not registered in schemas.RECORD_ID_TO_SCHEMA, so its "
+                        f"branch-naming schema is unknown; auto-detection is not "
+                        f"attempted for CMS record IDs (see that mapping's own "
+                        f"comment on why it does not work for NanoAOD's flat "
+                        f"branch naming) -- register this record's schema before "
+                        f"using it"
+                    ],
+                )]) from e
             logging.warning(
                 f"Release year '{release_year}' not found in schemas. "
                 "Attempting auto-detection."

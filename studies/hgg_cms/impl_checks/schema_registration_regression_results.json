@@ -1,0 +1,20 @@
+{
+  "description": "Regression proof for: (1) registering the 8 H->gamma-gamma record IDs (30521, 30554, 37350, 68497, 71013, 70173, 74132, 67611) in schemas.RECORD_ID_TO_SCHEMA; (2) UnregisteredRecordSchemaError replacing the silent auto-detect fallback for an unregistered CMS record ID; (3) the de-duplication-must-never-run-on-simulation guard in orchestration/handlers/parsing_handler.py. FileParser._parse_opened_file run on real files, once with feature/cms-mc-weights-and-probe-retry (3cf6ffd21d685316a1893620716c51bfc024b8e1) and once with this branch. Same 4 CMS files (30529, 30530, 30522, 30555 -- none of which are among the 8 newly-registered record IDs) and 1 ATLAS file as every earlier task's own regression proof, at most 2,000 events per file.",
+  "base_commit": "3cf6ffd21d685316a1893620716c51bfc024b8e1",
+  "feature_branch": "feature/hgg-selection-and-output",
+  "max_events_per_file": 2000,
+  "file_level_comparison": {
+    "30529": {"dataset": "/SingleElectron/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD", "status": "IDENTICAL"},
+    "30530": {"dataset": "/SingleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD", "status": "IDENTICAL"},
+    "30522": {"dataset": "/DoubleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD", "status": "IDENTICAL"},
+    "30555": {"dataset": "/DoubleMuon/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD", "status": "IDENTICAL"},
+    "atlas_2024r-pp": {"dataset": "ATLAS DAOD_PHYSLITE mc20_13TeV, dsid 301204", "status": "IDENTICAL"}
+  },
+  "why_no_config_level_diff_check_here": "None of these three changes touch domain/config.py or add any new ParsingConfig field, so there is no new config.yaml key to compare (unlike tasks 2-5's own regression proofs) -- the file-level comparison above is the complete proof of zero behaviour change for these three changes.",
+  "notes": [
+    "Schema registration only adds dict entries for record IDs none of these 4 CMS test files/records use, so it cannot affect their output by construction.",
+    "UnregisteredRecordSchemaError only changes behaviour for a release_year of the form 'record_<id>' where <id> is NOT in RECORD_ID_TO_SCHEMA -- all 4 CMS test records (30529, 30530, 30522, 30555) already were registered before this task, so this new error path is never reached for them.",
+    "The de-duplication simulation guard only changes behaviour when a deduplicator is active (selection_by_record set for at least one record in the run) AND that record's events look like simulation -- this regression check's dump_parsed_fields.py harness calls FileParser._parse_opened_file directly, which is upstream of ParsingHandler.handle() entirely (deduplication is applied in the handler, not in FileParser), so this guard's code path is not reached by this specific check at all; it is separately unit-tested in tests/test_dedup_simulation_guard.py."
+  ],
+  "overall_verdict": "IDENTICAL for all 4 CMS datasets and one real ATLAS file."
+}

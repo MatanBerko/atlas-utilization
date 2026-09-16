@@ -73,6 +73,23 @@ RECORD_ID_TO_SCHEMA = {
     # needed for m0m1j0 and were not requested).
     30522: "cms-nanoaod",  # /DoubleMuon/Run2016G      NanoAODv9
     30555: "cms-nanoaod",  # /DoubleMuon/Run2016H      NanoAODv9
+    # H->gamma-gamma (implementation task 6, studies/hgg_cms/): registered
+    # before use, same pattern as every prior addition to this mapping.
+    # Each record's own file was opened and its Events tree's branch list
+    # checked directly (metadata only, no event data read) before adding
+    # it here -- confirmed flat NanoAOD naming (Photon_pt, Muon_pt,
+    # Electron_pt, Jet_pt all present, no dotted branch names), run/
+    # luminosityBlock/event all present, and genWeight correctly absent on
+    # the two DoubleEG (data) records and present on all six signal
+    # records -- see studies/hgg_cms/impl_checks/record_schema_evidence.json.
+    30521: "cms-nanoaod",  # /DoubleEG/Run2016G                     NanoAODv9 (data)
+    30554: "cms-nanoaod",  # /DoubleEG/Run2016H                     NanoAODv9 (data)
+    37350: "cms-nanoaod",  # GluGluHToGG (ggH)                      NANOAODSIM (postVFP signal)
+    68497: "cms-nanoaod",  # VBFHToGG (VBF)                         NANOAODSIM (postVFP signal)
+    71013: "cms-nanoaod",  # WplusH_HToGG_WToAll (W+H)               NANOAODSIM (postVFP signal)
+    70173: "cms-nanoaod",  # WminusH_HToGG_WToAll (W-H)              NANOAODSIM (postVFP signal)
+    74132: "cms-nanoaod",  # ZH_HToGG_ZToAll (ZH)                    NANOAODSIM (postVFP signal)
+    67611: "cms-nanoaod",  # ttHJetToGG (ttH)                        NANOAODSIM (postVFP signal)
 }
 
 # Release-specific branch naming templates
