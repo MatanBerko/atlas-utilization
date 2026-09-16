@@ -1,0 +1,37 @@
+{
+  "selection": "Ele27-fired, 70 < m_ee < 110 GeV",
+  "dy_cross_section_pb": 6077.22,
+  "luminosity_fb": 16.393380531,
+  "genEventSumw_dy_processed": 1220934627963.07,
+  "flag_range": [
+    0.7,
+    1.3
+  ],
+  "note": "Ratio expected near 1 but not exactly -- no electron/photon-ID or trigger scale factors are applied anywhere in this task (normally derived FROM comparisons like this one, in a later task). Flagged only if outside [0.7, 1.3], a pre-set range, not tuned to the result.",
+  "per_category": {
+    "inclusive": {
+      "n_data_observed": 4394063,
+      "N_dy_expected_no_pu": 5310860.390256994,
+      "N_dy_expected_with_pu": 5310511.921289794,
+      "ratio_data_over_dy_no_pu": 0.8273730953389588,
+      "ratio_data_over_dy_with_pu": 0.8274273864981343,
+      "flagged_outside_0p7_1p3": false
+    },
+    "EBEB": {
+      "n_data_observed": 2947272,
+      "N_dy_expected_no_pu": 3496803.3889614623,
+      "N_dy_expected_with_pu": 3520180.200552249,
+      "ratio_data_over_dy_no_pu": 0.842847501607841,
+      "ratio_data_over_dy_with_pu": 0.8372503201789583,
+      "flagged_outside_0p7_1p3": false
+    },
+    "notEBEB": {
+      "n_data_observed": 1446791,
+      "N_dy_expected_no_pu": 1814061.680467977,
+      "N_dy_expected_with_pu": 1790331.720737547,
+      "ratio_data_over_dy_no_pu": 0.7975423413534476,
+      "ratio_data_over_dy_with_pu": 0.808113369853034,
+      "flagged_outside_0p7_1p3": false
+    }
+  }
+}

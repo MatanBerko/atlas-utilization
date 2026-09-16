@@ -23,9 +23,10 @@ table -- no separate "trigger-efficiency" cluster job variant anymore.
 For DY (--is-data false) ONLY, this driver ALSO computes a completely
 SEPARATE quantity in the same pass over the same already-in-memory chunk:
 how many DY events would pass the REAL, UNMODIFIED main H->gamma-gamma
-selection (studies.hgg_cms.selection, electronVeto REQUIRED True) in the
-100-105 and 105-115 GeV windows -- the "electron-veto leakage" estimate
-for Part B's flagged low-edge excess (see compute_hgg_veto_leakage()).
+selection (studies.hgg_cms.selection, electronVeto REQUIRED True) in
+each of LEAKAGE_WINDOWS (100-105, 105-110, 110-115, 135-180 GeV), per
+category -- the "electron-veto leakage" estimate for Part B's flagged
+low-edge excess (see compute_hgg_veto_leakage()).
 This reuses the SAME already-fetched, already-parsed chunk a second time
 in-memory (electronVeto is available on every photon regardless of its
 value, since config.cms_hgg_zee_dy.yaml deliberately omits electronVeto
@@ -78,10 +79,22 @@ TRIGGER_BIT_OUTPUT_FIELDS = {
     "HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90": "passes_diphoton_hlt",
 }
 
-# Part B's flagged low-edge excess windows -- see
+# Part B's flagged low-edge excess windows, REVISED 17 Sep 2026 to match
+# item 5's own request (100-105, 105-110, 110-115, plus the 135-180 upper
+# -sideband window for context) -- see
 # studies/hgg_cms/validation/zee/hgg_leakage_estimate.py, which sums
-# these across all 41 DY jobs and normalizes to an expected event count.
-LEAKAGE_WINDOWS = {"100_105": (100.0, 105.0), "105_115": (105.0, 115.0)}
+# these (now also split per category) across all 41 DY jobs and
+# normalizes to an expected event count. (The original 2-window version,
+# 100-105/105-115, was what actually ran on the cluster for the completed
+# DY jobs -- those numbers are superseded by a dedicated recomputation
+# pass over the SAME already-parsed chunk files, since the finer windows
+# and the category split were never aggregated at cluster runtime; see
+# studies/hgg_cms/validation/zee/hgg_leakage_estimate.py's own module
+# docstring.)
+LEAKAGE_WINDOWS = {
+    "100_105": (100.0, 105.0), "105_110": (105.0, 110.0),
+    "110_115": (110.0, 115.0), "135_180": (135.0, 180.0),
+}
 
 
 def resolve_cern_input_files(metadata_cache_json: str, batch_job_index, total_batch_jobs) -> list:
@@ -119,18 +132,24 @@ def check_dedup_never_active(config_path: str) -> int:
 def compute_hgg_veto_leakage(events: ak.Array) -> dict:
     """DY-only: how many events would pass the REAL, unmodified main
     H->gamma-gamma selection (electronVeto REQUIRED True -- the OPPOSITE
-    subset from this job's own Z->ee output) in the two windows Part B
-    flagged. Builds a photon collection restricted to electronVeto==True
-    (available because config.cms_hgg_zee_dy.yaml, like the data config,
-    deliberately does NOT filter on electronVeto at parsing time), swaps
-    it in for "Photons" via ak.with_field, and calls
+    subset from this job's own Z->ee output) in each of LEAKAGE_WINDOWS,
+    PER CATEGORY (EBEB/notEBEB) and inclusive. Builds a photon collection
+    restricted to electronVeto==True (available because
+    config.cms_hgg_zee_dy.yaml, like the data config, deliberately does
+    NOT filter on electronVeto at parsing time), swaps it in for
+    "Photons" via ak.with_field, and calls
     studies.hgg_cms.selection.select_diphoton_events UNMODIFIED -- the
-    exact same function (same TM cuts, same scaled-pT cuts, same 100-180
-    GeV window) the real production H->gamma-gamma signal jobs call, so
-    this is a faithful "what would the real selection do to these DY
-    events" estimate, not a re-derived approximation.
+    exact same function (same TM cuts, same scaled-pT cuts, same category
+    definition, same 100-180 GeV window) the real production
+    H->gamma-gamma signal jobs call, so this is a faithful "what would
+    the real selection do to these DY events" estimate, not a re-derived
+    approximation.
 
     Requires "genWeight" on `events` (DY only -- never called for data).
+
+    Returns a dict keyed "n_selected_<window>_<category>" /
+    "sum_genWeight_<window>_<category>" for category in
+    ("inclusive", "EBEB", "notEBEB").
     """
     photons = events["Photons"]
     veto_true_photons = photons[photons.electronVeto]
@@ -139,13 +158,27 @@ def compute_hgg_veto_leakage(events: ak.Array) -> dict:
 
     selected = ak.to_numpy(result["selected"])
     mgg = ak.to_numpy(ak.fill_none(result["mgg"], np.nan))
+    cat = ak.to_numpy(result["category"])
     gw = ak.to_numpy(events["genWeight"])
+
+    cat_masks = {
+        "inclusive": np.ones(len(selected), dtype=bool),
+        "EBEB": cat == "EBEB",
+        "notEBEB": cat != "EBEB",
+    }
 
     out = {}
     for label, (lo, hi) in LEAKAGE_WINDOWS.items():
-        mask = selected & (mgg >= lo) & (mgg < hi)
-        out[f"n_selected_{label}"] = int(mask.sum())
-        out[f"sum_genWeight_{label}"] = float(gw[mask].sum()) if mask.any() else 0.0
+        window_mask = selected & (mgg >= lo) & (mgg < hi)
+        for cat_label, cat_mask in cat_masks.items():
+            mask = window_mask & cat_mask
+            key = f"{label}_{cat_label}"
+            out[f"n_selected_{key}"] = int(mask.sum())
+            out[f"sum_genWeight_{key}"] = float(gw[mask].sum()) if mask.any() else 0.0
+            # sum of genWeight^2 -- needed for the statistical uncertainty
+            # on the normalized leakage estimate (sqrt(Sum w^2)), correct
+            # for signed weights (squaring removes the sign).
+            out[f"sum_genWeight_sq_{key}"] = float(np.sum(gw[mask] ** 2)) if mask.any() else 0.0
     return out
 
 
@@ -252,12 +285,17 @@ def main():
 
         hgg_veto_leakage_total = {}
         for label in LEAKAGE_WINDOWS:
-            hgg_veto_leakage_total[f"n_selected_{label}"] = sum(
-                (r["hgg_veto_leakage"] or {}).get(f"n_selected_{label}", 0) for r in per_chunk_results
-            )
-            hgg_veto_leakage_total[f"sum_genWeight_{label}"] = sum(
-                (r["hgg_veto_leakage"] or {}).get(f"sum_genWeight_{label}", 0.0) for r in per_chunk_results
-            )
+            for cat_label in ("inclusive", "EBEB", "notEBEB"):
+                key = f"{label}_{cat_label}"
+                hgg_veto_leakage_total[f"n_selected_{key}"] = sum(
+                    (r["hgg_veto_leakage"] or {}).get(f"n_selected_{key}", 0) for r in per_chunk_results
+                )
+                hgg_veto_leakage_total[f"sum_genWeight_{key}"] = sum(
+                    (r["hgg_veto_leakage"] or {}).get(f"sum_genWeight_{key}", 0.0) for r in per_chunk_results
+                )
+                hgg_veto_leakage_total[f"sum_genWeight_sq_{key}"] = sum(
+                    (r["hgg_veto_leakage"] or {}).get(f"sum_genWeight_sq_{key}", 0.0) for r in per_chunk_results
+                )
 
     cern_input_files = resolve_cern_input_files(
         args.metadata_cache_json, args.batch_job_index, args.total_batch_jobs

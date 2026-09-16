@@ -21,8 +21,8 @@ HLT_Ele27_WPTight_Gsf did NOT, 70-110 GeV. Expected: visibly depleted
 below ~90 GeV relative to the Ele27-triggered (unbiased) sample from
 2(a)'s own DY population.
 
-NOT run yet -- no Z->ee cluster output exists. Ready to run once
-merge_zee_outputs.py's output is copied locally (HGG_ZEE_MERGED_DIR).
+REVISED AGAIN (17 Sep 2026): DY weighted by genWeight * the item-1
+pileup weight throughout (pileup.py must be run first).
 """
 from __future__ import annotations
 
@@ -34,19 +34,26 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
+from studies.hgg_cms.validation import common as main_common
 from studies.hgg_cms.validation.zee import common as zc
 
 OUT_DIR = Path(__file__).resolve().parent / "results"
 PLOTS_DIR = OUT_DIR / "plots"
 
 
-def make_plot(dy_arr) -> dict:
+def make_plot(dy_arr, pu_edges, pu_weights) -> dict:
     diph_only = zc.diphoton_only_mask(dy_arr)
     unbiased = zc.energy_scale_selection_mask(dy_arr)
     mee_d = np.asarray(dy_arr["m_ee"])[diph_only]
     mee_u = np.asarray(dy_arr["m_ee"])[unbiased]
-    w_d = np.asarray(dy_arr["genWeight"])[diph_only]
-    w_u = np.asarray(dy_arr["genWeight"])[unbiased]
+    pv_d = np.asarray(dy_arr["PV_npvsGood"])[diph_only]
+    pv_u = np.asarray(dy_arr["PV_npvsGood"])[unbiased]
+    # PU weights applied to DY throughout (item 1's own instruction) --
+    # this demo's own point (Mass90 sculpting) has nothing to do with
+    # pileup, but the weighting is applied for consistency across every
+    # Z->ee plot/number in this validation round.
+    w_d = np.asarray(dy_arr["genWeight"])[diph_only] * main_common.apply_pileup_weight(pv_d, pu_edges, pu_weights)
+    w_u = np.asarray(dy_arr["genWeight"])[unbiased] * main_common.apply_pileup_weight(pv_u, pu_edges, pu_weights)
 
     bins = np.arange(zc.ENERGY_SCALE_MASS_LO, zc.ENERGY_SCALE_MASS_HI + 1.0, 1.0)
     fig, ax = plt.subplots(figsize=(8, 5))
@@ -77,8 +84,11 @@ def make_plot(dy_arr) -> dict:
 def main():
     PLOTS_DIR.mkdir(parents=True, exist_ok=True)
     dy_arr = zc.load_zee_dy()
+    pu = json.loads((OUT_DIR / "pileup_weights.json").read_text(encoding="utf-8"))
+    pu_edges = np.array(pu["bin_edges"])
+    pu_weights = np.array(pu["weights"])
 
-    counts = make_plot(dy_arr)
+    counts = make_plot(dy_arr, pu_edges, pu_weights)
 
     result = {
         "note": (

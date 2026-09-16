@@ -139,11 +139,21 @@ class RunZeeSelectionOnChunksRoundtripTests(unittest.TestCase):
                                      mass_lo=60.0, mass_hi=180.0)
             self.assertIsNotNone(res["hgg_veto_leakage"])
             leakage = res["hgg_veto_leakage"]
-            for key in ("n_selected_100_105", "sum_genWeight_100_105",
-                        "n_selected_105_115", "sum_genWeight_105_115"):
-                self.assertIn(key, leakage)
-            self.assertGreaterEqual(leakage["n_selected_100_105"], 0)
-            self.assertGreaterEqual(leakage["n_selected_105_115"], 0)
+            for window in ("100_105", "105_110", "110_115", "135_180"):
+                for cat in ("inclusive", "EBEB", "notEBEB"):
+                    key = f"{window}_{cat}"
+                    self.assertIn(f"n_selected_{key}", leakage)
+                    self.assertIn(f"sum_genWeight_{key}", leakage)
+                    self.assertIn(f"sum_genWeight_sq_{key}", leakage)
+                    self.assertGreaterEqual(leakage[f"n_selected_{key}"], 0)
+                    self.assertGreaterEqual(leakage[f"sum_genWeight_sq_{key}"], 0)
+            # inclusive must equal EBEB + notEBEB for every window (a pure
+            # partition of the same selected events)
+            for window in ("100_105", "105_110", "110_115", "135_180"):
+                incl = leakage[f"n_selected_{window}_inclusive"]
+                eb = leakage[f"n_selected_{window}_EBEB"]
+                noteb = leakage[f"n_selected_{window}_notEBEB"]
+                self.assertEqual(incl, eb + noteb)
 
     def test_dy_job_metadata_has_leakage_key_data_job_does_not(self):
         rng = np.random.default_rng(109)

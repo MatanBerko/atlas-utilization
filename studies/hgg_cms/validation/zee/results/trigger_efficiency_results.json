@@ -1,0 +1,51 @@
+{
+  "selection": "HLT_Ele27_WPTight_Gsf fired, m_ee > 95 GeV; reports fraction with diphoton bit also fired",
+  "implication_for_hgg_expected_yield": "The H->gamma-gamma analysis's own selection REQUIRES this same diphoton trigger to fire (config.cms_hgg_data.yaml / config.cms_hgg_signal*.yaml's trigger_requirements). The signal MC's own expected-yield calculation (VALIDATION_REPORT_1 Part E) implicitly trusts that MC's own simulated trigger response matches real data's. If the data/DY ratio measured here is not 1, that is direct evidence MC over- or under-estimates the diphoton trigger's real efficiency by approximately that same fractional amount -- exactly the kind of trigger scale factor real CMS analyses derive from this type of tag-and-probe measurement and apply multiplicatively to the signal MC's expected yield. This task does not apply any such correction (per its own scope); the ratio below is the number the signal-model task would need.",
+  "per_category": {
+    "inclusive": {
+      "n_probe_data": 397295,
+      "n_diphoton_fired_data": 376959,
+      "efficiency_data": 0.9488138536855485,
+      "efficiency_data_uncertainty": 0.00034963119596732065,
+      "efficiency_dy_no_pu": 0.9427363872528076,
+      "efficiency_dy_no_pu_uncertainty": 0.0006014767289092109,
+      "efficiency_dy_with_pu": 0.942673303219013,
+      "efficiency_dy_with_pu_uncertainty": 0.0006361104924147561,
+      "ratio_data_over_dy_no_pu": 1.0064466233773484,
+      "ratio_data_over_dy_no_pu_uncertainty": 0.000741530455116557,
+      "ratio_data_over_dy_with_pu": 1.006513975144482,
+      "ratio_data_over_dy_with_pu_uncertainty": 0.0007738608552102745
+    },
+    "EBEB": {
+      "n_probe_data": 265695,
+      "n_diphoton_fired_data": 259250,
+      "efficiency_data": 0.9757428630572649,
+      "efficiency_data_uncertainty": 0.00029846662235208225,
+      "efficiency_dy_no_pu": 0.9539369344711304,
+      "efficiency_dy_no_pu_uncertainty": 0.0006742032046937386,
+      "efficiency_dy_with_pu": 0.9538946144854896,
+      "efficiency_dy_with_pu_uncertainty": 0.0007128447486565715,
+      "ratio_data_over_dy_no_pu": 1.0228588786094375,
+      "ratio_data_over_dy_no_pu_uncertainty": 0.0007877171701729727,
+      "ratio_data_over_dy_with_pu": 1.0229042582272674,
+      "ratio_data_over_dy_with_pu_uncertainty": 0.0008259739906709358
+    },
+    "notEBEB": {
+      "n_probe_data": 131600,
+      "n_diphoton_fired_data": 117709,
+      "efficiency_data": 0.8944452887537994,
+      "efficiency_data_uncertainty": 0.0008470084769527854,
+      "efficiency_dy_no_pu": 0.9221018552780151,
+      "efficiency_dy_no_pu_uncertainty": 0.0011691216968682258,
+      "efficiency_dy_with_pu": 0.9215990221890663,
+      "efficiency_dy_with_pu_uncertainty": 0.0012396791567647583,
+      "ratio_data_over_dy_no_pu": 0.9700070373289974,
+      "ratio_data_over_dy_no_pu_uncertainty": 0.0015350288256141594,
+      "ratio_data_over_dy_with_pu": 0.970536282286011,
+      "ratio_data_over_dy_with_pu_uncertainty": 0.0015965669695508636
+    }
+  },
+  "plots": [
+    "trigger_efficiency.png"
+  ]
+}

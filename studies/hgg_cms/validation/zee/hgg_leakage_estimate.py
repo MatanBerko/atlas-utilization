@@ -1,62 +1,69 @@
+#!/usr/bin/env python
 """
-Implementation task 6, Part 4, item 3: electron-veto leakage estimate for
-Part B's flagged low-edge excess.
+Implementation task 6, Z->ee validation follow-up (17 Sep 2026), item 5:
+electron-veto leakage into the H->gamma-gamma sample.
 
-Sums, ACROSS ALL 41 DY job directories, the per-job
-"hgg_veto_leakage_estimate" that run_zee_selection_on_chunks.py computes
-in the same pass as the Z->ee selection (electronVeto REQUIRED True,
-i.e. the OPPOSITE subset from the Z->ee sample itself, run through the
-REAL, unmodified main H->gamma-gamma selection.select_diphoton_events) --
-see that script's own module docstring for why this is one pass, not a
-separate DY-only job.
+REVISED -- RUNS ON THE CLUSTER (analysis node, `nice`, NOT a PBS job),
+against the ALREADY-COMPLETED DY run's OWN parsed_data chunks. Not run
+yet in this task; see the final chat message for the exact command.
 
-N_expected = DY_CROSS_SECTION_PB * 1000 (pb->fb) * L_fb *
-             (sum_genWeight_selected_in_window / genEventSumw_over_processed_DY_files)
+Why this script exists, and why it reads raw parsed chunks instead of
+job_metadata.json: the completed DY run's 41 jobs each computed
+"hgg_veto_leakage_estimate" INLINE, at cluster runtime
+(run_zee_selection_on_chunks.py's compute_hgg_veto_leakage()), but only
+for TWO windows (100-105, 105-115 combined) and with NO category split --
+the windows and split this task's item 5 actually needs (100-105,
+105-110, 110-115, 135-180, EACH per category) were added to that
+function's own LEAKAGE_WINDOWS AFTER the DY run already completed. The
+electronVeto==True population itself was never written to any output
+file (by design -- see that function's own docstring: it exists only in
+memory, once, during each job's own run), so there is no way to get the
+finer windows from anything already local. BUT the underlying
+already-PARSED chunk files (job_<i>/parsed_data/*.root) are still sitting
+on Lustre from the completed run (nothing in this pipeline deletes them),
+so recomputing compute_hgg_veto_leakage() -- now with the full window/
+category set -- against those same already-parsed chunks needs NO new
+CERN download, NO re-parsing, and NO qsub: just one quick script reading
+already-local files, the same "must run on the analysis node in a few
+minutes with nice" category as merge_outputs.py.
 
-No branching-ratio factor (unlike the H->gamma-gamma signal normalization
-formula) -- DYJetsToLL_M-50 IS the full leptonic-decay process already;
-there is no further decay branching to apply.
-
-Requires the DY run's own per-job logs/parsing_stats_batch_<i>.json
-(sumw_by_record.record_35669.genEventSumw) to build the normalization
-denominator, summed across all present job directories -- the SAME
-per-job files merge_outputs.py's data-mode identity check already reads
-for the main run, read here with the same simple JSON-load pattern (no
-identity/URL checking needed for this estimate -- that's
-merge_zee_outputs.py's job).
-
-NOT run yet -- no Z->ee cluster output exists. Ready to run once the DY
-array job (config.cms_hgg_zee_dy.yaml) has actually run on the cluster.
-
-Usage:
-    python hgg_leakage_estimate.py --dy-jobs-base /path/to/hgg_zee/dy_full
+Usage (see studies/hgg_cms/cluster/pbs_hgg_zee_array.sh /
+config.cms_hgg_zee_dy.yaml for OUTPUT_BASE's real value):
+    nice python studies/hgg_cms/validation/zee/hgg_leakage_estimate.py \
+        --dy-jobs-base /storage/agrp/berkom/atlas-utilization/output/hgg_zee/dy_full \
+        --out /storage/agrp/berkom/atlas-utilization/output/hgg_zee/merged/hgg_leakage_estimate_results.json
+Then copy the one output JSON to the laptop (HGG_ZEE_MERGED_DIR) --
+no need to copy the 41 job directories themselves.
 """
 from __future__ import annotations
 
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 
-from studies.hgg_cms.validation.zee import common as zc
+REPO_ROOT = Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(REPO_ROOT))
 
-OUT_DIR = Path(__file__).resolve().parent / "results"
+from studies.hgg_cms.cluster.run_selection_on_chunks import read_chunk  # noqa: E402
+from studies.hgg_cms.cluster.run_zee_selection_on_chunks import (  # noqa: E402
+    LEAKAGE_WINDOWS, compute_hgg_veto_leakage,
+)
+from studies.hgg_cms.validation.zee import common as zc  # noqa: E402
+from studies.hgg_cms.validation import common as main_common  # noqa: E402
 
-# From VALIDATION_REPORT_1.md Part B: observed 100-105 GeV total (49,521)
-# minus the power-law extrapolation's prediction (47,917 -- the fit with
-# the much better in-range chi2/ndf, 1.10 vs the exponential's 8.07) =
-# 1,604 events, "~1,600" in the task's own framing. The 105-115 window
-# was not part of Part B's flagged excess (that check only extrapolated
-# INTO 100-105); reported here for completeness, not compared against a
-# pre-existing number.
+CATS = ("inclusive", "EBEB", "notEBEB")
+
+# From Part B (VALIDATION_REPORT_1.md): observed 100-105 GeV total
+# (49,521) minus the power-law extrapolation's prediction (47,917 -- the
+# fit with the much better in-range chi2/ndf, 1.10 vs the exponential's
+# 8.07) = 1,604 events, "~1,600" in this task's own framing.
 PART_B_EXCESS_100_105 = 1604
 PART_B_EXCESS_100_105_NOTE = (
     "Part B's flagged excess = observed 100-105 total (49,521) minus the "
     "power-law extrapolation's prediction (47,917 -- chi2/ndf=1.10, the "
-    "better of the two fits); the exponential fit's own prediction "
-    "(44,365) would give a larger, ~5,156-event 'excess' -- the power-law "
-    "comparison is used here since Part B itself judged that fit more "
-    "trustworthy in-range."
+    "better of the two fits)."
 )
 
 
@@ -80,96 +87,126 @@ def _load_json(path: Path):
         return None
 
 
-def sum_leakage_and_sumw(jobs_base: Path):
-    total_sumw = 0.0
-    total_sumgw = {"100_105": 0.0, "105_115": 0.0}
-    total_nsel = {"100_105": 0, "105_115": 0}
-    missing_jobs, missing_sumw_jobs, missing_leakage_jobs = [], [], []
-
-    for i in discover_job_indices(jobs_base):
-        job_dir = jobs_base / f"job_{i}"
-        meta = _load_json(job_dir / "selected" / "job_metadata.json")
-        if meta is None:
-            missing_jobs.append(i)
+def process_job(job_dir: Path, index: int) -> dict:
+    chunks_dir = job_dir / "parsed_data"
+    chunk_files = sorted(chunks_dir.glob("*.root")) if chunks_dir.exists() else []
+    totals = {}
+    n_chunks_with_genweight = 0
+    for chunk_path in chunk_files:
+        events = read_chunk(chunk_path)
+        if "genWeight" not in events.fields:
             continue
-        leakage = meta.get("hgg_veto_leakage_estimate")
-        if leakage is None:
-            missing_leakage_jobs.append(i)
-        else:
-            for label in ("100_105", "105_115"):
-                total_sumgw[label] += leakage.get(f"sum_genWeight_{label}", 0.0)
-                total_nsel[label] += leakage.get(f"n_selected_{label}", 0)
+        n_chunks_with_genweight += 1
+        leak = compute_hgg_veto_leakage(events)
+        for k, v in leak.items():
+            totals[k] = totals.get(k, 0) + v
 
-        stats = _load_json(job_dir / "logs" / f"parsing_stats_batch_{i}.json")
-        sw = None
-        if stats is not None:
-            sw = (stats.get("sumw_by_record") or {}).get("record_35669")
-        if sw is None:
-            missing_sumw_jobs.append(i)
-        else:
-            total_sumw += sw.get("genEventSumw", 0.0)
+    genEventSumw = None
+    stats = _load_json(job_dir / "logs" / f"parsing_stats_batch_{index}.json")
+    if stats is not None:
+        sw = (stats.get("sumw_by_record") or {}).get("record_35669")
+        if sw is not None:
+            genEventSumw = sw.get("genEventSumw")
 
     return {
-        "n_job_dirs_present": len(discover_job_indices(jobs_base)),
-        "missing_jobs_no_metadata": missing_jobs,
-        "missing_leakage_key_jobs": missing_leakage_jobs,
-        "missing_sumw_jobs": missing_sumw_jobs,
-        "total_genEventSumw_dy_processed": total_sumw,
-        "total_sum_genWeight_by_window": total_sumgw,
-        "total_n_selected_by_window": total_nsel,
+        "n_chunks_found": len(chunk_files),
+        "n_chunks_with_genweight": n_chunks_with_genweight,
+        "leakage_totals": totals,
+        "genEventSumw": genEventSumw,
     }
 
 
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--dy-jobs-base", required=True,
-                    help="e.g. /storage/.../hgg_zee/dy_full (or a local copy of it)")
+                    help="e.g. /storage/.../hgg_zee/dy_full")
+    p.add_argument("--out", required=True)
     args = p.parse_args()
 
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
     jobs_base = Path(args.dy_jobs_base)
-    agg = sum_leakage_and_sumw(jobs_base)
+    indices = discover_job_indices(jobs_base)
+    if not indices:
+        raise SystemExit(f"no job_<i> directories found under {jobs_base}")
 
-    genEventSumw = agg["total_genEventSumw_dy_processed"]
+    grand_totals = {}
+    total_genEventSumw = 0.0
+    missing_chunks_jobs, missing_sumw_jobs = [], []
+
+    for i in indices:
+        job_dir = jobs_base / f"job_{i}"
+        print(f"processing job_{i} ...", flush=True)
+        res = process_job(job_dir, i)
+        if res["n_chunks_found"] == 0:
+            missing_chunks_jobs.append(i)
+        for k, v in res["leakage_totals"].items():
+            grand_totals[k] = grand_totals.get(k, 0.0) + v
+        if res["genEventSumw"] is None:
+            missing_sumw_jobs.append(i)
+        else:
+            total_genEventSumw += res["genEventSumw"]
+        print(f"  chunks={res['n_chunks_found']} genEventSumw={res['genEventSumw']}", flush=True)
+
     expected = {}
-    if genEventSumw > 0:
-        scale = zc.DY_CROSS_SECTION_PB * 1000.0 * zc.LUMI_FB / genEventSumw
-        for label in ("100_105", "105_115"):
-            sum_gw = agg["total_sum_genWeight_by_window"][label]
-            expected[label] = {
-                "N_expected": scale * sum_gw,
-                "sum_genWeight": sum_gw,
-                "n_selected_raw": agg["total_n_selected_by_window"][label],
-            }
+    if total_genEventSumw > 0:
+        scale = zc.DY_CROSS_SECTION_PB * 1000.0 * main_common.LUMI_FB / total_genEventSumw
+        for label in LEAKAGE_WINDOWS:
+            expected[label] = {}
+            for cat in CATS:
+                key = f"{label}_{cat}"
+                sum_gw = grand_totals.get(f"sum_genWeight_{key}", 0.0)
+                sum_gw_sq = grand_totals.get(f"sum_genWeight_sq_{key}", 0.0)
+                N = scale * sum_gw
+                stat_unc = scale * (sum_gw_sq ** 0.5)
+                expected[label][cat] = {
+                    "N_expected": N,
+                    "statistical_uncertainty": stat_unc,
+                    "n_selected_raw": grand_totals.get(f"n_selected_{key}", 0),
+                    "sum_genWeight": sum_gw,
+                }
     else:
-        expected = {"error": "genEventSumw_dy_processed is 0 or missing -- cannot normalize"}
+        expected = {"error": "total_genEventSumw is 0 or missing -- cannot normalize"}
 
     comparison = None
-    if "100_105" in expected and isinstance(expected["100_105"], dict):
+    if "100_105" in expected and "inclusive" in expected.get("100_105", {}):
+        n_exp = expected["100_105"]["inclusive"]["N_expected"]
+        n_unc = expected["100_105"]["inclusive"]["statistical_uncertainty"]
+        frac = n_exp / PART_B_EXCESS_100_105 if PART_B_EXCESS_100_105 else None
+        if frac is None:
+            verdict = "unknown"
+        elif frac >= 0.9:
+            verdict = "fully"
+        elif frac >= 0.1:
+            verdict = "partly"
+        else:
+            verdict = "no"
         comparison = {
-            "N_expected_leakage_100_105": expected["100_105"]["N_expected"],
+            "N_expected_leakage_100_105_inclusive": n_exp,
+            "N_expected_leakage_100_105_inclusive_stat_unc": n_unc,
             "part_b_excess_100_105": PART_B_EXCESS_100_105,
-            "fraction_of_part_b_excess_explained": (
-                expected["100_105"]["N_expected"] / PART_B_EXCESS_100_105
-                if PART_B_EXCESS_100_105 else None
-            ),
+            "fraction_of_part_b_excess_explained": frac,
+            "verdict_fully_partly_no": verdict,
             "part_b_excess_note": PART_B_EXCESS_100_105_NOTE,
         }
 
     result = {
         "dy_cross_section_pb": zc.DY_CROSS_SECTION_PB,
-        "luminosity_fb": zc.LUMI_FB,
+        "luminosity_fb": main_common.LUMI_FB,
         "normalization_formula": (
             "N_expected = DY_CROSS_SECTION_PB * 1000 (pb->fb) * L_fb * "
-            "(sum_genWeight_selected_in_window / genEventSumw_over_processed_DY_files) "
-            "-- no branching-ratio factor (DYJetsToLL_M-50 is the full "
-            "leptonic process already)."
+            "(Sum genWeight_selected_in_window_and_category / "
+            "Sum genEventSumw_over_processed_DY_files); statistical "
+            "uncertainty = same scale * sqrt(Sum genWeight^2) (correct "
+            "for signed weights, since squaring removes the sign)."
         ),
-        "aggregation": agg,
-        "expected_leakage_by_window": expected,
+        "n_jobs_processed": len(indices),
+        "missing_chunks_jobs": missing_chunks_jobs,
+        "missing_sumw_jobs": missing_sumw_jobs,
+        "total_genEventSumw_dy_processed": total_genEventSumw,
+        "expected_leakage_by_window_and_category": expected,
         "comparison_to_part_b_excess": comparison,
     }
-    out_path = OUT_DIR / "hgg_leakage_estimate_results.json"
+    out_path = Path(args.out)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(json.dumps(result, indent=2))
     print(f"\nwrote {out_path}")

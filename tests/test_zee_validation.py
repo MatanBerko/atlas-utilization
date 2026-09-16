@@ -1,10 +1,10 @@
 """
-Implementation task 6, Part 4 (REVISED 16 Sep 2026): unit tests for the
-Z->e+e- offline analysis package (studies/hgg_cms/validation/zee/). No
-real merged Z->ee output exists (no cluster run has happened), so these
-test the CORE COMPUTATIONAL functions directly against small synthetic
-awkward arrays / synthetic job_metadata.json files -- not the file-
-loading main() entrypoints, which need real merged ROOT output.
+Implementation task 6, Z->ee validation follow-up (17 Sep 2026): unit
+tests for the Z->e+e- offline analysis package
+(studies/hgg_cms/validation/zee/). Tests the CORE COMPUTATIONAL
+functions directly against small synthetic awkward arrays / synthetic
+parsed-chunk ROOT files -- not the real-file-loading main() entrypoints
+(those need the real merged/parsed cluster output).
 """
 from __future__ import annotations
 
@@ -15,13 +15,15 @@ from pathlib import Path
 
 import awkward as ak
 import numpy as np
+import uproot
 
 from studies.hgg_cms.validation.zee import common as zc
-from studies.hgg_cms.validation.zee.energy_scale import compare_peak_and_width
 from studies.hgg_cms.validation.zee.trigger_efficiency import (
-    binomial_uncertainty, trigger_efficiency_per_category,
+    binomial_uncertainty, weighted_efficiency,
 )
-from studies.hgg_cms.validation.zee.hgg_leakage_estimate import sum_leakage_and_sumw
+from studies.hgg_cms.validation.zee.hgg_leakage_estimate import (
+    discover_job_indices, process_job,
+)
 
 
 def _make_zee_array(n, cat, mee, ele27, diphoton, is_data, genWeight=None):
@@ -50,23 +52,14 @@ class MaskHelperTests(unittest.TestCase):
 
     def test_energy_scale_mask_requires_ele27_and_window(self):
         mask = zc.energy_scale_selection_mask(self.arr)
-        # event0: ele27 T, mee 91 in (70,110) -> True
-        # event1: ele27 T, mee 65 NOT in window -> False
-        # event2: ele27 F -> False
-        # event3: ele27 T, mee 96 in window -> True
-        # event4: ele27 T, mee 111 NOT in window -> False
-        # event5: ele27 F -> False
         self.assertEqual(list(mask), [True, False, False, True, False, False])
 
     def test_trigger_eff_probe_mask_requires_ele27_and_mass_gt_95(self):
         mask = zc.trigger_eff_probe_mask(self.arr)
-        # only event3 (ele27 T, mee=96>95); event4 has ele27 T mee=111>95 too
         self.assertEqual(list(mask), [False, False, False, True, True, False])
 
     def test_diphoton_only_mask_excludes_ele27_fired_events(self):
         mask = zc.diphoton_only_mask(self.arr)
-        # needs diphoton T, ele27 F, mee in (70,110): event2 (91, ele27 F,
-        # diphoton T) and event5 (91, ele27 F, diphoton T) both qualify.
         self.assertEqual(list(mask), [False, False, True, False, False, True])
 
     def test_relative_difference(self):
@@ -74,118 +67,179 @@ class MaskHelperTests(unittest.TestCase):
         self.assertTrue(np.isnan(zc.relative_difference(1.0, 0.0)))
 
 
-class PeakAndWidthTests(unittest.TestCase):
-    def test_narrow_gaussian_like_peak_recovered(self):
-        rng = np.random.default_rng(5)
-        values = rng.normal(91.19, 2.0, 5000)
-        mode, sigma = zc.peak_and_width(values)
-        self.assertAlmostEqual(mode, 91.19, delta=1.0)
-        self.assertGreater(sigma, 0.5)
-        self.assertLess(sigma, 4.0)
+class WeightedStatTests(unittest.TestCase):
+    def test_weighted_median_unweighted_matches_numpy(self):
+        rng = np.random.default_rng(1)
+        v = rng.uniform(0, 100, 5001)  # odd n -> exact median well-defined
+        w = np.ones_like(v)
+        self.assertAlmostEqual(zc.weighted_median(v, w), float(np.median(v)), delta=0.05)
+
+    def test_weighted_mode_recovers_histogram_peak(self):
+        v = np.concatenate([np.full(100, 5.0), np.random.default_rng(2).uniform(0, 10, 50)])
+        w = np.ones_like(v)
+        mode = zc.weighted_mode(v, w, bin_width=0.5, lo=0, hi=10)
+        self.assertAlmostEqual(mode, 5.25, delta=0.5)  # bin containing the 5.0 spike
 
 
-class EnergyScaleComparisonTests(unittest.TestCase):
-    def test_identical_data_and_dy_pass_both_criteria(self):
-        rng = np.random.default_rng(11)
-        n = 4000
-        mee = rng.normal(91.19, 2.0, n)
-        cat = rng.choice(["EBEB", "notEBEB"], n)
-        ele27 = np.ones(n, dtype=bool)
-        diphoton = np.zeros(n, dtype=bool)
+class UnbinnedEffectiveSigma68Tests(unittest.TestCase):
+    def test_gaussian_recovers_true_sigma(self):
+        rng = np.random.default_rng(3)
+        true_sigma = 2.0
+        v = rng.normal(100.0, true_sigma, 200000)
+        w = np.ones_like(v)
+        res = zc.unbinned_effective_sigma68(v, w)
+        # For a symmetric unimodal (Gaussian) density, the shortest
+        # interval containing 68.3% IS the standard +-1 sigma interval.
+        self.assertAlmostEqual(res["sigma_eff68"], true_sigma, delta=0.05)
 
-        data_arr = _make_zee_array(n, cat, mee, ele27, diphoton, is_data=True)
-        dy_arr = _make_zee_array(n, cat, mee, ele27, diphoton, is_data=False,
-                                  genWeight=np.ones(n))
+    def test_hand_derived_case_with_negative_weight(self):
+        # values 0..4, weights [1,1,-1,1,1] (sum=3, target=0.683*3=2.049).
+        # Hand-derived: the ONLY (i,j) pair reaching the target is the
+        # full array (i=0,j=5): prefix=[0,1,2,1,2,3], and
+        # prefix[5]-prefix[0]=3 >= 2.049 is the sole crossing -- every
+        # other pair's diff is < 2.049. So the shortest window IS the
+        # full 5-event array: width = 4-0 = 4, sigma_eff68 = 2.0.
+        v = np.array([0.0, 1.0, 2.0, 3.0, 4.0])
+        w = np.array([1.0, 1.0, -1.0, 1.0, 1.0])
+        res = zc.unbinned_effective_sigma68(v, w)
+        self.assertAlmostEqual(res["sigma_eff68"], 2.0, places=6)
+        self.assertEqual(res["window_n_events"], 5)
 
-        per_cat = compare_peak_and_width(data_arr, dy_arr)
-        for c in zc.CATEGORIES:
-            self.assertTrue(per_cat[c]["overall_pass"], msg=f"{c}: {per_cat[c]}")
-            self.assertLess(abs(per_cat[c]["peak_relative_difference"]), zc.PEAK_POSITION_AGREEMENT_REL_TOL)
-
-    def test_shifted_dy_peak_fails_criterion(self):
-        rng = np.random.default_rng(13)
-        n = 4000
-        cat = rng.choice(["EBEB", "notEBEB"], n)
-        ele27 = np.ones(n, dtype=bool)
-        diphoton = np.zeros(n, dtype=bool)
-
-        data_mee = rng.normal(91.19, 2.0, n)
-        # DY shifted by 3 GeV -- far more than 0.5% of 91 GeV (~0.46 GeV)
-        dy_mee = rng.normal(94.19, 2.0, n)
-
-        data_arr = _make_zee_array(n, cat, data_mee, ele27, diphoton, is_data=True)
-        dy_arr = _make_zee_array(n, cat, dy_mee, ele27, diphoton, is_data=False, genWeight=np.ones(n))
-
-        per_cat = compare_peak_and_width(data_arr, dy_arr)
-        for c in zc.CATEGORIES:
-            self.assertFalse(per_cat[c]["peak_agreement_pass"], msg=f"{c}: {per_cat[c]}")
+    def test_uniform_positive_weights_four_of_five_needed(self):
+        # values 0..4, all weight 1 (sum=5, target=3.415) -- need >= 4
+        # consecutive events (since any 3 sum to 3 < 3.415). Any 4-in-a-row
+        # window has width 3 (e.g. 0..3 or 1..4).
+        v = np.array([0.0, 1.0, 2.0, 3.0, 4.0])
+        w = np.ones(5)
+        res = zc.unbinned_effective_sigma68(v, w)
+        self.assertAlmostEqual(res["sigma_eff68"], 1.5, places=6)
+        self.assertEqual(res["window_n_events"], 4)
 
 
-class TriggerEfficiencyTests(unittest.TestCase):
+class CrystalBallAndFitTests(unittest.TestCase):
+    def test_crystal_ball_integrates_to_one(self):
+        x = np.linspace(-30, 30, 200000)
+        y = zc.crystal_ball_pdf(x, mu=0.0, sigma=2.0, alpha=1.5, n=3.0)
+        integral = np.trapz(y, x)
+        self.assertAlmostEqual(integral, 1.0, delta=0.01)
+
+    def test_fit_recovers_injected_smearing_on_synthetic_bw_conv_cb_sample(self):
+        # Generate synthetic data by sampling true_mu/true_sigma smearing
+        # convolved (numerically, via direct sampling) with the fixed BW --
+        # approximate by: sample from a Gaussian approximation to BW near
+        # M_Z, convolve is implicit through addition of independent
+        # samples. This is a loose closure test (not exact), just checking
+        # the fit converges near the injected width, not exploding.
+        rng = np.random.default_rng(4)
+        n = 200000
+        # crude physical toy: mass = M_Z + BW-like fluctuation (Cauchy
+        # with the PDG width) + Gaussian smearing (injected sigma).
+        true_sigma = 1.8
+        bw_sample = rng.standard_cauchy(n) * (zc.PDG_GAMMA_Z / 2.0) + zc.PDG_MZ
+        smear = rng.normal(0.0, true_sigma, n)
+        mass = bw_sample + smear
+        mask = (mass > 80) & (mass < 100)
+        fit = zc.fit_bw_conv_cb(mass[mask], np.ones(mask.sum()), lo=80.0, hi=100.0, bin_width=0.5, mc_samples=20)
+        # sigma should land in the right ballpark (not a tight tolerance --
+        # this toy sample isn't a perfect BW, just Cauchy-approximated).
+        self.assertGreater(fit["sigma_GeV"], 0.5)
+        self.assertLess(fit["sigma_GeV"], 4.0)
+        self.assertGreater(fit["peak_GeV"], 85.0)
+        self.assertLess(fit["peak_GeV"], 97.0)
+
+
+class TriggerEfficiencyHelperTests(unittest.TestCase):
     def test_binomial_uncertainty_known_values(self):
         self.assertAlmostEqual(binomial_uncertainty(50, 100), np.sqrt(0.5 * 0.5 / 100))
         self.assertTrue(np.isnan(binomial_uncertainty(0, 0)))
 
-    def test_trigger_efficiency_per_category_counts_correctly(self):
-        n = 10
-        cat = ["EBEB"] * 5 + ["notEBEB"] * 5
-        mee = [96.0] * n  # all pass the >95 probe window
-        ele27 = [True] * n
-        diphoton = [True, True, True, False, False,   # EBEB: 3/5 fired
-                    True, False, False, False, False]  # notEBEB: 1/5 fired
-        arr = _make_zee_array(n, cat, mee, ele27, diphoton, is_data=True)
-        eff = trigger_efficiency_per_category(arr)
-        self.assertEqual(eff["EBEB"]["n_probe"], 5)
-        self.assertEqual(eff["EBEB"]["n_diphoton_fired"], 3)
-        self.assertAlmostEqual(eff["EBEB"]["efficiency"], 0.6)
-        self.assertEqual(eff["notEBEB"]["n_diphoton_fired"], 1)
-        self.assertAlmostEqual(eff["notEBEB"]["efficiency"], 0.2)
+    def test_weighted_efficiency_unweighted_matches_plain_fraction(self):
+        mask = np.array([True, True, False, False, False])
+        w = np.ones(5)
+        res = weighted_efficiency(mask, w)
+        self.assertAlmostEqual(res["efficiency"], 0.4)
+        self.assertAlmostEqual(res["n_eff"], 5.0)
 
 
-class LeakageEstimateAggregationTests(unittest.TestCase):
-    def _make_job(self, jobs_base: Path, index: int, n_100_105: int, sumgw_100_105: float,
-                   n_105_115: int, sumgw_105_115: float, genEventSumw: float) -> None:
-        job_dir = jobs_base / f"job_{index}"
-        sel = job_dir / "selected"
-        logs = job_dir / "logs"
-        sel.mkdir(parents=True, exist_ok=True)
-        logs.mkdir(parents=True, exist_ok=True)
-        (sel / "job_metadata.json").write_text(json.dumps({
-            "cutflow": {"n_selected": 5},
-            "hgg_veto_leakage_estimate": {
-                "n_selected_100_105": n_100_105, "sum_genWeight_100_105": sumgw_100_105,
-                "n_selected_105_115": n_105_115, "sum_genWeight_105_115": sumgw_105_115,
-            },
-        }), encoding="utf-8")
-        (logs / f"parsing_stats_batch_{index}.json").write_text(json.dumps({
-            "sumw_by_record": {"record_35669": {"genEventSumw": genEventSumw}}
-        }), encoding="utf-8")
+def _write_dy_chunk(path: Path, n_events: int, rng) -> None:
+    """Synthetic parsed-chunk ROOT file matching the format
+    orchestration/handlers/parsing_handler.py writes -- same construction
+    as test_run_zee_selection_on_chunks_roundtrip.py's own fixture, kept
+    small and local here so this test file has no cross-file coupling."""
+    n_photons = rng.integers(2, 4, n_events)
+    pt, eta, phi, hoe, r9, sieie, iso_all, iso_chg, mvaid, eb, ee, evtoveto = ([] for _ in range(12))
+    for n in n_photons:
+        ptv = np.sort(rng.uniform(30.0, 60.0, n))[::-1].copy()
+        r9v, hoev, sieiev = np.full(n, 0.95), np.full(n, 0.02), np.full(n, 0.01)
+        isoallv, isochgv = np.full(n, 0.05), np.full(n, 0.01)
+        is_eb = rng.uniform(0, 1, n) < 0.5
+        veto = rng.uniform(0, 1, n) < 0.5
+        for lst, v in [(pt, ptv), (eta, rng.uniform(-2, 2, n)), (phi, rng.uniform(-np.pi, np.pi, n)),
+                       (hoe, hoev), (r9, r9v), (sieie, sieiev), (iso_all, isoallv), (iso_chg, isochgv),
+                       (mvaid, np.full(n, 0.9)), (eb, is_eb), (ee, ~is_eb), (evtoveto, veto)]:
+            lst.append(list(v))
+    photons = ak.zip({
+        "pt": ak.Array(pt), "eta": ak.Array(eta), "phi": ak.Array(phi),
+        "hoe": ak.Array(hoe), "r9": ak.Array(r9), "sieie": ak.Array(sieie),
+        "pfRelIso03_all": ak.Array(iso_all), "pfRelIso03_chg": ak.Array(iso_chg),
+        "mvaID": ak.Array(mvaid), "isScEtaEB": ak.Array(eb), "isScEtaEE": ak.Array(ee),
+        "electronVeto": ak.Array(evtoveto),
+    })
+    fields = {
+        "Photons": photons,
+        "run": ak.Array(np.ones(n_events, dtype=np.int64)),
+        "luminosityBlock": ak.Array(np.ones(n_events, dtype=np.int64)),
+        "event": ak.Array(np.arange(n_events, dtype=np.int64)),
+        "PV_npvsGood": ak.Array(np.full(n_events, 25, dtype=np.int64)),
+        "source_record": ak.Array(np.full(n_events, 35669, dtype=np.int64)),
+        "genWeight": ak.Array(rng.choice([1.0, -1.0], n_events, p=[0.9, 0.1])),
+        "Pileup_nTrueInt": ak.Array(rng.uniform(10.0, 40.0, n_events)),
+    }
+    with uproot.recreate(str(path)) as f:
+        f["events"] = fields
 
-    def test_sums_across_all_jobs(self):
+
+class HggLeakageRecomputeTests(unittest.TestCase):
+    def test_discover_job_indices(self):
         with tempfile.TemporaryDirectory() as tmp:
-            jobs_base = Path(tmp) / "dy_full"
-            for i in range(1, 4):
-                self._make_job(jobs_base, i, n_100_105=2, sumgw_100_105=2.0,
-                                n_105_115=1, sumgw_105_115=1.0, genEventSumw=1000.0)
-            agg = sum_leakage_and_sumw(jobs_base)
-            self.assertEqual(agg["n_job_dirs_present"], 3)
-            self.assertEqual(agg["missing_jobs_no_metadata"], [])
-            self.assertEqual(agg["missing_leakage_key_jobs"], [])
-            self.assertEqual(agg["missing_sumw_jobs"], [])
-            self.assertAlmostEqual(agg["total_genEventSumw_dy_processed"], 3000.0)
-            self.assertAlmostEqual(agg["total_sum_genWeight_by_window"]["100_105"], 6.0)
-            self.assertEqual(agg["total_n_selected_by_window"]["100_105"], 6)
+            base = Path(tmp)
+            (base / "job_1").mkdir()
+            (base / "job_2").mkdir()
+            (base / "not_a_job").mkdir()
+            self.assertEqual(discover_job_indices(base), [1, 2])
 
-    def test_missing_leakage_key_flagged_not_silently_zero(self):
+    def test_process_job_reads_parsed_chunks_and_sumw(self):
+        rng = np.random.default_rng(21)
         with tempfile.TemporaryDirectory() as tmp:
-            jobs_base = Path(tmp) / "dy_full"
-            job_dir = jobs_base / "job_1"
-            (job_dir / "selected").mkdir(parents=True)
-            (job_dir / "selected" / "job_metadata.json").write_text(
-                json.dumps({"cutflow": {"n_selected": 1}}), encoding="utf-8"  # no leakage key
-            )
-            agg = sum_leakage_and_sumw(jobs_base)
-            self.assertEqual(agg["missing_leakage_key_jobs"], [1])
+            job_dir = Path(tmp) / "job_1"
+            chunks_dir = job_dir / "parsed_data"
+            chunks_dir.mkdir(parents=True)
+            _write_dy_chunk(chunks_dir / "chunk_0.root", 3000, rng)
+
+            logs_dir = job_dir / "logs"
+            logs_dir.mkdir()
+            (logs_dir / "parsing_stats_batch_1.json").write_text(json.dumps({
+                "sumw_by_record": {"record_35669": {"genEventSumw": 12345.0}}
+            }), encoding="utf-8")
+
+            res = process_job(job_dir, 1)
+            self.assertEqual(res["n_chunks_found"], 1)
+            self.assertEqual(res["n_chunks_with_genweight"], 1)
+            self.assertEqual(res["genEventSumw"], 12345.0)
+            # every window/category combo present
+            for window in ("100_105", "105_110", "110_115", "135_180"):
+                for cat in ("inclusive", "EBEB", "notEBEB"):
+                    self.assertIn(f"n_selected_{window}_{cat}", res["leakage_totals"])
+                    self.assertIn(f"sum_genWeight_sq_{window}_{cat}", res["leakage_totals"])
+
+    def test_process_job_missing_chunks_dir_returns_zero_not_crash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            job_dir = Path(tmp) / "job_1"
+            job_dir.mkdir()
+            res = process_job(job_dir, 1)
+            self.assertEqual(res["n_chunks_found"], 0)
+            self.assertEqual(res["leakage_totals"], {})
+            self.assertIsNone(res["genEventSumw"])
 
 
 if __name__ == "__main__":

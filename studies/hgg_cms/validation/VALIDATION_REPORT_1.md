@@ -117,6 +117,47 @@ pre-set suggestion to consider starting that fit at 105 or 110 GeV rather
 than 100 GeV, given how poorly a single smooth function extrapolates
 across this boundary.
 
+### Update — 17 Sep 2026 (Z→ee validation round 2)
+
+The Z→ee run referenced above has now completed and merged (see
+`studies/hgg_cms/validation/VALIDATION_REPORT_2.md` for the full
+follow-up report). Status of the electron-veto-leakage test specifically,
+candidate explanation 3 above:
+
+**Still pending — not yet measured.** The completed DY cluster run only
+computed the leakage estimate inline for two coarse windows with no
+category split, added before this task's finer requirement (four
+windows: 100–105, 105–110, 110–115, 135–180 GeV, each split by
+EBEB/notEBEB/inclusive) existed. A new script,
+`studies/hgg_cms/validation/zee/hgg_leakage_estimate.py`, recomputes the
+leakage estimate against the completed run's already-parsed chunk files
+(no re-download, no re-submission, no `qsub` — runs in a couple of
+minutes on the analysis node) and is ready to run; see
+`VALIDATION_REPORT_2.md` Part E for the exact command and its unit-test
+coverage. This section will be updated again once that command's output
+is available, with the measured expected count in each window/category
+and a fully/partly/no verdict against the 1,604-event excess above.
+
+What Z→ee validation round 2 *did* establish in the meantime, relevant to
+interpreting whatever the leakage number turns out to be: DY normalized
+the same way as the leakage estimate will be (σ × L × Σ genWeight /
+Σ genEventSumw, PU-reweighted) lands at 0.81–0.84× the observed Z→ee data
+count per category (`VALIDATION_REPORT_2.md` Part C) — i.e. this
+normalization procedure is not, on its own, wildly over- or
+under-predicting real yields, which is a precondition for trusting a
+leakage estimate built the same way.
+
+**Interim fit-range recommendation, pending the leakage measurement:
+start the background-model fit at 105 GeV, not 100 GeV.** 100–105 GeV
+remains the one window flagged above (+4.2σ above even the
+better-fitting power-law extrapolation), leakage is a physically
+plausible and not-yet-ruled-out contributor to exactly that excess, and
+105 GeV is a boundary this study already treats as natural (the sideband
+fit region above starts there). 110 GeV is not recommended as a default
+over 105 GeV unless the leakage measurement, once available, shows
+leakage also extends materially into 105–110 GeV — revisit this
+recommendation once that number exists.
+
 ## C — Run-by-run stability
 
 156 certified runs (Run2016G 278820–280385 + Run2016H 280919–284044), all
@@ -272,7 +313,7 @@ full statistics.)
 
 | check | flag | severity |
 |---|---|---|
-| B (turn-on) | possible turn-on/edge effect, 100–105 GeV | informational — feeds the background-model task's fit-range choice, not a defect; electron-veto leakage from Z→ee added as a candidate explanation, to be tested once the prepared Z→ee run actually happens |
+| B (turn-on) | possible turn-on/edge effect, 100–105 GeV | informational — feeds the background-model task's fit-range choice, not a defect; electron-veto leakage from Z→ee added as a candidate explanation — Z→ee run has completed (17 Sep 2026 update above) but the leakage measurement itself is still pending one more cluster command; interim recommendation is to start the background fit at 105 GeV |
 | C (run stability) | χ²/ndf=2.48, 12/156 runs >3σ | mild — mostly low-luminosity-run statistics; worth a light mention if it recurs later |
 
 Nothing else raised a flag. No blinding violation occurred at any point
