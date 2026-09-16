@@ -14,9 +14,20 @@
 # only the transport for the 3 pinned files is now XRootD (root://) instead
 # of HTTPS (see that script's SIGNAL_URL/DATA_FILES comments for why).
 #
-# Output: the script's own results JSON
-# (reproduce_check_b_and_c_results.json) plus this job's stdout/stderr log,
-# copied to Lustre so they survive after the job's scratch space is gone.
+# Output: reproduce_check_b_and_c.py is given --output-path pointing
+# straight at Lustre, so the results JSON is written there directly --
+# never under $HOME/the repo checkout (batch jobs must not write there;
+# see PILOT_CHECKLIST.md). All pilot/validation output lives under
+# .../output/hgg_pilot/ -- kept entirely separate from the full run's own
+# (untouched, empty) output directories.
+#
+# Resource basis: mem=4gb/walltime=03:00:00 below are PLACEHOLDER GUESSES
+# (this job has never actually run -- there is no local D3 measurement to
+# base them on, since local D3 runs were abandoned due to persistent
+# remote-read failures). After the pilot, read this job's own
+# /usr/bin/time -v peak memory and PBS's own accounted walltime
+# (`qstat -fx <jobid>` after it finishes) and see PILOT_CHECKLIST.md for
+# how to size the full run's requests from them.
 #
 # ACCEPTANCE CRITERIA (pre-set, must NOT be changed after seeing results --
 # see the script's own `reference` dict for the exact numbers):
@@ -41,15 +52,15 @@
 #PBS -l select=1:ncpus=1:mem=4gb
 #PBS -l walltime=03:00:00
 #PBS -l io=10
-#PBS -o /storage/agrp/berkom/atlas-utilization/logs/hgg_d1d2/hgg_d1d2_reproduce.out
-#PBS -e /storage/agrp/berkom/atlas-utilization/logs/hgg_d1d2/hgg_d1d2_reproduce.err
+#PBS -o /storage/agrp/berkom/atlas-utilization/logs/hgg_pilot/d1d2/hgg_d1d2_reproduce.out
+#PBS -e /storage/agrp/berkom/atlas-utilization/logs/hgg_pilot/d1d2/hgg_d1d2_reproduce.err
 
 set -euo pipefail
 
 REPO_DIR="$HOME/atlas-utilization"
 CONDA_PROFILE="/usr/wipp/conda/24.5.0/etc/profile.d/conda.sh"
 CONDA_ENV="/storage/agrp/berkom/atlas-utilization/envs/atlas-pipeline"
-LUSTRE_OUT="/storage/agrp/berkom/atlas-utilization/output/hgg_d1d2_reproduce"
+LUSTRE_OUT="/storage/agrp/berkom/atlas-utilization/output/hgg_pilot/d1d2_reproduce"
 
 mkdir -p "${TMPDIR:-/tmp}" "$LUSTRE_OUT"
 
@@ -62,9 +73,8 @@ echo "Job $PBS_JOBID starting on $(hostname) at $(date)"
 echo "TMPDIR=$TMPDIR"
 
 /usr/bin/time -v python -u studies/hgg_cms/impl_checks/reproduce_check_b_and_c.py \
+    --output-path "${LUSTRE_OUT}/reproduce_check_b_and_c_results.json" \
     2> "${LUSTRE_OUT}/timing_and_stderr.log"
-
-cp studies/hgg_cms/impl_checks/reproduce_check_b_and_c_results.json "$LUSTRE_OUT/"
 
 echo "Results written to: ${LUSTRE_OUT}/reproduce_check_b_and_c_results.json"
 echo "Timing/peak-memory (from /usr/bin/time -v): ${LUSTRE_OUT}/timing_and_stderr.log"

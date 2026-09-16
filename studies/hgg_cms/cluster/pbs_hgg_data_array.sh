@@ -32,11 +32,31 @@
 # paths, never touches an already-absolute one) nests them correctly
 # under --run-dir with zero manual config-editing here.
 #
-# Resource requests: PLACEHOLDERS, sized from Part D's one-file timing/
-# memory measurement (once the D3 cluster job below has run and been
-# reviewed -- see studies/hgg_cms/cluster/PILOT_CHECKLIST.md) with a x2
-# safety factor. DO NOT SUBMIT until the pilot (submit_pilot.sh) AND the
-# D1/D2/D3 validation jobs have run and been reviewed.
+# Resource requests: PLACEHOLDERS -- no local D3 run of the equivalent
+# single-file job ever completed (local remote reads were too unreliable;
+# D3 was moved to the cluster -- see pbs_hgg_d3_data.sh, which measures
+# exactly this job's per-file cost via /usr/bin/time -v). DO NOT SUBMIT
+# THE FULL -J 1-133 RUN until: the pilot (submit_pilot.sh) AND the
+# D1/D2/D3 validation jobs have run and been reviewed, AND these
+# mem/walltime values have been replaced with real numbers (x2 safety
+# factor) from D3's + the pilot's own measurements -- see
+# studies/hgg_cms/cluster/PILOT_CHECKLIST.md.
+#
+# Log files: "^array_index^" is OpenPBS's own substitution token for a
+# job array's Output_Path/Error_Path -- each subjob gets its own log file
+# named with its actual array index, so two subjobs submitted under the
+# same array (e.g. -J 1-133, or the pilot's -J 1-2) never share a log
+# file. This is the default for a bare `qsub` of this script (e.g. the
+# eventual full-run submission); submit_pilot.sh instead overrides -o/-e
+# on the qsub command line (which takes priority over this #PBS header)
+# to redirect the PILOT's logs under .../logs/hgg_pilot/ instead of here
+# -- see that script for the exact invocation.
+#
+# Output directory: OUTPUT_BASE, if set via `qsub -v OUTPUT_BASE=...`,
+# overrides where this job's output goes (used by submit_pilot.sh to
+# redirect the pilot's 2-file run under .../output/hgg_pilot/data/,
+# keeping the full run's own .../output/cms_hgg_data/ directory
+# completely untouched and empty until the full run actually happens).
 # ---------------------------------------------------------------------------
 #PBS -N hgg_data
 #PBS -q N
@@ -46,8 +66,8 @@
 #PBS -l select=1:ncpus=1:mem=4gb
 #PBS -l walltime=02:00:00
 #PBS -l io=30
-#PBS -o /storage/agrp/berkom/atlas-utilization/logs/hgg_data/hgg_data.out
-#PBS -e /storage/agrp/berkom/atlas-utilization/logs/hgg_data/hgg_data.err
+#PBS -o /storage/agrp/berkom/atlas-utilization/logs/hgg_data/hgg_data_^array_index^.out
+#PBS -e /storage/agrp/berkom/atlas-utilization/logs/hgg_data/hgg_data_^array_index^.err
 
 set -euo pipefail
 
@@ -56,7 +76,7 @@ CONDA_PROFILE="/usr/wipp/conda/24.5.0/etc/profile.d/conda.sh"
 CONDA_ENV="/storage/agrp/berkom/atlas-utilization/envs/atlas-pipeline"
 BASE_CONFIG="config.cms_hgg_data.yaml"
 TOTAL_FILES=133
-LUSTRE_BASE="/storage/agrp/berkom/atlas-utilization/output/cms_hgg_data"
+LUSTRE_BASE="${OUTPUT_BASE:-/storage/agrp/berkom/atlas-utilization/output/cms_hgg_data}"
 
 JOB_INDEX="${PBS_ARRAY_INDEX:?PBS_ARRAY_INDEX not set -- submit as a job array (-J)}"
 

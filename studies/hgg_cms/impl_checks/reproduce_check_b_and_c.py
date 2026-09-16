@@ -24,6 +24,7 @@ blinded COUNTS here, never printed/plotted individually.
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -262,6 +263,17 @@ def data_check():
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--output-path", default=None,
+        help="Where to write reproduce_check_b_and_c_results.json. Defaults "
+             "to this script's own directory (fine for a local/manual run); "
+             "a cluster job MUST pass an explicit Lustre path here instead "
+             "-- batch jobs must never write under $HOME/the repo checkout "
+             "(see pbs_hgg_d1d2_reproduce.sh)."
+    )
+    args = parser.parse_args()
+
     print("=== Signal (ggH) reproduction of check_c1 (with_TM) ===")
     sig = signal_check()
     print(json.dumps(sig, indent=2))
@@ -302,7 +314,11 @@ def main():
     out = {
         "signal": sig, "data": dat, "reference": reference, "comparison": comparison,
     }
-    out_path = Path(__file__).resolve().parent / "reproduce_check_b_and_c_results.json"
+    if args.output_path:
+        out_path = Path(args.output_path)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+    else:
+        out_path = Path(__file__).resolve().parent / "reproduce_check_b_and_c_results.json"
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)
     print(f"\nwrote {out_path}")

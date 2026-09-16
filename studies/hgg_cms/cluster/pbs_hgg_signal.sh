@@ -23,15 +23,29 @@
 # utils/paths.py's update_config_paths_with_run_dir nests them correctly
 # under --run-dir.
 #
-# Resource requests: PLACEHOLDERS, sized from Part D's one-file (ggH)
-# timing/memory measurement (once the D3 cluster job has run and been
-# reviewed) with a x2 safety factor, then scaled up for the LARGEST
-# record (ggH itself is also the record with by far the most events per
-# file, ~178k events/file average vs a few thousand for the smaller
-# modes -- see signal_sumw.json) -- see
-# studies/hgg_cms/cluster/PILOT_CHECKLIST.md for the actual numbers these
-# #PBS lines were set from. DO NOT SUBMIT until the pilot has run and
-# been reviewed.
+# Resource requests: PLACEHOLDERS -- no local D3 run of the equivalent
+# single-file (ggH) job ever completed (local remote reads were too
+# unreliable; D3 was moved to the cluster -- see pbs_hgg_d3_signal.sh,
+# which measures this job's per-file cost, using the WORST CASE record
+# by events/file, via /usr/bin/time -v). DO NOT SUBMIT until the pilot
+# has run and been reviewed, AND these mem/walltime values have been
+# replaced with real numbers (x2 safety factor) from D3's + the pilot's
+# own measurements -- see studies/hgg_cms/cluster/PILOT_CHECKLIST.md.
+#
+# Log files: this #PBS header's own -o/-e is a SHARED placeholder --
+# since this script is submitted once PER LABEL (6 times for the full
+# signal run, once per pilot signal job), every caller MUST override
+# -o/-e on the qsub command line with the label baked into the filename
+# (a #PBS header directive cannot reference a qsub -v variable, so this
+# cannot be fixed inside the header itself) -- see submit_pilot.sh for
+# the exact invocation. Submitting this script bare, for more than one
+# label, without that override WILL make concurrent jobs share a log file.
+#
+# Output directory: OUTPUT_BASE, if set via `qsub -v OUTPUT_BASE=...`,
+# overrides where this job's output goes (used by submit_pilot.sh to
+# redirect each pilot signal job under .../output/hgg_pilot/signal/<label>/,
+# keeping the full run's own .../output/cms_hgg_signal_<label>/ directory
+# completely untouched and empty until the full run actually happens).
 # ---------------------------------------------------------------------------
 #PBS -N hgg_signal
 #PBS -q N
@@ -40,8 +54,8 @@
 #PBS -l select=1:ncpus=1:mem=8gb
 #PBS -l walltime=04:00:00
 #PBS -l io=30
-#PBS -o /storage/agrp/berkom/atlas-utilization/logs/hgg_signal/hgg_signal.out
-#PBS -e /storage/agrp/berkom/atlas-utilization/logs/hgg_signal/hgg_signal.err
+#PBS -o /storage/agrp/berkom/atlas-utilization/logs/hgg_signal/hgg_signal_MUST_BE_OVERRIDDEN_PER_LABEL.out
+#PBS -e /storage/agrp/berkom/atlas-utilization/logs/hgg_signal/hgg_signal_MUST_BE_OVERRIDDEN_PER_LABEL.err
 
 set -euo pipefail
 
@@ -51,7 +65,7 @@ set -euo pipefail
 REPO_DIR="$HOME/atlas-utilization"
 CONDA_PROFILE="/usr/wipp/conda/24.5.0/etc/profile.d/conda.sh"
 CONDA_ENV="/storage/agrp/berkom/atlas-utilization/envs/atlas-pipeline"
-JOB_RUN_DIR="/storage/agrp/berkom/atlas-utilization/output/cms_hgg_signal_${LABEL}"
+JOB_RUN_DIR="${OUTPUT_BASE:-/storage/agrp/berkom/atlas-utilization/output/cms_hgg_signal_${LABEL}}"
 
 mkdir -p "${TMPDIR:-/tmp}" "$JOB_RUN_DIR"
 

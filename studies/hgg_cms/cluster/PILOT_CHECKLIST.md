@@ -15,24 +15,41 @@ considered:
 Do not submit the full run until every item below is checked and you have
 explicitly decided to proceed. `submit_pilot.sh` does not auto-continue.
 
+`submit_pilot.sh` runs a preflight (conda activation, python/XRootD
+package check, an XRootD metadata-only open of both D3 files, a
+branch/commit/clean-tree check on `$HOME/atlas-utilization`, directory
+writability, and a check that no pilot output directory is already
+populated) **before submitting anything** -- if any of it fails, nothing
+is submitted. See that script's own header comment for exactly what it
+checks, and `DRY_RUN=1 bash submit_pilot.sh` to see the exact `qsub`
+commands and log paths it would use without submitting anything.
+
 ## Where things land
 
-- Logs (PBS stdout/stderr): `/storage/agrp/berkom/atlas-utilization/logs/hgg_d1d2/`,
-  `.../hgg_d3/`, `.../hgg_data/`, `.../hgg_signal/`
-- D1/D2 results: `/storage/agrp/berkom/atlas-utilization/output/hgg_d1d2_reproduce/reproduce_check_b_and_c_results.json`
-  and `timing_and_stderr.log` in the same directory.
-- D3 results: `/storage/agrp/berkom/atlas-utilization/output/hgg_d3_data/`
-  (`d3_data_report.json`, `d3_data_mgg_plot.png`, `timing_and_memory.log`)
-  and `.../hgg_d3_signal_ggh/` (`d3_signal_report.json`,
-  `d3_signal_mgg_plot.png`, `timing_and_memory.log`).
-- Pilot data: `/storage/agrp/berkom/atlas-utilization/output/cms_hgg_data/job_1/`
-  and `job_2/` (each with `parsed_data/`, `selected/`, `logs/`).
-- Pilot signal: `/storage/agrp/berkom/atlas-utilization/output/cms_hgg_signal_<label>_pilot/`
-  for `<label>` in ggh, vbf, wplush, wminush, zh, tth.
+Everything the pilot and D1-D3 produce lives under one tree, entirely
+separate from where the full run will write:
+
+- Logs: `/storage/agrp/berkom/atlas-utilization/logs/hgg_pilot/{d1d2,d3,data,signal}/`
+- Output: `/storage/agrp/berkom/atlas-utilization/output/hgg_pilot/`
+  - D1/D2: `.../hgg_pilot/d1d2_reproduce/reproduce_check_b_and_c_results.json`,
+    `timing_and_stderr.log`
+  - D3 data: `.../hgg_pilot/d3_data/` (`d3_data_report.json`,
+    `d3_data_mgg_plot.png`, `timing_and_memory.log`)
+  - D3 signal: `.../hgg_pilot/d3_signal_ggh/` (`d3_signal_report.json`,
+    `d3_signal_mgg_plot.png`, `timing_and_memory.log`)
+  - Pilot data: `.../hgg_pilot/data/job_1/` and `job_2/` (each with
+    `parsed_data/`, `selected/`, `logs/`)
+  - Pilot signal: `.../hgg_pilot/signal/<label>/` for `<label>` in ggh,
+    vbf, wplush, wminush, zh, tth
+
+The full run's own directories (`.../output/cms_hgg_data/`,
+`.../output/cms_hgg_signal_<label>/`) are never touched by any of the
+above and should still be empty/nonexistent at this point -- if they are
+not, something submitted outside this checklist's process.
 
 Check job status with `qstat -u $USER`; a finished job's `#PBS -o`/`-e`
-files (see each script's header for the exact paths) have the run's own
-`echo` progress lines plus any Python traceback if something failed.
+files (paths above) have the run's own `echo` progress lines plus any
+Python traceback if something failed.
 
 ## 1. D1/D2 acceptance criteria (PRE-SET -- do not change these numbers after seeing results)
 
@@ -85,24 +102,25 @@ Open `d3_data_report.json` and `d3_signal_report.json`.
   `preview_expected_ggH_yield_SINGLE_FILE_ONLY` is a small positive number
   (it is explicitly NOT the full-record yield -- see its own
   `preview_yield_caveat` field).
-- **Both**: read `timing_and_memory.log`'s `Elapsed (wall clock) time` and
-  `Maximum resident set size` lines. **Use these two numbers, x2 for
-  safety, to replace the placeholder `#PBS -l mem`/`walltime` values in
-  `pbs_hgg_data_array.sh` and `pbs_hgg_signal.sh` before submitting the
-  full run** -- this is the whole reason D3 runs before the full
-  submission. `output_file_sizes_bytes` in each report tells you
-  approximately how much Lustre space the full run will need (data: x133
-  data files across the two records; signal: scale ggH's number to each
-  record's own file count and event-rate -- ggH has by far the most
-  events/file of the 6 records, see `pbs_hgg_signal.sh`'s own comment).
+- **Both -- resources (see "Resource requests" section below for the
+  full procedure)**: read `timing_and_memory.log`'s peak memory, and
+  cross-check the job's PBS-accounted walltime with
+  `qstat -fx <jobid>` once the job has finished (`resources_used.walltime`,
+  `resources_used.mem`) -- these are two independently-measured numbers
+  for the same job and should roughly agree; if they don't, prefer the
+  larger one when sizing the full run's requests.
+  `output_file_sizes_bytes` in each report gives the first REAL per-file
+  output size -- compare it against the estimate in "Storage estimate"
+  below and correct that estimate if it's off by more than a factor of a
+  few.
 
 ## 3. Pilot review (2 data files, 1 file per signal record)
 
 - `qstat -u $USER` shows all 8 jobs finished (not held, not still queued
   after a reasonable time given D3's walltime numbers).
-- Each `.../job_1/selected/job_metadata.json` and
+- Each `.../hgg_pilot/data/job_1/selected/job_metadata.json` and
   `.../job_2/selected/job_metadata.json` (data) and each
-  `.../cms_hgg_signal_<label>_pilot/selected/job_metadata.json` (signal)
+  `.../hgg_pilot/signal/<label>/selected/job_metadata.json` (signal)
   exists and its `cutflow` has non-zero `n_input_events`.
 - For signal pilots: `cutflow.dedup_removed_simulation_events == 0` in
   every record's `job_metadata.json` (this task's own guarantee -- see
@@ -114,14 +132,15 @@ Open `d3_data_report.json` and `d3_signal_report.json`.
   once copied off Lustre, e.g.:
   ```
   python studies/hgg_cms/cluster/merge_outputs.py --mode data \
-      --jobs-base /storage/agrp/berkom/atlas-utilization/output/cms_hgg_data \
+      --jobs-base /storage/agrp/berkom/atlas-utilization/output/hgg_pilot/data \
       --total-jobs 2 --out /tmp/pilot_data_merge.json
   ```
-  (note `--total-jobs 2`, not 133 -- this is only the pilot) and the
-  equivalent `--mode signal` call with the 6 `_pilot` run directories,
-  and confirm `status == "COMPLETE"` for both (no `--force` needed -- if
-  the pilot itself needs `--force` to look complete, do not proceed to
-  the full run).
+  (note `--jobs-base .../hgg_pilot/data` and `--total-jobs 2`, not the
+  full run's `.../cms_hgg_data` / 133) and the equivalent `--mode signal`
+  call with the 6 `.../hgg_pilot/signal/<label>` run directories, and
+  confirm `status == "COMPLETE"` for both (no `--force` needed -- if the
+  pilot itself needs `--force` to look complete, do not proceed to the
+  full run).
 - No data event anywhere in the pilot's normal (non-`_BLINDED_SIGNAL_REGION`)
   outputs falls in [115, 135] GeV -- this is actually asserted
   automatically by `studies.hgg_cms.output.read_output` on any read of a
@@ -130,12 +149,86 @@ Open `d3_data_report.json` and `d3_signal_report.json`.
   file once (e.g. via that same `read_output` function in a throwaway
   script) doubles as this check.
 
-## Resource-estimate reference numbers
+## 4. Resource requests: basis and how to set them for real
 
-The placeholder values currently in `pbs_hgg_data_array.sh`
-(`mem=4gb`, `walltime=02:00:00`) and `pbs_hgg_signal.sh` (`mem=8gb`,
-`walltime=04:00:00`) were NOT derived from a real measurement -- they are
-starting guesses. Do not submit the full run with these placeholders
-still in place; replace them using D3's `timing_and_memory.log` numbers
-(x2 safety factor) as described above, and re-syntax-check
-(`bash -n <script>.sh`) after editing.
+Every `#PBS -l mem`/`walltime` value currently in `pbs_hgg_data_array.sh`
+(`mem=4gb`, `walltime=02:00:00`), `pbs_hgg_signal.sh` (`mem=8gb`,
+`walltime=04:00:00`), `pbs_hgg_d1d2_reproduce.sh` (`mem=4gb`,
+`walltime=03:00:00`), `pbs_hgg_d3_data.sh` (`mem=4gb`,
+`walltime=03:00:00`) and `pbs_hgg_d3_signal.sh` (`mem=8gb`,
+`walltime=04:00:00`) is a **placeholder guess, not a measurement** --
+no local run of the equivalent job ever completed (local remote reads
+were too unreliable, which is exactly why D1-D3 moved to the cluster).
+The signal jobs' guesses are deliberately larger than the data jobs'
+because ggH -- used for D3's own signal measurement -- has by far the
+most events/file of the 6 signal records (~178k/file average vs a few
+thousand for the smaller modes, see `signal_sumw.json`), so it is treated
+as the worst case for `pbs_hgg_signal.sh`'s single template.
+
+**After the pilot (and D1-D3) finish, for each job:**
+1. Read `/usr/bin/time -v`'s "Maximum resident set size" from that job's
+   own timing log (D1/D2, D3) or add an equivalent wrapper before
+   re-running the data/signal pilot jobs a second time if you want a
+   directly comparable number for them too.
+2. Cross-check with PBS's own accounting: `qstat -fx <jobid>` (after the
+   job has finished) reports `resources_used.mem` and
+   `resources_used.walltime` independently of `/usr/bin/time`.
+3. Set the full run's `#PBS -l mem`/`walltime` to **about 2x the larger
+   of the two measured numbers**, and re-run `bash -n <script>.sh` after
+   editing. Keep walltime at or under the site's 72h hard maximum
+   (default 12h if you have no strong reason to request more).
+
+## 5. Storage estimate (re-check with real pilot numbers)
+
+This is a rough, explicitly-labeled order-of-magnitude estimate for the
+FULL run, computed from the output schema and existing metadata -- NOT
+from a real measurement (the pilot is what supplies that). Re-derive it
+once `output_file_sizes_bytes` is available from the pilot and D3 reports,
+and update this section.
+
+**Per-event output row** (`studies/hgg_cms/output.py`'s
+`build_output_table`): 8 event-level fields + 2x11 per-photon fields
+(lead+sublead), mostly `float64`/`int64` (8 bytes) plus a couple of
+`bool`s and one short string ("EBEB"/"notEBEB") -- roughly **205 bytes/
+event (data), ~221 bytes/event (simulation, +genWeight+Pileup_nTrueInt)**,
+uncompressed. (uproot's default ROOT compression, if any is actually
+applied by this uproot version's `recreate()` default, was not verified
+in this task -- so this is a conservative, not-smaller-than-reality,
+planning number.)
+
+**Signal** (uses real numbers from `signal_sumw.json`): summed
+`genEventCount` over all 6 records' 71 total files = 3,433,898 events.
+Using ggH's own real measured selection efficiency from `check_c1`
+(19986/50000 ~ 40%, the only per-record efficiency actually measured so
+far -- applied here as a common rough approximation for all 6 records,
+since a precise per-record number would need running the selection on
+each) gives ~1.37M selected events across all signal output -> **~300 MB
+total**, in 71 output files (one per input file, one per record's own
+`selected/` directory -- max 20 files in one directory, for ZH -- well
+under the 1000-files-per-directory rule).
+
+**Data**: no total event count across the 133 DoubleEG files is known
+locally (would need reading Runs/Events metadata for all 133 files, a
+remote-read cost this task does not spend). Using the two file sizes
+actually queried this session (1.93 GB and 0.84 GB, for two of the 133
+files) as a rough per-file scale, ~1.5 GB/file average, and a raw
+NanoAOD events/byte ratio benchmarked from the one file whose event count
+IS known precisely (ggH: 533,000 events / 629,014,638 bytes ~ 1180
+bytes/event) as a very rough stand-in, points to somewhere in the range
+of 1-2 million events per data file, i.e. roughly 150-260 million events
+total across 133 files. Applying `check_c2`'s real measured data
+selection efficiency (92/50,000 ~ 0.18%) gives on the order of
+300,000-500,000 selected data events -> **on the order of 100 MB total**,
+in up to 266 output files (133 data jobs x up to 2 files each,
+normal+blinded -- one job's own `job_N/selected/` directory has at most 2
+files, well under 1000/directory).
+
+**Bottom line (rough, pending real numbers)**: total full-run output on
+the order of a few hundred MB to ~1 GB, and a few hundred output files
+total -- both far under the site defaults (2 TB, 150,000 files) and the
+1000-files-per-directory rule, with no restructuring needed given the
+current one-output-per-input-file layout. **Re-check this against the
+pilot's own `output_file_sizes_bytes` and `job_metadata.json` counts
+before the full submission** -- if the real per-event size or selection
+efficiency differs from the rough numbers above by an order of magnitude,
+revisit this conclusion.

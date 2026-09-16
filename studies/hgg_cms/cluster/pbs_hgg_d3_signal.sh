@@ -23,6 +23,15 @@
 # ggH having by far the most events/file) are what pbs_hgg_signal.sh's
 # placeholder #PBS -l mem/walltime values must be set from (x2 safety
 # factor) before the full signal submission.
+#
+# Resource basis: mem=8gb/walltime=04:00:00 below are PLACEHOLDER GUESSES
+# -- this is the very job meant to REPLACE the guess with a real number
+# (no local run of this ever completed). After the pilot, read
+# timing_and_memory.log's "Maximum resident set size" and PBS's own
+# accounted walltime (`qstat -fx <jobid>`) -- see PILOT_CHECKLIST.md.
+#
+# Output: under .../output/hgg_pilot/ -- kept entirely separate from the
+# full run's own (untouched, empty) output directories.
 # ---------------------------------------------------------------------------
 #PBS -N hgg_d3_signal
 #PBS -q N
@@ -31,8 +40,8 @@
 #PBS -l select=1:ncpus=1:mem=8gb
 #PBS -l walltime=04:00:00
 #PBS -l io=30
-#PBS -o /storage/agrp/berkom/atlas-utilization/logs/hgg_d3/hgg_d3_signal.out
-#PBS -e /storage/agrp/berkom/atlas-utilization/logs/hgg_d3/hgg_d3_signal.err
+#PBS -o /storage/agrp/berkom/atlas-utilization/logs/hgg_pilot/d3/hgg_d3_signal.out
+#PBS -e /storage/agrp/berkom/atlas-utilization/logs/hgg_pilot/d3/hgg_d3_signal.err
 
 set -euo pipefail
 
@@ -40,7 +49,7 @@ REPO_DIR="$HOME/atlas-utilization"
 CONDA_PROFILE="/usr/wipp/conda/24.5.0/etc/profile.d/conda.sh"
 CONDA_ENV="/storage/agrp/berkom/atlas-utilization/envs/atlas-pipeline"
 BASE_CONFIG="config.cms_hgg_signal_ggh.yaml"
-JOB_RUN_DIR="/storage/agrp/berkom/atlas-utilization/output/hgg_d3_signal_ggh"
+JOB_RUN_DIR="/storage/agrp/berkom/atlas-utilization/output/hgg_pilot/d3_signal_ggh"
 
 PINNED_RECORD="37350"
 PINNED_URL="root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/3231834B-7A6E-4840-8627-C97FDCF67268.root"

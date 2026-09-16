@@ -22,6 +22,15 @@
 # pbs_hgg_data_array.sh's placeholder #PBS -l mem/walltime values must be
 # set from (with the requested x2 safety factor) before the full 133-file
 # submission.
+#
+# Resource basis: mem=4gb/walltime=03:00:00 below are PLACEHOLDER GUESSES
+# -- this is the very job meant to REPLACE the guess with a real number
+# (no local run of this ever completed). After the pilot, read
+# timing_and_memory.log's "Maximum resident set size" and PBS's own
+# accounted walltime (`qstat -fx <jobid>`) -- see PILOT_CHECKLIST.md.
+#
+# Output: under .../output/hgg_pilot/ -- kept entirely separate from the
+# full run's own (untouched, empty) output directories.
 # ---------------------------------------------------------------------------
 #PBS -N hgg_d3_data
 #PBS -q N
@@ -30,8 +39,8 @@
 #PBS -l select=1:ncpus=1:mem=4gb
 #PBS -l walltime=03:00:00
 #PBS -l io=30
-#PBS -o /storage/agrp/berkom/atlas-utilization/logs/hgg_d3/hgg_d3_data.out
-#PBS -e /storage/agrp/berkom/atlas-utilization/logs/hgg_d3/hgg_d3_data.err
+#PBS -o /storage/agrp/berkom/atlas-utilization/logs/hgg_pilot/d3/hgg_d3_data.out
+#PBS -e /storage/agrp/berkom/atlas-utilization/logs/hgg_pilot/d3/hgg_d3_data.err
 
 set -euo pipefail
 
@@ -39,7 +48,7 @@ REPO_DIR="$HOME/atlas-utilization"
 CONDA_PROFILE="/usr/wipp/conda/24.5.0/etc/profile.d/conda.sh"
 CONDA_ENV="/storage/agrp/berkom/atlas-utilization/envs/atlas-pipeline"
 BASE_CONFIG="config.cms_hgg_data.yaml"
-JOB_RUN_DIR="/storage/agrp/berkom/atlas-utilization/output/hgg_d3_data"
+JOB_RUN_DIR="/storage/agrp/berkom/atlas-utilization/output/hgg_pilot/d3_data"
 
 # The exact file pinned by check_c_trigger_mimicking.py / this task's own
 # reproduce_check_b_and_c.py, via XRootD (see that script's own comments
