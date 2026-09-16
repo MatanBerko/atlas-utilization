@@ -90,6 +90,19 @@ RECORD_ID_TO_SCHEMA = {
     70173: "cms-nanoaod",  # WminusH_HToGG_WToAll (W-H)              NANOAODSIM (postVFP signal)
     74132: "cms-nanoaod",  # ZH_HToGG_ZToAll (ZH)                    NANOAODSIM (postVFP signal)
     67611: "cms-nanoaod",  # ttHJetToGG (ttH)                        NANOAODSIM (postVFP signal)
+    # Z->e+e- control-region run (implementation task 6, Part 4): registered
+    # before use, same pattern as every addition above -- the pilot's DY
+    # jobs failed with exactly this record's own "not registered in
+    # schemas.RECORD_ID_TO_SCHEMA" error before this line was added (the
+    # H->gamma-gamma signal records were registered when task 6 started,
+    # but 35669 was only found and used later, in the Z->ee follow-up, and
+    # this entry was missed at that time). One real file opened and its
+    # Events tree's branch list checked directly (metadata only) before
+    # adding this: flat NanoAOD naming, run/luminosityBlock/event and
+    # genWeight all present (correctly, since this is simulation) -- see
+    # studies/hgg_cms/impl_checks/record_schema_evidence.json's own
+    # "35669" entry.
+    35669: "cms-nanoaod",  # DYJetsToLL_M-50                         NANOAODSIM (postVFP, Z->ee control region)
 }
 
 # Release-specific branch naming templates

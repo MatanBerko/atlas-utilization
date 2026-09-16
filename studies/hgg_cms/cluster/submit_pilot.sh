@@ -245,6 +245,27 @@ preflight_pilot_outputs_empty() {
 }
 preflight_pilot_outputs_empty   # pure local filesystem check -- runs even under DRY_RUN
 
+preflight_configs_registered() {
+    # Every record ID used by config.cms_hgg_data.yaml (D3 data + the data
+    # pilot array) or any of the 6 signal configs (D3 signal + the signal
+    # pilot) must already be registered in services/parsing/schemas.py's
+    # RECORD_ID_TO_SCHEMA -- added 16 Sep 2026 after exactly this failure
+    # mode ("record ID ... is not registered") hit the separate Z->ee
+    # pilot's DY jobs for record 35669. D1/D2 (pbs_hgg_d1d2_reproduce.sh)
+    # is NOT checked here -- it calls uproot.open directly on pinned URLs
+    # and never goes through FileParser's schema resolution at all. A pure
+    # local check (python + yaml + this repo's own schemas.py) -- no
+    # cluster/network dependency, runs even under DRY_RUN.
+    python studies/hgg_cms/cluster/check_configs_registered.py \
+        config.cms_hgg_data.yaml \
+        config.cms_hgg_signal_ggh.yaml config.cms_hgg_signal_vbf.yaml \
+        config.cms_hgg_signal_wplush.yaml config.cms_hgg_signal_wminush.yaml \
+        config.cms_hgg_signal_zh.yaml config.cms_hgg_signal_tth.yaml \
+        || { echo "PREFLIGHT FAILED: see MISSING lines above -- register the record ID(s) in services/parsing/schemas.py before submitting." >&2; exit 1; }
+    echo "  OK: every record ID used by the data + 6 signal configs is registered"
+}
+preflight_configs_registered   # pure local filesystem check -- runs even under DRY_RUN
+
 echo "=== Preflight passed -- submitting ==="
 
 # ---------------------------------------------------------------------------

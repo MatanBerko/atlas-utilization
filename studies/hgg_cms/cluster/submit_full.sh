@@ -256,6 +256,26 @@ preflight_full_outputs_empty() {
 }
 preflight_full_outputs_empty   # pure local filesystem check -- runs even under DRY_RUN
 
+preflight_configs_registered() {
+    # Every record ID used by config.cms_hgg_data.yaml (the data array
+    # job) or any of the 6 signal configs must already be registered in
+    # services/parsing/schemas.py's RECORD_ID_TO_SCHEMA, or that job fails
+    # immediately on the cluster (once per subjob, for the data array)
+    # with "record ID ... is not registered" -- added 16 Sep 2026 after
+    # exactly this failure mode hit the separate Z->ee pilot's DY jobs for
+    # record 35669. A pure local check (python + yaml + this repo's own
+    # schemas.py) -- no cluster/network dependency, runs even under
+    # DRY_RUN.
+    python studies/hgg_cms/cluster/check_configs_registered.py \
+        config.cms_hgg_data.yaml \
+        config.cms_hgg_signal_ggh.yaml config.cms_hgg_signal_vbf.yaml \
+        config.cms_hgg_signal_wplush.yaml config.cms_hgg_signal_wminush.yaml \
+        config.cms_hgg_signal_zh.yaml config.cms_hgg_signal_tth.yaml \
+        || { echo "PREFLIGHT FAILED: see MISSING lines above -- register the record ID(s) in services/parsing/schemas.py before submitting." >&2; exit 1; }
+    echo "  OK: every record ID used by the data + 6 signal configs is registered"
+}
+preflight_configs_registered   # pure local filesystem check -- runs even under DRY_RUN
+
 # ---------------------------------------------------------------------------
 # Lustre space estimate: measure the PILOT's real output size (du -sb) and
 # scale it to the full run's file counts. See PILOT_CHECKLIST.md's own

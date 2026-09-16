@@ -50,7 +50,11 @@
 # one DY file (also checks both trigger branches are present); $REPO_DIR
 # on this branch at origin's current tip with a clean tree; every log/
 # output directory writable; hgg_zee/ output directories must be empty or
-# not exist yet.
+# not exist yet; every record ID used by config.cms_hgg_zee_data.yaml /
+# config.cms_hgg_zee_dy.yaml is registered in services/parsing/schemas.py's
+# RECORD_ID_TO_SCHEMA (added 16 Sep 2026, after the Z->ee pilot's DY jobs
+# failed immediately with exactly this problem for record 35669 -- see
+# check_configs_registered.py).
 #
 # DRY_RUN=1: skips the checks that need the real cluster, still runs the
 # pure local/filesystem checks, and prints every qsub command instead of
@@ -193,6 +197,22 @@ preflight_outputs_empty() {
     fi
 }
 preflight_outputs_empty
+
+preflight_configs_registered() {
+    # Every record ID either config.cms_hgg_zee_data.yaml or
+    # config.cms_hgg_zee_dy.yaml uses must be registered in
+    # services/parsing/schemas.py's RECORD_ID_TO_SCHEMA, or the array job
+    # fails immediately on the cluster, once per subjob, with "record ID
+    # ... is not registered" -- exactly what happened to the Z->ee pilot's
+    # DY jobs before record 35669 was added there. A pure local check
+    # (python + yaml + this repo's own services/parsing/schemas.py) -- no
+    # cluster/network dependency, so it runs even under DRY_RUN.
+    python studies/hgg_cms/cluster/check_configs_registered.py \
+        config.cms_hgg_zee_data.yaml config.cms_hgg_zee_dy.yaml \
+        || { echo "PREFLIGHT FAILED: see MISSING lines above -- register the record ID(s) in services/parsing/schemas.py before submitting." >&2; exit 1; }
+    echo "  OK: every record ID used by config.cms_hgg_zee_data.yaml / config.cms_hgg_zee_dy.yaml is registered"
+}
+preflight_configs_registered
 
 echo "=== Preflight passed -- submitting ($MODE) ==="
 

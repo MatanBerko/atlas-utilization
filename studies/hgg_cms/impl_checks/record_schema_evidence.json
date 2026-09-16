@@ -134,5 +134,22 @@
       "has_genWeight": true,
       "no_dotted_naming": true
     }
+  },
+  "35669": {
+    "label": "DYJetsToLL_M-50 (Z->ee control region)",
+    "url": "https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/30000/0082C29D-E74C-024A-BE9B-97B29EE7A4A2.root",
+    "checks": {
+      "has_Events_tree": true,
+      "has_Runs_tree": true,
+      "flat_naming_Photon_pt": true,
+      "flat_naming_Muon_pt": true,
+      "flat_naming_Electron_pt": true,
+      "flat_naming_Jet_pt": true,
+      "has_run_branch": true,
+      "has_luminosityBlock_branch": true,
+      "has_event_branch": true,
+      "has_genWeight": true,
+      "no_dotted_naming": true
+    }
   }
 }
