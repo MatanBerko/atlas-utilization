@@ -23,14 +23,37 @@
 # utils/paths.py's update_config_paths_with_run_dir nests them correctly
 # under --run-dir.
 #
-# Resource requests: PLACEHOLDERS -- no local D3 run of the equivalent
-# single-file (ggH) job ever completed (local remote reads were too
-# unreliable; D3 was moved to the cluster -- see pbs_hgg_d3_signal.sh,
-# which measures this job's per-file cost, using the WORST CASE record
-# by events/file, via /usr/bin/time -v). DO NOT SUBMIT until the pilot
-# has run and been reviewed, AND these mem/walltime values have been
-# replaced with real numbers (x2 safety factor) from D3's + the pilot's
-# own measurements -- see studies/hgg_cms/cluster/PILOT_CHECKLIST.md.
+# Resource requests: SET FROM MEASURED PILOT NUMBERS (16 Sep 2026, 1 file
+# per record): wall 13-51s, peak mem 0.19-0.79 GB across the 6 records
+# (ggH's single file: 0.79 GB for 241,615 events parsed). A FULL signal
+# job processes ALL of a record's files, not just one -- checked in the
+# code (see run_selection_on_chunks.py's own main(): it loops over chunk
+# files ONE AT A TIME via process_one_chunk, never concatenating a
+# record's files together, so the SELECTION stage's own memory footprint
+# does not grow with file count. The PARSING stage (main.py --tasks
+# parsing) is the part that can hold more than one file's data at once:
+# pipeline/executor.py:815 gives ThreadedFileProcessor max_threads=8 (see
+# threads: 8 in config.cms_hgg_signal.yaml), so up to min(8, n_files)
+# files can be read concurrently before EventAccumulator flushes a chunk
+# at its chunk_yield_threshold_bytes (2 GB) -- meaning real peak memory
+# is bounded well below "linear in total events" in practice, but that
+# real ceiling was not measured (only single-file jobs were piloted), so
+# a conservative LINEAR estimate is used here instead, exactly as
+# intended by the x2 safety margin below.
+#   Worst case by TOTAL events (not events/file) is VBF: 2,000,000
+#   events over 13 files (signal_sumw.json's genEventCount) -- more than
+#   ggH's own 540,000 total despite ggH having more events per file.
+#   Scaling ggH's measured 0.79 GB / 241,615 events rate to VBF's
+#   2,000,000 events: 0.79 * (2,000,000 / 241,615) = 6.54 GB raw
+#   estimate; x2 safety margin = 13.08 GB -> rounded up to 14gb. This is
+#   well under the 16 GB threshold, so no record needs splitting into
+#   per-file jobs.
+#   mem=14gb, walltime=02:00:00 (as specified), io=30 (unchanged; the
+#   pilot gave no reason to raise it).
+#   ncpus=8 -- matches config.cms_hgg_signal.yaml's threads=8, and unlike
+#   the data job, a signal job's ThreadedFileProcessor genuinely reads
+#   more than one file per job (up to 13 for VBF), so this pool is
+#   actually exercised here.
 #
 # Log files: this #PBS header's own -o/-e is a SHARED placeholder --
 # since this script is submitted once PER LABEL (6 times for the full
@@ -51,8 +74,8 @@
 #PBS -q N
 #PBS -m n
 #PBS -S /bin/bash
-#PBS -l select=1:ncpus=1:mem=8gb
-#PBS -l walltime=04:00:00
+#PBS -l select=1:ncpus=8:mem=14gb
+#PBS -l walltime=02:00:00
 #PBS -l io=30
 #PBS -o /storage/agrp/berkom/atlas-utilization/logs/hgg_signal/hgg_signal_MUST_BE_OVERRIDDEN_PER_LABEL.out
 #PBS -e /storage/agrp/berkom/atlas-utilization/logs/hgg_signal/hgg_signal_MUST_BE_OVERRIDDEN_PER_LABEL.err

@@ -17,7 +17,16 @@
 # Uses config.cms_hgg_data.yaml with --batch-job-index/--total-batch-jobs
 # (utils/batching.py's get_batch_slice_by_year: with total_batches equal
 # to the exact total file count across both records, each batch gets
-# EXACTLY one file).
+# EXACTLY one file). IMPORTANT: every one of the 133 array subjobs fetches
+# this record's file list from the CERN Open Data API INDEPENDENTLY (no
+# shared cache between them), then flattens+slices it with ZERO sorting
+# anywhere in the pipeline -- so index<->file consistency across all 133
+# jobs relies on the portal returning the same file order every time it's
+# queried. This was checked (not just assumed) -- see
+# studies/hgg_cms/impl_checks/mapping_check/ for the offline verification
+# tool, the evidence gathered, and this finding's own writeup; read that
+# before trusting a specific index -> file assignment for anything beyond
+# "one file per index, no duplicates, full coverage".
 #
 # --run-dir is passed explicitly (main.py's own documented mechanism "for
 # multi-job PBS arrays") rather than letting main.py auto-generate a
@@ -32,15 +41,27 @@
 # paths, never touches an already-absolute one) nests them correctly
 # under --run-dir with zero manual config-editing here.
 #
-# Resource requests: PLACEHOLDERS -- no local D3 run of the equivalent
-# single-file job ever completed (local remote reads were too unreliable;
-# D3 was moved to the cluster -- see pbs_hgg_d3_data.sh, which measures
-# exactly this job's per-file cost via /usr/bin/time -v). DO NOT SUBMIT
-# THE FULL -J 1-133 RUN until: the pilot (submit_pilot.sh) AND the
-# D1/D2/D3 validation jobs have run and been reviewed, AND these
-# mem/walltime values have been replaced with real numbers (x2 safety
-# factor) from D3's + the pilot's own measurements -- see
-# studies/hgg_cms/cluster/PILOT_CHECKLIST.md.
+# Resource requests: SET FROM MEASURED PILOT NUMBERS (16 Sep 2026, 2
+# real files from record 30521): job 1 (2,014,154 events) took 2:03 wall
+# (117s of that in parsing), 2.37 GB peak; job 2 took 3:00 wall, 2.15 GB
+# peak. Worst observed: ~3 min wall, 2.37 GB peak.
+#   mem=5gb    -- ~2x the observed 2.37 GB peak, rounded up.
+#   walltime=01:00:00 -- ~20x the observed ~3 min wall (generous margin);
+#     also keeps this job routed to the shortE queue, as observed for
+#     <=02:00 requests during the pilot (this is an OBSERVATION from the
+#     pilot run, not something confirmed against a written site policy
+#     document -- recheck if routing behavior ever seems to change).
+#   ncpus=1    -- config.cms_hgg_data.yaml sets threads=8
+#     (pipeline/executor.py:815, ThreadedFileProcessor(max_threads=8)),
+#     but that pool only ever has ONE file to read per data job (each
+#     array index is batch-sliced to exactly one file -- see this
+#     script's own comment on get_batch_slice_by_year above), so at most
+#     one thread is ever actually active per job regardless of the
+#     configured thread count. Requesting ncpus=8 x133 concurrent array
+#     subjobs would reserve 1,064 cores' worth of scheduling for cores
+#     that are provably never used here -- this is a deliberate judgment
+#     call (the pilot itself ran successfully with ncpus=1); revisit if
+#     you'd rather match the config's thread count literally.
 #
 # Log files: "^array_index^" is OpenPBS's own substitution token for a
 # job array's Output_Path/Error_Path -- each subjob gets its own log file
@@ -63,8 +84,8 @@
 #PBS -m n
 #PBS -S /bin/bash
 #PBS -J 1-133
-#PBS -l select=1:ncpus=1:mem=4gb
-#PBS -l walltime=02:00:00
+#PBS -l select=1:ncpus=1:mem=5gb
+#PBS -l walltime=01:00:00
 #PBS -l io=30
 #PBS -o /storage/agrp/berkom/atlas-utilization/logs/hgg_data/hgg_data_^array_index^.out
 #PBS -e /storage/agrp/berkom/atlas-utilization/logs/hgg_data/hgg_data_^array_index^.err
