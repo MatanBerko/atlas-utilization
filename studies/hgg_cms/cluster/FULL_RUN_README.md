@@ -55,12 +55,18 @@ qstat -u $USER                                        # quick raw view
 bash studies/hgg_cms/cluster/status_full.sh            # summarized view (fast, run with nice automatically for its own checks)
 ```
 
-`status_full.sh` reads `submitted_jobs.txt`, queries every one of the 133
-data indices and all 6 signal jobs, and reports queued / running /
-finished OK / failed for each -- "finished OK" requires BOTH exit code 0
-AND the expected output (`selected/job_metadata.json` + at least one
-`.root` file) actually existing; an exit-0 job with no output is reported
-as FAILED, not OK.
+`status_full.sh` reads `submitted_jobs.txt`, queries all 133 data
+subjobs in ONE bulk `qstat -xft "<array-id>"` call (fixed 16 Sep 2026 --
+the previous version queried each subjob individually and, due to a
+job-id-format bug, misreported every finished subjob as "unknown"; see
+that script's own header comment) plus the 6 signal jobs individually,
+and reports queued / running / finished OK / failed for each -- "finished
+OK" requires BOTH exit code 0 AND the expected output
+(`selected/job_metadata.json` + at least one `.root` file) actually
+existing; an exit-0 job with no output is reported as FAILED, not OK. It
+also prints, for every data job directory that exists, its reconstructed
+CERN input file (same method the merge uses -- see "Merging" below) and
+flags any file assigned to more than one job index.
 
 ## Resubmitting failures
 
@@ -79,46 +85,67 @@ using `-v PBS_ARRAY_INDEX=i` instead, which achieves the same thing
 without depending on that OpenPBS feature at all -- uncomment and use
 that one instead if `-J i-i` fails.
 
-## Merging
+## Merging (implementation task 6, Part 1 -- now includes file-identity checks)
 
 Once `status_full.sh` shows everything finished OK (or you've decided to
-accept a partial run), merge on the analysis node directly -- **no PBS
-job needed for this step**: `merge_outputs.py` only reads the small
-`job_metadata.json`/`parsing_stats.json` files already produced (about
-139 small JSON files total), never opens a ROOT file itself, so it
-finishes in well under a second regardless of how much data the run
-actually produced. Run it with `nice` anyway, as a courtesy on a shared
-node:
+accept a partial run), merge on the analysis node directly. This version
+of `merge_outputs.py` does two things the earlier pilot-only tool did
+not: (1) it reconstructs and cross-checks EVERY processed file's real
+CERN identity (data: from each job's own `metadata_cache.json` + its
+array index, using the real `utils.batching.get_batch_slice_by_year`,
+against the frozen list in `studies/hgg_cms/impl_checks/mapping_check/
+cms_hgg_data_file_lists.json`, plus per-record event totals against the
+portal's published counts in that same directory's `records.json`;
+signal: from each job's own `parsing_stats.json`
+`sumw_by_record.processed_files`, against
+`cms_hgg_signal_file_lists.json`) and REFUSES `"COMPLETE"` if anything is
+duplicated, missing, unexpected, or event-total-mismatched; (2) unless
+`--no-merge-root` is passed, it reads every job's own normal (never
+blinded) selected-event ROOT file(s) through
+`studies.hgg_cms.output.read_output(unblind=False)` (which independently
+re-asserts no blinded data event is present, regardless of filename) and
+writes ONE merged ROOT file per mode/record under `--merged-dir`. This
+does open ROOT files (unlike the old JSON-only tool) but they are small
+(selected events only); still comfortably a "few minutes" job -- run with
+`nice`, or as a small PBS job (queue N, `#PBS -m n`, walltime 00:30:00,
+mem 4gb) if it turns out to be slower than that on the day.
 
 ```bash
 nice python studies/hgg_cms/cluster/merge_outputs.py --mode data \
     --jobs-base /storage/agrp/berkom/atlas-utilization/output/hgg_full/data \
-    --total-jobs 133 \
-    --out /storage/agrp/berkom/atlas-utilization/output/hgg_full/MERGED_DATA.json
+    --merged-dir /storage/agrp/berkom/atlas-utilization/output/hgg_full/merged \
+    --out /storage/agrp/berkom/atlas-utilization/output/hgg_full/merged/merge_summary_data.json
 
 nice python studies/hgg_cms/cluster/merge_outputs.py --mode signal \
-    --record 37350=/storage/agrp/berkom/atlas-utilization/output/hgg_full/signal/ggh \
-    --record 68497=/storage/agrp/berkom/atlas-utilization/output/hgg_full/signal/vbf \
-    --record 71013=/storage/agrp/berkom/atlas-utilization/output/hgg_full/signal/wplush \
-    --record 70173=/storage/agrp/berkom/atlas-utilization/output/hgg_full/signal/wminush \
-    --record 74132=/storage/agrp/berkom/atlas-utilization/output/hgg_full/signal/zh \
-    --record 67611=/storage/agrp/berkom/atlas-utilization/output/hgg_full/signal/tth \
-    --out /storage/agrp/berkom/atlas-utilization/output/hgg_full/MERGED_SIGNAL.json
+    --record ggh=/storage/agrp/berkom/atlas-utilization/output/hgg_full/signal/ggh \
+    --record vbf=/storage/agrp/berkom/atlas-utilization/output/hgg_full/signal/vbf \
+    --record wplush=/storage/agrp/berkom/atlas-utilization/output/hgg_full/signal/wplush \
+    --record wminush=/storage/agrp/berkom/atlas-utilization/output/hgg_full/signal/wminush \
+    --record zh=/storage/agrp/berkom/atlas-utilization/output/hgg_full/signal/zh \
+    --record tth=/storage/agrp/berkom/atlas-utilization/output/hgg_full/signal/tth \
+    --merged-dir /storage/agrp/berkom/atlas-utilization/output/hgg_full/merged \
+    --out /storage/agrp/berkom/atlas-utilization/output/hgg_full/merged/merge_summary_signal.json
 ```
 
-Both refuse to report `status: "COMPLETE"` if anything is missing or
-incomplete (a data job missing, or a signal record with fewer processed
-files than `signal_sumw.json` says it has) -- add `--force` only if you
-have deliberately decided to accept a partial run, which then reports
-`status: "COMPLETE_FORCED_WITH_MISSING"` (never a bare `"COMPLETE"`) so
-that is never confused with a genuinely full merge later. The signal
-merge's per-record `genEventSumw_over_processed_files` is read from the
-shared pipeline's own genEventSumw aggregation (never recomputed here),
-and covers exactly the files that record's job actually, successfully
-processed.
+(Note `--record LABEL=RUN_DIR`, e.g. `ggh=...`, not the record id --
+changed from the pilot-only tool's `--record RECORD_ID=RUN_DIR`.)
 
-Merged output lands at the two `--out` paths above, under
-`/storage/agrp/berkom/atlas-utilization/output/hgg_full/`.
+Both refuse to report `status: "COMPLETE"` if anything above is missing,
+duplicated, unexpected, or mismatched -- add `--force` only if you have
+deliberately decided to accept a partial run, which then reports
+`status: "COMPLETE_FORCED_WITH_MISSING"` (never a bare `"COMPLETE"`, and
+merged ROOT output is still written even when forced) so that is never
+confused with a genuinely full/verified merge later. The signal merge's
+per-record `genEventSumw_over_processed_files` is read from the shared
+pipeline's own genEventSumw aggregation (never recomputed here), and
+covers exactly the files that record's job actually, successfully
+processed -- for ttH (record 67611) this is over the CURRENT 15-file
+portal list, never `signal_sumw.json`'s stale 16-file total (see
+`signal_sumw_notes.md`).
+
+Merged output lands under `--merged-dir`:
+`data_sidebands.root` + `data_merge_metadata.json`, `signal_<label>.root`
+per record, and the two `merge_summary_*.json` files above.
 
 ## Blinding reminder
 
@@ -126,8 +153,11 @@ Merged output lands at the two `--out` paths above, under
 through `studies.hgg_cms.output.read_output(path, unblind=True)`, and
 even then, never print or plot an individual data event's `m_gg` value
 from it -- only counts. This applies to every per-file data output under
-`hgg_full/data/job_*/selected/` alike. `merge_outputs.py` never opens any
-`.root` file itself (data or blinded), so running the merge step carries
-no blinding risk on its own -- the risk is only in what a human (or a
-later analysis script, task 7) does with the individual output files
-afterward.
+`hgg_full/data/job_*/selected/` alike. `merge_outputs.py` NEVER reads a
+`_BLINDED_SIGNAL_REGION`-named file, and independently re-asserts (via
+`read_output(unblind=False)`) that no blinded event slipped into a
+normally-named file either, on every single file it merges -- if that
+assertion ever fires, the merge aborts with an exception rather than
+writing a contaminated merged file. No merged file containing individual
+blinded events is ever produced by this script; only the blinded COUNT is
+carried into `data_merge_metadata.json` / `merge_summary_data.json`.

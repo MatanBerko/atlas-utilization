@@ -133,14 +133,24 @@ Open `d3_data_report.json` and `d3_signal_report.json`.
   ```
   python studies/hgg_cms/cluster/merge_outputs.py --mode data \
       --jobs-base /storage/agrp/berkom/atlas-utilization/output/hgg_pilot/data \
-      --total-jobs 2 --out /tmp/pilot_data_merge.json
+      --out /tmp/pilot_data_merge.json
   ```
-  (note `--jobs-base .../hgg_pilot/data` and `--total-jobs 2`, not the
-  full run's `.../cms_hgg_data` / 133) and the equivalent `--mode signal`
-  call with the 6 `.../hgg_pilot/signal/<label>` run directories, and
-  confirm `status == "COMPLETE"` for both (no `--force` needed -- if the
-  pilot itself needs `--force` to look complete, do not proceed to the
-  full run).
+  (note `--jobs-base .../hgg_pilot/data`, not the full run's
+  `.../hgg_full/data`; `--total-batches` defaults to 133 either way --
+  see merge_outputs.py's own module docstring for why that must stay 133
+  even for a 2-job pilot: PBS_ARRAY_INDEX values 1 and 2 are still drawn
+  from the SAME 133-way split pbs_hgg_data_array.sh's TOTAL_FILES always
+  uses, so the file-list reconstruction math must match it) and the
+  equivalent `--mode signal` call with the 6 `.../hgg_pilot/signal/<label>`
+  run directories. **The pilot is EXPECTED to report `status ==
+  "INCOMPLETE"`** for data (only 2 of 133 expected files were ever
+  processed -- every other one is correctly listed under `missing_files`)
+  -- this is the full-run version of merge_outputs.py's own file-identity
+  checks now included by default (implementation task 6, Part 1), not a
+  regression from an earlier pilot-only tool. Read the summary and confirm
+  the ONLY problems reported are "133 expected files, 2 present" (never a
+  duplicate, an unexpected file, or an event-total mismatch on the two
+  files that WERE processed) before proceeding to the full run.
 - No data event anywhere in the pilot's normal (non-`_BLINDED_SIGNAL_REGION`)
   outputs falls in [115, 135] GeV -- this is actually asserted
   automatically by `studies.hgg_cms.output.read_output` on any read of a
