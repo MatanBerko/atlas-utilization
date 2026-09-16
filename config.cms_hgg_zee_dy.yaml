@@ -55,10 +55,22 @@ parsing_task_config:
   show_progress_bar: true
   # NOT set here (simulation) -- the validated-runs simulation guard would
   # raise.
-  # REVISED (16 Sep 2026) -- same fix and same reasoning as
-  # config.cms_hgg_zee_data.yaml's own comment (filtering on ONLY the
-  # diphoton trigger biased the peak-position/width comparison via the
-  # Mass90 online cut; now filters on either trigger, both bits kept).
+  # REVISED TWICE (16 Sep 2026). DY has NO "primary dataset" streaming
+  # concept at all (it's simulation -- every generated event carries every
+  # HLT bit, computed uniformly, regardless of value; there is no
+  # detector-side partitioning to bias against), so the DoubleEG-vs-
+  # SingleElectron dataset-selection fix applied to
+  # config.cms_hgg_zee_data.yaml does NOT apply here, and deliberately
+  # does NOT parallel it: this config KEEPS the broader "either trigger"
+  # filter (mode: any, BOTH paths -- the first revision's fix, still
+  # correct for simulation) specifically so DY retains events with the
+  # diphoton bit fired but Ele27 NOT fired -- data no longer has any such
+  # events once its own trigger_requirements filters on Ele27 alone (that
+  # is intentional there: SingleElectron's whole purpose is an unbiased
+  # Ele27-fired sample). This is what item 2(c)'s Mass90-sculpting
+  # demonstration needs, and why it is now DY-only -- see
+  # studies/hgg_cms/validation/zee/mass90_sculpting_demo.py's own module
+  # docstring.
   trigger_requirements:
     mode: any
     paths:

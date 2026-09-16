@@ -126,5 +126,5 @@ else
     echo "Some subjobs failed -- see FAILED lines above. Move each failed"
     echo "job_<i> directory aside (never delete) and resubmit just that"
     echo "index with, e.g.:"
-    echo "  qsub -J <i>-<i> -v CONFIG=<same config>,IS_DATA=<true|false>,TOTAL_FILES=<133|41>,OUTPUT_BASE=<same output base>,MASS_LO=<...>,MASS_HI=<...>,DIPHOTON_TRIGGER_BRANCH=<...> studies/hgg_cms/cluster/pbs_hgg_zee_array.sh"
+    echo "  qsub -J <i>-<i> -v CONFIG=<same config>,IS_DATA=<true|false>,TOTAL_FILES=<151 for data, 41 for DY>,OUTPUT_BASE=<same output base> studies/hgg_cms/cluster/pbs_hgg_zee_array.sh"
 fi

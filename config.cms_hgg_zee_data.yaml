@@ -29,15 +29,25 @@ parsing_task_config:
   file_urls_path: ./output/metadata_cache.json
   jobs_logs_path: ./output/logs
   release_years: []
-  # Same two DoubleEG records as the main H->gamma-gamma data config
-  # (config.cms_hgg_data.yaml) -- this is the SAME physical dataset, just
-  # a different analysis-layer selection (studies/hgg_cms/zee_selection.py)
-  # applied to a fresh parsing pass (see that config's own comment for why
-  # the main run's already-parsed output can't be reused: electronVeto==
-  # True was already required at PARSING time there).
+  # REVISED AGAIN (16 Sep 2026, second revision): reads SingleElectron
+  # (30529 Run2016G, 30562 Run2016H), NOT DoubleEG (30521/30554, the main
+  # H->gamma-gamma data config's own records). HLT_Ele27_WPTight_Gsf
+  # belongs to SingleElectron's own trigger-stream list, never DoubleEG's
+  # -- verified directly against the CERN Open Data portal's own record
+  # metadata for all 4 records (41 DoubleEG paths, none is Ele27; 50
+  # SingleElectron paths, includes Ele27) -- see
+  # studies/hgg_cms/impl_checks/mapping_check/
+  # zee_trigger_stream_verification.md for the full evidence, including a
+  # direct file-level branch check and a certified-run-coverage
+  # comparison against DoubleEG (identical: 70/70 G, 86/86 H). Using
+  # DoubleEG's own "Ele27 fired" subset would have been conditioned on
+  # ALSO firing a DoubleEG streaming trigger (very plausibly the diphoton
+  # path itself for many events) -- biasing the trigger-efficiency
+  # measurement upward and leaving Mass90 sculpting in the "energy scale"
+  # sample despite the FIRST revision's fix.
   specific_record_ids:
-  - 30521
-  - 30554
+  - 30529
+  - 30562
   parse_mc: false
   use_multiprocessing: false
   parallel_processes: 4
@@ -55,37 +65,34 @@ parsing_task_config:
   # Same validated-runs requirement as the main analysis (task 6, Part 4
   # instruction: "same validated-runs ... cuts").
   validated_runs_json: data/cms/validated_runs/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt
-  # REVISED (16 Sep 2026): filtering on ONLY the diphoton trigger here
-  # was a bug -- HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90's
-  # own online Mass90 requirement cuts straight through the Z peak
-  # (91.19 GeV), sculpting the lower half of the peak differently in data
-  # vs simulation (simulation's own trigger emulation may not model the
-  # HLT's exact turn-on shape as precisely as data's real hardware
-  # response) -- exactly the kind of shape difference that would bias the
-  # peak-position/width comparison this sample exists to make.
-  #
-  # Fix: filter on EITHER trigger firing (mode: any, both paths), and
-  # keep BOTH trigger bits in the output (they are attached automatically
-  # as soon as they're listed here -- services/parsing/
-  # trigger_requirements.py's own "Trigger" scalar-branch-group mechanism
-  # attaches every listed path regardless of which one(s) actually
-  # contributed to an event passing the "any" filter). The offline
-  # analysis (studies/hgg_cms/validation/zee/) then selects THREE
+  # First revision (16 Sep 2026) fixed the Mass90-sculpting bug by
+  # filtering on either trigger firing, on DoubleEG. Second revision
+  # (same day): filtering on DoubleEG at all was itself the remaining
+  # problem -- see the specific_record_ids comment above. Now: filter on
+  # HLT_Ele27_WPTight_Gsf ALONE (SingleElectron's own streaming trigger --
+  # an unbiased single-electron sample by construction, since this IS the
+  # dataset that trigger defines), and read the diphoton bit via
+  # extra_scalar_branches (attaches it as a plain output field WITHOUT
+  # making it part of the filter -- domain/config.py's existing, generic
+  # "read this branch, don't filter on it" mechanism; already used this
+  # way for exactly this purpose in this task's very first Z->ee design).
+  # Offline analysis (studies/hgg_cms/validation/zee/) then selects THREE
   # non-overlapping sub-samples from this one parsed dataset:
-  #   (a) energy-scale/resolution: Ele27-fired events, 70-110 GeV -- an
-  #       HLT_Ele27_WPTight_Gsf-triggered event's mass is untouched by
-  #       the diphoton trigger's Mass90 requirement REGARDLESS of
-  #       whether the diphoton bit also happened to fire, so this
-  #       sub-sample is clean of the Mass90 sculpting bug by construction.
+  #   (a) energy-scale/resolution: Ele27-fired events, 70-110 GeV.
   #   (b) trigger efficiency: Ele27-fired events with offline mass > 95
   #       GeV, checking (not filtering on) the diphoton bit.
-  #   (c) a demonstration plot of the SAME sculpting bug this comment
-  #       describes: the diphoton-only-triggered 70-110 GeV distribution,
-  #       expected to show a visible deficit below ~90 GeV.
+  #   (c) a demonstration, DY-only now (see mass90_sculpting_demo.py's
+  #       own module docstring for why data no longer has a meaningful
+  #       "diphoton-fired, Ele27 NOT fired" sub-sample once this dataset
+  #       is SingleElectron -- almost no SingleElectron event fires the
+  #       diphoton trigger without also firing Ele27, since Ele27 is
+  #       exactly this dataset's own defining trigger).
   trigger_requirements:
     mode: any
     paths:
     - HLT_Ele27_WPTight_Gsf
+  extra_scalar_branches:
+    ZeeDiphotonProbe:
     - HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90
   read_pileup_info: true
   read_event_weights: false

@@ -2,10 +2,10 @@
 # ---------------------------------------------------------------------------
 # pbs_hgg_zee_array.sh
 #
-# Implementation task 6, Part 4 (REVISED 16 Sep 2026): ONE generic array-
-# job template for the Z->e+e- control-region parsing+selection run --
-# data OR DY simulation, one file PER JOB (PBS job array,
-# $PBS_ARRAY_INDEX), exactly the same pattern pbs_hgg_data_array.sh
+# Implementation task 6, Part 4 (REVISED TWICE, 16 Sep 2026): ONE generic
+# array-job template for the Z->e+e- control-region parsing+selection
+# run -- SingleElectron data OR DY simulation, one file PER JOB (PBS job
+# array, $PBS_ARRAY_INDEX), exactly the same pattern pbs_hgg_data_array.sh
 # already uses successfully for the main analysis's 133 DoubleEG files.
 #
 # REVISED from an earlier 4-variant design (data/DY x main/trigger-
@@ -14,35 +14,50 @@
 # files a second time. That's no longer needed -- BOTH the energy-scale
 # sample and the trigger-efficiency sample are now OFFLINE CUTS
 # (studies/hgg_cms/validation/zee/) on ONE stored 60-180 GeV table from
-# ONE run per dataset, since both trigger bits are stored per event
-# (config.cms_hgg_zee_{data,dy}.yaml's trigger_requirements now lists BOTH
-# HLT_Ele27_WPTight_Gsf and the diphoton trigger, mode=any -- see those
-# configs' own comments for why filtering on the diphoton trigger ALONE
-# was a bug). So now just TWO qsub calls, not four:
+# ONE run per dataset.
 #
-#   qsub -J 1-133 -v CONFIG=config.cms_hgg_zee_data.yaml,IS_DATA=true,TOTAL_FILES=133,OUTPUT_BASE=... pbs_hgg_zee_array.sh
+# REVISED AGAIN: the data config now reads SingleElectron (30529
+# Run2016G, 30562 Run2016H -- 151 files total), NOT DoubleEG. Filtering
+# on HLT_Ele27_WPTight_Gsf within DoubleEG would have been conditioned on
+# ALSO firing a DoubleEG streaming trigger (DoubleEG's own trigger list
+# never includes Ele27 at all -- verified directly against the CERN Open
+# Data portal's own record metadata, see studies/hgg_cms/impl_checks/
+# mapping_check/zee_trigger_stream_verification.md), biasing both the
+# trigger-efficiency measurement and the energy-scale sample. Both
+# configs (data, DY) now filter on HLT_Ele27_WPTight_Gsf ALONE and read
+# the diphoton bit via extra_scalar_branches (attached, never filtered
+# on) -- see those configs' own comments for the full story. So still
+# just TWO qsub calls:
+#
+#   qsub -J 1-151 -v CONFIG=config.cms_hgg_zee_data.yaml,IS_DATA=true,TOTAL_FILES=151,OUTPUT_BASE=... pbs_hgg_zee_array.sh
 #   qsub -J 1-41  -v CONFIG=config.cms_hgg_zee_dy.yaml,IS_DATA=false,TOTAL_FILES=41,OUTPUT_BASE=... pbs_hgg_zee_array.sh
 #
 # (submit_zee.sh issues exactly these two qsub calls -- see that script,
 # which this task does NOT run, per this task's own "prepare, don't
 # submit" instruction.)
 #
-# Resource requests: REUSES the full run's own MEASURED data-array numbers
-# (mem=5gb, walltime=01:00:00 -- see pbs_hgg_data_array.sh's header: 16
-# Sep 2026, worst observed ~3 min wall / 2.37 GB peak on a ~2,014,154
-# -event DoubleEG file) rather than a fresh guess, since every job here is
-# STILL exactly one file per job, and DY's own per-file event count
-# (~1.75M average -- 71,839,442 events / 41 files, record 35669) is the
-# same order of magnitude as the DATA files this was measured on. The
-# ONLY extra per-file work now is the DY-only electron-veto-leakage
-# estimate (run_zee_selection_on_chunks.py's compute_hgg_veto_leakage) --
-# a second application of the same TM-cut/pairing formulas to a second,
-# disjoint photon subset already in memory, not a second file read, so it
-# should not meaningfully change these numbers. UNVERIFIED beyond that
-# reasoning -- no Z->ee-specific pilot has actually run (this task
-# explicitly does not submit anything); re-measure with the small
-# --pilot run (2 data + 2 DY subjobs) before trusting these for the full
-# 133+41 = 174-subjob submission.
+# Resource requests: REUSES the full run's own MEASURED DoubleEG-array
+# numbers (mem=5gb, walltime=01:00:00 -- see pbs_hgg_data_array.sh's
+# header: 16 Sep 2026, worst observed ~3 min wall / 2.37 GB peak on a
+# ~2,014,154-event DoubleEG file) rather than a fresh guess, since every
+# job here is STILL exactly one file per job. SingleElectron's own
+# per-file event count is somewhat HIGHER on average than DoubleEG's --
+# 282,385,002 events / 151 files ~= 1.87M/file (vs DoubleEG's
+# 164,185,704 / 133 ~= 1.23M/file, ~52% more per file on average, portal
+# API numbers, 16 Sep 2026) -- still the same order of magnitude as the
+# single ~2.01M-event file the mem/walltime numbers above were measured
+# on, so kept as-is, but flagged here explicitly as a real (not
+# negligible) difference worth re-checking against the --pilot run's
+# actual numbers rather than assuming the margin is automatically enough.
+# DY's own per-file event count (~1.75M average, record 35669) is
+# unaffected by this revision. The ONLY extra per-file work is the
+# DY-only electron-veto-leakage estimate (run_zee_selection_on_chunks.py's
+# compute_hgg_veto_leakage) -- a second application of the same TM-cut/
+# pairing formulas to a second, disjoint photon subset already in memory,
+# not a second file read. UNVERIFIED beyond this reasoning -- no Z->ee
+# -specific pilot has actually run; re-measure with the small --pilot run
+# (2 data + 2 DY subjobs) before trusting these for the full
+# 151+41 = 192-subjob submission.
 #
 # --run-dir (explicit, not main.py's auto-generated one) for the same
 # reason as pbs_hgg_data_array.sh: concurrently-launched array subjobs can
@@ -53,7 +68,7 @@
 #PBS -q N
 #PBS -m n
 #PBS -S /bin/bash
-#PBS -J 1-133
+#PBS -J 1-151
 #PBS -l select=1:ncpus=1:mem=5gb
 #PBS -l walltime=01:00:00
 #PBS -l io=30
@@ -64,7 +79,7 @@ set -euo pipefail
 
 : "${CONFIG:?must pass -v CONFIG=config.cms_hgg_zee_data.yaml or config.cms_hgg_zee_dy.yaml}"
 : "${IS_DATA:?must pass -v IS_DATA=true|false}"
-: "${TOTAL_FILES:?must pass -v TOTAL_FILES=<133 for data, 41 for DY>}"
+: "${TOTAL_FILES:?must pass -v TOTAL_FILES=<151 for data, 41 for DY>}"
 # The stored window is fixed at 60-180 GeV for both datasets (see
 # zee_selection.py's own module docstring for the justification) --
 # overridable only for local testing, never needed in real submission.

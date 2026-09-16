@@ -2,20 +2,31 @@
 # ---------------------------------------------------------------------------
 # submit_zee.sh
 #
-# Implementation task 6, Part 4 (REVISED 16 Sep 2026): submits the Z->e+e-
-# control-region run -- TWO array jobs, both using pbs_hgg_zee_array.sh:
-#   1. data (133 subjobs, config.cms_hgg_zee_data.yaml)
+# Implementation task 6, Part 4 (REVISED TWICE, 16 Sep 2026): submits the
+# Z->e+e- control-region run -- TWO array jobs, both using
+# pbs_hgg_zee_array.sh:
+#   1. data (151 subjobs, config.cms_hgg_zee_data.yaml -- SingleElectron,
+#      NOT DoubleEG; see that config's own comment)
 #   2. DY sim ( 41 subjobs, config.cms_hgg_zee_dy.yaml)
-# 174 scheduler entries total. All output under a NEW tree,
+# 192 scheduler entries total. All output under a NEW tree,
 # /storage/agrp/berkom/atlas-utilization/output/hgg_zee/ (logs under
 # .../logs/hgg_zee/) -- entirely separate from hgg_full/.
 #
 # REVISED from an earlier 4-variant design (see pbs_hgg_zee_array.sh's own
 # header for the full story): the "trigger-efficiency" sample is no
-# longer a separate cluster job -- both configs now store BOTH trigger
-# bits and the analysis-layer selects the energy-scale, trigger
-# -efficiency, and Mass90-sculpting-demonstration sub-samples OFFLINE
-# from this one dataset (studies/hgg_cms/validation/zee/).
+# longer a separate cluster job -- both configs store the diphoton bit
+# (via extra_scalar_branches) and the analysis-layer selects the energy
+# -scale, trigger-efficiency, and Mass90-sculpting-demonstration sub
+# -samples OFFLINE from this one dataset (studies/hgg_cms/validation/zee/).
+#
+# REVISED AGAIN: the data config now reads SingleElectron (30529+30562,
+# 151 files), not DoubleEG (30521+30554, 133 files) -- DoubleEG's own
+# trigger-stream list never includes HLT_Ele27_WPTight_Gsf at all, so an
+# "Ele27-fired" subset of DoubleEG would have been conditioned on ALSO
+# firing a DoubleEG trigger (biasing exactly the measurements this sample
+# exists to make). Verified against the CERN Open Data portal's own
+# record metadata -- see studies/hgg_cms/impl_checks/mapping_check/
+# zee_trigger_stream_verification.md.
 #
 # THIS TASK DOES NOT RUN THIS SCRIPT. Prepared only, per the task's own
 # "prepare, don't submit" instruction -- read PILOT_FIRST_RECOMMENDATION
@@ -23,23 +34,23 @@
 #
 # PILOT_FIRST_RECOMMENDATION: no Z->ee-specific pilot has been run on this
 # cluster -- pbs_hgg_zee_array.sh's resource requests are REUSED from the
-# main run's measured data-job numbers (reasoned to be a fair estimate --
-# see that script's own header), not directly measured for these 2
-# configs (DY's own extra per-file work, the electron-veto-leakage
-# estimate, has never run for real either). Strongly recommended: first
-# run this script with --pilot (2 data + 2 DY subjobs, 4 total, not 174),
-# inspect real wall/mem numbers with `qstat -fx <jobid>` the same way
+# main run's measured DoubleEG-job numbers (reasoned to be a fair
+# estimate, with an explicit flag for SingleElectron's somewhat higher
+# per-file event count -- see that script's own header), not directly
+# measured for these 2 configs. Strongly recommended: first run this
+# script with --pilot (2 data + 2 DY subjobs, 4 total, not 192), inspect
+# real wall/mem numbers with `qstat -fx <jobid>` the same way
 # PILOT_CHECKLIST.md describes for the main run, and re-check
 # pbs_hgg_zee_array.sh's mem/walltime against them before ever passing
 # --full.
 #
 # PREFLIGHT (same battery as submit_full.sh) runs BEFORE any qsub; nothing
 # is submitted if anything fails: conda activation; python/XRootD package
-# versions; an XRootD metadata-only open of one DoubleEG file and one DY
-# file (also checks both trigger branches are present); $REPO_DIR on this
-# branch at origin's current tip with a clean tree; every log/output
-# directory writable; hgg_zee/ output directories must be empty or not
-# exist yet.
+# versions; an XRootD metadata-only open of one SingleElectron file and
+# one DY file (also checks both trigger branches are present); $REPO_DIR
+# on this branch at origin's current tip with a clean tree; every log/
+# output directory writable; hgg_zee/ output directories must be empty or
+# not exist yet.
 #
 # DRY_RUN=1: skips the checks that need the real cluster, still runs the
 # pure local/filesystem checks, and prints every qsub command instead of
@@ -66,7 +77,7 @@ for arg in "$@"; do
 done
 if [[ -z "$MODE" ]]; then
     echo "Usage: bash submit_zee.sh --pilot   (2 data + 2 DY subjobs, 4 total)" >&2
-    echo "   or: bash submit_zee.sh --full    (the real run, 174 subjobs -- read PILOT_FIRST_RECOMMENDATION above first)" >&2
+    echo "   or: bash submit_zee.sh --full    (the real run, 192 subjobs -- read PILOT_FIRST_RECOMMENDATION above first)" >&2
     exit 1
 fi
 
@@ -107,7 +118,7 @@ preflight_xrootd_open() {
     timeout 60 nice python -c "
 import sys, uproot
 urls = {
-    'DoubleEG Run2016G (data)': 'root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root',
+    'SingleElectron Run2016G (record 30529, data)': 'root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleElectron/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/110000/43B00DA0-41AF-D042-9F41-7F95FBE5E59F.root',
     'DYJetsToLL_M-50 (record 35669)': 'root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/30000/0082C29D-E74C-024A-BE9B-97B29EE7A4A2.root',
 }
 ok = True
@@ -193,7 +204,7 @@ if [[ "$MODE" == "pilot" ]]; then
     ARRAY_RANGE_DATA="1-2"
     ARRAY_RANGE_DY="1-2"
 else
-    ARRAY_RANGE_DATA="1-133"
+    ARRAY_RANGE_DATA="1-151"
     ARRAY_RANGE_DY="1-41"
 fi
 
@@ -210,7 +221,7 @@ submit_variant() {
     echo "$name $jobid" >> "$JOBLIST_FILE"
 }
 
-submit_variant "data_${MODE}" config.cms_hgg_zee_data.yaml true 133 "$ARRAY_RANGE_DATA" \
+submit_variant "data_${MODE}" config.cms_hgg_zee_data.yaml true 151 "$ARRAY_RANGE_DATA" \
     "${ZEE_BASE}/data_${MODE}"
 submit_variant "dy_${MODE}" config.cms_hgg_zee_dy.yaml false 41 "$ARRAY_RANGE_DY" \
     "${ZEE_BASE}/dy_${MODE}"

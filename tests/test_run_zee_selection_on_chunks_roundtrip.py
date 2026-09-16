@@ -61,7 +61,7 @@ def _write_synthetic_zee_chunk(path: Path, n_events: int, is_data: bool, rng) ->
         "luminosityBlock": ak.Array(np.ones(n_events, dtype=np.int64)),
         "event": ak.Array(np.arange(n_events, dtype=np.int64)),
         "PV_npvsGood": ak.Array(np.full(n_events, 25, dtype=np.int64)),
-        "source_record": ak.Array(np.full(n_events, (30521 if is_data else 35669), dtype=np.int64)),
+        "source_record": ak.Array(np.full(n_events, (30529 if is_data else 35669), dtype=np.int64)),
         # Both trigger bits, as both new configs always attach them.
         ELE27: ak.Array(rng.uniform(0, 1, n_events) < 0.5),
         DIPHOTON: ak.Array(rng.uniform(0, 1, n_events) < 0.3),
@@ -118,7 +118,7 @@ class RunZeeSelectionOnChunksRoundtripTests(unittest.TestCase):
                     "luminosityBlock": ak.Array(np.ones(n, dtype=np.int64)),
                     "event": ak.Array(np.arange(n, dtype=np.int64)),
                     "PV_npvsGood": ak.Array(np.full(n, 25, dtype=np.int64)),
-                    "source_record": ak.Array(np.full(n, 30521, dtype=np.int64)),
+                    "source_record": ak.Array(np.full(n, 30529, dtype=np.int64)),
                     ELE27: ak.Array(np.ones(n, dtype=bool)),
                     # DIPHOTON deliberately omitted
                 }
