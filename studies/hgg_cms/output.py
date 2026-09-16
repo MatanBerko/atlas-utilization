@@ -65,12 +65,21 @@ def config_sha256(config_path) -> str:
     return hashlib.sha256(Path(config_path).read_bytes()).hexdigest()
 
 
-def build_output_table(events: ak.Array, selection_result: Dict, is_data: bool, record_id: int) -> ak.Array:
+def build_output_table(events: ak.Array, selection_result: Dict, is_data: bool, record_id: Optional[int] = None) -> ak.Array:
     """One flat (non-jagged) record per SELECTED event -- see
     studies.hgg_cms.selection.select_diphoton_events for
     ``selection_result``'s shape. Never touches Photon_eCorr (not read
     into ``events`` at all by this task's configs, so there is nothing to
-    accidentally apply)."""
+    accidentally apply).
+
+    ``record_id`` is read PER EVENT from ``events["source_record"]`` when
+    present (FileParser attaches this automatically for any "record_<id>"
+    release_year -- see services/parsing/file_parser.py) -- more robust
+    than a single external argument, since it is correct even if a chunk
+    somehow combined files from different records. The ``record_id``
+    parameter is only a fallback for callers with no such field (e.g. a
+    synthetic/test events array).
+    """
     sel = selection_result["selected"]
     ev = events[sel]
     lead = selection_result["lead"][sel]
@@ -79,8 +88,15 @@ def build_output_table(events: ak.Array, selection_result: Dict, is_data: bool, 
     cat = selection_result["category"][sel]
 
     n = len(ev)
+    if "source_record" in ev.fields:
+        record_id_col = ev["source_record"]
+    else:
+        if record_id is None:
+            raise ValueError("record_id must be given when events have no 'source_record' field")
+        record_id_col = ak.Array(np.full(n, record_id, dtype=np.int64))
+
     table = {
-        "record_id": ak.Array(np.full(n, record_id, dtype=np.int64)),
+        "record_id": record_id_col,
         "is_data": ak.Array(np.full(n, is_data, dtype=bool)),
         "run": ev["run"],
         "luminosityBlock": ev["luminosityBlock"],
