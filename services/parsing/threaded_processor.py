@@ -52,8 +52,11 @@ class ThreadedFileProcessor:
         jet_btagging_thresholds: Optional[dict[str, float]] = None,
         extra_scalar_branches: Optional[dict[str, list[str]]] = None,
         extra_object_fields: Optional[dict[str, list[str]]] = None,
+        read_event_weights: bool = False,
+        read_pileup_info: bool = False,
         on_success: Optional[Callable[[str, int, float], None]] = None,
-        on_error: Optional[Callable[[str, Exception], None]] = None
+        on_error: Optional[Callable[[str, Exception], None]] = None,
+        on_probe_stats: Optional[Callable[[str, dict], None]] = None,
     ) -> Iterator[EventBatch]:
         """
         Process multiple files concurrently and yield EventBatch objects.
@@ -69,8 +72,18 @@ class ThreadedFileProcessor:
             extra_object_fields: Optional extra per-object fields to read on
                 every file (see FileParser.parse_file); absent/None
                 reproduces existing behaviour exactly.
+            read_event_weights: Optional (default False, see
+                FileParser.parse_file). Simulation-only.
+            read_pileup_info: Optional (default False, see
+                FileParser.parse_file).
             on_success: Optional callback(file_url, event_count, time_sec) on success
             on_error: Optional callback(file_url, exception) on error
+            on_probe_stats: Optional callback(file_url, probe_stats), called
+                once per successfully-parsed file with that file's
+                branch-accessibility-probe retry/final-failure counts
+                (implementation task 5, Part B); purely additive
+                statistics, never called with nonzero counts for any file
+                whose probes all succeeded on the first attempt.
 
         Yields:
             EventBatch objects as files are successfully parsed
@@ -90,6 +103,8 @@ class ThreadedFileProcessor:
                     jet_btagging_thresholds,
                     extra_scalar_branches,
                     extra_object_fields,
+                    read_event_weights,
+                    read_pileup_info,
                 ): file_url
                 for file_url in file_urls
             }
@@ -112,7 +127,7 @@ class ThreadedFileProcessor:
                         result = future.result(timeout=300)  # 5 minute timeout per file
 
                         if result is not None:
-                            events, processing_time, partial_error = result
+                            events, processing_time, partial_error, probe_stats = result
 
                             # Create EventBatch
                             batch = self._create_event_batch(
@@ -128,6 +143,9 @@ class ThreadedFileProcessor:
                                     on_error(file_url, partial_error)
                             elif on_success:
                                 on_success(file_url, batch.event_count, processing_time)
+
+                            if on_probe_stats and (probe_stats["n_retries"] or probe_stats["n_final_failures"]):
+                                on_probe_stats(file_url, probe_stats)
 
                             if batch.event_count > 0:
                                 yield batch
@@ -160,6 +178,8 @@ class ThreadedFileProcessor:
         jet_btagging_thresholds: Optional[dict[str, float]],
         extra_scalar_branches: Optional[dict[str, list[str]]] = None,
         extra_object_fields: Optional[dict[str, list[str]]] = None,
+        read_event_weights: bool = False,
+        read_pileup_info: bool = False,
     ) -> tuple:
         """
         Parse a single file (runs in thread).
@@ -171,10 +191,21 @@ class ThreadedFileProcessor:
             batch_size: Batch size for reading
 
         Returns:
-            Tuple of (events, processing_time, partial_error)
+            Tuple of (events, processing_time, partial_error, probe_stats).
+            probe_stats (implementation task 5, Part B) is
+            {"n_retries": int, "n_final_failures": int} for THIS file's
+            branch-accessibility probes -- purely additive bookkeeping.
         """
         import time
         start_time = time.time()
+
+        probe_stats = {"n_retries": 0, "n_final_failures": 0}
+
+        def _on_probe_retry():
+            probe_stats["n_retries"] += 1
+
+        def _on_probe_final_failure(branch_name: str):
+            probe_stats["n_final_failures"] += 1
 
         partial_error = None
         try:
@@ -187,6 +218,10 @@ class ThreadedFileProcessor:
                 jet_btagging_thresholds=jet_btagging_thresholds,
                 extra_scalar_branches=extra_scalar_branches,
                 extra_object_fields=extra_object_fields,
+                read_event_weights=read_event_weights,
+                read_pileup_info=read_pileup_info,
+                on_probe_retry=_on_probe_retry,
+                on_probe_final_failure=_on_probe_final_failure,
             )
         except PartialFileReadError as error:
             events = error.events
@@ -197,7 +232,7 @@ class ThreadedFileProcessor:
         if events is None:
             raise RuntimeError("Parser returned no event data")
 
-        return (events, processing_time, partial_error)
+        return (events, processing_time, partial_error, probe_stats)
     
     def _create_event_batch(
         self,
@@ -276,7 +311,13 @@ class ParsingStatisticsCollector:
         self.failed_files = []
         self.processing_times = []
         self._failure_reason_counts: dict[str, int] = {}
-    
+        # implementation task 5, Part B: branch-accessibility-probe retry
+        # bookkeeping, additive only -- never affects which branches end up
+        # accessible.
+        self._n_probe_retries = 0
+        self._n_probe_final_failures = 0
+        self._files_with_probe_retries: list[tuple[str, dict]] = []
+
     def record_success(self, file_url: str, event_count: int, size_bytes: int, time_sec: float):
         """Record a successful parse."""
         with self.lock:
@@ -284,6 +325,14 @@ class ParsingStatisticsCollector:
             self.total_events += event_count
             self.total_size_bytes += size_bytes
             self.processing_times.append(time_sec)
+
+    def record_probe_stats(self, file_url: str, probe_stats: dict):
+        """Record a file's branch-accessibility-probe retry/final-failure
+        counts (implementation task 5, Part B)."""
+        with self.lock:
+            self._n_probe_retries += probe_stats.get("n_retries", 0)
+            self._n_probe_final_failures += probe_stats.get("n_final_failures", 0)
+            self._files_with_probe_retries.append((file_url, dict(probe_stats)))
     
     def record_failure(self, file_url: str, error: Exception):
         """Record a failed parse."""
@@ -326,4 +375,7 @@ class ParsingStatisticsCollector:
                 "average_processing_time_sec": avg_time,
                 "failed_file_list": self.failed_files,
                 "failure_reason_counts": dict(self._failure_reason_counts),
+                "n_probe_retries": self._n_probe_retries,
+                "n_probe_final_failures": self._n_probe_final_failures,
+                "files_with_probe_retries": list(self._files_with_probe_retries),
             }

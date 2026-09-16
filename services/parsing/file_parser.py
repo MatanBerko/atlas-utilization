@@ -6,10 +6,11 @@ No orchestration logic, no state management.
 """
 
 import logging
+import time
 import awkward as ak
 import numpy as np
 import itertools
-from typing import Optional
+from typing import Callable, Optional
 
 from services.parsing import schemas
 from services.parsing.root_io import open_root_file
@@ -96,6 +97,10 @@ class FileParser:
         jet_btagging_thresholds: Optional[dict[str, float]] = None,
         extra_scalar_branches: Optional[dict[str, list[str]]] = None,
         extra_object_fields: Optional[dict[str, list[str]]] = None,
+        read_event_weights: bool = False,
+        read_pileup_info: bool = False,
+        on_probe_retry: Optional[Callable[[], None]] = None,
+        on_probe_final_failure: Optional[Callable[[str], None]] = None,
     ) -> Optional[ak.Array]:
         """
         Parse a single ROOT file and return events.
@@ -118,6 +123,18 @@ class FileParser:
                 "mvaID_WP90"]}``. Merged with the schema's own default list
                 (see ``_resolve_object_fields``); absent/``None`` reproduces
                 today's behaviour exactly (implementation task 4).
+            read_event_weights: Optional (default False). Adds the
+                per-event ``genWeight`` scalar field -- simulation only;
+                raises if this file looks like real data (implementation
+                task 5, see ``services.parsing.mc_weights``).
+            read_pileup_info: Optional (default False). Adds ``PV_npvsGood``
+                (data and simulation) and, for simulation files only,
+                ``Pileup_nTrueInt`` (implementation task 5).
+            on_probe_retry: Optional callback(), invoked once per branch-
+                accessibility-probe retry (implementation task 5, Part B);
+                purely additive statistics, no effect on parsing.
+            on_probe_final_failure: Optional callback(branch_name), invoked
+                once per branch whose probe still fails after every retry.
 
         Returns:
             Awkward array of events with particle objects, or None if parsing failed
@@ -134,6 +151,10 @@ class FileParser:
                     jet_btagging_thresholds,
                     extra_scalar_branches=extra_scalar_branches,
                     extra_object_fields=extra_object_fields,
+                    read_event_weights=read_event_weights,
+                    read_pileup_info=read_pileup_info,
+                    on_probe_retry=on_probe_retry,
+                    on_probe_final_failure=on_probe_final_failure,
                 )
         except PartialFileReadError:
             raise
@@ -154,12 +175,37 @@ class FileParser:
         jet_btagging_thresholds: Optional[dict[str, float]],
         extra_scalar_branches: Optional[dict[str, list[str]]] = None,
         extra_object_fields: Optional[dict[str, list[str]]] = None,
+        read_event_weights: bool = False,
+        read_pileup_info: bool = False,
+        on_probe_retry: Optional[Callable[[], None]] = None,
+        on_probe_final_failure: Optional[Callable[[str], None]] = None,
     ) -> Optional[ak.Array]:
         """Parse an already-opened ROOT file."""
         tree_name = FileParser._get_data_tree_name(root_file.keys(), tree_names)
         tree = root_file[tree_name]
         all_tree_branches = set(tree.keys())
         n_entries = tree.num_entries
+
+        # Simulation weights / pileup info (implementation task 5): the
+        # required field list depends on whether THIS file is data or
+        # simulation (see services.parsing.mc_weights.file_is_simulation),
+        # so it's resolved per file, then merged into whatever
+        # extra_scalar_branches the caller already passed, and handled by
+        # the exact same scalar-branch-group machinery as any other group
+        # (accessibility gate, hard-fail-if-any-declared-branch-missing).
+        if read_event_weights or read_pileup_info:
+            from services.parsing.mc_weights import resolve_weight_and_pileup_groups
+
+            mc_groups = resolve_weight_and_pileup_groups(
+                all_tree_branches, file_path, read_event_weights, read_pileup_info
+            )
+            if mc_groups:
+                merged_extra_scalar = dict(extra_scalar_branches or {})
+                for group_name, branches in mc_groups.items():
+                    merged_extra_scalar[group_name] = list(dict.fromkeys(
+                        list(merged_extra_scalar.get(group_name, [])) + branches
+                    ))
+                extra_scalar_branches = merged_extra_scalar
 
         obj_branches = FileParser._extract_branches_by_schema(
             all_tree_branches,
@@ -179,7 +225,10 @@ class FileParser:
         declared_group_names = frozenset(name for name, branches in scalar_groups.items() if branches)
 
         obj_branches = FileParser._filter_accessible_branches(
-            tree, obj_branches, scalar_group_names=declared_group_names
+            tree, obj_branches, scalar_group_names=declared_group_names,
+            file_path=file_path,
+            on_probe_retry=on_probe_retry,
+            on_probe_final_failure=on_probe_final_failure,
         )
 
         if not obj_branches:
@@ -692,11 +741,21 @@ class FileParser:
     ) -> bool:
         return ref_system.issubset(set(available_fields))
     
+    # Backoff schedule for a per-branch accessibility probe retry
+    # (implementation task 5, Part B). A constant, not a config key --
+    # overridable only by tests, via _filter_accessible_branches's
+    # retry_delays_sec parameter.
+    _PROBE_RETRY_DELAYS_SEC: list[float] = [2.0, 5.0, 10.0]
+
     @staticmethod
     def _filter_accessible_branches(
         tree,
         obj_branches: dict[str, dict[str, str]],
         scalar_group_names: frozenset = frozenset(),
+        file_path: str = "<unknown file>",
+        retry_delays_sec: Optional[list[float]] = None,
+        on_probe_retry: Optional[Callable[[], None]] = None,
+        on_probe_final_failure: Optional[Callable[[str], None]] = None,
     ) -> dict[str, dict[str, str]]:
         """
         Test branch accessibility and filter out inaccessible ones.
@@ -711,11 +770,43 @@ class FileParser:
         out to have zero accessible branches still passes through here
         (empty dict, same as today's "EventIds"); ``_parse_opened_file``
         is what turns that into a hard error, not this function.
+
+        Implementation task 5, Part B: if the combined probe above fails
+        and a branch is tested individually, two cases are now
+        distinguished, instead of treating every read exception the same:
+
+        1. The branch name simply isn't in the tree's own branch list
+           (``tree.keys()``) -- genuinely absent. No retry (there is
+           nothing to retry); unchanged from before.
+        2. The branch name IS in the tree's branch list, but reading it
+           raised anyway -- treated as a possibly-transient failure (this
+           project's remote reads have shown exactly this kind of
+           intermittent flakiness repeatedly). Retried with backoff
+           (``retry_delays_sec``, default ``_PROBE_RETRY_DELAYS_SEC``) before
+           finally giving up and logging a WARNING naming the file, branch,
+           and final exception -- at which point the branch is treated as
+           inaccessible, exactly as before this fix (this function's return
+           value/behaviour for an ultimately-unreadable branch is
+           unchanged; only a branch that *recovers* on retry now survives
+           instead of being dropped after a single attempt).
+
+        The successful path (the combined probe succeeding) is entirely
+        unchanged: no retry logic is even reached, no extra reads happen.
+
+        ``on_probe_retry``/``on_probe_final_failure`` are optional
+        callbacks for purely additive statistics (implementation task 5,
+        Part B: "count probe retries and final probe failures per file");
+        absent (the default) does not change any branch-accessibility
+        decision.
         """
+        delays = retry_delays_sec if retry_delays_sec is not None else FileParser._PROBE_RETRY_DELAYS_SEC
+
         all_candidate_branches = []
         for branch_mapping in obj_branches.values():
             all_candidate_branches.extend(branch_mapping.keys())
-        
+
+        tree_branch_names = set(tree.keys())
+
         accessible_set = set()
         try:
             test_arr = tree.arrays(
@@ -726,17 +817,42 @@ class FileParser:
             accessible_set = set(test_arr.fields)
         except Exception:
             for branch_path in all_candidate_branches:
-                try:
-                    test_arr = tree.arrays(
-                        branch_path,
-                        entry_start=0, entry_stop=1,
-                        library="ak"
-                    )
-                    if branch_path in test_arr.fields:
-                        accessible_set.add(branch_path)
-                except Exception:
+                if branch_path not in tree_branch_names:
+                    # Genuinely absent from this file's tree -- no retry,
+                    # exactly today's behaviour.
                     continue
-        
+
+                last_exc: Optional[Exception] = None
+                succeeded = False
+                for attempt in range(len(delays) + 1):
+                    try:
+                        test_arr = tree.arrays(
+                            branch_path,
+                            entry_start=0, entry_stop=1,
+                            library="ak"
+                        )
+                        if branch_path in test_arr.fields:
+                            accessible_set.add(branch_path)
+                        succeeded = True
+                        break
+                    except Exception as e:
+                        last_exc = e
+                        if attempt < len(delays):
+                            if on_probe_retry is not None:
+                                on_probe_retry()
+                            time.sleep(delays[attempt])
+
+                if not succeeded:
+                    if on_probe_final_failure is not None:
+                        on_probe_final_failure(branch_path)
+                    logging.warning(
+                        f"Branch accessibility probe failed for '{branch_path}' "
+                        f"in {file_path} after {len(delays)} retr"
+                        f"{'y' if len(delays) == 1 else 'ies'}: "
+                        f"{type(last_exc).__name__}: {last_exc}. "
+                        f"Treating this branch as inaccessible for this file."
+                    )
+
         accessible_obj_branches = {}
         for obj_name, branch_mapping in obj_branches.items():
             accessible_branches = {
@@ -747,7 +863,7 @@ class FileParser:
                 list(accessible_branches.values())
             ) or obj_name == "DirectObjects" or obj_name in scalar_group_names:
                 accessible_obj_branches[obj_name] = accessible_branches
-        
+
         return accessible_obj_branches
     
     @staticmethod

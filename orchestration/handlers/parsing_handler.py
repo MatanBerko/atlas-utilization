@@ -30,6 +30,7 @@ from services.parsing.trigger_requirements import (
     trigger_group_branches,
     validate_trigger_requirements,
 )
+from services.parsing.mc_weights import aggregate_sumw_for_processed_files
 from utils.batching import get_batch_slice_by_year
 
 
@@ -254,6 +255,16 @@ class ParsingHandler(StateHandler):
         retention: dict[str, list[int]] = {}
         # release_year -> [files_opened_ok, files_failed_to_open]
         file_counts: dict[str, list[int]] = {}
+        # release_year -> [urls of files whose Events tree parsed successfully],
+        # used only when read_event_weights is enabled, to read exactly those
+        # same files' Runs-tree genEventSumw afterward (implementation task 5,
+        # Part A) -- the numerator (selected genWeight, computed later, in
+        # studies/hgg_cms/) and this denominator must cover an identical file
+        # set, or the normalization is silently biased.
+        processed_urls: dict[str, list[str]] = {}
+        # release_year -> {"n_files_processed", "processed_files",
+        # "n_files_failed", "genEventSumw", "genEventCount", "genEventSumw2"}
+        sumw_by_record: dict[str, dict] = {}
         # Above this fraction of a record's files failing to open, treat it as a
         # real failure rather than silently continuing with whatever (possibly
         # zero) events the surviving files produced -- see MAX_FILE_FAILURE_RATE.
@@ -298,6 +309,7 @@ class ParsingHandler(StateHandler):
 
             retention.setdefault(release_year, [0, 0])
             file_counts.setdefault(release_year, [0, 0])
+            processed_urls.setdefault(release_year, [])
             if record_profile is not None:
                 self.logger.info(
                     f"Record {record_key}: per-stream selection "
@@ -318,6 +330,7 @@ class ParsingHandler(StateHandler):
             def on_success(file_url: str, event_count: int, time_sec: float):
                 stats_collector.record_success(file_url, event_count, 0, time_sec)
                 file_counts[release_year][0] += 1
+                processed_urls[release_year].append(file_url)
 
             def on_error(file_url: str, error: Exception):
                 stats_collector.record_failure(file_url, error)
@@ -333,8 +346,11 @@ class ParsingHandler(StateHandler):
                 jet_btagging_thresholds=parsing_config.jet_btagging_thresholds,
                 extra_scalar_branches=effective_extra_scalar_branches,
                 extra_object_fields=parsing_config.extra_object_fields,
+                read_event_weights=parsing_config.read_event_weights,
+                read_pileup_info=parsing_config.read_pileup_info,
                 on_success=on_success,
-                on_error=on_error
+                on_error=on_error,
+                on_probe_stats=stats_collector.record_probe_stats,
             ):
                 retention[release_year][0] += len(batch.events)
 
@@ -454,6 +470,47 @@ class ParsingHandler(StateHandler):
                         f"record."
                     )
 
+            # ---- genEventSumw aggregation (implementation task 5, Part A) ----
+            # Only for the files that ACTUALLY succeeded at Events-tree
+            # parsing above (processed_urls) -- reading the Runs tree of a
+            # file that failed to parse would sum weights for events never
+            # actually included in the output, silently biasing task 6's
+            # normalization denominator relative to its numerator. If every
+            # file in this record were data, read_event_weights would have
+            # already raised (SimulationFieldRequestedOnDataError) for the
+            # very first file, well before reaching this point -- so by
+            # construction, reaching here with read_event_weights enabled
+            # means every processed file in this record is simulation.
+            if parsing_config.read_event_weights and processed_urls[release_year]:
+                # Consistency rule: the genWeight numerator (computed
+                # downstream, in studies/hgg_cms/) and this genEventSumw
+                # denominator must come from the identical file set --
+                # aggregate_sumw_for_processed_files raises loudly (aborting
+                # this record) rather than silently omitting a file whose
+                # Events parsed but whose Runs tree could not be read.
+                agg = aggregate_sumw_for_processed_files(processed_urls[release_year])
+                sumw_by_record[release_year] = {
+                    **agg,
+                    "n_files_failed": file_counts[release_year][1],
+                }
+                self.logger.info(
+                    f"Record {record_key}: genEventSumw={agg['genEventSumw']:.6g} "
+                    f"genEventCount={agg['genEventCount']} "
+                    f"genEventSumw2={agg['genEventSumw2']:.6g} "
+                    f"over {agg['n_files_processed']} processed file(s) "
+                    f"({file_counts[release_year][1]} file(s) failed and are NOT "
+                    f"included in this sum -- see 'processed_files' for exactly "
+                    f"which files this sum covers)."
+                )
+                if file_counts[release_year][1] > 0:
+                    self.logger.warning(
+                        f"Record {record_key}: {file_counts[release_year][1]} file(s) "
+                        f"failed to parse. genEventSumw above covers ONLY the "
+                        f"{agg['n_files_processed']} successfully processed "
+                        f"file(s), not the full record -- use it only alongside a "
+                        f"genWeight sum computed from that same processed-file set."
+                    )
+
         # Flush remaining events
         final_chunk = self.accumulator.flush()
         if final_chunk:
@@ -524,6 +581,14 @@ class ParsingHandler(StateHandler):
             for path, n_passed in sorted(tr["per_path"].items()):
                 self.logger.info(f"  {path}: {n_passed:,} / {tr['n_before']:,} events passed")
 
+        # ---- genEventSumw aggregation report (implementation task 5) ----
+        for ry, sw in sumw_by_record.items():
+            self.logger.info(
+                f"genEventSumw {ry}: {sw['genEventSumw']:.6g} over "
+                f"{sw['n_files_processed']} processed file(s) "
+                f"({sw['n_files_failed']} file(s) failed, NOT included)"
+            )
+
         # Create parsing statistics
         end_time = datetime.now()
         stats_summary = stats_collector.get_summary()
@@ -540,6 +605,23 @@ class ParsingHandler(StateHandler):
                 f"Skipped-file failure reasons: {stats_summary['failure_reason_counts']}"
             )
 
+        # ---- Branch-accessibility-probe retry report (implementation
+        # task 5, Part B). Purely additive: a new log line only, using new
+        # ParsingStatisticsCollector.get_summary() keys. Zero for every run
+        # where every probe succeeded on its first attempt -- i.e. every
+        # run today, since this project's real files always have had every
+        # requested branch accessible on the first try in every check so
+        # far; nonzero only under the transient-read-failure conditions
+        # this fix targets. ----
+        if stats_summary["n_probe_retries"] or stats_summary["n_probe_final_failures"]:
+            self.logger.info(
+                f"Branch-accessibility-probe retries: {stats_summary['n_probe_retries']} "
+                f"retr{'y' if stats_summary['n_probe_retries'] == 1 else 'ies'}, "
+                f"{stats_summary['n_probe_final_failures']} branch(es) still inaccessible "
+                f"after retries, across {len(stats_summary['files_with_probe_retries'])} "
+                f"file(s): {stats_summary['files_with_probe_retries']}"
+            )
+
         parsing_stats = ParsingStatistics(
             total_files=stats_summary["total_files"],
             successful_files=stats_summary["successful_files"],
@@ -552,7 +634,8 @@ class ParsingHandler(StateHandler):
             max_memory_mb=0.0,  # TODO: track memory
             total_time_sec=(end_time - start_time).total_seconds(),
             start_time=start_time,
-            end_time=end_time
+            end_time=end_time,
+            sumw_by_record=(sumw_by_record or None)
         )
         
         self.logger.info(
