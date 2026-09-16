@@ -402,3 +402,146 @@ needed to trigger it either way, so a clean result there is not evidence
 the hazard is gone. **Not fixed here** — out of this task's scope, and any
 fix touching `_filter_accessible_branches` or `_concatenate_events` could
 affect existing configs' behaviour, which needs its own explicit decision.
+
+**Update (implementation task 5, Part B): the accessibility probe itself
+now retries on a transient-looking failure**, which plausibly (not
+provenly) explains the above. See the "Branch-accessibility probe retry"
+section further down.
+
+## CMS simulation event weights and pileup information — new, not enabled anywhere yet
+
+Two related, general-purpose (not CMS-specific in mechanism) additions for
+the H→γγ study: an optional per-event generator weight, and optional
+pileup information, both read via task 1's scalar-branch-group mechanism.
+
+**New config keys**, under `parsing_task_config`:
+
+```yaml
+parsing_task_config:
+  # Optional, both default False -- every current config. Absent/False
+  # reproduces today's behaviour exactly.
+  read_event_weights: false   # adds genWeight (simulation only)
+  read_pileup_info: false     # adds PV_npvsGood (data + simulation) and,
+                               # for simulation only, Pileup_nTrueInt
+```
+
+**Data vs. simulation is detected per FILE**, not via a global flag: a
+file "looks like simulation" if its `Events` tree's own branch list
+contains `genWeight` (`services/parsing/mc_weights.py`'s
+`file_is_simulation`) — confirmed directly: present on a real
+GluGluHToGG signal file, absent on a real DoubleEG data file. This
+matters because a single pipeline run **can** process a mix of data and
+simulation CMS records in one invocation: CMS records are addressed by
+`specific_record_ids`, which (unlike ATLAS's paired `2024r-pp`/
+`2024r-pp_mc` release-year keys) are not split into a data/MC pair by
+`parse_mc` at all (`orchestration/handlers/parsing_handler.py`'s
+`select_metadata_for_parsing` docstring) — so assuming "this whole run is
+data" or "this whole run is simulation" would be wrong. (The pipeline has
+no separate "this record is declared data/MC" field to cross-check
+against — `schemas.py`'s `RECORD_ID_TO_SCHEMA` only maps a record to a
+branch-naming schema, not a data/MC type — so this file-level check is
+the only detection mechanism, not a secondary consistency check.)
+
+**`read_event_weights` on a file that looks like data raises a clear
+configuration error** (`SimulationFieldRequestedOnDataError`, a subclass
+of task 3's `RequiredScalarBranchMissingError`, so it aborts the run the
+same non-swallowed way) — never a silent no-op. **`read_pileup_info` on a
+data file reads `PV_npvsGood` only** — `Pileup_nTrueInt` (a
+generator-truth quantity, doc string *"the true mean number of the
+poisson distribution for this event from which the number of
+interactions each bunch crossing has been sampled"*) simply isn't
+requested for a data file at all, not an error and not a silent drop of
+something that was asked for.
+
+**Verified real branch doc strings** (`Events` tree, from a real ggH
+signal file): `genWeight` — *"generator weight"*, `float` (numpy
+`float32`, confirmed directly; both positive and negative values occur —
+never altered, clipped, or absolute-valued anywhere in this pipeline).
+`PV_npvsGood` — *"number of good reconstructed primary vertices.
+selection:!isFake && ndof > 4 && abs(z) <= 24 && position.Rho <= 2"*
+(identical doc string on data and simulation). From the `Runs` tree (one
+entry per file in every file checked across all 6 signal records, though
+every entry is summed generically, not assumed to be exactly one):
+`genEventSumw` — *"sum of gen weights"*, `double`; `genEventCount` —
+*"event count"*, `int64`; `genEventSumw2` — *"sum of gen (weight^2)"*,
+`double`.
+
+**genEventSumw aggregation and the "same files" rule.** When
+`read_event_weights` is enabled, after a record's files are parsed,
+`orchestration/handlers/parsing_handler.py` reads the `Runs` tree of
+**exactly the files whose `Events` tree was successfully parsed in this
+run** (not necessarily every file in the record) and sums `genEventSumw`/
+`genEventCount`/`genEventSumw2` over them
+(`services/parsing/mc_weights.py`'s `aggregate_sumw_for_processed_files`).
+This is recorded per record — file count, the exact list of processed
+files, and the sums — in the run's `ParsingStatistics`
+(`sumw_by_record`), which `pipeline/executor.py` already writes to
+`logs/batch_*_stats.json` for every run (a pre-existing mechanism, not a
+new output format). **If a file's `Events` parsed but its `Runs` tree
+can't be read, the whole record aborts loudly** rather than silently
+summing over a smaller set than the events actually used — task 6's
+normalization (`N_expected = σ × BR × L × Σselected(genWeight) /
+Σ(genEventSumw)`) needs its numerator and denominator to come from the
+identical file set, or the result is silently biased.
+
+**Verified real-file agreement**: summing the full `genWeight` branch and
+comparing to `genEventSumw` from the `Runs` tree agreed to within ~2×10⁻⁸
+relative difference for a ggH, a VBF, and a ttH file (floating-point
+precision, as expected — NanoAOD's `genEventSumw` is not pre-skimmed).
+aMC@NLO samples (VBF, ttH) showed a much higher negative-weight fraction
+(~34%) than POWHEG (ggH, ~0.5%) — a known generator-level effect, not a
+bug.
+
+**Not set in any existing config file** — this section is documentation
+only.
+
+## Branch-accessibility probe retry (implementation task 5, Part B)
+
+`FileParser._filter_accessible_branches` decides, per file, whether a
+requested branch is actually readable. Task 4's review found that when
+its first combined-branches probe fails and it falls back to testing
+branches one at a time, a branch whose *individual* read also raised was
+dropped after exactly one attempt — with no way to tell "genuinely absent
+from this file" apart from "read failed for some other, possibly
+transient, reason." Given how often this project's own real-file checks
+have hit transient read errors (HTTP 429s, dropped connections, one live
+example during this very task's own regression checks), that single
+combined-with-per-branch attempt is not robust.
+
+**Fixed**: the two cases are now distinguished. A branch missing from the
+file's own branch list (`tree.keys()`) is still treated as genuinely
+absent, with no retry — unchanged. A branch that IS in the branch list
+but whose read raised anyway is retried up to 3 times with backoff (2s,
+5s, 10s — constants, not a config key; overridable only by tests), and
+only logged as inaccessible (with a WARNING naming the file, branch, and
+final exception — there was no log message at all before) if every retry
+fails. **The successful-probe path is completely unchanged** — when the
+initial combined read succeeds (true for every file checked in this
+project so far), no retry logic is even reached and no extra reads
+happen. Retry counts and final-failure counts are tracked per file and
+added to the parsing summary/log the same way task 3 added a
+failure-reason breakdown.
+
+**Does this explain the muon field-drop bug?** Plausibly, not provenly.
+A minimal, synthetic reproduction (`tests/test_probe_retry.py`) shows the
+exact mechanism: a file whose `looseId` probe fails once (transient) and
+would succeed on a retry, merged with a second file that read `looseId`
+cleanly — with the OLD single-attempt behaviour, the first file's
+`looseId` is dropped, and merging then silently drops `looseId` from the
+combined output entirely (via `domain/events.py`'s known field-
+intersection behaviour, confirmed in task 4); with the retry fix, both
+files keep `looseId` and it survives the merge intact. This demonstrates
+the mechanism is real and reachable through this exact code path — it
+does not prove this is what actually happened historically, since that
+would require reproducing it under the original conditions, which have
+not recurred on demand.
+
+**Mid-file read errors are unchanged.** A separate, pre-existing
+mechanism handles a read failure *during* batch reading (after the
+probe) — `FileParser._read_file_in_batches` stops at the failing batch,
+keeps every batch read so far, and raises `PartialFileReadError`
+carrying the partial data; `ThreadedFileProcessor` still yields that
+partial result and reports it via `on_error`, rather than discarding it.
+This task does not change that behaviour — it addresses the earlier
+probe step only, where a branch is tested for accessibility, not where a
+batch's actual per-event values are read.
