@@ -24,7 +24,7 @@ from domain.events import EventBatch
 from services.parsing.event_selection import apply_parsing_event_selection
 from services.parsing.event_deduplication import EventDeduplicator
 from services.parsing.schemas import normalize_release_year
-from services.parsing.validated_runs import ValidatedRunsFilter, apply_validated_runs_filter
+from services.parsing.validated_runs import ValidatedRunsFilter, apply_validated_runs_filter, is_simulation
 from services.parsing.trigger_requirements import (
     apply_trigger_requirement,
     trigger_group_branches,
@@ -406,6 +406,34 @@ class ParsingHandler(StateHandler):
                     )
 
                 if deduplicator is not None:
+                    # De-duplication must never apply to simulation events
+                    # (implementation task 6, review addition). It is
+                    # switched on run-wide by the presence of ANY
+                    # selection_by_record entry (see this method's setup
+                    # above), then applied unconditionally to every
+                    # record's batches in the same run -- so a config that
+                    # mixed a trigger-stream-combined data record with a
+                    # simulation record would otherwise silently apply it
+                    # to the simulation too. Simulated NanoAOD sets run==1
+                    # for every event, and (luminosityBlock, event) can
+                    # repeat across different samples/files, so dedup on
+                    # simulation would silently delete genuine signal
+                    # events, keyed on a collision that means nothing.
+                    # is_simulation() is the same detector already used for
+                    # the validated-runs filter's own simulation guard.
+                    if is_simulation(working_events):
+                        raise RuntimeError(
+                            f"Record {record_key}: de-duplication is enabled for "
+                            f"this run (selection_by_record is set for at least "
+                            f"one record being processed), but these events look "
+                            f"like simulation (genWeight present, and/or run==1 "
+                            f"for every event). De-duplication must never run on "
+                            f"simulation -- simulated NanoAOD's (run, "
+                            f"luminosityBlock, event) key is not a genuine unique "
+                            f"event identifier the way it is for real data, so "
+                            f"applying dedup would silently delete real signal "
+                            f"events. Aborting rather than risk that."
+                        )
                     working_events, n_dropped = deduplicator.filter_new(working_events)
                     if n_dropped:
                         self.logger.info(
