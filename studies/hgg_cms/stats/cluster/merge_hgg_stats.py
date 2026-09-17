@@ -1,10 +1,28 @@
 #!/usr/bin/env python
 """
 Statistical-model task, Parts 2 and 3.3/3.5: merges every
-`run_toy_job.py` output under `--jobs-base/<job_type>/job_*.json` into
-one summary JSON per job_type, with the validation criteria from Part 2
-of this task's instructions evaluated directly (PASS/FAIL), plus the
-Part 3.3 expected band and Part 3.5 look-elsewhere trials-factor numbers.
+`run_toy_job.py` output under `--jobs-base/<job_type>/*job_*.json`
+(matches both the original run's `job_NNNN.json` and any retry's
+`retryK_job_NNNN.json` -- see `pbs_hgg_stats_array.sh`'s OUT_PREFIX)
+into one summary JSON per job_type, with the validation criteria from
+Part 2 of this task's instructions evaluated directly (PASS/FAIL), plus
+the Part 3.3 expected band and Part 3.5 look-elsewhere trials-factor
+numbers.
+
+Before any validation criterion is evaluated, this script reports the
+final toy count actually collected per job_type (and per mu_true for
+sig_injection) against this task's own pre-set minimums (bkg_only
+>=2000, sig_injection >=1000 per mu_true in {0.5, 1, 2}, spurious_check
+>=1000, mass_scan_bkg >=1000). If any falls short, it prints exactly
+which and STOPS (exit code 2) -- it does not compute or report
+validation criteria on a short toy count.
+
+A file that fails to parse as JSON (e.g. a killed job that somehow left
+a truncated file -- `run_toy_job.py` only ever writes its output in one
+`Path.write_text(...)` call at the very end, so this should not happen
+in practice, but is handled defensively rather than assumed) is skipped
+with a printed warning and counted in `n_corrupt_files_skipped`, never
+silently dropped.
 
 Usage:
     python studies/hgg_cms/stats/cluster/merge_hgg_stats.py \\
@@ -15,18 +33,43 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
 from scipy import stats as sps
 
+REQUIRED_MINIMA = {
+    "bkg_only": 2000,
+    "sig_injection": {0.5: 1000, 1.0: 1000, 2.0: 1000},
+    "spurious_check": 1000,
+    "mass_scan_bkg": 1000,
+}
 
-def load_job_type(jobs_base: Path, job_type: str) -> list:
-    out = []
-    for f in sorted((jobs_base / job_type).glob("job_*.json")):
-        d = json.loads(f.read_text(encoding="utf-8"))
-        out.extend(d["results"])
-    return out
+
+def _load_json_files(jobs_base: Path, job_type: str) -> list:
+    """Every file matching *job_*.json under jobs_base/job_type/ (both
+    the original run's job_NNNN.json and any retryK_job_NNNN.json),
+    parsed defensively -- a file that fails to parse is skipped with a
+    warning, not silently dropped, and not treated as fatal on its own
+    (the minimum-count check below is what actually gates on this)."""
+    docs = []
+    n_corrupt = 0
+    for f in sorted((jobs_base / job_type).glob("*job_*.json")):
+        try:
+            docs.append(json.loads(f.read_text(encoding="utf-8")))
+        except (json.JSONDecodeError, OSError) as e:
+            print(f"WARNING: could not parse {f}: {type(e).__name__}: {e} -- skipping this file", file=sys.stderr)
+            n_corrupt += 1
+    return docs, n_corrupt
+
+
+def load_job_type(jobs_base: Path, job_type: str):
+    docs, n_corrupt = _load_json_files(jobs_base, job_type)
+    results = []
+    for d in docs:
+        results.extend(d["results"])
+    return results, n_corrupt
 
 
 def asymptotic_q0_tail(z_thresh):
@@ -110,16 +153,73 @@ def main():
     args = p.parse_args()
 
     jobs_base = Path(args.jobs_base)
-    out = {}
+    n_corrupt_total = 0
 
-    bkg = load_job_type(jobs_base, "bkg_only")
+    bkg, nc = load_job_type(jobs_base, "bkg_only")
+    n_corrupt_total += nc
+
+    sig_by_mu = {}
+    sig_docs, nc = _load_json_files(jobs_base, "sig_injection")
+    n_corrupt_total += nc
+    for d in sig_docs:
+        sig_by_mu.setdefault(d["mu_true"], []).extend(d["results"])
+
+    spur, nc = load_job_type(jobs_base, "spurious_check")
+    n_corrupt_total += nc
+
+    scan, nc = load_job_type(jobs_base, "mass_scan_bkg")
+    n_corrupt_total += nc
+
+    # --- Minimum toy-count gate, evaluated BEFORE any validation
+    # criterion, per this task's own pre-set rule. ---
+    print("=== Toy counts vs required minimums ===")
+    shortfalls = []
+    counts_report = {
+        "bkg_only": len(bkg),
+        "sig_injection": {str(mu): len(r) for mu, r in sorted(sig_by_mu.items())},
+        "spurious_check": len(spur),
+        "mass_scan_bkg": len(scan),
+    }
+    if len(bkg) < REQUIRED_MINIMA["bkg_only"]:
+        shortfalls.append(f"bkg_only: {len(bkg)} < {REQUIRED_MINIMA['bkg_only']} required")
+    print(f"  bkg_only: {len(bkg)} (>= {REQUIRED_MINIMA['bkg_only']} required)"
+          + ("  SHORT" if len(bkg) < REQUIRED_MINIMA["bkg_only"] else "  OK"))
+
+    for mu_req, n_req in REQUIRED_MINIMA["sig_injection"].items():
+        n_have = len(sig_by_mu.get(mu_req, []))
+        status = "OK" if n_have >= n_req else "SHORT"
+        print(f"  sig_injection mu={mu_req}: {n_have} (>= {n_req} required)  {status}")
+        if n_have < n_req:
+            shortfalls.append(f"sig_injection mu={mu_req}: {n_have} < {n_req} required")
+
+    print(f"  spurious_check: {len(spur)} (>= {REQUIRED_MINIMA['spurious_check']} required)"
+          + ("  SHORT" if len(spur) < REQUIRED_MINIMA["spurious_check"] else "  OK"))
+    if len(spur) < REQUIRED_MINIMA["spurious_check"]:
+        shortfalls.append(f"spurious_check: {len(spur)} < {REQUIRED_MINIMA['spurious_check']} required")
+
+    print(f"  mass_scan_bkg: {len(scan)} (>= {REQUIRED_MINIMA['mass_scan_bkg']} required)"
+          + ("  SHORT" if len(scan) < REQUIRED_MINIMA["mass_scan_bkg"] else "  OK"))
+    if len(scan) < REQUIRED_MINIMA["mass_scan_bkg"]:
+        shortfalls.append(f"mass_scan_bkg: {len(scan)} < {REQUIRED_MINIMA['mass_scan_bkg']} required")
+
+    if n_corrupt_total:
+        print(f"  ({n_corrupt_total} corrupt/unparseable file(s) skipped -- see WARNING lines above)")
+
+    if shortfalls:
+        print("\nSTOPPED: toy counts below the required minimum -- not evaluating any validation "
+              "criterion on a short count. Submit more toys for the job type(s) below, merge again:",
+              file=sys.stderr)
+        for s in shortfalls:
+            print(f"  - {s}", file=sys.stderr)
+        sys.exit(2)
+
+    print("All toy counts meet their required minimum -- evaluating validation criteria.\n")
+
+    out = {"toy_counts": counts_report, "n_corrupt_files_skipped": n_corrupt_total}
+
     if bkg:
         out["part_2_1_background_only"] = summarize_bkg_only(bkg)
 
-    sig_by_mu = {}
-    for f in sorted((jobs_base / "sig_injection").glob("job_*.json")):
-        d = json.loads(f.read_text(encoding="utf-8"))
-        sig_by_mu.setdefault(d["mu_true"], []).extend(d["results"])
     if sig_by_mu:
         out["part_2_2_signal_injection"] = {
             str(mu): summarize_sig_injection(results, mu) for mu, results in sorted(sig_by_mu.items())
@@ -127,11 +227,9 @@ def main():
         if 1.0 in sig_by_mu:
             out["part_3_3_expected_band_mu1"] = summarize_sig_injection(sig_by_mu[1.0], 1.0)
 
-    spur = load_job_type(jobs_base, "spurious_check")
     if spur:
         out["part_2_3_spurious_signal_check"] = summarize_spurious_check(spur)
 
-    scan = load_job_type(jobs_base, "mass_scan_bkg")
     if scan:
         out["part_3_5_look_elsewhere"] = summarize_mass_scan_bkg(scan)
 

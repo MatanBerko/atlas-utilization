@@ -99,7 +99,49 @@ set) and Part 3.5 are prepared as PBS cluster jobs and not run here.**
   list, same pattern as `status_bias_study_part4.sh`.
 - `merge_hgg_stats.py`: merges all subjob output and evaluates every
   Part 2 validation criterion directly (PASS/FAIL flags), plus Part
-  3.3's expected band and Part 3.5's trials factor.
+  3.3's expected band and Part 3.5's trials factor. Globs
+  `*job_*.json` per job_type subdirectory, so it picks up both the
+  original run's `job_NNNN.json` files and any retry's
+  `retryK_job_NNNN.json` files automatically; reports the final toy
+  count per job_type (and per mu_true for signal-injection) against
+  this task's own required minimums BEFORE evaluating any criterion,
+  and STOPS if any falls short.
+
+### Update -- 18 Sep 2026: run 1 submitted, 8/80 subjobs walltime-killed, retry 1 prepared
+
+The user submitted job `5057683[]` (80 subjobs, commit `15bd3a5`).
+72/80 finished (exit 0); 8/80 hit the `walltime=02:00:00` limit on
+slow worker nodes (exit -29) -- same-type jobs on other nodes finished
+in 44 min to just under 2h, so this is worker-node speed variance (the
+real cluster measured up to ~5-6x slower than the laptop timing that
+sized the original batches), not a fit-convergence problem. Full
+accounting, killed indices, and the retry-1 job list are recorded in
+`logs/hgg_stats/run1_result.md`, `logs/hgg_stats/job_list.txt` (the
+original 80-line list), and `logs/hgg_stats/job_list_retry1.txt` (the
+22-line retry list) -- summary:
+
+- `sig_injection` mu=2.0 lost 3x250=750 toys (indices 17-19); index 20
+  (250 toys) survived. Retry: 12 x 63 toys = 756 (6-toy over-count,
+  stated rather than trimmed).
+- `mass_scan_bkg` lost 5x20=100 toys (indices 44, 46, 47, 48, 51); the
+  other 45 indices (900 toys) survived. Retry: 10 x 10 toys = 100
+  (exact).
+- `run_toy_job.py` writes its output in one `Path.write_text(...)` call
+  at the very end of the job -- a killed job leaves NO output file at
+  all, so nothing needed excluding from the merge by content, only by
+  "does the file exist" (verified for real on the 8 killed indices with
+  the command in the final chat message).
+- Retry outputs use `OUT_PREFIX=retry1_` (a new `pbs_hgg_stats_array.sh`
+  parameter) so they can never collide with the original run's files in
+  the same per-job-type subdirectories, and unique logs
+  (`hgg_stats_retry1_<index>.out/.err`) via `submit_hgg_stats_retry1.sh`.
+- `status_hgg_stats.sh` was updated to read an extended `submitted_jobs.txt`
+  line format (`label jobid job_list_path out_prefix`) so it correctly
+  covers both the original job ID and the retry job ID from one run,
+  including building a correctly-sourced retry-of-retry list if needed.
+- `merge_hgg_stats.py` was updated to glob `*job_*.json` (both original
+  and retry filenames) and to report/gate on final toy counts before
+  evaluating any criterion (see above).
 
 **Validation criteria that will be checked once results come back**
 (unchanged from this task's own pre-set spec -- not weakened or

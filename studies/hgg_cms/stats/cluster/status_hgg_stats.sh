@@ -12,6 +12,15 @@
 # them. Each failed line is printed as "  index <idx> (...): FAILED ..."
 # -- that exact prefix identifies a failure line.
 #
+# submitted_jobs.txt format: each line is either the original 2-field
+# form ("label jobid", written by submit_hgg_stats.sh) or the extended
+# 4-field form ("label jobid job_list_path out_prefix", written by
+# submit_hgg_stats_retry1.sh and any later numbered retry submit
+# script) -- reading 4 fields from a 2-field line just leaves the extra
+# two empty, which the defaults below handle (job_list.txt, no
+# prefix), so both forms are read by the same loop without needing to
+# touch or reformat whatever is already on disk from an earlier run.
+#
 # Usage: bash status_hgg_stats.sh
 # ---------------------------------------------------------------------------
 set -euo pipefail
@@ -74,21 +83,23 @@ next_retry_number() {
 
 ANY_FAILED=0
 declare -a FAILED_IDX=()
+declare -a FAILED_JOB_LIST=()
 
-while read -r label jobid; do
+while read -r label jobid job_list_path out_prefix; do
     [[ -z "$label" ]] && continue
-    echo "=== $label (jobid=$jobid) ==="
+    JOB_LIST="${job_list_path:-${STATS_LOG_BASE}/job_list.txt}"
+    OUT_PREFIX="${out_prefix:-}"
+    echo "=== $label (jobid=$jobid, job_list=$JOB_LIST, out_prefix='${OUT_PREFIX}') ==="
     QUERY_ID=$(array_query_id "$jobid")
     DUMP=$(nice "$QSTAT_CMD" -xft "$QUERY_ID" 2>/dev/null || true)
     PARSED=$(echo "$DUMP" | parse_array_dump)
 
     n_queued=0; n_running=0; n_ok=0; n_failed=0; n_unknown=0
-    JOB_LIST="${STATS_LOG_BASE}/job_list.txt"
     while read -r idx state exit_status walltime mem; do
         [[ -z "$idx" ]] && continue
         line=$(sed -n "${idx}p" "$JOB_LIST" 2>/dev/null || true)
         read -r job_type mu_true n_toys _seed <<< "$line"
-        out_file="${STATS_OUT_BASE}/${job_type}/job_$(printf '%04d' "$idx").json"
+        out_file="${STATS_OUT_BASE}/${job_type}/${OUT_PREFIX}job_$(printf '%04d' "$idx").json"
         case "$state" in
             Q) n_queued=$((n_queued+1)) ;;
             R) n_running=$((n_running+1)) ;;
@@ -99,6 +110,7 @@ while read -r label jobid; do
                     n_failed=$((n_failed+1))
                     ANY_FAILED=1
                     FAILED_IDX+=("$idx")
+                    FAILED_JOB_LIST+=("$JOB_LIST")
                     echo "  index $idx ($job_type mu_true=$mu_true n_toys=$n_toys): FAILED (state=$state exit_status=$exit_status wall=$walltime mem=$mem output=$([[ -f "$out_file" ]] && echo OK || echo MISSING))"
                 fi
                 ;;
@@ -111,31 +123,32 @@ done < "$JOBLIST_FILE"
 
 echo "=== Summary ==="
 if [[ "$ANY_FAILED" == "0" ]]; then
-    echo "No failures detected (among jobs currently in a finished state)."
-    echo "Once all 80 subjobs show finished_ok, merge with:"
+    echo "No failures detected (among jobs currently in a finished state, across all job IDs in"
+    echo "$JOBLIST_FILE). Once every subjob across every job ID above shows finished_ok, merge with:"
     echo "  python studies/hgg_cms/stats/cluster/merge_hgg_stats.py \\"
     echo "      --jobs-base $STATS_OUT_BASE \\"
     echo "      --out /storage/agrp/berkom/atlas-utilization/output/hgg_stats/merged/hgg_stats_merged.json"
 else
     RETRY_N=$(next_retry_number)
     RETRY_LIST="${STATS_LOG_BASE}/job_list_retry${RETRY_N}.txt"
-    JOB_LIST="${STATS_LOG_BASE}/job_list.txt"
     : > "$RETRY_LIST"
-    for idx in "${FAILED_IDX[@]}"; do
-        sed -n "${idx}p" "$JOB_LIST" >> "$RETRY_LIST"
+    for i in "${!FAILED_IDX[@]}"; do
+        sed -n "${FAILED_IDX[$i]}p" "${FAILED_JOB_LIST[$i]}" >> "$RETRY_LIST"
     done
     N_RETRY=$(wc -l < "$RETRY_LIST")
-    echo "Some subjobs failed -- see FAILED lines above."
-    echo "Retry list written: $RETRY_LIST ($N_RETRY line(s), same seeds as the original)."
+    echo "Some subjobs failed -- see FAILED lines above (each line records which job_list it came from,"
+    echo "so a failure from the original run and a failure from a retry are both handled correctly)."
+    echo "Retry list written: $RETRY_LIST ($N_RETRY line(s), same seeds as their own source line)."
     echo ""
-    echo "If the failures were walltime kills (exit -29), especially for mass_scan_bkg (the most"
-    echo "expensive job_type): this script's own PBS job already requests the maximum walltime"
-    echo "(02:00:00) that still routes to the shortE queue -- a further increase routes to normE"
-    echo "instead (busier; see studies/hgg_cms/cluster/FULL_RUN_README.md). Resubmit the retry list,"
-    echo "reading its own job list positionally (index 1..N of the RETRY file):"
-    echo "  qsub -J 1-${N_RETRY} -v JOB_LIST=$RETRY_LIST,OUT_BASE=$STATS_OUT_BASE \\"
-    echo "      -l walltime=03:00:00 \\"
+    echo "If the failures were walltime kills (exit -29): this script's own PBS job already requests"
+    echo "the maximum walltime (02:00:00) that still routes to the shortE queue -- a further increase"
+    echo "routes to normE instead (busier; see studies/hgg_cms/cluster/FULL_RUN_README.md). Resubmit"
+    echo "the retry list, reading its own job list positionally (index 1..N of the RETRY file), with a"
+    echo "fresh OUT_PREFIX so its outputs can't collide with any earlier attempt's:"
+    echo "  qsub -J 1-${N_RETRY} -v JOB_LIST=$RETRY_LIST,OUT_BASE=$STATS_OUT_BASE,OUT_PREFIX=retry${RETRY_N}_ \\"
     echo "      studies/hgg_cms/stats/cluster/pbs_hgg_stats_array.sh"
-    echo "(walltime override above via -l on the qsub command line, accepting normE routing --"
-    echo "only if the failures really are walltime kills; check wall= in the FAILED lines above first.)"
+    echo "then append \"hgg_stats_retry${RETRY_N} <jobid> $RETRY_LIST retry${RETRY_N}_\" to $JOBLIST_FILE"
+    echo "yourself so this script picks it up next time. If the same job_type keeps hitting walltime"
+    echo "even at this retry's smaller batch size, shrink n_toys per line further rather than raising"
+    echo "walltime past 02:00:00 (which routes to the busier normE queue)."
 fi

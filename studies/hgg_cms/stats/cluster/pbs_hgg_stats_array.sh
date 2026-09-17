@@ -12,7 +12,20 @@
 # make_job_list.py's own docstring and STATS_REPORT.md) with a
 # comfortable margin below the true per-job cost; walltime=02:00:00 is
 # the maximum that still routes to the shortE queue (see
-# studies/hgg_cms/cluster/FULL_RUN_README.md).
+# studies/hgg_cms/cluster/FULL_RUN_README.md). Real cluster worker
+# nodes turned out to vary in speed by up to ~5-6x versus the laptop
+# timing (see the 18 Sep 2026 hgg_stats validation run in
+# STATS_REPORT.md, job 5057683[] -- 8/80 subjobs hit this exact
+# walltime on slow nodes while same-type jobs on fast nodes finished in
+# under an hour), which is why retry batches are sized much smaller
+# per job (see make_retry_job_list_1.py) rather than by raising
+# walltime past the shortE cap.
+#
+# OUT_PREFIX (optional, default empty): prepended to each output
+# filename -- `${OUT_PREFIX}job_<index>.json` -- so a retry run's
+# outputs can never collide with the original run's, even though both
+# write into the same per-job-type subdirectory (see
+# submit_hgg_stats_retry1.sh, which passes OUT_PREFIX=retry1_).
 # ---------------------------------------------------------------------------
 #PBS -N hgg_stats
 #PBS -q N
@@ -31,6 +44,7 @@ CONDA_PROFILE="/usr/wipp/conda/24.5.0/etc/profile.d/conda.sh"
 CONDA_ENV="/storage/agrp/berkom/atlas-utilization/envs/atlas-pipeline"
 : "${JOB_LIST:?must pass -v JOB_LIST=/path/to/job_list.txt (from make_job_list.py)}"
 : "${OUT_BASE:?must pass -v OUT_BASE=/storage/agrp/berkom/atlas-utilization/output/hgg_stats}"
+OUT_PREFIX="${OUT_PREFIX:-}"
 
 JOB_INDEX="${PBS_ARRAY_INDEX:?PBS_ARRAY_INDEX not set -- submit as a job array (-J)}"
 
@@ -50,10 +64,10 @@ export OPENBLAS_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 
 OUT_DIR="${OUT_BASE}/${JOB_TYPE}"
-OUT_FILE="${OUT_DIR}/job_$(printf '%04d' "$JOB_INDEX").json"
+OUT_FILE="${OUT_DIR}/${OUT_PREFIX}job_$(printf '%04d' "$JOB_INDEX").json"
 
 echo "Job $PBS_JOBID (array index $JOB_INDEX) starting on $(hostname) at $(date)"
-echo "JOB_TYPE=$JOB_TYPE MU_TRUE=$MU_TRUE N_TOYS=$N_TOYS SEED=$SEED"
+echo "JOB_TYPE=$JOB_TYPE MU_TRUE=$MU_TRUE N_TOYS=$N_TOYS SEED=$SEED OUT_PREFIX=${OUT_PREFIX:-<none>}"
 
 python -u studies/hgg_cms/stats/cluster/run_toy_job.py \
     --job-type "$JOB_TYPE" --mu-true "$MU_TRUE" --n-toys "$N_TOYS" --seed "$SEED" \
