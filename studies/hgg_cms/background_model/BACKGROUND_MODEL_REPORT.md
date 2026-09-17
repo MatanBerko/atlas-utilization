@@ -310,21 +310,45 @@ the new one, per category:**
   **(i)** If one or more candidates are ELIGIBLE (the 5% fit-reliability
   rule, unchanged) **and** PASS (worst |mean S|/mean σ_S < 0.20 in every
   one of the 60 cells, unchanged): choose the one with the **fewest
-  parameters**; a tie is broken by the **lower sideband NLL**. No
-  spurious-signal systematic beyond what (iii) always assigns.
+  parameters**; a tie is broken by the **lower sideband NLL**. The
+  spurious-signal systematic for this chosen function is assigned per
+  (iii) below.
 
-  **(ii)** Otherwise — **FALLBACK C** (an ATLAS-style spurious-signal
-  systematic, not a relaxation of the 0.20 threshold): among ELIGIBLE
-  candidates only, choose the one with the **smallest worst ratio**
-  over the 60 cells; a tie is broken by **fewer parameters**.
+  **(ii)** Otherwise — **STOP, do not auto-select.** *(Revised 18 Sep
+  2026, before the rerun's own code was written, superseding this same
+  section's original wording — see the note at the end of this point.)*
+  If no candidate is both eligible and passing, the merge step reports
+  for that category and does **not** choose a function on its own. The
+  report must list, for that category: **every** candidate's
+  eligibility, its worst ratio, its worst |S_spur| in events, and that
+  worst |S_spur| as a percentage of the expected signal yield (EBEB
+  545.8, notEBEB 266.1). It must also compute and display — clearly
+  marked **"not applied, human decision required"** — which candidate
+  **FALLBACK C** (an ATLAS-style spurious-signal systematic: among
+  ELIGIBLE candidates only, the one with the smallest worst ratio over
+  the 60 cells, tie broken by fewer parameters) **would** choose, and
+  what its resulting systematic would be, without applying it. The two
+  standing options to decide between at that point are: adopt fallback
+  C as just described (accept a function that doesn't formally pass,
+  carrying its worst-case bias as an explicit nuisance parameter), or
+  invest in the CMS discrete-profiling / envelope method described in
+  point 4 below. Neither is applied automatically.
 
-  **(iii)** In both cases, the category's spurious-signal systematic =
-  the **maximum over all 60 cells** (4 truth families × 3 leakage
-  variants × 5 masses) of |mean spurious S| in events, for whichever
-  function was chosen. In the eventual signal-plus-background fit this
-  enters as an additional yield term `S_spur × θ_spur`, with `θ_spur` a
-  unit-Gaussian-constrained nuisance parameter, **one per category,
-  uncorrelated between categories**.
+  *(Note on this revision: an earlier version of this section, briefly
+  committed and then superseded before any rerun result existed, had
+  (ii) auto-apply fallback C as part of the merge step itself. That was
+  changed to the STOP-and-report behavior above at the user's explicit
+  instruction, before any rerun code was written and before this
+  section's own commit that the rerun code depends on — the ordering
+  this whole section exists to protect was preserved throughout.)*
+
+  **(iii)** For a function chosen under **(i)**, the category's
+  spurious-signal systematic = the **maximum over all 60 cells**
+  (4 truth families × 3 leakage variants × 5 masses) of |mean spurious
+  S| in events, for that function. In the eventual signal-plus-
+  background fit this enters as an additional yield term
+  `S_spur × θ_spur`, with `θ_spur` a unit-Gaussian-constrained nuisance
+  parameter, **one per category, uncorrelated between categories**.
 
   **(iv)** If NO candidate in a category is eligible at all: **STOP and
   report.** No further relaxation of the eligibility rule, the 0.20
