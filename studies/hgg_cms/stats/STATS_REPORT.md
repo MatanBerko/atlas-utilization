@@ -157,6 +157,161 @@ as final.** The numbers in Part 3 below are reported as the
 statistical model's own Asimov-level output; they should be read
 alongside Part 2's PASS/FAIL once available, not in place of it.
 
+### Update -- 18 Sep 2026: validation results from the merged run (72 original + 22 retry subjobs, all exit 0)
+
+`hgg_stats_merged.json` (from `merge_hgg_stats.py` at commit `f79f4f7`):
+all four toy-count minimums met (bkg_only 2000, sig_injection 1000/1000/1006
+per mu_true, spurious_check 1000, mass_scan_bkg 1000). Reviewing this
+merge surfaced two real issues, fixed before trusting any pull-width
+number, plus a scoped split of what can and cannot be evaluated at the
+required sample size:
+
+**Issue 1 -- pull_width was mislabeled.** The field previously named
+`pull_width` was `std(mu_hat)`, the residual width in absolute mu
+units -- NOT a pull (which needs dividing by each toy's own fitted
+uncertainty, sigma_mu_hat). Checked in code and in the toy output:
+**sigma_mu_hat was not being computed or stored at all**, for any toy,
+by the code that produced this merged JSON. Fixed (details below); the
+mislabeled quantity is now reported as `mu_hat_residual_width`, clearly
+labeled, and never compared against the 1.00+-0.05 criterion.
+
+**Issue 2 -- fit failure rates (bkg_only 6.6%, sig_injection 7.9%/
+15.1%/28.9% at mu=0.5/1.0/2.0, spurious_check 6.5%, mass_scan_bkg
+47.7%) and a related finding: MIGRAD's own `valid` flag is weaker than
+a trustworthy-uncertainty check.** `Minuit.valid` (what the existing
+`failed` flag is based on) requires only that MIGRAD did not hit its
+call limit and that EDM is below threshold -- per iminuit's own docs,
+it does NOT require an accurate or positive-definite covariance, nor
+that no parameter sits at a bound. Diagnosing this, at least one toy
+marked "not failed" turned out to have `has_accurate_covar=False` and
+`is_above_max_edm=True` under an EXPLICIT HESSE call, despite MIGRAD's
+own (cheaper, automatic) estimate reporting it fine. A stricter check
+(`fit.strict_valid`: accurate AND genuinely positive-definite --not
+forced-- covariance, HESSE didn't fail, finite positive mu_err) is now
+computed wherever mu_err is available.
+
+**Code fixed** (`fit.py`, `run_toy_job.py`, `merge_hgg_stats.py`):
+`toy_q0` and `run_spurious_check` now call an explicit HESSE on the alt
+fit and store `mu_err`, plus MIGRAD's own convergence diagnostics
+(`null_fmin`, `alt_fmin`, and a POST-hesse snapshot
+`alt_fmin_post_hesse` -- fmin state changes when HESSE is called, so
+the pre-HESSE snapshot is what actually determined `failed`, and must
+be captured before, not after, the HESSE call; an ordering bug in the
+first pass of this fix got this backwards and was caught and corrected
+before use). `run_spurious_check` also had a real bug where a
+retried fit's `info` (mu_hat, q0, Z) was swapped in but the `alt_fit`
+object itself was not, leaving `mu_err`/`alt_fmin` describing the
+DISCARDED original fit -- fixed. `merge_hgg_stats.py` now computes a
+genuine pull only from toys with `strict_valid` mu_err, and reports
+histograms (`Z_histogram`, `mu_hat_residual_histogram`,
+`true_pull_histogram`, `max_Z_histogram`) and a Gross-Vitells
+upcrossing estimate for Part 3.5 (neither existed before this review).
+
+**This fix does not retroactively apply to the already-collected
+cluster toys** -- they were generated with the pre-fix code and simply
+have no `mu_err`/`fmin` fields. Per your instruction, the criteria
+below are split into (a) what the EXISTING full-statistics sample can
+answer, (b) what it cannot (pull width, and a full-scale corrected
+failure rate), with a 175-toy LOCAL reproduction (fixed code, same
+seeds as the original job list, `studies/hgg_cms/stats/diagnose_run1.py`)
+shown as indicative only, and (c) the cost of a full-statistics rerun.
+
+#### (a) Criteria evaluable from the existing 5197-toy sample
+
+| # | Criterion | Sample (n used / n collected) | Result | Status |
+|---|---|---|---|---|
+| 1 | q0 vs 1/2*delta(0)+1/2*chi2_1 (P(Z>=1,2,3) within 3 binomial sigma of asymptotic) | bkg_only, 1869/2000 (6.6% excluded) | Z>=1: 1.07 sigma away; Z>=2: 2.09 sigma; Z>=3: 1.52 sigma -- all within 3 sigma | **PASS** |
+| 2 | mu_hat <= 0 fraction ~ 0.5 | bkg_only, 1869/2000 | 0.5013 | **PASS** |
+| 3 | Pull mean \|x\|<0.05, mu_true=0.5 | sig_injection, 921/1000 (7.9% excluded) | -0.0024 | **PASS** |
+| 4 | Pull mean \|x\|<0.05, mu_true=1.0 | sig_injection, 849/1000 (15.1% excluded) | +0.0036 | **PASS** |
+| 5 | Pull mean \|x\|<0.05, mu_true=2.0 | sig_injection, 715/1006 (28.9% excluded) | -0.0012 | **PASS** |
+| 6 | Median Z vs Asimov Z (3.911, Part 3.1) within 0.15, mu_true=1 | sig_injection, 849/1000 | median Z=3.922, diff=0.011 | **PASS** |
+| 7 | Spurious-signal absorption \|mean mu_hat\|<0.1 | spurious_check, 935/1000 (6.5% excluded) | 0.0873 | **PASS** |
+| 8 (info) | Part 3.3 expected band | sig_injection mu=1, 849/1000 | median 3.92, 16/84%=[3.02, 4.94], P(Z>=3)=0.841, P(Z>=5)=0.147 | reported |
+| 9 (info) | Part 3.5 trials factor at local Z=3 | mass_scan_bkg, 523/1000 (**47.7% excluded**) | toy-based 17.0x (also ~17.0x at Z=2, ~6.2x at Z=1); Gross-Vitells comparison pending a re-merge (needs the code fix, not new toys -- see below) | reported, high-exclusion caveat |
+
+**Exclusion-bias check** (per your request, using the 175-toy local
+sample -- indicative, not a formal bound): comparing residual mu_hat
+width WITH vs WITHOUT the excluded toys included:
+
+| sample | width incl. failed | width excl. failed | relative difference |
+|---|---|---|---|
+| bkg_only | 0.2763 | 0.2699 | 2.3% |
+| sig_injection mu=0.5 | 0.2530 | 0.2534 | 0.2% |
+| sig_injection mu=1.0 | 0.2503 | 0.2527 | 1.0% |
+| sig_injection mu=2.0 | 0.2268 | 0.2029 | **11.8%** |
+
+mu=0.5/1.0/bkg_only show little to no bias from exclusion in this small
+sample. mu=2.0 shows a larger effect (excluding failed toys narrows the
+residual width by ~12%) -- consistent with larger injected signals
+producing larger fluctuations that are both harder to fit AND land
+further from the mean, so the reported mu=2.0 pull/width statistics may
+be a mild underestimate of the true spread; not large enough on its own
+to change PASS/FAIL above (which don't depend on width), but worth
+weighing if a precise mu=2.0 pull width is ever needed.
+
+For mass_scan_bkg specifically: of the 15 locally-reproduced toys, 6
+were "any_failed"; of THOSE, the failed-point count per toy was mostly
+small (histogram: {0 failed points: 9 toys, 1: 2, 2: 2, 4: 1, 11: 1} --
+a toy is marked entirely "failed" even if only 1 of its 81 scanned mass
+points didn't converge). Mean max_Z was 1.76 for clean toys vs 1.86 for
+toys with >=1 failed point -- similar, no strong sign of a systematic
+direction, but n=15 is far too small to bound this at the required
+precision; the 47.7%-exclusion trials-factor number in row 9 above
+should be treated with real caution until either a larger diagnostic
+sample or a dedicated rerun addresses it (not costed here -- out of
+this review's requested scope, which was pull width; ask if you want
+that costed too).
+
+#### (b) Criteria that need sigma_mu_hat: NOT YET EVALUABLE at required sample size
+
+| Criterion | Existing sample | Local 175-toy sample (indicative only) |
+|---|---|---|
+| Pull width 1.00+-0.05, mu_true=0.5 | **0 of 921 toys have mu_err -- cannot compute** | 0.805 (n=14 with strict-valid mu_err) |
+| Pull width 1.00+-0.05, mu_true=1.0 | **0 of 849 toys have mu_err -- cannot compute** | 0.514 (n=23) |
+| Pull width 1.00+-0.05, mu_true=2.0 | **0 of 715 toys have mu_err -- cannot compute** | 0.372 (n=11) |
+| Corrected (strict_valid) failure rate, any job type | **not computable -- no fmin data in existing toys** | bkg_only 27/30 strict-valid at the loose-pass level (informal spot check only, n too small for a rate) |
+
+The local numbers show a suggestive downward trend (pull width shrinks
+as mu_true grows) but each is based on only 11-23 strict-valid toys --
+at that n, the statistical uncertainty on the width estimate itself is
+roughly +-15-20% relative, so this trend is NOT confirmed, only
+noted as a reason the full-scale rerun in (c) matters rather than being
+purely a formality.
+
+#### (c) Cost of a full-statistics sig_injection rerun with the fix
+
+The ONLY way to get pull_width at the required n=1000/mu_true: a fresh
+sig_injection run with the now-fixed code (no other job type is needed
+for this specific criterion). Per-toy cost, measured locally on this
+laptop (rises with mu_true, plausibly more retry-driven extra fits at
+larger injected signal, matching that job type's higher failure rate):
+17.8 s/toy (mu=0.5), 20.6 s/toy (mu=1.0), 29.2 s/toy (mu=2.0) -- roughly
+5-7x the original (pre-fix) cost, from the added explicit HESSE call.
+
+Batch sizes below assume the same up to ~6x worker-node slowdown
+observed in the original run (job 5057683[]), sized to use at most half
+of the 02:00:00 walltime cap even at that worst case:
+
+| mu_true | toys needed | toys/job | jobs | worst-case job wall time |
+|---|---|---|---|---|
+| 0.5 | 1000 | 30 | 34 (1020 collected, 20 over) | ~53 min |
+| 1.0 | 1000 | 25 | 40 (exact) | ~52 min |
+| 2.0 | 1000 | 20 | 50 (exact) | ~58 min |
+| **Total** | 3000 | -- | **124 subjobs** | still routes to shortE (walltime<=02:00:00) |
+
+**Prepared, NOT submitted**: `studies/hgg_cms/stats/cluster/make_job_list_sig_pull_rerun.py`
+(builds the 124-line job list, seeds 20280918+, disjoint from both the
+original run 20260918-20260997 and retry1 20270918-20270939) and
+`submit_hgg_stats_sig_pull_rerun.sh` (same preflight pattern as
+`submit_hgg_stats.sh`/`submit_hgg_stats_retry1.sh`, `OUT_PREFIX=pullrerun_`
+so output can't collide with anything already on disk). Merges normally
+into the existing `sig_injection` totals (more toys only helps the
+other criteria; pull_width is computed only from whichever toys
+actually carry a usable mu_err, i.e. these new ones) -- no separate
+merge step needed. See the final chat message for the exact command,
+labeled for later, at your discretion.
+
 ## Part 3: expected significance (Asimov and toys)
 
 Computed for real, locally (all single or few-dozen-fit pieces, all

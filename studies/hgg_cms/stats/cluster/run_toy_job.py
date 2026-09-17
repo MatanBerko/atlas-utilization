@@ -61,7 +61,10 @@ def run_bkg_only(rng, names, base, n_toys):
     for i in range(n_toys):
         info = F.toy_q0(rng, base, MH_NOMINAL, names, seed_base=10_000 + 7 * i)
         out.append({"q0": info["q0"], "Z": info["Z"], "mu_hat": info["mu_hat"],
-                     "failed": info["failed"], "retried": info["retried"]})
+                     "failed": info["failed"], "retried": info["retried"],
+                     "mu_err": info["mu_err"], "n_obs_total": info["n_obs_total"],
+                     "null_fmin": info["null_fmin"], "alt_fmin": info["alt_fmin"],
+                     "alt_fmin_post_hesse": info["alt_fmin_post_hesse"]})
     return out
 
 
@@ -72,7 +75,10 @@ def run_sig_injection(rng, names, base, n_toys, mu_true):
     for i in range(n_toys):
         info = F.toy_q0(rng, par_true, MH_NOMINAL, names, seed_base=20_000 + 7 * i)
         out.append({"q0": info["q0"], "Z": info["Z"], "mu_hat": info["mu_hat"],
-                     "failed": info["failed"], "retried": info["retried"]})
+                     "failed": info["failed"], "retried": info["retried"],
+                     "mu_err": info["mu_err"], "n_obs_total": info["n_obs_total"],
+                     "null_fmin": info["null_fmin"], "alt_fmin": info["alt_fmin"],
+                     "alt_fmin_post_hesse": info["alt_fmin_post_hesse"]})
     return out
 
 
@@ -104,13 +110,33 @@ def run_spurious_check(rng, names, base, n_toys):
                                     seed=30_002 + 7 * i, base_start=par_true)
             info2 = F.q0_from_fits(null_fit, alt_fit2)
             if info2["nll_alt"] < info["nll_alt"]:
-                info = info2
+                # alt_fit must be swapped too -- info alone was swapped
+                # here before this fix, leaving mu_err/alt_fmin below
+                # describing the DISCARDED original fit instead of the
+                # one info["mu_hat"]/q0/Z actually came from (found
+                # diagnosing the 18 Sep 2026 validation run).
+                alt_fit, info = alt_fit2, info2
             failed = not (info["invariant_ok"] and info["both_valid"])
-        out.append({"q0": info["q0"], "Z": info["Z"], "mu_hat": info["mu_hat"], "failed": failed})
+        n_obs_total = float(sum(toy[cat].sum() for cat in toy))
+        # fmin captured BEFORE mu_hesse_error(): an explicit .hesse()
+        # call recomputes the covariance and can change fmin's flags --
+        # see fit.toy_q0's own comment on this same ordering issue.
+        null_fmin = F.fmin_diagnostics(null_fit)
+        alt_fmin = F.fmin_diagnostics(alt_fit)
+        mu_err = F.mu_hesse_error(alt_fit)
+        alt_fmin_post_hesse = F.fmin_diagnostics(alt_fit)
+        out.append({"q0": info["q0"], "Z": info["Z"], "mu_hat": info["mu_hat"], "failed": failed,
+                     "mu_err": mu_err, "n_obs_total": n_obs_total,
+                     "null_fmin": null_fmin, "alt_fmin": alt_fmin,
+                     "alt_fmin_post_hesse": alt_fmin_post_hesse})
     return out
 
 
 def run_mass_scan_bkg(rng, names, base, n_toys):
+    """A toy is `any_failed=True` if EVEN ONE of its 81 scanned mass
+    points' alt fit is invalid, or its own single null fit is invalid
+    -- `n_failed_points` (new) records exactly how many of the 81 that
+    was, for real diagnosis rather than just the boolean."""
     out = []
     for i in range(n_toys):
         toy = F.generate_toy(rng, base, MH_NOMINAL)
@@ -118,7 +144,8 @@ def run_mass_scan_bkg(rng, names, base, n_toys):
                                 seed=40_000 + 100 * i, base_start=base)
         zs = []
         alt_base = null_fit.params if null_fit.valid else base
-        any_failed = not null_fit.valid
+        n_failed_points = 0
+        worst_alt_fmin = {}
         for j, mH in enumerate(MASS_SCAN):
             alt_fit = F.fit_model(toy, float(mH), names, mu_fixed=None, n_starts=1,
                                    seed=40_001 + 100 * i + j, base_start=alt_base)
@@ -127,9 +154,16 @@ def run_mass_scan_bkg(rng, names, base, n_toys):
             if alt_fit.valid:
                 alt_base = alt_fit.params
             else:
-                any_failed = True
+                n_failed_points += 1
+                if not worst_alt_fmin:
+                    worst_alt_fmin = F.fmin_diagnostics(alt_fit)
+        any_failed = (not null_fit.valid) or (n_failed_points > 0)
+        n_obs_total = float(sum(toy[cat].sum() for cat in toy))
         out.append({"max_Z": float(np.max(zs)), "max_Z_mH": float(MASS_SCAN[int(np.argmax(zs))]),
-                     "Z_scan": zs, "any_failed": any_failed})
+                     "Z_scan": zs, "any_failed": any_failed, "n_failed_points": n_failed_points,
+                     "null_valid": bool(null_fit.valid), "n_obs_total": n_obs_total,
+                     "null_fmin": F.fmin_diagnostics(null_fit),
+                     "first_failed_point_fmin": worst_alt_fmin})
     return out
 
 

@@ -1,0 +1,251 @@
+{
+  "bkg_only": {
+    "seed": 20260918,
+    "n_toys": 30,
+    "pull_analysis": {
+      "n_toys": 30,
+      "n_failed": 3,
+      "n_used": 27,
+      "n_with_reliable_mu_err": 19,
+      "residual_width_all_toys_incl_failed": 0.276324262852092,
+      "residual_width_excl_failed": 0.2698674156387427,
+      "true_pull_mean": -0.24197319319629,
+      "true_pull_width": 1.003954835063757
+    },
+    "failure_analysis": {
+      "n_toys": 30,
+      "n_failed": 3,
+      "n_passed": 27,
+      "n_obs_total_failed": {
+        "mean": 210700.66666666666,
+        "std": 129.569372238281,
+        "n": 3
+      },
+      "n_obs_total_passed": {
+        "mean": 210797.07407407407,
+        "std": 460.7054916848584,
+        "n": 27
+      },
+      "mu_hat_abs_failed": {
+        "mean": 0.33123656878054913,
+        "std": 0.08853713233171974,
+        "n": 3
+      },
+      "mu_hat_abs_passed": {
+        "mean": 0.2114478588579887,
+        "std": 0.17126527192312463,
+        "n": 27
+      },
+      "fmin_flag_counts_among_failed": {
+        "has_parameters_at_limit": 3,
+        "has_accurate_covar": 1,
+        "has_valid_parameters": 1,
+        "is_above_max_edm": 2
+      },
+      "n_at_mu_bound_failed": 0,
+      "n_at_mu_bound_passed": 0
+    }
+  },
+  "sig_injection_0.5": {
+    "seed": 20260926,
+    "n_toys": 30,
+    "pull_analysis": {
+      "n_toys": 30,
+      "n_failed": 3,
+      "n_used": 27,
+      "n_with_reliable_mu_err": 14,
+      "residual_width_all_toys_incl_failed": 0.2529662687411978,
+      "residual_width_excl_failed": 0.2534038013441695,
+      "true_pull_mean": 0.07837424857772445,
+      "true_pull_width": 0.8053899962622675
+    },
+    "failure_analysis": {
+      "n_toys": 30,
+      "n_failed": 3,
+      "n_passed": 27,
+      "n_obs_total_failed": {
+        "mean": 210597.33333333334,
+        "std": 537.3356079356323,
+        "n": 3
+      },
+      "n_obs_total_passed": {
+        "mean": 211120.0,
+        "std": 444.0691471014479,
+        "n": 27
+      },
+      "mu_hat_abs_failed": {
+        "mean": 0.3461775416337514,
+        "std": 0.04370160321048184,
+        "n": 3
+      },
+      "mu_hat_abs_passed": {
+        "mean": 0.6045659707352686,
+        "std": 0.2534038013441695,
+        "n": 27
+      },
+      "fmin_flag_counts_among_failed": {
+        "has_parameters_at_limit": 3,
+        "has_valid_parameters": 2,
+        "is_above_max_edm": 1
+      },
+      "n_at_mu_bound_failed": 0,
+      "n_at_mu_bound_passed": 0
+    }
+  },
+  "sig_injection_1.0": {
+    "seed": 20260930,
+    "n_toys": 50,
+    "pull_analysis": {
+      "n_toys": 50,
+      "n_failed": 4,
+      "n_used": 46,
+      "n_with_reliable_mu_err": 23,
+      "residual_width_all_toys_incl_failed": 0.2502590468898768,
+      "residual_width_excl_failed": 0.25274603449876015,
+      "true_pull_mean": 0.02398761071435413,
+      "true_pull_width": 0.5142238864406994
+    },
+    "failure_analysis": {
+      "n_toys": 50,
+      "n_failed": 4,
+      "n_passed": 46,
+      "n_obs_total_failed": {
+        "mean": 211401.75,
+        "std": 660.1754975004752,
+        "n": 4
+      },
+      "n_obs_total_passed": {
+        "mean": 211500.45652173914,
+        "std": 540.2523849220739,
+        "n": 46
+      },
+      "mu_hat_abs_failed": {
+        "mean": 0.8526615817465846,
+        "std": 0.13329094492056395,
+        "n": 4
+      },
+      "mu_hat_abs_passed": {
+        "mean": 1.034670269425328,
+        "std": 0.25274603449876015,
+        "n": 46
+      },
+      "fmin_flag_counts_among_failed": {
+        "has_parameters_at_limit": 4,
+        "has_valid_parameters": 4
+      },
+      "n_at_mu_bound_failed": 0,
+      "n_at_mu_bound_passed": 0
+    }
+  },
+  "sig_injection_2.0": {
+    "seed": 20260934,
+    "n_toys": 30,
+    "pull_analysis": {
+      "n_toys": 30,
+      "n_failed": 6,
+      "n_used": 24,
+      "n_with_reliable_mu_err": 11,
+      "residual_width_all_toys_incl_failed": 0.22684251884058687,
+      "residual_width_excl_failed": 0.2029322315731518,
+      "true_pull_mean": 0.1800788119120275,
+      "true_pull_width": 0.3722720053300883
+    },
+    "failure_analysis": {
+      "n_toys": 30,
+      "n_failed": 6,
+      "n_passed": 24,
+      "n_obs_total_failed": {
+        "mean": 211763.83333333334,
+        "std": 480.51133065609275,
+        "n": 6
+      },
+      "n_obs_total_passed": {
+        "mean": 212319.08333333334,
+        "std": 413.1084317571948,
+        "n": 24
+      },
+      "mu_hat_abs_failed": {
+        "mean": 2.0469698449633658,
+        "std": 0.302576051634475,
+        "n": 6
+      },
+      "mu_hat_abs_passed": {
+        "mean": 2.08249118189563,
+        "std": 0.2029322315731518,
+        "n": 24
+      },
+      "fmin_flag_counts_among_failed": {
+        "has_accurate_covar": 1,
+        "has_valid_parameters": 3,
+        "has_parameters_at_limit": 2,
+        "is_above_max_edm": 3
+      },
+      "n_at_mu_bound_failed": 0,
+      "n_at_mu_bound_passed": 0
+    }
+  },
+  "spurious_check": {
+    "seed": 20260938,
+    "n_toys": 20,
+    "failure_analysis": {
+      "n_toys": 20,
+      "n_failed": 1,
+      "n_passed": 19,
+      "n_obs_total_failed": {
+        "mean": 210933.0,
+        "std": 0.0,
+        "n": 1
+      },
+      "n_obs_total_passed": {
+        "mean": 210775.63157894736,
+        "std": 387.69483530034233,
+        "n": 19
+      },
+      "mu_hat_abs_failed": {
+        "mean": 0.25302722021622515,
+        "std": 0.0,
+        "n": 1
+      },
+      "mu_hat_abs_passed": {
+        "mean": 0.16293807101670166,
+        "std": 0.12966059641282832,
+        "n": 19
+      },
+      "fmin_flag_counts_among_failed": {
+        "has_parameters_at_limit": 1,
+        "is_above_max_edm": 1
+      },
+      "n_at_mu_bound_failed": 0,
+      "n_at_mu_bound_passed": 0
+    }
+  },
+  "mass_scan_bkg": {
+    "seed": 20260948,
+    "n_toys": 15,
+    "failure_analysis": {
+      "n_toys": 15,
+      "n_failed": 6,
+      "n_passed": 9,
+      "n_obs_total_failed": {
+        "mean": 211104.16666666666,
+        "std": 235.09956519644084,
+        "n": 6
+      },
+      "n_obs_total_passed": {
+        "mean": 210723.77777777778,
+        "std": 574.8626459671867,
+        "n": 9
+      },
+      "n_failed_points_histogram": {
+        "0": 9,
+        "1": 2,
+        "2": 2,
+        "4": 1,
+        "11": 1
+      },
+      "null_invalid_count": 0,
+      "max_Z_mean_zero_failed_points": 1.7563865600096968,
+      "max_Z_mean_some_failed_points": 1.857871898734021
+    }
+  }
+}

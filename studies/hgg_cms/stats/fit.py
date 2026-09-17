@@ -194,6 +194,77 @@ def q0_from_fits(null_fit: FitResult, alt_fit: FitResult) -> dict:
     }
 
 
+def mu_hesse_error(fit_result: FitResult) -> float:
+    """An explicit HESSE call on the fit's own minimized point --
+    MIGRAD's automatic covariance estimate (available without calling
+    HESSE) is not as reliable, per iminuit's own documentation. Returns
+    nan if mu is fixed (nothing to report) or HESSE itself fails (e.g.
+    on an already-pathological fit); never raises."""
+    if fit_result.minuit is None or "mu" not in fit_result.params:
+        return float("nan")
+    try:
+        if fit_result.minuit.fixed["mu"]:
+            return float("nan")
+    except KeyError:
+        return float("nan")
+    try:
+        fit_result.minuit.hesse()
+        return float(fit_result.minuit.errors["mu"])
+    except Exception:
+        return float("nan")
+
+
+def fmin_diagnostics(fit_result: FitResult) -> dict:
+    """MIGRAD's own detailed convergence diagnostics for this fit --
+    which of these is set (if any) explains WHY `fit_result.valid` is
+    False, rather than just that it is. Empty dict if no Minuit object
+    is attached.
+
+    IMPORTANT (found diagnosing the 18 Sep 2026 validation run's fit-
+    failure rates): `fit_result.valid` (iminuit's `Minuit.valid`, i.e.
+    `fmin.is_valid`) is a WEAKER condition than "the uncertainty is
+    trustworthy" -- per iminuit's own docs, `is_valid` requires only
+    `not has_reached_call_limit` and `not is_above_max_edm`. It does
+    NOT require `has_accurate_covar`, `has_posdef_covar`, or
+    `not has_parameters_at_limit` -- a fit can be `valid=True` with an
+    untrustworthy covariance (and therefore an untrustworthy mu_err).
+    A STRICT validity check for "this toy's mu_err can be trusted"
+    should additionally require `has_accurate_covar` and
+    `has_posdef_covar` (added here) and a finite, positive mu_err --
+    see `strict_valid` below and `mu_hesse_error`'s callers."""
+    if fit_result.minuit is None:
+        return {}
+    fm = fit_result.minuit.fmin
+    return {
+        "edm": float(fm.edm),
+        "has_parameters_at_limit": bool(fm.has_parameters_at_limit),
+        "has_accurate_covar": bool(fm.has_accurate_covar),
+        "has_posdef_covar": bool(fm.has_posdef_covar),
+        "has_made_posdef_covar": bool(fm.has_made_posdef_covar),
+        "has_valid_parameters": bool(fm.has_valid_parameters),
+        "hesse_failed": bool(fm.hesse_failed),
+        "has_reached_call_limit": bool(fm.has_reached_call_limit),
+        "is_above_max_edm": bool(fm.is_above_max_edm),
+    }
+
+
+def strict_valid(fmin: dict, mu_err: float = None) -> bool:
+    """The stricter validity check described in `fmin_diagnostics`'s
+    own docstring: MIGRAD's cheap `valid` plus an accurate, genuinely
+    positive-definite covariance (not forced positive-definite), and
+    -- if `mu_err` is given -- a finite, positive uncertainty on mu.
+    `fmin` should be a POST-HESSE snapshot (e.g. `alt_fmin_post_hesse`)
+    for this to mean anything about mu_err's own trustworthiness."""
+    if not fmin:
+        return False
+    ok = (fmin.get("has_valid_parameters") and fmin.get("has_accurate_covar")
+          and fmin.get("has_posdef_covar") and not fmin.get("has_made_posdef_covar")
+          and not fmin.get("hesse_failed") and not fmin.get("is_above_max_edm"))
+    if mu_err is not None:
+        ok = ok and np.isfinite(mu_err) and mu_err > 0
+    return bool(ok)
+
+
 def toy_q0(rng: np.random.Generator, par_true: dict, mH: float, names: tuple, seed_base: int) -> dict:
     """ONE toy: generate, fit null (mu=0, warm-started at par_true) and
     alt (mu free, warm-started at the null's own converged point --
@@ -202,7 +273,13 @@ def toy_q0(rng: np.random.Generator, par_true: dict, mH: float, names: tuple, se
     NLL invariant, and retry once from a fresh generic start if it's
     violated or either fit is invalid -- mirrors
     `background_model/bias_study.py`'s own toy-retry pattern. Returns a
-    dict with q0 info plus `failed` (never silently dropped)."""
+    dict with q0 info plus `failed` (never silently dropped), the
+    alt fit's HESSE uncertainty on mu (`mu_err` -- needed to compute a
+    genuine pull, (mu_hat - mu_true) / mu_err, rather than just the raw
+    residual mu_hat - mu_true; this field did not exist before 18 Sep
+    2026's validation-run pull-width review, which found "pull_width"
+    had been computed without it), and MIGRAD's own convergence
+    diagnostics for both fits (`null_fmin`, `alt_fmin`)."""
     toy = generate_toy(rng, par_true, mH)
     null_fit = fit_model(toy, mH, names, mu_fixed=0.0, n_starts=1, seed=seed_base, base_start=par_true)
     alt_fit = fit_model(toy, mH, names, mu_fixed=None, n_starts=1, seed=seed_base + 1,
@@ -219,6 +296,18 @@ def toy_q0(rng: np.random.Generator, par_true: dict, mH: float, names: tuple, se
     info["retried"] = retried
     info["null_valid"] = null_fit.valid
     info["alt_valid"] = alt_fit.valid
+    # fmin snapshots MUST be taken before mu_hesse_error() below: calling
+    # .hesse() explicitly recomputes the covariance and can change fmin's
+    # flags (e.g. reveal a large post-Hesse EDM MIGRAD's own cheaper
+    # automatic estimate didn't catch) -- capturing fmin afterwards would
+    # silently describe a DIFFERENT fit state than the one `valid`/
+    # `failed` above were actually decided from (caught while diagnosing
+    # the 18 Sep 2026 validation run's fit-failure rates).
+    info["null_fmin"] = fmin_diagnostics(null_fit)
+    info["alt_fmin"] = fmin_diagnostics(alt_fit)
+    info["mu_err"] = mu_hesse_error(alt_fit)
+    info["alt_fmin_post_hesse"] = fmin_diagnostics(alt_fit)
+    info["n_obs_total"] = float(sum(toy[cat].sum() for cat in toy))
     return info
 
 
