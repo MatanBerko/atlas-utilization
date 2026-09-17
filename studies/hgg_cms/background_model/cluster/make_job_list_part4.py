@@ -7,8 +7,20 @@ only, >= 500 toys, restricted to a specific set of test functions (the
 chosen function from the main 105-180 study plus its two runners-up --
 NOT knowable until that study's `merge_bias_results.py` output exists).
 
-Usage (fill in --test-functions from the merged 105-180 result once
-available -- see BACKGROUND_MODEL_REPORT.md Part 4):
+ELIGIBILITY RULE (added 18 Sep 2026, see merge_bias_results.py's module
+docstring and BACKGROUND_MODEL_REPORT.md's "Fit-reliability eligibility
+rule" section): "chosen function + 2 runners-up" MUST be read from the
+merged 105-180 result's `per_category.<cat>.selection.passing_functions_ranked`
+list -- that list already excludes any function marked ineligible on
+fit-reliability grounds (fail_fraction > 0.05, or too few successful
+toys, in ANY cell), not just functions failing the 0.20 spurious-signal
+ratio. Do NOT pick runners-up from `worst_ratio_by_test_function` (that
+dict lists EVERY test function, including ineligible ones, purely for
+visibility) -- only `passing_functions_ranked` reflects both criteria.
+
+Usage (fill in --test-functions from the merged 105-180 result's
+`passing_functions_ranked` once available -- see BACKGROUND_MODEL_REPORT.md
+Part 4):
     python studies/hgg_cms/background_model/cluster/make_job_list_part4.py \\
         --order-selection-json studies/hgg_cms/background_model/results/order_selection_110_180.json \\
         --out /tmp/job_list_110_180_part4.txt
@@ -49,7 +61,9 @@ def main():
     print(f"wrote {len(lines)} jobs to {args.out}")
     print(f"qsub array range: -J 1-{len(lines)}")
     print("Remember to pass -v TEST_FUNCTIONS=<family:order,family:order,family:order> "
-          "(the chosen function + 2 runners-up from the merged 105-180 result) to qsub.")
+          "(the chosen function + 2 runners-up, taken from the merged 105-180 result's "
+          "per_category.<cat>.selection.passing_functions_ranked -- NOT worst_ratio_by_test_function, "
+          "which includes ineligible functions too) to qsub.")
 
 
 if __name__ == "__main__":

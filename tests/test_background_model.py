@@ -260,5 +260,142 @@ class LeakageTemplateTests(unittest.TestCase):
             self.assertAlmostEqual(template.sum(), 120.0)
 
 
+class MergeBiasEligibilityTests(unittest.TestCase):
+    """Added 18 Sep 2026, before any real bias-study result existed: the
+    fit-reliability eligibility rule (fail_fraction <= 0.05 and a minimum
+    successful-toy count in every cell) must make a function ineligible
+    for selection REGARDLESS of how small its spurious signal looks --
+    a function whose bias estimate is built from mostly-failed fits is
+    not trustworthy even if the (few) successful fits happen to average
+    out near zero."""
+
+    def setUp(self):
+        from studies.hgg_cms.background_model.cluster.merge_bias_results import (
+            evaluate_test_function, select_chosen_function,
+        )
+        self.evaluate_test_function = evaluate_test_function
+        self.select_chosen_function = select_chosen_function
+
+    def _one_cell_grid(self, test_function: str, summary: dict, mass: float = 125.0):
+        return {("bernstein", "nominal"): {mass: {test_function: summary}}}
+
+    def test_45pct_failure_with_tiny_spurious_signal_is_ineligible(self):
+        # 450/1000 failed -- fail_fraction=0.45, way over the 0.05 cap --
+        # even though mean_S is tiny relative to mean_sigma_S (would
+        # otherwise easily pass the 0.20 ratio criterion on its own).
+        summary = {
+            "n_total": 1000, "n_failed": 450, "n_used": 550,
+            "mean_S": 0.5, "se_mean_S": 0.2, "mean_sigma_S": 100.0,
+            "fail_fraction": 0.45,
+        }
+        grid = self._one_cell_grid("expsum_2", summary)
+        ev = self.evaluate_test_function(grid, "expsum_2")
+        self.assertAlmostEqual(ev["worst_ratio"], 0.005)  # would PASS the ratio criterion alone
+        self.assertTrue(ev["ratio_passes"])
+        self.assertFalse(ev["eligible"])
+        self.assertFalse(ev["passes"])  # combined verdict: ineligible overrides a good ratio
+        self.assertIn("ineligible: fit reliability", ev["ineligibility_reason"])
+
+    def test_reliable_function_with_good_ratio_passes(self):
+        summary = {
+            "n_total": 1000, "n_failed": 20, "n_used": 980,
+            "mean_S": 1.0, "se_mean_S": 0.3, "mean_sigma_S": 100.0,
+            "fail_fraction": 0.02,
+        }
+        grid = self._one_cell_grid("bernstein_4", summary)
+        ev = self.evaluate_test_function(grid, "bernstein_4")
+        self.assertTrue(ev["eligible"])
+        self.assertTrue(ev["ratio_passes"])
+        self.assertTrue(ev["passes"])
+
+    def test_min_toy_count_checked_explicitly_even_at_low_fail_fraction(self):
+        # fail_fraction itself is 0.04 (<=0.05), but n_used is engineered
+        # to sit below the explicit 900/1000 floor -- this should still
+        # be caught by the SEPARATE n_used check (defense against a
+        # fail_fraction/n_used bookkeeping inconsistency), not silently
+        # accepted just because fail_fraction alone looks fine.
+        summary = {
+            "n_total": 1000, "n_failed": 40, "n_used": 899,  # inconsistent on purpose
+            "mean_S": 1.0, "se_mean_S": 0.3, "mean_sigma_S": 100.0,
+            "fail_fraction": 0.04,
+        }
+        grid = self._one_cell_grid("laurent_2", summary)
+        ev = self.evaluate_test_function(grid, "laurent_2")
+        self.assertFalse(ev["eligible"])
+
+    def test_min_toy_count_threshold_is_90pct_at_125_and_elsewhere(self):
+        from studies.hgg_cms.background_model.cluster.merge_bias_results import _min_required_toys
+        self.assertEqual(_min_required_toys(125.0), 900)
+        self.assertEqual(_min_required_toys(115.0), 270)
+        self.assertEqual(_min_required_toys(135.0), 270)
+
+    def test_borderline_flag_within_one_se_of_threshold(self):
+        # ratio = mean_S/mean_sigma_S = 21/100 = 0.21; se_ratio = se_mean_S/mean_sigma_S = 2/100 = 0.02
+        # |0.21 - 0.20| = 0.01 <= 0.02 -> borderline
+        summary = {
+            "n_total": 1000, "n_failed": 10, "n_used": 990,
+            "mean_S": 21.0, "se_mean_S": 2.0, "mean_sigma_S": 100.0,
+            "fail_fraction": 0.01,
+        }
+        grid = self._one_cell_grid("powersum_1", summary)
+        ev = self.evaluate_test_function(grid, "powersum_1")
+        self.assertEqual(ev["n_borderline_points"], 1)
+        self.assertTrue(ev["all_points"][0]["borderline"])
+        # and this same point correctly fails the ratio criterion (0.21 >= 0.20)
+        self.assertFalse(ev["ratio_passes"])
+
+    def test_not_borderline_when_far_from_threshold(self):
+        summary = {
+            "n_total": 1000, "n_failed": 10, "n_used": 990,
+            "mean_S": 1.0, "se_mean_S": 0.5, "mean_sigma_S": 100.0,  # ratio=0.01, se_ratio=0.005
+            "fail_fraction": 0.01,
+        }
+        grid = self._one_cell_grid("powersum_1", summary)
+        ev = self.evaluate_test_function(grid, "powersum_1")
+        self.assertEqual(ev["n_borderline_points"], 0)
+
+    def test_select_chosen_function_skips_ineligible_even_if_ratio_ok(self):
+        good_summary = {
+            "n_total": 300, "n_failed": 5, "n_used": 295,
+            "mean_S": 1.0, "se_mean_S": 0.3, "mean_sigma_S": 100.0, "fail_fraction": 0.0167,
+        }
+        bad_summary = {
+            "n_total": 300, "n_failed": 150, "n_used": 150,  # 50% failed
+            "mean_S": 0.1, "se_mean_S": 0.1, "mean_sigma_S": 100.0, "fail_fraction": 0.5,
+        }
+        grid = {
+            ("bernstein", "nominal"): {
+                115.0: {"laurent_2": good_summary, "expsum_2": bad_summary},
+            },
+        }
+        evaluations = {
+            "laurent_2": self.evaluate_test_function(grid, "laurent_2"),
+            "expsum_2": self.evaluate_test_function(grid, "expsum_2"),
+        }
+        order_selection = {
+            "EBEB": {
+                "laurent": {"per_order": {"2": {"n_params": 2, "fit": {"nll": -100.0}}}},
+                "expsum": {"per_order": {"2": {"n_params": 4, "fit": {"nll": -101.0}}}},
+            }
+        }
+        selection = self.select_chosen_function(evaluations, order_selection, "EBEB")
+        # expsum_2 has fewer... actually laurent_2 has FEWER params (2 vs 4) AND is the
+        # only eligible one -- expsum_2 must not be selectable despite existing.
+        self.assertEqual(selection["chosen"], "laurent_2")
+        self.assertIn("expsum_2", selection["ineligible_functions"])
+
+    def test_no_passing_function_reports_ineligible_list_not_silent(self):
+        bad_summary = {
+            "n_total": 300, "n_failed": 200, "n_used": 100,
+            "mean_S": 0.1, "se_mean_S": 0.1, "mean_sigma_S": 100.0, "fail_fraction": 0.667,
+        }
+        grid = {("bernstein", "nominal"): {115.0: {"expsum_2": bad_summary}}}
+        evaluations = {"expsum_2": self.evaluate_test_function(grid, "expsum_2")}
+        order_selection = {"EBEB": {"expsum": {"per_order": {"2": {"n_params": 4, "fit": {"nll": -101.0}}}}}}
+        selection = self.select_chosen_function(evaluations, order_selection, "EBEB")
+        self.assertIsNone(selection["chosen"])
+        self.assertIn("expsum_2", selection["ineligible_functions"])
+
+
 if __name__ == "__main__":
     unittest.main()

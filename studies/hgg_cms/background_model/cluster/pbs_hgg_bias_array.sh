@@ -65,6 +65,18 @@ source "$CONDA_PROFILE"
 conda activate "$CONDA_ENV"
 cd "$REPO_DIR"
 
+# Added 18 Sep 2026, for Part 4 and later runs of this script (the
+# already-running/queued Part 3 array is unaffected -- PBS reads a
+# script's contents at submission time, not on re-read, so editing this
+# file does not retroactively change jobs already submitted). This PBS
+# job requests select=1:ncpus=1 above, but numpy/scipy link against
+# BLAS/OpenMP libraries that will happily spawn extra threads and use
+# more CPU than requested unless told not to -- pin every relevant
+# thread-pool env var to 1 so a "1 CPU" job actually stays at 1 CPU.
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+
 OUT_FILE="${OUT_BASE}/${FIT_RANGE}/${CATEGORY}_${TRUTH_FAMILY}_${LEAKAGE_VARIANT}_m${MASS}.json"
 
 echo "Job $PBS_JOBID (array index $JOB_INDEX) starting on $(hostname) at $(date)"

@@ -215,6 +215,67 @@ under the 02:00:00 `shortE`-routing boundary this cluster uses — see
 `studies/hgg_cms/cluster/FULL_RUN_README.md`). **Exact commands are in
 the final chat message.**
 
+### Update — 18 Sep 2026: fit-reliability eligibility rule (added before any real result exists)
+
+The 120-subjob cluster run is now in flight. **Before any of its results
+have been merged or looked at**, the "Reliability finding" bullet above
+(strategy=0 vs. strategy=1's failure rates, and the one persistently
+elevated combination found in a small local check) is promoted from an
+observation into a formal, pre-set SELECTION RULE, added to
+`merge_bias_results.py`:
+
+**A test function is INELIGIBLE for selection if, in ANY (truth
+variant, mass) cell, its `fail_fraction` exceeds 0.05 (5%).** This is
+in ADDITION to, not instead of, the existing 0.20×σ_S spurious-signal
+criterion — a function must be BOTH eligible (reliable fits) AND
+passing (small enough bias) in every cell to be selectable. An
+ineligible function's bias numbers are still computed and reported (for
+information — e.g. to distinguish "this function is unreliable" from
+"this function is reliable but biased"), never hidden, just excluded
+from the ranking that picks the chosen function.
+
+**Why this had to be a separate rule, not folded into the 0.20×σ_S
+check**: a spurious-signal MEAN computed from mostly-failed fits is not
+a trustworthy estimate of that function's true bias, no matter how
+small it happens to look — a function could show a tiny, reassuring
+mean spurious S purely because most of its toy fits silently failed
+and only a lucky, unrepresentative subset of fits contributed to the
+average. Rejecting on reliability FIRST, independent of what the
+(possibly meaningless) bias number says, is the only way to avoid that
+trap. A unit test (`test_45pct_failure_with_tiny_spurious_signal_is_ineligible`,
+`tests/test_background_model.py`) enforces this: a function with a
+45% fail rate and a tiny, easily-passing spurious signal is checked to
+be INELIGIBLE, not selected.
+
+**Minimum successful-toy count, checked explicitly** (this follows
+mathematically from the 5% fail-fraction cap — 95% success already
+exceeds either floor — but is implemented as its own separate check
+against each job's own reported `n_used` field, not re-derived from
+`fail_fraction`, so an inconsistency between the two would itself be
+caught): ≥900 of 1,000 successful toys at m_H=125 GeV, ≥270 of 300
+elsewhere.
+
+**Borderline flag**: a (truth variant, mass) cell is flagged
+`"borderline"` if its ratio |mean S|/mean σ_S sits within **1 standard
+error** of the 0.20 threshold — `se_ratio = se_mean_S / mean_sigma_S`
+(the toy-to-toy standard error on the mean spurious signal, treating
+the average fitted uncertainty `mean_sigma_S` as fixed — a documented
+approximation, not a full two-term error propagation). This does not
+change pass/fail on its own; it flags cells worth a second look where
+the criterion's outcome could plausibly flip with different toy
+statistics.
+
+**Output location, fixed at the same time**: `merge_bias_results.py`
+now writes its merged result to Lustre by default
+(`<out-base>/merged/bias_study_<fit-range>.json`) — never into this git
+checkout, which needs to stay clean for later preflight checks (e.g.
+`submit_zee.sh`'s own `preflight_git`, which refuses to submit against
+a dirty tree). The exact merge command is in the final chat message.
+
+Because this whole section was written and committed before the
+120-subjob run's results have been merged or examined, none of it was
+tuned to any observed outcome.
+
 ---
 
 ## Part 4 — Robustness: 110–180 GeV
@@ -227,9 +288,16 @@ only, m_H=125, ≥500 toys): pending**, since it needs Part 3's ranking to
 know which 3 test functions to run. `cluster/make_job_list_part4.py` is
 ready (8 subjobs: 4 truth families × nominal-only × m_H=125 × 500 toys,
 per category) — pass `-v TEST_FUNCTIONS=<family:order,family:order,family:order>`
-(the winner + 2 runners-up from the merged 105–180 result) to
-`pbs_hgg_bias_array.sh` with `FIT_RANGE=110_180`. Exact command template
-in the final chat message.
+(the winner + 2 runners-up, read from the merged 105–180 result's
+`per_category.<cat>.selection.passing_functions_ranked` — which already
+reflects BOTH the fit-reliability eligibility rule and the 0.20×σ_S
+criterion above, not just the latter) to `pbs_hgg_bias_array.sh` with
+`FIT_RANGE=110_180`. Exact command template in the final chat message.
+That script (used for both Part 3 and this reduced Part 4 run) now also
+pins `OMP_NUM_THREADS`/`OPENBLAS_NUM_THREADS`/`MKL_NUM_THREADS` to 1
+before running Python, added 18 Sep 2026 so a 1-CPU job request can't
+use more than 1 CPU's worth of BLAS/OpenMP threads — the already-running
+Part 3 array is unaffected (PBS reads a script at submission time).
 
 ---
 
