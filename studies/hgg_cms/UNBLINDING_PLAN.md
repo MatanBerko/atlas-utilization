@@ -143,6 +143,45 @@ a decision revisited), the change is reported explicitly as a
 **post-unblinding change**, alongside -- never in place of -- the
 originally pre-registered result computed with the frozen commit above.
 
+### Post-approval change #1 (18 Sep 2026): `merge_full_range.py` write bug
+
+**What happened**: after explicit approval was given and the gate
+correctly passed (flag + `HGG_UNBLIND_APPROVED` + frozen commit
+`5e2e84f...` all verified), the gated merge script crashed while
+WRITING its output file -- `f["events"] = full` (passing uproot a
+single zipped awkward record array) raised `TypeError: fields of a
+record must be NumPy types... field 'category' has type string`. This
+is a pure file-I/O bug in how the merge script serializes its output,
+not in the gate, the selection, or any analysis logic.
+
+**No data had been read for analysis and no result had been produced
+or seen at the time of the crash.** Only a 1,698-byte, header-only,
+zero-event partial file existed on disk (moved aside as
+`data_full_range.root.failed1`, never used); the 133 per-job blinded
+files and the sideband file were both untouched (the merge script only
+ever reads them). The gate itself is unmodified by this fix.
+
+**What changed**: `write_full_range_root` in `merge_full_range.py` now
+writes the output as a dict of per-field awkward arrays (matching the
+convention `studies/hgg_cms/output.py`'s `_write_root_table` already
+uses successfully for every other ROOT file in this pipeline), instead
+of passing a single zipped record array to uproot. No event, field
+value, or ordering changes -- confirmed by a new round-trip unit test
+(`tests/test_merge_full_range_write.py`, synthetic data only). No
+reader-side change was needed or made (`read_output` opens either
+representation identically). No selection, statistical-model, or
+analysis-procedure logic was touched.
+
+**Commit**: see `STATS_REPORT.md`'s own frozen-inputs section / the git
+log for this fix's exact commit hash (recorded there rather than
+duplicated here, so there is one place this can go stale). New SHA-256
+of `merge_full_range.py` as of this fix:
+`fa83d2211839cd93e8c39c9d5d7801c439e3e885ef4e26c2b34f23766bf09de6`
+(was `593e6b0228bc7df5535a6b87b738ab38550c5681ce3e5832fe6ed961dba533f8`
+at the original frozen commit `5e2e84f...` above -- that original hash
+is kept unchanged in section 5 as the historical record of what was
+frozen; this is the current, fixed value).
+
 ## 6. Stop conditions (technical, not outcome-based)
 
 These are conditions under which the analysis stops and is diagnosed

@@ -49,6 +49,34 @@ EXPECTED_BLINDED_COUNT_DEFAULT = 78_992
 EXPECTED_SIDEBAND_COUNT_DEFAULT = 182_551
 
 
+def write_full_range_root(table, out_path) -> None:
+    """Writes `table` (an awkward Array of event records, e.g. the
+    concatenation of the 133 blinded files + the sideband file) to one
+    ROOT file at `out_path`.
+
+    Writes as a DICT of per-field arrays, NOT `f["events"] = table` (a
+    single zipped record array) -- uproot's mktree cannot write a
+    string-typed field ("category") when it comes from a zipped record
+    ("TypeError: fields of a record must be NumPy types... field
+    'category' has type string"; reproduced and confirmed, see
+    tests/test_merge_full_range_write.py). This is the SAME convention
+    `studies/hgg_cms/output.py`'s `_write_root_table` already uses for
+    every other ROOT file in this pipeline (including `ak.to_packed`
+    for the same reason noted there: a field that has passed through a
+    boolean mask or concatenation can come out as an IndexedArray,
+    which uproot's string-branch writer does not support directly) --
+    reused here rather than inventing a new encoding. Every event,
+    value, and field is identical either way; only how it lands on disk
+    changes. The read side (`studies.hgg_cms.output.read_output`, via
+    plain `uproot.open(...)["events"].arrays(...)`) is unaffected by
+    which way a tree was written -- no reader-side change is needed."""
+    import awkward as ak
+    import uproot
+    packed = ak.to_packed(table)
+    with uproot.recreate(out_path) as f:
+        f["events"] = {field: packed[field] for field in packed.fields}
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument(APPROVAL_FLAG, action="store_true", default=False)
@@ -98,9 +126,7 @@ def main():
 
     full = ak.concatenate(blinded_arrays + [sideband_arr])
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    import uproot
-    with uproot.recreate(out_path) as f:
-        f["events"] = full
+    write_full_range_root(full, out_path)
     print(f"wrote {out_path}: {len(full)} events "
           f"({n_blinded} from signal region + {len(sideband_arr)} from sidebands)")
 
