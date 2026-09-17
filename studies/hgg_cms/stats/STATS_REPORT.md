@@ -9,6 +9,16 @@ and no data event with 115 ≤ m_γγ ≤ 135 GeV is read, fit, or plotted.
 See `UNBLINDING_PLAN.md` for what happens after this report, gated and
 not yet run.
 
+**VALIDATION STATUS (18 Sep 2026, round 2): NOT YET COMPLETE.** Every
+Part 2 criterion passes except pull width, which literally FAILS the
+1.00+-0.05 requirement at all three mu_true. A specific, testable
+hypothesis for why (the fixed-nuisance toy design, not a fit defect)
+is quantitatively supported but not fully confirmed -- see "Update --
+18 Sep 2026 (round 2)" below. A decisive follow-up (randomized-nuisance
+toys, pre-set expectation stated in advance) is prepared but **not yet
+run**. Validation will not be declared complete until that result is
+in.
+
 ## Part 1: the statistical model
 
 `studies/hgg_cms/stats/model.py` implements the binned Poisson
@@ -225,10 +235,19 @@ shown as indicative only, and (c) the cost of a full-statistics rerun.
 | 3 | Pull mean \|x\|<0.05, mu_true=0.5 | sig_injection, 921/1000 (7.9% excluded) | -0.0024 | **PASS** |
 | 4 | Pull mean \|x\|<0.05, mu_true=1.0 | sig_injection, 849/1000 (15.1% excluded) | +0.0036 | **PASS** |
 | 5 | Pull mean \|x\|<0.05, mu_true=2.0 | sig_injection, 715/1006 (28.9% excluded) | -0.0012 | **PASS** |
-| 6 | Median Z vs Asimov Z (3.911, Part 3.1) within 0.15, mu_true=1 | sig_injection, 849/1000 | median Z=3.922, diff=0.011 | **PASS** |
+| 6 | Median Z vs Asimov Z (3.911, Part 3.1) within 0.15, mu_true=1 | sig_injection, ~2000 (after the pull-width rerun added ~1000 more mu=1 toys, see below) | median Z=3.956, diff=0.045 | **PASS** |
 | 7 | Spurious-signal absorption \|mean mu_hat\|<0.1 | spurious_check, 935/1000 (6.5% excluded) | 0.0873 | **PASS** |
-| 8 (info) | Part 3.3 expected band | sig_injection mu=1, 849/1000 | median 3.92, 16/84%=[3.02, 4.94], P(Z>=3)=0.841, P(Z>=5)=0.147 | reported |
+| 8 (info) | Part 3.3 expected band | sig_injection mu=1, ~2000 | median 3.956, 16/84%=[3.02, 4.97], P(Z>=3)=0.84, P(Z>=5)=0.15 | reported |
 | 9 (info) | Part 3.5 trials factor at local Z=3 | mass_scan_bkg, 523/1000 (**47.7% excluded**) | toy-based 17.0x (also ~17.0x at Z=2, ~6.2x at Z=1); Gross-Vitells comparison pending a re-merge (needs the code fix, not new toys -- see below) | reported, high-exclusion caveat |
+| 10 | Pull width 1.00+-0.05, mu_true=0.5/1.0/2.0 | sig_injection, n_with_mu_err=243/174/145 of ~2000 each | 0.803 / 0.691 / 0.581 | **FAIL as literally defined -- see the hypothesis test below; not treated as a fit defect** |
+
+Row 10 updates row "6 (b)" from the previous round (then "NOT YET
+EVALUABLE") now that the dedicated rerun has real full-scale numbers.
+**This is a literal FAIL against the pre-set 1.00+-0.05 criterion.**
+See the next section for why, and why validation is not being declared
+complete on the strength of this explanation alone -- the randomized-
+nuisance decisive check (prepared, not yet run) is what actually
+confirms or refutes it.
 
 **Exclusion-bias check** (per your request, using the 175-toy local
 sample -- indicative, not a formal bound): comparing residual mu_hat
@@ -263,23 +282,21 @@ sample or a dedicated rerun addresses it (not costed here -- out of
 this review's requested scope, which was pull width; ask if you want
 that costed too).
 
-#### (b) Criteria that need sigma_mu_hat: NOT YET EVALUABLE at required sample size
+#### (b) Criteria that needed sigma_mu_hat: SUPERSEDED -- see the round-2 update below
 
-| Criterion | Existing sample | Local 175-toy sample (indicative only) |
-|---|---|---|
-| Pull width 1.00+-0.05, mu_true=0.5 | **0 of 921 toys have mu_err -- cannot compute** | 0.805 (n=14 with strict-valid mu_err) |
-| Pull width 1.00+-0.05, mu_true=1.0 | **0 of 849 toys have mu_err -- cannot compute** | 0.514 (n=23) |
-| Pull width 1.00+-0.05, mu_true=2.0 | **0 of 715 toys have mu_err -- cannot compute** | 0.372 (n=11) |
-| Corrected (strict_valid) failure rate, any job type | **not computable -- no fmin data in existing toys** | bkg_only 27/30 strict-valid at the loose-pass level (informal spot check only, n too small for a rate) |
+At the time this was first written, pull width was "not yet evaluable"
+(the existing cluster toys had no mu_err field at all). The dedicated
+rerun requested next (part (c) below) has since been run and merged --
+see "Update -- 18 Sep 2026 (round 2)" further down for the real
+full-scale numbers (row 10 of the table above), the quantitative test
+of why they come out below 1, and the decisive follow-up check. The
+original small local-sample numbers (0.805/0.514/0.372 at n=14/23/11)
+are kept here only as the historical record of what was known before
+the rerun -- the real numbers (0.803/0.691/0.581 at n=243/174/145) are
+close to these in shape (same downward trend) but should be read from
+row 10, not this table.
 
-The local numbers show a suggestive downward trend (pull width shrinks
-as mu_true grows) but each is based on only 11-23 strict-valid toys --
-at that n, the statistical uncertainty on the width estimate itself is
-roughly +-15-20% relative, so this trend is NOT confirmed, only
-noted as a reason the full-scale rerun in (c) matters rather than being
-purely a formality.
-
-#### (c) Cost of a full-statistics sig_injection rerun with the fix
+#### (c) Cost of a full-statistics sig_injection rerun with the fix -- RUN, see round-2 update below
 
 The ONLY way to get pull_width at the required n=1000/mu_true: a fresh
 sig_injection run with the now-fixed code (no other job type is needed
@@ -300,17 +317,165 @@ of the 02:00:00 walltime cap even at that worst case:
 | 2.0 | 1000 | 20 | 50 (exact) | ~58 min |
 | **Total** | 3000 | -- | **124 subjobs** | still routes to shortE (walltime<=02:00:00) |
 
-**Prepared, NOT submitted**: `studies/hgg_cms/stats/cluster/make_job_list_sig_pull_rerun.py`
-(builds the 124-line job list, seeds 20280918+, disjoint from both the
-original run 20260918-20260997 and retry1 20270918-20270939) and
-`submit_hgg_stats_sig_pull_rerun.sh` (same preflight pattern as
-`submit_hgg_stats.sh`/`submit_hgg_stats_retry1.sh`, `OUT_PREFIX=pullrerun_`
-so output can't collide with anything already on disk). Merges normally
-into the existing `sig_injection` totals (more toys only helps the
-other criteria; pull_width is computed only from whichever toys
-actually carry a usable mu_err, i.e. these new ones) -- no separate
-merge step needed. See the final chat message for the exact command,
-labeled for later, at your discretion.
+`studies/hgg_cms/stats/cluster/make_job_list_sig_pull_rerun.py` (the
+124-line job list, seeds 20280918+, disjoint from both the original run
+20260918-20260997 and retry1 20270918-20270939) and
+`submit_hgg_stats_sig_pull_rerun.sh` were run: all 124 subjobs exit 0,
+merged normally into the existing `sig_injection` totals (~2000 toys
+per mu_true now). Real results are row 10 of the PASS/FAIL table above
+and the round-2 update immediately below.
+
+### Update -- 18 Sep 2026 (round 2): pull-width rerun results, hypothesis tested, decisive check prepared
+
+**Result**: pull_width came back 0.803 (mu=0.5), 0.691 (mu=1.0), 0.581
+(mu=2.0) -- a literal **FAIL** against the pre-set 1.00+-0.05 criterion
+at every mu_true, on n_with_mu_err = 243/174/145 out of ~2000 toys each
+(pull_mean still passes everywhere; median Z, the expected band, and
+mu_hat bias are all fine -- see row 10 and rows 4-9 of the table
+above). This section tests a specific hypothesis for WHY, before
+treating the failure as evidence of a fit defect.
+
+#### 1. Quantitative test: is the toy design (fixed-nuisance truth) the explanation?
+
+**Hypothesis**: every toy's truth has every nuisance fixed at 0. The
+toy-to-toy SPREAD of mu_hat can therefore only ever reflect the
+STATISTICAL fluctuation of the data around that one fixed truth
+(sigma_stat), never any systematic spread -- systematics never move
+between toys. But each toy's FITTED mu_err reflects the FULL model
+(sigma_full, all nuisances floating and profiled in the fit). If
+sigma_full > sigma_stat, then pull = (mu_hat-mu_true)/mu_err is
+mechanically under-dispersed: predicted pull width ~ sigma_stat /
+sigma_full.
+
+Computed for real (Asimov HESSE fits, `compute_expected_significance.py`'s
+own machinery, at EACH mu_true's own operating point -- not just
+mu_true=1 as originally reported in Part 3.2, since the normalization
+systematics multiply mu*N_s and so scale in absolute size with
+mu_true):
+
+| mu_true | sigma_stat (Asimov) | sigma_full (Asimov) | predicted ratio | observed pull_width | relative difference |
+|---|---|---|---|---|---|
+| 0.5 | 0.2471 | 0.2750 | 0.8983 | 0.803 | -10.6% |
+| 1.0 | 0.2495 | 0.3280 | 0.7608 | 0.691 | -9.2% |
+| 2.0 | 0.2544 | 0.4855 | 0.5239 | 0.581 | +10.9% |
+
+**The hypothesis explains the dominant effect, including the mu=2.0
+case specifically asked about.** sigma_full grows sharply with mu_true
+(0.275 -> 0.328 -> 0.486) because the signal-normalization nuisances
+(theory, lumi, ID, trigger, pileup, MC stat -- Part 3.2's largest
+non-statistical component) enter as mu*N_s*K(theta): the SAME
+fractional uncertainty on K(theta) becomes a LARGER absolute
+uncertainty on mu as mu itself grows. sigma_stat, by contrast, stays
+essentially flat (0.247 -> 0.249 -> 0.254) -- consistent with
+mu_hat_residual_width also staying essentially flat across mu_true
+(0.249/0.251/0.271, from the merged toys) -- confirming the mu_hat
+SPREAD really is statistics-dominated, exactly as the toy design
+implies, while the FITTED uncertainty is not. The predicted ratio
+reproduces the observed downward-then-recovering shape (0.898 -> 0.761
+-> 0.524 predicted vs 0.803 -> 0.691 -> 0.581 observed) closely, though
+a consistent ~9-11% residual gap remains at every mu_true -- comparable
+to (roughly 2x) the statistical uncertainty on the observed pull_width
+itself given n=145-243 (~1/sqrt(2n) ~ 4-6%), so plausibly toy-sampling
+noise plus second-order effects (the Asimov ratio is a noise-free
+approximation; individual toys have Poisson fluctuations that can
+correlate mu_hat with the local HESSE curvature in ways the Asimov
+number doesn't capture), but not fully confirmed by this test alone.
+**This is why part 2 (the decisive check) was prepared rather than
+treating this test as sufficient on its own.**
+
+#### 2. Decisive check: randomized-nuisance toys -- PREPARED, NOT RUN
+
+**Pre-set expectation, stated here before this is ever run**: if the
+hypothesis above is correct, a toy design where the TRUE nuisance
+values are drawn from their own unit-Gaussian constraint each toy
+(rather than fixed at 0) should give mu_hat a toy-to-toy spread that
+matches sigma_full, bringing pull_width to **1.00+-0.05**. If it does
+NOT come out near 1, the fixed-nuisance-design explanation above is
+wrong or incomplete, and the pull-width failure needs a different
+explanation (a real fit defect cannot yet be ruled out).
+
+Implemented: `run_toy_job.run_sig_injection_randomized_nuisance`
+(job_type `sig_injection_randnuis`) -- for each toy, every constrained
+nuisance's TRUE value is drawn from N(0,1) independently, the toy data
+generated from that randomized truth, but the FIT is still
+warm-started from the nominal (theta=0) point, not the randomized
+truth -- blind to it, exactly as a real analysis is, and exactly how
+every other toy type here is warm-started, so only the truth
+generation differs and the comparison stays apples-to-apples.
+
+500 toys at mu_true=1 (20 jobs x 25 toys, seeds 20290918-20290937,
+disjoint from every other seed range used on this job), same walltime
+sizing pattern as before. **NOT submitted** -- see the final chat
+message for the exact commands. Existing toys and results are
+untouched; this is an added diagnostic.
+
+#### 3. Why n_with_mu_err is so low (~9%), and a profile-likelihood alternative
+
+**Investigation** (a dedicated 120-toy local sample at mu_true=1,
+`studies/hgg_cms/stats/diagnose_mu_err_gap.py`, seed 20261430):
+120 toys, 12 loose-failed (10%, consistent with the full-scale ~15% at
+this mu_true given n=120 sampling noise), 108 loose-valid. Of those 108,
+only **7 (6.5%) pass `strict_valid`** -- overall usable rate 5.8%,
+consistent with the full-scale rerun's 174/~2000=8.7% within ~1.1
+sigma (a much better match than the earlier 46-toy sample's 50%, which
+was simply too small to be representative -- caught by comparing
+against the real full-scale rate rather than trusting the small
+sample). Of the 101 loose-valid-but-strict-invalid toys:
+- **67 (66%) have `has_accurate_covar=False` AND `has_posdef_covar=False`
+  AND `has_made_posdef_covar=True`** -- MIGRAD's Hessian approximation
+  was NOT naturally positive-definite and had to be artificially forced,
+  the classic signature of a flat or nearly-degenerate direction in the
+  28-parameter likelihood. This matches an already-known feature of
+  this model (Part 3.1's own per-category bug-discovery note): several
+  normalization nuisances are exactly degenerate with mu at an Asimov-
+  like point, and toys sit close enough to that regime for MIGRAD's
+  Hessian to be poorly conditioned there.
+- **The remaining 34 (34%) fail via `has_valid_parameters`/`is_above_max_edm`
+  in the POST-HESSE snapshot**, even though the toy was `loose_valid`
+  from its PRE-HESSE snapshot -- i.e. the explicit HESSE call itself can
+  "break" a fit MIGRAD's own automatic (cheaper) estimate reported as
+  converged, not just report a worse covariance on an already-flagged
+  fit. This is the same phenomenon as the single-toy example found
+  earlier while implementing the ordering fix (see the commit that
+  added `alt_fmin_post_hesse`), now characterized at n=108 rather than
+  n=1.
+- `mu` was never at a bound (`n_at_mu_bound_*=0` throughout this and
+  the earlier 175-toy sample) -- the uncertainty is unusable because of
+  covariance/EDM issues in the wider 28-parameter fit, not because mu
+  itself ran away.
+
+**Proposal for the FINAL fit on real data**: use a profile-likelihood
+scan (Delta(-2lnL)=1 crossings, i.e. where profiling out every other
+parameter raises the NLL by 0.5 from the minimum) instead of HESSE,
+which naturally supports asymmetric errors and makes no assumption
+that the likelihood is locally quadratic -- exactly the assumption
+that HESSE needs and that appears to fail for most toys here.
+**Implemented**: `fit.profile_interval` (a generic Delta(-2lnL)=1
+root-finder: bracket outward from the minimum with a growing step,
+then bisect to `tol`) and `fit.profile_likelihood_mu_error` (the
+model-specific wrapper: profiles every other parameter via a fresh
+`fit_model` call, fixed mu, at each candidate mu the root-finder
+visits). Unit-tested in `tests/test_profile_likelihood.py`: two exact
+analytic cases (a symmetric and an asymmetric piecewise-quadratic NLL,
+both with an exactly known Delta(-2lnL)=1 crossing, checked to 1e-4),
+a no-crossing-in-range case, and an integration-level check against the
+real model.
+
+**Does the Asimov sigma_mu change?** At the full-model Asimov fit
+(mu_true=1, mu_hat=1.0), the profile-likelihood interval is
+**sigma_up=0.361, sigma_down=0.296** -- the SYMMETRIZED average, 0.328,
+matches the existing HESSE-based sigma_mu_full (0.3280, Part 3.2) to
+better than 0.2%, so **the headline number does not change**. What DOES
+change: the profile likelihood reveals a real **~18% asymmetry**
+(sigma_up/sigma_down = 1.22) that HESSE, by construction, cannot
+represent at all (HESSE always reports a single symmetric error). Since
+this is computed at the noise-free Asimov point where the likelihood is
+close to well-behaved, this asymmetry is a property of the model
+itself (the multiplicative mu*N_s*K(theta) structure is not perfectly
+linear in mu), not a numerical artifact -- worth reporting as
+sigma_mu = +0.36/-0.30 for the real-data headline result rather than a
+single symmetric +-0.328, regardless of what the pull-width
+investigation concludes.
 
 ## Part 3: expected significance (Asimov and toys)
 
@@ -400,12 +565,30 @@ prediction; sigma_mu (3.2) is about how *precisely* mu can be measured
 once a signal is seen -- a nuisance can widen the second without
 touching the first when it does not break the mu=0-vs-mu=1 degeneracy.
 
-### 3.3 Expected band from toys (mu_true = 1) -- PENDING cluster results
+**Update, 18 Sep 2026 (round 2)**: a profile-likelihood cross-check
+(see the round-2 update above) gives sigma_up=0.361, sigma_down=0.296
+at this same Asimov point -- symmetrized average 0.328, matching the
+HESSE number above to better than 0.2%, so the headline value is
+unchanged, but the profile likelihood additionally reveals a real ~18%
+asymmetry that HESSE cannot represent. **+0.36/-0.30 is the more
+complete statement of this uncertainty than a single symmetric
++-0.328.**
 
-Not computed locally (part of the same toy set as Part 2.2's
-mu_true=1 signal injection -- see Part 2 above and the cluster commands
-below). Once the merged results come back: median observed Z, 16/84%
-quantiles, P(Z_obs>=3), P(Z_obs>=5).
+### 3.3 Expected band from toys (mu_true = 1)
+
+From the cluster (same toy set as Part 2.2's mu_true=1 signal
+injection, ~2000 toys after the pull-width rerun added more):
+
+| quantity | value |
+|---|---|
+| median observed Z | 3.956 |
+| 16% / 84% quantiles | 3.02 / 4.97 |
+| P(Z_obs >= 3) | 0.84 |
+| P(Z_obs >= 5) | 0.15 |
+
+Median Z (3.956) vs the Asimov Z (3.911, Part 3.1): diff=0.045, well
+within the 0.15 pre-set tolerance -- **PASS** (row 6 of the validation
+table above).
 
 ### 3.4 Expected local-significance curve vs m_H (110-150 GeV, 0.5 GeV steps)
 

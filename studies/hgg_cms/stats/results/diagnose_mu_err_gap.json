@@ -1,0 +1,18 @@
+{
+  "seed": 20261430,
+  "n_toys": 120,
+  "n_loose_failed": 12,
+  "n_loose_valid": 108,
+  "n_strict_valid": 7,
+  "n_strict_invalid_among_loose_valid": 101,
+  "strict_valid_rate_among_loose_valid": 0.06481481481481481,
+  "overall_usable_rate": 0.058333333333333334,
+  "sub_flag_counts_among_strict_invalid": {
+    "has_accurate_covar_false": 67,
+    "has_posdef_covar_false": 67,
+    "has_made_posdef_covar": 67,
+    "hesse_failed": 0,
+    "mu_err_nonfinite_or_nonpositive": 0,
+    "no_post_hesse_data": 0
+  }
+}

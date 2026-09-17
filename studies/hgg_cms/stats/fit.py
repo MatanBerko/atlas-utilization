@@ -265,6 +265,97 @@ def strict_valid(fmin: dict, mu_err: float = None) -> bool:
     return bool(ok)
 
 
+def profile_interval(nll_1d, mu_hat: float, nll_hat: float, direction: int,
+                      target_delta_nll: float = 0.5, tol: float = 1e-4,
+                      max_search: float = 20.0, initial_step: float = None) -> Optional[float]:
+    """Find the mu value on one side of `mu_hat` where a 1-D NLL
+    function `nll_1d(mu) -> float` first rises by `target_delta_nll`
+    above `nll_hat` -- the profile-likelihood interval boundary
+    (target_delta_nll=0.5 <=> Delta(-2 ln L)=1, the standard one-sigma
+    profile-likelihood crossing). `nll_1d` is expected to already have
+    every OTHER parameter profiled out (minimized) at each mu it is
+    called with -- see `profile_likelihood_mu_error` below for the
+    model-specific version that does this via `fit_model`.
+
+    `direction` is +1 to search upward (the upper error) or -1
+    downward (the lower error). Two-phase root find: (1) bracket by
+    stepping outward with a growing step until the target is crossed or
+    `max_search` is exceeded (returns None -- no crossing found in
+    range); (2) bisect within the bracket down to `tol` in NLL.
+
+    Pure function of `nll_1d` -- no model, no data, no iminuit -- which
+    is what makes this directly unit-testable against an EXACT known
+    answer (e.g. a pure quadratic NLL, whose Delta(-2lnL)=1 crossings
+    are analytically mu_hat +- sigma)."""
+    step = initial_step if initial_step is not None else 0.1 * max(abs(mu_hat), 1.0)
+    mu_prev, nll_prev = mu_hat, nll_hat
+    bracket = None
+    for _ in range(80):
+        mu_next = mu_prev + direction * step
+        if abs(mu_next - mu_hat) > max_search:
+            return None
+        nll_next = nll_1d(mu_next)
+        if (nll_next - nll_hat) >= target_delta_nll:
+            bracket = (mu_prev, nll_prev, mu_next, nll_next)
+            break
+        mu_prev, nll_prev = mu_next, nll_next
+        step *= 1.5
+    if bracket is None:
+        return None
+
+    lo_mu, lo_nll, hi_mu, hi_nll = bracket
+    for _ in range(60):
+        mid_mu = 0.5 * (lo_mu + hi_mu)
+        mid_nll = nll_1d(mid_mu)
+        diff = (mid_nll - nll_hat) - target_delta_nll
+        if abs(diff) < tol:
+            return mid_mu
+        if diff < 0:
+            lo_mu, lo_nll = mid_mu, mid_nll
+        else:
+            hi_mu, hi_nll = mid_mu, mid_nll
+    return 0.5 * (lo_mu + hi_mu)
+
+
+def profile_likelihood_mu_error(data: dict, mH: float, names: tuple, alt_fit: FitResult,
+                                 n_starts: int = 5, target_delta_nll: float = 0.5) -> dict:
+    """Asymmetric mu uncertainty from the profile likelihood: at each
+    candidate mu, EVERY OTHER parameter is re-minimized (profiled out)
+    via a fresh `fit_model` call warm-started from the previous point
+    in the scan, and `profile_interval` finds where the resulting 1-D
+    profile NLL(mu) curve crosses `nll_hat + target_delta_nll`.
+
+    Unlike `mu_hesse_error` (a local quadratic/HESSE approximation
+    around the minimum, which can fail outright or be unreliable --
+    see `strict_valid`, and the 18 Sep 2026 validation-run review that
+    found only ~9% of toys had a usable HESSE uncertainty), this makes
+    NO assumption that the likelihood is locally quadratic in mu and
+    naturally supports asymmetric errors -- the standard ATLAS/CMS
+    choice for a headline, real-data result. It IS much more expensive
+    (each side needs several full re-fits via bracket+bisect) -- meant
+    for one-off headline fits (real data), NOT toy-scale loops."""
+    mu_hat = alt_fit.params["mu"]
+    nll_hat = alt_fit.nll
+    state = {"warm_start": dict(alt_fit.params)}
+
+    def nll_1d(mu_val):
+        fr = fit_model(data, mH, names, mu_fixed=mu_val, n_starts=n_starts, base_start=state["warm_start"])
+        if fr.valid:
+            state["warm_start"] = dict(fr.params)
+            state["warm_start"]["mu"] = mu_val
+        return fr.nll
+
+    mu_up = profile_interval(nll_1d, mu_hat, nll_hat, direction=+1, target_delta_nll=target_delta_nll)
+    state["warm_start"] = dict(alt_fit.params)
+    mu_down = profile_interval(nll_1d, mu_hat, nll_hat, direction=-1, target_delta_nll=target_delta_nll)
+    return {
+        "mu_hat": mu_hat,
+        "sigma_up": (mu_up - mu_hat) if mu_up is not None else None,
+        "sigma_down": (mu_hat - mu_down) if mu_down is not None else None,
+        "mu_crossing_up": mu_up, "mu_crossing_down": mu_down,
+    }
+
+
 def toy_q0(rng: np.random.Generator, par_true: dict, mH: float, names: tuple, seed_base: int) -> dict:
     """ONE toy: generate, fit null (mu=0, warm-started at par_true) and
     alt (mu free, warm-started at the null's own converged point --

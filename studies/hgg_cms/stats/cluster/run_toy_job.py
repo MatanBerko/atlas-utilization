@@ -82,6 +82,60 @@ def run_sig_injection(rng, names, base, n_toys, mu_true):
     return out
 
 
+def run_sig_injection_randomized_nuisance(rng, names, base, n_toys, mu_true):
+    """A proper frequentist toy, added 18 Sep 2026 to test the
+    hypothesis that `run_sig_injection`'s fixed-nuisance toy design
+    (truth at theta=0 for every toy) mechanically produces a pull width
+    below 1 -- the toy-to-toy spread of mu_hat only ever reflects
+    STATISTICAL fluctuation (since the truth never moves), while the
+    fitted mu_err reflects the FULL systematic model, so pull =
+    (mu_hat - mu_true)/mu_err is under-dispersed by construction. Here,
+    for EACH toy, the TRUE nuisance values are instead drawn from their
+    own unit-Gaussian constraint (theta_true ~ N(0,1), independently per
+    toy and per nuisance) -- a properly randomized frequentist toy. The
+    FIT is still warm-started from the nominal `base` (theta=0), NOT
+    from the randomized truth, so the fit stays blind to it, exactly as
+    a real analysis would be and exactly how every other toy type here
+    is warm-started -- an apples-to-apples fitting procedure, only the
+    truth generation differs. See STATS_REPORT.md for the pre-declared
+    expectation (pull width 1.00+-0.05) and the result."""
+    theta_names = [n for n in names if n.startswith("theta_")]
+    out = []
+    for i in range(n_toys):
+        par_true = dict(base)
+        par_true["mu"] = mu_true
+        for n in theta_names:
+            par_true[n] = float(rng.normal(0.0, 1.0))
+        toy = F.generate_toy(rng, par_true, MH_NOMINAL)
+        null_fit = F.fit_model(toy, MH_NOMINAL, names, mu_fixed=0.0, n_starts=1,
+                                seed=50_000 + 7 * i, base_start=base)
+        alt_fit = F.fit_model(toy, MH_NOMINAL, names, mu_fixed=None, n_starts=1,
+                               seed=50_001 + 7 * i,
+                               base_start=null_fit.params if null_fit.valid else base)
+        info = F.q0_from_fits(null_fit, alt_fit)
+        failed = not (info["invariant_ok"] and info["both_valid"])
+        if failed:
+            alt_fit2 = F.fit_model(toy, MH_NOMINAL, names, mu_fixed=None, n_starts=1,
+                                    seed=50_002 + 7 * i, base_start=base)
+            info2 = F.q0_from_fits(null_fit, alt_fit2)
+            if info2["nll_alt"] < info["nll_alt"] or (info2["invariant_ok"] and not info["invariant_ok"]):
+                alt_fit, info = alt_fit2, info2
+            failed = not (info["invariant_ok"] and info["both_valid"])
+        n_obs_total = float(sum(toy[cat].sum() for cat in toy))
+        # fmin captured BEFORE mu_hesse_error(): see toy_q0's own comment
+        # on this ordering (HESSE changes fmin's state).
+        null_fmin = F.fmin_diagnostics(null_fit)
+        alt_fmin = F.fmin_diagnostics(alt_fit)
+        mu_err = F.mu_hesse_error(alt_fit)
+        alt_fmin_post_hesse = F.fmin_diagnostics(alt_fit)
+        out.append({"q0": info["q0"], "Z": info["Z"], "mu_hat": info["mu_hat"], "failed": failed,
+                     "mu_err": mu_err, "n_obs_total": n_obs_total,
+                     "true_thetas": {n: par_true[n] for n in theta_names},
+                     "null_fmin": null_fmin, "alt_fmin": alt_fmin,
+                     "alt_fmin_post_hesse": alt_fmin_post_hesse})
+    return out
+
+
 def run_spurious_check(rng, names, base, n_toys):
     mi = M.get_model_inputs()
     edges = M.edges()
@@ -172,6 +226,7 @@ JOB_TYPES = {
     "sig_injection": run_sig_injection,
     "spurious_check": run_spurious_check,
     "mass_scan_bkg": run_mass_scan_bkg,
+    "sig_injection_randnuis": run_sig_injection_randomized_nuisance,
 }
 
 
@@ -180,7 +235,8 @@ def main():
     p.add_argument("--job-type", required=True, choices=list(JOB_TYPES))
     p.add_argument("--n-toys", required=True, type=int)
     p.add_argument("--seed", required=True, type=int)
-    p.add_argument("--mu-true", type=float, default=0.0, help="only used by sig_injection")
+    p.add_argument("--mu-true", type=float, default=0.0,
+                    help="only used by sig_injection and sig_injection_randnuis")
     p.add_argument("--out", required=True)
     args = p.parse_args()
 
@@ -189,15 +245,15 @@ def main():
     base = F.default_start(names, mu_start=0.0)
     rng = np.random.default_rng(args.seed)
 
-    if args.job_type == "sig_injection":
-        results = run_sig_injection(rng, names, base, args.n_toys, args.mu_true)
+    needs_mu_true = args.job_type in ("sig_injection", "sig_injection_randnuis")
+    if needs_mu_true:
+        results = JOB_TYPES[args.job_type](rng, names, base, args.n_toys, args.mu_true)
     else:
         results = JOB_TYPES[args.job_type](rng, names, base, args.n_toys)
 
     out = {
         "job_type": args.job_type, "n_toys": args.n_toys, "seed": args.seed,
-        "mu_true": args.mu_true if args.job_type == "sig_injection" else
-                   (0.0 if args.job_type != "spurious_check" else 0.0),
+        "mu_true": args.mu_true if needs_mu_true else 0.0,
         "results": results, "elapsed_sec": time.time() - t0,
     }
     out_path = Path(args.out)
