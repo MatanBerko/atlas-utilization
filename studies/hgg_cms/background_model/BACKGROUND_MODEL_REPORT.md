@@ -401,6 +401,163 @@ that plan.
 
 ---
 
+## Human decision after rerun 1: Fallback C applied in both categories (decided 18 Sep 2026, before any significance calculation and before unblinding)
+
+### 1. Rerun-1 outcome
+
+The rerun ran on the cluster as job `5056179[]` (120 subjobs: EBEB
+`bernstein_6`, notEBEB `bernstein_7`, same 60 cells and same per-cell
+seeds as the first run — see `tests/test_bias_rerun_seed_identity.py`
+for the proof). 112/120 subjobs finished on the first attempt; **8
+notEBEB, m_H=125 GeV, `bernstein_7` subjobs (array indices 61, 66, 71,
+76, 81, 86, 111, 116) were killed by the original 15-minute walltime
+(exit −29)** — this project's own quick local check had already flagged
+`bernstein_7` as slow/unreliable in notEBEB (30–42% fit-failure rates
+on 5 sample cells, `results/rerun1_local_convergence_check.json`), so a
+1000-toy `bernstein_7` cell running past 15 minutes is consistent with
+that same finding, not a new problem. Those 8 were resubmitted
+**unchanged** — identical job-list lines and seeds, only `walltime`
+raised to `01:00:00` — as job `5056206[]`, all 8 exiting 0. Final: 120/120
+output files present. **This does not alter the pre-set test in any
+way**: no seed, toy count, truth model, leakage variant, or criterion
+was touched — only the wall-clock budget given to already-defined jobs
+that needed more time to finish the identical computation.
+
+Merged result (`results/bias_study_105_180_with_rerun1.json`, 240 job
+outputs = 120 first-run + 120 rerun):
+
+| category | chosen (auto) | ineligible (fit reliability) | fallback C would choose | worst ratio | worst \|S_spur\| |
+|---|---|---|---|---:|---:|
+| EBEB | **None** | expsum_2, laurent_3, powersum_2 | bernstein_6 | 0.217 | 32.2 events (5.9% of 545.8) |
+| notEBEB | **None** | bernstein_7, expsum_2, expsum_3, laurent_3, laurent_4, powersum_2, powersum_3 | bernstein_6 | 0.493 | 109.3 events (41.1% of 266.1) |
+
+**`bernstein_7` itself is ineligible in notEBEB** (fit reliability) —
+the quick local check's red flag was correct: the extra order didn't
+just fail to help, it made convergence worse, not better.
+
+### 2. The decision
+
+**Fallback C is applied in both categories. The chosen background
+function is `bernstein_6` (EBEB and notEBEB)** — the pre-declared
+Fallback C rule (`BACKGROUND_MODEL_REPORT.md`'s "Pre-declared selection
+procedure", point 2(ii)/(iv)): among eligible candidates, the smallest
+worst ratio, ties broken by fewer parameters. This is a **human
+decision**, made here, not an automatic one — the merge script itself
+still only *reports* what fallback C would choose (see the STOP-and-
+report behavior recorded in this same report's revised point 2(ii));
+applying it is this section's own act.
+
+**Why**: no candidate passed the 0.20 criterion in either category, so
+(i) never triggers. Between the two options this report's point 2(ii)
+laid out (fallback C, or the CMS envelope method):
+- **EBEB's `bernstein_6` sits close to the threshold** (worst ratio
+  0.217 vs. 0.20 — within the noise-level territory `BIAS_DIAGNOSIS.md`
+  Part 2 already found for `bernstein_5`), and its worst spurious
+  signal is a modest 5.9% of the expected signal yield — a function
+  this close to passing, carrying a small systematic, is a reasonable,
+  conservative choice.
+- **notEBEB does not have that luxury.** `BIAS_DIAGNOSIS.md` Part 4
+  found the truth-family spread inside 115–135 GeV in notEBEB is
+  **≈1.07× the signal peak's own density** — genuinely different
+  plausible background shapes disagree with each other by about as
+  much as the whole signal, a structural feature of this category, not
+  a fixable fitting artifact — and the one candidate that might have
+  done better, `bernstein_7`, is **itself unreliable** (ineligible on
+  fit-reliability grounds, consistent with the local check's own red
+  flag). With the principled alternative (CMS discrete profiling) not
+  implemented (this report's earlier point 4) and no eligible
+  candidate closer to passing, `bernstein_6` — carrying an honestly
+  large, explicit systematic — is the least-bad available choice.
+
+### 3. Spurious-signal systematic per category
+
+Per this report's own point 2(iii): the systematic = the **maximum
+over all 60 cells** of |mean spurious S| in events, for the chosen
+function — **verified directly against the merged JSON**
+(`worst_abs_mean_S_events` / `worst_abs_mean_S_detail` in each
+category's `bernstein_6` evaluation), which is **not always the same
+cell as the worst RATIO** (ratio also divides by that cell's own
+σ_S, which varies cell to cell):
+
+| category | S_spur (events) | source cell (truth / leakage / mass) | mean_S (signed) | mean σ_S there |
+|---|---:|---|---:|---:|
+| EBEB | **32.2** | expsum / leakage_plus / m=120 GeV | +32.16 | 157.36 |
+| notEBEB | **109.3** | powersum / nominal / m=120 GeV | +109.26 | 221.68 |
+
+(EBEB's worst-*ratio* cell is a different one — powersum / leakage_plus
+/ m=130 GeV, ratio 0.217, mean_S=−28.4 — smaller in events than the
+expsum/120 cell above but a larger fraction of that cell's own, smaller
+σ_S; notEBEB's worst-ratio and worst-|S_spur| cells coincide.)
+
+In the eventual signal-plus-background fit, this enters as an
+additional yield term **`S_spur,c × θ_spur,c`**, with `θ_spur,c` a
+unit-Gaussian-constrained nuisance parameter, **one per category,
+uncorrelated between categories** (`c` ∈ {EBEB, notEBEB}). **The term
+is independent of the hypothesized mass** — the maximum over the whole
+5-mass scan is used at every mass point, not a mass-dependent value,
+per this report's own point 2(iii) wording ("maximum over all 60
+cells").
+
+### 4. Alternatives considered, and a rough cost estimate for option C
+
+**(A) CMS discrete profiling / envelope** (arXiv:1408.6865): remains
+the principled alternative, not adopted for the reasons already
+recorded in this report's point 4 (needs new fitting machinery this
+project hasn't built) — kept as a possible future cross-check,
+particularly worth revisiting for notEBEB given how large its
+systematic is.
+
+**(D) Dropping notEBEB entirely**: considered and rejected. notEBEB
+contributes 32.8% of the total expected signal (266.1 of 811.9 events,
+`signal_model.json`) — dropping it is a much larger, structural
+sensitivity loss than carrying an explicit ~14.6% yield-uncertainty
+penalty (below) in exchange for keeping it.
+
+**Rough expected cost of option C**, `√(1 + (S_spur/σ_S)²)` using the
+mean fitted σ_S at m_H=125 GeV from the bias study (averaged over the
+12 truth×leakage cells at that mass, for `bernstein_6`):
+
+| category | S_spur | mean σ_S (125 GeV) | S_spur / σ_S | **signal-yield uncertainty growth** |
+|---|---:|---:|---:|---:|
+| EBEB | 32.2 | 140.7 | 0.229 | **√1.052 ≈ 1.026 → +2.6%** |
+| notEBEB | 109.3 | 195.5 | 0.559 | **√1.313 ≈ 1.146 → +14.6%** |
+
+**Flagged explicitly as rough**: this is a simple quadrature-sum
+estimate using only the statistical σ_S from the bias-study toys at one
+mass point, not a real profiled-likelihood calculation — the actual
+cost to expected significance is computed properly in the next
+(expected-significance) task, which also folds in the other systematics
+already tabulated in `SIGNAL_MODEL_REPORT.md`.
+
+### 5. Citation status for the ATLAS spurious-signal convention
+
+This is published ATLAS practice, not an invented convention: G. Aad et
+al. (ATLAS), *Observation of a new particle in the search for the
+Standard Model Higgs boson...*, Phys. Lett. B 716 (2012) 1,
+**arXiv:1207.7214**, established the general approach for this
+channel; later ATLAS H→γγ **mass** measurements state the criterion
+explicitly — G. Aad et al. (ATLAS), *Measurement of the Higgs boson
+mass from the H→γγ and H→ZZ*→4ℓ channels...*, **arXiv:1406.3827**, and
+the more recent G. Aad et al. (ATLAS), *Measurement of the Higgs boson
+mass with H→γγ decays in 140 fb⁻¹...*, **arXiv:2308.07216**, both
+select background functions by requiring the fitted spurious signal be
+below a fixed fraction of the expected signal yield (retrieved via web
+search summaries 18 Sep 2026, not by opening the primary PDF tables
+myself — **UNVERIFIED to the exact wording/equation**, but the
+methodology match is clear from multiple independent summaries).
+**Their own published threshold is 10% of the expected yield — a
+factor of 2 tighter than this project's own 20%×σ_S convention**
+(a *different* quantity: theirs is spurious-S ÷ expected-signal-yield,
+ours is spurious-S ÷ statistical-uncertainty-σ_S — not directly
+comparable without also knowing their S/σ_S ratio, so this is noted as
+a discrepancy worth being aware of, not proof our threshold is
+wrong or right). This project's own 20%×σ_S choice was already recorded
+as **our own documented choice** (not ATLAS's specific number) in
+`merge_bias_results.py`'s module docstring and earlier in this report —
+unchanged by this citation check.
+
+---
+
 ## Part 4 — Robustness: 110–180 GeV
 
 **Order selection: complete, see Part 2 above** — no family dropped,
