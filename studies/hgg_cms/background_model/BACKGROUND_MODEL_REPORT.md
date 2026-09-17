@@ -29,10 +29,10 @@ function the later S+B fit will use — is in
 `results/background_model_final.json` /
 `studies/hgg_cms/background_model/final_model.py`.
 
-**What remains**: the 110–180 GeV reduced robustness check (chosen
-function + runner-up(s), prepared but not yet run — see Part 4 below
-for the exact commands), and the expected-significance / pre-
-unblinding-plan task after that.
+**What remains**: the expected-significance / pre-unblinding-plan task
+(the 110–180 GeV reduced robustness check is now complete too — see
+Part 4's dated update below — `bernstein_6` confirmed robust in both
+categories; the chosen model is unchanged).
 
 Reproduce Parts 1–2 (and 4's order selection) with:
 ```
@@ -592,6 +592,44 @@ pins `OMP_NUM_THREADS`/`OPENBLAS_NUM_THREADS`/`MKL_NUM_THREADS` to 1
 before running Python, added 18 Sep 2026 so a 1-CPU job request can't
 use more than 1 CPU's worth of BLAS/OpenMP threads — the already-running
 Part 3 array is unaffected (PBS reads a script at submission time).
+
+### Update — 18 Sep 2026: reduced bias check complete, robust
+
+Ran on the cluster (8/8 jobs OK) — `bernstein_6`, the chosen 105–180 GeV
+function, tested against the same 4 truth families (nominal leakage
+only, m_H=125, ≥500 toys each) on the 110–180 GeV range:
+
+| category | worst ratio (110–180) | fail fraction | worst ratio (105–180) | verdict |
+|---|---:|---:|---:|---|
+| EBEB | 0.085 | 0.024 | 0.217 | **robust** |
+| notEBEB | 0.097 | 0.028 | 0.493 | **robust** |
+
+Both satisfy the pre-set rule (`cluster/check_part4_robustness.py`):
+worst ratio at 110–180 ≤ worst ratio at 105–180 + 0.10, and fit
+reliability ≤ 5%, in both categories. **The chosen background function
+for the actual analysis remains `bernstein_6` on the 105–180 GeV
+range** — this check does not change that; it only confirms the choice
+holds up under a range variation.
+
+**A naming caveat, recorded explicitly**: `merge_bias_results.py`'s own
+generic "which candidate passes/is best" selection logic, run on this
+110–180 merge, printed `chosen = bernstein_5` — that field name is
+generic (it always reports whichever candidate the merge script's own
+ranking picks among whatever it was given), and here it is **not** the
+result this section's own pre-declared interpretation rule cares about
+(that rule specifically tracks `bernstein_6`'s own ratio, not "which of
+the handful of candidates in this run ranks best"). The 110–180 merge's
+own "chosen" field is not being used to select anything for this
+analysis, is not directly comparable to the 105–180 merge's "chosen"
+field, and does not conflict with the Fallback C decision recorded
+above. **Also not directly comparable**: this run covers only 4 cells
+per category (one per truth family, nominal leakage only, m_H=125),
+against the full 60-cell grid (4 truth families × 3 leakage variants ×
+5 masses) the 105–180 decision was based on — a much narrower check, by
+design (a robustness spot-check, not a re-run of the full study), so
+its numbers should be read as "the chosen function still looks
+reasonable under a range variation on the cells checked," not as a
+like-for-like replacement of the 105–180 result.
 
 ---
 
