@@ -1,0 +1,51 @@
+{
+  "primary": {
+    "mH": 125.09,
+    "q0": 17.050433033145964,
+    "Z": 4.129217000006897,
+    "mu_hat": 1.0608589959541987,
+    "invariant_ok": true,
+    "both_valid": true
+  },
+  "cross_checks": {
+    "null": {
+      "scipy_nll": -1083975.6256514108,
+      "migrad_nll": -1083975.6256514108,
+      "improvement": 0.0,
+      "relative_improvement": 0.0,
+      "scipy_found_better": false,
+      "scipy_converged": true
+    },
+    "alt": {
+      "scipy_nll": -1083984.1508679274,
+      "migrad_nll": -1083984.1508679274,
+      "improvement": 0.0,
+      "relative_improvement": 0.0,
+      "scipy_found_better": false,
+      "scipy_converged": true
+    }
+  },
+  "stop_conditions_triggered": [],
+  "gate_commit": "5e2e84ffb1c9308914684be101886df763ef04bb",
+  "run_timestamp_utc": "2026-09-17T21:12:17Z",
+  "status": "OK",
+  "secondary": {
+    "mu_hat_uncertainty_breakdown": {
+      "sigma_mu_full": 0.3337944378787778,
+      "sigma_mu_stat_only": 0.248928296930357
+    },
+    "per_category": {
+      "EBEB": {
+        "Z": 4.096797154621395,
+        "mu_hat": 1.1172013059597177
+      },
+      "notEBEB": {
+        "Z": 0.8693444342552592,
+        "mu_hat": 0.740956105124134
+      }
+    },
+    "best_fit_mH_fixed_at_125p09_mu_hat": 1.0608201533166515
+  },
+  "secondary_note": "Best-fit m_H with m_H itself floated, the 110-150 GeV local-p curve, and the look-elsewhere global significance (Gross-Vitells + toy comparison) are computed in STATS_REPORT.md's own post-unblinding companion section using the same building blocks (stats/model.py, stats/fit.py) -- not duplicated here to keep this gated script's own runtime bounded; see UNBLINDING_PLAN.md section 2 items 3-5 for what those results must answer.",
+  "robustness_note": "UNBLINDING_PLAN.md section 3's six pre-declared robustness checks (i-vi) are each a single re-fit with one input changed (fit range, background function, spurious-signal terms off, per-category, per-run-period, scale/res fixed) using the same stats/model.py + stats/fit.py building blocks as the primary fit above -- run and reported alongside this primary result in STATS_REPORT.md's post-unblinding section, per UNBLINDING_PLAN.md section 3."
+}
