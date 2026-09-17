@@ -12,26 +12,40 @@ suspenders. Data plots leave the blinded band empty (grey); each
 family's fitted **curve** is drawn across it, which this task's own
 rules explicitly allow.
 
-**Part 1 and Part 2 (both fit ranges) are complete, run for real, on
-this laptop.** **Part 3 (the full bias study) is built, unit-tested, and
-timed, but was not executed at full scale** — a direct timing test
-showed the full requested grid would take ~5–6 hours on this laptop,
-over the task's own 3-hour budget, so per the task's own instruction
-this stopped after the timing test and cluster jobs were prepared
-instead (not submitted). **Part 4's order selection is complete; its
-reduced bias check is pending on Part 3's outcome** (it needs to know
-the chosen function). See Part 3 below for the exact commands to finish
-this.
+**STATUS (updated 18 Sep 2026): the background model is FINALIZED.**
+Parts 1–2 (both fit ranges) ran for real on this laptop. Part 3 (the
+full bias study) ran on the cluster in two rounds — the first 120-job
+run (no candidate passed) and a rerun testing one higher-order Bernstein
+candidate per category — see `BIAS_DIAGNOSIS.md` for why, and this
+report's two dated decision sections ("Pre-declared selection
+procedure" and "Human decision after rerun 1") for the full,
+pre-committed selection logic and the resulting human decision:
+**Fallback C applied in both categories, chosen function = `bernstein_6`**
+(EBEB and notEBEB), with an explicit spurious-signal systematic per
+category (32.2 events EBEB, 109.3 events notEBEB — see that section for
+the full numbers and source cells). The finalized model —
+parameters, covariance, the systematic, and the per-bin evaluation
+function the later S+B fit will use — is in
+`results/background_model_final.json` /
+`studies/hgg_cms/background_model/final_model.py`.
+
+**What remains**: the 110–180 GeV reduced robustness check (chosen
+function + runner-up(s), prepared but not yet run — see Part 4 below
+for the exact commands), and the expected-significance / pre-
+unblinding-plan task after that.
 
 Reproduce Parts 1–2 (and 4's order selection) with:
 ```
 python -m studies.hgg_cms.background_model.build_background_model
 ```
-Unit tests: `python -m pytest tests/test_background_model.py` (22 tests:
-family evaluation/positivity, bin integration, the sideband mask, the
-blinding-marker constant, F-test/GOF arithmetic, toy generation,
-spurious-signal summary arithmetic, the NLL invariant, leakage-template
-rebinning).
+Reproduce the finalized model (Part 2's refit-with-covariance, the
+final JSON, and the plots) with:
+```
+python -m studies.hgg_cms.background_model.finalize_background_model
+```
+Unit tests: `python -m pytest tests/test_background_model.py
+tests/test_bias_rerun_seed_identity.py tests/test_bias_rerun_merge.py
+tests/test_final_background_model.py tests/test_pbs_scripts.py`.
 
 ---
 
@@ -139,7 +153,7 @@ there to capture.
 
 ---
 
-## Part 3 — Bias (spurious-signal) study — **PENDING, cluster run required**
+## Part 3 — Bias (spurious-signal) study — **COMPLETE** (see the dated decision sections after Part 3 for the outcome and the resulting finalized model)
 
 ### What is built and validated
 

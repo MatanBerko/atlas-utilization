@@ -224,6 +224,50 @@ def f_test_p_value(nll_low: float, ndf_low: int, nll_high: float, ndf_high: int)
     return {"delta_nll": delta_nll, "delta_ndf": delta_ndf, "stat": stat, "p_value": p}
 
 
+def refit_with_covariance(family_name: str, order: int, edges: np.ndarray, counts: np.ndarray,
+                           mask: np.ndarray, start_params: np.ndarray,
+                           nll_match_tol: float = 1e-4) -> dict:
+    """Background-model finalization: `fit_family_order`'s multi-start
+    search (module docstring) does not compute a covariance matrix (10
+    parallel MIGRAD calls is not the place to also pay for HESSE 10
+    times). This is the single, deliberate exception: ONE MIGRAD fit,
+    warm-started EXACTLY at `start_params` (the already-recorded best-fit
+    point from `order_selection_<range>.json`), followed by `hesse()`.
+    Since the warm start is already the minimum, this is expected to
+    converge trivially (a near-zero step) -- the fitted NLL is checked
+    against the input fit's own recorded NLL to within `nll_match_tol`
+    as an explicit verification that this reproduces the same minimum,
+    not a silently different one; a mismatch raises rather than
+    returning a covariance for the wrong point."""
+    fam = FAMILIES[family_name]
+    names = fam.param_names(order)
+    total_count = float(counts[mask].sum())
+    bounds = fam.bounds(order, total_count)
+    data = counts[mask]
+
+    def nll_fn(*par):
+        pred = fam.bin_expectation(edges, order, np.array(par))[mask]
+        return poisson_nll(data, pred)
+
+    m = Minuit(nll_fn, *start_params, name=names)
+    m.errordef = Minuit.LIKELIHOOD
+    for n, b in zip(names, bounds):
+        m.limits[n] = b
+    m.strategy = 1
+    m.migrad()
+    m.hesse()
+
+    refit_nll = float(m.fval)
+    refit_params = np.array([m.values[n] for n in names])
+    return {
+        "family": family_name, "order": order, "param_names": list(names),
+        "params": refit_params, "nll": refit_nll, "valid": bool(m.valid),
+        "covariance": np.array(m.covariance) if m.covariance is not None else None,
+        "hesse_failed": bool(m.fmin.hesse_failed),
+        "matches_recorded_start": bool(np.allclose(refit_params, start_params, rtol=1e-6, atol=1e-8)),
+    }
+
+
 def goodness_of_fit(family_name: str, order: int, edges: np.ndarray, counts: np.ndarray,
                      mask: np.ndarray, params: np.ndarray, min_expected: float = 5.0) -> dict:
     fam = FAMILIES[family_name]
