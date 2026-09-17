@@ -278,6 +278,105 @@ tuned to any observed outcome.
 
 ---
 
+## Pre-declared selection procedure after the first bias study (decided 18 Sep 2026, before any result of the rerun exists)
+
+The first bias study (120/120 cluster jobs, merged at
+`results/bias_study_105_180.json`) found no eligible-and-passing
+candidate in either category (see `BIAS_DIAGNOSIS.md`). This section
+records, in full, the procedure for the rerun that follows — written
+and committed **before** the rerun's own code exists, let alone any of
+its results, so nothing below is tuned to an outcome.
+
+**1. Step B — one new candidate per category.** Add exactly one
+higher-order Bernstein test function per category: **EBEB
+`bernstein_6`**, **notEBEB `bernstein_7`**. Test them with the
+IDENTICAL bias-study setup as the first run: the same truth models
+(each family at its already-selected order, fitted to the real
+sidebands, exactly as recorded in `results/order_selection_105_180.json`
+— not refit), the same three leakage variants (nominal, ±0.5× the
+leakage template), the same five masses (115, 120, 125, 130, 135 GeV),
+the same toy counts (1,000 at 125 GeV, 300 at the other four), the same
+per-cell seeds as the first run (so the new candidate is tested on the
+same pseudo-datasets — see the rerun code's own documentation for
+exactly how seed reuse is guaranteed and proven), the same fit
+robustness settings (MIGRAD strategy=1, warm-started from the
+background-only fit, one retry on an NLL-invariant violation or an
+invalid fit), and the same `NLL(S free) ≤ NLL(S=0) + 1e-6` invariant
+check.
+
+**2. Selection, applied to the UNION of the first-run candidates and
+the new one, per category:**
+
+  **(i)** If one or more candidates are ELIGIBLE (the 5% fit-reliability
+  rule, unchanged) **and** PASS (worst |mean S|/mean σ_S < 0.20 in every
+  one of the 60 cells, unchanged): choose the one with the **fewest
+  parameters**; a tie is broken by the **lower sideband NLL**. No
+  spurious-signal systematic beyond what (iii) always assigns.
+
+  **(ii)** Otherwise — **FALLBACK C** (an ATLAS-style spurious-signal
+  systematic, not a relaxation of the 0.20 threshold): among ELIGIBLE
+  candidates only, choose the one with the **smallest worst ratio**
+  over the 60 cells; a tie is broken by **fewer parameters**.
+
+  **(iii)** In both cases, the category's spurious-signal systematic =
+  the **maximum over all 60 cells** (4 truth families × 3 leakage
+  variants × 5 masses) of |mean spurious S| in events, for whichever
+  function was chosen. In the eventual signal-plus-background fit this
+  enters as an additional yield term `S_spur × θ_spur`, with `θ_spur` a
+  unit-Gaussian-constrained nuisance parameter, **one per category,
+  uncorrelated between categories**.
+
+  **(iv)** If NO candidate in a category is eligible at all: **STOP and
+  report.** No further relaxation of the eligibility rule, the 0.20
+  threshold, or anything else — this would be escalated as its own
+  finding, not silently worked around.
+
+**3. Why this was decided, recorded for transparency** (the diagnosis
+findings that motivated adding exactly this one new candidate per
+category, from `BIAS_DIAGNOSIS.md`): EBEB's best existing candidate,
+`bernstein_5`, has worst ratio 0.304 — statistically **indistinguishable
+from noise** around the 0.20 threshold (Monte Carlo null p=0.83, zero of
+its 60 cells exceed 0.20 by more than 2 standard errors) — going one
+Bernstein order higher is the direct, evidence-driven next step, since
+order 4→5 already took the worst ratio from a hugely significant 0.841
+down to noise level. notEBEB's best existing candidate, `bernstein_6`,
+has worst ratio 0.493 — a **statistically real effect** (p=3×10⁻⁵),
+worst |S_spur| ≈ 109 events, ≈41% of the expected notEBEB signal yield
+(266.1 events) — and the truth-family spread inside 115–135 GeV in
+notEBEB is ≈1.07× the signal peak's own density (it exceeds the signal
+peak), so a meaningfully larger notEBEB residual than EBEB's is
+expected even after adding flexibility; `bernstein_7` is tried there
+because the same order-increase mechanism (4→5 already roughly halved
+the worst ratio, 5→6 continued in the same direction: 0.925→0.493) is
+the best-evidenced lever available, not because the diagnosis proved it
+will be enough — fallback C exists precisely in case it isn't.
+
+**4. The principled alternative, not adopted here.** CMS's own
+"discrete profiling" / envelope method (P. Dauncey et al., JINST 10
+(2015) P04015, arXiv:1408.6865) — profiling over multiple PASSING
+candidate functions as a discrete nuisance parameter at fit time — is
+the standard, more rigorous solution to exactly this problem. It is
+**not adopted in this rerun** because it requires new fitting
+machinery (a discrete-nuisance-parameter profiled likelihood) beyond
+what this project's already-validated tools
+(`studies/hgg_cms/background_model/`, `studies/hgg_cms/stats/`)
+currently implement, and because — per `BIAS_DIAGNOSIS.md` — an
+envelope built from the CURRENT candidate set would be dominated by
+Bernstein alone anyway (every non-Bernstein family either fails on
+cross-family truth mismatch or is unreliable outright), so it would add
+implementation cost without changing today's outcome. Recorded here as
+a possible future improvement, e.g. once more than one family is
+genuinely viable.
+
+**5. Robustness plan, unchanged.** After a function is selected under
+(2) above, the already-planned 110–180 GeV reduced bias check (the
+chosen function plus its two runners-up, nominal truths only, m_H=125,
+≥500 toys — `cluster/make_job_list_part4.py`, already prepared) proceeds
+exactly as originally scoped in Part 4 below; this rerun does not change
+that plan.
+
+---
+
 ## Part 4 — Robustness: 110–180 GeV
 
 **Order selection: complete, see Part 2 above** — no family dropped,
