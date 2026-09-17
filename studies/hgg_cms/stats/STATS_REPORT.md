@@ -285,10 +285,23 @@ conditions.
   uncertainty breakdown, and the per-category secondary results from
   `UNBLINDING_PLAN.md`, gated, checks the plan's own stop conditions
   before reporting anything, writes a new timestamped file every run.
-- `tests/test_unblind_gate.py`: 10 unit tests against synthetic plan
+- `tests/test_unblind_gate.py`: 11 unit tests against synthetic plan
   text and injected git state only (missing flag, missing/malformed/
   wrong env var, dirty repo, missing/unfilled/mismatched plan hash,
-  short-hash-prefix match, all-conditions-met) -- **all pass.**
+  frozen-commit-not-an-ancestor-of-HEAD, short-hash-prefix match, exact
+  match, trailing-docs-only-commit) -- **all pass.**
+
+Two real bugs were found and fixed while actually filling in the
+frozen-commit hash this plan asks for (i.e. by using the gate the way
+it will really be used): (1) the hash-parsing regex needed `re.DOTALL`
+to read this file's own multi-line hash line -- without it, the gate
+could never find its own frozen hash, no matter how correctly it was
+filled in; (2) the gate originally required HEAD to equal the frozen
+commit EXACTLY, which is unsatisfiable by construction (a commit cannot
+contain its own resulting hash, so the commit that records "the frozen
+commit is X" is necessarily one commit after X) -- fixed by requiring
+the frozen commit to be HEAD or an ancestor of HEAD instead. Both are
+recorded in the fix commit's own message and covered by new tests.
 
 **These are NOT run in this task.** See the final chat message for the
 exact commands, labeled FOR LATER, AFTER EXPLICIT APPROVAL.
@@ -298,7 +311,9 @@ exact commands, labeled FOR LATER, AFTER EXPLICIT APPROVAL.
 - `signal_model.json`: `c1183f375e87b947335eaec014bd94ccd949b2de578e12183b1d0841c11b5f82`
 - `background_model_final.json`: `af17b2cdcaa58929f5018c9b18cd94b501c493bcda13ccb02f93daa1fa1a605b`
 - `stats/model.py`: `366e361925e5bb197432835c5a0e3ac1d7f1932399c2f8cc510bfed325a58aab`
-- `stats/unblind/gate.py`: `e89d86027ec8f8c11df9de231cbbb65bda8ca4b9ecbf753d08a7ca0d808d617c`
+- `stats/unblind/gate.py`: `d809d4f7283e7fe7618b8ce295b4ba661607b4f74acd2190244c2f35747335b6`
 - `stats/unblind/merge_full_range.py`: `593e6b0228bc7df5535a6b87b738ab38550c5681ce3e5832fe6ed961dba533f8`
 - `stats/unblind/run_unblinded_analysis.py`: `87363080c4ac9c10a8eeee94216486cdff63197a953250cfb8b7ef5b3659e3c0`
-- Git commit hash: `<FILLED IN BY FOLLOW-UP COMMIT>`
+- Git commit hash: `5e2e84ffb1c9308914684be101886df763ef04bb` (see
+  `UNBLINDING_PLAN.md` section 5 for why this differs from the commit
+  that actually contains this sentence)

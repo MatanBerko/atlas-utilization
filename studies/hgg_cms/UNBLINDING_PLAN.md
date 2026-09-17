@@ -114,11 +114,17 @@ The following are fixed at the commit this plan is part of, and
 recorded here so that any later change is visible as a **post-hoc**
 change rather than silently folded into the "pre-registered" result.
 
-- Git commit hash (this plan, the statistical model code, and all
-  frozen input files, as pushed): `<FILLED IN AT FINAL COMMIT>` (this
-  line cannot be known until after the commit is made -- filled in by a
-  small follow-up commit immediately after; see STATS_REPORT.md's own
-  frozen-inputs section for the same hash)
+- Git commit hash (this plan, the statistical model code, and the
+  unblinding gate, as pushed): `5e2e84ffb1c9308914684be101886df763ef04bb`
+  -- the commit that fixed a real bug in the gate itself (a regex that
+  could not parse this very file's multi-line hash line -- see that
+  commit's own message), found while filling in this line. `gate.py`'s
+  own ancestor-based check (not exact-HEAD-equality) is what makes this
+  line, and the purely-documentary commit that records it, both
+  possible: a commit can never contain its own resulting hash, so this
+  value was necessarily written down one commit AFTER `5e2e84f...`
+  itself -- the ONLY commit hash that matters for approval is
+  `5e2e84f...`, not whatever commit happens to contain this sentence.
 - SHA-256 of `studies/hgg_cms/signal_model/results/signal_model.json`:
   `c1183f375e87b947335eaec014bd94ccd949b2de578e12183b1d0841c11b5f82`
 - SHA-256 of
@@ -128,7 +134,7 @@ change rather than silently folded into the "pre-registered" result.
   code): `366e361925e5bb197432835c5a0e3ac1d7f1932399c2f8cc510bfed325a58aab`
 - SHA-256 of every script under `studies/hgg_cms/stats/unblind/` (the
   gated unblinding scripts, Part 5):
-  - `gate.py`: `e89d86027ec8f8c11df9de231cbbb65bda8ca4b9ecbf753d08a7ca0d808d617c`
+  - `gate.py`: `d809d4f7283e7fe7618b8ce295b4ba661607b4f74acd2190244c2f35747335b6`
   - `merge_full_range.py`: `593e6b0228bc7df5535a6b87b738ab38550c5681ce3e5832fe6ed961dba533f8`
   - `run_unblinded_analysis.py`: `87363080c4ac9c10a8eeee94216486cdff63197a953250cfb8b7ef5b3659e3c0`
 
