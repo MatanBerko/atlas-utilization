@@ -1,0 +1,831 @@
+{
+  "EBEB": {
+    "shape_function": "DCB",
+    "shape_params": {
+      "use_gauss2": false,
+      "params": {
+        "mu": 124.81546353425193,
+        "sigma": 1.3692689680418524,
+        "alphaL": 0.997566747598021,
+        "nL": 5.293356786231726,
+        "alphaR": 1.3946072643717111,
+        "nR": 10.49088145529481
+      },
+      "param_names": [
+        "mu",
+        "sigma",
+        "alphaL",
+        "nL",
+        "alphaR",
+        "nR"
+      ],
+      "covariance": [
+        [
+          4.082460733430351e-05,
+          -2.530140904965004e-05,
+          -4.233472221970052e-05,
+          0.0002567694178855422,
+          -7.1281116759244175e-06,
+          -0.00044593066159059907
+        ],
+        [
+          -2.5301409049650103e-05,
+          9.422015261229988e-05,
+          9.071071405719436e-05,
+          -0.0003602978786418642,
+          0.00016649719483445005,
+          -0.002868085535373016
+        ],
+        [
+          -4.233472221970065e-05,
+          9.071071405719433e-05,
+          0.00013783453901844612,
+          -0.0009212821341674978,
+          0.0001490687676404425,
+          -0.0023641368691512
+        ],
+        [
+          0.0002567694178855428,
+          -0.0003602978786418626,
+          -0.0009212821341674952,
+          0.010951704483634622,
+          -0.0005229906983958313,
+          0.0070855561190279175
+        ],
+        [
+          -7.12811167592472e-06,
+          0.0001664971948344504,
+          0.00014906876764044335,
+          -0.0005229906983958435,
+          0.0005683802068425376,
+          -0.016777826063541636
+        ],
+        [
+          -0.0004459306615905898,
+          -0.0028680855353730287,
+          -0.0023641368691512325,
+          0.007085556119028323,
+          -0.016777826063541647,
+          0.73527572281229
+        ]
+      ],
+      "param_uncertainties": {
+        "mu": 0.006389413692531069,
+        "sigma": 0.009706706579077162,
+        "alphaL": 0.011740295525175085,
+        "nL": 0.10465039170320684,
+        "alphaR": 0.02384072580360207,
+        "nR": 0.8574821997057956
+      }
+    },
+    "delta_GeV_mass_shift": -0.18453646574806726,
+    "sigma_eff68_GeV": 1.7699702886958306,
+    "mode_GeV": 124.81546353425193,
+    "goodness_of_fit": {
+      "chi2": 72.30190490887972,
+      "ndf": 20,
+      "chi2_per_ndf": 3.615095245443986,
+      "n_bins_used": 26,
+      "n_bins_total": 300
+    },
+    "validation": {
+      "d3_reference_ggh_sigma_eff68": 1.78,
+      "model_vs_d3_rel_diff": 0.005634669272005286,
+      "model_vs_d3_within_3pct": true,
+      "sample_sigma_eff68_weighted_binned": 2.0,
+      "sample_mode_weighted_binned": 124.75
+    },
+    "gauss2_decision": {
+      "chi2_improvement": -0.4205197986628946,
+      "dcb_chi2_per_ndf": 3.615095245443986,
+      "dcb_chi2_per_ndf_exceeds_threshold": true,
+      "improvement_exceeds_threshold": false,
+      "use_gauss2": false
+    },
+    "fit_dcb_alone": {
+      "params": {
+        "mu": 124.81546353425193,
+        "sigma": 1.3692689680418524,
+        "alphaL": 0.997566747598021,
+        "nL": 5.293356786231726,
+        "alphaR": 1.3946072643717111,
+        "nR": 10.49088145529481
+      },
+      "chi2": {
+        "chi2": 72.30190490887972,
+        "ndf": 20,
+        "chi2_per_ndf": 3.615095245443986,
+        "n_bins_used": 26,
+        "n_bins_total": 300
+      }
+    },
+    "fit_dcb_gauss_alone": {
+      "params": {
+        "mu": 124.25126401981599,
+        "sigma": 2.5379033673899936,
+        "alphaL": 1.3590742136116185,
+        "nL": 5.13326075182995,
+        "alphaR": 3.090159599723517,
+        "nR": 2.0706843223444222,
+        "frac2": 0.5138146560414483,
+        "mu2": 124.87025820822444,
+        "sigma2": 1.1531357510402303
+      },
+      "chi2": {
+        "chi2": 72.72242470754261,
+        "ndf": 17,
+        "chi2_per_ndf": 4.277789688678977,
+        "n_bins_used": 26,
+        "n_bins_total": 300
+      }
+    },
+    "per_mode_check": {
+      "ggh": {
+        "n_events": 140245,
+        "params": {
+          "mu": 124.80999030600523,
+          "sigma": 1.3662736440454764,
+          "alphaL": 0.976339103712565,
+          "nL": 5.475070041721926,
+          "alphaR": 1.2700500944605417,
+          "nR": 25.955636626897668
+        },
+        "valid": true,
+        "sigma_eff68": 1.7946519699626222,
+        "mode": 124.80999030600523
+      },
+      "vbf": {
+        "n_events": 536230,
+        "params": {
+          "mu": 124.8278831751476,
+          "sigma": 1.3096611510255223,
+          "alphaL": 1.0591222234079594,
+          "nL": 4.649722082719557,
+          "alphaR": 1.5637374285648202,
+          "nR": 6.299254511086527
+        },
+        "valid": true,
+        "sigma_eff68": 1.64742290123705,
+        "mode": 124.8278831751476
+      }
+    },
+    "vbf_flag": {
+      "vbf_sigma_eff68": 1.64742290123705,
+      "combined_sigma_eff68": 1.7699702886958306,
+      "rel_diff_pct": 6.923697433874854,
+      "flagged": false
+    },
+    "mass_shift_demo": {
+      "delta_GeV": -0.18453646574806726,
+      "shifted_shapes": {
+        "110.0": {
+          "mean_used": 109.81546353425193,
+          "mode": 109.81546353425193
+        },
+        "115.0": {
+          "mean_used": 114.81546353425193,
+          "mode": 114.81546353425193
+        },
+        "120.0": {
+          "mean_used": 119.81546353425193,
+          "mode": 119.81546353425193
+        },
+        "125.0": {
+          "mean_used": 124.81546353425193,
+          "mode": 124.81546353425193
+        },
+        "130.0": {
+          "mean_used": 129.81546353425193,
+          "mode": 129.81546353425193
+        },
+        "135.0": {
+          "mean_used": 134.81546353425193,
+          "mode": 134.81546353425193
+        },
+        "140.0": {
+          "mean_used": 139.81546353425193,
+          "mode": 139.81546353425193
+        }
+      }
+    },
+    "bin_integration_check": {
+      "sum_of_fine_bin_probabilities": 0.9988811077352512,
+      "in_range_fraction_105_180": 0.9988811077352512,
+      "rel_diff": 0.0
+    },
+    "yields": {
+      "per_mode": {
+        "ggh": {
+          "N_no_corrections": 473.8210479523525,
+          "N_with_pileup": 474.2686752758307
+        },
+        "vbf": {
+          "N_no_corrections": 37.457857672940094,
+          "N_with_pileup": 37.61151648700134
+        },
+        "wplush": {
+          "N_no_corrections": 6.096971338901252,
+          "N_with_pileup": 6.102977449577692
+        },
+        "wminush": {
+          "N_no_corrections": 4.511884308325755,
+          "N_with_pileup": 4.509153065110307
+        },
+        "zh": {
+          "N_no_corrections": 6.10026703501218,
+          "N_with_pileup": 6.077913052284647
+        },
+        "tth": {
+          "N_no_corrections": 5.023029068818117,
+          "N_with_pileup": 5.011147660102392
+        }
+      },
+      "N_no_corrections": 533.0110573763499,
+      "N_with_pileup": 533.5813829899072,
+      "N_with_trigger_sf_central": 545.800396660376,
+      "trigger_sf_applied": 1.0229,
+      "N_zee_ratio_alternative_for_info": 446.6076175625523,
+      "zee_ratio_applied": 0.837,
+      "fraction_of_total_signal": 0.6605392378367335
+    },
+    "systematics": {
+      "mode_fractions_used_for_theory_weighting": {
+        "ggh": 0.8888403726124785,
+        "vbf": 0.07048880955374856,
+        "wplush": 0.011437763093194596,
+        "wminush": 0.008450731620064036,
+        "zh": 0.01139078919550612,
+        "tth": 0.009391533925007984
+      },
+      "luminosity_pct": {
+        "value": 1.2,
+        "type": "normalization",
+        "source": "arXiv:2104.01927 (CMS 2016 13 TeV luminosity, precision 1.2%)"
+      },
+      "theory_pct": {
+        "value": 6.507011881568296,
+        "type": "normalization (affects mu interpretation, not observed significance)",
+        "source": "LHCHXSWG YR4 (arXiv:1610.07922) production x-sec scale+PDF, combined per mode, weighted by category mode-fractions, plus BR(Hgg)~3% in quadrature -- see module docstring",
+        "breakdown": {
+          "per_mode_theory_pct": {
+            "ggh": 6.493265742290239,
+            "vbf": 2.1289668856043766,
+            "wplush": 1.9924858845171274,
+            "wminush": 1.9924858845171274,
+            "zh": 3.757658845611187,
+            "tth": 8.31925477431723
+          },
+          "production_combined_pct": 5.774184239082693,
+          "br_hgg_pct": 3.0,
+          "total_theory_pct": 6.507011881568296
+        }
+      },
+      "trigger_sf_pct": {
+        "value": 2.289999999999992,
+        "type": "normalization",
+        "source": "|1-SF|, VALIDATION_REPORT_2 Part D trigger data/DY ratio SF=1.0229"
+      },
+      "id_reco_pct": {
+        "value": 20.0,
+        "type": "normalization",
+        "source": "No photon-ID scale factors available; +-20% assigned, justified by the Z->ee data/DY normalization ratios' distance from 1 (VALIDATION_REPORT_2 Part C: EBEB 0.837, notEBEB 0.808). Affects expected significance / mu interpretation, not the observed significance."
+      },
+      "pileup_pct": {
+        "value_yield": 0.10700070958464536,
+        "value_shape": 0.0,
+        "type": "normalization (yield) + shape (negligible)",
+        "source": "This task's own before/after-pileup-weight comparison, all 6 modes, 105-180 GeV (cf. VALIDATION_REPORT_1 Part D's ggH-only demonstration, which found no measurable shape change at its 0.25 GeV binning resolution -- shape effect taken as negligible/zero here on that basis).",
+        "detail": {
+          "N_no_pileup": 533.0110573763499,
+          "N_with_pileup": 533.5813829899072,
+          "relative_yield_effect_pct": 0.10700070958464536,
+          "abs_relative_yield_effect_pct": 0.10700070958464536
+        }
+      },
+      "energy_scale_pct": {
+        "value": 0.1,
+        "type": "shape (mean shift)",
+        "value_GeV_at_125": 0.125,
+        "source": "max over categories of Z->ee |Delta peak|/peak (VALIDATION_REPORT_2 Part B), rounded up to >= 0.1%"
+      },
+      "energy_resolution_pct": {
+        "value": 5.0,
+        "type": "shape (width)",
+        "source": "2x max over categories of |Delta sigma_eff/sigma_eff| from Z->ee (VALIDATION_REPORT_2 Part B), factor 2 for electron->photon extrapolation (documented choice, not independently validated), rounded up to >= 5%"
+      },
+      "simulation_stat_pct": {
+        "value": 0.2612741141932567,
+        "type": "normalization (statistical)",
+        "source": "sqrt(Sum w^2)/Sum(w), all 6 modes combined, 105-180 GeV, from this task's own effective-event-count calculation (Part 1)",
+        "detail": {
+          "N_total": 533.581382989907,
+          "stat_uncertainty_abs": 1.394110031907008,
+          "stat_uncertainty_relative_pct": 0.2612741141932567
+        }
+      }
+    }
+  },
+  "notEBEB": {
+    "shape_function": "DCB+Gaussian",
+    "shape_params": {
+      "use_gauss2": true,
+      "params": {
+        "mu": 124.25804985736814,
+        "sigma": 3.2644094436641775,
+        "alphaL": 1.6341108073917752,
+        "nL": 4.713588516843822,
+        "alphaR": 3.206320272824026,
+        "nR": 1.7600179375629785,
+        "frac2": 0.48009261036975587,
+        "mu2": 124.87673580598499,
+        "sigma2": 1.924669231459637
+      },
+      "param_names": [
+        "mu",
+        "sigma",
+        "alphaL",
+        "nL",
+        "alphaR",
+        "nR",
+        "frac2",
+        "mu2",
+        "sigma2"
+      ],
+      "covariance": [
+        [
+          0.005380896710641955,
+          -0.00661391063898688,
+          0.0008703843818292055,
+          -0.0062958182091729575,
+          0.00018650605777371297,
+          0.0014140708388843061,
+          -0.0036417820597684615,
+          0.0007700750347629878,
+          -0.004328479614404983
+        ],
+        [
+          -0.006613910638986897,
+          0.009727322485141306,
+          -0.0016015828551675458,
+          0.011175533572517996,
+          9.217685380557274e-05,
+          -0.002449361305101826,
+          0.005254560978621536,
+          -0.001720254448614969,
+          0.006213935511280159
+        ],
+        [
+          0.000870384381829203,
+          -0.0016015828551675412,
+          0.00148976142208069,
+          -0.008807526405467067,
+          0.00016350062387606104,
+          0.00038885703871795554,
+          -0.0011078413992239653,
+          0.0005565136377269282,
+          -0.0015087463932836071
+        ],
+        [
+          -0.0062958182091728465,
+          0.011175533572517842,
+          -0.008807526405467034,
+          0.07119965933150874,
+          -0.0005341606551204619,
+          -0.0028860838050092526,
+          0.007037309387801512,
+          -0.0032991556219139815,
+          0.009147402125374546
+        ],
+        [
+          0.00018650605777370432,
+          9.217685380558451e-05,
+          0.0001635006238760601,
+          -0.0005341606551204533,
+          0.003609507169861933,
+          -0.003714862575609868,
+          -8.637516713011781e-05,
+          -5.1966644968292997e-05,
+          -0.0001970939441649113
+        ],
+        [
+          0.0014140708388843105,
+          -0.002449361305101815,
+          0.00038885703871795245,
+          -0.0028860838050092687,
+          -0.003714862575609861,
+          0.00652480266618345,
+          -0.0012599785908972733,
+          0.000521448511023149,
+          -0.0014550826838029642
+        ],
+        [
+          -0.0036417820597684745,
+          0.0052545609786215286,
+          -0.0011078413992239619,
+          0.007037309387801553,
+          -8.637516713012393e-05,
+          -0.001259978590897277,
+          0.002974583088265808,
+          -0.000985240243928595,
+          0.003618684472602725
+        ],
+        [
+          0.0007700750347629724,
+          -0.001720254448614943,
+          0.0005565136377269232,
+          -0.0032991556219139646,
+          -5.196664496829082e-05,
+          0.0005214485110231432,
+          -0.0009852402439285831,
+          0.0007991455436097993,
+          -0.0012385548186150622
+        ],
+        [
+          -0.004328479614404958,
+          0.006213935511280107,
+          -0.001508746393283604,
+          0.009147402125374609,
+          -0.00019709394416492028,
+          -0.001455082683802956,
+          0.003618684472602702,
+          -0.0012385548186150718,
+          0.004651603209320839
+        ]
+      ],
+      "param_uncertainties": {
+        "mu": 0.07335459570225955,
+        "sigma": 0.09862718938072455,
+        "alphaL": 0.03859742766144773,
+        "nL": 0.266832642927189,
+        "alphaR": 0.060079174177596124,
+        "nR": 0.08077625063212238,
+        "frac2": 0.05453973861567186,
+        "mu2": 0.02826916241436593,
+        "sigma2": 0.06820266277295073
+      }
+    },
+    "delta_GeV_mass_shift": -0.7419501426318647,
+    "sigma_eff68_GeV": 2.607717063886021,
+    "mode_GeV": 124.76813195676114,
+    "goodness_of_fit": {
+      "chi2": 20.03023802825005,
+      "ndf": 14,
+      "chi2_per_ndf": 1.4307312877321465,
+      "n_bins_used": 23,
+      "n_bins_total": 300
+    },
+    "validation": {
+      "d3_reference_ggh_sigma_eff68": 2.59,
+      "model_vs_d3_rel_diff": 0.006840565206957963,
+      "model_vs_d3_within_3pct": true,
+      "sample_sigma_eff68_weighted_binned": 2.75,
+      "sample_mode_weighted_binned": 124.75
+    },
+    "gauss2_decision": {
+      "chi2_improvement": 56.834177290959786,
+      "dcb_chi2_per_ndf": 4.270245295511658,
+      "dcb_chi2_per_ndf_exceeds_threshold": true,
+      "improvement_exceeds_threshold": true,
+      "use_gauss2": true
+    },
+    "fit_dcb_alone": {
+      "params": {
+        "mu": 124.69661886686085,
+        "sigma": 2.4374456840812577,
+        "alphaL": 1.4534185792721932,
+        "nL": 5.3466517433713765,
+        "alphaR": 2.1731893990045443,
+        "nR": 5.463156820848901
+      },
+      "chi2": {
+        "chi2": 76.86441531920984,
+        "ndf": 18,
+        "chi2_per_ndf": 4.270245295511658,
+        "n_bins_used": 24,
+        "n_bins_total": 300
+      }
+    },
+    "fit_dcb_gauss_alone": {
+      "params": {
+        "mu": 124.25804985736814,
+        "sigma": 3.2644094436641775,
+        "alphaL": 1.6341108073917752,
+        "nL": 4.713588516843822,
+        "alphaR": 3.206320272824026,
+        "nR": 1.7600179375629785,
+        "frac2": 0.48009261036975587,
+        "mu2": 124.87673580598499,
+        "sigma2": 1.924669231459637
+      },
+      "chi2": {
+        "chi2": 20.03023802825005,
+        "ndf": 14,
+        "chi2_per_ndf": 1.4307312877321465,
+        "n_bins_used": 23,
+        "n_bins_total": 300
+      }
+    },
+    "per_mode_check": {
+      "ggh": {
+        "n_events": 73347,
+        "params": {
+          "mu": 124.21395274025468,
+          "sigma": 3.335957415343443,
+          "alphaL": 1.6299012277853668,
+          "nL": 4.804904845998402,
+          "alphaR": 3.6986165720885635,
+          "nR": 1.618493386596929,
+          "frac2": 0.5041373540572984,
+          "mu2": 124.87263097640233,
+          "sigma2": 1.9819457949631019
+        },
+        "valid": true,
+        "sigma_eff68": 2.6360954435255977,
+        "mode": 124.76388084324128
+      },
+      "vbf": {
+        "n_events": 259581,
+        "params": {
+          "mu": 124.29807780183414,
+          "sigma": 3.138027955576677,
+          "alphaL": 1.596855980050935,
+          "nL": 4.660147581571904,
+          "alphaR": 3.0001368088630302,
+          "nR": 1.7650990253784329,
+          "frac2": 0.5170426871588734,
+          "mu2": 124.83636128137728,
+          "sigma2": 1.7799704998154477
+        },
+        "valid": true,
+        "sigma_eff68": 2.405952234636409,
+        "mode": 124.76093903938236
+      }
+    },
+    "vbf_flag": {
+      "vbf_sigma_eff68": 2.405952234636409,
+      "combined_sigma_eff68": 2.607717063886021,
+      "rel_diff_pct": 7.737220883501138,
+      "flagged": false
+    },
+    "mass_shift_demo": {
+      "delta_GeV": -0.7419501426318647,
+      "shifted_shapes": {
+        "110.0": {
+          "mean_used": 109.25804985736814,
+          "mode": 109.76813195676114
+        },
+        "115.0": {
+          "mean_used": 114.25804985736814,
+          "mode": 114.76813195676114
+        },
+        "120.0": {
+          "mean_used": 119.25804985736814,
+          "mode": 119.76813195676114
+        },
+        "125.0": {
+          "mean_used": 124.25804985736814,
+          "mode": 124.76813195676114
+        },
+        "130.0": {
+          "mean_used": 129.25804985736812,
+          "mode": 129.76813195676112
+        },
+        "135.0": {
+          "mean_used": 134.25804985736812,
+          "mode": 134.76813195676112
+        },
+        "140.0": {
+          "mean_used": 139.25804985736812,
+          "mode": 139.76813195676112
+        }
+      }
+    },
+    "bin_integration_check": {
+      "sum_of_fine_bin_probabilities": 0.998517039406874,
+      "in_range_fraction_105_180": 0.998517039406874,
+      "rel_diff": 0.0
+    },
+    "yields": {
+      "per_mode": {
+        "ggh": {
+          "N_no_corrections": 245.64714822979045,
+          "N_with_pileup": 244.067014827627
+        },
+        "vbf": {
+          "N_no_corrections": 18.453664139786138,
+          "N_with_pileup": 18.239843537150243
+        },
+        "wplush": {
+          "N_no_corrections": 4.073359171195873,
+          "N_with_pileup": 4.038424465590383
+        },
+        "wminush": {
+          "N_no_corrections": 2.5636545383808516,
+          "N_with_pileup": 2.5481037619630897
+        },
+        "zh": {
+          "N_no_corrections": 3.6856195679579056,
+          "N_with_pileup": 3.6787039023892367
+        },
+        "tth": {
+          "N_no_corrections": 1.6792807637576923,
+          "N_with_pileup": 1.6431757157846423
+        }
+      },
+      "N_no_corrections": 276.1027264108689,
+      "N_with_pileup": 274.2152662105046,
+      "N_with_trigger_sf_central": 266.12591585729473,
+      "trigger_sf_applied": 0.9705,
+      "N_zee_ratio_alternative_for_info": 221.56593509808772,
+      "zee_ratio_applied": 0.808,
+      "fraction_of_total_signal": 0.3394607621632664
+    },
+    "systematics": {
+      "mode_fractions_used_for_theory_weighting": {
+        "ggh": 0.8900562620035387,
+        "vbf": 0.06651651379302935,
+        "wplush": 0.014727205094738377,
+        "wminush": 0.00929234829692891,
+        "zh": 0.013415386944814504,
+        "tth": 0.0059922838669501325
+      },
+      "luminosity_pct": {
+        "value": 1.2,
+        "type": "normalization",
+        "source": "arXiv:2104.01927 (CMS 2016 13 TeV luminosity, precision 1.2%)"
+      },
+      "theory_pct": {
+        "value": 6.513633612192408,
+        "type": "normalization (affects mu interpretation, not observed significance)",
+        "source": "LHCHXSWG YR4 (arXiv:1610.07922) production x-sec scale+PDF, combined per mode, weighted by category mode-fractions, plus BR(Hgg)~3% in quadrature -- see module docstring",
+        "breakdown": {
+          "per_mode_theory_pct": {
+            "ggh": 6.493265742290239,
+            "vbf": 2.1289668856043766,
+            "wplush": 1.9924858845171274,
+            "wminush": 1.9924858845171274,
+            "zh": 3.757658845611187,
+            "tth": 8.31925477431723
+          },
+          "production_combined_pct": 5.781645339683395,
+          "br_hgg_pct": 3.0,
+          "total_theory_pct": 6.513633612192408
+        }
+      },
+      "trigger_sf_pct": {
+        "value": 2.949999999999997,
+        "type": "normalization",
+        "source": "|1-SF|, VALIDATION_REPORT_2 Part D trigger data/DY ratio SF=0.9705"
+      },
+      "id_reco_pct": {
+        "value": 20.0,
+        "type": "normalization",
+        "source": "No photon-ID scale factors available; +-20% assigned, justified by the Z->ee data/DY normalization ratios' distance from 1 (VALIDATION_REPORT_2 Part C: EBEB 0.837, notEBEB 0.808). Affects expected significance / mu interpretation, not the observed significance."
+      },
+      "pileup_pct": {
+        "value_yield": 0.6836079545102347,
+        "value_shape": 0.0,
+        "type": "normalization (yield) + shape (negligible)",
+        "source": "This task's own before/after-pileup-weight comparison, all 6 modes, 105-180 GeV (cf. VALIDATION_REPORT_1 Part D's ggH-only demonstration, which found no measurable shape change at its 0.25 GeV binning resolution -- shape effect taken as negligible/zero here on that basis).",
+        "detail": {
+          "N_no_pileup": 276.1027264108689,
+          "N_with_pileup": 274.2152662105046,
+          "relative_yield_effect_pct": -0.6836079545102347,
+          "abs_relative_yield_effect_pct": 0.6836079545102347
+        }
+      },
+      "energy_scale_pct": {
+        "value": 0.1,
+        "type": "shape (mean shift)",
+        "value_GeV_at_125": 0.125,
+        "source": "max over categories of Z->ee |Delta peak|/peak (VALIDATION_REPORT_2 Part B), rounded up to >= 0.1%"
+      },
+      "energy_resolution_pct": {
+        "value": 5.0,
+        "type": "shape (width)",
+        "source": "2x max over categories of |Delta sigma_eff/sigma_eff| from Z->ee (VALIDATION_REPORT_2 Part B), factor 2 for electron->photon extrapolation (documented choice, not independently validated), rounded up to >= 5%"
+      },
+      "simulation_stat_pct": {
+        "value": 0.36347489909918684,
+        "type": "normalization (statistical)",
+        "source": "sqrt(Sum w^2)/Sum(w), all 6 modes combined, 105-180 GeV, from this task's own effective-event-count calculation (Part 1)",
+        "detail": {
+          "N_total": 274.2152662105046,
+          "stat_uncertainty_abs": 0.9967036621731982,
+          "stat_uncertainty_relative_pct": 0.36347489909918684
+        }
+      }
+    }
+  },
+  "_meta": {
+    "luminosity_fb": 16.393380531,
+    "branching_ratio_Hgammagamma": 0.00227,
+    "fit_range_GeV": [
+      105.0,
+      180.0
+    ],
+    "part1_reproduction_of_validation_report_1_part_e": {
+      "per_label": {
+        "ggh": {
+          "ref_before_pu": 720.3171521947667,
+          "got_before_pu": 720.3173317823972,
+          "rel_diff_before_pu": 2.4931744302886593e-07,
+          "ref_after_pu": 719.1997788086004,
+          "got_after_pu": 719.1997788086006,
+          "rel_diff_after_pu": 3.161481442887689e-16
+        },
+        "vbf": {
+          "ref_before_pu": 55.98249920295657,
+          "got_before_pu": 55.982506978060215,
+          "rel_diff_before_pu": 1.3888453995143276e-07,
+          "ref_after_pu": 55.92042252185691,
+          "got_after_pu": 55.92042252185695,
+          "rel_diff_after_pu": 6.353159576739421e-16
+        },
+        "wplush": {
+          "ref_before_pu": 10.188092427769082,
+          "got_before_pu": 10.188094031294822,
+          "rel_diff_before_pu": 1.5739214696008708e-07,
+          "ref_after_pu": 10.159672523850322,
+          "got_after_pu": 10.159672523850322,
+          "rel_diff_after_pu": 0.0
+        },
+        "wminush": {
+          "ref_before_pu": 7.0876094804172185,
+          "got_before_pu": 7.087608783327987,
+          "rel_diff_before_pu": 9.835322242253677e-08,
+          "ref_after_pu": 7.070146347117252,
+          "got_after_pu": 7.070146347117252,
+          "rel_diff_after_pu": 0.0
+        },
+        "zh": {
+          "ref_before_pu": 9.79925555979135,
+          "got_before_pu": 9.799254755365777,
+          "rel_diff_before_pu": 8.209047803232713e-08,
+          "ref_after_pu": 9.76943182691887,
+          "got_after_pu": 9.769431826918867,
+          "rel_diff_after_pu": 3.6365612061607195e-16
+        },
+        "tth": {
+          "ref_before_pu": 6.711736086533821,
+          "got_before_pu": 6.711736428683512,
+          "rel_diff_before_pu": 5.097782248743286e-08,
+          "ref_after_pu": 6.659753335486874,
+          "got_after_pu": 6.659753335486874,
+          "rel_diff_after_pu": 0.0
+        }
+      },
+      "ref_total_before_pu": 810.0863449522348,
+      "ref_total_after_pu": 808.7792053638307,
+      "rel_diff_total_before_pu": 2.3183565030732292e-07,
+      "rel_diff_total_after_pu": 2.8113195039546996e-16,
+      "max_rel_diff_any_label": 2.4931744302886593e-07,
+      "all_within_0.1pct": true
+    },
+    "part1_effective_mc_events": {
+      "ggh": {
+        "inclusive": 212254.10167047454,
+        "per_category": {
+          "EBEB": 140137.0207921851,
+          "notEBEB": 72120.17343585969
+        }
+      },
+      "vbf": {
+        "inclusive": 77549.79590003155,
+        "per_category": {
+          "EBEB": 51638.832620330824,
+          "notEBEB": 25916.551831605553
+        }
+      },
+      "wplush": {
+        "inclusive": 48023.191837364495,
+        "per_category": {
+          "EBEB": 29029.182798142796,
+          "notEBEB": 18999.382762388937
+        }
+      },
+      "wminush": {
+        "inclusive": 47816.88583712405,
+        "per_category": {
+          "EBEB": 30749.153322804035,
+          "notEBEB": 17074.04833915628
+        }
+      },
+      "zh": {
+        "inclusive": 46853.92220430839,
+        "per_category": {
+          "EBEB": 29508.21354117462,
+          "notEBEB": 17353.949305485145
+        }
+      },
+      "tth": {
+        "inclusive": 1644.3966635773866,
+        "per_category": {
+          "EBEB": 1206.4940820734341,
+          "notEBEB": 440.3877088643444
+        }
+      }
+    },
+    "grand_total_signal_yield_105_180": 807.7966492004118
+  }
+}

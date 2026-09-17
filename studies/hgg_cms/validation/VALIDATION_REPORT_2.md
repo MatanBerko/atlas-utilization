@@ -276,6 +276,34 @@ normalization pulled by this locally steep component. This is exactly
 why leakage matters for the fit-range and bias-study decisions below,
 even though it doesn't fake a signal peak.
 
+### Update — 17 Sep 2026: correction — the single exponential above is a poor description
+
+As already flagged when it was fitted, the single exponential across all
+four windows does not describe the leakage shape well. Looking at just
+the three sub-115-GeV windows: the yield falls by a consistent factor of
+**≈0.59 per 5 GeV** (inclusive: 933.7/1,609.8 = 0.580, then
+568.9/933.7 = 0.609 — a steep, Z-tail-like component). Extrapolating
+*that* steep component alone to 115–135 GeV gives **≈730 events**
+(inclusive; ≈213 EBEB, ≈511 notEBEB) — well below the ≈1,790 the
+single-exponential fit gave above. The same steep-only component
+predicts only **≈100 events** in 135–180 GeV, against the **769
+actually measured** there. That is a factor of ~7.7 under-prediction,
+which means a second, much flatter component (the non-resonant
+high-mass Drell-Yan continuum, which does not fall off nearly as fast)
+must dominate by 135–180 GeV. A single exponential, fit across both
+regimes at once, ends up compromising between the two and is not a
+faithful description of either.
+
+**Revised bracket for the 115–135 GeV leakage estimate: roughly
+≈730 (steep-component-only) to ≈1,790 (single-exponential fit)
+events, inclusive** — a factor of ~2.5 wide, not a precise number. This
+does not change Part B's verdict above (leakage remains "consistent
+with... not fully explaining" the 100–105 GeV excess, for the same two
+caveats already given), but it does mean the previously-quoted ≈1,790
+estimate should not be read as more precise than it is, and it sharpens
+why the bias-study requirement below asks for the actual measured shape
+rather than any fitted formula.
+
 ### Fit-range decision (input to the background-model task)
 
 - **Default fit range: 105–180 GeV.** Excludes 100–105 GeV, the one
@@ -300,8 +328,18 @@ task makes the final call.
 The signal-extraction bias study must include a leakage-like component
 in its pseudo-data, not just the smooth QCD/γ+jet continuum:
 
-- **Shape**: the exponential fit above, `density(m) = A·exp(−k·m)`
-  (fitted A, k per category from this section).
+- **Shape**: **not** the fitted exponential above — per the correction
+  immediately above, a single exponential is a poor description (it
+  either over-predicts 115–135 GeV or under-predicts 135–180 GeV by a
+  large factor, depending which windows it favors). Instead, use the
+  **actual mass distribution of the leaked DY events**: the same
+  electronVeto-swapped H→γγ selection, histogrammed finely (1 GeV bins)
+  over 100–180 GeV per category, exported as a template by
+  `studies/hgg_cms/validation/zee/hgg_leakage_mass_template.py` (reads
+  the same already-parsed DY chunks as `hgg_leakage_estimate.py`, needs
+  no new download/re-parsing/`qsub`). This has not been run yet — see
+  the signal-model task's final message for the exact command to run it
+  on the cluster.
 - **Normalization**: centered on this section's DY-based N_expected
   estimate, **varied by ±50%** to bracket the systematic uncertainty
   discussed above (data/DY normalization mismatch + unvalidated
