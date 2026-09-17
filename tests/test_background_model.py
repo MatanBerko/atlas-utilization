@@ -323,11 +323,18 @@ class MergeBiasEligibilityTests(unittest.TestCase):
         ev = self.evaluate_test_function(grid, "laurent_2")
         self.assertFalse(ev["eligible"])
 
-    def test_min_toy_count_threshold_is_90pct_at_125_and_elsewhere(self):
+    def test_min_toy_count_threshold_is_90pct_of_each_cells_own_n_total(self):
+        # Generalized 18 Sep 2026 (Part 4 prep) from a {125: 900, default:
+        # 270} mass-keyed lookup to 90% of each cell's OWN n_total -- the
+        # two backward-compatible cases (1000 -> 900, 300 -> 270) must be
+        # numerically IDENTICAL to the old hardcoded values (no change to
+        # the already-committed 105-180 result), and the new case Part 4
+        # actually needs (500 toys, uniformly, including at 125 GeV) must
+        # now work instead of wrongly requiring 900 successes out of 500 toys.
         from studies.hgg_cms.background_model.cluster.merge_bias_results import _min_required_toys
-        self.assertEqual(_min_required_toys(125.0), 900)
-        self.assertEqual(_min_required_toys(115.0), 270)
-        self.assertEqual(_min_required_toys(135.0), 270)
+        self.assertEqual(_min_required_toys(1000), 900)  # was the m_H=125 case, 1000 toys
+        self.assertEqual(_min_required_toys(300), 270)   # was the "elsewhere" case, 300 toys
+        self.assertEqual(_min_required_toys(500), 450)   # Part 4's uniform toy count
 
     def test_borderline_flag_within_one_se_of_threshold(self):
         # ratio = mean_S/mean_sigma_S = 21/100 = 0.21; se_ratio = se_mean_S/mean_sigma_S = 2/100 = 0.02

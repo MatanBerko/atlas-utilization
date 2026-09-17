@@ -34,11 +34,17 @@ scanned mass:
 
   (1) RELIABILITY (added 18 Sep 2026, before any bias-study result
       existed): fail_fraction <= 0.05 in every cell, AND (checked
-      explicitly, not just inferred) at least 900/1000 successful toys
-      at m_H=125 GeV or 270/300 elsewhere. A function violating this in
-      ANY cell is INELIGIBLE for selection regardless of its spurious-
-      signal size -- its numbers are still reported, for information,
-      never hidden.
+      explicitly, not just inferred) at least 90% of THAT CELL'S OWN
+      toy count succeeded (900/1000 at m_H=125 GeV, 270/300 elsewhere in
+      the main 105-180 study; generalized 18 Sep 2026 to 90% of each
+      cell's own n_total, not a hardcoded {125: 900, default: 270}
+      lookup, after Part 4's 110-180 robustness check -- uniformly
+      >=500 toys, including at 125 GeV -- exposed that the old
+      mass-keyed lookup would have marked every Part-4 cell ineligible
+      regardless of actual reliability; see `_min_required_toys`'s own
+      docstring). A function violating this in ANY cell is INELIGIBLE
+      for selection regardless of its spurious-signal size -- its
+      numbers are still reported, for information, never hidden.
   (2) SPURIOUS SIGNAL (ATLAS-style; see G. Aad et al. (ATLAS),
       "Observation of a new particle...", Phys. Lett. B 716 (2012) 1,
       arXiv:1207.7214, and this project's own `studies/lr_toys/REPORT.md`
@@ -88,11 +94,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 
 PASS_THRESHOLD = 0.20
 MAX_FAIL_FRACTION = 0.05  # added 18 Sep 2026, before any real bias-study result existed
-MIN_SUCCESSFUL_TOYS = {125: 900, "default": 270}  # 90% of 1000 / 90% of 300 -- see module docstring
+MIN_SUCCESS_FRACTION = 0.90  # 90% of a cell's OWN n_total -- see module docstring and _min_required_toys
 DEFAULT_OUT_BASE = "/storage/agrp/berkom/atlas-utilization/output/hgg_bias"
 DEFAULT_MERGED_SUBDIR = "merged"
 REPO_ROOT = Path(__file__).resolve().parents[4]
@@ -132,8 +139,23 @@ def build_grid(job_outputs: list) -> dict:
     return grid
 
 
-def _min_required_toys(mass: float) -> int:
-    return MIN_SUCCESSFUL_TOYS[125] if int(round(mass)) == 125 else MIN_SUCCESSFUL_TOYS["default"]
+def _min_required_toys(n_total: int) -> int:
+    """FIXED 18 Sep 2026 (Part 4 prep): this used to be a {125: 900,
+    default: 270} lookup keyed on MASS, silently assuming every cell at
+    125 GeV has exactly 1000 toys and every other cell has exactly 300 --
+    true for the main 105-180 study, but WRONG for Part 4's 110-180
+    robustness check, which uses >=500 toys UNIFORMLY at every mass
+    (only m_H=125 is even scanned there) -- under the old lookup, a
+    500-toy Part 4 cell at 125 GeV would need 900 successes out of 500
+    toys, i.e. would be marked ineligible NO MATTER HOW RELIABLE the
+    fits actually were. Fixed to compute 90% of THIS CELL'S OWN n_total
+    directly -- the same 90% rule as before (900/1000 and 270/300 are
+    both exactly 90%), just no longer hardcoded to specific totals. This
+    does NOT change the already-computed/committed 105-180 result at
+    all: 0.9*1000=900 and 0.9*300=270 exactly, so every existing
+    eligibility verdict in bias_study_105_180_with_rerun1.json is
+    reproduced identically by this formula."""
+    return math.ceil(MIN_SUCCESS_FRACTION * n_total)
 
 
 def evaluate_test_function(grid_cat: dict, test_function: str) -> dict:
@@ -169,7 +191,7 @@ def evaluate_test_function(grid_cat: dict, test_function: str) -> dict:
             # which never emits "n_used").
             n_used = summary.get("n_used", n_total - n_failed)
             fail_fraction = (n_failed / n_total) if n_total else 1.0
-            min_required = _min_required_toys(mass)
+            min_required = _min_required_toys(n_total)
             # Two checks, kept SEPARATE on purpose (see comment above):
             # fail_fraction<=0.05 already implies n_used is comfortably
             # above these floors (95% >= 90%) IF the two numbers agree --

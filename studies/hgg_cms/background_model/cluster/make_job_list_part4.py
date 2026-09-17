@@ -1,26 +1,32 @@
 #!/usr/bin/env python
 """
-Background-model task, Part 4: generate the REDUCED bias-study job list
-on the 110-180 GeV range -- nominal-leakage truths only (all 4 truth
-families, since Part 2's 110-180 order selection dropped none), m_H=125
-only, >= 500 toys, restricted to a specific set of test functions (the
-chosen function from the main 105-180 study plus its two runners-up --
-NOT knowable until that study's `merge_bias_results.py` output exists).
+Background-model task, Part 4: generate the REDUCED robustness bias-
+study job list on the 110-180 GeV range -- nominal-leakage truths only
+(all 4 truth families, since Part 2's 110-180 order selection dropped
+none), m_H=125 only, >= 500 toys, one job per (category, truth family)
+cell, each job evaluating the category's own set of test functions
+(chosen function + runner-up(s)).
 
-ELIGIBILITY RULE (added 18 Sep 2026, see merge_bias_results.py's module
-docstring and BACKGROUND_MODEL_REPORT.md's "Fit-reliability eligibility
-rule" section): "chosen function + 2 runners-up" MUST be read from the
-merged 105-180 result's `per_category.<cat>.selection.passing_functions_ranked`
-list -- that list already excludes any function marked ineligible on
-fit-reliability grounds (fail_fraction > 0.05, or too few successful
-toys, in ANY cell), not just functions failing the 0.20 spurious-signal
-ratio. Do NOT pick runners-up from `worst_ratio_by_test_function` (that
-dict lists EVERY test function, including ineligible ones, purely for
-visibility) -- only `passing_functions_ranked` reflects both criteria.
+TEST FUNCTIONS PER CATEGORY (fixed here, read directly from the merged
+105-180-with-rerun1 result's `per_category.<cat>.selection`
+`fallback_c_if_applied.ranked_eligible_by_worst_ratio` -- the ranking
+that already reflects BOTH the fit-reliability eligibility rule and the
+0.20xsigma_S criterion, NOT `worst_ratio_by_test_function`/
+`candidate_summary`, which list every candidate including ineligible
+ones; see `BACKGROUND_MODEL_REPORT.md`'s "Human decision after rerun 1"
+section for the underlying numbers):
 
-Usage (fill in --test-functions from the merged 105-180 result's
-`passing_functions_ranked` once available -- see BACKGROUND_MODEL_REPORT.md
-Part 4):
+  EBEB ranked-eligible:    bernstein_6, bernstein_5, expsum_3, bernstein_4, laurent_2, powersum_1
+    -> chosen + 2 runners-up = bernstein_6, bernstein_5, expsum_3
+  notEBEB ranked-eligible: bernstein_6, bernstein_5   (only 2 eligible candidates total)
+    -> chosen + runner-up(s) = bernstein_6, bernstein_5 -- ONLY ONE runner-up
+       exists for notEBEB (bernstein_7 and everything else is ineligible
+       there -- see the same decision section); this is NOT an error,
+       just fewer candidates than the "2 runners-up" plan assumed when
+       more than 2 candidates are eligible. Recorded explicitly, not
+       silently padded with something arbitrary.
+
+Usage:
     python studies/hgg_cms/background_model/cluster/make_job_list_part4.py \\
         --order-selection-json studies/hgg_cms/background_model/results/order_selection_110_180.json \\
         --out /tmp/job_list_110_180_part4.txt
@@ -36,6 +42,12 @@ TRUTH_FAMILIES = ["bernstein", "expsum", "powersum", "laurent"]
 N_TOYS = 500
 MASS = 125
 SEED_BASE = 20260918900
+
+# Fixed from the real merged 105-180-with-rerun1 result -- see module docstring.
+TEST_FUNCTIONS_PER_CATEGORY = {
+    "EBEB": "bernstein:6,bernstein:5,expsum:3",
+    "notEBEB": "bernstein:6,bernstein:5",
+}
 
 
 def main():
@@ -54,16 +66,17 @@ def main():
                 print(f"skipping {cat}/{fam} as a truth model: dropped (fails GOF everywhere)")
                 continue
             seed = SEED_BASE + idx
-            lines.append(f"{cat} {fam} nominal {MASS} {N_TOYS} {seed}")
+            tfs = TEST_FUNCTIONS_PER_CATEGORY[cat]
+            lines.append(f"{cat} {fam} nominal {MASS} {N_TOYS} {seed} {tfs}")
             idx += 1
 
     Path(args.out).write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"wrote {len(lines)} jobs to {args.out}")
     print(f"qsub array range: -J 1-{len(lines)}")
-    print("Remember to pass -v TEST_FUNCTIONS=<family:order,family:order,family:order> "
-          "(the chosen function + 2 runners-up, taken from the merged 105-180 result's "
-          "per_category.<cat>.selection.passing_functions_ranked -- NOT worst_ratio_by_test_function, "
-          "which includes ineligible functions too) to qsub.")
+    for cat, tfs in TEST_FUNCTIONS_PER_CATEGORY.items():
+        n = len(tfs.split(","))
+        print(f"  {cat}: {n} test function(s) per job -- {tfs}"
+              + ("" if n >= 3 else "  (fewer than chosen+2 runners-up: only this many eligible candidates exist)"))
 
 
 if __name__ == "__main__":
