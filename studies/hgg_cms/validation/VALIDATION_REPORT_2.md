@@ -22,8 +22,10 @@ python -m studies.hgg_cms.validation.zee.mass90_sculpting_demo
 ```
 Each writes its own `zee/results/<name>_results.json` (or
 `pileup_weights.json`) and PNG(s) under `zee/results/plots/`. Item 5
-(electron-veto leakage) needs one additional command run **on the
-cluster** — see Part E below; it is not included in the list above.
+(electron-veto leakage) needed one additional command run **on the
+cluster**; that command has now been run — see Part E below — and its
+output is committed at
+`zee/results/hgg_leakage_estimate_results.json`.
 
 All criteria in this report (§B's ±0.5%/±10% pass/fail bands, §C's
 [0.7, 1.3] flag range, §E's fully/partly/no thresholds) were fixed in the
@@ -158,7 +160,7 @@ task would need if it chooses to apply one.
 
 ---
 
-## E — Electron-veto leakage into the H→γγ sample — **PENDING (needs one cluster command)**
+## E — Electron-veto leakage into the H→γγ sample — **COMPLETE**
 
 Goal: using DY events that pass the *normal* H→γγ selection
 (`electronVeto == True`, same trigger/photon-ID/trigger-mimicking/scaled
@@ -168,52 +170,162 @@ number of such events landing in the H→γγ *data* sample's 100–105,
 against `VALIDATION_REPORT_1.md` Part B's ~1,604-event excess in
 100–105 GeV.
 
-**This could not be completed in this pass.** The already-completed DY
-cluster run computed a leakage estimate inline
-(`run_zee_selection_on_chunks.py`'s `compute_hgg_veto_leakage()`), but
-only for two coarse windows (100–105, 105–115 combined) with no category
-split — the four windows and per-category split this task actually needs
-were added to that function *after* the DY run had already finished, and
-the underlying `electronVeto==True` population was never written to disk
-(by design — see that function's own docstring). Re-submitting the whole
-DY run just to get finer binning is unnecessary: the already-parsed chunk
-files from the completed run are still sitting on the cluster, so a new
-script, `studies/hgg_cms/validation/zee/hgg_leakage_estimate.py`, reads
-those same chunks and recomputes `compute_hgg_veto_leakage()` fresh, now
-with the full window/category set. It needs no new download, no
-re-parsing, and no `qsub` — the same "runs in a couple of minutes on the
-analysis node with `nice`" category as `merge_outputs.py`. It has 3 unit
-tests passing (`tests/test_zee_validation.py::HggLeakageRecomputeTests`)
-against synthetic fixtures, and the underlying per-chunk computation has
-its own round-trip test
-(`tests/test_run_zee_selection_on_chunks_roundtrip.py::test_dy_chunk_computes_veto_leakage_estimate`)
-checking all 4 windows × 3 categories × the √Σw² uncertainty inputs.
+### Update — 17 Sep 2026: cluster command run, results below
 
-**Please run this yourself** (no SSH/qsub from me, per the standing
-rule) and paste back the output JSON:
-```
-nice python studies/hgg_cms/validation/zee/hgg_leakage_estimate.py \
-    --dy-jobs-base /storage/agrp/berkom/atlas-utilization/output/hgg_zee/dy_full \
-    --out /storage/agrp/berkom/atlas-utilization/output/hgg_zee/merged/hgg_leakage_estimate_results.json
-```
-Then copy just that one JSON file back (no need to copy the 41 job
-directories). Once it's back I'll fill in this section's table, the
-fully/partly/no verdict, and finalize Part B's dated update in
-`VALIDATION_REPORT_1.md` below.
+`studies/hgg_cms/validation/zee/hgg_leakage_estimate.py` was run over all
+41 DY jobs (no missing chunks, no missing sumw — `missing_chunks_jobs`
+and `missing_sumw_jobs` both empty in the output JSON). Output copied
+back to `studies/hgg_cms/validation/zee/results/hgg_leakage_estimate_results.json`.
 
-**Interim fit-range recommendation** (based on currently available
-evidence only — Part B's own power-law-vs-exponential extrapolation
-result, not yet the leakage measurement): **start the background-model
-fit at 105 GeV, not 100 GeV.** Reasoning: 100–105 GeV is the one window
-`VALIDATION_REPORT_1.md` Part B explicitly flagged (+4.2σ above even the
-better-fitting power-law extrapolation, χ²/ndf=1.10 in-range); leakage is
-a physically plausible, not-yet-ruled-out contributor to exactly that
-excess, and 105 GeV is a boundary this study already treats as a natural
-cut (Part B's own sideband fit region starts there). 110 GeV is not
-recommended as a default — it would discard a clean window unnecessarily
-unless the leakage measurement, once available, shows leakage also
-extends materially into 105–110 GeV, in which case this recommendation
-should be revisited.
+**Expected leakage (N_expected ± statistical uncertainty):**
+
+| window | inclusive | EBEB | notEBEB |
+|---|---:|---:|---:|
+| 100–105 GeV | 1,609.8 ± 71.5 | 432.8 ± 39.1 | 1,176.9 ± 59.9 |
+| 105–110 GeV | 933.7 ± 55.3 | 274.1 ± 30.1 | 659.6 ± 46.4 |
+| 110–115 GeV | 568.9 ± 42.8 | 154.6 ± 22.3 | 414.3 ± 36.6 |
+| 135–180 GeV | 768.8 ± 51.4 | 220.5 ± 27.4 | 548.3 ± 43.5 |
+
+The script's own comparison block reports the 100–105 GeV inclusive
+leakage (1,609.8 ± 71.5) against Part B's ~1,604-event excess and labels
+this "fully" explained (ratio 1.004). **That verdict label is too strong
+and is not adopted as-is below** — see the two caveats immediately
+following.
+
+**Verdict: consistent with electron-veto leakage being the cause of the
+100–105 GeV excess — not "fully explained."** The numerical match is
+close, but two things keep this from being an independent confirmation:
+
+1. **The comparison isn't independent of itself.** Leakage doesn't only
+   land in 100–105 GeV — it also populates 105–110, 110–115 and 135–180
+   GeV, which is exactly the sideband region Part B's own extrapolation
+   was fit to (105–115 ∪ 135–180). Summing the three sideband windows
+   above: 933.7 + 568.9 + 768.8 ≈ **2,271 events** of leakage sitting
+   inside the very fit region used to predict the "expected" 100–105
+   count that the excess is measured against. If leakage is real, it
+   biases that extrapolation's baseline upward too, so the 1,604-event
+   excess and the 1,609.8-event leakage estimate are not two independent
+   numbers being compared — the same physical effect partially
+   contaminates both sides of the comparison. This doesn't invalidate
+   the leakage explanation; it just means the closeness of the match
+   isn't as strong a confirmation as it looks.
+2. **The DY-based prediction carries systematic uncertainty well beyond
+   its quoted statistical error, and that systematic is not quantified
+   here.** Two concrete sources, both already on record in this report:
+   - Part C's Z→ee data/DY normalization ratio is **0.83** (inclusive)
+     *without* any electron-ID or trigger scale factors applied — i.e.
+     the DY simulation used for this leakage estimate is known to be off
+     from data by ~17% in the *opposite* direction (DY over-predicts
+     Z→ee) in the region it's best measured. Applying that same
+     normalization to the leakage estimate is an extrapolation of a
+     known ~15–20% mismodeling into a kinematic region (real electrons
+     faking `electronVeto==True`) that has no direct data control here.
+   - The `electronVeto` inefficiency for **real electrons** (the actual
+     physical quantity driving this leakage) is not validated against
+     data anywhere in this study — everything above is DY simulation's
+     own veto response, taken at face value.
+
+   Combining these, a **rough systematic uncertainty of order 20–50% on
+   the leakage normalization** (clearly a rough estimate, not a
+   measurement — no dedicated systematic study was performed) is a
+   reasonable working assumption. At the low end (+20%) the leakage
+   estimate would still cover most of the excess; at the high end
+   (−50%) it would cover roughly half. Either way it remains a
+   physically real and plausible contributor of the right order of
+   magnitude — just not a number precise enough to claim the excess is
+   *fully* accounted for.
+
+### Estimated leakage shape in 115–135 GeV (from an exponential fit — an estimate, not a measurement)
+
+The four measured windows (100–105, 105–110, 110–115, 135–180 GeV) were
+fit as event density (N_expected / window width) to a simple exponential
+in mass, `density(m) = A·exp(−k·m)`, by weighted least squares in
+log-space (weights = 1/σ_ln², propagating each window's quoted
+statistical uncertainty). This is a 4-point fit to 2 parameters (2 dof)
+so it should be read as an order-of-magnitude estimate, not a precision
+result — and the fit is visibly imperfect (χ²/ndf well above 1 in all
+three categories, largely because the 135–180 GeV bin is 9× wider than
+the other three and a single exponential's curvature isn't exactly
+matched by that bin's width-averaged density).
+
+Integrating the fitted exponential over 115–135 GeV:
+
+| category | estimated N_expected, 115–135 GeV |
+|---|---:|
+| inclusive | ≈ 1,790 ± 60 (fit-propagated) |
+| EBEB | ≈ 500 ± 30 (fit-propagated) |
+| notEBEB | ≈ 1,290 ± 50 (fit-propagated) |
+
+(uncertainties from propagating the fit's parameter covariance only —
+they do not include the systematic on the overall DY normalization
+discussed above, which dominates). Take this as a rough estimate of the
+scale and shape of leakage under the blinded peak, not a precise
+prediction.
+
+**Implication for the background-model task**: this leakage component is
+smooth and non-resonant — it does not produce a peak or bump, so a smooth
+background function fit across the blinded region will absorb most of
+it, the same way it absorbs the rest of the QCD/γ+jet continuum. What it
+does add is **curvature**: the fit above shows leakage falls off steeply
+between 100 and 115 GeV (density drops by roughly a factor of ~3 across
+just that 15 GeV span in every category), which is a much steeper local
+slope than the smooth QCD/γ+jet continuum alone. A background function
+with too little shape freedom near the low edge could show larger
+residuals there, or (if fit including 100–105 GeV) have its overall
+normalization pulled by this locally steep component. This is exactly
+why leakage matters for the fit-range and bias-study decisions below,
+even though it doesn't fake a signal peak.
+
+### Fit-range decision (input to the background-model task)
+
+- **Default fit range: 105–180 GeV.** Excludes 100–105 GeV, the one
+  window Part B flagged (+4.2σ above even the better power-law
+  extrapolation) and where leakage is largest and steepest.
+- **Pre-declared robustness variation: 110–180 GeV.** To be run
+  alongside the default as a systematic cross-check — if the extracted
+  background (and any derived signal yield) is stable between 105–180
+  and 110–180, that's evidence the 105–110 GeV window isn't distorting
+  the fit; if it shifts materially, that's itself informative about how
+  much residual leakage curvature leaks past 105 GeV.
+- 100 GeV as a fit-range floor is **not recommended**, consistent with
+  every prior recommendation in this study — leakage is largest and
+  steepest there, precisely where a smooth function has the least
+  ability to distinguish it from noise.
+
+This decision point is recorded here as an input; the background-model
+task makes the final call.
+
+### Bias-study requirement (recorded for the next task)
+
+The signal-extraction bias study must include a leakage-like component
+in its pseudo-data, not just the smooth QCD/γ+jet continuum:
+
+- **Shape**: the exponential fit above, `density(m) = A·exp(−k·m)`
+  (fitted A, k per category from this section).
+- **Normalization**: centered on this section's DY-based N_expected
+  estimate, **varied by ±50%** to bracket the systematic uncertainty
+  discussed above (data/DY normalization mismatch + unvalidated
+  electron-veto inefficiency for real electrons).
+- **Where it matters most**: candidate background functions must be
+  stress-tested against this pseudo-data **especially in notEBEB**,
+  where roughly **72%** of the total leakage across all four measured
+  windows lands (2,799 of 3,881 events summed over the four windows,
+  notEBEB vs. inclusive) — a materially larger fraction than notEBEB's
+  ~50% share of the inclusive sideband population (Part F of
+  `VALIDATION_REPORT_1.md`), so a background function that looks
+  adequate inclusively could still be biased specifically in the
+  notEBEB category.
+
+### Other results recorded here for the signal-model task
+
+- **Energy scale/resolution (Part B above): PASS in all three
+  categories.** No energy-scale correction or extra smearing is needed
+  for the signal model.
+- **Diphoton trigger data/DY ratios (Part D above): EBEB 1.0229 ±
+  0.0008, notEBEB 0.9705 ± 0.0016.** These are candidate multiplicative
+  trigger scale factors for the expected signal yield
+  (`VALIDATION_REPORT_1.md` Part E). Whether to apply them is a decision
+  for the signal-model task, not this one.
 
 ---
 
@@ -245,7 +357,7 @@ candidate (not the leading one) for its own 100–105 GeV excess. Plot:
 |---|---|---|
 | B (energy scale/resolution) | none | all three categories PASS both pre-set criteria |
 | C (normalization) | none | all three ratios inside [0.7, 1.3] |
-| E (electron-veto leakage) | **pending** | needs one cluster command (above) before Part B of `VALIDATION_REPORT_1.md` can be finalized |
+| E (electron-veto leakage) | informational — **complete** | leakage is consistent with being the cause of the 100–105 GeV excess (not "fully" — see Part E's two caveats: sideband contamination of the comparison baseline, and an unquantified ~20–50% systematic on the DY normalization); feeds fit-range and bias-study decisions for the background-model task |
 
 Nothing else raised a flag. No H→γγ blind-window data was read, printed,
 or plotted while producing this report (this report never touches

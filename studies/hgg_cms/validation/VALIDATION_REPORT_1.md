@@ -158,6 +158,46 @@ over 105 GeV unless the leakage measurement, once available, shows
 leakage also extends materially into 105–110 GeV — revisit this
 recommendation once that number exists.
 
+### Update — 17 Sep 2026 (leakage measurement complete)
+
+The leakage measurement referenced immediately above has now been run
+(`studies/hgg_cms/validation/zee/hgg_leakage_estimate.py`, all 41 DY
+jobs, no missing chunks or sumw). Full table, discussion, and the
+115–135 GeV shape estimate are in `VALIDATION_REPORT_2.md` Part E; only
+the bottom-line conclusion is repeated here.
+
+Expected electron-veto leakage, inclusive (N_expected ± stat.):
+100–105 GeV 1,609.8 ± 71.5; 105–110 GeV 933.7 ± 55.3; 110–115 GeV 568.9
+± 42.8; 135–180 GeV 768.8 ± 51.4 (EBEB/notEBEB split in
+`VALIDATION_REPORT_2.md` Part E).
+
+**Verdict: consistent with electron-veto leakage being the cause of the
+100–105 GeV excess flagged above — not "fully explained."** The
+100–105 GeV leakage estimate (1,609.8 ± 71.5) is numerically very close
+to this section's ~1,604-event excess, but two caveats keep this from
+being an independent confirmation, both detailed in
+`VALIDATION_REPORT_2.md` Part E:
+
+1. Leakage also lands in 105–110, 110–115 and 135–180 GeV — the same
+   sideband region this section's own extrapolation was fit to
+   (≈2,271 combined events of leakage sitting inside that fit region),
+   so the "excess" being compared against isn't independent of the
+   leakage that's supposedly explaining it.
+2. The DY-based leakage prediction carries a systematic uncertainty well
+   beyond its quoted statistical error — the Z→ee data/DY normalization
+   ratio is 0.83 without electron-ID/trigger scale factors
+   (`VALIDATION_REPORT_2.md` Part C), and the electron-veto inefficiency
+   for real electrons is not validated against data anywhere in this
+   study. A rough (not measured) systematic of order 20–50% on the
+   leakage normalization is a reasonable working assumption.
+
+Net effect on the fit-range recommendation above: it is now **upgraded
+from interim to a decision recorded as input to the background-model
+task**: default fit range 105–180 GeV, with 110–180 GeV as a
+pre-declared robustness variation. See `VALIDATION_REPORT_2.md` Part E
+for the full reasoning, the estimated leakage shape under the blinded
+peak (115–135 GeV), and the bias-study requirement that follows from it.
+
 ## C — Run-by-run stability
 
 156 certified runs (Run2016G 278820–280385 + Run2016H 280919–284044), all
@@ -313,7 +353,7 @@ full statistics.)
 
 | check | flag | severity |
 |---|---|---|
-| B (turn-on) | possible turn-on/edge effect, 100–105 GeV | informational — feeds the background-model task's fit-range choice, not a defect; electron-veto leakage from Z→ee added as a candidate explanation — Z→ee run has completed (17 Sep 2026 update above) but the leakage measurement itself is still pending one more cluster command; interim recommendation is to start the background fit at 105 GeV |
+| B (turn-on) | possible turn-on/edge effect, 100–105 GeV | informational — feeds the background-model task's fit-range choice, not a defect; electron-veto leakage from Z→ee, measured (17 Sep 2026 update above), is consistent with being the cause (not "fully" — see caveats above and `VALIDATION_REPORT_2.md` Part E); fit-range decision: default 105–180 GeV, 110–180 GeV pre-declared robustness variation |
 | C (run stability) | χ²/ndf=2.48, 12/156 runs >3σ | mild — mostly low-luminosity-run statistics; worth a light mention if it recurs later |
 
 Nothing else raised a flag. No blinding violation occurred at any point
