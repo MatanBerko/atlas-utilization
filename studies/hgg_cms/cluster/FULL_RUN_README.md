@@ -27,6 +27,24 @@ is busy when you submit, they may queue for a while. This is an
 observation from the pilot run, not a documented site guarantee -- if
 routing behavior seems to have changed, that's worth noting.
 
+## Every PBS job must request `-l io=<value>`
+
+**Added 18 Sep 2026, after a real submission failure**: this cluster's
+scheduler rejects a job outright at submission time (`qsub` error "Job
+violates queue and/or server resource limits") if it has no `-l io=...`
+resource request, REGARDLESS of walltime, mem, or anything else about
+the job -- diagnosed with small test jobs (`pbs_hgg_bias_array.sh`,
+`studies/hgg_cms/background_model/cluster/`, was submitted without one
+and rejected; adding `-l io=5` alone, with nothing else changed, was
+accepted). This is not documented anywhere on this project's side
+before now, so every new PBS script must include an explicit `-l io=`
+line (the existing scripts already have one, at various values 5-30 --
+match the I/O this task's job actually does; a small value like `io=5`
+is fine for a job that reads a few small JSON/config files rather than
+streaming ROOT files). `tests/test_pbs_scripts.py` enforces this: every
+`pbs_*.sh` file under `studies/hgg_cms/` must contain an `#PBS -l io=`
+line, or the test fails and names the offending file.
+
 ## Launch commands
 
 ```bash

@@ -23,6 +23,19 @@
 # wall time on this one laptop -- over the ~3 hour budget this task set,
 # which is exactly why this runs as 120 independent ~2-7 minute cluster
 # jobs instead of one long local loop.
+#
+# UPDATE (18 Sep 2026): the FIRST real submission of this script was
+# rejected outright by the scheduler ("Job violates queue and/or server
+# resource limits") before ever running -- diagnosed with small test
+# jobs to be this cluster's undocumented (from this project's side)
+# requirement that EVERY job request an -l io=<MB/s> value; jobs without
+# one are rejected regardless of walltime/mem, jobs with one (even a
+# small "-l io=5") are accepted. Every OTHER PBS script in this repo
+# already had an -l io request (see studies/hgg_cms/cluster/*.sh) --
+# this one was simply missed when it was written. See
+# studies/hgg_cms/cluster/FULL_RUN_README.md for the general rule, now
+# recorded there, and tests/test_pbs_scripts.py for a unit test that
+# checks every PBS script under studies/hgg_cms has one.
 # ---------------------------------------------------------------------------
 #PBS -N hgg_bias
 #PBS -q N
@@ -30,6 +43,7 @@
 #PBS -S /bin/bash
 #PBS -l select=1:ncpus=1:mem=4gb
 #PBS -l walltime=00:30:00
+#PBS -l io=5
 #PBS -o /storage/agrp/berkom/atlas-utilization/logs/hgg_bias/hgg_bias_^array_index^.out
 #PBS -e /storage/agrp/berkom/atlas-utilization/logs/hgg_bias/hgg_bias_^array_index^.err
 
