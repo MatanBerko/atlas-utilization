@@ -59,6 +59,7 @@ LOCAL_Z, LOCAL_Z_EXP = 4.13, 3.91
 MU_HAT, MU_UP, MU_DOWN = 1.06, 0.37, 0.30
 Z_EBEB, Z_NOTEBEB = 4.097, 0.869
 LUMI_FB = 16.4
+N_CANDIDATES = 261_543  # UNBLINDED_RESULT.md Sec. 0 / Sec. 8 -- total selected diphoton pairs
 
 
 def load_real_data_counts():
@@ -191,7 +192,8 @@ def draw_base_figure(d, figsize=(7.2, 8.4)):
     ax1.plot(centers, d["sb_coarse"], color="#c1272d", ls="-", lw=1.9, zorder=3, label="Signal + background fit")
     ax1.errorbar(centers, d["data_coarse"], yerr=d["data_err"], fmt="ko", ms=4, lw=1.2,
                  capsize=0, zorder=4, label="Data (S/B-weighted)")
-    ax1.axvspan(115, 135, color="gray", alpha=0.07, lw=0, zorder=0)
+    ax1.axvspan(115, 135, color="gray", alpha=0.07, lw=0, zorder=0,
+                label="Blinded 115–135 GeV (opened only after pre-registration)")
     ax1.set_ylabel(f"S/B-weighted events / {width:.0f} GeV")
     ax1.set_xlim(105, 180)
     ax1.set_ylim(bottom=0, top=d["data_coarse"].max() * 1.30)
@@ -207,6 +209,7 @@ def draw_base_figure(d, figsize=(7.2, 8.4)):
 
     box_text = (
         r"$H\rightarrow\gamma\gamma$" "\n"
+        f"{N_CANDIDATES:,} diphoton candidates" "\n"
         f"Local significance: {LOCAL_Z:.2f}" r"$\sigma$" f" (expected {LOCAL_Z_EXP:.2f}" r"$\sigma$" ")\n"
         r"$\mu$ = " f"{MU_HAT:.2f}" r"$^{+%.2f}_{-%.2f}$" % (MU_UP, MU_DOWN) + "\n"
         r"$m_H$ fixed to 125.09 GeV (primary fit)"
@@ -232,13 +235,16 @@ def draw_base_figure(d, figsize=(7.2, 8.4)):
 
 def build_caption(weights):
     return (
-        f"S/B-weighted combination of the EBEB and notEBEB categories, weight w_c = S_c/B_c at the "
-        f"signal peak (m_H=125.09 GeV) from the same signal+background fit: EBEB w={weights['EBEB']:.3f}, "
-        f"notEBEB w={weights['notEBEB']:.3f} (identical weighting to spectrum_combined_SB_weighted.png). "
-        f"1 GeV bins (a 2 GeV version is kept as an alternative). Data error bars: propagated Poisson "
-        f"uncertainty on the weighted sum, sigma = sqrt(sum_c w_c^2 * n_c). Background band: +-1sigma "
-        f"linear error propagation through the fitted Bernstein background coefficients using the S+B "
-        f"fit's own Hesse covariance matrix."
+        f"{N_CANDIDATES:,} selected diphoton candidates. S/B-weighted combination of the EBEB and "
+        f"notEBEB categories, weight w_c = S_c/B_c at the signal peak (m_H=125.09 GeV) from the same "
+        f"signal+background fit: EBEB w={weights['EBEB']:.3f}, notEBEB w={weights['notEBEB']:.3f} "
+        f"(identical weighting to spectrum_combined_SB_weighted.png). 1 GeV bins (a 2 GeV version is "
+        f"kept as an alternative). Data error bars: propagated Poisson uncertainty on the weighted sum, "
+        f"sigma = sqrt(sum_c w_c^2 * n_c). Background band: +-1sigma linear error propagation through "
+        f"the fitted Bernstein background coefficients using the S+B fit's own Hesse covariance matrix. "
+        f"The shaded grey vertical band at 115-135 GeV marks the signal region that was blinded "
+        f"throughout the analysis (model, fit procedure, and reporting thresholds all frozen beforehand) "
+        f"and opened only after pre-registration -- see UNBLINDING_PLAN.md / FINAL_REPORT.md Section 8."
     )
 
 

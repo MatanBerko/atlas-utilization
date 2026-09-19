@@ -36,9 +36,9 @@ photons in the ECAL barrel), which alone gives Z = 4.10σ, while the
 notEBEB category (at least one photon outside the barrel) gives only Z
 = 0.87σ. Six pre-declared robustness checks (background-function
 choice, fit range, spurious-signal terms, per-category, per-run-period,
-energy scale/resolution) all move the result within a Z range of
-roughly 2.6–4.9σ without ever flipping sign or direction — see Section
-9.
+energy scale/resolution) all give a positive Z, ranging from 0.87σ (the
+notEBEB-alone check just mentioned) up to 4.91σ (an alternative
+background function), and none reverses the result — see Section 9.
 
 **What this is not**: a CMS result, a publication, or a competitor to
 the actual CMS/ATLAS Higgs discovery and precision measurements. It
@@ -120,9 +120,13 @@ candidate pair; (4) scaled-pT requirements, pT,lead > m_γγ/3 and
 pT,sublead > m_γγ/4; (5) a 100–180 GeV mass window (note: the
 statistical fit itself uses a narrower 105–180 GeV range, so there is
 a small 100–105 GeV margin that is selected but not fit); (6) category
-assignment. No numeric event-count-per-cut table exists in the repo —
-only the final selected counts are reported: **261,543 total pairs**
-(EBEB 129,954, notEBEB 131,589).
+assignment. The pipeline's own merge step records a 3-stage event-count
+cutflow (`merge_summary_data.json`, referenced by
+`validation/VALIDATION_REPORT_1.md`'s opening paragraph): **1,009,767**
+input events across all 133 files → **922,091** with at least two
+trigger-mimicking-passing photons → **261,543** final selected pairs
+(EBEB 129,954, notEBEB 131,589), split into 182,551 sideband + 78,992
+blinded-signal-region events.
 
 **Trigger-mimicking cuts:** since this is Open Data with no ability to
 re-run the real CMS trigger, offline shower-shape and isolation cuts
@@ -458,8 +462,9 @@ tracked down properly rather than explained away:
    first attempt at this fix was itself caught and corrected).
 3. **The real pull-width diagnosis.** With those fixes in place, row 10
    still nominally failed (pull width 0.58–0.80 against a required
-   1.00±0.05), but only ~9–13% of toys had a usable HESSE uncertainty
-   at all. The hypothesis: fixed-nuisance toys have a μ̂ spread that
+   1.00±0.05), but only ~7–12% of toys had a usable HESSE uncertainty
+   at all (243/174/145 of ~2000 toys per μ_true — the source report's
+   own headline figure for this is "~9%"). The hypothesis: fixed-nuisance toys have a μ̂ spread that
    reflects only the statistical uncertainty, while the fitted μ_err
    reflects the *full* uncertainty (all nuisances floating) — an
    apples-to-oranges comparison that mechanically under-disperses the
@@ -782,7 +787,9 @@ course of this project):
 |---|---|
 | Main data + signal selection | 133 data-array subjobs + 6 signal jobs (139 total) |
 | Z→ee validation control sample | 192 subjobs (151 SingleElectron + 41 DY), after the trigger-stream fix below |
-| Background bias study | 500 toys per line-config across the family/order/leakage/mass grid |
+| Background bias study, main grid | 120 jobs (4 truth families × 3 leakage variants × 5 masses × 2 categories; 1000 toys at m_H=125 GeV, 300 toys at each other mass, per cell) |
+| Background bias study, rerun 1 | 120 jobs (one new candidate per category, same 60 cells) |
+| Background bias study, 110–180 GeV robustness check | 8 jobs, 500 toys each |
 | Stats toy validation (original) | 2000 (bkg_only) + 3×1000 (sig_injection) + 1000 (spurious_check) + 1000 (mass_scan_bkg) |
 | Stats toy validation (pull-width rerun) | 124 sub-jobs (1020+1000+1000 toys across μ_true=0.5/1/2) |
 | Stats randomized-nuisance decisive check | 20 sub-jobs, 500 toys |
