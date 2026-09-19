@@ -684,18 +684,44 @@ with roughly half the data each, but agree in direction. See
 
 ![money plot](stats/results/plots/final/hgg_money_plot.png)
 
-`stats/results/plots/final/hgg_money_plot.png` / `.pdf` — S/B-weighted
-combination of EBEB and notEBEB (weights identical to the earlier
-`spectrum_combined_SB_weighted.png`: EBEB w=0.076, notEBEB w=0.022),
-1 GeV bins, with the signal+background fit (solid red), the background
-component of that same fit (dashed blue) with its ±1σ band from the
-fit's own covariance matrix, and the background-subtracted residual in
-the lower panel. Per-category significance (EBEB 4.10σ, notEBEB
-0.87σ) is shown separately in
-`stats/results/plots/final/hgg_per_category_significance.png` (an
-inset was tried and rejected — it covered real data points near
-m_γγ≈150–165 GeV, so a separate figure was used instead, per this
-task's own fallback instruction).
+`stats/results/plots/final/hgg_money_plot.png` / `.pdf` — styled after
+the calmer ATLAS H→γγ convention (cf. `studies/atlas_hgg_repro`'s own
+reproduction of arXiv:1207.7214 Fig. 4(a), matching the arXiv:2501.05603
+Fig. 15 target style): S/B-weighted combination of EBEB and notEBEB
+(weights identical to `spectrum_combined_SB_weighted.png`: EBEB
+w=0.076, notEBEB w=0.022), **2 GeV display bins**, **105–160 GeV
+display window** (the fit itself is always over the full 105–180 GeV
+range at 0.25 GeV bins — only the display choice differs). Top panel:
+the signal+background fit (solid red), the background component of
+that same fit (dashed blue) with its ±1σ band from the fit's own
+covariance matrix, and the data. Middle panel: the background-
+subtracted residual. **Bottom panel** (new): the observed local
+significance Z vs m_H over the pre-declared 110–150 GeV scan range,
+from the already-computed, already-stored mass scan (Section 9.2) —
+not recomputed, blank outside 110–150 even though the display window
+is wider. No shaded blinded-region band is drawn on this version (a
+deliberate calmer-style choice); the blinding fact itself is stated in
+the caption and in Section 8, not shown graphically.
+
+**Alternatives, same underlying curves/data, different display choices
+only:** `hgg_money_plot_1gev.png/.pdf` (1 GeV bins, same 105–160 GeV
+window) and `hgg_money_plot_full_range.png/.pdf` (2 GeV bins, full
+105–180 GeV window, so the significance panel's blank region beyond
+150 GeV is visible). Verified that the 2 GeV bins are the exact
+pairwise sum of the 1 GeV bins for data, background, and S+B curves
+(max abs. difference ~5×10⁻¹⁴, floating-point noise) — rebinned, not
+refitted. The background-band ±1σ variance does **not** simply add
+pairwise (adjacent bins share the same Bernstein coefficients and are
+correlated); the correct identity, Var(bin_a+bin_b) = Var(a)+Var(b)+
+2·Cov(a,b) using the full covariance matrix, was checked instead and
+also matches to ~5×10⁻¹⁴ — `stats/unblind/make_money_plot.py`'s own
+`verify_rebinning_consistency()` prints both checks.
+
+Per-category significance (EBEB 4.10σ, notEBEB 0.87σ) is shown
+separately in `stats/results/plots/final/hgg_per_category_significance.png`
+(an inset was tried and rejected — it covered real data points, so a
+separate figure was used instead, per this task's own fallback
+instruction).
 
 Full caption text: `stats/results/plots/final/hgg_money_plot_caption.txt`.
 
