@@ -1,0 +1,352 @@
+{
+  "30522": {
+    "label": "DoubleMuon Run2016G",
+    "uri": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/05DD095C-F6C3-9A4F-9FB3-348A5A6403D5.root",
+    "muon_fields": {
+      "pt": {
+        "branch": "Muon_pt",
+        "present": true,
+        "title": "pt"
+      },
+      "eta": {
+        "branch": "Muon_eta",
+        "present": true,
+        "title": "eta"
+      },
+      "phi": {
+        "branch": "Muon_phi",
+        "present": true,
+        "title": "phi"
+      },
+      "mass": {
+        "branch": "Muon_mass",
+        "present": true,
+        "title": "mass"
+      },
+      "charge": {
+        "branch": "Muon_charge",
+        "present": true,
+        "title": "electric charge"
+      },
+      "looseId": {
+        "branch": "Muon_looseId",
+        "present": true,
+        "title": "muon is loose muon"
+      },
+      "mediumId": {
+        "branch": "Muon_mediumId",
+        "present": true,
+        "title": "cut-based ID, medium WP"
+      },
+      "tightId": {
+        "branch": "Muon_tightId",
+        "present": true,
+        "title": "cut-based ID, tight WP"
+      },
+      "pfRelIso04_all": {
+        "branch": "Muon_pfRelIso04_all",
+        "present": true,
+        "title": "PF relative isolation dR=0.4, total (deltaBeta corrections)"
+      },
+      "dxy": {
+        "branch": "Muon_dxy",
+        "present": true,
+        "title": "dxy (with sign) wrt first PV, in cm"
+      },
+      "dz": {
+        "branch": "Muon_dz",
+        "present": true,
+        "title": "dz (with sign) wrt first PV, in cm"
+      }
+    },
+    "jet_fields": {
+      "pt": {
+        "branch": "Jet_pt",
+        "present": true,
+        "title": "pt"
+      },
+      "eta": {
+        "branch": "Jet_eta",
+        "present": true,
+        "title": "eta"
+      },
+      "phi": {
+        "branch": "Jet_phi",
+        "present": true,
+        "title": "phi"
+      },
+      "mass": {
+        "branch": "Jet_mass",
+        "present": true,
+        "title": "mass"
+      },
+      "jetId": {
+        "branch": "Jet_jetId",
+        "present": true,
+        "title": "Jet ID flags bit1 is loose (always false in 2017 since it does not exist), bit2 is tight, bit3 is tightLepVeto"
+      },
+      "puId": {
+        "branch": "Jet_puId",
+        "present": true,
+        "title": "Pileup ID flags with 106X (2016) training"
+      },
+      "rawFactor": {
+        "branch": "Jet_rawFactor",
+        "present": true,
+        "title": "1 - Factor to get back to raw pT"
+      },
+      "muonIdx1": {
+        "branch": "Jet_muonIdx1",
+        "present": true,
+        "title": "index of first matching muon"
+      },
+      "muonIdx2": {
+        "branch": "Jet_muonIdx2",
+        "present": true,
+        "title": "index of second matching muon"
+      }
+    },
+    "event_fields": {
+      "run": {
+        "present": true,
+        "title": "run/i"
+      },
+      "luminosityBlock": {
+        "present": true,
+        "title": "luminosityBlock/i"
+      }
+    },
+    "hlt_paths": {
+      "HLT_Mu17_Mu8": {
+        "n_events_checked": 500000,
+        "n_fired": 8446,
+        "fraction_fired": 0.016892
+      },
+      "HLT_Mu17_Mu8_DZ": {
+        "n_events_checked": 500000,
+        "n_fired": 6940,
+        "fraction_fired": 0.01388
+      },
+      "HLT_Mu17_Mu8_SameSign": {
+        "n_events_checked": 500000,
+        "n_fired": 78232,
+        "fraction_fired": 0.156464
+      },
+      "HLT_Mu17_Mu8_SameSign_DZ": {
+        "n_events_checked": 500000,
+        "n_fired": 51461,
+        "fraction_fired": 0.102922
+      },
+      "HLT_Mu17_TkMu8_DZ": {
+        "n_events_checked": 500000,
+        "n_fired": 7173,
+        "fraction_fired": 0.014346
+      },
+      "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL": {
+        "n_events_checked": 500000,
+        "n_fired": 179633,
+        "fraction_fired": 0.359266
+      },
+      "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+        "n_events_checked": 500000,
+        "n_fired": 138671,
+        "fraction_fired": 0.277342
+      },
+      "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL": {
+        "n_events_checked": 500000,
+        "n_fired": 233520,
+        "fraction_fired": 0.46704
+      },
+      "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+        "n_events_checked": 500000,
+        "n_fired": 143052,
+        "fraction_fired": 0.286104
+      },
+      "HLT_TrkMu17_DoubleTrkMu8NoFiltersNoVtx": {
+        "n_events_checked": 500000,
+        "n_fired": 7305,
+        "fraction_fired": 0.01461
+      }
+    }
+  },
+  "30555": {
+    "label": "DoubleMuon Run2016H",
+    "uri": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/2510000/127C2975-1B1C-A046-AABF-62B77E757A86.root",
+    "muon_fields": {
+      "pt": {
+        "branch": "Muon_pt",
+        "present": true,
+        "title": "pt"
+      },
+      "eta": {
+        "branch": "Muon_eta",
+        "present": true,
+        "title": "eta"
+      },
+      "phi": {
+        "branch": "Muon_phi",
+        "present": true,
+        "title": "phi"
+      },
+      "mass": {
+        "branch": "Muon_mass",
+        "present": true,
+        "title": "mass"
+      },
+      "charge": {
+        "branch": "Muon_charge",
+        "present": true,
+        "title": "electric charge"
+      },
+      "looseId": {
+        "branch": "Muon_looseId",
+        "present": true,
+        "title": "muon is loose muon"
+      },
+      "mediumId": {
+        "branch": "Muon_mediumId",
+        "present": true,
+        "title": "cut-based ID, medium WP"
+      },
+      "tightId": {
+        "branch": "Muon_tightId",
+        "present": true,
+        "title": "cut-based ID, tight WP"
+      },
+      "pfRelIso04_all": {
+        "branch": "Muon_pfRelIso04_all",
+        "present": true,
+        "title": "PF relative isolation dR=0.4, total (deltaBeta corrections)"
+      },
+      "dxy": {
+        "branch": "Muon_dxy",
+        "present": true,
+        "title": "dxy (with sign) wrt first PV, in cm"
+      },
+      "dz": {
+        "branch": "Muon_dz",
+        "present": true,
+        "title": "dz (with sign) wrt first PV, in cm"
+      }
+    },
+    "jet_fields": {
+      "pt": {
+        "branch": "Jet_pt",
+        "present": true,
+        "title": "pt"
+      },
+      "eta": {
+        "branch": "Jet_eta",
+        "present": true,
+        "title": "eta"
+      },
+      "phi": {
+        "branch": "Jet_phi",
+        "present": true,
+        "title": "phi"
+      },
+      "mass": {
+        "branch": "Jet_mass",
+        "present": true,
+        "title": "mass"
+      },
+      "jetId": {
+        "branch": "Jet_jetId",
+        "present": true,
+        "title": "Jet ID flags bit1 is loose (always false in 2017 since it does not exist), bit2 is tight, bit3 is tightLepVeto"
+      },
+      "puId": {
+        "branch": "Jet_puId",
+        "present": true,
+        "title": "Pileup ID flags with 106X (2016) training"
+      },
+      "rawFactor": {
+        "branch": "Jet_rawFactor",
+        "present": true,
+        "title": "1 - Factor to get back to raw pT"
+      },
+      "muonIdx1": {
+        "branch": "Jet_muonIdx1",
+        "present": true,
+        "title": "index of first matching muon"
+      },
+      "muonIdx2": {
+        "branch": "Jet_muonIdx2",
+        "present": true,
+        "title": "index of second matching muon"
+      }
+    },
+    "event_fields": {
+      "run": {
+        "present": true,
+        "title": "run/i"
+      },
+      "luminosityBlock": {
+        "present": true,
+        "title": "luminosityBlock/i"
+      }
+    },
+    "hlt_paths": {
+      "HLT_Mu17_Mu8": {
+        "n_events_checked": 500000,
+        "n_fired": 8229,
+        "fraction_fired": 0.016458
+      },
+      "HLT_Mu17_Mu8_DZ": {
+        "n_events_checked": 500000,
+        "n_fired": 7213,
+        "fraction_fired": 0.014426
+      },
+      "HLT_Mu17_Mu8_SameSign": {
+        "n_events_checked": 500000,
+        "n_fired": 2324,
+        "fraction_fired": 0.004648
+      },
+      "HLT_Mu17_Mu8_SameSign_DZ": {
+        "n_events_checked": 500000,
+        "n_fired": 66377,
+        "fraction_fired": 0.132754
+      },
+      "HLT_Mu17_TkMu8_DZ": {
+        "n_events_checked": 500000,
+        "n_fired": 6770,
+        "fraction_fired": 0.01354
+      },
+      "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL": {
+        "n_events_checked": 500000,
+        "n_fired": 8874,
+        "fraction_fired": 0.017748
+      },
+      "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+        "n_events_checked": 500000,
+        "n_fired": 152062,
+        "fraction_fired": 0.304124
+      },
+      "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL": {
+        "n_events_checked": 500000,
+        "n_fired": 11625,
+        "fraction_fired": 0.02325
+      },
+      "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+        "n_events_checked": 500000,
+        "n_fired": 156947,
+        "fraction_fired": 0.313894
+      },
+      "HLT_TkMu17_TrkIsoVVL_TkMu8_TrkIsoVVL": {
+        "n_events_checked": 500000,
+        "n_fired": 9289,
+        "fraction_fired": 0.018578
+      },
+      "HLT_TkMu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+        "n_events_checked": 500000,
+        "n_fired": 169037,
+        "fraction_fired": 0.338074
+      },
+      "HLT_TrkMu17_DoubleTrkMu8NoFiltersNoVtx": {
+        "n_events_checked": 500000,
+        "n_fired": 8146,
+        "fraction_fired": 0.016292
+      }
+    }
+  }
+}

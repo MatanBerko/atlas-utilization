@@ -1,0 +1,30 @@
+{
+  "dimuon_sanity": {
+    "n_events_with_muon_pair_both_files": 118693,
+    "median_m_mumu": 90.24571438946977
+  },
+  "turnon_by_ptmin": {
+    "20.0": {
+      "computed_turnon_scale_gev": 109.37404808161762,
+      "n_total": 56790,
+      "n_in_120_150_window": 15833,
+      "fraction_in_120_150_window": 0.27879908434583556
+    },
+    "30.0": {
+      "computed_turnon_scale_gev": 117.41564799361285,
+      "n_total": 30618,
+      "n_in_120_150_window": 6793,
+      "fraction_in_120_150_window": 0.22186295643085766
+    },
+    "50.0": {
+      "computed_turnon_scale_gev": 132.03764006433923,
+      "n_total": 14161,
+      "n_in_120_150_window": 1204,
+      "fraction_in_120_150_window": 0.08502224419179437
+    }
+  },
+  "loose_legacy_like": {
+    "n_total": 297279,
+    "max_gev": 20733.597377670503
+  }
+}

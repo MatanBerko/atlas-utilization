@@ -1,0 +1,24 @@
+{
+  "n_events_used": 30618,
+  "fixed_10gev": {
+    "n_bins_total_0_to_10tev": 1000,
+    "n_bins_after_sample_max": 601,
+    "sample_max_gev": 3984.7044463405246
+  },
+  "paper_style_variable": {
+    "note": "UNVERIFIED placeholder relative resolutions (2% per muon, 10% for jet) -- NOT independently measured CMS resolutions; formula only, per DESIGN.md Section F.",
+    "n_bins_to_sample_max": 220,
+    "first_10_edges_gev": [
+      0.0,
+      1.0,
+      2.0,
+      3.0,
+      4.0,
+      5.0,
+      6.0,
+      7.0,
+      8.0,
+      9.0
+    ]
+  }
+}
