@@ -30,8 +30,11 @@ only metadata (JSON) and PNG plots were written to disk.
 
 ```
 python 00_file_inventory.py       # full portal file list + event counts, both records
-python 01_load_and_analyze.py     # everything else (branch inventory, rawFactor,
-                                   # cutflow, mass plots, overlap+outliers, binning)
+python 01_load_and_analyze.py     # branch inventory, rawFactor, cutflow, mass plots,
+                                   # overlap+outliers, binning comparison
+python 07_bins_after_peak.py      # corrected "bins after the peak" check (imports
+                                   # 01_load_and_analyze.py by file path to reuse its
+                                   # selection functions; does not re-run it)
 ```
 
 Both were run from this directory (`studies/m0m1j0_cms/design_checks/`)
@@ -69,13 +72,15 @@ to test, and fail, the `xrootd` package install, and was discarded).
 | `04_mass_plots_summary.json` | Dimuon sanity check + turn-on-feature summary numbers |
 | `05_overlap_and_outliers.json` | Muon-jet overlap stats (geometric + `Jet_muonIdx` corroboration) + top-mass outlier table |
 | `06_binning_comparison.json` | Fixed vs. paper-style variable binning bin counts |
-| `plots/*.png` | Every plot referenced in `DESIGN.md` |
+| `07_bins_after_peak.json` | Corrected "bins after the histogram's peak" check (fixed 10 GeV/0-10 TeV grid, same peak convention as `_apply_peak_removal_to_histogram`), 4 selection variants |
+| `plots/*.png` | Every plot referenced in `DESIGN.md`, including `bins_after_peak_{i,ii,iii,iv}_*.png` |
 
 ## Reproducing
 
 Re-running will hit the portal and the EOS gateway again; file index 0
 of each record's list is used deterministically (not randomly sampled),
 so results should reproduce unless the portal's file order changes
-(see `impl_checks/mapping_check/README.md` in `studies/hgg_cms/` for
+(see `impl_checks/signal_sumw_notes.md:75` in `studies/hgg_cms/` for
 this project's own documented experience of that actually happening
-once, for a different record) or the files themselves are updated.
+once, for a different record — ttH, record 67611, a same-day 15-vs-16
+file-count discrepancy) or the files themselves are updated.
