@@ -14,6 +14,25 @@ not taken from any earlier document without re-checking), or (c) a
 cited paper reference. Anything not meeting that bar is marked
 **UNVERIFIED**.
 
+**On the paper citations (P1-P7):** the paper itself (arXiv:2501.05603v1)
+was not downloaded or read in Phase 0 — this environment reaches the
+CERN Open Data portal and EOS gateway over HTTPS (Section F/Appendix)
+but no attempt was made to fetch arxiv.org PDFs. The P1-P7 statements
+throughout this document are the technical lead's own reading of the
+PDF, checked by the technical lead against it on 21 Sep 2026 — they are
+cited here as "per technical lead's reading," not independently
+verified by whoever is editing this document in a given session, unless
+stated otherwise.
+
+**Corrections in this revision:** this document was reviewed by the
+technical lead against its own committed JSON files and plots after
+its first version, and several errors were found and are fixed below
+(see the "Number audit" appendix for the full list) — most
+significantly, Section F(a)'s original "bins after the maximum" claim
+conflated the sample's highest individual event value with the
+histogram's own peak bin (the paper's actual rule), and is replaced
+with a new, correctly-defined check.
+
 ---
 
 ## A. "BumpNet-ready" specification
@@ -27,9 +46,9 @@ cited paper reference. Anything not meeting that bar is marked
 | Z-candidate collapsing | §2.2.2 (P2): OS-SF pairs with \|m-91.18\|<15 GeV removed from the lepton list, footnote-2 conflict resolution | **Not implemented anywhere in this repo.** No code path builds a same-flavor-opposite-charge pair, tests it against a mass window, or removes matched leptons from a collection | **gap** — see Section B |
 | Jet-mass relabelling (Vh/top/HM) | §2.2.2 (P2): jet mass 60-110→"Vh", 110-200→"top", >200→"HM"; "standard jets" = mass<60 | **Not implemented anywhere in this repo** | **gap, and an open question whether it should even apply to CMS AK4 jets** (see below) |
 | Combination rule + index meaning | §2.2.2 (P4): one histogram per combination of >=2 objects incl. any of the 4 leading jets; index "0"=leading, "1"=subleading (P7, Fig. 3 caption) | `_convert_to_bumpnet_name` (`histograms_pipeline.py:419-453`) takes an already-index-based combo string (e.g. `"e0j0"`, `"m0m1j0"`) as given — the index-building itself lives elsewhere (im_calculator/combinatorics, not read in depth this phase) | **settled** for the naming; index meaning matches the paper's own convention (0=leading) per P7, consistent with what m0m1j0 (leading 2 muons + leading jet) already assumes |
-| Binning: fixed vs. paper formula | §2.1/§3.2.3 (P5): bin width = 0.5·√(Σσᵢ²(pT=m/2)); training Gaussians are "one bin wide" | `FIXED_MASS_MIN_GEV=0.0`, `FIXED_MASS_MAX_GEV=10000.0` (`histograms_pipeline.py:22-23`), fixed 10 GeV width, per group convention (this task's own binding instruction) | **conflicts with group convention** by design — see Section F for the numbers and the P5 ambiguity |
-| Minimum statistics: >=100 events, >30 bins | P4, P6 | Not found as an enforced check anywhere in `services/pipelines/histograms_pipeline.py` beyond `trim_empty_tail` (trims trailing empty bins, doesn't enforce a minimum) | **gap** — counting "bins" against the fixed 0-10 TeV grid needs its own convention (see Section F: our sample uses only 30/1000 bins after its own maximum) |
-| Drop bins before the histogram's own maximum | P4 (histogram production), P6 (dropping the first 10% is a separate, later, *application* step) | Not implemented in `histograms_pipeline.py` (only `trim_empty_tail`, which trims *trailing*, not *leading*, empty content) | **gap** — and an open design question: should the histogram *producer* (this repo) or the BumpNet-feeding step do this? Proposed: the feeding step, since P6's "drop the first 10%" is explicitly an application-time (not histogram-production-time) rule, and pre-trimming would destroy information other consumers might want |
+| Binning: fixed vs. paper formula | §2.2.2 ("Histogram production", P4): bin width = 0.5·√(Σσᵢ²(pT=m/2)); §2.1/§3.2.3 (P5): training Gaussians are "one bin wide," and the width study | `FIXED_MASS_MIN_GEV=0.0`, `FIXED_MASS_MAX_GEV=10000.0` (`histograms_pipeline.py:22-23`), fixed 10 GeV width, per group convention (this task's own binding instruction) | **conflicts with group convention** by design — see Section F for the numbers and the P5 ambiguity |
+| Minimum statistics: >=100 events, **strictly more than** 30 bins | §2.2.2 (P4, P6) | Not found as an enforced check anywhere in `services/pipelines/histograms_pipeline.py` — `trim_empty_tail` only widens/narrows the `TH1F`'s x-axis DISPLAY range (`hist.GetXaxis().SetRangeUser(...)`, `histograms_pipeline.py:26-41`); it does not remove, zero, or rebin any stored bin — all 1000 fixed bins remain in the saved histogram regardless. No minimum-statistics check of any kind exists in this file. | **gap** — see Section F(a) for the corrected "bins after the peak" numbers, using the SAME peak convention as `_apply_peak_removal_to_histogram` (`histograms_pipeline.py:625-645`) |
+| Drop bins before the histogram's own peak | §2.2.2 (P4, histogram production); §3.1 (P6: dropping the first 10% of bins is a separate, later, *application-time* step) | `_apply_peak_removal_to_histogram` (`histograms_pipeline.py:625-645`) exists and does exactly this — zeros every bin strictly before the rightmost bin holding the histogram's maximum content — gated behind an existing **opt-in config key, `apply_peak_removal_at_histogram_level`, default `False`** (`histograms_pipeline.py:89`, and threaded through as a plain `bool = False` parameter at lines 196, 338, 370, 460, 515) | **settled**: the producer-side capability already exists and is already opt-in/off-by-default (no new shared code needed); whether m0m1j0 should turn it on, or leave dropping-before-the-peak to a downstream BumpNet-feeding step instead (matching P6's own framing of the *first-10%* rule as application-time), is an open question — see J.1 item 7 |
 | Histogram format/name | ROOT `TH1F` implied by the paper's plots; this repo's own convention | `ROOT.TH1F(hist_name, hist_name, nbins, FIXED_MASS_MIN_GEV, FIXED_MASS_MAX_GEV)` where `hist_name = f"ROI_{signature}_width_{bin_width}"` (`histograms_pipeline.py:343-344`, and again at lines 380, 520, 650) | **settled, but with a confirmed mismatch** (see below) |
 | `cat_` block meaning / trailing "x" | Not documented in the paper at all (repo-internal naming) | `_convert_to_bumpnet_name` (`histograms_pipeline.py:444`): `fs_formatted = "_".join(f"{c}{p}x" for c, p in fs_particles)` — the trailing `x` is a literal character appended after every count+letter token by this f-string, with no separate meaning found in any comment, test, or docstring in this repo | **UNVERIFIED beyond "it's how the string is built"** — no evidence the "x" carries independent semantic content (e.g. "exact" vs "inclusive") anywhere in this repo; P7/the paper's own Fig. 3 caption doesn't use this token style at all, so this convention is entirely repo-internal |
 
@@ -169,10 +188,12 @@ $ git show 47e33fd:services/parsing/schemas.py | grep -n '"Muons":'
 105:            "Muons": ["pt", "eta", "phi", "mass"],
 ```
 
-**Confirmed error.** The investigation document's quoted code block is
-fabricated — it is not what `services/parsing/schemas.py` contains at
+**Confirmed error.** The investigation document's quoted code block
+matches no committed version of `services/parsing/schemas.py` — not at
 `47e33fd`, at `f5df667`, at `29af276`, or (checked) anywhere else in
-this repository's history for the `cms-nanoaod` schema's Muons list.
+this repository's history for the `cms-nanoaod` schema's Muons list. It
+may have come from an uncommitted local edit at the time the document
+was written; either way it is not a reliable source.
 A **plausible** (not proven) origin: the H→ZZ→4l branch commit `4aaf59b`
 extends that branch's own copy of the same schema to
 `["pt", "eta", "phi", "mass", "charge", "pfRelIso04_all", "looseId"]`
@@ -188,7 +209,9 @@ pipeline.** The fields were simply never requested (no mechanism to
 request them existed at the time), the current mechanism to request
 them (`extra_object_fields`) already provides a loud, tested guarantee
 that a requested field either arrives or the run aborts, and the one
-document that claimed otherwise contains a fabricated code quote.
+document that claimed otherwise contains a code quote that matches no
+committed version of `schemas.py` (see the box above for why it should
+not be treated as a reliable source).
 
 **Proposed test** (to write in Phase 1, not this phase — no shared code
 change here): a tiny parse of one real file with
@@ -394,8 +417,10 @@ both comfortably). Separately, the "loose legacy-like" selection
 (muon pT>5 only, no ID/iso, no jet cleaning or ID — matching the
 original smoketest's own parse-time-only cuts, `config.cms_m0m1j0_smoketest.yaml:95-96`)
 run on the same two files reaches a maximum of **20,733.6 GeV** (≈20.7
-TeV) — two orders of magnitude below the legacy report's own ~117 TeV,
-but confirming the **direction** of the effect: an uncleaned, unidentified
+TeV) — about a factor of 5.6 below the legacy report's own ~117 TeV
+(117,000/20,733.6 ≈ 5.64), not the "two orders of magnitude" this
+document's first version incorrectly claimed, but still confirming the
+**direction** of the effect: an uncleaned, unidentified
 selection produces a dramatically larger extreme tail than the proposed
 selection does. This sample (2 files, 500,000 events each) does not
 reproduce the exact legacy value; a full-statistics rerun with the
@@ -451,7 +476,9 @@ multiplicity — i.e. exactly the Section E cutflow's last row:
   buckets above): 15,747 (30522) + 14,871 (30555) = 30,618 events
   passing the full proposed selection, out of 1,000,000 events read
   (both files, 500,000 each) → **extrapolated to the two full files:
-  ≈30,618 × ((2,315,223+2,147,195)/1,000,000) ≈ 142,600 events**;
+  30,618 × (4,462,418/1,000,000) ≈ 136,600 events** (this document's
+  first version reported 142,600 here — an arithmetic error, corrected;
+  30,618×4.462418=136,630.3, confirmed by direct recomputation);
   **extrapolated to both full records: ≈30,618 × (94,148,416/1,000,000)
   ≈ 2,883,000 events** (both extrapolations are simple linear scalings
   of a rate measured on a small subsample of sequential, not randomly
@@ -464,18 +491,50 @@ multiplicity — i.e. exactly the Section E cutflow's last row:
 
 **(a) Fixed 10 GeV, 0-10 TeV** (`FIXED_MASS_MIN_GEV=0.0`,
 `FIXED_MASS_MAX_GEV=10000.0`, `histograms_pipeline.py:22-23`): **1000
-bins total**. On this sample's own m(μμj) distribution (pT>30 GeV
-selection, 30,618 events, sample maximum 3984.7 GeV): **only 30 of
-those 1000 bins fall after the sample's own maximum** — i.e. 970 of
-the 1000 fixed bins are guaranteed empty for this particular
-category/selection at this sample size, before any bump-search step
-even runs. This is exactly the ">30 bins after the maximum" question
-this task raised: on the fixed grid, this category clears that bar
-comfortably (30 ≥ 30, and would clear it far more comfortably at full
-statistics, where the maximum will be pulled higher by rarer high-mass
-tail events) — but the fixed convention's own 1000-bin total makes
-"how many bins are actually being used" a very different question from
-"how many bins does the histogram have."
+bins total.**
+
+**Corrected in this revision** — the first version of this section
+conflated the sample's highest individual event value with the
+histogram's own peak bin, which is what the paper's rule (§2.2.2,
+"only bins after the histogram maximum are kept") and the shared
+pipeline's own `_apply_peak_removal_to_histogram`
+(`histograms_pipeline.py:625-645`) actually mean by "the maximum": the
+**rightmost bin holding the histogram's largest bin content**, not the
+single highest event. `design_checks/07_bins_after_peak.py` recomputes
+this correctly, on the fixed 1000-bin grid, for four variants of the
+proposed selection (`design_checks/07_bins_after_peak.json`):
+
+| Variant | Events | Peak bin lower edge | Bins: peak→last non-empty | Non-empty bins in that range | Bins with <10 events (incl. empty) | Events at/after peak | Last non-empty bin upper edge |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| (i) All events | 30,618 | 140 GeV | 385 | 116 | 323 | 23,104 | 3,990 GeV |
+| (ii) Outside Z window (proxy for Z-collapsed) | 8,721 | 100 GeV | 389 | 92 | 344 | 7,021 | 3,990 GeV |
+| (iii) (ii), OS only | 8,624 | 100 GeV | 389 | 92 | 345 | 6,939 | 3,990 GeV |
+| (iv) (ii), SS only | 97 | 100 GeV | 58 | 33 | 58 | 82 | 680 GeV |
+
+![Bins after peak, all events](design_checks/plots/bins_after_peak_i_all_events.png)
+![Bins after peak, outside Z window](design_checks/plots/bins_after_peak_ii_outside_z_window_proxy_for_Z_collapsed.png)
+![Bins after peak, same-sign](design_checks/plots/bins_after_peak_iv_outside_z_window_SS.png)
+
+**The paper's rule requires strictly MORE THAN 30 bins** (§2.2.2), not
+"≥30" — every variant here clears that bar on raw bin count (385, 389,
+389, 58, all >30), but the raw count is a poor proxy for whether
+BumpNet actually has usable statistics: in variant (i), only **116 of
+the 385 bins (30%)** from the peak onward hold any events at all — the
+other **269 are completely empty**, and a further 54 hold fewer than
+10 events each, leaving only **62 bins with ≥10 events** out of 385.
+Variant (iv) (same-sign, 97 events total) is the starkest case: every
+single one of its 58 bins in range has fewer than 10 events, including
+25 completely empty ones — this variant is not remotely usable at this
+sample size regardless of the raw bin count clearing 30.
+
+**Extrapolated event counts only** (using the same per-record factors
+as Section E — 4.63× for 30522, 4.29× for 30555 — applied separately
+per record then summed; the NUMBER OF NON-EMPTY BINS is **not**
+extrapolated, since it depends on where rare high-mass events actually
+land at full statistics, not a linear scaling of this subsample):
+variant (i) ≈136,800 events; (ii) ≈39,000; (iii) ≈38,500; (iv) ≈430 —
+all at the two design-check files' own full statistics, not the full
+57-file records.
 
 **(b) Paper-style variable bins** (P4: bin width =
 0.5·√(Σᵢσᵢ²(pT=m/2))): **UNVERIFIED, formula only.** Computing this
@@ -570,19 +629,35 @@ under the original, much looser smoketest-style cuts.**
 size to produce any visible feature, and this document makes no such
 claim.
 
-**What BumpNet would actually see, given the paper's own rules:** with
+**What BumpNet would actually see, given the paper's own rules —
+corrected using the Section F(a) "bins after the peak" results:** with
 Z-candidate collapsing (P2, not implemented in this repo — Section B),
 a genuine Z→μμ pair is removed from the muon list entirely before
 m0m1j0-style combinations are even formed, so **Z+jet events would
 leave the m0m1j0 histogram** under the paper's own convention (they'd
 become "Z+jet" objects, a different category, not "2 muons + jet").
-Separately, even without collapsing, the "drop bins before the
-histogram's own maximum" rule (P6, an application-time step per this
-task's own framing) would remove this whole low-mass region regardless,
-since it sits well before the sample's own falling high-mass tail's
-maximum. Both of the paper's own conventions, if actually applied,
-would make this specific feature invisible to BumpNet even though it
-is real and visible in this document's own (un-collapsed, un-trimmed)
+This is directly visible in the Section F(a) numbers: the un-collapsed
+("all events") histogram's own peak bin sits at 140 GeV, while the
+Z-window-excluded proxy's peak sits at 100 GeV — i.e. the Z+jet
+turn-on feature itself is what pulls the inclusive histogram's peak up
+to 140 GeV; collapsing it away would move the peak back down and
+remove the feature's dominant contribution to the shape.
+
+**The "drop bins before the peak" rule (P4/P6) does NOT cleanly remove
+this feature, and this document's first version was wrong to claim it
+would.** Because the inclusive histogram's own peak (140 GeV) sits
+*inside*, not after, the feature's own rising edge (~115-140 GeV per
+Section G's turn-on plots), applying the peak-drop rule to the
+un-collapsed histogram would zero the feature's rising edge (everything
+below 140 GeV) but leave its peak region intact — a partial, not clean,
+suppression. Z-candidate collapsing is the paper convention that
+actually addresses this feature at its source (by removing the Z+jet
+events themselves, not just truncating the histogram at an arbitrary
+point); the peak-drop rule alone is not a substitute for it. Both of
+the paper's own conventions, if actually applied, would substantially
+change how visible this specific feature is to BumpNet, but only Z
+collapsing removes it at the source; it is real and fully visible in
+this document's own (un-collapsed, un-trimmed)
 plots.
 
 ---
@@ -669,9 +744,14 @@ Full 29+28 = 57 files, ~94.1M total events across both records.
 ### Required conventions for Phases 2-3
 
 **Portal file-list instability is real, not theoretical** — this
-project's own `studies/hgg_cms/impl_checks/mapping_check/README.md`
-documents a concrete same-day 15-vs-16-file discrepancy for a different
-CMS record (ttH, `67611`). Merges for m0m1j0 must therefore reconstruct
+project's own `studies/hgg_cms/impl_checks/signal_sumw_notes.md:75`
+("Addendum: ttH file count instability -- 15 vs 16 files") documents a
+concrete same-day 15-vs-16-file discrepancy for a different CMS record
+(ttH, `67611`) — re-verified directly this session
+(`grep -n "15 vs 16" studies/hgg_cms/impl_checks/signal_sumw_notes.md`
+→ line 75; this document's first version incorrectly cited
+`mapping_check/README.md` for this, which does not mention ttH or this
+discrepancy at all — corrected). Merges for m0m1j0 must therefore reconstruct
 each job's actual inputs from its own `metadata_cache.json` plus its
 batch index, and verify file identity and event totals against a fresh
 portal query, refusing to report "complete" if they disagree — exactly
@@ -694,63 +774,100 @@ already-succeeded unit of work under the same seed.
 
 ## J. Open questions
 
-### J.1 — For the supervisor (Maryna)
+### J.0 — Decided by us (no supervisor input needed)
 
-1. **Muon definition** (C2): `mediumId` + `pfRelIso04_all<0.15` +
-   leading pT>20/sub pT>15 + |η|<2.4 — confirm, or specify a different
+- **Trigger**: any of the 2 DZ paths present in both run periods
+  (`HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ`,
+  `HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ`) — reason: one consistent
+  selection across both G and H, per C3.
+- **New config location**: the new m0m1j0 config files live at the
+  repo root as `config.cms_m0m1j0_v2_*.yaml`, matching the
+  `config.cms_hgg_*` precedent (`studies/hgg_cms`'s own family of
+  root-level configs). The legacy `config.cms_m0m1j0_*` files
+  (`_smoketest`, `_fullscale`) are **not** reused or edited — the `v2`
+  suffix keeps the new files unambiguously separate from them.
+
+### J.1 — Questions for the supervisor (Maryna)
+
+1. **Muons**: `mediumId`, `pfRelIso04_all < 0.15`, pT > 20/15 GeV
+   (leading/subleading), |η| < 2.4 — confirm, or specify a different
    working point? **Default if unanswered: as proposed.**
-2. **Jet definition** (D4): pT>30 GeV (not the paper's 20 GeV) + tight
-   ID + |η|<2.8 — confirm? **Default if unanswered: pT>30 GeV as
-   proposed** (D5 shows this threshold doesn't remove the sample's own
-   genuine high-mass outliers).
-3. **Which DZ trigger path(s)** (C3): "any of the 2" paths present in
-   both G and H, or "any of 3" including the H-only `TkMu17` variant
-   for maximum H-period coverage? **Default if unanswered: any of the
-   2 shared paths**, for a single consistent selection across both
-   periods.
-4. **Z-candidate collapsing** (Section B): build it now (Phase 1, item
-   3) or defer m0m1j0 to the "minimal" category (Section E(b)) and add
-   collapsing later? **Default if unanswered: build it in Phase 1**,
-   since Section G shows it materially changes what ends up in the
-   m0m1j0 histogram.
-5. **Jet-mass relabelling (Vh/top/HM)** (P2): should this apply to CMS
-   AK4 jets at all? The paper's own thresholds (60-110/110-200/>200 GeV
-   jet mass) were tuned for a different (DELPHES fast-sim, presumably
-   large-radius or substructure-aware) jet definition context — applying
-   them unmodified to CMS's standard small-radius AK4 jets is not
-   obviously physically appropriate and was not evidenced either way
-   this phase. **Default if unanswered: do NOT apply it to m0m1j0's AK4
-   jets** (treat all AK4 jets as "standard" regardless of mass) until a
-   specific reason to do otherwise is given.
-6. **Where should the new m0m1j0 config live** (Phase 1 item 1):
-   root-level `config.cms_m0m1j0_*.yaml` (matching the legacy files'
-   own location) or under `studies/m0m1j0_cms/`? **Default if
-   unanswered: root-level**, matching the existing legacy file
-   location and this project's own precedent for other CMS studies.
+2. **Jets**: pT > 30 GeV, tight ID, muon cleaning ΔR < 0.4, |η| < 2.8,
+   **no pileup ID for now** (the `puId` bit-to-working-point mapping is
+   UNVERIFIED beyond its NanoAOD title — Section D1) — confirm?
+   **Default if unanswered: as proposed.**
+3. **Apply the paper's Z-candidate collapsing?** If yes: Z+jet events
+   move to a Z+jet histogram (a different category), and m0m1j0 keeps
+   only non-Z dimuons, split OS/SS. **Default if unanswered: yes** —
+   Section G/F(a) show this materially changes both the shape and the
+   peak location of the m0m1j0 histogram.
+4. **Categories**: exact object counts plus exclusive jet-multiplicity
+   sub-categories (several m0m1j0 histograms, one per jet-count bucket,
+   paper style — Section A/E(a)), or one inclusive histogram (Section
+   E(b))? **Default if unanswered: yes, paper style** (exact counts +
+   exclusive jet-multiplicity sub-categories).
+5. **Relabel heavy AK4 jets as Vh/top/HM by jet mass** (P2's
+   60-110/110-200/>200 GeV thresholds), applied to CMS's small-radius
+   AK4 jets? **Default if unanswered: no** — not evidenced as
+   physically appropriate for AK4 jets this phase (Section A).
+6. **Binning**: the shared fixed 10 GeV / 0-10 TeV convention, or the
+   paper's resolution-based variable widths — and if paper-style,
+   width = σ/2 (the paper's own formula, P4) or σ (correcting for the
+   P5 one-bin-vs-two-bin ambiguity, Section F)? **Default if
+   unanswered: fixed 10 GeV** (the group's binding convention; paper-
+   style widths need the CMS resolution papers actually read first,
+   which Phase 0 did not do — Section F(b)).
+7. **Hand-off**: who drops bins before the peak and trims the empty
+   tail — currently, `_apply_peak_removal_to_histogram` exists but is
+   opt-in/off by default, and `trim_empty_tail` only ever adjusts the
+   display range (all 1000 bins are always stored, Section A) — should
+   m0m1j0 turn peak-removal on at production time, or leave both steps
+   to the BumpNet-feeding code? And should the produced `TH1F` keep the
+   `ROI_` prefix (Section A) or be named only by the shared naming
+   function's own output? **Default if unanswered: store the full
+   histogram (all 1000 bins, no peak removal at production time);
+   leave both bin-dropping steps to the BumpNet-feeding code; name
+   produced by the shared naming function, `ROI_` prefix kept as-is
+   (documented, not fixed, per Section A).**
 
 ### J.2 — For Matan
 
-None identified that need your decision specifically rather than
-Maryna's technical sign-off above — this phase's findings are either
-settled by direct evidence (Sections A/C1/D2/D3) or are physics/analysis
-choices for Maryna (J.1). If you'd like, flag back anything you want
-handled differently before Phase 1 starts.
+None.
 
 ---
 
 ## K. Bugs observed, not fixed
 
-- **Dangling `DESIGN_SELECTION.md` references.**
+- **`DESIGN_SELECTION.md` references point across branches, not to a
+  nonexistent file — this document's first version got this wrong.**
   `studies/hgg_cms/DESIGN_SELECTION.md` is referenced by name (as a
-  design precedent) in at least four places, checked directly this
-  session: `services/parsing/trigger_requirements.py:4`,
+  design precedent) in at least four places on THIS branch, checked
+  directly this session: `services/parsing/trigger_requirements.py:4`,
   `studies/hgg_cms/physics_checks/common.py:6` and `:24`, and
-  `studies/hgg_cms/zee_selection.py:5` — but **does not exist anywhere
-  in this repository's git history** at any commit checked (`git
-  ls-files` at 29af276 finds nothing named `DESIGN_SELECTION.md`). A
-  dangling reference to a document that was apparently never committed,
-  or was committed on a branch not merged anywhere reachable from
-  master.
+  `studies/hgg_cms/zee_selection.py:5`. The first version of this
+  document claimed the file "does not exist anywhere in this
+  repository's git history," checked only with `git ls-files` at
+  `29af276` (which only lists files reachable from the current
+  checkout, not the whole repository). **The file does exist**, added
+  in commit `4fe80e5` ("Phase 2.2: CMS H->gamma gamma event selection
+  design document") on branch `design/hgg-selection`, re-verified
+  directly this session:
+  ```
+  $ git log --all --oneline -- studies/hgg_cms/DESIGN_SELECTION.md
+  16f52a0 Review corrections to the physics-check update (vertex, Check C3, scale estimate)
+  103a05d Phase 2.2 follow-up: three physics checks (smearing, vertex, trigger cuts)
+  4fe80e5 Phase 2.2: CMS H->gamma gamma event selection design document
+  $ git merge-base --is-ancestor 4fe80e5 29af276 && echo YES || echo NO
+  NO
+  ```
+  So the correct statement is: the feature branch (`29af276`, and this
+  branch built on top of it) references a file that lives only on
+  another branch (`design/hgg-selection`), not an ancestor of it — a
+  real cross-branch dependency, not a dangling/missing-file bug. **Note:
+  the previous task prompt pointed to the wrong location/check for this
+  item (the technical lead's error, not this session's) — this
+  revision's own `git log --all` / `git merge-base` commands, shown
+  above, are what actually settles it.**
 - **`BACKGROUND_MODEL_REPORT.md`-style output-file lists can go stale
   after code evolves further than the report itself was updated**
   (observed pattern, not specific to m0m1j0): e.g. this project's own
@@ -762,12 +879,14 @@ handled differently before Phase 1 starts.
   specifically, but a documentation-maintenance pattern worth being
   aware of when trusting a report's *undated* summary sections over its
   *dated* update sections.
-- **The investigation document's fabricated code quote** (Section C1)
+- **The investigation document's unreliable code quote** (Section C1)
   is itself the most significant "bug" found this phase — a
-  specification document containing an invented schema snippet that
-  was never true at any commit, presented as a direct quote with line
-  numbers. Documented in full above; not fixed (the document lives on
-  a different branch, out of this phase's scope).
+  specification document containing a schema snippet that matches no
+  committed version of `schemas.py` at any commit, presented as a
+  direct quote with line numbers. It may have come from an uncommitted
+  local edit; either way it is not a reliable source. Documented in
+  full above; not fixed (the document lives on a different branch, out
+  of this phase's scope).
 - **`_convert_to_bumpnet_name`'s regex** (`histograms_pipeline.py:443`)
   hardcodes the particle-letter set `[emjgtb]` — adding a 7th object
   type to `group_by_final_state` in the future would silently fail to
@@ -787,7 +906,93 @@ All committed under `studies/m0m1j0_cms/design_checks/`:
   1-6). Outputs: `01_branch_inventory.json`, `02_rawfactor_summary.json`,
   `03_cutflow.json`, `04_mass_plots_summary.json`,
   `05_overlap_and_outliers.json`, `06_binning_comparison.json`.
+- `07_bins_after_peak.py` — the corrected "bins after the peak" check
+  (Section F(a)), using the fixed shared 10 GeV/0-10 TeV grid and the
+  same rightmost-highest-bin peak convention as
+  `_apply_peak_removal_to_histogram`, for four selection variants
+  (all events; outside the Z window as a Z-collapsing proxy; that
+  restricted to OS; that restricted to SS). Imports
+  `01_load_and_analyze.py` by file path (its own name starts with a
+  digit) to reuse its selection functions verbatim, not duplicate them.
+  Output: `07_bins_after_peak.json`,
+  `plots/bins_after_peak_{i,ii,iii,iv}_*.png`.
 - `common.py` — shared HTTPS-read helper (see its own docstring for the
   XRootD-unavailable-on-Windows workaround and its scope).
 - `plots/*.png` — every plot referenced above.
 - `README.md` — exact commands, exact inputs, environment notes.
+
+---
+
+## Appendix: Number audit
+
+Every distinct numeric claim in this document, checked directly this
+session against its stated source. "Match?" is **yes** unless noted;
+every mismatch found is fixed in the text above and flagged **FIXED**
+here, with the corrected value. Rows are grouped by section.
+
+| Section | Claim | Value in DESIGN.md | Source | Value at source | Match? |
+|---|---|---|---|---|---|
+| Header | Feature branch tip | `29af276` | `git rev-parse origin/feature/hgg-selection-and-output` (re-run this session) | `29af276...` | yes |
+| Header | master tip | `8cf737e` | `git rev-parse origin/master` (re-run) | `8cf737e...` | yes |
+| Header | Commit count | 55 | `git rev-list --count 8cf737e..29af276` (re-run) | 55 | yes |
+| A | `group_by_final_state` line range | 61-83 | `services/calculations/physics_calcs.py` (re-grepped) | def at 61 | yes |
+| A | `limit_particles_in_fs` line range | 86-98 | same file | def at 86 | yes |
+| A | Muons schema fields, 29af276 | `schemas.py:153` | `services/parsing/schemas.py` (re-read) | line 153, `["pt","eta","phi","mass"]` | yes |
+| A | `_convert_to_bumpnet_name` line range | 419-453 | `histograms_pipeline.py` | def at 419 | yes |
+| A | `FIXED_MASS_MIN/MAX_GEV` line numbers | 22-23 | same file | lines 22-23 | yes |
+| A | `hist_name = f"ROI_..."` line numbers | 343, 380, 520, 650 | same file | all 4 confirmed present | yes |
+| A | `fs_formatted` line number | 444 | same file | line 444 | yes |
+| A | Binning formula citation | §2.1/§3.2.3 for bin-width formula | task 5(c) correction | formula is §2.2.2; §2.1/§3.2.3 are the one-bin-wide claim + width study | **FIXED** — now cites §2.2.2 for the formula |
+| A | `trim_empty_tail` behavior | "trims trailing empty bins" | `histograms_pipeline.py:26-41` (re-read) | only sets `SetRangeUser` (display range); all bins retained | **FIXED** — corrected in both Section A rows |
+| A | Peak-removal capability existence | "Not implemented" (first version) | `histograms_pipeline.py:625-645`, and call sites 89/196/338/357/370/396/460/515/557/559/620 | `_apply_peak_removal_to_histogram` exists, opt-in via `apply_peak_removal_at_histogram_level`, default `False` | **FIXED** — corrected from "gap" to "settled, opt-in, off by default" |
+| A | "Minimum statistics" bins claim | "30/1000 bins after maximum" | `06_binning_comparison.json` (conflated max event with peak) | see F(a) fix | **FIXED** — replaced with `07_bins_after_peak.json` |
+| A | `scripts/m0m1j0_mumujet_report.py` line numbers | 29, 115, 618 | that file (re-grepped) | all 3 confirmed | yes |
+| A | `_process_im_arrays_bumpnet` root_filename line | 504 | `histograms_pipeline.py` | line 504 (also present at 268, not cited, not an error) | yes |
+| B | `filter_events_by_kinematics` line range | 292-407 | `physics_calcs.py` | def at 292 | yes |
+| B | `rel_isolation_max` Electrons-only gate | line 361 | same file | line 361 | yes |
+| B | `_boolean_field_mask` line range | 231-256 | same file | def at 231 | yes |
+| C1 | `git log -S'looseId'` result | only `4aaf59b` | re-run this session | only `4aaf59b` | yes |
+| C1 | `4aaf59b` ancestor of `f5df667`/`8cf737e` | NO/NO | re-run this session | NO/NO | yes |
+| C1 | Branches containing `4aaf59b` | 3 H→ZZ→4l branches | re-run this session | same 3 branches | yes |
+| C1 | Schema at `f5df667` | line 123, `["pt","eta","phi","mass"]` | re-run `git show f5df667:...` | line 123 (block starts line 109, `objects` at 121) confirmed | yes |
+| C1 | `extra_object_fields` introduced in `da325d9`, dated 2026-09-16 | — | re-run `git log -S` + `git log -1 --format=%ci` | confirmed, `da325d9` = 2026-09-16 09:06:32 | yes |
+| C1 | `f5df667` dated 2026-09-14 | — | `git log -1 --format=%ci f5df667` | 2026-09-14 20:46:53 | yes |
+| C1 | `da325d9` not ancestor of `f5df667` | NO | re-run this session | NO | yes |
+| C1 | `file_parser.py` field-arrival guarantee lines | 262-278 | that file (re-read) | confirmed, incl. "hard error, not a silent drop" quote at line 263 | yes |
+| C1 | Probe-retry callback lines | 254-255 | same file | confirmed | yes |
+| C1 | Investigation doc quote location | `docs/M0M1J0_SPEC_INVESTIGATION.md:501-503` @ `47e33fd` | re-run `git show 47e33fd:docs/...` | confirmed, matches no committed `schemas.py` | yes (wording fixed per task 5(b), number unaffected) |
+| C1 | `4aaf59b` schema line 121 | `["pt","eta","phi","mass","charge","pfRelIso04_all","looseId"]` | re-run `git show 4aaf59b:...` | confirmed exactly | yes |
+| C3 | HLT firing fractions, both records | table in C3 | `01_branch_inventory.json` | all 5 values re-checked, exact match | yes |
+| C4 | Golden JSON: runs, range, G/H counts, sha256 | 393 runs, 273158-284044, 70/86/156, sha256 `a7dd83fd...` | direct re-parse of `data/cms/validated_runs/Cert_...txt` this session | all values reproduced exactly | yes |
+| D2 | `Jet_rawFactor` fraction exactly 0 | "0.0000" (both records) | `02_rawfactor_summary.json` | `n_exact_zero=1` for each (not 0) — 1 jet each out of 2.5-2.7M | **note, not fixed as an error**: 3.7-4.0×10⁻⁷ correctly rounds to "0.0000" at 4 d.p.; prose already says "essentially never," not "never" — left as-is, flagged here for transparency |
+| D2 | median/p5/p95, both records | 0.0439/-0.3438/0.2051 (G); 0.0269/-0.4141/0.1914 (H) | same JSON | 0.04395/-0.34375/0.20508; 0.02686/-0.41406/0.19141 | yes (correct rounding) |
+| D3 | Overlap fractions, median ΔR, muonIdx corroboration | table in D3 | `05_overlap_and_outliers.json` | all 6 values re-checked, exact match | yes |
+| D3 | "removes roughly 74%" | 74% | `03_cutflow.json` (computed: 1 - 30,618/115,290) | 73.44% | yes ("roughly 74%") |
+| D5 | Outlier table, top 5 rows | table in D5 | `05_overlap_and_outliers.json` | all 5 rows, all fields, exact match | yes |
+| D5 | Loose-legacy max | 20,733.6 GeV | `04_mass_plots_summary.json` | 20,733.597... | yes |
+| D5 | Ratio to "~117 TeV" | "two orders of magnitude" | computed: 117,000/20,733.6 | 5.64× | **FIXED** — now states "~5.6×" |
+| E | Extrapolation factors 4.63×/4.29×/×21.1 | — | computed from `00_file_inventory.json` | 4.6304/4.2944/21.098 | yes |
+| E | Extrapolated "two full files" event count | "142,600" | computed: 30,618 × (4,462,418/1,000,000) | 136,630.3 | **FIXED** — now states "≈136,600" |
+| E | Extrapolated "both full records" event count | "≈2,883,000" | computed: 30,618 × (94,148,416/1,000,000) | 2,882,636.2 | yes |
+| F(a) | Bins-after-peak table, all 4 variants | table in F(a) | `07_bins_after_peak.json` (new this session) | exact match (source of the numbers) | yes |
+| G | Turn-on scales 109.4/117.4/132.0 GeV | table in G | `04_mass_plots_summary.json` | 109.374/117.416/132.038 | yes |
+| G | Dimuon median 90.25 GeV | — | same JSON | 90.2457 | yes (correct rounding) |
+| G | Loose-legacy N=297,279 | — | same JSON | 297,279 | yes |
+| G | OS/SS counts 30,508/110 | — | **plot legend text only** (`plots/mumuj_osss_ptmin30.png`), re-viewed this session; not currently in any committed JSON key | visually confirmed correct on the image | yes, but flagged: this number's only committed source is a PNG legend, not a JSON key — a minor gap against the strict evidence rule, noted here rather than silently left |
+| I | ttH 15-vs-16-file discrepancy citation | `mapping_check/README.md` | `signal_sumw_notes.md:75` (re-grepped both files this session) | `mapping_check/README.md` does not mention ttH at all; `signal_sumw_notes.md:75` does | **FIXED** — citation corrected |
+| I | FINAL_REPORT.md "6× worst-case slowdown" | Section 12 | `studies/hgg_cms/FINAL_REPORT.md` (re-grepped) | confirmed at lines 825/902, Section 12 header at line 866 | yes |
+| K | `DESIGN_SELECTION.md` existence | "does not exist anywhere" | `git log --all -- studies/hgg_cms/DESIGN_SELECTION.md` (re-run) | exists, added in `4fe80e5` on `design/hgg-selection`, not an ancestor of `29af276` | **FIXED** — see Section K bullet 1, full rewrite |
+| K | `_convert_to_bumpnet_name` regex line | 443 | `histograms_pipeline.py` | line 443 | yes |
+
+**Summary: 51 rows checked. 8 corrections made** (binning citation
+§2.1/§3.2.3→§2.2.2; `trim_empty_tail` behavior description, 2 places;
+peak-removal capability existence, corrected from "gap" to "settled/
+opt-in"; the F(a) bins-after-the-maximum/peak conflation, the main
+fix, driving a full rewrite of Section F(a) and the related Section A
+row and Section G paragraph; the D5 "orders of magnitude" wording;
+the Section E arithmetic error (142,600→136,600); the
+`signal_sumw_notes.md`/`mapping_check` citation swap; the
+`DESIGN_SELECTION.md` existence claim, Section K). One additional
+sourcing gap was found and flagged, not fixed as an error (the D2
+"0.0000" rounding is technically correct but could mislead; the G
+OS/SS counts trace only to a plot legend, not a JSON key).
