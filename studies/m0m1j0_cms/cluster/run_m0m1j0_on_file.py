@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-m0m1j0 CMS histogram -- Step 1 per-job driver.
+m0m1j0 CMS histogram -- per-job driver (Step 1 pilot, Step 2 full run).
 
 One job = one input CMS NanoAOD file, read directly over XRootD (works on
 the Weizmann cluster; NOT on this repo's own Windows dev machine, which
@@ -16,11 +16,32 @@ task's "record for every job the exact file URL read" requirement, so a
 merge step can verify it rather than assume it).
 
 Applies, in order: golden-JSON (validated-runs) filter, trigger OR,
-CMS object selection (studies.m0m1j0_cms.selection), m0m1j0 mass +
+CMS object selection (studies.m0m1j0_cms.selection -- UNCHANGED from the
+pilot; Step 2 does not add, remove, or change any cut), m0m1j0 mass +
 z_peak_cutoff/max_mass_cutoff, then builds histograms
 (studies.m0m1j0_cms.histograms) and a small outlier event list. See
 studies/m0m1j0_cms/RECIPE.md for the full recipe and every deviation from
-the group's ATLAS config.yaml.
+the group's ATLAS config.yaml, and studies/m0m1j0_cms/pilot/PILOT_REPORT.md
+for the pilot this was validated against.
+
+Step 2 additions (output-format/diagnostic only, no selection change):
+  (A) Histograms are written as genuine TH1F (float32 bin contents),
+      matching the shared pipeline's own histogram class -- previously
+      TH1D (uproot's plain tuple-write shortcut always produces TH1D
+      regardless of dtype; see histograms.py's to_writable_th1f). Every
+      write is immediately re-opened and verified (class == TH1F, bin
+      contents match) via histograms.verify_written_th1f -- an
+      AssertionError here fails the job loudly rather than shipping a
+      silently-wrong file.
+  (B) A low-mass dimuon diagnostic: for every event entering the
+      inclusive histogram (i.e. surviving z_peak_cutoff/max_mass_cutoff),
+      saves a small .npz with (run, luminosityBlock, event, dimuon mass,
+      deltaR(mu0,mu1), charge product, pT ratio, m0m1j0, and whichever of
+      Muon_isGlobal/isTracker/isPFcand/nStations/nTrackerLayers this file
+      has -- NaN for any that are absent). This is purely diagnostic
+      (studies.m0m1j0_cms.selection.compute_dimuon_diagnostics) -- it
+      does not read into, or affect, the m0m1j0 selection or histograms
+      in any way.
 
 Usage:
     python run_m0m1j0_on_file.py \
@@ -28,29 +49,31 @@ Usage:
         --output-dir /storage/.../job_1
 
 Writes, under --output-dir:
-    all_histograms.root   -- one TH1D per BumpNet category + one inclusive
+    all_histograms.root   -- one TH1F per BumpNet category + one inclusive
                               (studies.m0m1j0_cms.histograms), ROI_-prefixed
                               ROOT-internal names, same fixed grid as the
-                              shared pipeline. Written via uproot, not
-                              PyROOT -- this cluster account's own
-                              atlas-pipeline conda env has no PyROOT
-                              installed at all (confirmed directly; even
-                              `import services.pipelines.histograms_pipeline`
-                              fails there), so studies.m0m1j0_cms.histograms
-                              builds plain (values, edges) numpy arrays and
-                              this driver writes them with
-                              uproot.recreate(...), which produces a
-                              genuine ROOT TH1D -- readable by real
-                              ROOT/PyROOT elsewhere -- with no PyROOT
-                              needed on this end. See histograms.py's
-                              module docstring for the full finding.
+                              shared pipeline. Written via uproot (this
+                              cluster account's own atlas-pipeline conda
+                              env has no PyROOT installed at all -- see
+                              histograms.py's module docstring), using
+                              uproot.writing.identify.to_TH1x directly so
+                              the on-disk class is a genuine TH1F, not
+                              TH1D.
     job_metadata.json     -- exact file URL + event count read, full
                               cutflow, per-category counts, thresholds
-                              used, git commit, validated-runs file sha256.
+                              used, git commit, validated-runs file sha256,
+                              which optional muon diagnostic branches this
+                              file has, and the TH1F-write verification
+                              outcome.
     outliers_gt_1tev.json -- (run, luminosityBlock, event, m0m1j0_gev,
                               category) for every event with m0m1j0 > 1000
                               GeV (kept for inspection, never discarded
                               from the histograms -- RECIPE.md deviation 4).
+    sanity_arrays.json    -- dimuon mass / leading-jet pT arrays for the
+                              pilot-style sanity plots.
+    dimuon_diagnostics.npz -- Step 2 (B): the low-mass dimuon diagnostic
+                              arrays, one row per event entering the
+                              inclusive histogram.
 """
 from __future__ import annotations
 
@@ -66,6 +89,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO_ROOT))
 
 import awkward as ak  # noqa: E402
+import numpy as np  # noqa: E402
 import uproot  # noqa: E402
 
 from services.parsing.validated_runs import ValidatedRunsFilter, apply_validated_runs_filter  # noqa: E402
@@ -98,7 +122,12 @@ def resolve_file_url(record_id: int, file_index: int) -> str:
     return urls[file_index]
 
 
-def read_events(file_url: str) -> ak.Array:
+def read_events(file_url: str):
+    """Returns (events, present_optional_muon_branches). The required
+    branches (selection.NEEDED_BRANCHES) must ALL be present or this
+    raises; the optional diagnostic branches
+    (selection.OPTIONAL_MUON_DIAGNOSTIC_BRANCHES) are read only if
+    present in this specific file -- absence is recorded, never fatal."""
     tree = uproot.open(file_url)["Events"]
     available = set(tree.keys())
     missing = [b for b in selection.NEEDED_BRANCHES if b not in available]
@@ -108,7 +137,10 @@ def read_events(file_url: str) -> ak.Array:
             f"proceed rather than silently treating a missing branch (e.g. a "
             f"trigger path) as 'not present/not fired'."
         )
-    return tree.arrays(list(selection.NEEDED_BRANCHES), library="ak")
+    present_optional = [b for b in selection.OPTIONAL_MUON_DIAGNOSTIC_BRANCHES if b in available]
+    branches_to_read = list(selection.NEEDED_BRANCHES) + present_optional
+    events = tree.arrays(branches_to_read, library="ak")
+    return events, present_optional
 
 
 def build_outlier_list(sel_events: ak.Array, raw_mass: ak.Array, categories) -> list:
@@ -133,6 +165,40 @@ def build_outlier_list(sel_events: ak.Array, raw_mass: ak.Array, categories) -> 
         }
         for r, lu, ev, m, c in zip(runs, lumis, events_nr, masses, cats)
     ]
+
+
+def build_dimuon_diagnostics_npz(output_path: Path, result: dict) -> int:
+    """Step 2 (B): saves one row per event entering the inclusive
+    histogram (mass not NaN after z_peak_cutoff/max_mass_cutoff) --
+    diagnostic only, does not affect the selection or histograms.
+    Returns the number of rows written."""
+    mass_np = ak.to_numpy(result["mass"])
+    keep = ~np.isnan(mass_np)
+    n_kept = int(keep.sum())
+
+    sel_events = result["sel_events"]
+    sel_muons = result["sel_muons"]
+    diagnostics = selection.compute_dimuon_diagnostics(sel_muons)
+    dimuon_mass = selection.compute_dimuon_mass(sel_muons)
+
+    fields = {
+        "run": ak.to_numpy(sel_events["run"])[keep].astype(np.int32),
+        "luminosityBlock": ak.to_numpy(sel_events["luminosityBlock"])[keep].astype(np.int32),
+        "event": ak.to_numpy(sel_events["event"])[keep].astype(np.int64),
+        "m_mumu_gev": ak.to_numpy(dimuon_mass)[keep].astype(np.float32),
+        "deltaR_mu0_mu1": ak.to_numpy(diagnostics["dr"])[keep].astype(np.float32),
+        "charge_product": ak.to_numpy(diagnostics["charge_product"])[keep].astype(np.int8),
+        "pt_ratio_mu1_mu0": ak.to_numpy(diagnostics["pt_ratio"])[keep].astype(np.float32),
+        "m0m1j0_gev": mass_np[keep].astype(np.float32),
+    }
+    for branch in selection.OPTIONAL_MUON_DIAGNOSTIC_BRANCHES:
+        field = branch[len("Muon_"):]
+        for suffix in ("mu0", "mu1"):
+            key = f"{field}_{suffix}"
+            fields[key] = ak.to_numpy(diagnostics[key])[keep].astype(np.float32)
+
+    np.savez_compressed(output_path, **fields)
+    return n_kept
 
 
 def selection_thresholds() -> dict:
@@ -170,21 +236,27 @@ def main():
     file_url = resolve_file_url(args.record_id, args.file_index)
     print(f"resolved record {args.record_id} file index {args.file_index} -> {file_url}", flush=True)
 
-    events = read_events(file_url)
+    events, present_optional_branches = read_events(file_url)
     n_read = len(events)
-    print(f"read {n_read} events from {file_url}", flush=True)
+    print(f"read {n_read} events from {file_url}; optional muon diagnostic branches present: "
+          f"{present_optional_branches}", flush=True)
 
     validated_runs = ValidatedRunsFilter(args.validated_runs_json)
     events_golden, golden_stats = apply_validated_runs_filter(events, validated_runs)
     print(f"golden-JSON filter: {golden_stats['n_before']} -> {golden_stats['n_after']}", flush=True)
 
-    result = selection.select_event_selection_cutflow(events_golden)
+    muon_extra_fields = {"charge": events_golden.Muon_charge}
+    for branch in present_optional_branches:
+        field = branch[len("Muon_"):]
+        muon_extra_fields[field] = events_golden[branch]
+
+    result = selection.select_event_selection_cutflow(events_golden, muon_extra_fields=muon_extra_fields)
 
     # apply_min_events_prune=False: min_events_per_fs is a GLOBAL
     # population count taken after merging every job (RECIPE.md section
     # 5/6.5) -- a single file's own per-category count is not the
     # population to prune on. This job writes every category it sees, no
-    # matter how small; merge_pilot.py applies the real prune once, after
+    # matter how small; the merge step applies the real prune once, after
     # summing every job's histograms by category name.
     hists, hist_meta = histograms.build_m0m1j0_histograms(
         result["obj_record"], result["mass"], apply_min_events_prune=False
@@ -192,7 +264,7 @@ def main():
     _, categories = histograms.per_event_raw_and_capped_final_state(result["obj_record"])
     outliers = build_outlier_list(result["sel_events"], result["raw_mass"], categories)
 
-    # Pilot-only sanity-check inputs (not part of the m0m1j0 selection
+    # Pilot-style sanity-check inputs (not part of the m0m1j0 selection
     # itself): dimuon mass of the selected pair and leading-jet pT, over
     # the same already-selected (>=2mu, >=1 light jet) event population.
     dimuon_mass = ak.to_numpy(
@@ -202,10 +274,22 @@ def main():
         selection.leading_jet_pt(result["obj_record"]["Jets"])
     ).tolist()
 
+    # Step 2 (A): write genuine TH1F (float32), not TH1D, then verify.
     root_path = output_dir / "all_histograms.root"
+    verify_expected = {}
     with uproot.recreate(str(root_path)) as f:
         for bumpnet_name, (values, edges) in hists.items():
-            f[f"ROI_{bumpnet_name}_width_{int(histograms.BIN_WIDTH_GEV)}"] = (values, edges)
+            key = f"ROI_{bumpnet_name}_width_{int(histograms.BIN_WIDTH_GEV)}"
+            f[key] = histograms.to_writable_th1f(values, edges, key)
+            verify_expected[key] = values
+    histograms.verify_written_th1f(str(root_path), verify_expected)
+    print(f"verified {len(verify_expected)} histogram(s) in {root_path}: all TH1F, bin contents match", flush=True)
+
+    # Step 2 (B): low-mass dimuon diagnostic npz.
+    npz_path = output_dir / "dimuon_diagnostics.npz"
+    n_diag_rows = build_dimuon_diagnostics_npz(npz_path, result)
+    npz_size_mb = npz_path.stat().st_size / (1024 * 1024)
+    print(f"wrote {npz_path}: {n_diag_rows} rows, {npz_size_mb:.2f} MB", flush=True)
 
     elapsed = time.time() - t0
 
@@ -231,7 +315,11 @@ def main():
         "cutflow": cutflow,
         "per_category": hist_meta,
         "n_histograms_written": len(hists),
+        "histograms_verified_th1f": True,
         "thresholds": selection_thresholds(),
+        "optional_muon_diagnostic_branches_present": present_optional_branches,
+        "n_dimuon_diagnostic_rows": n_diag_rows,
+        "dimuon_diagnostics_npz_size_mb": round(npz_size_mb, 3),
         "elapsed_sec": elapsed,
     }
 
@@ -242,8 +330,8 @@ def main():
     )
 
     print(json.dumps(cutflow, indent=2))
-    print(f"wrote {root_path}, job_metadata.json, outliers_gt_1tev.json, sanity_arrays.json "
-          f"under {output_dir} ({elapsed:.1f}s elapsed)")
+    print(f"wrote {root_path}, job_metadata.json, outliers_gt_1tev.json, sanity_arrays.json, "
+          f"dimuon_diagnostics.npz under {output_dir} ({elapsed:.1f}s elapsed)")
 
 
 if __name__ == "__main__":
