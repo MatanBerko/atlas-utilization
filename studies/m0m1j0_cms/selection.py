@@ -80,11 +80,23 @@ NEEDED_BRANCHES = (
     "run", "luminosityBlock", "event",
     *TRIGGER_BRANCHES,
     "nMuon", "Muon_pt", "Muon_eta", "Muon_phi", "Muon_mass",
-    "Muon_mediumId", "Muon_pfRelIso04_all",
+    "Muon_mediumId", "Muon_pfRelIso04_all", "Muon_charge",
     "nElectron", "Electron_pt", "Electron_eta", "Electron_phi", "Electron_mass",
     "Electron_cutBased",
     "nJet", "Jet_pt", "Jet_eta", "Jet_phi", "Jet_mass", "Jet_jetId",
     "Jet_btagDeepFlavB",
+)
+
+# Step 2, requirement B (low-mass dimuon diagnostic): read if present,
+# never required -- unlike NEEDED_BRANCHES above, a file missing one of
+# these does NOT fail the job; it's simply recorded as absent and that
+# muon's value for it is NaN in the diagnostic output (see
+# select_muons's extra_fields and compute_dimuon_diagnostics below).
+# DIAGNOSTIC ONLY: none of these are read for, or affect, the m0m1j0
+# selection itself.
+OPTIONAL_MUON_DIAGNOSTIC_BRANCHES = (
+    "Muon_isGlobal", "Muon_isTracker", "Muon_isPFcand",
+    "Muon_nStations", "Muon_nTrackerLayers",
 )
 
 
@@ -112,12 +124,20 @@ def _p4(obj: ak.Array) -> ak.Array:
     })
 
 
-def select_muons(events: ak.Array) -> ak.Array:
-    muons = ak.zip({
+def select_muons(events: ak.Array, extra_fields: Dict[str, ak.Array] = None) -> ak.Array:
+    """`extra_fields` (Step 2, requirement B) is purely additive
+    passthrough for the low-mass dimuon diagnostic (e.g. charge, and
+    whichever of OPTIONAL_MUON_DIAGNOSTIC_BRANCHES a given file has) --
+    it does NOT affect the selection mask below in any way, which is
+    unchanged from the pilot (RECIPE.md/PILOT_REPORT.md)."""
+    fields = {
         "pt": events.Muon_pt, "eta": events.Muon_eta, "phi": events.Muon_phi,
         "mass": events.Muon_mass, "mediumId": events.Muon_mediumId,
         "pfRelIso04_all": events.Muon_pfRelIso04_all,
-    })
+    }
+    if extra_fields:
+        fields.update(extra_fields)
+    muons = ak.zip(fields)
     mask = (
         (muons.pt > MUON_PT_MIN_GEV)
         & (abs(muons.eta) < MUON_ETA_MAX)
@@ -227,6 +247,42 @@ def compute_dimuon_mass(muons: ak.Array) -> ak.Array:
     return ak.fill_none(total.mass, np.nan)
 
 
+def compute_dimuon_diagnostics(muons: ak.Array) -> Dict[str, ak.Array]:
+    """Step 2, requirement B: DIAGNOSTIC ONLY, no cut, does not touch the
+    selection or the histograms. For the leading + subleading selected
+    muon: delta-R between them, the product of their charges (+1 same-
+    sign, -1 opposite-sign), the subleading/leading pT ratio, and
+    (leading, subleading) values of whichever OPTIONAL_MUON_DIAGNOSTIC_
+    BRANCHES were present in this file's `muons` record (NaN for any
+    that were not -- see run_m0m1j0_on_file.py's optional-branch read).
+    Used to help distinguish "duplicate reconstruction of one physical
+    muon" (expect delta-R ~ 0, pT ratio ~ 1, often same charge, likely
+    isGlobal/isTracker differing between the two) from "genuine collimated
+    pair" (no such pattern) for the low-mass (<2, <4 GeV) dimuon events
+    seen in the pilot's own sanity plot -- RECIPE.md/PILOT_REPORT.md do
+    not decide this; that decision is explicitly out of scope here."""
+    order = ak.argsort(muons.pt, axis=1, ascending=False)
+    sorted_muons = muons[order]
+    padded = ak.pad_none(sorted_muons, 2, axis=1, clip=True)
+    mu0, mu1 = padded[:, 0], padded[:, 1]
+
+    dr = ak.fill_none(_p4(mu0).deltaR(_p4(mu1)), np.nan)
+    charge_product = ak.fill_none(mu0.charge * mu1.charge, 0)
+    pt_ratio = ak.fill_none(mu1.pt / mu0.pt, np.nan)
+
+    out = {"dr": dr, "charge_product": charge_product, "pt_ratio": pt_ratio}
+    for branch in OPTIONAL_MUON_DIAGNOSTIC_BRANCHES:
+        field = branch[len("Muon_"):]
+        if field in muons.fields:
+            out[f"{field}_mu0"] = ak.fill_none(mu0[field], np.nan)
+            out[f"{field}_mu1"] = ak.fill_none(mu1[field], np.nan)
+        else:
+            n = len(muons)
+            out[f"{field}_mu0"] = ak.Array(np.full(n, np.nan))
+            out[f"{field}_mu1"] = ak.Array(np.full(n, np.nan))
+    return out
+
+
 def leading_jet_pt(jets: ak.Array) -> ak.Array:
     """pT of the leading (highest-pT) selected light jet per event -- used
     only for the pilot's own sanity-check plot."""
@@ -257,20 +313,26 @@ def apply_z_peak_and_mass_cutoff(mass: ak.Array) -> ak.Array:
     return ak.where(keep, mass, np.nan)
 
 
-def select_event_selection_cutflow(events: ak.Array) -> Dict[str, ak.Array]:
+def select_event_selection_cutflow(events: ak.Array, muon_extra_fields: Dict[str, ak.Array] = None) -> Dict[str, ak.Array]:
     """Runs the full per-event selection chain and returns everything
     downstream code (histograms.py, the outlier-event list) needs,
     including a step-by-step cutflow count. Does not apply the golden-JSON
     filter -- callers apply that first (it needs a loaded
     ValidatedRunsFilter, kept out of this ROOT/validated-runs-free module
     on purpose) and pass in the already-filtered ``events``.
+
+    `muon_extra_fields` (Step 2, requirement B) is passthrough-only (see
+    select_muons) -- when given, `sel_muons` in the returned dict carries
+    those fields through the same selection mask as every other muon
+    property, so callers can run compute_dimuon_diagnostics(sel_muons)
+    on it; the selection itself is unaffected either way.
     """
     n_after_golden = len(events)
 
     triggered = apply_trigger(events)
     n_after_trigger = len(triggered)
 
-    muons = select_muons(triggered)
+    muons = select_muons(triggered, extra_fields=muon_extra_fields)
     electrons = select_electrons(triggered)
     jets = select_and_split_jets(triggered, muons, electrons)
 
@@ -299,6 +361,7 @@ def select_event_selection_cutflow(events: ak.Array) -> Dict[str, ak.Array]:
         "n_after_ge1jet_after_cleaning": n_after_ge1jet,
         "n_after_z_peak_and_mass_cutoff": n_after_z_peak_and_mass_cutoff,
         "sel_events": sel_events,
+        "sel_muons": sel_muons,
         "obj_record": obj_record,
         "raw_mass": raw_mass,
         "mass": mass,

@@ -204,6 +204,46 @@ def main():
           set(["BJets", "Jets", "Muons", "Electrons"]).issubset(set(cutflow["obj_record"].fields)),
           f"got {cutflow['obj_record'].fields}")
 
+    # Step 2 requirement B: low-mass dimuon diagnostic (extra_fields
+    # threading + compute_dimuon_diagnostics), using a duplicate-like
+    # pair (near-zero deltaR, pt ratio ~1, same charge) vs a normal pair.
+    diag_events = ak.Array({
+        "run": [1, 1], "luminosityBlock": [1, 1], "event": [20, 21],
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": [True, True],
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": [False, False],
+        # event 0: near-duplicate pair (same eta/phi, pt ratio ~1, same charge)
+        # event 1: normal back-to-back pair, opposite charge
+        "Muon_pt": [[40.0, 39.9], [60.0, 40.0]],
+        "Muon_eta": [[0.5, 0.5001], [0.1, -0.2]],
+        "Muon_phi": [[1.0, 1.0001], [0.0, 3.0]],
+        "Muon_mass": [[0.105, 0.105], [0.105, 0.105]],
+        "Muon_mediumId": [[True, True], [True, True]],
+        "Muon_pfRelIso04_all": [[0.05, 0.05], [0.05, 0.05]],
+        "Muon_charge": [[1, 1], [1, -1]],
+        "Electron_pt": [[], []], "Electron_eta": [[], []], "Electron_phi": [[], []],
+        "Electron_mass": [[], []], "Electron_cutBased": [[], []],
+        "Jet_pt": [[80.0], [80.0]], "Jet_eta": [[2.0], [2.0]], "Jet_phi": [[-1.5], [-1.5]],
+        "Jet_mass": [[8.0], [8.0]], "Jet_jetId": [[6], [6]], "Jet_btagDeepFlavB": [[0.01], [0.01]],
+    })
+    muon_extra = {"charge": diag_events.Muon_charge}
+    diag_result = selection.select_event_selection_cutflow(diag_events, muon_extra_fields=muon_extra)
+    check("extra_fields threading: sel_muons carries 'charge' field", "charge" in diag_result["sel_muons"].fields, f"got {diag_result['sel_muons'].fields}")
+
+    diagnostics = selection.compute_dimuon_diagnostics(diag_result["sel_muons"])
+    dr_list = ak.to_list(diagnostics["dr"])
+    cp_list = ak.to_list(diagnostics["charge_product"])
+    ptr_list = ak.to_list(diagnostics["pt_ratio"])
+    check("diagnostic: near-duplicate pair has deltaR ~0", dr_list[0] < 0.01, f"got {dr_list[0]}")
+    check("diagnostic: near-duplicate pair has pt_ratio ~1", abs(ptr_list[0] - 1.0) < 0.01, f"got {ptr_list[0]}")
+    check("diagnostic: near-duplicate pair is same-sign (charge_product=+1)", cp_list[0] == 1, f"got {cp_list[0]}")
+    check("diagnostic: normal pair has larger deltaR", dr_list[1] > 1.0, f"got {dr_list[1]}")
+    check("diagnostic: normal pair is opposite-sign (charge_product=-1)", cp_list[1] == -1, f"got {cp_list[1]}")
+    check(
+        "diagnostic: missing optional branches (isGlobal etc.) fill as NaN, not crash",
+        all(np.isnan(x) for x in ak.to_list(diagnostics["isGlobal_mu0"])),
+        f"got {diagnostics['isGlobal_mu0']}",
+    )
+
     # Pilot sanity-plot helpers
     dimuon_mass = ak.to_list(selection.compute_dimuon_mass(mixed_muons))
     check("dimuon mass: 2 events computed, both finite", len(dimuon_mass) == 2 and all(not np.isnan(x) for x in dimuon_mass), f"got {dimuon_mass}")

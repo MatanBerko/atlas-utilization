@@ -38,11 +38,19 @@ WORKAROUND USED HERE (no shared code or environment touched):
     directly), so no copy was needed for it.
   - Histograms are built and returned as plain (values, edges) numpy
     array pairs instead of ROOT.TH1F objects, and written to disk via
-    `uproot.recreate(...)` (confirmed: uproot writes a genuine ROOT TH1D
-    from a (values, edges) tuple, readable by real ROOT/PyROOT
-    elsewhere, with no PyROOT needed on this end at all) rather than via
-    PyROOT's TFile/TH1F -- same on-disk ROOT histogram format, same
-    binning, same naming, just written through a different library.
+    `uproot.recreate(...)`.
+  - UPDATE (Step 2, full run): the shared pipeline writes TH1F (float32
+    bin contents), not TH1D. uproot's plain `file[key] = (values, edges)`
+    shortcut always produces a TH1D regardless of the array's dtype
+    (confirmed directly: a float32 values array still round-trips as
+    TH1D) -- so matching TH1F requires uproot's lower-level
+    `uproot.writing.identify.to_TH1x` constructor instead, which DOES
+    key its return class off the dtype of its `data` argument per its
+    own docstring ("The dtype of this array determines the return type
+    of this function (TH1C, TH1D, TH1F, TH1I, or TH1S)"). See
+    `to_writable_th1f` below -- confirmed round-trips as a genuine TH1F
+    with float32 bin contents, readable by real ROOT/PyROOT elsewhere,
+    with no PyROOT needed on this end at all.
   - trim_empty_tail's cosmetic axis-range trim (ROOT's SetRangeUser,
     display-only, never touches stored bin content per
     histograms_pipeline.py:26-41) is NOT reproduced in the written ROOT
@@ -86,6 +94,7 @@ from typing import Dict, Tuple
 
 import awkward as ak
 import numpy as np
+import uproot.writing.identify as _uproot_identify
 
 from services.calculations.physics_calcs import limit_particles_in_fs
 
@@ -150,6 +159,78 @@ def make_fixed_grid_histogram(values) -> Histogram:
     bin_idx = np.clip(bin_idx, 0, n_bins - 1)
     np.add.at(counts, bin_idx, 1.0)
     return counts, edges
+
+
+def to_writable_th1f(values: np.ndarray, edges: np.ndarray, title: str):
+    """Builds a genuine, writable ROOT TH1F (float32 bin contents) from a
+    (values, edges) numpy pair, via uproot.writing.identify.to_TH1x
+    directly (see this module's docstring: uproot's plain
+    `file[key] = (values, edges)` shortcut always writes a TH1D
+    regardless of dtype; to_TH1x's own docstring says its `data`
+    argument's dtype IS what selects TH1F vs TH1D vs ... -- confirmed by
+    writing+reading back one directly, `classname == "TH1F"`).
+
+    `title` becomes both the TH1's title and (once assigned via
+    `file[name] = to_writable_th1f(...)`) its ROOT-internal name -- the
+    key used in that assignment is what actually determines the
+    read-back `.name`; `title` here only needs to be informative, not
+    necessarily identical to the eventual key (callers should still pass
+    the same string for both, to keep name==title as in the pilot).
+
+    `data` must include the underflow (index 0) and overflow (last index)
+    bins around the real bin contents (ROOT's own TH1 on-disk convention);
+    `values` here has no under/overflow of its own (this study's inputs
+    are already clipped into range by make_fixed_grid_histogram), so
+    those two slots are always zero.
+    """
+    n_bins = len(values)
+    data = np.zeros(n_bins + 2, dtype=np.float32)
+    data[1:-1] = values.astype(np.float32)
+
+    xaxis = _uproot_identify.to_TAxis(
+        "xaxis", "", n_bins, float(edges[0]), float(edges[-1]),
+        fXbins=np.asarray(edges, dtype=np.float64),
+    )
+    values_f64 = values.astype(np.float64)
+    return _uproot_identify.to_TH1x(
+        fName=None,
+        fTitle=title,
+        data=data,
+        fEntries=float(values_f64.sum()),
+        fTsumw=float(values_f64.sum()),
+        fTsumw2=float((values_f64 ** 2).sum()),
+        fTsumwx=0.0,
+        fTsumwx2=0.0,
+        fSumw2=None,
+        fXaxis=xaxis,
+    )
+
+
+def verify_written_th1f(root_path: str, expected: Dict[str, np.ndarray]) -> None:
+    """Re-opens `root_path` with uproot and asserts, for every
+    `key -> values` pair in `expected`, that the on-disk histogram's
+    class is exactly TH1F and its bin contents equal `values` (float32
+    precision -- rtol chosen to comfortably clear float32 rounding of
+    typical bin-count magnitudes here, well under 1 part in 10^5).
+    Raises AssertionError with a specific message identifying which
+    histogram/aspect failed, rather than silently trusting the write.
+    """
+    import uproot as _uproot
+    f = _uproot.open(root_path)
+    on_disk = set(k.split(";")[0] for k in f.keys())
+    missing = set(expected) - on_disk
+    if missing:
+        raise AssertionError(f"{root_path}: expected histogram(s) missing after write: {sorted(missing)}")
+    for key, values in expected.items():
+        hist = f[key]
+        if hist.classname != "TH1F":
+            raise AssertionError(f"{root_path}: {key} is {hist.classname}, expected TH1F")
+        on_disk_values = hist.values()
+        if not np.allclose(on_disk_values, values.astype(np.float32), rtol=1e-5, atol=1e-3):
+            raise AssertionError(
+                f"{root_path}: {key} bin contents do not match after write/read "
+                f"(max abs diff {np.max(np.abs(on_disk_values - values)):.6g})"
+            )
 
 
 def per_event_raw_and_capped_final_state(obj_record: ak.Array):
