@@ -1,0 +1,213 @@
+{
+  "jobs_base": "/storage/agrp/berkom/atlas-utilization/output/m0m1j0_pilot",
+  "present_job_indices": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "missing_job_indices": [],
+  "n_jobs_expected": 4,
+  "portal_identity": {
+    "per_job": {
+      "1": {
+        "status": "OK",
+        "record_id": 30522,
+        "file_index": 0,
+        "recorded_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/05DD095C-F6C3-9A4F-9FB3-348A5A6403D5.root",
+        "current_portal_url_at_this_index": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/05DD095C-F6C3-9A4F-9FB3-348A5A6403D5.root",
+        "matches_current_portal": true,
+        "n_read": 2315223,
+        "git_commit": "29018f4a1d976c2ce2498f0c3f00dda1fbfd968f"
+      },
+      "2": {
+        "status": "OK",
+        "record_id": 30522,
+        "file_index": 1,
+        "recorded_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/209D94D9-B6D5-A34B-A2A3-CBB7E4EA8ADF.root",
+        "current_portal_url_at_this_index": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/209D94D9-B6D5-A34B-A2A3-CBB7E4EA8ADF.root",
+        "matches_current_portal": true,
+        "n_read": 2467200,
+        "git_commit": "29018f4a1d976c2ce2498f0c3f00dda1fbfd968f"
+      },
+      "3": {
+        "status": "OK",
+        "record_id": 30555,
+        "file_index": 0,
+        "recorded_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/2510000/127C2975-1B1C-A046-AABF-62B77E757A86.root",
+        "current_portal_url_at_this_index": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/2510000/127C2975-1B1C-A046-AABF-62B77E757A86.root",
+        "matches_current_portal": true,
+        "n_read": 2147195,
+        "git_commit": "29018f4a1d976c2ce2498f0c3f00dda1fbfd968f"
+      },
+      "4": {
+        "status": "OK",
+        "record_id": 30555,
+        "file_index": 1,
+        "recorded_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/2510000/183BFB78-7B5E-734F-BBF5-174A73020F89.root",
+        "current_portal_url_at_this_index": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/2510000/183BFB78-7B5E-734F-BBF5-174A73020F89.root",
+        "matches_current_portal": true,
+        "n_read": 2167324,
+        "git_commit": "29018f4a1d976c2ce2498f0c3f00dda1fbfd968f"
+      }
+    },
+    "problems": []
+  },
+  "cutflow_summed_over_present_jobs": {
+    "n_read": 9096942,
+    "n_after_golden_json": 8964623,
+    "n_after_trigger": 2981006,
+    "n_after_ge2mu": 912265,
+    "n_after_ge1jet_after_cleaning": 174313,
+    "n_after_z_peak_and_mass_cutoff": 170949,
+    "n_outliers_gt_1tev": 327
+  },
+  "n_histograms_before_merge_prune": 41,
+  "n_histograms_after_merge_prune": 11,
+  "dropped_categories_below_min_events_per_fs": [
+    {
+      "name": "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_entries": 20
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_2mx_2jx_0gx_0tx_3bx",
+      "n_entries": 15
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_entries": 87
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_entries": 43
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_2mx_4jx_0gx_0tx_3bx",
+      "n_entries": 3
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_3mx_1jx_0gx_0tx_0bx",
+      "n_entries": 33
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_3mx_2jx_0gx_0tx_0bx",
+      "n_entries": 11
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_3mx_3jx_0gx_0tx_0bx",
+      "n_entries": 4
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_3mx_4jx_0gx_0tx_0bx",
+      "n_entries": 2
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_3mx_4jx_0gx_0tx_2bx",
+      "n_entries": 1
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_4mx_2jx_0gx_0tx_0bx",
+      "n_entries": 1
+    },
+    {
+      "name": "mass_m0m1j0_cat_1ex_2mx_1jx_0gx_0tx_0bx",
+      "n_entries": 39
+    },
+    {
+      "name": "mass_m0m1j0_cat_1ex_2mx_1jx_0gx_0tx_1bx",
+      "n_entries": 9
+    },
+    {
+      "name": "mass_m0m1j0_cat_1ex_2mx_2jx_0gx_0tx_0bx",
+      "n_entries": 19
+    },
+    {
+      "name": "mass_m0m1j0_cat_1ex_2mx_2jx_0gx_0tx_1bx",
+      "n_entries": 3
+    },
+    {
+      "name": "mass_m0m1j0_cat_1ex_2mx_2jx_0gx_0tx_2bx",
+      "n_entries": 1
+    },
+    {
+      "name": "mass_m0m1j0_cat_1ex_2mx_3jx_0gx_0tx_0bx",
+      "n_entries": 4
+    },
+    {
+      "name": "mass_m0m1j0_cat_1ex_2mx_4jx_0gx_0tx_1bx",
+      "n_entries": 3
+    },
+    {
+      "name": "mass_m0m1j0_cat_1ex_3mx_1jx_0gx_0tx_1bx",
+      "n_entries": 1
+    },
+    {
+      "name": "mass_m0m1j0_cat_2ex_2mx_1jx_0gx_0tx_1bx",
+      "n_entries": 1
+    },
+    {
+      "name": "mass_m0m1j0_cat_2ex_2mx_2jx_0gx_0tx_0bx",
+      "n_entries": 1
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_2mx_2jx_0gx_0tx_4bx",
+      "n_entries": 1
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_2mx_4jx_0gx_0tx_4bx",
+      "n_entries": 1
+    },
+    {
+      "name": "mass_m0m1j0_cat_1ex_2mx_1jx_0gx_0tx_2bx",
+      "n_entries": 3
+    },
+    {
+      "name": "mass_m0m1j0_cat_1ex_2mx_4jx_0gx_0tx_0bx",
+      "n_entries": 2
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_3mx_1jx_0gx_0tx_1bx",
+      "n_entries": 1
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_3mx_2jx_0gx_0tx_1bx",
+      "n_entries": 2
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_2mx_3jx_0gx_0tx_3bx",
+      "n_entries": 1
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_3mx_3jx_0gx_0tx_1bx",
+      "n_entries": 1
+    },
+    {
+      "name": "mass_m0m1j0_cat_1ex_2mx_2jx_0gx_0tx_3bx",
+      "n_entries": 0
+    }
+  ],
+  "top_categories_by_event_count": [
+    {
+      "category": "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_0bx",
+      "n_entries": 125379
+    },
+    {
+      "category": "mass_m0m1j0_cat_0ex_2mx_2jx_0gx_0tx_0bx",
+      "n_entries": 28528
+    },
+    {
+      "category": "mass_m0m1j0_cat_0ex_2mx_3jx_0gx_0tx_0bx",
+      "n_entries": 6346
+    },
+    {
+      "category": "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_1bx",
+      "n_entries": 4944
+    },
+    {
+      "category": "mass_m0m1j0_cat_0ex_2mx_4jx_0gx_0tx_0bx",
+      "n_entries": 1849
+    }
+  ],
+  "n_outlier_events_gt_1tev": 327,
+  "complete": true
+}
