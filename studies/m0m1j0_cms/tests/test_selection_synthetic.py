@@ -207,26 +207,38 @@ def main():
     # Step 2 requirement B: low-mass dimuon diagnostic (extra_fields
     # threading + compute_dimuon_diagnostics), using a duplicate-like
     # pair (near-zero deltaR, pt ratio ~1, same charge) vs a normal pair.
+    # Event 2 deliberately FAILS the trigger (both HLT paths False) -- this
+    # is essential, not incidental: passing branch NAMES (not pre-sliced
+    # arrays) into select_event_selection_cutflow only proves anything if
+    # the trigger cut actually shrinks the event count somewhere in the
+    # fixture. An earlier version of this test had every event pass the
+    # trigger, which hid a real bug (muon_extra_fields built from
+    # PRE-trigger events, then zipped against POST-trigger muons -- an
+    # ak.zip length mismatch) that only surfaced running the real cluster
+    # array, 2026-09-22 -- every one of the first 57 full-run jobs crashed
+    # on it. See selection.select_event_selection_cutflow's own docstring.
     diag_events = ak.Array({
-        "run": [1, 1], "luminosityBlock": [1, 1], "event": [20, 21],
-        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": [True, True],
-        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": [False, False],
+        "run": [1, 1, 1], "luminosityBlock": [1, 1, 1], "event": [20, 21, 22],
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": [True, True, False],
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": [False, False, False],
         # event 0: near-duplicate pair (same eta/phi, pt ratio ~1, same charge)
         # event 1: normal back-to-back pair, opposite charge
-        "Muon_pt": [[40.0, 39.9], [60.0, 40.0]],
-        "Muon_eta": [[0.5, 0.5001], [0.1, -0.2]],
-        "Muon_phi": [[1.0, 1.0001], [0.0, 3.0]],
-        "Muon_mass": [[0.105, 0.105], [0.105, 0.105]],
-        "Muon_mediumId": [[True, True], [True, True]],
-        "Muon_pfRelIso04_all": [[0.05, 0.05], [0.05, 0.05]],
-        "Muon_charge": [[1, 1], [1, -1]],
-        "Electron_pt": [[], []], "Electron_eta": [[], []], "Electron_phi": [[], []],
-        "Electron_mass": [[], []], "Electron_cutBased": [[], []],
-        "Jet_pt": [[80.0], [80.0]], "Jet_eta": [[2.0], [2.0]], "Jet_phi": [[-1.5], [-1.5]],
-        "Jet_mass": [[8.0], [8.0]], "Jet_jetId": [[6], [6]], "Jet_btagDeepFlavB": [[0.01], [0.01]],
+        # event 2: fails the trigger entirely -- must be dropped before
+        #          muon_extra_branches extraction, never crash
+        "Muon_pt": [[40.0, 39.9], [60.0, 40.0], [50.0, 30.0]],
+        "Muon_eta": [[0.5, 0.5001], [0.1, -0.2], [0.3, -0.3]],
+        "Muon_phi": [[1.0, 1.0001], [0.0, 3.0], [1.0, -1.0]],
+        "Muon_mass": [[0.105, 0.105], [0.105, 0.105], [0.105, 0.105]],
+        "Muon_mediumId": [[True, True], [True, True], [True, True]],
+        "Muon_pfRelIso04_all": [[0.05, 0.05], [0.05, 0.05], [0.05, 0.05]],
+        "Muon_charge": [[1, 1], [1, -1], [1, -1]],
+        "Electron_pt": [[], [], []], "Electron_eta": [[], [], []], "Electron_phi": [[], [], []],
+        "Electron_mass": [[], [], []], "Electron_cutBased": [[], [], []],
+        "Jet_pt": [[80.0], [80.0], [80.0]], "Jet_eta": [[2.0], [2.0], [2.0]], "Jet_phi": [[-1.5], [-1.5], [-1.5]],
+        "Jet_mass": [[8.0], [8.0], [8.0]], "Jet_jetId": [[6], [6], [6]], "Jet_btagDeepFlavB": [[0.01], [0.01], [0.01]],
     })
-    muon_extra = {"charge": diag_events.Muon_charge}
-    diag_result = selection.select_event_selection_cutflow(diag_events, muon_extra_fields=muon_extra)
+    diag_result = selection.select_event_selection_cutflow(diag_events, muon_extra_branches=["Muon_charge"])
+    check("trigger cut actually removed an event (n_after_trigger==2, not 3) -- otherwise this test proves nothing", diag_result["n_after_trigger"] == 2, f"got {diag_result['n_after_trigger']}")
     check("extra_fields threading: sel_muons carries 'charge' field", "charge" in diag_result["sel_muons"].fields, f"got {diag_result['sel_muons'].fields}")
 
     diagnostics = selection.compute_dimuon_diagnostics(diag_result["sel_muons"])

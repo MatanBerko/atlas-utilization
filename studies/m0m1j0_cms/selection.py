@@ -313,7 +313,7 @@ def apply_z_peak_and_mass_cutoff(mass: ak.Array) -> ak.Array:
     return ak.where(keep, mass, np.nan)
 
 
-def select_event_selection_cutflow(events: ak.Array, muon_extra_fields: Dict[str, ak.Array] = None) -> Dict[str, ak.Array]:
+def select_event_selection_cutflow(events: ak.Array, muon_extra_branches=None) -> Dict[str, ak.Array]:
     """Runs the full per-event selection chain and returns everything
     downstream code (histograms.py, the outlier-event list) needs,
     including a step-by-step cutflow count. Does not apply the golden-JSON
@@ -321,16 +321,41 @@ def select_event_selection_cutflow(events: ak.Array, muon_extra_fields: Dict[str
     ValidatedRunsFilter, kept out of this ROOT/validated-runs-free module
     on purpose) and pass in the already-filtered ``events``.
 
-    `muon_extra_fields` (Step 2, requirement B) is passthrough-only (see
-    select_muons) -- when given, `sel_muons` in the returned dict carries
-    those fields through the same selection mask as every other muon
-    property, so callers can run compute_dimuon_diagnostics(sel_muons)
-    on it; the selection itself is unaffected either way.
+    `muon_extra_branches` (Step 2, requirement B): an iterable of raw
+    NanoAOD branch names (e.g. ["Muon_charge", "Muon_isGlobal"]) present
+    on `events`. Deliberately taken as NAMES, not pre-sliced arrays: this
+    function extracts them from `triggered` -- i.e. AFTER the trigger cut
+    below -- not from the caller's original `events`. A caller that
+    instead pre-slices fields from `events` and passes those arrays in
+    will silently have the WRONG length once the trigger cut removes any
+    events (confirmed: this crashed every job of the very first Step 2
+    full-run submission, 2026-09-22, with an ak.zip "cannot broadcast
+    RegularArray of size <after-trigger> with RegularArray of size
+    <before-trigger>" error -- exactly this mismatch. The pilot's own
+    local integration test did not catch it because its synthetic fixture
+    had every event pass the trigger, so before/after-trigger lengths
+    happened to be equal there and only diverged on real data). Passing
+    NAMES instead of arrays makes this bug structurally impossible: the
+    extraction always happens against whatever `triggered` is here, at
+    the one place that's authoritative for it.
+
+    When given, `sel_muons` in the returned dict carries those fields
+    through the same selection mask as every other muon property, so
+    callers can run compute_dimuon_diagnostics(sel_muons) on it; the
+    selection itself is UNAFFECTED either way -- this is passthrough only
+    (see select_muons).
     """
     n_after_golden = len(events)
 
     triggered = apply_trigger(events)
     n_after_trigger = len(triggered)
+
+    muon_extra_fields = None
+    if muon_extra_branches:
+        muon_extra_fields = {}
+        for branch in muon_extra_branches:
+            field = branch[len("Muon_"):] if branch.startswith("Muon_") else branch
+            muon_extra_fields[field] = triggered[branch]
 
     muons = select_muons(triggered, extra_fields=muon_extra_fields)
     electrons = select_electrons(triggered)

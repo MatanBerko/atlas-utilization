@@ -57,18 +57,32 @@ class FakeTree:
 def make_synthetic_events(n_events: int, include_optional: bool):
     """n_events events, ~half passing the full selection with a range of
     dimuon masses (including some near-duplicate-like low-mass pairs),
-    all in run 111, certified lumis 1-100 (golden JSON below covers this)."""
+    all in run 111, certified lumis 1-100 (golden JSON below covers this).
+
+    Every 5th event deliberately FAILS both trigger paths -- essential,
+    not incidental: an earlier version of this fixture had every event
+    pass the trigger, which hid a real bug (muon_extra_fields built from
+    events BEFORE the trigger cut, then zipped against muons built from
+    events AFTER it -- an ak.zip length mismatch) that only surfaced
+    running the real cluster array, where every one of the first 57
+    full-run jobs crashed on it, 2026-09-22. See
+    selection.select_event_selection_cutflow's own docstring for the
+    full story. This fixture must keep exercising that shrinkage."""
     rng = np.random.default_rng(0)
     data = {
         "run": [111] * n_events,
         "luminosityBlock": [((i % 50) + 1) for i in range(n_events)],
         "event": list(range(1, n_events + 1)),
-        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": [True] * n_events,
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": [(i % 5 != 0) for i in range(n_events)],
         "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": [False] * n_events,
     }
     mu_pt, mu_eta, mu_phi, mu_mass, mu_medium, mu_iso, mu_charge = [], [], [], [], [], [], []
     for i in range(n_events):
-        if i % 10 == 0:
+        # offset 3, not 0: i%5==0 events fail the trigger above, so using
+        # the SAME multiple-of-5-aligned offset here would make every
+        # near-duplicate event also a trigger failure, leaving none of
+        # them in the final sample -- confirmed to happen with i%10==0.
+        if i % 10 == 3:
             # near-duplicate-like low-mass pair
             mu_pt.append([40.0, 39.5])
             mu_eta.append([0.3, 0.301])
@@ -170,6 +184,11 @@ def main():
 
         meta = json.loads((output_dir / "job_metadata.json").read_text())
         check("cutflow n_read == 500", meta["cutflow"]["n_read"] == 500, f"got {meta['cutflow']}")
+        check(
+            "trigger cut actually removed events (n_after_trigger==400, not 500) -- otherwise this test proves nothing about muon_extra_branches correctness",
+            meta["cutflow"]["n_after_trigger"] == 400,
+            f"got {meta['cutflow']}",
+        )
         check("file_url recorded matches the fake portal's file-index-0 URL", meta["file_url"] == "root://fake/12345/file0.root")
         check(
             "optional_muon_diagnostic_branches_present includes isGlobal/isTracker only",

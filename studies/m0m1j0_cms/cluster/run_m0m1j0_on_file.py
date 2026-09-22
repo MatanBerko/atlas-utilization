@@ -245,12 +245,17 @@ def main():
     events_golden, golden_stats = apply_validated_runs_filter(events, validated_runs)
     print(f"golden-JSON filter: {golden_stats['n_before']} -> {golden_stats['n_after']}", flush=True)
 
-    muon_extra_fields = {"charge": events_golden.Muon_charge}
-    for branch in present_optional_branches:
-        field = branch[len("Muon_"):]
-        muon_extra_fields[field] = events_golden[branch]
+    # Branch NAMES, not pre-sliced arrays: select_event_selection_cutflow
+    # extracts these itself from its own post-trigger-cut `triggered`
+    # array -- passing pre-sliced arrays from events_golden here crashed
+    # every job of the first full-run submission (2026-09-22), since the
+    # trigger cut removes events and events_golden's own length no longer
+    # matches by the time selection code tries to zip them together. See
+    # selection.select_event_selection_cutflow's docstring for the full
+    # story.
+    muon_extra_branches = ["Muon_charge"] + present_optional_branches
 
-    result = selection.select_event_selection_cutflow(events_golden, muon_extra_fields=muon_extra_fields)
+    result = selection.select_event_selection_cutflow(events_golden, muon_extra_branches=muon_extra_branches)
 
     # apply_min_events_prune=False: min_events_per_fs is a GLOBAL
     # population count taken after merging every job (RECIPE.md section
