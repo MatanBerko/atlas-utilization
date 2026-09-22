@@ -28,10 +28,22 @@ Usage:
         --output-dir /storage/.../job_1
 
 Writes, under --output-dir:
-    all_histograms.root   -- one TH1F per BumpNet category + one inclusive
+    all_histograms.root   -- one TH1D per BumpNet category + one inclusive
                               (studies.m0m1j0_cms.histograms), ROI_-prefixed
                               ROOT-internal names, same fixed grid as the
-                              shared pipeline.
+                              shared pipeline. Written via uproot, not
+                              PyROOT -- this cluster account's own
+                              atlas-pipeline conda env has no PyROOT
+                              installed at all (confirmed directly; even
+                              `import services.pipelines.histograms_pipeline`
+                              fails there), so studies.m0m1j0_cms.histograms
+                              builds plain (values, edges) numpy arrays and
+                              this driver writes them with
+                              uproot.recreate(...), which produces a
+                              genuine ROOT TH1D -- readable by real
+                              ROOT/PyROOT elsewhere -- with no PyROOT
+                              needed on this end. See histograms.py's
+                              module docstring for the full finding.
     job_metadata.json     -- exact file URL + event count read, full
                               cutflow, per-category counts, thresholds
                               used, git commit, validated-runs file sha256.
@@ -54,7 +66,6 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO_ROOT))
 
 import awkward as ak  # noqa: E402
-import ROOT  # noqa: E402
 import uproot  # noqa: E402
 
 from services.parsing.validated_runs import ValidatedRunsFilter, apply_validated_runs_filter  # noqa: E402
@@ -192,10 +203,9 @@ def main():
     ).tolist()
 
     root_path = output_dir / "all_histograms.root"
-    root_file = ROOT.TFile(str(root_path), "RECREATE")
-    for hist in hists.values():
-        hist.Write()
-    root_file.Close()
+    with uproot.recreate(str(root_path)) as f:
+        for bumpnet_name, (values, edges) in hists.items():
+            f[f"ROI_{bumpnet_name}_width_{int(histograms.BIN_WIDTH_GEV)}"] = (values, edges)
 
     elapsed = time.time() - t0
 

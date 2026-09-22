@@ -1,23 +1,62 @@
 """
 m0m1j0 CMS histogram -- Step 1 ROOT histogram building.
 
-ROOT-dependent (unlike studies/m0m1j0_cms/selection.py): builds one TH1F
-per exact final state (>=2 muons, >=1 light jet) plus one deliberately
-non-BumpNet-named inclusive TH1F, on the SAME fixed grid and using the
-SAME naming convention the shared pipeline would use -- imported directly,
-not re-derived (RECIPE.md sections 4, 6, 7):
+ENVIRONMENT FINDING (discovered running the pilot, 2026-09-22): the
+cluster's own `atlas-pipeline` conda env
+(/storage/agrp/berkom/atlas-utilization/envs/atlas-pipeline) has NO
+PyROOT installed, and there is no system `root`/`root-config` on this
+account either. `services/pipelines/histograms_pipeline.py` does
+`import ROOT` at MODULE level, so it cannot even be IMPORTED in that
+env -- not just "the histogram-building call fails", the whole module
+fails at `import`. Confirmed directly:
+    $ python -c "import services.pipelines.histograms_pipeline"
+    ModuleNotFoundError: No module named 'ROOT'
+This means the task's own instruction to literally `import` FIXED_MASS_
+MIN_GEV/MAX_GEV, _fill_mass, trim_empty_tail, and _convert_to_bumpnet_name
+from that module cannot be carried out as a real import in this
+environment -- doing so would make every cluster job crash immediately.
+This is a real, non-obvious environment gap worth the group's attention
+separately (whether the shared pipeline's own histogram_creation_task
+has ever actually been run end-to-end on this cluster account is
+unclear); it is NOT something this study is authorized to fix by
+installing PyROOT into the shared `atlas-pipeline` env (that env is used
+by other studies, e.g. studies/hgg_cms, and modifying shared
+infrastructure is outside this task's scope).
 
-  - FIXED_MASS_MIN_GEV / FIXED_MASS_MAX_GEV / _fill_mass / trim_empty_tail
-    from services.pipelines.histograms_pipeline (never hardcoded here).
-  - _convert_to_bumpnet_name from the same module, for the real
-    "mass_<combo>_cat_<fs>" name -- the ROOT-internal TH1F name additionally
-    gets a "ROI_" prefix at write time here, exactly mirroring
-    services/pipelines/histograms_pipeline.py:380 (the known ROI_/grouping-
-    name mismatch documented in docs/CMS_KNOWN_LIMITATIONS.md, not fixed).
-  - limit_particles_in_fs from services.calculations.physics_calcs, for the
-    exact-count/capped-at-4 final-state string (RECIPE.md section 4) -- see
-    the "Grouping note" below for why group_by_final_state itself is not
-    called directly.
+WORKAROUND USED HERE (no shared code or environment touched):
+  - The two numeric constants (FIXED_MASS_MIN_GEV/MAX_GEV) and the
+    _convert_to_bumpnet_name function are copied VERBATIM below, with an
+    explicit citation to the exact source lines they were copied from
+    (services/pipelines/histograms_pipeline.py:22-23, 419-453 at the
+    commit this branch was built from) -- byte-identical logic, just not
+    a live `import` (which is impossible here). If that module's logic
+    ever changes, this copy will silently drift -- flagged here so a
+    future reader knows to re-diff it, not treated as fixed forever.
+  - limit_particles_in_fs IS still a real, live import from
+    services.calculations.physics_calcs -- that module has no ROOT/fcntl
+    dependency at all and imports cleanly in this env (confirmed
+    directly), so no copy was needed for it.
+  - Histograms are built and returned as plain (values, edges) numpy
+    array pairs instead of ROOT.TH1F objects, and written to disk via
+    `uproot.recreate(...)` (confirmed: uproot writes a genuine ROOT TH1D
+    from a (values, edges) tuple, readable by real ROOT/PyROOT
+    elsewhere, with no PyROOT needed on this end at all) rather than via
+    PyROOT's TFile/TH1F -- same on-disk ROOT histogram format, same
+    binning, same naming, just written through a different library.
+  - trim_empty_tail's cosmetic axis-range trim (ROOT's SetRangeUser,
+    display-only, never touches stored bin content per
+    histograms_pipeline.py:26-41) is NOT reproduced in the written ROOT
+    file here -- there is no PyROOT axis object to call SetRangeUser on
+    via uproot's writer. The same information (last non-empty bin) is
+    reported in each job's JSON metadata and applied directly in the
+    pilot's own sanity-check PNGs instead.
+
+Builds one histogram per exact final state (>=2 muons, >=1 light jet)
+plus one deliberately non-BumpNet-named inclusive histogram, on the SAME
+fixed grid and using the SAME naming convention the shared pipeline
+would use (RECIPE.md sections 4, 6, 7) -- ROI_-prefixed ROOT-internal
+name, "mass_<combo>_cat_<fs>" grouping name, exact-count/capped-at-4
+final-state string.
 
 MIN_EVENTS_PER_FINAL_STATE (config.yaml's min_events_per_fs=100, RECIPE.md
 section 5/6.5) is applied here: a final state's histogram is only created
@@ -35,31 +74,32 @@ the SEPARATELY-computed `mass` array (not a field of `obj_record`) in
 lockstep with its output. Reusing group_by_final_state would have meant
 either bundling `mass` into `obj_record` as a fake jagged field (fragile:
 ak.num(events) there is called on the whole record, so a flat non-jagged
-field breaks it) or recomputing the mask afterwards anyway. The two
-non-trivial pieces of the shared naming/categorization logic --
-limit_particles_in_fs's >4 capping rule and _convert_to_bumpnet_name's
-exact string format -- ARE imported and reused directly (see below); only
-the trivial "join six counts into `{e}e_{m}m_{j}j_{g}g_{t}t_{b}b`" loop is
-duplicated, verbatim, from services/calculations/physics_calcs.py:61-83.
+field breaks it) or recomputing the mask afterwards anyway. limit_particles_in_fs's
+>4 capping rule IS imported and reused directly; only the trivial "join
+six counts into `{e}e_{m}m_{j}j_{g}g_{t}t_{b}b`" loop is duplicated,
+verbatim, from services/calculations/physics_calcs.py:61-83.
 """
 from __future__ import annotations
 
+import math
 from typing import Dict, Tuple
 
 import awkward as ak
 import numpy as np
-import ROOT
 
 from services.calculations.physics_calcs import limit_particles_in_fs
-from services.pipelines.histograms_pipeline import (
-    FIXED_MASS_MIN_GEV, FIXED_MASS_MAX_GEV, _fill_mass, _convert_to_bumpnet_name,
-    trim_empty_tail,
-)
 
 from studies.m0m1j0_cms.selection import MIN_EVENTS_PER_FINAL_STATE
 
+# Copied verbatim from services/pipelines/histograms_pipeline.py:22-23 --
+# see this module's docstring for why these cannot be live-imported here.
+FIXED_MASS_MIN_GEV = 0.0
+FIXED_MASS_MAX_GEV = 10000.0
+
 BIN_WIDTH_GEV = 10.0  # config.yaml:166, mirrored
 INCLUSIVE_HIST_NAME = "mass_m0m1j0_inclusive_ge2m_ge1j"
+
+Histogram = Tuple[np.ndarray, np.ndarray]  # (bin_values, bin_edges) -- uproot's own histogram-write shape
 
 
 def _n_bins() -> int:
@@ -73,18 +113,43 @@ def _n_bins() -> int:
     return int(n)
 
 
-def make_fixed_grid_histogram(name: str, values) -> ROOT.TH1F:
-    """One TH1F on the shared fixed grid, filled via the pipeline's own
-    _fill_mass (handles the exact-10000.0-GeV boundary the same way the
-    shared pipeline does)."""
-    hist = ROOT.TH1F(name, name, _n_bins(), FIXED_MASS_MIN_GEV, FIXED_MASS_MAX_GEV)
-    hist.Sumw2()
+def _convert_to_bumpnet_name(fs_str: str, im_str: str) -> str:
+    """Copied verbatim from
+    services/pipelines/histograms_pipeline.py:419-453 (this module's
+    docstring explains why it cannot be live-imported in this
+    environment). Do not edit independently of that source."""
+    combo = im_str if im_str else "none"
+    import re
+    fs_particles = re.findall(r'(\d+)([emjgtb])', fs_str)
+    fs_formatted = "_".join(f"{c}{p}x" for c, p in fs_particles)
+    result = f"mass_{combo}_cat_{fs_formatted}"
+    if 'cat' not in result and 'hCat' not in result:
+        raise ValueError(
+            f"Generated histogram name '{result}' doesn't contain 'cat' -- "
+            "BumpNet incompatible"
+        )
+    return result
+
+
+def make_fixed_grid_histogram(values) -> Histogram:
+    """One (values, edges) histogram pair on the shared fixed grid,
+    reproducing _fill_mass's own exact-10000.0-GeV boundary handling
+    (services/pipelines/histograms_pipeline.py:67-72: nudge an exact max
+    value down by one ULP so it lands in the last real bin, not
+    overflow) -- see this module's docstring for why that function is
+    reimplemented rather than imported."""
+    n_bins = _n_bins()
+    counts = np.zeros(n_bins, dtype=np.float64)
+    edges = np.linspace(FIXED_MASS_MIN_GEV, FIXED_MASS_MAX_GEV, n_bins + 1)
+
     values_np = ak.to_numpy(values) if not isinstance(values, np.ndarray) else values
-    for v in values_np:
-        if np.isnan(v):
-            continue
-        _fill_mass(hist, float(v))
-    return hist
+    finite = values_np[~np.isnan(values_np)]
+    nudged = np.where(finite == FIXED_MASS_MAX_GEV, math.nextafter(FIXED_MASS_MAX_GEV, FIXED_MASS_MIN_GEV), finite)
+    in_range = (nudged >= FIXED_MASS_MIN_GEV) & (nudged < FIXED_MASS_MAX_GEV)
+    bin_idx = np.floor((nudged[in_range] - FIXED_MASS_MIN_GEV) / BIN_WIDTH_GEV).astype(np.int64)
+    bin_idx = np.clip(bin_idx, 0, n_bins - 1)
+    np.add.at(counts, bin_idx, 1.0)
+    return counts, edges
 
 
 def per_event_raw_and_capped_final_state(obj_record: ak.Array):
@@ -118,7 +183,7 @@ def per_event_raw_and_capped_final_state(obj_record: ak.Array):
 
 def build_m0m1j0_histograms(
     obj_record: ak.Array, mass: ak.Array, apply_min_events_prune: bool = True
-) -> Tuple[Dict[str, ROOT.TH1F], Dict[str, dict]]:
+) -> Tuple[Dict[str, Histogram], Dict[str, dict]]:
     """
     Args:
         obj_record: events already restricted to >=2 selected muons and
@@ -142,23 +207,20 @@ def build_m0m1j0_histograms(
 
     Returns:
         (histograms, meta) where `histograms` maps the real BumpNet
-        category name (or INCLUSIVE_HIST_NAME) -> TH1F, with every
-        TH1F's ROOT-internal name carrying the ROI_/width_ decoration
-        (see this module's docstring); `meta` reports, per category, the
-        event count and whether min_events_per_fs pruned it, plus the
-        inclusive count -- always present, even for dropped categories.
+        category name (or INCLUSIVE_HIST_NAME) -> (values, edges), with
+        the ROI_/width_ ROOT-internal-name decoration applied by the
+        CALLER at write time (see cluster/run_m0m1j0_on_file.py); `meta`
+        reports, per category, the event count and whether
+        min_events_per_fs pruned it, plus the inclusive count -- always
+        present, even for dropped categories.
     """
     mass_np = ak.to_numpy(mass)
     n_total_events = len(mass_np)
 
-    histograms: Dict[str, ROOT.TH1F] = {}
+    histograms: Dict[str, Histogram] = {}
     meta: Dict[str, dict] = {}
 
-    inclusive_hist = make_fixed_grid_histogram(
-        f"ROI_{INCLUSIVE_HIST_NAME}_width_{int(BIN_WIDTH_GEV)}", mass_np
-    )
-    trim_empty_tail(inclusive_hist)
-    histograms[INCLUSIVE_HIST_NAME] = inclusive_hist
+    histograms[INCLUSIVE_HIST_NAME] = make_fixed_grid_histogram(mass_np)
     meta[INCLUSIVE_HIST_NAME] = {
         "n_events_in_histogram": int(np.sum(~np.isnan(mass_np))),
         "n_events_before_z_peak_and_mass_cutoff": n_total_events,
@@ -166,6 +228,7 @@ def build_m0m1j0_histograms(
     }
 
     if n_total_events == 0:
+        meta["_dropped_categories_below_min_events_per_fs"] = []
         return histograms, meta
 
     _raw_fs_per_event, bumpnet_name_per_event = per_event_raw_and_capped_final_state(obj_record)
@@ -196,9 +259,7 @@ def build_m0m1j0_histograms(
             }
             continue
 
-        hist = make_fixed_grid_histogram(f"ROI_{bumpnet_name}_width_{int(BIN_WIDTH_GEV)}", cat_mass)
-        trim_empty_tail(hist)
-        histograms[bumpnet_name] = hist
+        histograms[bumpnet_name] = make_fixed_grid_histogram(cat_mass)
         meta[bumpnet_name] = {
             "n_events_in_histogram": n_events_in_cat,
             "n_events_before_z_peak_and_mass_cutoff": n_events_before_cutoff,

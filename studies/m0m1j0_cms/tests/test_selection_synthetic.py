@@ -149,24 +149,19 @@ def main():
         fs_name, fs_events = fs_list[0]
         check("final-state string has 2 muons, 1 jet", fs_name == "0e_2m_1j_0g_0t_0b", f"got {fs_name}")
 
-    try:
-        from services.pipelines.histograms_pipeline import _convert_to_bumpnet_name
-    except ImportError as e:
-        # histograms_pipeline.py imports fcntl (POSIX-only) and ROOT --
-        # neither is available on this Windows dev machine. Not a bug:
-        # this module only ever runs on the Linux cluster. Skip rather
-        # than fail -- the naming logic itself was verified separately by
-        # reading services/pipelines/histograms_pipeline.py:419-453
-        # directly (see RECIPE.md section 4).
-        print(f"[SKIP] BumpNet name import ({e}) -- POSIX/ROOT-only module, expected on Windows")
-    else:
-        if fs_list:
-            bumpnet_name = _convert_to_bumpnet_name(fs_name, "m0m1j0")
-            check(
-                "BumpNet name is mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_0bx",
-                bumpnet_name == "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_0bx",
-                f"got {bumpnet_name}",
-            )
+    # services.pipelines.histograms_pipeline itself cannot be imported at
+    # all in this project's actual cluster env (`import ROOT` fails there
+    # too -- confirmed running the pilot, see histograms.py's module
+    # docstring), so studies.m0m1j0_cms.histograms carries its own
+    # verbatim, cited copy of _convert_to_bumpnet_name -- exercised here.
+    from studies.m0m1j0_cms.histograms import _convert_to_bumpnet_name
+    if fs_list:
+        bumpnet_name = _convert_to_bumpnet_name(fs_name, "m0m1j0")
+        check(
+            "BumpNet name is mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_0bx",
+            bumpnet_name == "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_0bx",
+            f"got {bumpnet_name}",
+        )
 
     # Mixed b-jet scenario: event A has a b-tagged jet AND a light jet;
     # event B has only a light jet (0 b-jets) -- exercises the
