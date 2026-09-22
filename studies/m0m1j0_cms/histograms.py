@@ -87,6 +87,35 @@ def make_fixed_grid_histogram(name: str, values) -> ROOT.TH1F:
     return hist
 
 
+def per_event_raw_and_capped_final_state(obj_record: ak.Array):
+    """Per-event (raw_fs_string, capped_bumpnet_category) numpy string
+    arrays, aligned 1:1 with `obj_record` -- the same six-field formula
+    services.calculations.physics_calcs.group_by_final_state uses
+    internally (see this module's "Grouping note"), exposed here so
+    callers needing a PER-EVENT category (the outlier event list, the
+    merge step's top-categories plot) don't duplicate this a third time.
+    """
+    n = len(obj_record)
+    if n == 0:
+        empty = np.array([], dtype=object)
+        return empty, empty
+    zero = np.zeros(n, dtype=np.int64)
+    counts = ak.num(obj_record)
+    e = ak.to_numpy(getattr(counts, "Electrons", zero))
+    m = ak.to_numpy(getattr(counts, "Muons", zero))
+    j = ak.to_numpy(getattr(counts, "Jets", zero))
+    g = zero
+    t = zero
+    b = ak.to_numpy(getattr(counts, "BJets", zero))
+    raw_fs = np.array(
+        [f"{e_}e_{m_}m_{j_}j_{g_}g_{t_}t_{b_}b" for e_, m_, j_, g_, t_, b_ in zip(e, m, j, g, t, b)]
+    )
+    capped = np.array([
+        _convert_to_bumpnet_name(limit_particles_in_fs(str(fs), 4), "m0m1j0") for fs in raw_fs
+    ])
+    return raw_fs, capped
+
+
 def build_m0m1j0_histograms(
     obj_record: ak.Array, mass: ak.Array
 ) -> Tuple[Dict[str, ROOT.TH1F], Dict[str, dict]]:
@@ -128,35 +157,23 @@ def build_m0m1j0_histograms(
     if n_total_events == 0:
         return histograms, meta
 
-    zero = np.zeros(n_total_events, dtype=np.int64)
-    counts = ak.num(obj_record)
-    e = ak.to_numpy(getattr(counts, "Electrons", zero))
-    m = ak.to_numpy(getattr(counts, "Muons", zero))
-    j = ak.to_numpy(getattr(counts, "Jets", zero))
-    g = zero  # Photons not selected/counted at all (RECIPE.md deviation 2)
-    t = zero  # Taus not selected/counted at all (RECIPE.md deviation 2)
-    b = ak.to_numpy(getattr(counts, "BJets", zero))
+    _raw_fs_per_event, bumpnet_name_per_event = per_event_raw_and_capped_final_state(obj_record)
 
-    raw_fs_per_event = np.array(
-        [f"{e_}e_{m_}m_{j_}j_{g_}g_{t_}t_{b_}b" for e_, m_, j_, g_, t_, b_ in zip(e, m, j, g, t, b)]
-    )
-
-    # Multiple raw (uncapped) final states can share the same capped label
-    # (e.g. 4 vs 5 muons both display as "4m") -- accumulate mass values by
-    # capped label across every raw group that maps to it, so no group is
-    # silently dropped or overwritten.
-    mass_by_capped_label: Dict[str, list] = {}
-    for raw_fs in np.unique(raw_fs_per_event):
-        capped_label = limit_particles_in_fs(str(raw_fs), 4)
-        mask = raw_fs_per_event == raw_fs
-        mass_by_capped_label.setdefault(capped_label, []).append(mass_np[mask])
+    # Group directly by the final BumpNet name (already capped at 4 --
+    # limit_particles_in_fs is applied inside
+    # per_event_raw_and_capped_final_state), so e.g. 4 vs 5 muons -- which
+    # both display as "4mx" -- are correctly accumulated into ONE
+    # histogram rather than silently overwriting each other.
+    mass_by_bumpnet_name: Dict[str, list] = {}
+    for bumpnet_name in np.unique(bumpnet_name_per_event):
+        mask = bumpnet_name_per_event == bumpnet_name
+        mass_by_bumpnet_name.setdefault(str(bumpnet_name), []).append(mass_np[mask])
 
     dropped_categories = []
-    for capped_label, mass_chunks in mass_by_capped_label.items():
+    for bumpnet_name, mass_chunks in mass_by_bumpnet_name.items():
         cat_mass = np.concatenate(mass_chunks)
         n_events_in_cat = int(np.sum(~np.isnan(cat_mass)))
         n_events_before_cutoff = len(cat_mass)
-        bumpnet_name = _convert_to_bumpnet_name(capped_label, "m0m1j0")
 
         if n_events_in_cat < MIN_EVENTS_PER_FINAL_STATE:
             dropped_categories.append(bumpnet_name)
