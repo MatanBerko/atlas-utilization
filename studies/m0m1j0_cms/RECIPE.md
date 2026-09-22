@@ -191,8 +191,57 @@ main/outliers by first empty bin after the peak.
   A final state with fewer than 100 total events across the whole dataset is
   dropped entirely from the histogram output.
 - **`apply_peak_removal_at_histogram_level`** — `false` in
-  `config.yaml:173` (opt-in step 4 above is off in the ATLAS recipe as
-  actually run).
+  `config.yaml:173`. **CORRECTION (2026-09-22, found by the group's
+  supervisor, confirmed by the technical lead directly in
+  `post_processing_pipeline.py` lines ~234-256 (SQLite path) and
+  ~281-305 (single-array path)):** this flag does **NOT** control
+  whether the peak-removal step in this module's own docstring (its
+  steps 3-4, "find the rightmost highest bin" / "remove data before the
+  peak") runs. That step is **unconditional** — it has no config flag at
+  all, and always executes for every final-state mass array, via
+  `_find_rightmost_highest_peak` (`post_processing_pipeline.py:324-352`)
+  followed by `filtered = arr[arr >= peak_mass]`
+  (`post_processing_pipeline.py:241`/`295`). Immediately after, **every**
+  array is also split at its first empty bin
+  (`_split_by_first_empty_bin`, `post_processing_pipeline.py:355-388`)
+  into `..._main` / `..._outliers`, and — because
+  `histogram_creation_task_config.exclude_outliers: true`
+  (`config.yaml:171`) — **only `_main` ever reaches a histogram**
+  (`histograms_pipeline.py:158-163`, `230-233`: any signature ending
+  `_outliers` is dropped entirely before histogram-building starts).
+  `apply_peak_removal_at_histogram_level` is a **second, separate,
+  additional** peak-removal step that runs (only if `true`) on the
+  already-built, FIXED-GRID (0-10,000 GeV) merged histogram itself
+  (`_apply_peak_removal_to_histogram`, `histograms_pipeline.py:625-643`:
+  zeroes every bin strictly before the rightmost highest bin, using
+  `ROOT.TH1F.SetBinContent`/`SetBinError` directly on the final
+  histogram) — it is `false` in this recipe, so that *second* step does
+  not run, but the *first* (array-level, unconditional) one always does.
+  **This study's Step 1/2 outputs (`studies/m0m1j0_cms/pilot/`,
+  `studies/m0m1j0_cms/full/`) never applied the array-level peak-removal
+  or the `_main`/`_outliers` split/`exclude_outliers` filtering — this
+  was a real, consequential gap, not a deliberate documented deviation,
+  and is corrected in `studies/m0m1j0_cms/v2/` (see that directory's
+  `REPORT.md`), which imports and calls the pipeline's own
+  `_apply_z_peak_cut`, `_find_rightmost_highest_peak`, and
+  `_split_by_first_empty_bin` directly rather than re-deriving them.**
+  The error in this document originated from an earlier turn's own
+  misreading, not from any instruction given to this study.
+- **Order relative to `min_events_per_fs` pruning**: in the SQLite path,
+  `prune_final_states_below_min_events` is called **first**
+  (`post_processing_pipeline.py:162-164`), against the **raw,
+  pre-z_peak/pre-max_mass/pre-peak-removal** per-final-state population
+  (the mass-array lengths as originally written by the mass-calculation
+  stage) — deleting entire final-state rows from the SQLite shards
+  in-place, BEFORE the per-signature `_apply_z_peak_cut` /
+  `_find_rightmost_highest_peak` / `_split_by_first_empty_bin` chain
+  (`post_processing_pipeline.py:187-256`) ever runs on the (now-pruned)
+  remaining signatures. So the real order is: **(1) prune on raw counts,
+  (2) z_peak_cutoff + max_mass_cutoff, (3) peak removal, (4) first-empty-
+  bin split, (5) histogram from `_main` only** — not "z_peak/max_mass
+  then prune on the post-cutoff count", which is what Step 1/2's own
+  `min_events_per_fs` implementation did (RECIPE.md section 6.5). `v2`
+  corrects this ordering too.
 - **`trim_empty_tail`** (`histograms_pipeline.py:26-41`) — confirmed
   display-range-only: it finds the last bin with content `> 0` and calls
   `hist.GetXaxis().SetRangeUser(...)`; it never zeroes or removes stored bin
