@@ -181,6 +181,7 @@ def main():
         check("outliers_gt_1tev.json was written", (output_dir / "outliers_gt_1tev.json").exists())
         check("sanity_arrays.json was written", (output_dir / "sanity_arrays.json").exists())
         check("dimuon_diagnostics.npz was written", (output_dir / "dimuon_diagnostics.npz").exists())
+        check("mass_by_category.npz was written", (output_dir / "mass_by_category.npz").exists())
 
         meta = json.loads((output_dir / "job_metadata.json").read_text())
         check("cutflow n_read == 500", meta["cutflow"]["n_read"] == 500, f"got {meta['cutflow']}")
@@ -223,6 +224,27 @@ def main():
             check("synthetic near-duplicate pattern is visible in the diagnostic npz", bool(has_small_dr_same_sign))
         npz_size_mb = (output_dir / "dimuon_diagnostics.npz").stat().st_size / (1024 * 1024)
         check("npz stays well under the 20 MB per-job limit", npz_size_mb < 1.0, f"got {npz_size_mb:.3f} MB")
+
+        with np.load(output_dir / "mass_by_category.npz", allow_pickle=True) as mbc:
+            check("mass_by_category.npz has category + m0m1j0_raw_gev fields", set(["category", "m0m1j0_raw_gev"]) == set(mbc.files), f"got {mbc.files}")
+            check(
+                "mass_by_category row count matches n_after_ge1jet_after_cleaning (the pre-z_peak/max_mass population)",
+                len(mbc["m0m1j0_raw_gev"]) == meta["cutflow"]["n_after_ge1jet_after_cleaning"],
+                f"got {len(mbc['m0m1j0_raw_gev'])} vs {meta['cutflow']['n_after_ge1jet_after_cleaning']}",
+            )
+            check(
+                "mass_by_category row count is >= mass_by_category.npz-informed n_after_z_peak_and_mass_cutoff (raw includes events the z_peak/max_mass cut would later drop)",
+                len(mbc["m0m1j0_raw_gev"]) >= meta["cutflow"]["n_after_z_peak_and_mass_cutoff"],
+                f"got {len(mbc['m0m1j0_raw_gev'])} vs {meta['cutflow']['n_after_z_peak_and_mass_cutoff']}",
+            )
+            # (This synthetic fixture's masses never happen to fall below
+            # the 115 GeV z_peak_cutoff at all -- n_after_ge1jet_after_
+            # cleaning == n_after_z_peak_and_mass_cutoff == 400 here --
+            # so row counts alone can't discriminate "raw" from "already
+            # cut" in this specific fixture. build_mass_by_category_npz's
+            # own source (uses result["raw_mass"], never result["mass"])
+            # is the authority for that; not re-asserted here to avoid a
+            # second fixture rebuild solely to force a sub-115-GeV event.)
 
     print()
     if FAILURES:

@@ -74,6 +74,12 @@ Writes, under --output-dir:
     dimuon_diagnostics.npz -- Step 2 (B): the low-mass dimuon diagnostic
                               arrays, one row per event entering the
                               inclusive histogram.
+    mass_by_category.npz  -- v2 correction (A2): RAW (pre-post-processing)
+                              m0m1j0 mass + capped category label, one
+                              row per event with >=2 muons and >=1 light
+                              jet -- input to the merge step's real
+                              pipeline post-processing
+                              (studies.m0m1j0_cms.postprocessing).
 """
 from __future__ import annotations
 
@@ -201,6 +207,26 @@ def build_dimuon_diagnostics_npz(output_path: Path, result: dict) -> int:
     return n_kept
 
 
+def build_mass_by_category_npz(output_path: Path, result: dict) -> int:
+    """v2 correction (A2): one row per event with >=2 selected muons and
+    >=1 selected light jet (i.e. every event a m0m1j0 value was computed
+    for -- n_after_ge1jet_after_cleaning), saving the RAW m0m1j0 mass
+    (float64, BEFORE z_peak_cutoff/max_mass_cutoff/peak-removal/outlier-
+    split -- none of that has been applied yet) and its capped
+    final-state category label. The merge step concatenates these across
+    all jobs per category and runs the real pipeline's own post-
+    processing chain on the result (studies.m0m1j0_cms.postprocessing) --
+    this file exists so that chain has the right INPUT to run on;
+    computing it per-job would apply post-processing to a single file's
+    own (much smaller) population, which is not the right scope for a
+    step that is inherently global-population-dependent (RECIPE.md
+    correction). Returns the number of rows written."""
+    _, categories = histograms.per_event_raw_and_capped_final_state(result["obj_record"])
+    raw_mass = ak.to_numpy(result["raw_mass"]).astype(np.float64)
+    np.savez_compressed(output_path, category=categories, m0m1j0_raw_gev=raw_mass)
+    return len(raw_mass)
+
+
 def selection_thresholds() -> dict:
     return {
         "muon_pt_min_gev": selection.MUON_PT_MIN_GEV,
@@ -296,6 +322,13 @@ def main():
     npz_size_mb = npz_path.stat().st_size / (1024 * 1024)
     print(f"wrote {npz_path}: {n_diag_rows} rows, {npz_size_mb:.2f} MB", flush=True)
 
+    # v2 correction (A2): raw per-event mass + category, for the merge
+    # step's real post-processing.
+    mass_by_category_path = output_dir / "mass_by_category.npz"
+    n_mass_rows = build_mass_by_category_npz(mass_by_category_path, result)
+    mass_by_category_size_mb = mass_by_category_path.stat().st_size / (1024 * 1024)
+    print(f"wrote {mass_by_category_path}: {n_mass_rows} rows, {mass_by_category_size_mb:.2f} MB", flush=True)
+
     elapsed = time.time() - t0
 
     cutflow = {
@@ -325,6 +358,8 @@ def main():
         "optional_muon_diagnostic_branches_present": present_optional_branches,
         "n_dimuon_diagnostic_rows": n_diag_rows,
         "dimuon_diagnostics_npz_size_mb": round(npz_size_mb, 3),
+        "n_mass_by_category_rows": n_mass_rows,
+        "mass_by_category_npz_size_mb": round(mass_by_category_size_mb, 3),
         "elapsed_sec": elapsed,
     }
 
@@ -336,7 +371,7 @@ def main():
 
     print(json.dumps(cutflow, indent=2))
     print(f"wrote {root_path}, job_metadata.json, outliers_gt_1tev.json, sanity_arrays.json, "
-          f"dimuon_diagnostics.npz under {output_dir} ({elapsed:.1f}s elapsed)")
+          f"dimuon_diagnostics.npz, mass_by_category.npz under {output_dir} ({elapsed:.1f}s elapsed)")
 
 
 if __name__ == "__main__":
