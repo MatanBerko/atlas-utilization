@@ -169,7 +169,15 @@ def main():
 
     result = selection.select_event_selection_cutflow(events_golden)
 
-    hists, hist_meta = histograms.build_m0m1j0_histograms(result["obj_record"], result["mass"])
+    # apply_min_events_prune=False: min_events_per_fs is a GLOBAL
+    # population count taken after merging every job (RECIPE.md section
+    # 5/6.5) -- a single file's own per-category count is not the
+    # population to prune on. This job writes every category it sees, no
+    # matter how small; merge_pilot.py applies the real prune once, after
+    # summing every job's histograms by category name.
+    hists, hist_meta = histograms.build_m0m1j0_histograms(
+        result["obj_record"], result["mass"], apply_min_events_prune=False
+    )
     _, categories = histograms.per_event_raw_and_capped_final_state(result["obj_record"])
     outliers = build_outlier_list(result["sel_events"], result["raw_mass"], categories)
 

@@ -251,7 +251,19 @@ ATLAS-detector-specific quantities); where ATLAS's recipe informs a
    cuts with no CMS-specific reason to differ. `min_events_per_fs` is
    applied when categorizing per-exact-final-state histograms (§7); it does
    not affect the single inclusive histogram, which is deliberately
-   non-standard already (see next point).
+   non-standard already (see next point). **Applied at MERGE time only,
+   not per job**: `services/storage/sqlite_shards.py`'s
+   `prune_final_states_below_min_events` (§5 above) sums each final
+   state's population GLOBALLY across every shard before comparing to the
+   threshold — so this study's own per-job driver
+   (`cluster/run_m0m1j0_on_file.py`) calls
+   `histograms.build_m0m1j0_histograms(..., apply_min_events_prune=False)`
+   and writes every category it sees, however small; `cluster/merge_pilot.py`
+   applies the real >=100 check once, after summing every job's
+   histograms by category name. Pruning per-job-file would have
+   compared each of the 4 pilot jobs' own (much smaller) single-file
+   counts against the threshold, which is not the population the ATLAS
+   recipe itself checks.
 6. **No multi-stage pipeline architecture is replicated.** The ATLAS
    recipe is a multi-stage system (parse → per-file invariant-mass arrays →
    post-processing → SQLite shards → histogram merge). Reproducing that

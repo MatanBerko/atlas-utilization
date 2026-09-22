@@ -175,6 +175,24 @@ def main():
             f"range={h._axis._range}, total_contents={sum(h.contents)}",
         )
 
+    # apply_min_events_prune=False (the per-job driver's own mode): the
+    # 3-muon category (2 events, below the threshold of 5) must still get
+    # its own histogram written, not dropped -- pruning is a merge-time-
+    # only operation (RECIPE.md section 5/6.5).
+    hists_nopune, meta_noprune = histograms.build_m0m1j0_histograms(
+        obj_record, mass, apply_min_events_prune=False
+    )
+    check(
+        "apply_min_events_prune=False: 3-muon category IS written despite being below threshold",
+        expected_3m_name in hists_nopune,
+        f"hists keys: {list(hists_nopune.keys())}",
+    )
+    check(
+        "apply_min_events_prune=False: no categories reported as dropped",
+        meta_noprune.get("_dropped_categories_below_min_events_per_fs") == [],
+        f"got {meta_noprune.get('_dropped_categories_below_min_events_per_fs')}",
+    )
+
     # z_peak/max_mass cutoff propagation: an all-NaN mass array must yield
     # zero entries, not crash.
     empty_obj = ak.Array({"Electrons": [[]], "Muons": [[1, 2]], "Jets": [[1]], "BJets": [[]]})

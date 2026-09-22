@@ -117,7 +117,7 @@ def per_event_raw_and_capped_final_state(obj_record: ak.Array):
 
 
 def build_m0m1j0_histograms(
-    obj_record: ak.Array, mass: ak.Array
+    obj_record: ak.Array, mass: ak.Array, apply_min_events_prune: bool = True
 ) -> Tuple[Dict[str, ROOT.TH1F], Dict[str, dict]]:
     """
     Args:
@@ -128,6 +128,17 @@ def build_m0m1j0_histograms(
             order, with the z_peak_cutoff/max_mass_cutoff already applied
             (NaN for events cut out -- studies.m0m1j0_cms.selection
             .apply_z_peak_and_mass_cutoff).
+        apply_min_events_prune: whether to drop (rather than write) a
+            category whose OWN event count here is below
+            MIN_EVENTS_PER_FINAL_STATE. min_events_per_fs is, in the
+            ATLAS recipe, a GLOBAL population count taken AFTER merging
+            every job's shards (services/storage/sqlite_shards.py
+            :159-238, RECIPE.md section 5) -- so a per-job cluster driver
+            processing a single file MUST pass False here (a single file's
+            own count is not the right population to prune on) and let a
+            separate merge step apply this check once, after summing
+            every job's histograms by category. Defaults True for
+            standalone/single-shot use (e.g. this module's own tests).
 
     Returns:
         (histograms, meta) where `histograms` maps the real BumpNet
@@ -175,7 +186,7 @@ def build_m0m1j0_histograms(
         n_events_in_cat = int(np.sum(~np.isnan(cat_mass)))
         n_events_before_cutoff = len(cat_mass)
 
-        if n_events_in_cat < MIN_EVENTS_PER_FINAL_STATE:
+        if apply_min_events_prune and n_events_in_cat < MIN_EVENTS_PER_FINAL_STATE:
             dropped_categories.append(bumpnet_name)
             meta[bumpnet_name] = {
                 "n_events_in_histogram": 0,
