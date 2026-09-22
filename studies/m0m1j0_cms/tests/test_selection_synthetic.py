@@ -209,6 +209,13 @@ def main():
           set(["BJets", "Jets", "Muons", "Electrons"]).issubset(set(cutflow["obj_record"].fields)),
           f"got {cutflow['obj_record'].fields}")
 
+    # Pilot sanity-plot helpers
+    dimuon_mass = ak.to_list(selection.compute_dimuon_mass(mixed_muons))
+    check("dimuon mass: 2 events computed, both finite", len(dimuon_mass) == 2 and all(not np.isnan(x) for x in dimuon_mass), f"got {dimuon_mass}")
+    lead_pt = ak.to_list(selection.leading_jet_pt(mixed_jets["Jets"]))
+    check("leading jet pT: eventA's light jet is 90 GeV (the non-b one)", lead_pt[0] == 90.0, f"got {lead_pt}")
+    check("leading jet pT: eventB's light jet is 80 GeV", lead_pt[1] == 80.0, f"got {lead_pt}")
+
     print()
     if FAILURES:
         print(f"{len(FAILURES)} FAILURE(S): {FAILURES}")

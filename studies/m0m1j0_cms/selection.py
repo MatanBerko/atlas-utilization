@@ -214,6 +214,28 @@ def compute_m0m1j0(muons: ak.Array, jets: ak.Array) -> ak.Array:
     return ak.fill_none(total.mass, np.nan)
 
 
+def compute_dimuon_mass(muons: ak.Array) -> ak.Array:
+    """Invariant mass of the leading + subleading muon alone (no jet) --
+    used only for the pilot's own sanity-check plot (Z peak near 91 GeV),
+    not part of the m0m1j0 selection itself. Same four-vector convention
+    as compute_m0m1j0."""
+    order = ak.argsort(muons.pt, axis=1, ascending=False)
+    sorted_muons = muons[order]
+    padded = ak.pad_none(sorted_muons, 2, axis=1, clip=True)
+    mu0, mu1 = padded[:, 0], padded[:, 1]
+    total = _p4(mu0) + _p4(mu1)
+    return ak.fill_none(total.mass, np.nan)
+
+
+def leading_jet_pt(jets: ak.Array) -> ak.Array:
+    """pT of the leading (highest-pT) selected light jet per event -- used
+    only for the pilot's own sanity-check plot."""
+    order = ak.argsort(jets.pt, axis=1, ascending=False)
+    sorted_jets = jets[order]
+    padded = ak.pad_none(sorted_jets, 1, axis=1, clip=True)
+    return ak.fill_none(padded[:, 0].pt, np.nan)
+
+
 def build_object_record(muons: ak.Array, electrons: ak.Array, jets: Dict[str, ak.Array]) -> ak.Array:
     """Zips selected objects into the canonical field-name layout
     (Electrons/Muons/Jets/BJets) that

@@ -173,6 +173,16 @@ def main():
     _, categories = histograms.per_event_raw_and_capped_final_state(result["obj_record"])
     outliers = build_outlier_list(result["sel_events"], result["raw_mass"], categories)
 
+    # Pilot-only sanity-check inputs (not part of the m0m1j0 selection
+    # itself): dimuon mass of the selected pair and leading-jet pT, over
+    # the same already-selected (>=2mu, >=1 light jet) event population.
+    dimuon_mass = ak.to_numpy(
+        selection.compute_dimuon_mass(result["obj_record"]["Muons"])
+    ).tolist()
+    lead_jet_pt = ak.to_numpy(
+        selection.leading_jet_pt(result["obj_record"]["Jets"])
+    ).tolist()
+
     root_path = output_dir / "all_histograms.root"
     root_file = ROOT.TFile(str(root_path), "RECREATE")
     for hist in hists.values():
@@ -209,10 +219,13 @@ def main():
 
     (output_dir / "job_metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     (output_dir / "outliers_gt_1tev.json").write_text(json.dumps(outliers, indent=2), encoding="utf-8")
+    (output_dir / "sanity_arrays.json").write_text(
+        json.dumps({"dimuon_mass_gev": dimuon_mass, "leading_jet_pt_gev": lead_jet_pt}), encoding="utf-8"
+    )
 
     print(json.dumps(cutflow, indent=2))
-    print(f"wrote {root_path}, job_metadata.json, outliers_gt_1tev.json under {output_dir} "
-          f"({elapsed:.1f}s elapsed)")
+    print(f"wrote {root_path}, job_metadata.json, outliers_gt_1tev.json, sanity_arrays.json "
+          f"under {output_dir} ({elapsed:.1f}s elapsed)")
 
 
 if __name__ == "__main__":
