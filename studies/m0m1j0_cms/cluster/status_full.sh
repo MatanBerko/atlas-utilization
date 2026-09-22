@@ -82,7 +82,10 @@ check_output_exists() {
     fi
 }
 
-read -r _NAME JOBID TOTAL_JOBS < <(awk '$1=="m0m1j0_full"{print; exit}' "$JOBLIST_FILE")
+# tail -1, not the first match: a DRY_RUN submission (jobid
+# "DRY-RUN-NO-JOBID") also appends a line here, and any real resubmission
+# would too -- the most RECENT line is always the one that matters.
+read -r _NAME JOBID TOTAL_JOBS < <(awk '$1=="m0m1j0_full"{print}' "$JOBLIST_FILE" | tail -1)
 if [[ -z "${JOBID:-}" ]]; then
     echo "  (no m0m1j0_full entry in $JOBLIST_FILE)" >&2
     exit 1
