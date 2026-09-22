@@ -27,7 +27,6 @@ import json
 from pathlib import Path
 from typing import Optional
 
-import aiohttp
 import numpy as np
 import requests
 import uproot
@@ -42,7 +41,18 @@ async def _get_client_no_ssl_verify(**kwargs):
     """uproot/fsspec `get_client` override: build the aiohttp session's
     TCPConnector with ssl=False INSIDE the running event loop (aiohttp's
     TCPConnector requires a running loop at construction time in this
-    aiohttp version, so it cannot be built ahead of time in sync code)."""
+    aiohttp version, so it cannot be built ahead of time in sync code).
+
+    `import aiohttp` is LOCAL to this function, not module-level: aiohttp
+    is only needed for this Windows-only HTTPS-gateway workaround, and is
+    not installed in the Weizmann cluster's atlas-pipeline conda env,
+    which never calls this function at all (real XRootD via
+    fetch_file_list's plain `requests` call + uproot's native root://
+    support is used there instead) -- a module-level import would have
+    broken every other function in this module (fetch_file_list included)
+    on the cluster, for a dependency only this one function needs.
+    Discovered running this pilot's own preflight, 2026-09-22."""
+    import aiohttp
     kwargs.pop("connector", None)
     connector = aiohttp.TCPConnector(ssl=False)
     return aiohttp.ClientSession(connector=connector, **kwargs)
