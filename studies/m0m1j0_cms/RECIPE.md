@@ -317,6 +317,47 @@ ATLAS-detector-specific quantities); where ATLAS's recipe informs a
   every event with `m0m1j0 > 1000` GeV, for manual outlier inspection (kept,
   never discarded — see deviation 4 above).
 
+## 7a. Environment finding: no PyROOT on the cluster (2026-09-22)
+
+Running this pilot's own preflight discovered that the Weizmann cluster's
+`atlas-pipeline` conda env
+(`/storage/agrp/berkom/atlas-utilization/envs/atlas-pipeline`) has **no
+PyROOT installed at all**, and there is no system `root`/`root-config` on
+this account either. This means `services/pipelines/histograms_pipeline.py`
+cannot even be **imported** there (`import ROOT` at module level fails
+with `ModuleNotFoundError`), confirmed directly:
+```
+$ python -c "import services.pipelines.histograms_pipeline"
+ModuleNotFoundError: No module named 'ROOT'
+```
+So the task's own instruction to literally `import` `FIXED_MASS_MIN_GEV`/
+`MAX_GEV`, `_fill_mass`, `trim_empty_tail`, and `_convert_to_bumpnet_name`
+from that module cannot be carried out as a real import in this
+environment. **This study does not install PyROOT into the shared env**
+(that env is used by other studies, e.g. `studies/hgg_cms`, and modifying
+shared infrastructure is outside this task's scope) — instead:
+- The two constants and `_convert_to_bumpnet_name` are copied verbatim
+  into `studies/m0m1j0_cms/histograms.py`, cited to their exact source
+  lines, with an explicit warning that they will silently drift if the
+  source ever changes.
+- `limit_particles_in_fs` (`services/calculations/physics_calcs.py`) has
+  no ROOT/fcntl dependency and is still genuinely imported.
+- Histograms are built as plain `(values, edges)` numpy pairs and written
+  with `uproot.recreate(...)` instead of PyROOT's `TFile`/`TH1F` —
+  confirmed this produces a real ROOT `TH1D` file, readable by actual
+  ROOT/PyROOT elsewhere, just not written through PyROOT on this end.
+- `trim_empty_tail`'s cosmetic axis-range trim (display-only, never
+  touches stored bin content) is not reproduced in the written ROOT file
+  — there is no PyROOT axis object to call `SetRangeUser` on via uproot's
+  writer. The same "last non-empty bin" information is available from
+  each job's metadata JSON and is applied directly in the pilot's own
+  sanity-check PNGs.
+
+This is flagged here as a genuine, non-obvious environment gap worth the
+group's attention on its own merits (unclear whether the shared
+pipeline's own `histogram_creation_task` has ever been run end-to-end on
+this cluster account), separate from anything specific to m0m1j0.
+
 ## 8. Still UNVERIFIED / left as-is per scope
 
 - `Electron_cutBased >= 3` meaning ("medium, includes isolation") is taken

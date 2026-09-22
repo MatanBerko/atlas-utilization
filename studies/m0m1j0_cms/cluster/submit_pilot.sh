@@ -75,9 +75,15 @@ preflight_conda() {
 skip_or_run "conda profile + env activation" preflight_conda
 
 preflight_python_stack() {
+    # ROOT/PyROOT deliberately NOT checked here: this cluster account's
+    # atlas-pipeline conda env has no PyROOT installed at all (discovered
+    # running this pilot's own preflight, 2026-09-22) -- this study's
+    # histogram I/O uses uproot instead (see histograms.py's module
+    # docstring). Checking for ROOT here would make this preflight fail
+    # every time in an environment this study no longer needs it in.
     timeout 30 nice python -c "
 import sys
-mods = ['uproot', 'awkward', 'numpy', 'vector', 'ROOT', 'requests']
+mods = ['uproot', 'awkward', 'numpy', 'vector', 'requests', 'matplotlib']
 missing = []
 for m in mods:
     try:
