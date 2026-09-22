@@ -407,7 +407,73 @@ group's attention on its own merits (unclear whether the shared
 pipeline's own `histogram_creation_task` has ever been run end-to-end on
 this cluster account), separate from anything specific to m0m1j0.
 
-## 8. Still UNVERIFIED / left as-is per scope
+## 8. Part B: ttbar MC sample and MC-specific handling
+
+**Sample search (2026-09-22)**: the CERN Open Data portal's own search
+API (`https://opendata.cern.ch/api/records?q=...`) does not tokenize
+literal CMS dataset names containing consecutive digits/letters like
+"TTTo2L2Nu" as a plain keyword query (`q=TTTo2L2Nu` returns 0 hits) — a
+trailing-wildcard query (`q=TTTo2L2Nu*`) does work and returned 59 hits,
+among which is the exact nominal (no systematic-variation suffix)
+sample:
+
+- **Record ID: 67801**
+- **Title**: `/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM`
+- **`run_period`**: `["Run2016G", "Run2016H"]` — confirms this is the
+  post-VFP ("UL16", not "UL16APV") campaign, matching this study's data
+  records exactly, as required.
+- **`distribution.number_events`**: 43,546,000
+- **`distribution.number_files`**: 49 — confirmed to match
+  `fetch_file_list(67801)`'s own returned length exactly.
+- **Cross section**: **UNVERIFIED — not published anywhere in this
+  record's own metadata.** Checked directly: no key or substring
+  matching "cross" appears anywhere in the full metadata JSON returned by
+  `https://opendata.cern.ch/api/records/67801` (only `distribution`,
+  `methodology`, `usage`, `abstract`, etc. are present, none of which
+  carry a cross-section value). This does not block anything in this
+  study — no luminosity/cross-section-based normalization is performed
+  (task's own explicit instruction), but the number itself is not
+  invented or recalled from outside knowledge; it is reported as
+  UNVERIFIED per the evidence rule.
+
+The task's own fallback (record 67993, `TTToSemiLeptonic`) was **not**
+needed — the dilepton sample exists and was found.
+
+### MC-specific deviations from the data recipe (all documented, none change the object selection)
+
+1. **No golden-JSON (validated-runs) filter at all.**
+   `services.parsing.validated_runs.apply_validated_runs_filter` itself
+   would refuse to run on simulation (it detects simulation via a
+   `genWeight` field or `run==1` and raises rather than silently
+   discarding the whole sample, `services/parsing/validated_runs.py:217-227`)
+   — this study's MC driver (`cluster/run_m0m1j0_on_mc_file.py`) simply
+   never calls it, rather than calling and catching that refusal.
+2. **Same trigger requirement, same fail-loudly-if-missing check** — MC
+   NanoAOD carries trigger-emulation HLT branches under the same names as
+   data; confirmed present in a real file at pilot time (see PILOT
+   sanity report, `studies/m0m1j0_cms/v2/REPORT.md`).
+3. **`genWeight` is read as an ordinary per-event scalar field** on the
+   full `events` record — it survives `apply_trigger`'s and the final
+   selection mask's slicing automatically (both are plain
+   `events[boolean_mask]` operations, which preserve every field), so no
+   special per-object threading (like the muon diagnostic branches
+   needed) was required.
+4. **Primary histograms are UNWEIGHTED** event counts, for direct
+   format-comparability with the data histogram. A **separate**,
+   clearly-named file holds genWeight-weighted histograms (fill weight =
+   the actual `genWeight` value read, not just its sign). Per-job
+   `sum_genWeight` (over ALL read events, the standard MC-normalization
+   population — not just selected events) and the negative-weight
+   fraction are recorded in each job's `job_metadata.json`.
+5. **Not scaled to luminosity** — the DoubleMuon dataset's own
+   luminosity has not been independently verified in this project, so no
+   number-of-events-per-fb⁻¹ scaling is applied anywhere.
+6. **Known limitations, not applied (recorded, not fixed)**: no pileup
+   reweighting, no muon-ID/isolation or b-tag scale factors, no trigger
+   efficiency correction. Every ttbar number in this study is a raw
+   (or genWeight-weighted) simulated event count, nothing more.
+
+## 9. Still UNVERIFIED / left as-is per scope
 
 - `Electron_cutBased >= 3` meaning ("medium, includes isolation") is taken
   from the task as given; this study will quote the branch's own NanoAOD
