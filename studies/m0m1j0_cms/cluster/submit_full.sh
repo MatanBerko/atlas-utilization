@@ -35,10 +35,11 @@
 #
 # DRY_RUN=1 ./submit_full.sh -- same semantics as submit_pilot.sh: runs
 # every check that doesn't need the real cluster, replaces `qsub` with an
-# echo of the exact command, submits nothing. The job-index-map
-# generation itself (a real network fetch to the CERN portal) IS run even
-# under DRY_RUN, since it's informational and read-only, not a cluster
-# action.
+# echo of the exact command, submits nothing. Conda activation always
+# runs (even under DRY_RUN) -- it's local and harmless, and the
+# job-index-map generation step below needs it (that step, a real network
+# fetch to the CERN portal, ALSO always runs even under DRY_RUN, since
+# it's informational/read-only, not a cluster action).
 # ---------------------------------------------------------------------------
 set -euo pipefail
 
@@ -83,7 +84,12 @@ preflight_conda() {
     conda activate "$CONDA_ENV" || { echo "PREFLIGHT FAILED: failed to activate conda env $CONDA_ENV" >&2; exit 1; }
     echo "  OK: activated conda env $CONDA_ENV"
 }
-skip_or_run "conda profile + env activation" preflight_conda
+# Always activated, even under DRY_RUN: it's a safe, local, harmless
+# operation (never touches the scheduler), and the job-index-map
+# generation step below needs the conda env's `requests` module -- that
+# step deliberately runs even under DRY_RUN (informational, read-only),
+# so conda activation cannot be skipped without breaking it.
+preflight_conda
 
 preflight_python_stack() {
     # ROOT/PyROOT deliberately NOT checked -- this cluster account's
