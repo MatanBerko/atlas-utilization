@@ -297,12 +297,18 @@ def style():
     })
 
 
-def draw_figure(d, sig_scan, x_range, bin_width_label):
+def draw_figure(d, sig_scan, x_range, bin_width_label, slide=False):
     """Calmer ATLAS-style figure: spectrum (top), background-subtracted
     residual (middle), and -- if `sig_scan` is available -- observed
     local significance vs m_H (bottom). No blinded-region band (removed
     per this task's explicit instruction; the blinding fact is stated
-    in the caption text instead)."""
+    in the caption text instead).
+
+    `slide=True` (talk-slide cosmetic variant, display only): omits the
+    "Independent reanalysis..." disclaimer text and shortens the info
+    box (drops "(expected ...)" and the m_H line). Everything else --
+    data, curves, band, significance panel, legend, axes -- is produced
+    by the exact same code path as `slide=False`."""
     centers = d["centers"]
 
     three_panel = sig_scan is not None
@@ -334,16 +340,25 @@ def draw_figure(d, sig_scan, x_range, bin_width_label):
               fontweight="bold", va="bottom", ha="left", clip_on=False)
     ax1.text(1.0, 1.02, f"{LUMI_FB:.1f} fb" r"$^{-1}$" " (13 TeV), 2016 (Runs G+H)",
               transform=ax1.transAxes, fontsize=11.5, va="bottom", ha="right", clip_on=False)
-    ax1.text(0.02, 0.045, "Independent reanalysis of public data.\nNot a CMS publication; not reviewed or endorsed by CMS.",
-              transform=ax1.transAxes, fontsize=9.5, va="bottom", ha="left", style="italic", color="#444444")
+    if not slide:
+        ax1.text(0.02, 0.045, "Independent reanalysis of public data.\nNot a CMS publication; not reviewed or endorsed by CMS.",
+                  transform=ax1.transAxes, fontsize=9.5, va="bottom", ha="left", style="italic", color="#444444")
 
-    box_text = (
-        r"$H\rightarrow\gamma\gamma$" "\n"
-        f"{N_CANDIDATES:,} diphoton candidates" "\n"
-        f"Local significance: {LOCAL_Z:.2f}" r"$\sigma$" f" (expected {LOCAL_Z_EXP:.2f}" r"$\sigma$" ")\n"
-        r"$\mu$ = " f"{MU_HAT:.2f}" r"$^{+%.2f}_{-%.2f}$" % (MU_UP, MU_DOWN) + "\n"
-        r"$m_H$ fixed to 125.09 GeV (primary fit)"
-    )
+    if slide:
+        box_text = (
+            r"$H\rightarrow\gamma\gamma$" "\n"
+            f"{N_CANDIDATES:,} diphoton candidates" "\n"
+            f"Local significance: {LOCAL_Z:.2f}" r"$\sigma$" "\n"
+            r"$\mu$ = " f"{MU_HAT:.2f}" r"$^{+%.2f}_{-%.2f}$" % (MU_UP, MU_DOWN)
+        )
+    else:
+        box_text = (
+            r"$H\rightarrow\gamma\gamma$" "\n"
+            f"{N_CANDIDATES:,} diphoton candidates" "\n"
+            f"Local significance: {LOCAL_Z:.2f}" r"$\sigma$" f" (expected {LOCAL_Z_EXP:.2f}" r"$\sigma$" ")\n"
+            r"$\mu$ = " f"{MU_HAT:.2f}" r"$^{+%.2f}_{-%.2f}$" % (MU_UP, MU_DOWN) + "\n"
+            r"$m_H$ fixed to 125.09 GeV (primary fit)"
+        )
     ax1.text(0.985, 0.60, box_text, transform=ax1.transAxes, fontsize=11, va="top", ha="right",
               bbox=dict(boxstyle="round,pad=0.5", fc="white", ec="#888888", lw=1.0, alpha=0.95))
 
@@ -391,7 +406,11 @@ def build_caption(weights, has_sig_panel):
         f"window (hgg_money_plot.png/.pdf). Alternatives: 1 GeV display bins, same 105-160 GeV window "
         f"(hgg_money_plot_1gev.png/.pdf); 2 GeV display bins, full 105-180 GeV window "
         f"(hgg_money_plot_full_range.png/.pdf) -- all three rebin the identical underlying fit curves "
-        f"and data, none re-fits. Data error bars: propagated Poisson uncertainty on the weighted sum, "
+        f"and data, none re-fits. Slide variant (hgg_money_plot_slide.png/.pdf): identical data, curves, "
+        f"band, and significance panel as the headline (2 GeV bins, 105-160 GeV) -- omits only the "
+        f"'Independent reanalysis...' disclaimer text and, in the info box, the '(expected ...)' "
+        f"significance qualifier and the m_H line; for talk slides, not a replacement for the headline. "
+        f"Data error bars: propagated Poisson uncertainty on the weighted sum, "
         f"sigma = sqrt(sum_c w_c^2 * n_c). Background band: +-1sigma linear error propagation through "
         f"the fitted Bernstein background coefficients using the S+B fit's own Hesse covariance matrix."
         f"{third} "
@@ -402,12 +421,19 @@ def build_caption(weights, has_sig_panel):
     )
 
 
-def main_plot():
+def main_plot(cli_style="report"):
+    """`cli_style="report"` (default): unchanged behavior -- produces the
+    three report variants (headline, 1gev, full_range) plus the
+    per-category chart and caption, exactly as before this option was
+    added. `cli_style="slide"`: produces ONLY the new talk-slide
+    cosmetic variant (hgg_money_plot_slide.png/.pdf, same 2 GeV/105-160
+    data/curves/band/significance panel as the headline) and refreshes
+    the caption text -- does NOT write or touch hgg_money_plot.png/.pdf
+    or any of the other existing variant files."""
     style()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
     fine = compute_fine_curves()
-    checks = verify_rebinning_consistency(fine)
 
     sig_scan = load_significance_scan()
     if sig_scan is None:
@@ -417,6 +443,23 @@ def main_plot():
         mH_scan, Z_scan = sig_scan
         print(f"\nLoaded stored significance scan: {len(mH_scan)} points, "
               f"mH in [{mH_scan.min():.1f}, {mH_scan.max():.1f}] GeV")
+
+    if cli_style == "slide":
+        d = build_data(fine, GROUP_2GEV)
+        fig, axes = draw_figure(d, sig_scan, (105, 160), "2 GeV", slide=True)
+        fig.savefig(OUT_DIR / "hgg_money_plot_slide.png", dpi=300, bbox_inches="tight")
+        fig.savefig(OUT_DIR / "hgg_money_plot_slide.pdf", bbox_inches="tight")
+        plt.close(fig)
+        print("wrote hgg_money_plot_slide.png / .pdf (2 GeV bins, 105-160 GeV display, "
+              f"{'3' if sig_scan is not None else '2'} panels, slide style -- "
+              "hgg_money_plot.png/.pdf and the other variants were NOT touched)")
+
+        caption = build_caption(d["weights"], sig_scan is not None)
+        (OUT_DIR / "hgg_money_plot_caption.txt").write_text(caption, encoding="utf-8")
+        print("\nCaption:\n" + caption)
+        return None
+
+    checks = verify_rebinning_consistency(fine)
 
     variants = [
         ("hgg_money_plot", GROUP_2GEV, (105, 160), "2 GeV"),
@@ -463,4 +506,11 @@ def main_plot():
 
 
 if __name__ == "__main__":
-    main_plot()
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--style", choices=["report", "slide"], default="report",
+                         help="'report' (default): unchanged -- headline + 1gev + full_range + "
+                              "per-category chart. 'slide': ONLY the talk-slide cosmetic variant "
+                              "(hgg_money_plot_slide.png/.pdf); does not touch the other files.")
+    args = parser.parse_args()
+    main_plot(cli_style=args.style)
