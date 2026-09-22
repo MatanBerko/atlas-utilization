@@ -88,6 +88,23 @@ def main():
         f"got main={result3['main_array']}",
     )
     check("split_mass is a real value near 900 GeV", result3["split_mass"] is not None and result3["split_mass"] >= 900.0, f"got {result3['split_mass']}")
+    check(
+        "main_mask, applied to the ORIGINAL raw3 array, reproduces main_array exactly (as sorted multisets)",
+        np.array_equal(np.sort(raw3[result3["main_mask"]]), np.sort(result3["main_array"])),
+        f"got {sorted(raw3[result3['main_mask']])} vs {sorted(result3['main_array'])}",
+    )
+    check("main_mask has the same length as the input array", len(result3["main_mask"]) == len(raw3), f"got {len(result3['main_mask'])} vs {len(raw3)}")
+    check("main_mask sum equals n_main", int(result3["main_mask"].sum()) == result3["n_main"], f"got {result3['main_mask'].sum()} vs {result3['n_main']}")
+
+    # A companion array (e.g. genWeight) sliced the same way must also
+    # line up correctly -- this is the actual use case main_mask exists for.
+    companion = np.arange(len(raw3), dtype=np.float64)  # a fake "genWeight"-like array, index i -> value i
+    sliced_companion = companion[result3["main_mask"]]
+    check(
+        "a companion array sliced by main_mask has the same length as main_array",
+        len(sliced_companion) == len(result3["main_array"]),
+        f"got {len(sliced_companion)} vs {len(result3['main_array'])}",
+    )
 
     # Empty-after-cutoff case must not crash.
     result4 = postprocessing.apply_full_postprocessing(np.array([50.0, 60.0]), "empty_cat")
