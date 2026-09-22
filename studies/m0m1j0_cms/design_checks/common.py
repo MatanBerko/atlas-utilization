@@ -90,6 +90,24 @@ def fetch_file_list(record_id: int) -> list[str]:
     return files
 
 
+CMS_RECID_API_URL = "https://opendata.cern.ch/api/records/{0}"
+
+
+def fetch_record_number_events(record_id: int) -> dict:
+    """The CERN Open Data portal's own PRE-SELECTION total event count
+    and file count for a record (`metadata.distribution.number_events` /
+    `.number_files`) -- same portal API and JSON path
+    studies/hgg_cms/impl_checks/mapping_check/records.json's own
+    `_source` note documents using for the equivalent H->gamma-gamma
+    identity check. Used by the Step 2 full-run merge to verify the sum
+    of events actually read matches the portal's own published total,
+    not just that every job exited 0."""
+    r = requests.get(CMS_RECID_API_URL.format(record_id), timeout=30)
+    r.raise_for_status()
+    dist = r.json()["metadata"]["distribution"]
+    return {"number_events": dist["number_events"], "number_files": dist["number_files"]}
+
+
 def https_head(root_uri: str) -> dict:
     """HEAD request (no body) for a root:// URI's HTTPS-gateway
     equivalent -- gets Content-Length (file size) without downloading."""
