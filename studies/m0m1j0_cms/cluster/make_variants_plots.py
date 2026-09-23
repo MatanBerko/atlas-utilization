@@ -46,6 +46,25 @@ DOUBLEMUON_LUMI_FB_INV = 16.393
 TTBAR_N_GENERATED = 43_546_000  # record 67801's own published total event count
 
 
+def _last_nonzero_bin(*value_arrays: np.ndarray) -> int:
+    """Same convention cluster/make_v2_comparison_plots.py already uses
+    (its own plot_inclusive_single/plot_normalized_overlay/plot_top5, e.g.
+    `nonzero = np.nonzero(values)[0]; last_bin = int(nonzero.max()) + 1 if
+    len(nonzero) else 10`) -- crops the plotted array to [0:last_bin],
+    i.e. only the TRAILING empty region past the last bin with content in
+    ANY of the given arrays is dropped; the leading region (bins 0 up to
+    wherever the peak-removed content starts) is deliberately NOT cropped,
+    matching the pipeline's own trim_empty_tail (histograms.py's own
+    module-level derivation) -- this was already v2's behaviour, this
+    function only lets v3's plots (which previously used no crop at all,
+    the full 0-10000 GeV grid) match it too."""
+    combined = np.zeros_like(value_arrays[0])
+    for arr in value_arrays:
+        combined = combined + arr
+    nonzero = np.nonzero(combined)[0]
+    return int(nonzero.max()) + 1 if len(nonzero) else 10
+
+
 def load_root_hist(root_path: Path, key_substr: str):
     """Finds the one key in root_path containing key_substr and returns
     (values, edges) via uproot's own .to_numpy()."""
@@ -74,7 +93,9 @@ def overlay_with_ratio(sample: str, base_key: str, other_key: str, variants_dir:
 
     v0, edges = h0
     v1, _ = h1
-    centers = 0.5 * (edges[:-1] + edges[1:])
+    last_bin = _last_nonzero_bin(v0, v1)
+    v0, v1 = v0[:last_bin], v1[:last_bin]
+    centers = ((edges[:-1] + edges[1:]) / 2)[:last_bin]
 
     fig, (ax_top, ax_bot) = plt.subplots(
         2, 1, sharex=True, figsize=(8, 7), gridspec_kw={"height_ratios": [3, 1]}
@@ -145,7 +166,9 @@ def shape_comparison(variants_dir: Path, out_path: Path):
         return
     v_data, edges = h_data
     v_ttbar, _ = h_ttbar
-    centers = 0.5 * (edges[:-1] + edges[1:])
+    last_bin = _last_nonzero_bin(v_data, v_ttbar)
+    v_data, v_ttbar = v_data[:last_bin], v_ttbar[:last_bin]
+    centers = ((edges[:-1] + edges[1:]) / 2)[:last_bin]
 
     v_data_norm = v_data / v_data.sum() if v_data.sum() > 0 else v_data
     v_ttbar_norm = v_ttbar / v_ttbar.sum() if v_ttbar.sum() > 0 else v_ttbar
@@ -189,7 +212,9 @@ def ttbar_luminosity_scaled_plot(variants_dir: Path, out_path: Path) -> dict:
     v_data, edges = h_data
     v_ttbar, _ = h_ttbar
     v_ttbar_scaled = v_ttbar * scale
-    centers = 0.5 * (edges[:-1] + edges[1:])
+    last_bin = _last_nonzero_bin(v_data, v_ttbar_scaled)
+    v_data, v_ttbar_scaled = v_data[:last_bin], v_ttbar_scaled[:last_bin]
+    centers = ((edges[:-1] + edges[1:]) / 2)[:last_bin]
 
     fig, ax = plt.subplots(figsize=(8, 6))
     ax.step(centers, v_data, where="mid", label="data (V0)", color="black")

@@ -1,0 +1,26 @@
+studies/m0m1j0_cms/v2/data/m0m1j0_data_postprocessed.root: 19 histogram(s) compared
+studies/m0m1j0_cms/v2/ttbar/m0m1j0_ttbar_postprocessed.root: 30 histogram(s) compared
+studies/m0m1j0_cms/v2/ttbar/m0m1j0_ttbar_postprocessed_weighted.root: 30 histogram(s) compared
+studies/m0m1j0_cms/v3_variants/data_V0_baseline.root: 19 histogram(s) compared
+studies/m0m1j0_cms/v3_variants/data_V1_no_muon_iso.root: 27 histogram(s) compared
+studies/m0m1j0_cms/v3_variants/data_V2_no_jet_lepton_cleaning.root: 23 histogram(s) compared
+studies/m0m1j0_cms/v3_variants/data_V3_single_muon_trigger.root: 19 histogram(s) compared
+studies/m0m1j0_cms/v3_variants/ttbar_V0_baseline.root: 30 histogram(s) compared
+studies/m0m1j0_cms/v3_variants/ttbar_V1_no_muon_iso.root: 49 histogram(s) compared
+studies/m0m1j0_cms/v3_variants/ttbar_V2_no_jet_lepton_cleaning.root: 40 histogram(s) compared
+studies/m0m1j0_cms/v3_variants/ttbar_V3_single_muon_trigger.root: 30 histogram(s) compared
+studies/m0m1j0_cms/v2/data/merge_v2_summary.json[per_category]: 62 categor(y/ies) compared
+studies/m0m1j0_cms/v2/ttbar/merge_ttbar_summary.json[per_category]: 74 categor(y/ies) compared
+studies/m0m1j0_cms/v3_variants/merge_variants_data_summary.json[per_variant/V0_baseline/per_category]: 62 categor(y/ies) compared
+studies/m0m1j0_cms/v3_variants/merge_variants_data_summary.json[per_variant/V1_no_muon_iso/per_category]: 77 categor(y/ies) compared
+studies/m0m1j0_cms/v3_variants/merge_variants_data_summary.json[per_variant/V2_no_jet_lepton_cleaning/per_category]: 74 categor(y/ies) compared
+studies/m0m1j0_cms/v3_variants/merge_variants_data_summary.json[per_variant/V3_single_muon_trigger/per_category]: 61 categor(y/ies) compared
+studies/m0m1j0_cms/v3_variants/merge_variants_ttbar_summary.json[per_variant/V0_baseline/per_category]: 74 categor(y/ies) compared
+studies/m0m1j0_cms/v3_variants/merge_variants_ttbar_summary.json[per_variant/V1_no_muon_iso/per_category]: 104 categor(y/ies) compared
+studies/m0m1j0_cms/v3_variants/merge_variants_ttbar_summary.json[per_variant/V2_no_jet_lepton_cleaning/per_category]: 101 categor(y/ies) compared
+studies/m0m1j0_cms/v3_variants/merge_variants_ttbar_summary.json[per_variant/V3_single_muon_trigger/per_category]: 74 categor(y/ies) compared
+
+TOTAL histograms compared: 316
+TOTAL categories compared: 763
+
+RESULT: PASS -- every histogram's bin contents and edges, and every category's post-processing counts, are UNCHANGED between the before-commit and the regenerated files. Only the x-axis display range metadata differs.

@@ -395,17 +395,117 @@ shared infrastructure is outside this task's scope) — instead:
   with `uproot.recreate(...)` instead of PyROOT's `TFile`/`TH1F` —
   confirmed this produces a real ROOT `TH1D` file, readable by actual
   ROOT/PyROOT elsewhere, just not written through PyROOT on this end.
-- `trim_empty_tail`'s cosmetic axis-range trim (display-only, never
+- **CORRECTION (2026-09-24): `trim_empty_tail`'s axis-range trim IS now
+  reproduced — the statement below that it "cannot" be, because "there is
+  no PyROOT axis object to call `SetRangeUser` on via uproot's writer",
+  was true of the mechanism actually used at the time this was written,
+  but wrong about the conclusion: it does not follow that the DISPLAY
+  RANGE ITSELF cannot be reproduced without PyROOT, only that it cannot be
+  reproduced by calling `SetRangeUser` (a PyROOT method) on a PyROOT
+  object neither of which exists here. `studies/m0m1j0_cms/histograms.py`'s
+  `to_writable_th1f` now sets the same fFirst/fLast TAxis members and the
+  TObject `kAxisRange` status bit that a real `SetRangeUser` call would
+  produce, worked out directly from ROOT's own source
+  (`TAxis.h`/`TAxis.cxx`, quoted in full in that module) rather than by
+  calling the method itself — see §7b below for the complete story,
+  including why setting the bit needed a workaround uproot's public
+  writing API does not otherwise expose. This is no longer a known gap;
+  §10 records it as closed.
+
+For historical accuracy the original (now-superseded) reasoning is kept
+below rather than deleted:
+
+- ~~`trim_empty_tail`'s cosmetic axis-range trim (display-only, never
   touches stored bin content) is not reproduced in the written ROOT file
   — there is no PyROOT axis object to call `SetRangeUser` on via uproot's
   writer. The same "last non-empty bin" information is available from
   each job's metadata JSON and is applied directly in the pilot's own
-  sanity-check PNGs.
+  sanity-check PNGs.~~ (superseded, see the correction immediately above)
 
-This is flagged here as a genuine, non-obvious environment gap worth the
-group's attention on its own merits (unclear whether the shared
-pipeline's own `histogram_creation_task` has ever been run end-to-end on
+This section is otherwise still accurate: the rest of the environment gap
+(no PyROOT, no live import of `histograms_pipeline.py` itself, the
+verbatim-copy workaround for the two constants and
+`_convert_to_bumpnet_name`) remains unchanged and is flagged here as a
+genuine, non-obvious environment gap worth the group's attention on its
+own merits (unclear whether the shared pipeline's own
+`histogram_creation_task` has ever been run end-to-end on
 this cluster account), separate from anything specific to m0m1j0.
+
+## 7b. Display-range parity closed (2026-09-24)
+
+The technical lead found the one remaining difference from the shared
+pipeline's histogram output: `trim_empty_tail`
+(`services/pipelines/histograms_pipeline.py:26-41`) sets the written
+histogram's x-axis DISPLAY range (never its bin content) to the filled
+part; this study's uproot-written files left it unset (`fXaxis.fFirst=0`,
+`fLast=0` — confirmed directly in `v2/data/m0m1j0_data_postprocessed.root`
+and `v3_variants/data_V0_baseline.root` before this fix).
+
+**What `trim_empty_tail` actually does, read precisely, not paraphrased**
+(exact source quoted in full in `histograms.py`'s own module-level
+comment above `_last_nonempty_root_bin`): it scans from the last bin down
+to bin 1 for the last one with content `> 0`, then calls
+`GetXaxis().SetRangeUser(GetXmin(), <that bin's own upper edge>)` — the
+LOWER bound passed is the axis's own original minimum, not the first
+filled bin. **It trims only the trailing empty region; it never crops a
+leading one.** That matters for this study specifically: the peak-removal
+step already deletes everything below each category's own peak from the
+underlying mass array, so bins between 0 GeV and the peak are
+empty-but-present on the shared fixed 0-10000 GeV grid — a real pipeline
+histogram in the same situation would leave that leading empty region
+un-cropped too, and so does this fix. If no bin has content at all,
+`trim_empty_tail` is a complete no-op (the axis is left exactly as it
+was — for a never-ranged histogram, ROOT's own default: `fFirst=0`,
+`fLast=0`, the range bit unset).
+
+**What that means on disk**, worked out from ROOT's own source
+(root.cern, `TAxis.h:65` for `kAxisRange = BIT(11)`; `TAxis.cxx` for
+`SetRange`/`SetRangeUser`/`GetFirst`/`GetLast`, all quoted verbatim in
+`histograms.py`): the call above always resolves to `fFirst=1`,
+`fLast=<last filled bin>`, with the `kAxisRange` status bit SET.
+Crucially, `TAxis::GetFirst()`/`GetLast()` — what any real reader (ROOT's
+own `Draw()`, a `TBrowser`, etc.) actually calls — **ignore `fFirst`/
+`fLast` entirely unless that bit is set**, returning the full range
+regardless. Writing `fFirst`/`fLast` alone, without the bit, would
+therefore have been a complete no-op for any real reader, not a partial
+fix.
+
+**Implementation.** `fFirst`/`fLast` are supported directly by uproot's
+own `to_TAxis(...)` call. The `kAxisRange` bit is not exposed by uproot's
+writing API at all — confirmed by direct experiment that the bit is NOT
+sourced from the axis model's own `_members["@fBits"]` at write time;
+every writable model's internal `_serialize(...)` receives the eventual
+on-disk flags word as an explicit argument threaded down from the top of
+the call chain (with fixed bits ORed in along the way by various classes),
+and no parameter anywhere lets a caller add to that word for one specific
+sub-object. The fix wraps the one axis instance's own bound `_serialize`
+method (per-object, per-write-call; no other histogram or file is
+affected) to OR in the bit before delegating to the real implementation.
+
+**Verification.** Round-tripped by writing a real file and reading it back
+with uproot: `fFirst`, `fLast`, and the raw `@fBits` value (confirmed
+`kIsOnHeap | kNotDeleted | kAxisRange`) all match what a real
+`SetRangeUser` call would produce, for both a histogram with content and
+an all-empty one (which correctly gets the untouched default, not a
+cropped-to-nothing range). **UNVERIFIED against an actual PyROOT-produced
+file**: checked directly (2026-09-24), no PyROOT install exists in any
+conda env on this cluster account (only `atlas-pipeline` exists, and
+`import ROOT` fails there exactly as before), there is no system
+`root`/`root-config` binary, and no genuine PyROOT-written TH1 histogram
+exists anywhere in this repository or in any output directory on this
+account — every "histograms" output directory belonging to other studies
+on this account was checked directly and found empty. The verification
+above is therefore against ROOT's own quoted source and an uproot
+round-trip, not a byte-for-byte comparison against a real pipeline output.
+
+After this fix, the existing merge steps were re-run from the per-job
+outputs already on disk (no analysis job was re-run), and every histogram
+in every regenerated file was checked bin-for-bin against the previously
+committed file, and every category's post-processing counts against the
+previous JSON summaries: 316 histograms and 763 categories compared, zero
+differences (`cluster/check_display_range_fix_preserves_content.py`,
+committed alongside its own passing output). Only the display-range
+metadata changed.
 
 ## 8. Part B: ttbar MC sample and MC-specific handling
 
@@ -486,3 +586,63 @@ needed — the dilepton sample exists and was found.
   `min_events_per_fs = 100` for every category is not knowable from a
   2-file-per-record pilot; the pilot report will state observed counts
   plainly rather than extrapolate.
+
+## 10. Final status (2026-09-24): remaining differences from the shared pipeline
+
+§7b closes the x-axis display-range gap, which was the last remaining
+difference in the histogram OUTPUT itself. What remains — accurately, as
+of this writing, not as originally scoped — is three items, none of them
+in the histogram output:
+
+1. **No cross-dataset de-duplication.** This study reads a single primary
+   dataset (DoubleMuon, records 30522/30555 — two run eras of the *same*
+   dataset, not two different datasets) — confirmed directly from each
+   record's own portal metadata. There is no overlapping second dataset
+   here for an event to be double-counted between, unlike the
+   SingleElectron+SingleMuon combination the shared pipeline's own
+   de-duplication mechanism (`services/parsing/event_deduplication.py`,
+   see `docs/UPSTREAM_DIVERGENCE_MAP.md`) exists to handle. Not a gap in
+   this study; not applicable to it.
+
+2. **Per-object masses come from each event's own NanoAOD `mass` branch
+   (via `vector.zip`), not the shared pipeline's per-object-type
+   `KNOWN_MASSES` constants** (`services/calculations/consts.py`, not
+   imported here — see `selection.py`'s own module docstring, unchanged
+   by this task). Verified directly (2026-09-24) against 500,000 real
+   muons from one real DoubleMuon file (record 30522): `Muon_mass` is
+   stored as float32 on disk but takes only a small number of distinct
+   values, consistent with float16 quantization of the true PDG muon mass
+   (`0.1056583755` GeV) somewhere upstream in NanoAOD production —
+   `float16(0.1056583755) == 0.10565185546875` matches the file's own
+   values exactly. The two dominant quantized values in the sample were
+   `0.10565185546875` (153,322 muons, ~14.5%, differing from the exact PDG
+   value by `6.5×10⁻⁶` GeV — genuinely below 1e-5) and, MORE commonly,
+   `0.105712890625` (905,383 muons, ~85.4%, differing by `5.4×10⁻⁵` GeV —
+   **not** below 1e-5). The population mean over all 500,000 muons
+   differed from the exact PDG value by `4.6×10⁻⁵` GeV. **This corrects an
+   expectation stated when this check was requested (that the difference
+   would be below 1e-5 for muons) — the actual, measured figure is closer
+   to 1e-5 to 5×10⁻⁵ GeV depending on which quantization bin a given muon
+   falls in, not uniformly below 1e-5.** A handful of true outliers exist
+   in the same sample (5 muons out of 1,059,710 total array entries,
+   including one anomalous `0.125` GeV value clearly unrelated to the
+   muon mass) — negligible in count, not representative. Every one of
+   these differences — 1e-5 to 5×10⁻⁵ GeV — is physically negligible for
+   this study, whose bins are 10 GeV wide and whose mass window starts at
+   115 GeV; it is recorded here for completeness and accuracy, not flagged
+   as a problem. (Explicitly out of scope, per this task's own
+   instruction, and untouched: this is a different question from the
+   fork's own separately-flagged, separately-rounded `KNOWN_MASSES["Muons"]
+   = 0.105` constant, which this study does not use at all and which is
+   not "fixed" here or anywhere else per standing instruction.)
+
+3. **No multi-stage pipeline architecture is replicated** (§6, deviation
+   6, unchanged) — this study applies the same numerical recipe in a
+   single pass per file rather than reproducing the shared pipeline's
+   parse → mass-array → post-processing → SQLite-shard → histogram-merge
+   architecture. Still considered out of proportion to this study's own
+   scope, as originally stated.
+
+No other known difference from the shared pipeline's own histogram/
+selection/post-processing behaviour remains, to the best of this
+document's own verification.
