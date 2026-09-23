@@ -198,6 +198,7 @@ def _create_histograms_from_sqlite(
     output_dir = histograms_config["output_dir"]
     os.makedirs(output_dir, exist_ok=True)
 
+
     bin_width_gev = histograms_config["bin_width_gev"]
     bin_widths_gev = [bin_width_gev] if isinstance(bin_width_gev, (int, float)) else bin_width_gev
     use_bumpnet_naming = histograms_config.get("use_bumpnet_naming", False)
@@ -207,11 +208,10 @@ def _create_histograms_from_sqlite(
 
     db_paths = [os.path.join(input_dir, f) for f in sqlite_files]
 
+    # Split SQLite files across histogram batch jobs
     batch_job_index = histograms_config.get("batch_job_index")
     total_batch_jobs = histograms_config.get("total_batch_jobs")
     trim_before_write = batch_job_index is None or total_batch_jobs is None
-
-    # Split SQLite files across histogram batch jobs
     if batch_job_index is not None and total_batch_jobs is not None:
         sqlite_files = _get_batch_files(
             sorted(sqlite_files), batch_job_index, total_batch_jobs
