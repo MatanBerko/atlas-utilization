@@ -55,8 +55,44 @@ def main():
         check("read-back name matches the assignment key", h.name == "ROI_mass_test_width_10", f"got {h.name}")
         check("edges match the input fixed grid", np.array_equal(h.axis().edges(), edges))
 
+        # Display-range parity with the shared pipeline's trim_empty_tail
+        # (services/pipelines/histograms_pipeline.py:26-41) -- see
+        # histograms.py's own module-level derivation. Values [5,15,15,25]
+        # bin into make_fixed_grid_histogram's 10-GeV grid as: bin1 (0-10)
+        # gets the 5.0 -> 1 entry, bin2 (10-20) gets both 15.0s -> 2
+        # entries, bin3 (20-30) gets the 25.0 -> 1 entry, nothing after --
+        # so the last bin with content > 0 is ROOT bin 3 (1-based).
+        expected_last_bin = 3
+        xaxis = h.member("fXaxis")
+        check("fFirst is 1 (matches trim_empty_tail's own SetRangeUser(Xmin, ...) call)",
+              xaxis.member("fFirst") == 1, f"got {xaxis.member('fFirst')}")
+        check(f"fLast is {expected_last_bin} (the last bin with content > 0)",
+              xaxis.member("fLast") == expected_last_bin, f"got {xaxis.member('fLast')}")
+        check("kAxisRange (bit 11) is set on the axis's TObject fBits",
+              bool(xaxis.member("@fBits") & (1 << 11)), f"got fBits={xaxis.member('@fBits'):#x}")
+
         histograms.verify_written_th1f(root_path, {"ROI_mass_test_width_10": values})
         check("verify_written_th1f passes on correct data (reached here without raising)", True)
+
+        # All-empty histogram: trim_empty_tail is a no-op (its own
+        # `if last_filled > 0:` guard never fires), so the axis must be
+        # left in the untouched-TAxis default: fFirst=0, fLast=0,
+        # kAxisRange NOT set -- not "cropped to nothing".
+        empty_values, empty_edges = histograms.make_fixed_grid_histogram(np.array([]))
+        empty_path = str(Path(tmp) / "test_empty.root")
+        empty_th1f = histograms.to_writable_th1f(empty_values, empty_edges, "ROI_mass_empty_width_10")
+        with uproot.recreate(empty_path) as f:
+            f["ROI_mass_empty_width_10"] = empty_th1f
+        h_empty = uproot.open(empty_path)["ROI_mass_empty_width_10"]
+        xaxis_empty = h_empty.member("fXaxis")
+        check("all-empty histogram: fFirst is 0 (untouched default, not cropped)",
+              xaxis_empty.member("fFirst") == 0, f"got {xaxis_empty.member('fFirst')}")
+        check("all-empty histogram: fLast is 0 (untouched default)",
+              xaxis_empty.member("fLast") == 0, f"got {xaxis_empty.member('fLast')}")
+        check("all-empty histogram: kAxisRange is NOT set",
+              not bool(xaxis_empty.member("@fBits") & (1 << 11)), f"got fBits={xaxis_empty.member('@fBits'):#x}")
+        histograms.verify_written_th1f(empty_path, {"ROI_mass_empty_width_10": empty_values})
+        check("verify_written_th1f passes on the all-empty histogram too", True)
 
         try:
             histograms.verify_written_th1f(root_path, {"ROI_mass_test_width_10": values + 1000.0})

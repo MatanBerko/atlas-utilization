@@ -161,6 +161,171 @@ def make_fixed_grid_histogram(values) -> Histogram:
     return counts, edges
 
 
+# --- Display-range parity with the shared pipeline's trim_empty_tail -----
+#
+# services/pipelines/histograms_pipeline.py:26-41 (trim_empty_tail, exact
+# source at the commit this branch was built from):
+#
+#     def trim_empty_tail(hist: ROOT.TH1F) -> None:
+#         last_filled = 0
+#         for b in range(hist.GetNbinsX(), 0, -1):
+#             if hist.GetBinContent(b) > 0:
+#                 last_filled = b
+#                 break
+#         if last_filled > 0:
+#             hist.GetXaxis().SetRangeUser(
+#                 hist.GetXaxis().GetXmin(),
+#                 hist.GetBinLowEdge(last_filled + 1)
+#             )
+#
+# Read precisely (not paraphrased): this scans from the LAST bin down to
+# bin 1 for the last one with content > 0 ("last_filled", a 1-based ROOT
+# bin index). If NONE is found (an all-empty histogram), the function
+# returns without touching the axis at all -- the axis is left exactly as
+# it was before the call (for a histogram whose axis was never previously
+# ranged, that is ROOT's own untouched-TAxis default: fFirst=0, fLast=0,
+# the kAxisRange status bit NOT set -- see below). If one IS found, it
+# calls SetRangeUser(GetXmin(), <last_filled bin's own upper edge>) --
+# note the LOWER bound passed is the axis's own original minimum, NOT the
+# first filled bin: this function trims only the TRAILING (upper) empty
+# region, never a leading one. That matters here because our own
+# histograms' filled region does not start at the axis minimum (the
+# pipeline's peak-removal step already deleted everything below the peak
+# from the underlying mass array, so bins between 0 and the peak are
+# empty-but-present on the fixed 0-10000 GeV grid) -- trim_empty_tail, run
+# on a real pipeline histogram in this same situation, would NOT crop that
+# leading empty region either. Replicating it exactly (not "improving" it
+# to crop both sides) is the point: a pipeline-produced file and ours must
+# open identically.
+#
+# What SetRangeUser(ufirst, ulast) actually sets, per ROOT's own source
+# (root.cern, tag v6-32; TAxis.h:65 for the bit, TAxis.cxx:1052-1100 for
+# the two methods -- fetched and quoted directly, not from memory):
+#
+#     // TAxis.h:65
+#     kAxisRange = BIT(11),   // i.e. 1 << 11 == 0x800 == 2048
+#
+#     // TAxis.cxx:1052-1072
+#     void TAxis::SetRange(Int_t first, Int_t last) {
+#       Int_t nCells = fNbins + 1;
+#       if (last < first || (first < 0 && last < 0) ||
+#           (first > nCells && last > nCells) || (first == 0 && last == 0)) {
+#         fFirst = 1; fLast = fNbins; SetBit(kAxisRange, false);
+#       } else {
+#         fFirst = std::max(first, 0);
+#         fLast = std::min(last, nCells);
+#         SetBit(kAxisRange, true);
+#       }
+#     }
+#
+#     // TAxis.cxx:1080-1100
+#     void TAxis::SetRangeUser(Double_t ufirst, Double_t ulast) {
+#       Int_t ifirst = FindFixBin(ufirst);
+#       Int_t ilast = FindFixBin(ulast);
+#       if (GetBinUpEdge(ifirst) <= ufirst) ifirst += 1;
+#       if (GetBinLowEdge(ilast) >= ulast) ilast -= 1;
+#       SetRange(ifirst, ilast);
+#     }
+#
+# Working through trim_empty_tail's own call with ufirst=GetXmin() (bin 1's
+# own lower edge -- FindFixBin gives ifirst=1, the edge-fix does not move
+# it) and ulast=GetBinLowEdge(last_filled+1) (EXACTLY bin last_filled+1's
+# lower edge, so FindFixBin gives last_filled+1, and the edge-fix
+# `GetBinLowEdge(ilast) >= ulast` is then true, so ilast -= 1 gives
+# last_filled): the net, always-taken result is fFirst=1, fLast=last_filled,
+# kAxisRange SET.
+#
+# CRUCIALLY, per that same source: TAxis::GetFirst()/GetLast() -- the
+# methods any real reader (ROOT's own Draw(), TBrowser, TAxis's own context
+# menu, etc.) actually calls to find the display range -- are:
+#
+#     Int_t TAxis::GetFirst() const { if (!TestBit(kAxisRange)) return 1; return fFirst; }
+#     Int_t TAxis::GetLast()  const { if (!TestBit(kAxisRange)) return fNbins; return fLast; }
+#
+# i.e. fFirst/fLast are IGNORED unless the kAxisRange bit is set. Writing
+# fFirst/fLast alone (which uproot's to_TAxis(fFirst=..., fLast=...) DOES
+# support directly) without also setting that bit would therefore be a
+# complete no-op for any real reader -- confirmed empirically too (see
+# _set_trim_empty_tail_range's own docstring for why the bit cannot be set
+# by assigning to the axis model's `_members["@fBits"]`, and what does
+# work instead).
+#
+# UNVERIFIED: no ROOT installation (PyROOT) is available in this project's
+# cluster conda env (RECIPE.md section 7a) or, checked directly for this
+# task, in any other env on that account either -- so the round-trip below
+# is verified by re-opening the written file with uproot and checking
+# fFirst/fLast/the raw fBits value directly, not by opening it in real
+# ROOT. No real pipeline-produced ROOT histogram (one that went through
+# trim_empty_tail for real) was found anywhere in this repository or on
+# the cluster to compare against byte-for-byte either (searched both,
+# 2026-09-24) -- the ROOT source quoted above is the evidence in its
+# place, not a live comparison.
+
+_KAXISRANGE_BIT = 1 << 11  # TAxis.h:65, kAxisRange = BIT(11)
+
+
+def _last_nonempty_root_bin(values: np.ndarray) -> int:
+    """The 1-based ROOT bin index of the last bin with content > 0, or 0 if
+    none (all-empty histogram) -- the exact same scan trim_empty_tail
+    itself does (services/pipelines/histograms_pipeline.py:32-36), just
+    vectorized instead of a Python loop counting down from the end."""
+    nonzero = np.nonzero(values > 0)[0]
+    if len(nonzero) == 0:
+        return 0
+    return int(nonzero[-1]) + 1  # numpy index -> 1-based ROOT bin
+
+
+def _set_trim_empty_tail_range(xaxis, last_filled_root_bin: int) -> None:
+    """Sets `xaxis` (a `uproot.writing.identify.to_TAxis(...)` result) to
+    the exact fFirst/fLast/kAxisRange state trim_empty_tail's own
+    SetRangeUser call produces (see the module-level derivation above):
+    fFirst=1, fLast=last_filled_root_bin, kAxisRange set. A no-op if
+    `last_filled_root_bin` is 0 (all-empty histogram), matching
+    trim_empty_tail's own `if last_filled > 0:` guard exactly -- an
+    all-empty histogram's axis is left in ROOT's untouched-TAxis default
+    (fFirst=0, fLast=0, kAxisRange unset), which is already uproot's own
+    default for a `to_TAxis(...)` call with no fFirst/fLast given, so
+    nothing needs to change for that case.
+
+    Why this cannot be done by setting `fFirst`/`fLast` alone: uproot's
+    `to_TAxis(fFirst=..., fLast=...)` parameters DO write real fFirst/fLast
+    TAxis members (confirmed by round-trip below) -- but the kAxisRange
+    status bit lives on the TAxis's inherited TObject base, and uproot's
+    writer does NOT source that bit from the model's own
+    `_members["@fBits"]` at write time (confirmed by direct experiment:
+    setting it there has no effect on the written bytes) -- instead, every
+    writable model's `_serialize(out, header, name, tobject_flags)` method
+    receives the eventual on-disk flags word as its `tobject_flags`
+    ARGUMENT, threaded down recursively from the top-level `serialize()`
+    call (which always starts it at 0) and ORs in fixed bits along the way
+    (e.g. `uproot.models.TNamed.Model_TNamed._serialize` unconditionally
+    ORs in kIsOnHeap|kNotDeleted) -- there is no public parameter, on
+    `to_TAxis`, `to_TH1x`, or anywhere else in uproot's writing API, that
+    lets a caller inject an additional bit into that word for one specific
+    sub-object. This function does the only thing that reaches it: it
+    wraps THIS axis instance's own bound `_serialize` method (a per-object,
+    per-write-call override, not a global monkeypatch of the uproot
+    class -- every other histogram/axis in this or any other file is
+    unaffected) so that whatever `tobject_flags` it would have received is
+    OR'd with kAxisRange before being forwarded to the real implementation.
+    Verified round-trip (this module's own test suite, and manually via
+    `uproot.open(...)["...."] .member("fXaxis").member("@fBits")`):
+    fBits reads back as kIsOnHeap|kNotDeleted|kAxisRange, exactly as a real
+    ROOT-written ranged axis would (module docstring above), with bin
+    contents byte-for-byte unaffected.
+    """
+    if last_filled_root_bin <= 0:
+        return
+    xaxis._members["fFirst"] = 1
+    xaxis._members["fLast"] = int(last_filled_root_bin)
+    original_serialize = xaxis._serialize
+
+    def _serialize_with_axis_range(out, header, name, tobject_flags, _orig=original_serialize):
+        return _orig(out, header, name, np.uint32(tobject_flags) | np.uint32(_KAXISRANGE_BIT))
+
+    xaxis._serialize = _serialize_with_axis_range
+
+
 def to_writable_th1f(values: np.ndarray, edges: np.ndarray, title: str):
     """Builds a genuine, writable ROOT TH1F (float32 bin contents) from a
     (values, edges) numpy pair, via uproot.writing.identify.to_TH1x
@@ -182,6 +347,11 @@ def to_writable_th1f(values: np.ndarray, edges: np.ndarray, title: str):
     `values` here has no under/overflow of its own (this study's inputs
     are already clipped into range by make_fixed_grid_histogram), so
     those two slots are always zero.
+
+    The written histogram's x-axis DISPLAY range (never its bin content)
+    is set to match the shared pipeline's own trim_empty_tail exactly --
+    see the module-level comment above _last_nonempty_root_bin for the
+    full derivation and citations.
     """
     n_bins = len(values)
     data = np.zeros(n_bins + 2, dtype=np.float32)
@@ -191,6 +361,8 @@ def to_writable_th1f(values: np.ndarray, edges: np.ndarray, title: str):
         "xaxis", "", n_bins, float(edges[0]), float(edges[-1]),
         fXbins=np.asarray(edges, dtype=np.float64),
     )
+    _set_trim_empty_tail_range(xaxis, _last_nonempty_root_bin(values))
+
     values_f64 = values.astype(np.float64)
     return _uproot_identify.to_TH1x(
         fName=None,
@@ -209,11 +381,17 @@ def to_writable_th1f(values: np.ndarray, edges: np.ndarray, title: str):
 def verify_written_th1f(root_path: str, expected: Dict[str, np.ndarray]) -> None:
     """Re-opens `root_path` with uproot and asserts, for every
     `key -> values` pair in `expected`, that the on-disk histogram's
-    class is exactly TH1F and its bin contents equal `values` (float32
+    class is exactly TH1F, its bin contents equal `values` (float32
     precision -- rtol chosen to comfortably clear float32 rounding of
-    typical bin-count magnitudes here, well under 1 part in 10^5).
-    Raises AssertionError with a specific message identifying which
-    histogram/aspect failed, rather than silently trusting the write.
+    typical bin-count magnitudes here, well under 1 part in 10^5), AND its
+    x-axis display range matches trim_empty_tail's own behaviour exactly
+    (see _set_trim_empty_tail_range's docstring for the full derivation):
+    fFirst=1, fLast=<last bin with content>0>, kAxisRange bit set -- or,
+    for an all-empty histogram, fFirst=fLast=0 and the bit unset (the
+    untouched-axis default, since trim_empty_tail itself is a no-op on an
+    all-empty histogram). Raises AssertionError with a specific message
+    identifying which histogram/aspect failed, rather than silently
+    trusting the write.
     """
     import uproot as _uproot
     f = _uproot.open(root_path)
@@ -230,6 +408,23 @@ def verify_written_th1f(root_path: str, expected: Dict[str, np.ndarray]) -> None
             raise AssertionError(
                 f"{root_path}: {key} bin contents do not match after write/read "
                 f"(max abs diff {np.max(np.abs(on_disk_values - values)):.6g})"
+            )
+
+        expected_last = _last_nonempty_root_bin(values)
+        xaxis = hist.member("fXaxis")
+        actual_first = xaxis.member("fFirst")
+        actual_last = xaxis.member("fLast")
+        actual_range_bit = bool(xaxis.member("@fBits") & _KAXISRANGE_BIT)
+        if expected_last <= 0:
+            expected_first, expected_bit = 0, False
+        else:
+            expected_first, expected_bit = 1, True
+            expected_last = expected_last  # last non-empty bin, already computed
+        if (actual_first, actual_last, actual_range_bit) != (expected_first, expected_last, expected_bit):
+            raise AssertionError(
+                f"{root_path}: {key} display range mismatch -- "
+                f"got (fFirst={actual_first}, fLast={actual_last}, kAxisRange={actual_range_bit}), "
+                f"expected (fFirst={expected_first}, fLast={expected_last}, kAxisRange={expected_bit})"
             )
 
 
