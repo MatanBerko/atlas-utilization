@@ -68,6 +68,17 @@ TRIGGER_BRANCHES = (
     "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ",
 )
 
+# Selection-variants task (supervisor request, studies/m0m1j0_cms/variants.py):
+# the V3 "single-muon trigger" variant. NOT part of the V0 baseline -- only
+# read/required when a caller explicitly asks for the V3 variant (see
+# require_trigger_branches/apply_trigger's new `trigger_branches` parameter
+# below, which defaults to TRIGGER_BRANCHES so every existing call site's
+# behavior is byte-for-byte unchanged).
+SINGLE_MUON_TRIGGER_BRANCHES = (
+    "HLT_IsoMu24",
+    "HLT_IsoTkMu24",
+)
+
 # Mirrored from config.yaml:155-156 (RECIPE.md section 5/6.3, 6.5).
 Z_PEAK_CUTOFF_GEV = 115.0
 MAX_MASS_CUTOFF_GEV = 10000.0
@@ -100,11 +111,14 @@ OPTIONAL_MUON_DIAGNOSTIC_BRANCHES = (
 )
 
 
-def require_trigger_branches(available_fields: list) -> None:
+def require_trigger_branches(available_fields: list, trigger_branches=TRIGGER_BRANCHES) -> None:
     """Fail loudly (per the task's own instruction) if either named HLT
     path is absent from a file, rather than silently treating it as
-    'did not fire'."""
-    missing = [b for b in TRIGGER_BRANCHES if b not in available_fields]
+    'did not fire'. `trigger_branches` defaults to the V0 baseline pair;
+    the variants task (studies/m0m1j0_cms/variants.py) passes
+    SINGLE_MUON_TRIGGER_BRANCHES for V3 -- every other/default call is
+    unaffected."""
+    missing = [b for b in trigger_branches if b not in available_fields]
     if missing:
         raise ValueError(
             f"Required trigger branch(es) missing from this file: {missing}. "
@@ -112,9 +126,11 @@ def require_trigger_branches(available_fields: list) -> None:
         )
 
 
-def apply_trigger(events: ak.Array) -> ak.Array:
-    require_trigger_branches(events.fields)
-    fired = events[TRIGGER_BRANCHES[0]] | events[TRIGGER_BRANCHES[1]]
+def apply_trigger(events: ak.Array, trigger_branches=TRIGGER_BRANCHES) -> ak.Array:
+    require_trigger_branches(events.fields, trigger_branches=trigger_branches)
+    fired = events[trigger_branches[0]] | events[trigger_branches[1]]
+    for extra_branch in trigger_branches[2:]:
+        fired = fired | events[extra_branch]
     return events[fired]
 
 
@@ -124,12 +140,17 @@ def _p4(obj: ak.Array) -> ak.Array:
     })
 
 
-def select_muons(events: ak.Array, extra_fields: Dict[str, ak.Array] = None) -> ak.Array:
+def select_muons(events: ak.Array, extra_fields: Dict[str, ak.Array] = None, apply_iso: bool = True) -> ak.Array:
     """`extra_fields` (Step 2, requirement B) is purely additive
     passthrough for the low-mass dimuon diagnostic (e.g. charge, and
     whichever of OPTIONAL_MUON_DIAGNOSTIC_BRANCHES a given file has) --
     it does NOT affect the selection mask below in any way, which is
-    unchanged from the pilot (RECIPE.md/PILOT_REPORT.md)."""
+    unchanged from the pilot (RECIPE.md/PILOT_REPORT.md).
+
+    `apply_iso` (selection-variants task, studies/m0m1j0_cms/variants.py):
+    defaults to True, reproducing the V0 baseline exactly. The V1 variant
+    passes False to drop the `pfRelIso04_all < MUON_ISO_MAX` requirement;
+    every other cut is unaffected."""
     fields = {
         "pt": events.Muon_pt, "eta": events.Muon_eta, "phi": events.Muon_phi,
         "mass": events.Muon_mass, "mediumId": events.Muon_mediumId,
@@ -142,8 +163,9 @@ def select_muons(events: ak.Array, extra_fields: Dict[str, ak.Array] = None) -> 
         (muons.pt > MUON_PT_MIN_GEV)
         & (abs(muons.eta) < MUON_ETA_MAX)
         & muons.mediumId
-        & (muons.pfRelIso04_all < MUON_ISO_MAX)
     )
+    if apply_iso:
+        mask = mask & (muons.pfRelIso04_all < MUON_ISO_MAX)
     return muons[mask]
 
 
@@ -161,16 +183,27 @@ def select_electrons(events: ak.Array) -> ak.Array:
     return electrons[mask]
 
 
-def _clean_and_cut_jets(raw_jets: ak.Array, muons: ak.Array, electrons: ak.Array) -> ak.Array:
+def _clean_and_cut_jets(
+    raw_jets: ak.Array, muons: ak.Array, electrons: ak.Array, apply_lepton_cleaning: bool = True
+) -> ak.Array:
     """pt/eta/tight-ID cuts, then delta-R>=0.4 cleaning against every
     selected muon AND every selected electron (CMS jets include leptons in
-    their constituents -- see DESIGN.md D3's ~93% overlap finding)."""
+    their constituents -- see DESIGN.md D3's ~93% overlap finding).
+
+    `apply_lepton_cleaning` (selection-variants task,
+    studies/m0m1j0_cms/variants.py): defaults to True, reproducing the V0
+    baseline exactly. The V2 variant passes False to skip the delta-R
+    cleaning step entirely -- pt/eta/tight-ID cuts and the b-tag split
+    (done by the caller, select_and_split_jets) are unaffected."""
     kin_mask = (
         (raw_jets.pt > JET_PT_MIN_GEV)
         & (abs(raw_jets.eta) < JET_ETA_MAX)
         & ((raw_jets.jetId & 2) != 0)
     )
     cut_jets = raw_jets[kin_mask]
+
+    if not apply_lepton_cleaning:
+        return cut_jets
 
     jets_p4 = _p4(cut_jets)
     leptons = ak.concatenate([muons, electrons], axis=1)
@@ -194,9 +227,14 @@ def _clean_and_cut_jets(raw_jets: ak.Array, muons: ak.Array, electrons: ak.Array
     return cut_jets[far_from_leptons]
 
 
-def select_and_split_jets(events: ak.Array, muons: ak.Array, electrons: ak.Array) -> Dict[str, ak.Array]:
+def select_and_split_jets(
+    events: ak.Array, muons: ak.Array, electrons: ak.Array, apply_lepton_cleaning: bool = True
+) -> Dict[str, ak.Array]:
     """Split RAW jets into b-tagged/light first (ATLAS recipe order,
-    RECIPE.md section 3), then apply jet cuts + lepton cleaning to both."""
+    RECIPE.md section 3), then apply jet cuts + lepton cleaning to both.
+
+    `apply_lepton_cleaning`: see _clean_and_cut_jets; defaults to True
+    (V0 baseline, unchanged)."""
     raw_jets = ak.zip({
         "pt": events.Jet_pt, "eta": events.Jet_eta, "phi": events.Jet_phi,
         "mass": events.Jet_mass, "jetId": events.Jet_jetId,
@@ -207,8 +245,8 @@ def select_and_split_jets(events: ak.Array, muons: ak.Array, electrons: ak.Array
     raw_light = raw_jets[~is_bjet]
 
     return {
-        "BJets": _clean_and_cut_jets(raw_bjets, muons, electrons),
-        "Jets": _clean_and_cut_jets(raw_light, muons, electrons),
+        "BJets": _clean_and_cut_jets(raw_bjets, muons, electrons, apply_lepton_cleaning=apply_lepton_cleaning),
+        "Jets": _clean_and_cut_jets(raw_light, muons, electrons, apply_lepton_cleaning=apply_lepton_cleaning),
     }
 
 
@@ -283,6 +321,41 @@ def compute_dimuon_diagnostics(muons: ak.Array) -> Dict[str, ak.Array]:
     return out
 
 
+def leading_jet_muon_overlap_diagnostics(jets: ak.Array, muons: ak.Array) -> Dict[str, ak.Array]:
+    """Selection-variants task, V2 diagnostic only (does not affect any
+    selection or histogram): for the leading (highest-pT) jet in `jets`
+    (intended to be called with V2's UNCLEANED light-jet collection) and
+    the full selected `muons` collection of the same event, per event with
+    >=1 jet and >=1 muon:
+      - `min_dr_to_muon`: delta-R from the leading jet to its NEAREST
+        selected muon.
+      - `min_pt_frac_diff_to_muon`: the SMALLEST |jet_pt - muon_pt| / muon_pt
+        over all selected muons in the event (i.e. whether ANY selected
+        muon's pT is close to the leading jet's pT -- consistent with the
+        "duplicate reconstruction" hypothesis: a muon mis-reconstructed a
+        second time as a jet would have both a small delta-R AND a near-
+        identical pT to that muon).
+    NaN for an event with zero jets or zero muons (the diagnostic is not
+    meaningful there; such events are already excluded from the m0m1j0
+    selection's own final population by the >=1 jet / >=2 muon cutflow
+    cuts, so this only ever matters for the population the diagnostic is
+    actually computed over)."""
+    jet_order = ak.argsort(jets.pt, axis=1, ascending=False)
+    sorted_jets = jets[jet_order]
+    padded_jet = ak.pad_none(sorted_jets, 1, axis=1, clip=True)
+    lead_jet = padded_jet[:, 0]
+    lead_jet_p4 = _p4(lead_jet)
+
+    muons_p4 = _p4(muons)
+    dr_to_each_muon = lead_jet_p4.deltaR(muons_p4)
+    min_dr = ak.fill_none(ak.min(dr_to_each_muon, axis=1), np.nan)
+
+    pt_frac_diff = abs(lead_jet.pt - muons.pt) / muons.pt
+    min_pt_frac_diff = ak.fill_none(ak.min(pt_frac_diff, axis=1), np.nan)
+
+    return {"min_dr_to_muon": min_dr, "min_pt_frac_diff_to_muon": min_pt_frac_diff}
+
+
 def leading_jet_pt(jets: ak.Array) -> ak.Array:
     """pT of the leading (highest-pT) selected light jet per event -- used
     only for the pilot's own sanity-check plot."""
@@ -313,7 +386,13 @@ def apply_z_peak_and_mass_cutoff(mass: ak.Array) -> ak.Array:
     return ak.where(keep, mass, np.nan)
 
 
-def select_event_selection_cutflow(events: ak.Array, muon_extra_branches=None) -> Dict[str, ak.Array]:
+def select_event_selection_cutflow(
+    events: ak.Array,
+    muon_extra_branches=None,
+    apply_muon_iso: bool = True,
+    apply_jet_lepton_cleaning: bool = True,
+    trigger_branches=TRIGGER_BRANCHES,
+) -> Dict[str, ak.Array]:
     """Runs the full per-event selection chain and returns everything
     downstream code (histograms.py, the outlier-event list) needs,
     including a step-by-step cutflow count. Does not apply the golden-JSON
@@ -344,10 +423,18 @@ def select_event_selection_cutflow(events: ak.Array, muon_extra_branches=None) -
     callers can run compute_dimuon_diagnostics(sel_muons) on it; the
     selection itself is UNAFFECTED either way -- this is passthrough only
     (see select_muons).
+
+    `apply_muon_iso`, `apply_jet_lepton_cleaning`, `trigger_branches`
+    (selection-variants task, studies/m0m1j0_cms/variants.py): all three
+    default to the V0 baseline's own values (True, True,
+    TRIGGER_BRANCHES), so every existing call site -- and the RECIPE.md
+    baseline itself -- is byte-for-byte unaffected. The variants module
+    passes non-default values for V1/V2/V3; see its own docstring for
+    which flag each variant changes.
     """
     n_after_golden = len(events)
 
-    triggered = apply_trigger(events)
+    triggered = apply_trigger(events, trigger_branches=trigger_branches)
     n_after_trigger = len(triggered)
 
     muon_extra_fields = None
@@ -357,9 +444,9 @@ def select_event_selection_cutflow(events: ak.Array, muon_extra_branches=None) -
             field = branch[len("Muon_"):] if branch.startswith("Muon_") else branch
             muon_extra_fields[field] = triggered[branch]
 
-    muons = select_muons(triggered, extra_fields=muon_extra_fields)
+    muons = select_muons(triggered, extra_fields=muon_extra_fields, apply_iso=apply_muon_iso)
     electrons = select_electrons(triggered)
-    jets = select_and_split_jets(triggered, muons, electrons)
+    jets = select_and_split_jets(triggered, muons, electrons, apply_lepton_cleaning=apply_jet_lepton_cleaning)
 
     has_ge2mu = ak.num(muons) >= 2
     n_after_ge2mu = int(ak.sum(has_ge2mu))
