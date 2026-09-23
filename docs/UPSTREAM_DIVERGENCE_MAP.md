@@ -174,19 +174,22 @@ left unclassified. Where an untested physics claim is made, it is marked
 **UNVERIFIED — reasoning only** together with the reasoning; nothing is
 asserted as "looks equivalent" without evidence.
 
-A structural note before the table: **Tier 1 has exactly one ADOPT-UPSTREAM
-candidate** *(corrected — this originally read "zero," which is now false;
-see T1-17)*. Of the 13 differing files, 11 are cases of "fork added a
-capability upstream lacks" and one (`services/pipelines/histograms_pipeline.py`,
-T1-17) is a pure textual no-op — confirmed by an AST (parsed-code-structure)
-comparison to compile to the exact same program as upstream's version, with
-the alignment already prepared on branch `chore/align-noop-files-with-upstream`
-— so there is nothing to lose and one fewer divergence to carry by adopting
-it. A second file that looked like the same situation
-(`services/storage/sqlite_shards.py`, T1-18) was checked the same way and
-did **not** pass: see T1-18 for why it stays NEEDS-DECISION rather than also
-becoming ADOPT-UPSTREAM. Likewise, **"ADOPT-UPSTREAM" does not structurally
-apply to Tier 2** at all — Tier 2 compares the fork's own feature branch
+A structural note before the table: **Tier 1 has exactly two ADOPT-UPSTREAM
+candidates** *(corrected twice — this originally read "zero"; a first
+correction added only T1-17 and put T1-18 at NEEDS-DECISION; see T1-17 and
+T1-18 for the full history of both corrections)*. Of the 13 differing
+files, 11 are cases of "fork added a capability upstream lacks" and two
+(`services/pipelines/histograms_pipeline.py`, T1-17, and
+`services/storage/sqlite_shards.py`, T1-18) are pure reorderings with no
+executable difference — the first confirmed by whole-file AST
+(parsed-code-structure) equality, the second (a statement reordering,
+which whole-file AST equality can never confirm) by per-method AST
+equality plus actually running both versions and comparing their output
+databases. Both alignments are already prepared and pushed on branch
+`chore/align-noop-files-with-upstream`, so there is nothing to lose and two
+fewer divergences to carry by adopting them. Likewise, **"ADOPT-UPSTREAM"
+does not structurally apply to Tier 2** at all — Tier 2 compares the fork's
+own feature branch
 against the fork's own master, so there is no "upstream" side to adopt from;
 Tier 2 items are classified among the other three labels only.
 
@@ -234,8 +237,10 @@ to specify. `docs/CMS_KNOWN_LIMITATIONS.md` documents this was found for
 real, on real output (a b-jet at 15 GeV / |η|=2.90 despite `pt_min:
 30`/`eta_max: 2.5`), and already fixed in 9 fork configs.
 
-*Physics effect — ATLAS:* None for *this* file (CMS-only), but see T1-04 —
-the same missing-`bjets`-cuts pattern exists in an ATLAS-only config today.
+*Physics effect — ATLAS:* None for *this* file (CMS-only). *(Corrected: an
+earlier version of this note pointed to T1-04 as "an ATLAS-only config"
+with the same pattern — that was factually wrong; T1-04 is also a CMS
+config. See T1-04's own entry, corrected, and Part 3 Issue B, rewritten.)*
 
 *Classification:* **KEEP-OURS-PRIVATE** — config data, not a generic
 capability. See T1-07 for the generic, proposable guard against this
@@ -255,25 +260,42 @@ in an earlier diff pass). Same physics effect, same reasoning.
 
 **T1-04** — `config.short_parse_btag.yaml:73-75 @ 8cf737e` vs `: (absent) @ c296b927`
 
-*What differs:* Same missing-`bjets:`-cuts pattern. **This file is an
-ATLAS-only config** (no `specific_record_ids`, uses ATLAS `release_years`)
-with `enable_jet_tagging: true` set (confirmed: `grep -n
-enable_jet_tagging config.short_parse_btag.yaml` → line 79, `true`).
+**CORRECTED — this item previously misidentified this file as ATLAS-only.
+It is not.** Checked directly against both fork and upstream:
+`parsing_task_config.release_years: []` and `specific_record_ids: [30529]`
+— record 30529 is `/SingleElectron/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/
+NANOAOD`, a **CMS** record (see `docs/CMS_KNOWN_LIMITATIONS.md`'s own
+record table). This is a CMS config, exactly like T1-02/T1-03. The earlier
+claim that it uses "ATLAS `release_years`" was backwards — its
+`release_years` list is empty specifically *because* it selects CMS data by
+record ID instead.
 
-*Physics effect — ATLAS:* If this exact config file were run against
-upstream's code today, `BJets` would receive **zero** kinematic cuts — this
-is a live, currently-latent bug in an ATLAS-only file, not merely a
-hypothetical. It is the single strongest piece of evidence that the
-missing-bjets-cuts problem is not a CMS-only concern.
+*What differs:* Same missing-`bjets:`-cuts pattern as T1-02/T1-03. This file
+additionally has `enable_jet_tagging: true` set (confirmed: line 76 of the
+fork's copy), which T1-02/T1-03's files do not — so unlike those two, this
+one's missing `bjets:` entry is **live**, not merely a config-data
+difference sitting inert.
 
-*Physics effect — CMS:* N/A (ATLAS config).
+*Physics effect — CMS:* If this exact config file were run against
+upstream's code today, `BJets` would receive **zero** kinematic cuts — a
+live bug, not a hypothetical. But it is a CMS bug, on CMS data, via a CMS
+record ID. It is *not* evidence about ATLAS at all; see T1-05 for a second,
+also-corrected CMS example, and Part 3 Issue B (rewritten) for why no live
+ATLAS breakage was found anywhere in this repository's actual configs.
 
-*Classification:* **KEEP-OURS-PRIVATE** (config data). Cross-referenced
-explicitly in Part 3 Issue B, which leads with this exact ATLAS example.
+*Physics effect — ATLAS:* N/A — this is a CMS config, not an ATLAS one.
+
+*Classification:* **KEEP-OURS-PRIVATE** (config data) — unchanged by this
+correction. Cross-referenced in Part 3 Issue B, rewritten to no longer lead
+with a false ATLAS claim.
 
 ---
 
 **T1-05** — `config.short_parse_local.yaml:73-75 @ 8cf737e` vs `: (absent) @ c296b927`
+
+**CORRECTED — also mislabeled as ATLAS previously.** Checked directly, same
+as T1-04: `release_years: []`, `specific_record_ids: [30529]` — the
+identical CMS SingleElectron record as T1-04. This is a CMS config too.
 
 Same missing-`bjets:`-cuts pattern, but **dormant**: this file has no
 `enable_jet_tagging` key at all, and `domain/config.py`'s default is
@@ -281,13 +303,13 @@ Same missing-`bjets:`-cuts pattern, but **dormant**: this file has no
 for this config, and the missing cut has no effect while the file is used
 as-is.
 
-*Physics effect — ATLAS:* None today (dormant); would become live the moment
+*Physics effect — CMS:* None today (dormant); would become live the moment
 someone added `enable_jet_tagging: true` to this file without also adding
 `bjets:`.
 
-*Physics effect — CMS:* N/A.
+*Physics effect — ATLAS:* N/A — this is a CMS config, not an ATLAS one.
 
-*Classification:* **KEEP-OURS-PRIVATE**.
+*Classification:* **KEEP-OURS-PRIVATE** — unchanged by this correction.
 
 ---
 
@@ -375,8 +397,13 @@ from reading both code paths and the schema's own documented cross-check.
 against a known-MeV ATLAS release for the same MC sample, dsid 301204,
 dividing by 1000 to confirm equivalence — comment preserved verbatim in
 T1-10). Upstream's unconditional conversion would apply the same 1000×
-shrink to this ATLAS release's masses too. **This is a live latent bug in
-upstream affecting ATLAS data, with zero CMS involvement in the mechanism.**
+shrink to this ATLAS release's masses too, with zero CMS involvement in the
+mechanism. **This is confirmed as a real defect in upstream's code, but —
+corrected here to match Issue A's own correction below — it is latent, not
+live: no config file on either fork or upstream master actually selects
+release `"2025e-13tev-beta"` today** (`git grep` for the literal string
+returns zero matches in any `config*.yaml` on either side). It would
+corrupt ATLAS results the moment a config used this release; none does yet.
 
 *Classification:* **KEEP-OURS-PROPOSE** — the single strongest candidate in
 this entire document; independently corroborated by
@@ -584,29 +611,69 @@ EXISTS` statement order and method-definition order inside a Python class
 have no runtime effect that either experiment's use of this code could
 observe.
 
-*Classification:* **NEEDS-DECISION** — *(corrected from KEEP-OURS-PRIVATE;
-NOT reclassified to ADOPT-UPSTREAM, despite that being requested — see
-below for why)*. This item was checked by the same AST comparison used for
-T1-17, as part of the `chore/align-noop-files-with-upstream` branch-
-alignment task, specifically because this document's own claim of "no
-executable difference" should not simply be trusted for a second file just
-because it held for the first. **The result was different: the AST is NOT
-identical.** Reordering two statements moves them to a different position
-in the parse tree even when neither statement's own content changes, so a
-literal AST comparison correctly reports this file as changed, not merely
-reformatted. Informally, the reordering is still very likely harmless — the
-two `CREATE TABLE` statements create two unrelated tables with no
-dependency on each other, and the two methods do not call each other during
-class construction — but "very likely harmless, by reasoning" is a weaker
-standard than the proof that supported T1-17's reclassification, and this
-document does not treat the two as equivalent. This file was deliberately
-**left unchanged** on `chore/align-noop-files-with-upstream` rather than
-replaced. Whether to adopt upstream's version anyway on the weaker,
-still-reasonable "independent statements" argument, or to hold out for a
-stronger proof (e.g. a canonicalized/order-independent AST diff, or a
-maintainer's explicit sign-off that this specific class of reordering is
-always safe to treat as a no-op) is a judgment call this document is not
-positioned to make silently, and so it does not.
+*Classification:* **ADOPT-UPSTREAM** — *(corrected a second time; see the
+full history below — a reader should be able to see exactly what changed
+and why, not just the final answer)*.
+
+**Correction history for this item, kept visible on purpose:**
+
+1. *Originally:* KEEP-OURS-PRIVATE — "cosmetic only," on the strength of
+   reading the diff alone.
+2. *First correction:* NEEDS-DECISION — a whole-file AST (Abstract Syntax
+   Tree — the parsed structure of the code) comparison was run, expecting
+   it to confirm "no executable difference" the same way it had for T1-17.
+   It did not: the AST was NOT identical, because reordering two statements
+   moves them to a different position in the parse tree even when neither
+   statement's own content changes. At that point this document correctly
+   refused to call the reordering proven-safe and downgraded to
+   NEEDS-DECISION rather than overstate the evidence.
+3. *This correction:* back to ADOPT-UPSTREAM — because the first
+   correction was checking the wrong thing, not because the reordering
+   turned out to be unsafe. Whole-file AST equality can *never* hold for a
+   pure reordering, no matter how harmless — it wasn't a fair test to
+   begin with. The right test for "does this reordering matter" is
+   per-statement/per-method equality plus actually running the code, and
+   that test was run for the `chore/align-noop-files-with-upstream` branch
+   alignment (Task A of that work), with all four of the following holding:
+
+   1. **Per-method AST comparison:** every method of
+      `SqliteArrayShardWriter` except `__init__` — `append_array`,
+      `append_many`, `commit`, `record_final_state_count`, `set_metadata`,
+      `close` — has a byte-identical parsed AST on both sides. Only
+      `__init__` differs.
+   2. **Independence check:** the two order-swapped methods
+      (`record_final_state_count`, `set_metadata`) do not call or
+      reference each other anywhere in their bodies, neither carries a
+      decorator, and the class body's only non-method statement is the
+      docstring (identical on both sides) — nothing else in the class body
+      has an order that could matter.
+   3. **`__init__` statement-set comparison:** both sides' `__init__`
+      bodies contain the same 11 statements as an unordered set (confirmed
+      by comparing each statement's own AST dump); exactly two are
+      transposed — the two `CREATE TABLE IF NOT EXISTS` calls for
+      `final_state_counts` and `shard_metadata`, two unrelated tables with
+      no dependency between them.
+   4. **Execution equivalence (decisive):** both versions were actually
+      run — instantiated against their own fresh SQLite file, called
+      `set_metadata` and `record_final_state_count`, closed — and the
+      resulting databases compared. The full `sqlite_master` schema (every
+      table, index, and its exact `CREATE` statement) came back identical;
+      every row written to both tables came back identical. The only
+      difference found was `rootpage` (SQLite's internal page-allocation
+      number), which is not part of the observable schema and is never
+      read by any code in this repository.
+
+   Full detail, including the exact statement lists and query output, is
+   in the commit message on `chore/align-noop-files-with-upstream` that
+   performs this alignment. This file has since been replaced with
+   upstream's exact content on that branch.
+
+The lesson this history is left visible to demonstrate: the first
+correction's caution was the right call at the time (refusing to certify
+something as proven when the test used could not have proven it either
+way), and the second correction is not a reversal of that caution but a
+completion of it — a better test was run, and it actually settled the
+question instead of leaving it open.
 
 ---
 
@@ -1221,19 +1288,33 @@ generic).
 
 ### Classification totals
 
-*(Corrected. T1-17 moves from KEEP-OURS-PRIVATE to ADOPT-UPSTREAM. T1-18
-moves from KEEP-OURS-PRIVATE to NEEDS-DECISION — **not** to ADOPT-UPSTREAM;
-see T1-18's own entry for why an AST check performed for a separate branch-
-alignment task found its "no executable difference" claim did not hold the
-way T1-17's did. Net effect: ADOPT-UPSTREAM +1, KEEP-OURS-PRIVATE −2,
-NEEDS-DECISION +1, verified by recounting the 20 Tier-1 and 24 Tier-2 items
-directly rather than assumed.)*
+*(Corrected a second time — history kept visible rather than silently
+updated:*
+*Round 1: T1-17 KEEP-OURS-PRIVATE → ADOPT-UPSTREAM; T1-18 KEEP-OURS-PRIVATE
+→ NEEDS-DECISION (an AST check found T1-18's "no executable difference"
+claim did not hold the way T1-17's did — correctly cautious at the time,
+using the only test that had been run).*
+*Round 2 (this correction): T1-18 NEEDS-DECISION → ADOPT-UPSTREAM. The
+AST-equality test used in round 1 was the wrong test for a reordering — it
+can never pass for one, harmless or not. A correct test (per-method AST
+equality + independence + statement-set equality + actually running both
+versions and comparing their output) was then run and passed; see T1-18's
+own entry for the full four-part result. Net effect versus round 1:
+ADOPT-UPSTREAM +1, NEEDS-DECISION −1.*
+*Recomputed directly from the document, not assumed: counted every
+`**Classification:**` line in Part 1 by hand — 44 total (20 Tier 1 + 24
+Tier 2), tallying to Tier 1 = 2 ADOPT-UPSTREAM / 11 KEEP-OURS-PROPOSE / 6
+KEEP-OURS-PRIVATE / 1 NEEDS-DECISION, Tier 2 = 0 / 23 / 1 / 0. One line
+(T1-17's) mentions "KEEP-OURS-PRIVATE" a second time in its own
+parenthetical note about its prior label — excluded from the tally since
+it is commentary, not a second classification; recounting by the first
+bolded label on each line, not by substring search, avoids that trap.)*
 
 | | ADOPT-UPSTREAM | KEEP-OURS-PROPOSE | KEEP-OURS-PRIVATE | NEEDS-DECISION | Total |
 |---|---|---|---|---|---|
-| Tier 1 | 1 | 11 | 6 | 2 | 20 |
+| Tier 1 | 2 | 11 | 6 | 1 | 20 |
 | Tier 2 | 0 (N/A by construction) | 23 | 1 | 0 | 24 |
-| **Total** | **1** | **34** | **7** | **2** | **44** |
+| **Total** | **2** | **34** | **7** | **1** | **44** |
 
 ---
 
@@ -1386,8 +1467,21 @@ verified (real-data cross-check against a known-MeV release, same MC
 sample) to be GeV-native. Under the current unconditional-conversion design,
 any invariant mass computed from this release is silently wrong by a factor
 of exactly 1000 — with no error, no warning, and no involvement of any
-non-ATLAS data format. This is a live latent bug affecting ATLAS data today,
-independent of any other experiment.
+non-ATLAS data format.
+
+**Honesty check, done as part of a later correction to this document: is
+this actually live anywhere today?** No. Checked directly: `git grep
+"2025e-13tev-beta"` against every `config*.yaml` file on both fork master
+and upstream master returns **zero matches on either side**. No config file
+anywhere in this repository, upstream or fork, currently selects this
+release. This defect is therefore **latent, not live** — a real, precisely
+located bug in the code's design that would silently corrupt results the
+moment any config used this release, but not something actually happening
+in any run today. That is a meaningfully weaker claim than "affecting ATLAS
+data today," and this document says so plainly rather than leaving the
+stronger-sounding phrasing standing. The defect's existence and mechanism
+are still fully confirmed (see Part 2(b)) — only the "is it live" question
+is corrected here.
 
 The same root problem also blocks correct support for any GeV-native data
 format in general (e.g. CMS NanoAOD, whose `pt`/`eta`/`phi`/`mass` branches
@@ -1416,22 +1510,50 @@ assumption (`f43cc93`) for this exact reason, before this document existed.
 
 ---
 
-### Issue B — Missing `bjets:` kinematic-cuts entry silently leaves tagged b-jets uncut (ATLAS-affecting today)
+### Issue B — Missing `bjets:` kinematic-cuts entry silently leaves tagged b-jets uncut (a latent trap, not a live ATLAS bug — corrected)
 
 *Covers: T1-02, T1-03, T1-04, T1-05, T1-07*
 
-**Problem — leading with ATLAS impact.** `filter_events_by_kinematics`
-applies a `kinematic_cuts` entry only to the exactly-named collection it
-matches — a `jets:` entry is never applied to a `BJets` collection produced
-by b-tagging. **This project's own ATLAS-only config
-`config.short_parse_btag.yaml` has `enable_jet_tagging: true` and a `jets:`
-cut but no `bjets:` cut today** — meaning any b-tagged jet in a run of this
-exact file receives zero pT/η cuts, silently, regardless of what its
-`jets:` block specifies. This was independently discovered via manual code
-tracing during unrelated work and confirmed on real CMS output (a b-jet at
-15 GeV / |η|=2.90 despite `pt_min: 30`/`eta_max: 2.5`), but the underlying
-code defect is entirely experiment-neutral and the ATLAS config above shows
-it is not merely a CMS scenario.
+**This issue's framing was factually wrong in an earlier version of this
+document and has been corrected below.** It previously called
+`config.short_parse_btag.yaml` "this project's own ATLAS-only config" and
+titled itself "ATLAS-affecting today." **Both claims were false, found and
+fixed by checking the actual config directly rather than trusting the
+earlier description**: `config.short_parse_btag.yaml` sets
+`release_years: []` and `specific_record_ids: [30529]` — record 30529 is
+`/SingleElectron/Run2016G-.../NANOAOD`, a **CMS** record, confirmed against
+`docs/CMS_KNOWN_LIMITATIONS.md`'s own record table. It is a CMS config.
+`config.short_parse_local.yaml` (T1-05), also previously called ATLAS, is
+the same CMS record too. **There is no live ATLAS instance of this bug
+anywhere in this repository.** Checked directly, every config file that
+exists on upstream today: upstream's actual ATLAS config, `config.yaml`
+(release `"2024r-pp"`), has `enable_jet_tagging: true` **and** both a
+`jets:` and a matching `bjets:` entry under `kinematic_cuts` — ATLAS b-jets
+are correctly cut there. The only other genuinely ATLAS config on either
+side, `configWmaxTotal_up4j_minEvt100_subleading.yaml`, never sets
+`enable_jet_tagging` at all (defaults to `False`), so no `BJets` collection
+is ever created for it and the missing cut is moot. Checking every config
+that exists on upstream for "`enable_jet_tagging: true` with a `jets:` cut
+and no `bjets:` cut" turns up exactly **one** file:
+`config.short_parse_btag.yaml` — and it is CMS, not ATLAS.
+
+**Problem, stated correctly.** `filter_events_by_kinematics` applies a
+`kinematic_cuts` entry only to the exactly-named collection it matches — a
+`jets:` entry is never applied to a `BJets` collection produced by
+b-tagging. This is not merely a naming coincidence: `file_parser.py`'s
+`_calculate_btagging_and_split` physically moves objects between
+collections *before* any kinematic cut ever runs —
+`BJets = Jets[is_bjet]` immediately followed by `Jets = Jets[~is_bjet]`
+(confirmed by reading the code directly) — so a `jets:`-only cut cannot
+reach a tagged b-jet even in principle, on either experiment's data, by
+construction of the collection split itself, not by an accident of naming.
+**Today, this is live on CMS** (`config.short_parse_btag.yaml`, confirmed
+above) **and latent everywhere else** — including, hypothetically, for
+ATLAS: no ATLAS config happens to combine `enable_jet_tagging: true` with
+an incomplete `kinematic_cuts` block today, but nothing in the code would
+stop that combination from reproducing the same silent gap on ATLAS data
+if such a config were ever written. The defect is experiment-neutral; its
+one live instance today happens to be CMS.
 
 **Proposed fix (generic).** Add a config-construction-time `WARNING` (no
 behavior change, no exception) whenever `enable_jet_tagging: true` and
@@ -1441,26 +1563,32 @@ behavior change, no exception) whenever `enable_jet_tagging: true` and
 output for every existing config on either experiment, verified by reading
 the guard's own code (it only calls `logging.warning`, nothing else).
 
-**Evidence.** Confirmed directly: `config.short_parse_btag.yaml` (ATLAS)
-has `enable_jet_tagging: true` and no `bjets:` cut as of this writing,
-independent of anything CMS-related.
+**Evidence.** Confirmed directly: `config.short_parse_btag.yaml` (CMS) has
+`enable_jet_tagging: true` and no `bjets:` cut as of this writing. No ATLAS
+config with the same combination was found; the ATLAS relevance of this
+issue is architectural (the same code path), not evidenced by a live ATLAS
+example.
 
 **Limitation of this issue as drafted — stated plainly, not redrafted here.**
-The fix above is a `WARNING` only. If filed and accepted exactly as written,
-it makes the mistake visible in a log; it does **not** stop it from
-happening. Upstream's ATLAS-only `config.short_parse_btag.yaml` would still,
-after this fix, tag b-jets and then apply zero pT/η cuts to them — the run
-would simply also print a warning while doing so. Actually correcting the
-cut itself means adding a `bjets:` block to upstream's own ATLAS config
-file, and that is a different kind of change entirely: it would alter which
-b-jets pass selection in an existing ATLAS analysis, i.e. it changes ATLAS
-physics output. A change that changes physics output for an existing
-config cannot be proposed as opt-in/default-off the way every other issue
-in this document is — there is no "off" setting for "this config's own
-numbers now cut differently." That makes it a physics decision for ATLAS
-analysers to make deliberately, not something a generic-pipeline issue can
-carry or default its way into. This document does not draft that config
-change, and does not propose one.
+The fix above is a `WARNING` only. If filed and accepted exactly as
+written, it makes the mistake visible in a log; it does **not** stop it
+from happening. `config.short_parse_btag.yaml` (CMS) would still, after
+this fix, tag b-jets and then apply zero pT/η cuts to them — the run would
+simply also print a warning while doing so. Actually correcting the cut
+itself means adding a `bjets:` block to that config file, which is a
+config-data fix specific to this fork's own CMS setup, not something to
+propose upstream at all — see T1-02/T1-03/T1-04's own classifications
+(KEEP-OURS-PRIVATE). The general point about *changing an existing
+config's own cuts* remains worth stating plainly regardless of which
+experiment it would apply to: doing so changes that config's physics
+output (which b-jets pass selection), and a change that changes existing
+physics output cannot be proposed as opt-in/default-off the way every
+other issue in this document is — there is no "off" setting for "this
+config's own numbers now cut differently." That makes it a deliberate
+physics decision for whoever owns a given config to make, never something
+a generic-pipeline issue can carry or default its way into. This document
+does not draft that config change for any config, CMS or ATLAS, and does
+not propose one.
 
 ---
 
