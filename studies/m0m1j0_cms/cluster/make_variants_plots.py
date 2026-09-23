@@ -95,10 +95,11 @@ def overlay_with_ratio(sample: str, base_key: str, other_key: str, variants_dir:
     ax_bot.set_ylabel(f"{other_key}/{base_key}")
     ax_bot.set_ylim(0, max(2.0, np.nanpercentile(ratio, 99) if np.isfinite(ratio).any() else 2.0))
 
-    if caption_extra:
-        fig.text(0.5, 0.005, caption_extra, ha="center", fontsize=7, wrap=True)
-
     fig.tight_layout()
+    if caption_extra:
+        fig.subplots_adjust(bottom=0.22)
+        fig.text(0.5, 0.02, caption_extra, ha="center", va="bottom", fontsize=7, wrap=True)
+
     fig.savefig(out_path, dpi=130)
     plt.close(fig)
     print(f"wrote {out_path}")
@@ -197,15 +198,16 @@ def ttbar_luminosity_scaled_plot(variants_dir: Path, out_path: Path) -> dict:
     ax.set_xlabel(r"m($\mu\mu$j) [GeV]")
     ax.set_ylabel("Events / 10 GeV")
     ax.set_title("OPTIONAL / SCOPE-LIMITED -- see caption")
+    ax.legend()
+    fig.tight_layout()
+    fig.subplots_adjust(bottom=0.24)
     fig.text(
-        0.5, 0.005,
+        0.5, 0.02,
         "cross section not published on the CERN Open Data portal -- standard value used; DoubleMuon\n"
         "luminosity not independently verified (established for DoubleEG); ~10% uncertainty; no pileup\n"
         "reweighting or scale factors applied",
-        ha="center", fontsize=7, wrap=True,
+        ha="center", va="bottom", fontsize=7, wrap=True,
     )
-    ax.legend()
-    fig.tight_layout()
     fig.savefig(out_path, dpi=130)
     plt.close(fig)
     print(f"wrote {out_path}")
