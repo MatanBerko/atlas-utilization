@@ -174,15 +174,21 @@ left unclassified. Where an untested physics claim is made, it is marked
 **UNVERIFIED — reasoning only** together with the reasoning; nothing is
 asserted as "looks equivalent" without evidence.
 
-A structural note before the table: **Tier 1 found zero ADOPT-UPSTREAM
-candidates.** Every one of the 13 differing files, in the current diff, is a
-case of "fork added a capability upstream lacks" — not the reverse. This
-isn't a gap in the search (Part 0 explains why: most of upstream's real
-fixes were already reconciled via `sync/upstream-safe-16`); it's an honest
-result. Likewise, **"ADOPT-UPSTREAM" does not structurally apply to Tier 2**
-at all — Tier 2 compares the fork's own feature branch against the fork's own
-master, so there is no "upstream" side to adopt from; Tier 2 items are
-classified among the other three labels only.
+A structural note before the table: **Tier 1 has exactly one ADOPT-UPSTREAM
+candidate** *(corrected — this originally read "zero," which is now false;
+see T1-17)*. Of the 13 differing files, 11 are cases of "fork added a
+capability upstream lacks" and one (`services/pipelines/histograms_pipeline.py`,
+T1-17) is a pure textual no-op — confirmed by an AST (parsed-code-structure)
+comparison to compile to the exact same program as upstream's version, with
+the alignment already prepared on branch `chore/align-noop-files-with-upstream`
+— so there is nothing to lose and one fewer divergence to carry by adopting
+it. A second file that looked like the same situation
+(`services/storage/sqlite_shards.py`, T1-18) was checked the same way and
+did **not** pass: see T1-18 for why it stays NEEDS-DECISION rather than also
+becoming ADOPT-UPSTREAM. Likewise, **"ADOPT-UPSTREAM" does not structurally
+apply to Tier 2** at all — Tier 2 compares the fork's own feature branch
+against the fork's own master, so there is no "upstream" side to adopt from;
+Tier 2 items are classified among the other three labels only.
 
 ### Tier 1 — `master` vs `upstream/master`
 
@@ -547,8 +553,21 @@ whitespace/comment placement only.**
 full; the executable statements are identical, only in a different textual
 order relative to the comment.
 
-*Classification:* **KEEP-OURS-PRIVATE** — trivial, no behavioral content,
-nothing to propose.
+*Classification:* **ADOPT-UPSTREAM** — *(corrected; was KEEP-OURS-PRIVATE)*.
+The original classification was wrong: if a difference truly has no
+executable content, adopting upstream's version costs nothing and shrinks
+the fork's divergence for free — there is no reason to carry a permanent,
+pointless difference just because it happens to be harmless. This is no
+longer a claim resting only on reading the diff: it has since been proven
+by an AST (Abstract Syntax Tree — the parsed structure of the code, with
+comments and whitespace stripped out) comparison performed as part of a
+separate branch-alignment task, and the alignment itself has already been
+prepared. Branch `chore/align-noop-files-with-upstream` (created from this
+same fork master) replaces this file with upstream's exact content and
+records, in its commit message, that the fork's and upstream's ASTs for
+this file are byte-for-byte **identical** — the two versions compile to the
+exact same program. Adopting is a pure win: zero behavior change, one less
+divergence to track.
 
 ---
 
@@ -560,11 +579,34 @@ nothing to propose.
 swapped in order within the class. Both tables and both methods exist,
 unchanged, on both sides.
 
-*Physics effect — CMS and ATLAS:* None — `CREATE TABLE IF NOT EXISTS`
-statement order and method-definition order inside a Python class have no
-runtime effect.
+*Physics effect — CMS and ATLAS:* None expected — `CREATE TABLE IF NOT
+EXISTS` statement order and method-definition order inside a Python class
+have no runtime effect that either experiment's use of this code could
+observe.
 
-*Classification:* **KEEP-OURS-PRIVATE** — cosmetic only.
+*Classification:* **NEEDS-DECISION** — *(corrected from KEEP-OURS-PRIVATE;
+NOT reclassified to ADOPT-UPSTREAM, despite that being requested — see
+below for why)*. This item was checked by the same AST comparison used for
+T1-17, as part of the `chore/align-noop-files-with-upstream` branch-
+alignment task, specifically because this document's own claim of "no
+executable difference" should not simply be trusted for a second file just
+because it held for the first. **The result was different: the AST is NOT
+identical.** Reordering two statements moves them to a different position
+in the parse tree even when neither statement's own content changes, so a
+literal AST comparison correctly reports this file as changed, not merely
+reformatted. Informally, the reordering is still very likely harmless — the
+two `CREATE TABLE` statements create two unrelated tables with no
+dependency on each other, and the two methods do not call each other during
+class construction — but "very likely harmless, by reasoning" is a weaker
+standard than the proof that supported T1-17's reclassification, and this
+document does not treat the two as equivalent. This file was deliberately
+**left unchanged** on `chore/align-noop-files-with-upstream` rather than
+replaced. Whether to adopt upstream's version anyway on the weaker,
+still-reasonable "independent statements" argument, or to hold out for a
+stronger proof (e.g. a canonicalized/order-independent AST diff, or a
+maintainer's explicit sign-off that this specific class of reordering is
+always safe to treat as a no-op) is a judgment call this document is not
+positioned to make silently, and so it does not.
 
 ---
 
@@ -1179,11 +1221,19 @@ generic).
 
 ### Classification totals
 
+*(Corrected. T1-17 moves from KEEP-OURS-PRIVATE to ADOPT-UPSTREAM. T1-18
+moves from KEEP-OURS-PRIVATE to NEEDS-DECISION — **not** to ADOPT-UPSTREAM;
+see T1-18's own entry for why an AST check performed for a separate branch-
+alignment task found its "no executable difference" claim did not hold the
+way T1-17's did. Net effect: ADOPT-UPSTREAM +1, KEEP-OURS-PRIVATE −2,
+NEEDS-DECISION +1, verified by recounting the 20 Tier-1 and 24 Tier-2 items
+directly rather than assumed.)*
+
 | | ADOPT-UPSTREAM | KEEP-OURS-PROPOSE | KEEP-OURS-PRIVATE | NEEDS-DECISION | Total |
 |---|---|---|---|---|---|
-| Tier 1 | 0 | 11 | 8 | 1 | 20 |
+| Tier 1 | 1 | 11 | 6 | 2 | 20 |
 | Tier 2 | 0 (N/A by construction) | 23 | 1 | 0 | 24 |
-| **Total** | **0** | **34** | **9** | **1** | **44** |
+| **Total** | **1** | **34** | **7** | **2** | **44** |
 
 ---
 
@@ -1394,6 +1444,23 @@ the guard's own code (it only calls `logging.warning`, nothing else).
 **Evidence.** Confirmed directly: `config.short_parse_btag.yaml` (ATLAS)
 has `enable_jet_tagging: true` and no `bjets:` cut as of this writing,
 independent of anything CMS-related.
+
+**Limitation of this issue as drafted — stated plainly, not redrafted here.**
+The fix above is a `WARNING` only. If filed and accepted exactly as written,
+it makes the mistake visible in a log; it does **not** stop it from
+happening. Upstream's ATLAS-only `config.short_parse_btag.yaml` would still,
+after this fix, tag b-jets and then apply zero pT/η cuts to them — the run
+would simply also print a warning while doing so. Actually correcting the
+cut itself means adding a `bjets:` block to upstream's own ATLAS config
+file, and that is a different kind of change entirely: it would alter which
+b-jets pass selection in an existing ATLAS analysis, i.e. it changes ATLAS
+physics output. A change that changes physics output for an existing
+config cannot be proposed as opt-in/default-off the way every other issue
+in this document is — there is no "off" setting for "this config's own
+numbers now cut differently." That makes it a physics decision for ATLAS
+analysers to make deliberately, not something a generic-pipeline issue can
+carry or default its way into. This document does not draft that config
+change, and does not propose one.
 
 ---
 
