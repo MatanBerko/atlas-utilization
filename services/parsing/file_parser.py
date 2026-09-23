@@ -612,6 +612,24 @@ class FileParser:
         for group_name, branches in scalar_groups.items():
             if branches:
                 obj_branches[group_name] = {b: b for b in branches}
+
+        # Trigger matching branches (event-level, per-particle ElementLink vectors,
+        # bea982d cherry-pick). Each branch is a ``var * var * ElementLink``; a
+        # non-empty inner list means that offline particle matched the HLT
+        # trigger object within ΔR < 0.07. Stored under ``_triggerMatch`` so
+        # downstream code can distinguish them from particle-type fields.
+        # `available_trigger` only ever contains branches this specific file's
+        # tree actually has (`b in tree_branches`), so on a CMS NanoAOD file --
+        # which never has any `AnalysisTrigMatch_HLT_*` branch -- this list is
+        # always empty and neither key below is ever added.
+        trigger_branches = schemas.get_all_trigger_branches()
+        available_trigger = [b for b in trigger_branches if b in tree_branches]
+        if available_trigger:
+            obj_branches["_triggerMatch"] = {b: b for b in available_trigger}
+        # MC only: the random run number picks each event's trigger year.
+        if schemas.RANDOM_RUN_NUMBER_BRANCH in tree_branches:
+            obj_branches["_runNumber"] = {schemas.RANDOM_RUN_NUMBER_BRANCH: "_runNumber"}
+
         return obj_branches
     
     @staticmethod
@@ -903,9 +921,25 @@ class FileParser:
                 bp: qty for bp, qty in branch_mapping.items()
                 if bp in accessible_set
             }
-            if accessible_branches and FileParser._can_calculate_inv_mass(
+            if obj_name in ("DirectObjects", "_triggerMatch", "_runNumber") or obj_name in scalar_group_names:
+                # These are not particle types — skip the inv-mass field check.
+                # (Same treatment as "DirectObjects" always got, both before
+                # and after this cherry-pick: an empty accessible_branches
+                # here is simply not added, exactly as upstream's own
+                # "DirectObjects"/"_triggerMatch"/"_runNumber" case already
+                # did. Confirmed harmless for scalar_group_names the same
+                # way it was already confirmed harmless for "DirectObjects":
+                # the only downstream consumer, _parse_opened_file's
+                # `obj_events.pop(group_name, None)`, treats "present but
+                # empty" and "absent entirely" identically -- both yield an
+                # empty `actual_branches` set, so the declared-but-missing
+                # hard-fail check (RequiredScalarBranchMissingError) fires
+                # the same way either way.)
+                if accessible_branches:
+                    accessible_obj_branches[obj_name] = accessible_branches
+            elif accessible_branches and FileParser._can_calculate_inv_mass(
                 list(accessible_branches.values())
-            ) or obj_name == "DirectObjects" or obj_name in scalar_group_names:
+            ):
                 accessible_obj_branches[obj_name] = accessible_branches
 
         return accessible_obj_branches
@@ -961,10 +995,31 @@ class FileParser:
         for obj_name, chunks in obj_events_by_quantities.items():
             if chunks:
                 concatenated = ak.concatenate(chunks)
-                result[obj_name] = ak.zip({
-                    quantity: concatenated[full_branch]
-                    for full_branch, quantity in obj_branches[obj_name].items()
-                })
+                if obj_name == "_triggerMatch":
+                    # Trigger branches are ``var * var * ElementLink``.
+                    # We collapse each to a single per-event boolean:
+                    # True if ANY particle in the event has a non-empty match
+                    # for that chain.  The result is a record of booleans keyed
+                    # by the original branch name.
+                    trig_fields = {}
+                    for full_branch in obj_branches[obj_name].keys():
+                        if full_branch not in concatenated.fields:
+                            continue
+                        raw = concatenated[full_branch]
+                        # raw[i] holds one entry per matched combination in event i;
+                        # raw[i][j] links the offline particle(s) of combination j.
+                        # The event matched if any combination is non-empty.
+                        per_particle_matched = ak.num(raw, axis=2) > 0
+                        trig_fields[full_branch] = ak.any(per_particle_matched, axis=1)
+                    if trig_fields:
+                        result[obj_name] = ak.zip(trig_fields)
+                elif obj_name == "_runNumber":
+                    result[obj_name] = concatenated[schemas.RANDOM_RUN_NUMBER_BRANCH]
+                else:
+                    result[obj_name] = ak.zip({
+                        quantity: concatenated[full_branch]
+                        for full_branch, quantity in obj_branches[obj_name].items()
+                    })
         
         return result, read_error
     

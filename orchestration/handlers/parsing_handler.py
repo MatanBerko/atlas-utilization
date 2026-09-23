@@ -21,7 +21,7 @@ from services.parsing.event_accumulator import EventAccumulator
 from services.parsing.threaded_processor import ThreadedFileProcessor, ParsingStatisticsCollector
 from domain.statistics import ParsingStatistics
 from domain.events import EventBatch
-from services.parsing.event_selection import apply_parsing_event_selection
+from services.parsing.event_selection import apply_parsing_event_selection, apply_trigger_selection
 from services.parsing.event_deduplication import EventDeduplicator
 from services.parsing.schemas import normalize_release_year
 from services.parsing.validated_runs import ValidatedRunsFilter, apply_validated_runs_filter, is_simulation
@@ -172,6 +172,8 @@ class ParsingHandler(StateHandler):
             next_state = self._determine_next_state(context)
             return context, next_state
         
+        trigger_cfg = getattr(context.config, "trigger_config", None) or {}
+
         start_time = datetime.now()
         stats_collector = ParsingStatisticsCollector()
         parsed_files = []
@@ -398,6 +400,30 @@ class ParsingHandler(StateHandler):
                             f"{tr_stats['n_after']:,}/{tr_stats['n_before']:,} events in this batch"
                         )
 
+                # Upstream's single-lepton TRIGGER MATCHING (bea982d,
+                # cherry-picked) -- a DIFFERENT feature from the CMS trigger
+                # REQUIREMENT above: this checks whether a SPECIFIC offline
+                # lepton is the object that actually fired the trigger
+                # (geometric matching, precomputed by ATLAS into the
+                # _triggerMatch field at parse time), not merely whether some
+                # trigger fired anywhere in the event. Opt-in
+                # (trigger_config.enabled in config.yaml, absent/False by
+                # default) and, per apply_trigger_selection's own guard, a
+                # strict no-op for any file lacking a _triggerMatch field --
+                # if enabled with the field absent, it logs a warning and
+                # returns events[:0] (drops every event in that batch), never
+                # silently continues as if the requirement were satisfied.
+                # See studies/upstream_trigger_cms/REPORT.md for why this can
+                # never fire against a CMS NanoAOD file. Threaded through the
+                # same working_events chain as the two CMS filters above so
+                # ordering relative to de-duplication stays well-defined.
+                if trigger_cfg.get("enabled", False):
+                    working_events = apply_trigger_selection(
+                        working_events,
+                        release_year=release_year,
+                        file_path=batch.file_url,
+                    )
+
                 if parsing_config.kinematic_cuts or record_particle_counts:
                     working_events = apply_parsing_event_selection(
                         working_events,
@@ -447,6 +473,7 @@ class ParsingHandler(StateHandler):
                     batch = EventBatch(
                         events=working_events,
                         file_id=batch.file_id,
+                        file_url=batch.file_url,
                         release_year=batch.release_year,
                         size_bytes=(
                             working_events.layout.nbytes
@@ -456,7 +483,39 @@ class ParsingHandler(StateHandler):
                         event_count=len(working_events),
                         processing_time_sec=batch.processing_time_sec,
                     )
+                elif "_triggerMatch" in batch.events.fields or "_runNumber" in batch.events.fields:
+                    # Strip trigger fields even when not filtering
+                    clean = {f: batch.events[f] for f in batch.events.fields if f not in ("_triggerMatch", "_runNumber")}
+                    cleaned_events = ak.zip(clean, depth_limit=1)
+                    batch = EventBatch(
+                        events=cleaned_events,
+                        file_id=batch.file_id,
+                        file_url=batch.file_url,
+                        release_year=batch.release_year,
+                        size_bytes=batch.size_bytes,
+                        event_count=len(cleaned_events),
+                        processing_time_sec=batch.processing_time_sec,
+                    )
 
+                if parsing_config.kinematic_cuts or parsing_config.particle_counts:
+                    filtered = apply_parsing_event_selection(
+                        batch.events,
+                        particle_counts=parsing_config.particle_counts,
+                        kinematic_cuts=parsing_config.kinematic_cuts,
+                    )
+                    batch = EventBatch(
+                        events=filtered,
+                        file_id=batch.file_id,
+                        file_url=batch.file_url,
+                        release_year=batch.release_year,
+                        size_bytes=(
+                            filtered.layout.nbytes
+                            if hasattr(filtered, "layout")
+                            else batch.size_bytes
+                        ),
+                        event_count=len(filtered),
+                        processing_time_sec=batch.processing_time_sec,
+                    )
                 # Accumulate batch into chunks
                 chunk = self.accumulator.add_batch(batch)
                 
