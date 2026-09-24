@@ -8,6 +8,77 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 
+def _validate_field_cuts_block(obj_key: str, field_cuts) -> None:
+    """Validate one object's optional `field_cuts` kinematic-cut sub-block
+    at config-load time (see docs/GENERIC_CUTS_DESIGN.md).
+
+    ``field_cuts`` is ``{field_name: {"min": ..., "max": ...}}``; each bound
+    is optional but at least one is required, both must be numeric (not
+    bool -- bool is a Python int subclass and would otherwise silently pass
+    as 0/1), and min must not exceed max. Unknown sub-keys and an empty
+    block are both configuration errors, not no-ops, since a typo here
+    could otherwise silently produce "no cut" with no signal.
+    """
+    prefix = f"kinematic_cuts['{obj_key}']['field_cuts']"
+    if not isinstance(field_cuts, dict) or not field_cuts:
+        raise ValueError(f"{prefix} must be a non-empty dict of field name -> {{'min'/'max': ...}}, got {field_cuts!r}")
+    for field_name, bounds in field_cuts.items():
+        if not isinstance(field_name, str) or not field_name:
+            raise ValueError(f"{prefix} field names must be non-empty strings, got {field_name!r}")
+        entry = f"{prefix}['{field_name}']"
+        if not isinstance(bounds, dict) or not bounds:
+            raise ValueError(f"{entry} must be a non-empty dict with 'min' and/or 'max', got {bounds!r}")
+        unknown = set(bounds) - {"min", "max"}
+        if unknown:
+            raise ValueError(f"{entry} has unknown key(s) {sorted(unknown)}; only 'min'/'max' are allowed")
+        if "min" not in bounds and "max" not in bounds:
+            raise ValueError(f"{entry} must specify at least one of 'min'/'max'")
+        for bound_name in ("min", "max"):
+            if bound_name not in bounds:
+                continue
+            value = bounds[bound_name]
+            if isinstance(value, bool) or not isinstance(value, (int, float)):
+                raise ValueError(f"{entry}['{bound_name}'] must be numeric, got {value!r}")
+        if "min" in bounds and "max" in bounds and bounds["min"] > bounds["max"]:
+            raise ValueError(f"{entry}: min ({bounds['min']}) > max ({bounds['max']})")
+
+
+def _validate_bit_cuts_block(obj_key: str, bit_cuts) -> None:
+    """Validate one object's optional `bit_cuts` kinematic-cut sub-block at
+    config-load time (see docs/GENERIC_CUTS_DESIGN.md).
+
+    ``bit_cuts`` is ``{field_name: {"bits_all": N, "bits_any": N}}``. Each of
+    ``bits_all``/``bits_any`` is optional but at least one is required; both
+    must be positive integers -- the mask is always an explicit integer
+    value from config, never a bit index or a named working-point level, on
+    purpose (bit meanings differ between data-taking years/campaigns; see
+    docs/GENERIC_CUTS_DESIGN.md). A zero or negative mask is a config error,
+    not a valid (if useless) cut.
+    """
+    prefix = f"kinematic_cuts['{obj_key}']['bit_cuts']"
+    if not isinstance(bit_cuts, dict) or not bit_cuts:
+        raise ValueError(f"{prefix} must be a non-empty dict of field name -> {{'bits_all'/'bits_any': N}}, got {bit_cuts!r}")
+    for field_name, spec in bit_cuts.items():
+        if not isinstance(field_name, str) or not field_name:
+            raise ValueError(f"{prefix} field names must be non-empty strings, got {field_name!r}")
+        entry = f"{prefix}['{field_name}']"
+        if not isinstance(spec, dict) or not spec:
+            raise ValueError(f"{entry} must be a non-empty dict with 'bits_all' and/or 'bits_any', got {spec!r}")
+        unknown = set(spec) - {"bits_all", "bits_any"}
+        if unknown:
+            raise ValueError(f"{entry} has unknown key(s) {sorted(unknown)}; only 'bits_all'/'bits_any' are allowed")
+        if "bits_all" not in spec and "bits_any" not in spec:
+            raise ValueError(f"{entry} must specify at least one of 'bits_all'/'bits_any'")
+        for mask_name in ("bits_all", "bits_any"):
+            if mask_name not in spec:
+                continue
+            value = spec[mask_name]
+            if isinstance(value, bool) or not isinstance(value, int):
+                raise ValueError(f"{entry}['{mask_name}'] must be an integer, got {value!r}")
+            if value <= 0:
+                raise ValueError(f"{entry}['{mask_name}'] must be a positive, non-zero integer mask, got {value}")
+
+
 @dataclass(frozen=True)
 class TaskConfig:
     """Configuration for which tasks to run."""
@@ -173,6 +244,22 @@ class ParsingConfig:
                     "receive NO kinematic cuts (see "
                     "docs/CMS_KNOWN_LIMITATIONS.md)"
                 )
+        if isinstance(self.kinematic_cuts, dict):
+            # Generic numeric field cuts (`field_cuts`) and integer bit-mask
+            # cuts (`bit_cuts`) -- see docs/GENERIC_CUTS_DESIGN.md. Validated
+            # here, at config-load time (unlike bool_require/bool_any_of,
+            # which validate at apply time) because a config typo here is a
+            # silent-physics-change risk: a cut that fails to apply because
+            # of a bad config value must never look like "no cut requested".
+            # Absent field_cuts/bit_cuts (every existing config) skips this
+            # block entirely -- see the per-key `if` checks below.
+            for obj_key, obj_cuts in self.kinematic_cuts.items():
+                if not isinstance(obj_cuts, dict):
+                    continue
+                if "field_cuts" in obj_cuts:
+                    _validate_field_cuts_block(obj_key, obj_cuts["field_cuts"])
+                if "bit_cuts" in obj_cuts:
+                    _validate_bit_cuts_block(obj_key, obj_cuts["bit_cuts"])
         if self.extra_scalar_branches is not None:
             if not isinstance(self.extra_scalar_branches, dict):
                 raise ValueError("extra_scalar_branches must be a dict of group name -> branch list")

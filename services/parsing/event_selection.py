@@ -68,7 +68,92 @@ def normalize_yaml_kinematic_cuts(raw: Dict[str, Any]) -> Dict[str, Any]:
     if "eta_exclude" in raw:
         out["eta_exclude"] = dict(raw["eta_exclude"])
 
+    # Generic numeric cut on an ARBITRARY per-object field, e.g. CMS muon
+    # isolation: {"field_cuts": {"pfRelIso04_all": {"max": 0.15}}}. Passed
+    # through as-is (validated at config-load time in
+    # domain.config.ParsingConfig.__post_init__, not here) -- see
+    # docs/GENERIC_CUTS_DESIGN.md. Deliberately separate from
+    # rel_isolation_max (see physics_calcs.filter_events_by_kinematics for
+    # why): field_cuts never divides, rel_isolation_max always does.
+    if "field_cuts" in raw and isinstance(raw["field_cuts"], dict):
+        out["field_cuts"] = {
+            field_name: dict(bounds) for field_name, bounds in raw["field_cuts"].items()
+        }
+
+    # Integer bit-mask cut, e.g. CMS tight jet ID: {"bit_cuts": {"jetId":
+    # {"bits_all": 2}}}. Passed through as-is (validated at config-load
+    # time, not here) -- see docs/GENERIC_CUTS_DESIGN.md.
+    if "bit_cuts" in raw and isinstance(raw["bit_cuts"], dict):
+        out["bit_cuts"] = {
+            field_name: dict(spec) for field_name, spec in raw["bit_cuts"].items()
+        }
+
     return out
+
+
+def collect_extra_object_fields_from_kinematic_cuts(
+    kinematic_cuts: Optional[Dict[str, Any]],
+) -> Dict[str, list]:
+    """Return ``{canonical_object_name: [field_name, ...]}`` for every field
+    referenced by a ``field_cuts`` or ``bit_cuts`` block anywhere in
+    ``kinematic_cuts`` (raw YAML shape, keyed by ``electrons``/``muons``/…).
+
+    Used by the parsing handler to fold these fields into
+    ``extra_object_fields`` so they are auto-requested from the file --
+    requesting a cut on a field must never silently do nothing just because
+    that field wasn't already being read. Absent ``field_cuts``/``bit_cuts``
+    (every existing config) returns ``{}``, a complete no-op.
+    """
+    result: Dict[str, list] = {}
+    if not kinematic_cuts:
+        return result
+    for key, val in kinematic_cuts.items():
+        if not isinstance(val, dict):
+            continue
+        fields: list = []
+        for sub_key in ("field_cuts", "bit_cuts"):
+            sub = val.get(sub_key)
+            if isinstance(sub, dict):
+                fields.extend(sub.keys())
+        if fields:
+            cname = canonical_particle_field_name(key)
+            existing = result.setdefault(cname, [])
+            result[cname] = list(dict.fromkeys(existing + fields))
+    return result
+
+
+def merge_auto_requested_object_fields(
+    extra_object_fields: Optional[Dict[str, list]],
+    auto_requested: Dict[str, list],
+):
+    """Merge ``auto_requested`` (from
+    :func:`collect_extra_object_fields_from_kinematic_cuts`) into
+    ``extra_object_fields``, de-duplicating fields already requested.
+
+    Returns ``(merged, newly_added)``: ``merged`` is the dict to actually
+    pass on to ``FileParser``/``ThreadedFileProcessor``; ``newly_added``
+    lists, per object, only the fields that were not already present in
+    ``extra_object_fields`` -- the caller (the parsing handler) logs these
+    at INFO, so a field auto-requested because of a ``field_cuts``/
+    ``bit_cuts`` block is never invisible (see
+    docs/GENERIC_CUTS_DESIGN.md).
+
+    If ``auto_requested`` is empty (no ``field_cuts``/``bit_cuts`` anywhere
+    in ``kinematic_cuts`` -- every existing config), returns
+    ``(extra_object_fields, {})`` with ``merged`` being the exact same
+    object passed in, unchanged: a complete no-op, nothing to log.
+    """
+    if not auto_requested:
+        return extra_object_fields, {}
+    merged = {name: list(fields) for name, fields in (extra_object_fields or {}).items()}
+    newly_added: Dict[str, list] = {}
+    for obj_name, fields in auto_requested.items():
+        already_requested = merged.get(obj_name, [])
+        added = [f for f in fields if f not in already_requested]
+        if added:
+            newly_added[obj_name] = added
+        merged[obj_name] = list(dict.fromkeys(already_requested + fields))
+    return merged, newly_added
 
 
 def apply_parsing_event_selection(

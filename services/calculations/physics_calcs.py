@@ -401,6 +401,65 @@ def filter_events_by_kinematics(
             excl = cuts["eta_exclude"]
             mask = mask & ~((abs_eta >= excl["min"]) & (abs_eta <= excl["max"]))
 
+        # Generic numeric cut on an ARBITRARY per-object field (e.g. CMS
+        # muon isolation, Muon_pfRelIso04_all). PLAIN comparison, NO
+        # division -- deliberately distinct from rel_isolation_max just
+        # above, which divides an ATLAS absolute cone-energy field by pT.
+        # CMS's pfRelIso04_all is ALREADY a relative quantity; dividing it
+        # again would compute a ratio of a ratio, which is physically
+        # meaningless. Do not merge these two cuts. Bound semantics match
+        # pt/eta/phi above exactly: min is inclusive (>=), max is inclusive
+        # (<=) -- see docs/GENERIC_CUTS_DESIGN.md.
+        #
+        # The field is expected to already be present by this point (the
+        # caller is expected to have requested it via extra_object_fields,
+        # which raises a loud, file-naming error at parse time if it's
+        # genuinely absent from the file -- see
+        # services.parsing.event_selection.collect_extra_object_fields_from_kinematic_cuts).
+        # This check is a second, independent guard for any caller that
+        # reaches this function directly, without going through that
+        # parse-time path.
+        if "field_cuts" in cuts:
+            for field_name, bounds in cuts["field_cuts"].items():
+                if not hasattr(particles, field_name):
+                    raise ValueError(
+                        f"{obj} is missing configured kinematic field '{field_name}' (field_cuts)"
+                    )
+                field_vals = ak.values_astype(getattr(particles, field_name), float)
+                if "min" in bounds:
+                    mask = mask & (field_vals >= float(bounds["min"]))
+                if "max" in bounds:
+                    mask = mask & (field_vals <= float(bounds["max"]))
+
+        # Integer bit-mask cut (e.g. CMS tight jet ID, Jet_jetId & 2). The
+        # mask is always an explicit integer value taken straight from
+        # config -- never a bit index, never a named working-point level --
+        # because bit MEANINGS differ between data-taking years and
+        # reprocessing campaigns; see docs/GENERIC_CUTS_DESIGN.md. No
+        # year-to-meaning or name-to-mask table exists anywhere in this
+        # codebase on purpose.
+        if "bit_cuts" in cuts:
+            for field_name, spec in cuts["bit_cuts"].items():
+                if not hasattr(particles, field_name):
+                    raise ValueError(
+                        f"{obj} is missing configured kinematic field '{field_name}' (bit_cuts)"
+                    )
+                raw_vals = getattr(particles, field_name)
+                flat = ak.flatten(raw_vals, axis=None)
+                np_dtype = ak.to_numpy(flat).dtype
+                if np_dtype.kind not in ("i", "u"):
+                    raise ValueError(
+                        f"{obj}.{field_name} used in bit_cuts must be an integer field, "
+                        f"got dtype {np_dtype} (a bit-mask cut on a float field is a bug)"
+                    )
+                int_vals = ak.values_astype(raw_vals, np.int64)
+                if "bits_all" in spec:
+                    n = int(spec["bits_all"])
+                    mask = mask & ((int_vals & n) == n)
+                if "bits_any" in spec:
+                    n = int(spec["bits_any"])
+                    mask = mask & ((int_vals & n) != 0)
+
         # Boolean mask (not ak.mask) so dropped particles do not appear in lists
         filtered_events[obj] = particles[mask]
 

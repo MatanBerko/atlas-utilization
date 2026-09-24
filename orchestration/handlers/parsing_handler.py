@@ -21,7 +21,11 @@ from services.parsing.event_accumulator import EventAccumulator
 from services.parsing.threaded_processor import ThreadedFileProcessor, ParsingStatisticsCollector
 from domain.statistics import ParsingStatistics
 from domain.events import EventBatch
-from services.parsing.event_selection import apply_parsing_event_selection
+from services.parsing.event_selection import (
+    apply_parsing_event_selection,
+    collect_extra_object_fields_from_kinematic_cuts,
+    merge_auto_requested_object_fields,
+)
 from services.parsing.event_deduplication import EventDeduplicator
 from services.parsing.schemas import normalize_release_year
 from services.parsing.validated_runs import ValidatedRunsFilter, apply_validated_runs_filter, is_simulation
@@ -199,6 +203,30 @@ class ParsingHandler(StateHandler):
         # or per-record) is actually configured.
         trigger_report: dict[str, dict] = {}
 
+        # ---- Auto-request fields referenced by kinematic_cuts' field_cuts/
+        # bit_cuts blocks (generic numeric field / integer bit-mask cuts) ----
+        # Requesting a cut on a field must never silently do nothing just
+        # because the field wasn't already being read -- see
+        # docs/GENERIC_CUTS_DESIGN.md. kinematic_cuts is global (not a
+        # per-record override, same as elsewhere in this handler), so this
+        # is computed once, outside the per-release-year loop. Absent
+        # field_cuts/bit_cuts (every existing config) makes
+        # auto_extra_object_fields == {}, so effective_extra_object_fields
+        # is passed through as the exact same object as
+        # parsing_config.extra_object_fields -- nothing merged, nothing
+        # logged, a complete no-op.
+        auto_extra_object_fields = collect_extra_object_fields_from_kinematic_cuts(
+            parsing_config.kinematic_cuts
+        )
+        effective_extra_object_fields, newly_added_object_fields = merge_auto_requested_object_fields(
+            parsing_config.extra_object_fields, auto_extra_object_fields
+        )
+        for obj_name, fields in newly_added_object_fields.items():
+            self.logger.info(
+                f"field_cuts/bit_cuts on '{obj_name}' auto-requesting "
+                f"branch field(s) {fields} (not already in extra_object_fields)"
+            )
+
         # ---- Apply batch splitting if configured ----
         metadata = dict(context.metadata)  # mutable copy
         metadata = select_metadata_for_parsing(
@@ -345,7 +373,7 @@ class ParsingHandler(StateHandler):
                 enable_jet_tagging=parsing_config.enable_jet_tagging,
                 jet_btagging_thresholds=parsing_config.jet_btagging_thresholds,
                 extra_scalar_branches=effective_extra_scalar_branches,
-                extra_object_fields=parsing_config.extra_object_fields,
+                extra_object_fields=effective_extra_object_fields,
                 read_event_weights=parsing_config.read_event_weights,
                 read_pileup_info=parsing_config.read_pileup_info,
                 on_success=on_success,
