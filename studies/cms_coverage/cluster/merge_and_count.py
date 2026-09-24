@@ -40,7 +40,7 @@ sys.path.insert(0, str(REPO_ROOT))
 import numpy as np  # noqa: E402
 
 from services.storage.sqlite_shards import (  # noqa: E402
-    iter_arrays_for_signature,
+    iter_all_chunks,
     list_signatures,
     prune_final_states_below_min_events,
 )
@@ -115,6 +115,27 @@ def copy_shards(source_paths, scratch_dir: Path):
     return copies
 
 
+def load_chunks_by_signature(shard_paths):
+    """Read every (signature, chunk) row from every shard using ONE
+    sqlite3 connection per shard file (iter_all_chunks), not one per
+    signature. Calling services.storage.sqlite_shards.iter_arrays_for_signature
+    thousands of times (once per surviving signature) leaks a file
+    descriptor per call -- Python's ``with sqlite3.connect(...) as conn``
+    commits/rolls back on exit but does NOT close the connection, a
+    known stdlib sqlite3 gotcha -- and exhausts the process's open-file
+    limit well before 2000+ signatures across 57 shards are read
+    (observed directly: ``OSError: Too many open files``). This is a
+    property of the shared sqlite_shards module, not edited here (out of
+    scope); reading each shard's rows in one pass instead avoids
+    triggering it, with no shared-code change needed.
+    """
+    chunks_by_sig = defaultdict(list)
+    for shard_path in shard_paths:
+        for sig, arr in iter_all_chunks(shard_path):
+            chunks_by_sig[sig].append(arr)
+    return chunks_by_sig
+
+
 def run_funnel_at_threshold(shard_paths, threshold: int, sig_to_bumpnet: dict):
     """Run the REAL prune_final_states_below_min_events at `threshold` on
     `shard_paths` (expected to be scratch copies -- this mutates them),
@@ -125,21 +146,22 @@ def run_funnel_at_threshold(shard_paths, threshold: int, sig_to_bumpnet: dict):
     """
     prune_final_states_below_min_events(shard_paths, threshold)
 
+    chunks_by_sig = load_chunks_by_signature(shard_paths)
+
     surviving_bumpnet_to_sigs = defaultdict(list)
-    for shard_path in shard_paths:
-        for sig in list_signatures(shard_path):
-            if sig not in sig_to_bumpnet:
-                continue
-            bumpnet_name, fs_str, im_str = sig_to_bumpnet[sig]
-            surviving_bumpnet_to_sigs[bumpnet_name].append((shard_path, sig, im_str))
+    for sig in chunks_by_sig:
+        if sig not in sig_to_bumpnet:
+            continue
+        bumpnet_name, fs_str, im_str = sig_to_bumpnet[sig]
+        surviving_bumpnet_to_sigs[bumpnet_name].append((sig, im_str))
     stage_b_names = list(surviving_bumpnet_to_sigs.keys())
 
     stage_c_survivors = {}
     im_str_by_name = {}
     for bumpnet_name, entries in surviving_bumpnet_to_sigs.items():
         chunks = []
-        for shard_path, sig, im_str in entries:
-            chunks.extend(iter_arrays_for_signature(shard_path, sig))
+        for sig, im_str in entries:
+            chunks.extend(chunks_by_sig[sig])
             im_str_by_name[bumpnet_name] = im_str
         raw_arr = np.concatenate(chunks).astype(np.float64) if chunks else np.array([], dtype=np.float64)
 
@@ -237,13 +259,13 @@ def main():
     with tempfile.TemporaryDirectory(prefix="coverage_merge_selfcheck_") as tmp2:
         selfcheck_shards = copy_shards(shard_paths, Path(tmp2))
         prune_final_states_below_min_events(selfcheck_shards, PRIMARY_MIN_EVENTS_PER_FS)
+        selfcheck_chunks_by_sig = load_chunks_by_signature(selfcheck_shards)
         raw_after_prune = defaultdict(list)
-        for shard_path in selfcheck_shards:
-            for sig in list_signatures(shard_path):
-                if sig not in sig_to_bumpnet:
-                    continue
-                bumpnet_name, _fs, _im = sig_to_bumpnet[sig]
-                raw_after_prune[bumpnet_name].extend(iter_arrays_for_signature(shard_path, sig))
+        for sig, chunks in selfcheck_chunks_by_sig.items():
+            if sig not in sig_to_bumpnet:
+                continue
+            bumpnet_name, _fs, _im = sig_to_bumpnet[sig]
+            raw_after_prune[bumpnet_name].extend(chunks)
         combined_raw_after_prune = {
             name: (np.concatenate(chunks) if chunks else np.array([]))
             for name, chunks in raw_after_prune.items()
