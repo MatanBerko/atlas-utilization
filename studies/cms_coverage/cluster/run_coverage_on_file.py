@@ -108,18 +108,45 @@ def resolve_file_url(record_id: int, file_index: int) -> str:
     return urls[file_index]
 
 
+READ_RETRY_ATTEMPTS = 4
+READ_RETRY_BACKOFF_SEC = 15
+
+
 def read_events(file_url: str):
-    tree = uproot.open(file_url)["Events"]
-    available = set(tree.keys())
-    missing = [b for b in selection.NEEDED_BRANCHES if b not in available]
-    if missing:
-        raise ValueError(
-            f"{file_url}: missing required branch(es): {missing}. Refusing to "
-            f"proceed rather than silently treating a missing branch as "
-            f"'not present/not fired'."
-        )
-    events = tree.arrays(list(selection.NEEDED_BRANCHES), library="ak")
-    return events
+    """Read every NEEDED_BRANCHES entry from `file_url`, retrying the
+    whole-file vector-read a few times on a transient XRootD timeout
+    (observed directly during the full run: 22/57 jobs hit
+    ``OSError: File did not vector_read properly: [ERROR] Operation
+    expired`` on the FULL branch/entry read, while a small 1000-event,
+    1-branch probe of the same file succeeded instantly immediately
+    afterward -- i.e. this is a transient network flakiness tied to
+    request volume, not a genuinely unreadable file, so a bounded retry
+    is the appropriate response rather than treating it as a hard
+    failure)."""
+    last_exc = None
+    for attempt in range(1, READ_RETRY_ATTEMPTS + 1):
+        try:
+            tree = uproot.open(file_url)["Events"]
+            available = set(tree.keys())
+            missing = [b for b in selection.NEEDED_BRANCHES if b not in available]
+            if missing:
+                raise ValueError(
+                    f"{file_url}: missing required branch(es): {missing}. Refusing "
+                    f"to proceed rather than silently treating a missing branch as "
+                    f"'not present/not fired'."
+                )
+            return tree.arrays(list(selection.NEEDED_BRANCHES), library="ak")
+        except ValueError:
+            raise  # missing branches is a real configuration error, never retry it
+        except Exception as e:  # noqa: BLE001 -- transient XRootD read failure
+            last_exc = e
+            print(f"read attempt {attempt}/{READ_RETRY_ATTEMPTS} failed for {file_url}: "
+                  f"{type(e).__name__}: {e}", flush=True)
+            if attempt < READ_RETRY_ATTEMPTS:
+                time.sleep(READ_RETRY_BACKOFF_SEC)
+    raise RuntimeError(
+        f"{file_url}: failed to read after {READ_RETRY_ATTEMPTS} attempts"
+    ) from last_exc
 
 
 def main():
