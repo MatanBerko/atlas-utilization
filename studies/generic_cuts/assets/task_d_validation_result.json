@@ -1,0 +1,69 @@
+{
+  "muons": {
+    "n_events_sampled": 5000,
+    "reference_thresholds": {
+      "MUON_PT_MIN_GEV": 25.0,
+      "MUON_ETA_MAX": 2.4,
+      "MUON_ISO_MAX": 0.15
+    },
+    "n_reference_muons_selected": 1569,
+    "n_pipeline_muons_selected": 1569,
+    "per_muon_masks_identical": true,
+    "n_muons_disagreeing": 0,
+    "boundary_value_counts": {
+      "pt_exactly_at_min": 0,
+      "abs_eta_exactly_at_max": 0,
+      "iso_exactly_at_max": 0
+    }
+  },
+  "jets": {
+    "reference_thresholds": {
+      "JET_PT_MIN_GEV": 30.0,
+      "JET_ETA_MAX": 2.5
+    },
+    "observed_jetid_values": [
+      0,
+      2,
+      6
+    ],
+    "bits_all_2_equals_bits_any_2_on_this_sample": true,
+    "n_isolated_bitmask_only_disagreements": 0,
+    "n_reference_jets_selected": 9256,
+    "n_pipeline_jets_selected": 9261,
+    "per_jet_masks_identical": false,
+    "n_jets_disagreeing_full_selection": 5,
+    "all_full_selection_disagreements_at_pt_boundary": true,
+    "disagreeing_jets_detail": [
+      {
+        "pt": 30.0,
+        "eta": -0.026824951171875,
+        "jetId": 2
+      },
+      {
+        "pt": 30.0,
+        "eta": 1.125732421875,
+        "jetId": 6
+      },
+      {
+        "pt": 30.0,
+        "eta": 0.32080078125,
+        "jetId": 6
+      },
+      {
+        "pt": 30.0,
+        "eta": 1.711181640625,
+        "jetId": 6
+      },
+      {
+        "pt": 30.0,
+        "eta": -0.6640625,
+        "jetId": 6
+      }
+    ],
+    "boundary_value_counts": {
+      "pt_exactly_at_min": 7,
+      "abs_eta_exactly_at_max": 0
+    }
+  },
+  "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/05DD095C-F6C3-9A4F-9FB3-348A5A6403D5.root"
+}
