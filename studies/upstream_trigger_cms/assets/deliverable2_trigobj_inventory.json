@@ -1,0 +1,180 @@
+{
+  "hgg_data_30521_file0": {
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root",
+    "n_events_total_in_file": 2014154,
+    "n_events_sampled_for_stats": 20000,
+    "trigobj_branches": {
+      "TrigObj_eta": "float[]",
+      "TrigObj_filterBits": "int32_t[]",
+      "TrigObj_id": "int32_t[]",
+      "TrigObj_l1charge": "int32_t[]",
+      "TrigObj_l1iso": "int32_t[]",
+      "TrigObj_l1pt": "float[]",
+      "TrigObj_l1pt_2": "float[]",
+      "TrigObj_l2pt": "float[]",
+      "TrigObj_phi": "float[]",
+      "TrigObj_pt": "float[]"
+    },
+    "n_hlt_branches_total": 546,
+    "relevant_hlt_branches_sample": [
+      "HLT_Diphoton30EB_18EB_R9Id_OR_IsoCaloId_AND_HE_R9Id_DoublePixelVeto_Mass55",
+      "HLT_Diphoton30PV_18PV_R9Id_AND_IsoCaloId_AND_HE_R9Id_DoublePixelVeto_Mass55",
+      "HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_DoublePixelSeedMatch_Mass70",
+      "HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90",
+      "HLT_Diphoton30_18_Solid_R9Id_AND_IsoCaloId_AND_HE_R9Id_Mass55",
+      "HLT_DoublePhoton60",
+      "HLT_DoublePhoton85",
+      "HLT_HISinglePhoton10",
+      "HLT_HISinglePhoton15",
+      "HLT_HISinglePhoton20",
+      "HLT_HISinglePhoton40",
+      "HLT_HISinglePhoton60",
+      "HLT_Mu12_Photon25_CaloIdL",
+      "HLT_Mu12_Photon25_CaloIdL_L1ISO",
+      "HLT_Mu12_Photon25_CaloIdL_L1OR",
+      "HLT_Mu17_Photon22_CaloIdL_L1ISO",
+      "HLT_Mu17_Photon30_CaloIdL_L1ISO",
+      "HLT_Mu17_Photon35_CaloIdL_L1ISO",
+      "HLT_Mu23NoFiltersNoVtx_Photon23_CaloIdL",
+      "HLT_Mu28NoFiltersNoVtxDisplaced_Photon28_CaloIdL"
+    ],
+    "trigobj_id_range": {
+      "min": 1,
+      "max": 15
+    },
+    "trigobj_id_value_counts_sampled": {
+      "1": 35680,
+      "3": 3813,
+      "11": 21572,
+      "13": 86,
+      "15": 13553
+    },
+    "trigobj_filterbits_range": {
+      "min": 1,
+      "max": 14493
+    },
+    "trigobj_filterbits_top_values_sampled": {
+      "16": 23959,
+      "144": 12094,
+      "288": 9196,
+      "32": 4750,
+      "3": 3865,
+      "292": 3514,
+      "17": 2909,
+      "1": 1079,
+      "65": 979,
+      "294": 854,
+      "4097": 829,
+      "2064": 805,
+      "128": 762,
+      "451": 680,
+      "4096": 661
+    },
+    "trigobjs_per_event_sampled": {
+      "mean": 3.7352,
+      "min": 0,
+      "max": 37
+    },
+    "relevant_hlt_pass_rate_sampled": {
+      "HLT_Diphoton30EB_18EB_R9Id_OR_IsoCaloId_AND_HE_R9Id_DoublePixelVeto_Mass55": 0.1652,
+      "HLT_Diphoton30PV_18PV_R9Id_AND_IsoCaloId_AND_HE_R9Id_DoublePixelVeto_Mass55": 0.1569,
+      "HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_DoublePixelSeedMatch_Mass70": 0.04955,
+      "HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90": 0.23985,
+      "HLT_Diphoton30_18_Solid_R9Id_AND_IsoCaloId_AND_HE_R9Id_Mass55": 5e-05,
+      "HLT_DoublePhoton60": 0.0755,
+      "HLT_DoublePhoton85": 0.0151,
+      "HLT_HISinglePhoton10": 0.0,
+      "HLT_HISinglePhoton15": 0.0,
+      "HLT_HISinglePhoton20": 0.0
+    }
+  },
+  "m0m1j0_30522_file0": {
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/05DD095C-F6C3-9A4F-9FB3-348A5A6403D5.root",
+    "n_events_total_in_file": 2315223,
+    "n_events_sampled_for_stats": 20000,
+    "trigobj_branches": {
+      "TrigObj_eta": "float[]",
+      "TrigObj_filterBits": "int32_t[]",
+      "TrigObj_id": "int32_t[]",
+      "TrigObj_l1charge": "int32_t[]",
+      "TrigObj_l1iso": "int32_t[]",
+      "TrigObj_l1pt": "float[]",
+      "TrigObj_l1pt_2": "float[]",
+      "TrigObj_l2pt": "float[]",
+      "TrigObj_phi": "float[]",
+      "TrigObj_pt": "float[]"
+    },
+    "n_hlt_branches_total": 556,
+    "relevant_hlt_branches_sample": [
+      "HLT_BTagMu_AK8Jet300_Mu5",
+      "HLT_BTagMu_DiJet110_Mu5",
+      "HLT_BTagMu_DiJet170_Mu5",
+      "HLT_BTagMu_DiJet20_Mu5",
+      "HLT_BTagMu_DiJet40_Mu5",
+      "HLT_BTagMu_DiJet70_Mu5",
+      "HLT_BTagMu_Jet300_Mu5",
+      "HLT_DiMu9_Ele9_CaloIdL_TrackIdL",
+      "HLT_DiPFJet40_DEta3p5_MJJ600_PFMETNoMu140",
+      "HLT_DiPFJet40_DEta3p5_MJJ600_PFMETNoMu80",
+      "HLT_Dimuon0_Jpsi_Muon",
+      "HLT_Dimuon0_Phi_Barrel",
+      "HLT_Dimuon0_Upsilon_Muon",
+      "HLT_Dimuon0er16_Jpsi_NoOS_NoVertexing",
+      "HLT_Dimuon0er16_Jpsi_NoVertexing",
+      "HLT_Dimuon10_Jpsi_Barrel",
+      "HLT_Dimuon13_PsiPrime",
+      "HLT_Dimuon13_Upsilon",
+      "HLT_Dimuon16_Jpsi",
+      "HLT_Dimuon20_Jpsi"
+    ],
+    "trigobj_id_range": {
+      "min": 1,
+      "max": 15
+    },
+    "trigobj_id_value_counts_sampled": {
+      "1": 16251,
+      "3": 1869,
+      "11": 834,
+      "13": 25888,
+      "15": 9121
+    },
+    "trigobj_filterbits_range": {
+      "min": 1,
+      "max": 10512
+    },
+    "trigobj_filterbits_top_values_sampled": {
+      "1": 17683,
+      "3": 7381,
+      "144": 5266,
+      "8": 4784,
+      "288": 3999,
+      "16": 3270,
+      "32": 2024,
+      "292": 1348,
+      "1032": 1034,
+      "1024": 962,
+      "1027": 852,
+      "294": 701,
+      "2": 620,
+      "33": 493,
+      "290": 446
+    },
+    "trigobjs_per_event_sampled": {
+      "mean": 2.69815,
+      "min": 0,
+      "max": 33
+    },
+    "relevant_hlt_pass_rate_sampled": {
+      "HLT_BTagMu_AK8Jet300_Mu5": 0.0062,
+      "HLT_BTagMu_DiJet110_Mu5": 0.0085,
+      "HLT_BTagMu_DiJet170_Mu5": 0.01735,
+      "HLT_BTagMu_DiJet20_Mu5": 0.0008,
+      "HLT_BTagMu_DiJet40_Mu5": 0.0021,
+      "HLT_BTagMu_DiJet70_Mu5": 0.0038,
+      "HLT_BTagMu_Jet300_Mu5": 0.0041,
+      "HLT_DiMu9_Ele9_CaloIdL_TrackIdL": 0.01275,
+      "HLT_DiPFJet40_DEta3p5_MJJ600_PFMETNoMu140": 0.0002,
+      "HLT_DiPFJet40_DEta3p5_MJJ600_PFMETNoMu80": 5e-05
+    }
+  }
+}
