@@ -1,0 +1,172 @@
+{
+  "identity_check": {
+    "n_jobs_present": 57,
+    "total_n_read": 94148416,
+    "expected_total_events": 94148416,
+    "matches_expected": true
+  },
+  "m0m1j0_present_stage_a": true,
+  "self_check_vs_v2_all_pass": true,
+  "funnel": {
+    "a_all_pairs_ge1_event": 2397,
+    "b_after_min_events_per_fs_100": 465,
+    "c_after_postprocessing_ge100_main": 375,
+    "d_bumpnet_usable_gt30bins_ge100events": 316,
+    "e_bumpnet_usable_and_ge10_per_retained_bin": 0
+  },
+  "breakdown_by_object_count": {
+    "b": {
+      "2": 162,
+      "3": 176,
+      "4": 127
+    },
+    "c": {
+      "2": 134,
+      "3": 145,
+      "4": 96
+    },
+    "d": {
+      "3": 130,
+      "2": 98,
+      "4": 88
+    }
+  },
+  "breakdown_by_object_content": {
+    "b": {
+      "lepton-only": 26,
+      "lepton+jet": 156,
+      "b-jet-containing": 262,
+      "jet-only": 21
+    },
+    "c": {
+      "lepton-only": 17,
+      "lepton+jet": 124,
+      "b-jet-containing": 215,
+      "jet-only": 19
+    },
+    "d": {
+      "lepton-only": 8,
+      "lepton+jet": 104,
+      "b-jet-containing": 187,
+      "jet-only": 17
+    }
+  },
+  "top20_by_event_count_and_bins": [
+    [
+      "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_0bx",
+      1051110,
+      133
+    ],
+    [
+      "mass_m0j0_cat_0ex_2mx_1jx_0gx_0tx_0bx",
+      1006251,
+      129
+    ],
+    [
+      "mass_m1j0_cat_0ex_2mx_1jx_0gx_0tx_0bx",
+      976771,
+      88
+    ],
+    [
+      "mass_m0m1j0_cat_0ex_2mx_2jx_0gx_0tx_0bx",
+      254664,
+      144
+    ],
+    [
+      "mass_m0m1j1_cat_0ex_2mx_2jx_0gx_0tx_0bx",
+      253697,
+      115
+    ],
+    [
+      "mass_m0m1j0j1_cat_0ex_2mx_2jx_0gx_0tx_0bx",
+      251364,
+      187
+    ],
+    [
+      "mass_m1j0j1_cat_0ex_2mx_2jx_0gx_0tx_0bx",
+      243856,
+      151
+    ],
+    [
+      "mass_m0j0j1_cat_0ex_2mx_2jx_0gx_0tx_0bx",
+      233439,
+      175
+    ],
+    [
+      "mass_j0j1_cat_0ex_2mx_2jx_0gx_0tx_0bx",
+      230816,
+      146
+    ],
+    [
+      "mass_m0j0_cat_0ex_2mx_2jx_0gx_0tx_0bx",
+      223660,
+      120
+    ],
+    [
+      "mass_m1j0_cat_0ex_2mx_2jx_0gx_0tx_0bx",
+      217390,
+      100
+    ],
+    [
+      "mass_m0j1_cat_0ex_2mx_2jx_0gx_0tx_0bx",
+      205659,
+      95
+    ],
+    [
+      "mass_m1j1_cat_0ex_2mx_2jx_0gx_0tx_0bx",
+      202770,
+      76
+    ],
+    [
+      "mass_m0m1j0_cat_0ex_2mx_3jx_0gx_0tx_0bx",
+      55380,
+      141
+    ],
+    [
+      "mass_j0j1_cat_0ex_2mx_3jx_0gx_0tx_0bx",
+      52539,
+      138
+    ],
+    [
+      "mass_m0m1j1_cat_0ex_2mx_3jx_0gx_0tx_0bx",
+      52461,
+      104
+    ],
+    [
+      "mass_m1j0j1_cat_0ex_2mx_3jx_0gx_0tx_0bx",
+      52436,
+      150
+    ],
+    [
+      "mass_m1j1_cat_0ex_2mx_3jx_0gx_0tx_0bx",
+      51978,
+      76
+    ],
+    [
+      "mass_m1j0_cat_0ex_2mx_3jx_0gx_0tx_0bx",
+      50937,
+      95
+    ],
+    [
+      "mass_m0j0j1_cat_0ex_2mx_3jx_0gx_0tx_0bx",
+      50253,
+      171
+    ]
+  ],
+  "median_bins_stage_d": 65.5,
+  "stage_e_names": [],
+  "sensitivity_at_alternate_thresholds": {
+    "50": {
+      "stage_b": 593,
+      "stage_d": 319
+    },
+    "200": {
+      "stage_b": 371,
+      "stage_d": 307
+    },
+    "1000": {
+      "stage_b": 269,
+      "stage_d": 210
+    }
+  }
+}
