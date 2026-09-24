@@ -110,43 +110,61 @@ def resolve_file_url(record_id: int, file_index: int) -> str:
 
 READ_RETRY_ATTEMPTS = 4
 READ_RETRY_BACKOFF_SEC = 15
+READ_CHUNK_SIZE = 300_000
 
 
-def read_events(file_url: str):
-    """Read every NEEDED_BRANCHES entry from `file_url`, retrying the
-    whole-file vector-read a few times on a transient XRootD timeout
-    (observed directly during the full run: 22/57 jobs hit
-    ``OSError: File did not vector_read properly: [ERROR] Operation
-    expired`` on the FULL branch/entry read, while a small 1000-event,
-    1-branch probe of the same file succeeded instantly immediately
-    afterward -- i.e. this is a transient network flakiness tied to
-    request volume, not a genuinely unreadable file, so a bounded retry
-    is the appropriate response rather than treating it as a hard
-    failure)."""
+def _read_chunk_with_retry(tree, branches, entry_start, entry_stop, file_url):
     last_exc = None
     for attempt in range(1, READ_RETRY_ATTEMPTS + 1):
         try:
-            tree = uproot.open(file_url)["Events"]
-            available = set(tree.keys())
-            missing = [b for b in selection.NEEDED_BRANCHES if b not in available]
-            if missing:
-                raise ValueError(
-                    f"{file_url}: missing required branch(es): {missing}. Refusing "
-                    f"to proceed rather than silently treating a missing branch as "
-                    f"'not present/not fired'."
-                )
-            return tree.arrays(list(selection.NEEDED_BRANCHES), library="ak")
-        except ValueError:
-            raise  # missing branches is a real configuration error, never retry it
+            return tree.arrays(branches, entry_start=entry_start, entry_stop=entry_stop, library="ak")
         except Exception as e:  # noqa: BLE001 -- transient XRootD read failure
             last_exc = e
-            print(f"read attempt {attempt}/{READ_RETRY_ATTEMPTS} failed for {file_url}: "
-                  f"{type(e).__name__}: {e}", flush=True)
+            print(f"read attempt {attempt}/{READ_RETRY_ATTEMPTS} failed for {file_url} "
+                  f"[{entry_start}:{entry_stop}]: {type(e).__name__}: {e}", flush=True)
             if attempt < READ_RETRY_ATTEMPTS:
                 time.sleep(READ_RETRY_BACKOFF_SEC)
     raise RuntimeError(
-        f"{file_url}: failed to read after {READ_RETRY_ATTEMPTS} attempts"
+        f"{file_url} [{entry_start}:{entry_stop}]: failed to read after {READ_RETRY_ATTEMPTS} attempts"
     ) from last_exc
+
+
+def read_events(file_url: str):
+    """Read every NEEDED_BRANCHES entry from `file_url` in
+    READ_CHUNK_SIZE-event chunks, retrying each chunk on a transient
+    XRootD timeout.
+
+    Chunking (not just retrying) is required, not merely helpful:
+    observed directly during the full run, a SINGLE whole-file
+    ``tree.arrays(...)`` call for a ~2.3-2.5M-event file failed with
+    ``OSError: File did not vector_read properly: [ERROR] Operation
+    expired`` on EVERY one of 4 retry attempts (with a 15s backoff) for
+    at least one file, while (a) a small 1000-event/1-branch probe of
+    the exact same file succeeded instantly, and (b) reading that same
+    file in 300,000-event chunks succeeded end-to-end with zero errors.
+    The failure is tied to REQUEST SIZE (many branches x many baskets in
+    one vector-read), not file health or a fixed transient-vs-permanent
+    split -- retrying the same oversized request just repeats the same
+    failure. This mirrors the shared pipeline's own batched-reading
+    convention (services/parsing/file_parser.py's batch_size), applied
+    here for the same reason.
+    """
+    tree = uproot.open(file_url)["Events"]
+    available = set(tree.keys())
+    missing = [b for b in selection.NEEDED_BRANCHES if b not in available]
+    if missing:
+        raise ValueError(
+            f"{file_url}: missing required branch(es): {missing}. Refusing "
+            f"to proceed rather than silently treating a missing branch as "
+            f"'not present/not fired'."
+        )
+    branches = list(selection.NEEDED_BRANCHES)
+    n_entries = tree.num_entries
+    chunks = []
+    for start in range(0, n_entries, READ_CHUNK_SIZE):
+        stop = min(start + READ_CHUNK_SIZE, n_entries)
+        chunks.append(_read_chunk_with_retry(tree, branches, start, stop, file_url))
+    return ak.concatenate(chunks) if len(chunks) > 1 else chunks[0]
 
 
 def main():
