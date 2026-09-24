@@ -1,0 +1,41 @@
+{
+  "fit_range": "105-115 GeV and 135-180 GeV (1 GeV bins), 100-105 excluded",
+  "extrapolation_region": "100-105 GeV",
+  "observed_100_105_total": 49521,
+  "observed_100_105_poisson_uncertainty": 222.53314359888057,
+  "exponential_fit": {
+    "params": {
+      "A": 322901.74835735053,
+      "b": 0.03507799516663053
+    },
+    "param_errs": {
+      "A": 5237.545251361041,
+      "b": 0.00012289950423937502
+    },
+    "chi2": 427.4700816964919,
+    "ndf": 53,
+    "chi2_over_ndf": 8.06547323955645,
+    "predicted_100_105_total": 44365.29213402756,
+    "predicted_100_105_total_fit_uncertainty": 195.6197253372753
+  },
+  "power_law_fit": {
+    "params": {
+      "A": 24040428059203.305,
+      "b": 4.674560724727838
+    },
+    "param_errs": {
+      "A": 1846361835731.8057,
+      "b": 0.01581541322935277
+    },
+    "chi2": 58.129578188344766,
+    "ndf": 53,
+    "chi2_over_ndf": 1.0967844941197125,
+    "predicted_100_105_total": 47917.27805942671,
+    "predicted_100_105_total_fit_uncertainty": 307.18495938140285
+  },
+  "exponential_deviation_significance_sigma": 17.400852811571184,
+  "power_law_deviation_significance_sigma": 4.227887515540602,
+  "flag_possible_turn_on_edge_effect": true,
+  "pre_set_flag_rule": "flag only if |significance| > 3 sigma for BOTH extrapolations",
+  "note_final_fit_range_decision": "This check is exploratory only. The final background-model fit range is decided in the background-model task, independent of this result."
+}

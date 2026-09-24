@@ -1,0 +1,155 @@
+{
+  "30521": {
+    "label": "DoubleEG Run2016G",
+    "url": "https://opendata.cern.ch/eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root",
+    "checks": {
+      "has_Events_tree": true,
+      "has_Runs_tree": true,
+      "flat_naming_Photon_pt": true,
+      "flat_naming_Muon_pt": true,
+      "flat_naming_Electron_pt": true,
+      "flat_naming_Jet_pt": true,
+      "has_run_branch": true,
+      "has_luminosityBlock_branch": true,
+      "has_event_branch": true,
+      "has_genWeight": false,
+      "no_dotted_naming": true
+    }
+  },
+  "30554": {
+    "label": "DoubleEG Run2016H",
+    "url": "https://opendata.cern.ch/eos/opendata/cms/Run2016H/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/2AD46B56-E1CA-CD44-B30D-C57FE1C35D15.root",
+    "checks": {
+      "has_Events_tree": true,
+      "has_Runs_tree": true,
+      "flat_naming_Photon_pt": true,
+      "flat_naming_Muon_pt": true,
+      "flat_naming_Electron_pt": true,
+      "flat_naming_Jet_pt": true,
+      "has_run_branch": true,
+      "has_luminosityBlock_branch": true,
+      "has_event_branch": true,
+      "has_genWeight": false,
+      "no_dotted_naming": true
+    }
+  },
+  "37350": {
+    "label": "ggH",
+    "url": "https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/3231834B-7A6E-4840-8627-C97FDCF67268.root",
+    "checks": {
+      "has_Events_tree": true,
+      "has_Runs_tree": true,
+      "flat_naming_Photon_pt": true,
+      "flat_naming_Muon_pt": true,
+      "flat_naming_Electron_pt": true,
+      "flat_naming_Jet_pt": true,
+      "has_run_branch": true,
+      "has_luminosityBlock_branch": true,
+      "has_event_branch": true,
+      "has_genWeight": true,
+      "no_dotted_naming": true
+    }
+  },
+  "68497": {
+    "label": "VBF",
+    "url": "https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/VBFHToGG_M125_TuneCP5_13TeV-amcatnlo-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2520000/99F507FD-FF4B-0E42-8269-48385EDD1CBD.root",
+    "checks": {
+      "has_Events_tree": true,
+      "has_Runs_tree": true,
+      "flat_naming_Photon_pt": true,
+      "flat_naming_Muon_pt": true,
+      "flat_naming_Electron_pt": true,
+      "flat_naming_Jet_pt": true,
+      "has_run_branch": true,
+      "has_luminosityBlock_branch": true,
+      "has_event_branch": true,
+      "has_genWeight": true,
+      "no_dotted_naming": true
+    }
+  },
+  "71013": {
+    "label": "WplusH",
+    "url": "https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WplusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2530000/76E60A21-499C-904C-9C3A-D5922BDBFBBB.root",
+    "checks": {
+      "has_Events_tree": true,
+      "has_Runs_tree": true,
+      "flat_naming_Photon_pt": true,
+      "flat_naming_Muon_pt": true,
+      "flat_naming_Electron_pt": true,
+      "flat_naming_Jet_pt": true,
+      "has_run_branch": true,
+      "has_luminosityBlock_branch": true,
+      "has_event_branch": true,
+      "has_genWeight": true,
+      "no_dotted_naming": true
+    }
+  },
+  "70173": {
+    "label": "WminusH",
+    "url": "https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2430000/268E8006-DD41-CA42-8D4F-499DE634724E.root",
+    "checks": {
+      "has_Events_tree": true,
+      "has_Runs_tree": true,
+      "flat_naming_Photon_pt": true,
+      "flat_naming_Muon_pt": true,
+      "flat_naming_Electron_pt": true,
+      "flat_naming_Jet_pt": true,
+      "has_run_branch": true,
+      "has_luminosityBlock_branch": true,
+      "has_event_branch": true,
+      "has_genWeight": true,
+      "no_dotted_naming": true
+    }
+  },
+  "74132": {
+    "label": "ZH",
+    "url": "https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/ZH_HToGG_ZToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2520000/2B7A25A9-431E-2242-BFBE-02A3AEDAFC00.root",
+    "checks": {
+      "has_Events_tree": true,
+      "has_Runs_tree": true,
+      "flat_naming_Photon_pt": true,
+      "flat_naming_Muon_pt": true,
+      "flat_naming_Electron_pt": true,
+      "flat_naming_Jet_pt": true,
+      "has_run_branch": true,
+      "has_luminosityBlock_branch": true,
+      "has_event_branch": true,
+      "has_genWeight": true,
+      "no_dotted_naming": true
+    }
+  },
+  "67611": {
+    "label": "ttH",
+    "url": "https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/ttHJetToGG_M125_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2520000/4AE7677E-0E18-3648-828C-EE3AEC9C5A3C.root",
+    "checks": {
+      "has_Events_tree": true,
+      "has_Runs_tree": true,
+      "flat_naming_Photon_pt": true,
+      "flat_naming_Muon_pt": true,
+      "flat_naming_Electron_pt": true,
+      "flat_naming_Jet_pt": true,
+      "has_run_branch": true,
+      "has_luminosityBlock_branch": true,
+      "has_event_branch": true,
+      "has_genWeight": true,
+      "no_dotted_naming": true
+    }
+  },
+  "35669": {
+    "label": "DYJetsToLL_M-50 (Z->ee control region)",
+    "url": "https://opendata.cern.ch/eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/30000/0082C29D-E74C-024A-BE9B-97B29EE7A4A2.root",
+    "checks": {
+      "has_Events_tree": true,
+      "has_Runs_tree": true,
+      "flat_naming_Photon_pt": true,
+      "flat_naming_Muon_pt": true,
+      "flat_naming_Electron_pt": true,
+      "flat_naming_Jet_pt": true,
+      "has_run_branch": true,
+      "has_luminosityBlock_branch": true,
+      "has_event_branch": true,
+      "has_genWeight": true,
+      "no_dotted_naming": true
+    }
+  }
+}

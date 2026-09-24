@@ -1,0 +1,14 @@
+{
+  "_source": "CERN Open Data record API, https://opendata.cern.ch/api/records/<id> -- 'distribution.number_events' field. Fetched 16 Sep 2026 for implementation task 6, Part 1's data merge event-total identity check.",
+  "_note": "These are the PORTAL-published, PRE-SELECTION total event counts for each full DoubleEG record (i.e. the number of entries in the Events tree, summed over every file currently listed for that record) -- not a selected/passed-cuts count. merge_outputs.py sums parsing_stats_batch_*.json's 'total_events' (itself a pre-selection, per-file raw entry count -- see orchestration/handlers/parsing_handler.py's ParsingStatistics) per record across all data jobs assigned to that record (via the verified metadata_cache.json + batch-index reconstruction) and compares against these numbers.",
+  "records": {
+    "30521": {
+      "title": "/DoubleEG/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD",
+      "number_events": 78797031
+    },
+    "30554": {
+      "title": "/DoubleEG/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD",
+      "number_events": 85388673
+    }
+  }
+}

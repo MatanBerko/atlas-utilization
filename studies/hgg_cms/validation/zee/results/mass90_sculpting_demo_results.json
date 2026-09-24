@@ -1,0 +1,12 @@
+{
+  "note": "DY-only (see this module's own docstring for why data no longer has a meaningful diphoton-only sub-sample). Not a pass/fail check -- a visual + count demonstration of the bug this task's first revision fixed. Expected: the diphoton-only-triggered sample shows visibly fewer events below ~90 GeV than the Ele27-triggered (unbiased) sample.",
+  "counts": {
+    "n_diphoton_only_70_90": 34848,
+    "n_diphoton_only_90_110": 54733,
+    "ratio_below_over_above": 0.6366908446458261,
+    "n_unbiased_ele27_fired": 3741369
+  },
+  "plots": [
+    "mass90_sculpting_demo.png"
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "note": "SMALL-SAMPLE CHECK ONLY (<=50 toys/cell) -- do not draw bias conclusions from this; only for pre-cluster-run convergence sanity-checking.",
+  "results": {
+    "EBEB_bernstein_nominal_m125.0": {
+      "category": "EBEB",
+      "test_function": "bernstein:6",
+      "truth_family": "bernstein",
+      "leakage_variant": "nominal",
+      "mass": 125.0,
+      "seed": 20260918501,
+      "n_toys": 50,
+      "n_failed": 0,
+      "fail_fraction": 0.0,
+      "mean_S": -26.010469346915233,
+      "mean_sigma_S": 140.24705888475216
+    },
+    "EBEB_laurent_leakage_plus_m115.0": {
+      "category": "EBEB",
+      "test_function": "bernstein:6",
+      "truth_family": "laurent",
+      "leakage_variant": "leakage_plus",
+      "mass": 115.0,
+      "seed": 20260918502,
+      "n_toys": 50,
+      "n_failed": 0,
+      "fail_fraction": 0.0,
+      "mean_S": 14.438685092304876,
+      "mean_sigma_S": 193.99858174412802
+    },
+    "EBEB_expsum_nominal_m125.0": {
+      "category": "EBEB",
+      "test_function": "bernstein:6",
+      "truth_family": "expsum",
+      "leakage_variant": "nominal",
+      "mass": 125.0,
+      "seed": 20260918503,
+      "n_toys": 50,
+      "n_failed": 0,
+      "fail_fraction": 0.0,
+      "mean_S": 18.498468938224395,
+      "mean_sigma_S": 140.46496163874167
+    },
+    "notEBEB_bernstein_nominal_m125.0": {
+      "category": "notEBEB",
+      "test_function": "bernstein:7",
+      "truth_family": "bernstein",
+      "leakage_variant": "nominal",
+      "mass": 125.0,
+      "seed": 20260918504,
+      "n_toys": 50,
+      "n_failed": 18,
+      "fail_fraction": 0.36,
+      "mean_S": 55.60502719865386,
+      "mean_sigma_S": 213.39661124083335
+    },
+    "notEBEB_powersum_nominal_m120.0": {
+      "category": "notEBEB",
+      "test_function": "bernstein:7",
+      "truth_family": "powersum",
+      "leakage_variant": "nominal",
+      "mass": 120.0,
+      "seed": 20260918505,
+      "n_toys": 50,
+      "n_failed": 21,
+      "fail_fraction": 0.42,
+      "mean_S": 48.98532392189583,
+      "mean_sigma_S": 231.9721912212046
+    },
+    "notEBEB_expsum_nominal_m125.0": {
+      "category": "notEBEB",
+      "test_function": "bernstein:7",
+      "truth_family": "expsum",
+      "leakage_variant": "nominal",
+      "mass": 125.0,
+      "seed": 20260918506,
+      "n_toys": 50,
+      "n_failed": 21,
+      "fail_fraction": 0.42,
+      "mean_S": -15.28056558871955,
+      "mean_sigma_S": 217.23457384721033
+    },
+    "notEBEB_laurent_leakage_minus_m130.0": {
+      "category": "notEBEB",
+      "test_function": "bernstein:7",
+      "truth_family": "laurent",
+      "leakage_variant": "leakage_minus",
+      "mass": 130.0,
+      "seed": 20260918507,
+      "n_toys": 50,
+      "n_failed": 20,
+      "fail_fraction": 0.4,
+      "mean_S": -19.64368541476033,
+      "mean_sigma_S": 179.6401487584899
+    },
+    "notEBEB_powersum_nominal_m135.0": {
+      "category": "notEBEB",
+      "test_function": "bernstein:7",
+      "truth_family": "powersum",
+      "leakage_variant": "nominal",
+      "mass": 135.0,
+      "seed": 20260918508,
+      "n_toys": 50,
+      "n_failed": 15,
+      "fail_fraction": 0.3,
+      "mean_S": -0.5877735475583384,
+      "mean_sigma_S": 166.0318590686858
+    }
+  }
+}

@@ -228,6 +228,57 @@ def slice_events_by_field(
     return events
 
 
+def _boolean_field_mask(particles: ak.Array, field: str, obj: str, cut_name: str) -> ak.Array:
+    """
+    Return ``particles[field]`` as a boolean mask, for the generic
+    ``bool_require``/``bool_any_of`` object-level cut types (implementation
+    task 4).
+
+    Accepts a genuinely boolean field as-is, or an integer field whose only
+    values are 0/1 (documented explicitly, e.g. a field read as ``uint8``
+    that is semantically boolean). Anything else -- a non-boolean dtype, or
+    an integer field with other values (e.g. ``cutBased``'s 0-3 ordinal
+    scale) -- is almost certainly a configuration mistake (silently
+    truthy-casting a multi-valued field would quietly do the wrong thing),
+    so it raises a clear error instead.
+
+    Raises:
+        ValueError: ``field`` is not present on ``particles`` (a
+            configuration error, not a runtime KeyError deep in parsing --
+            same style as the existing pt/eta/phi checks above), or its
+            dtype/values aren't boolean or 0/1.
+    """
+    if not hasattr(particles, field):
+        raise ValueError(f"{obj} is missing configured kinematic field '{field}' ({cut_name})")
+
+    vals = getattr(particles, field)
+    # ak.to_numpy's dtype reflects the field's own declared type even when
+    # this particular batch has zero particles in it after upstream
+    # filtering (a properly-typed empty slice keeps its dtype; only a
+    # fresh, never-typed empty literal like ak.Array([[], []]) would fall
+    # back to float64 -- not the case here, since `vals` always comes from
+    # an already-typed parsed field).
+    flat = ak.flatten(vals, axis=None)
+    np_dtype = ak.to_numpy(flat).dtype
+
+    if np_dtype.kind == "b":
+        return ak.values_astype(vals, bool)
+
+    if np_dtype.kind in ("i", "u"):
+        uniq = set(np.unique(ak.to_numpy(flat)).tolist())
+        if uniq.issubset({0, 1}):
+            return ak.values_astype(vals, bool)
+        raise ValueError(
+            f"{obj}.{field} used in {cut_name} must be boolean or 0/1-valued, "
+            f"got values {sorted(uniq)}"
+        )
+
+    raise ValueError(
+        f"{obj}.{field} used in {cut_name} must be boolean-typed (or integer "
+        f"0/1), got dtype {np_dtype}"
+    )
+
+
 def _kinematic_cuts_is_per_object(cuts: Optional[Dict]) -> bool:
     if not cuts:
         return False
@@ -319,6 +370,36 @@ def filter_events_by_kinematics(
                 raise ValueError(
                     f"Electron rel_isolation_max requires missing field {iso_name!r}"
                 )
+
+        # "all of these boolean fields must be True" -- e.g. CMS photon ID:
+        # {"bool_require": ["electronVeto", "mvaID_WP90"]}. Implementation
+        # task 4, generic (not CMS-specific): any collection/field.
+        if "bool_require" in cuts:
+            for field in cuts["bool_require"]:
+                mask = mask & _boolean_field_mask(particles, field, obj, "bool_require")
+
+        # "at least one of these boolean fields must be True" -- e.g. the
+        # CMS photon barrel/endcap supercluster-eta acceptance flags:
+        # {"bool_any_of": ["isScEtaEB", "isScEtaEE"]}. A photon in the
+        # 1.4442-1.566 gap has neither flag set, so this excludes the gap.
+        if "bool_any_of" in cuts:
+            fields = cuts["bool_any_of"]
+            any_mask = None
+            for field in fields:
+                field_mask = _boolean_field_mask(particles, field, obj, "bool_any_of")
+                any_mask = field_mask if any_mask is None else (any_mask | field_mask)
+            mask = mask & any_mask
+
+        # Generic momentum-|eta| exclusion window: {"eta_exclude": {"min":
+        # ..., "max": ...}}. NOT the CMS supercluster-eta acceptance gap --
+        # see docs/CMS_KNOWN_LIMITATIONS.md's explicit warning; use
+        # bool_any_of with isScEtaEB/isScEtaEE for that instead.
+        if "eta_exclude" in cuts and not hasattr(particles, "eta"):
+            raise ValueError(f"{obj} is missing configured kinematic field 'eta' (eta_exclude)")
+        if "eta_exclude" in cuts:
+            abs_eta = np.abs(ak.values_astype(particles.eta, float))
+            excl = cuts["eta_exclude"]
+            mask = mask & ~((abs_eta >= excl["min"]) & (abs_eta <= excl["max"]))
 
         # Boolean mask (not ak.mask) so dropped particles do not appear in lists
         filtered_events[obj] = particles[mask]

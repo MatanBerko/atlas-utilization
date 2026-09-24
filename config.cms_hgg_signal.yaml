@@ -1,0 +1,107 @@
+paths:
+  parsed_data_path: ./output/parsed_data_signal
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache_signal.json
+  jobs_logs_path: ./output/logs_signal
+names:
+  run_name: cms_hgg_signal
+  histogram_filename: cms_hgg_signal.root
+run_metadata:
+  run_name: cms_hgg_signal
+  base_output_dir: /storage/agrp/berkom/atlas-utilization/output/cms_hgg_signal
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: false
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data_signal
+  file_urls_path: ./output/metadata_cache_signal.json
+  jobs_logs_path: ./output/logs_signal
+  release_years: []
+  # The six postVFP H->gamma-gamma signal production modes (studies/hgg_cms/
+  # impl_checks/signal_sumw.json): ggH, VBF, W+H, W-H, ZH, ttH. Kept in ONE
+  # config/run since genEventSumw aggregation is already done per-record
+  # inside the shared pipeline (each record's own "record_<id>" key is
+  # tracked separately) -- no cross-contamination between production modes.
+  # NOT combined with the data records -- see config.cms_hgg_data.yaml's
+  # comment for why (validated_runs_json/read_event_weights asymmetry).
+  specific_record_ids:
+  - 37350   # ggH
+  - 68497   # VBF
+  - 71013   # WplusH
+  - 70173   # WminusH
+  - 74132   # ZH
+  - 67611   # ttH
+  parse_mc: true
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 8
+  env_threshold_memory_mb: 8000
+  chunk_yield_threshold_bytes: 2147483648
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  max_files_to_process: null
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  create_dirs: true
+  show_progress_bar: true
+  # NOT set here (data only) -- the validated-runs simulation guard
+  # (services/parsing/validated_runs.py) would raise if this were ever
+  # applied to a simulation record; simulation has no certified-run concept.
+  # validated_runs_json: (absent)
+  # Required in simulation too (design doc Section 2 step 1: the same
+  # trigger bit must be required in MC so trigger inefficiency becomes
+  # part of the simulated signal efficiency automatically).
+  trigger_requirements:
+    mode: any
+    paths:
+    - HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90
+  # Simulation: both pileup fields (PV_npvsGood + Pileup_nTrueInt) and the
+  # per-event generator weight, plus genEventSumw aggregated over
+  # successfully-processed files per record (services/parsing/mc_weights.py).
+  read_pileup_info: true
+  read_event_weights: true
+  extra_object_fields:
+    Photons:
+    - electronVeto
+    - mvaID_WP90
+    - isScEtaEB
+    - isScEtaEE
+    - r9
+    - hoe
+    - sieie
+    - pfRelIso03_all
+    - pfRelIso03_chg
+    - mvaID
+    - cutBased
+    - pixelSeed
+  # Same reasoning as config.cms_hgg_data.yaml: no selection_by_record (no
+  # trigger-stream combination -- dedup is never switched on for this
+  # config either), and particle_counts/kinematic_cuts list ONLY
+  # "photons" -- Electrons/Muons/Jets/Taus get no cut or count requirement.
+  particle_counts:
+    photons:
+      min: 2
+      max: 20
+  kinematic_cuts:
+    photons:
+      pt:
+        min: 20.0
+      bool_require:
+      - electronVeto
+      - mvaID_WP90
+      bool_any_of:
+      - isScEtaEB
+      - isScEtaEE

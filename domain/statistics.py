@@ -68,6 +68,16 @@ class ParsingStatistics:
     # Errors (immutable tuple of error messages)
     error_types: tuple[tuple[str, int], ...] = field(default_factory=tuple)
     timeout_count: int = 0
+
+    # Optional (default None -- every existing caller of this dataclass):
+    # per-record genEventSumw/genEventCount/genEventSumw2 aggregation,
+    # populated only when parsing_task_config.read_event_weights is
+    # enabled (implementation task 5, Part A). {release_year: {
+    # "n_files_processed", "processed_files", "n_files_failed",
+    # "genEventSumw", "genEventCount", "genEventSumw2"}}. Covers exactly
+    # the files that were successfully processed IN THIS RUN, not
+    # necessarily every file in the record -- see "n_files_failed".
+    sumw_by_record: Optional[dict] = None
     
     def __post_init__(self):
         """Validate parsing statistics."""
@@ -121,4 +131,5 @@ class ParsingStatistics:
             "error_types": {error_type: count for error_type, count in self.error_types},
             "start_time": self.start_time.isoformat(),
             "end_time": self.end_time.isoformat(),
+            "sumw_by_record": self.sumw_by_record,
         }

@@ -24,6 +24,13 @@ from domain.events import EventBatch
 from services.parsing.event_selection import apply_parsing_event_selection
 from services.parsing.event_deduplication import EventDeduplicator
 from services.parsing.schemas import normalize_release_year
+from services.parsing.validated_runs import ValidatedRunsFilter, apply_validated_runs_filter, is_simulation
+from services.parsing.trigger_requirements import (
+    apply_trigger_requirement,
+    trigger_group_branches,
+    validate_trigger_requirements,
+)
+from services.parsing.mc_weights import aggregate_sumw_for_processed_files
 from utils.batching import get_batch_slice_by_year
 
 
@@ -168,7 +175,30 @@ class ParsingHandler(StateHandler):
         start_time = datetime.now()
         stats_collector = ParsingStatisticsCollector()
         parsed_files = []
-        
+
+        # ---- Validated-runs ("golden JSON") filter: loaded once per run ----
+        # Absent (the default, and every current config) -> validated_runs is
+        # None and the filter below is a complete no-op. See
+        # services/parsing/validated_runs.py and
+        # data/cms/validated_runs/README.md.
+        validated_runs = None
+        if parsing_config.validated_runs_json:
+            validated_runs = ValidatedRunsFilter(parsing_config.validated_runs_json)
+            self.logger.info(
+                f"Validated-runs filter enabled: {validated_runs.source_path} "
+                f"(sha256={validated_runs.sha256}, {validated_runs.n_runs} runs, "
+                f"{validated_runs.n_certified_lumisections} certified lumisections)"
+            )
+        # release_year -> {run: {"before": n, "after": n}}, accumulated across
+        # every file/batch of that release, for the per-run retention report.
+        validated_runs_report: dict[str, dict[int, dict[str, int]]] = {}
+
+        # release_year -> {"n_before": n, "n_after": n, "per_path": {path: n_passed}},
+        # accumulated across every batch, for the HLT trigger requirement report.
+        # Populated only for release years where trigger_requirements (global
+        # or per-record) is actually configured.
+        trigger_report: dict[str, dict] = {}
+
         # ---- Apply batch splitting if configured ----
         metadata = dict(context.metadata)  # mutable copy
         metadata = select_metadata_for_parsing(
@@ -225,6 +255,16 @@ class ParsingHandler(StateHandler):
         retention: dict[str, list[int]] = {}
         # release_year -> [files_opened_ok, files_failed_to_open]
         file_counts: dict[str, list[int]] = {}
+        # release_year -> [urls of files whose Events tree parsed successfully],
+        # used only when read_event_weights is enabled, to read exactly those
+        # same files' Runs-tree genEventSumw afterward (implementation task 5,
+        # Part A) -- the numerator (selected genWeight, computed later, in
+        # studies/hgg_cms/) and this denominator must cover an identical file
+        # set, or the normalization is silently biased.
+        processed_urls: dict[str, list[str]] = {}
+        # release_year -> {"n_files_processed", "processed_files",
+        # "n_files_failed", "genEventSumw", "genEventCount", "genEventSumw2"}
+        sumw_by_record: dict[str, dict] = {}
         # Above this fraction of a record's files failing to open, treat it as a
         # real failure rather than silently continuing with whatever (possibly
         # zero) events the surviving files produced -- see MAX_FILE_FAILURE_RATE.
@@ -240,27 +280,62 @@ class ParsingHandler(StateHandler):
                 (record_profile or {}).get("particle_counts")
                 or parsing_config.particle_counts
             )
+            # Per-record HLT trigger requirement override, same shape as the
+            # global parsing_task_config.trigger_requirements key, mirroring
+            # the particle_counts override pattern just above. Unlike the
+            # global key (validated in ParsingConfig.__post_init__),
+            # selection_by_record profiles are freeform dicts not covered by
+            # that validation, so a per-record override is validated here.
+            record_trigger_requirements = (
+                (record_profile or {}).get("trigger_requirements")
+                or parsing_config.trigger_requirements
+            )
+            if record_trigger_requirements:
+                validate_trigger_requirements(record_trigger_requirements)
+
+            # The "Trigger" scalar branch group is only added when a trigger
+            # requirement is actually configured (global or per-record) --
+            # extra_scalar_branches stays byte-identical to
+            # parsing_config.extra_scalar_branches (including being the same
+            # None when both are unset) for every existing configuration.
+            effective_extra_scalar_branches = parsing_config.extra_scalar_branches
+            if record_trigger_requirements:
+                merged = dict(effective_extra_scalar_branches or {})
+                trigger_paths = trigger_group_branches(record_trigger_requirements)
+                merged["Trigger"] = list(dict.fromkeys(
+                    list(merged.get("Trigger", [])) + trigger_paths
+                ))
+                effective_extra_scalar_branches = merged
+
             retention.setdefault(release_year, [0, 0])
             file_counts.setdefault(release_year, [0, 0])
+            processed_urls.setdefault(release_year, [])
             if record_profile is not None:
                 self.logger.info(
                     f"Record {record_key}: per-stream selection "
                     f"(particle_counts={record_particle_counts})"
                 )
+            if record_trigger_requirements:
+                self.logger.info(
+                    f"Record {record_key}: HLT trigger requirement enabled "
+                    f"(mode={record_trigger_requirements.get('mode', 'any')}, "
+                    f"paths={trigger_group_branches(record_trigger_requirements)})"
+                )
 
             self.logger.info(
                 f"Parsing {len(file_urls)} files for release year: {release_year}"
             )
-            
+
             # Define callbacks
             def on_success(file_url: str, event_count: int, time_sec: float):
                 stats_collector.record_success(file_url, event_count, 0, time_sec)
                 file_counts[release_year][0] += 1
+                processed_urls[release_year].append(file_url)
 
             def on_error(file_url: str, error: Exception):
                 stats_collector.record_failure(file_url, error)
                 file_counts[release_year][1] += 1
-            
+
             # Process files
             for batch in self.processor.process_files(
                 file_urls=file_urls,
@@ -269,21 +344,96 @@ class ParsingHandler(StateHandler):
                 batch_size=40_000,
                 enable_jet_tagging=parsing_config.enable_jet_tagging,
                 jet_btagging_thresholds=parsing_config.jet_btagging_thresholds,
+                extra_scalar_branches=effective_extra_scalar_branches,
+                extra_object_fields=parsing_config.extra_object_fields,
+                read_event_weights=parsing_config.read_event_weights,
+                read_pileup_info=parsing_config.read_pileup_info,
                 on_success=on_success,
-                on_error=on_error
+                on_error=on_error,
+                on_probe_stats=stats_collector.record_probe_stats,
             ):
                 retention[release_year][0] += len(batch.events)
 
+                working_events = batch.events
+
+                # Validated-runs filter runs BEFORE any kinematic/particle-
+                # count selection and BEFORE de-duplication, so an event
+                # rejected here is never counted as "selected" by either of
+                # those later stages, and dedup's (run, luminosityBlock,
+                # event) keys are only ever built from certified events.
+                if validated_runs is not None:
+                    working_events, vr_stats = apply_validated_runs_filter(working_events, validated_runs)
+                    per_run = validated_runs_report.setdefault(release_year, {})
+                    for run, counts in vr_stats["per_run"].items():
+                        entry = per_run.setdefault(run, {"before": 0, "after": 0})
+                        entry["before"] += counts["before"]
+                        entry["after"] += counts["after"]
+                    if vr_stats["n_before"] != vr_stats["n_after"]:
+                        self.logger.info(
+                            f"  {release_year}: validated-runs filter kept "
+                            f"{vr_stats['n_after']:,}/{vr_stats['n_before']:,} events in this batch"
+                        )
+
+                # HLT trigger requirement runs AFTER the validated-runs
+                # filter and BEFORE particle/kinematic selection and
+                # de-duplication -- same reasoning as the validated-runs
+                # filter above (dedup's (run, luminosityBlock, event) keys
+                # must only ever be built from events that also pass the
+                # trigger requirement). Applies to data AND simulation
+                # (no simulation guard, unlike validated-runs).
+                if record_trigger_requirements:
+                    working_events, tr_stats = apply_trigger_requirement(
+                        working_events, record_trigger_requirements
+                    )
+                    tr_report = trigger_report.setdefault(
+                        release_year, {"n_before": 0, "n_after": 0, "per_path": {}}
+                    )
+                    tr_report["n_before"] += tr_stats["n_before"]
+                    tr_report["n_after"] += tr_stats["n_after"]
+                    for path, n_passed in tr_stats["per_path"].items():
+                        tr_report["per_path"][path] = tr_report["per_path"].get(path, 0) + n_passed
+                    if tr_stats["n_before"] != tr_stats["n_after"]:
+                        self.logger.info(
+                            f"  {release_year}: trigger requirement kept "
+                            f"{tr_stats['n_after']:,}/{tr_stats['n_before']:,} events in this batch"
+                        )
+
                 if parsing_config.kinematic_cuts or record_particle_counts:
                     working_events = apply_parsing_event_selection(
-                        batch.events,
+                        working_events,
                         particle_counts=record_particle_counts,
                         kinematic_cuts=parsing_config.kinematic_cuts,
                     )
-                else:
-                    working_events = batch.events
 
                 if deduplicator is not None:
+                    # De-duplication must never apply to simulation events
+                    # (implementation task 6, review addition). It is
+                    # switched on run-wide by the presence of ANY
+                    # selection_by_record entry (see this method's setup
+                    # above), then applied unconditionally to every
+                    # record's batches in the same run -- so a config that
+                    # mixed a trigger-stream-combined data record with a
+                    # simulation record would otherwise silently apply it
+                    # to the simulation too. Simulated NanoAOD sets run==1
+                    # for every event, and (luminosityBlock, event) can
+                    # repeat across different samples/files, so dedup on
+                    # simulation would silently delete genuine signal
+                    # events, keyed on a collision that means nothing.
+                    # is_simulation() is the same detector already used for
+                    # the validated-runs filter's own simulation guard.
+                    if is_simulation(working_events):
+                        raise RuntimeError(
+                            f"Record {record_key}: de-duplication is enabled for "
+                            f"this run (selection_by_record is set for at least "
+                            f"one record being processed), but these events look "
+                            f"like simulation (genWeight present, and/or run==1 "
+                            f"for every event). De-duplication must never run on "
+                            f"simulation -- simulated NanoAOD's (run, "
+                            f"luminosityBlock, event) key is not a genuine unique "
+                            f"event identifier the way it is for real data, so "
+                            f"applying dedup would silently delete real signal "
+                            f"events. Aborting rather than risk that."
+                        )
                     working_events, n_dropped = deduplicator.filter_new(working_events)
                     if n_dropped:
                         self.logger.info(
@@ -348,6 +498,47 @@ class ParsingHandler(StateHandler):
                         f"record."
                     )
 
+            # ---- genEventSumw aggregation (implementation task 5, Part A) ----
+            # Only for the files that ACTUALLY succeeded at Events-tree
+            # parsing above (processed_urls) -- reading the Runs tree of a
+            # file that failed to parse would sum weights for events never
+            # actually included in the output, silently biasing task 6's
+            # normalization denominator relative to its numerator. If every
+            # file in this record were data, read_event_weights would have
+            # already raised (SimulationFieldRequestedOnDataError) for the
+            # very first file, well before reaching this point -- so by
+            # construction, reaching here with read_event_weights enabled
+            # means every processed file in this record is simulation.
+            if parsing_config.read_event_weights and processed_urls[release_year]:
+                # Consistency rule: the genWeight numerator (computed
+                # downstream, in studies/hgg_cms/) and this genEventSumw
+                # denominator must come from the identical file set --
+                # aggregate_sumw_for_processed_files raises loudly (aborting
+                # this record) rather than silently omitting a file whose
+                # Events parsed but whose Runs tree could not be read.
+                agg = aggregate_sumw_for_processed_files(processed_urls[release_year])
+                sumw_by_record[release_year] = {
+                    **agg,
+                    "n_files_failed": file_counts[release_year][1],
+                }
+                self.logger.info(
+                    f"Record {record_key}: genEventSumw={agg['genEventSumw']:.6g} "
+                    f"genEventCount={agg['genEventCount']} "
+                    f"genEventSumw2={agg['genEventSumw2']:.6g} "
+                    f"over {agg['n_files_processed']} processed file(s) "
+                    f"({file_counts[release_year][1]} file(s) failed and are NOT "
+                    f"included in this sum -- see 'processed_files' for exactly "
+                    f"which files this sum covers)."
+                )
+                if file_counts[release_year][1] > 0:
+                    self.logger.warning(
+                        f"Record {record_key}: {file_counts[release_year][1]} file(s) "
+                        f"failed to parse. genEventSumw above covers ONLY the "
+                        f"{agg['n_files_processed']} successfully processed "
+                        f"file(s), not the full record -- use it only alongside a "
+                        f"genWeight sum computed from that same processed-file set."
+                    )
+
         # Flush remaining events
         final_chunk = self.accumulator.flush()
         if final_chunk:
@@ -391,10 +582,74 @@ class ParsingHandler(StateHandler):
         if deduplicator is not None:
             self.logger.info(deduplicator.summary())
 
+        # ---- Per-run validated-runs filter report ----
+        if validated_runs is not None:
+            for ry, per_run in validated_runs_report.items():
+                total_before = sum(c["before"] for c in per_run.values())
+                total_after = sum(c["after"] for c in per_run.values())
+                pct = 100.0 * total_after / total_before if total_before else 0.0
+                self.logger.info(
+                    f"Validated-runs filter {ry}: {total_after:,} / {total_before:,} "
+                    f"events kept ({pct:.1f}%) across {len(per_run)} run(s)"
+                )
+                for run in sorted(per_run):
+                    counts = per_run[run]
+                    if counts["before"] != counts["after"]:
+                        self.logger.info(
+                            f"  run {run}: {counts['after']:,} / {counts['before']:,} events kept"
+                        )
+
+        # ---- HLT trigger requirement report ----
+        for ry, tr in trigger_report.items():
+            pct = 100.0 * tr["n_after"] / tr["n_before"] if tr["n_before"] else 0.0
+            self.logger.info(
+                f"Trigger requirement {ry}: {tr['n_after']:,} / {tr['n_before']:,} "
+                f"events kept ({pct:.1f}%)"
+            )
+            for path, n_passed in sorted(tr["per_path"].items()):
+                self.logger.info(f"  {path}: {n_passed:,} / {tr['n_before']:,} events passed")
+
+        # ---- genEventSumw aggregation report (implementation task 5) ----
+        for ry, sw in sumw_by_record.items():
+            self.logger.info(
+                f"genEventSumw {ry}: {sw['genEventSumw']:.6g} over "
+                f"{sw['n_files_processed']} processed file(s) "
+                f"({sw['n_files_failed']} file(s) failed, NOT included)"
+            )
+
         # Create parsing statistics
         end_time = datetime.now()
         stats_summary = stats_collector.get_summary()
-        
+
+        # ---- Skipped-file failure-reason breakdown (implementation task 3,
+        # Part B3 -- "count ALL skipped files and their failure reasons").
+        # Purely additive: a new log line only, using a new
+        # ParsingStatisticsCollector.get_summary() key computed from data
+        # (file_url, exception) that was already being collected for every
+        # existing configuration; does not touch parsed_files, parsing_stats,
+        # or any other value written to an output file. ----
+        if stats_summary["failure_reason_counts"]:
+            self.logger.info(
+                f"Skipped-file failure reasons: {stats_summary['failure_reason_counts']}"
+            )
+
+        # ---- Branch-accessibility-probe retry report (implementation
+        # task 5, Part B). Purely additive: a new log line only, using new
+        # ParsingStatisticsCollector.get_summary() keys. Zero for every run
+        # where every probe succeeded on its first attempt -- i.e. every
+        # run today, since this project's real files always have had every
+        # requested branch accessible on the first try in every check so
+        # far; nonzero only under the transient-read-failure conditions
+        # this fix targets. ----
+        if stats_summary["n_probe_retries"] or stats_summary["n_probe_final_failures"]:
+            self.logger.info(
+                f"Branch-accessibility-probe retries: {stats_summary['n_probe_retries']} "
+                f"retr{'y' if stats_summary['n_probe_retries'] == 1 else 'ies'}, "
+                f"{stats_summary['n_probe_final_failures']} branch(es) still inaccessible "
+                f"after retries, across {len(stats_summary['files_with_probe_retries'])} "
+                f"file(s): {stats_summary['files_with_probe_retries']}"
+            )
+
         parsing_stats = ParsingStatistics(
             total_files=stats_summary["total_files"],
             successful_files=stats_summary["successful_files"],
@@ -407,7 +662,8 @@ class ParsingHandler(StateHandler):
             max_memory_mb=0.0,  # TODO: track memory
             total_time_sec=(end_time - start_time).total_seconds(),
             start_time=start_time,
-            end_time=end_time
+            end_time=end_time,
+            sumw_by_record=(sumw_by_record or None)
         )
         
         self.logger.info(

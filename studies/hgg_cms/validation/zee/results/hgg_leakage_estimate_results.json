@@ -1,0 +1,99 @@
+{
+  "dy_cross_section_pb": 6077.22,
+  "luminosity_fb": 16.393380531,
+  "normalization_formula": "N_expected = DY_CROSS_SECTION_PB * 1000 (pb->fb) * L_fb * (Sum genWeight_selected_in_window_and_category / Sum genEventSumw_over_processed_DY_files); statistical uncertainty = same scale * sqrt(Sum genWeight^2) (correct for signed weights, since squaring removes the sign).",
+  "n_jobs_processed": 41,
+  "missing_chunks_jobs": [],
+  "missing_sumw_jobs": [],
+  "total_genEventSumw_dy_processed": 1220934627963.072,
+  "expected_leakage_by_window_and_category": {
+    "100_105": {
+      "inclusive": {
+        "N_expected": 1609.7553462505982,
+        "statistical_uncertainty": 71.5487934582645,
+        "n_selected_raw": 1205.0,
+        "sum_genWeight": 19727806.9296875
+      },
+      "EBEB": {
+        "N_expected": 432.84071218107687,
+        "statistical_uncertainty": 39.10750143626704,
+        "n_selected_raw": 360.0,
+        "sum_genWeight": 5304531.537109375
+      },
+      "notEBEB": {
+        "N_expected": 1176.9145937484907,
+        "statistical_uncertainty": 59.91522199403096,
+        "n_selected_raw": 845.0,
+        "sum_genWeight": 14423274.8984375
+      }
+    },
+    "105_110": {
+      "inclusive": {
+        "N_expected": 933.6992764326117,
+        "statistical_uncertainty": 55.267938797035505,
+        "n_selected_raw": 719.0,
+        "sum_genWeight": 11442632.6328125
+      },
+      "EBEB": {
+        "N_expected": 274.13245092583037,
+        "statistical_uncertainty": 30.081439250076098,
+        "n_selected_raw": 213.0,
+        "sum_genWeight": 3359536.638671875
+      },
+      "notEBEB": {
+        "N_expected": 659.5668183350564,
+        "statistical_uncertainty": 46.364340029240836,
+        "n_selected_raw": 506.0,
+        "sum_genWeight": 8083095.90625
+      }
+    },
+    "110_115": {
+      "inclusive": {
+        "N_expected": 568.8763643668304,
+        "statistical_uncertainty": 42.84012154986545,
+        "n_selected_raw": 432.0,
+        "sum_genWeight": 6971670.017578125
+      },
+      "EBEB": {
+        "N_expected": 154.5859676684852,
+        "statistical_uncertainty": 22.29470556212091,
+        "n_selected_raw": 117.0,
+        "sum_genWeight": 1894475.537109375
+      },
+      "notEBEB": {
+        "N_expected": 414.2903974952036,
+        "statistical_uncertainty": 36.581717697871454,
+        "n_selected_raw": 315.0,
+        "sum_genWeight": 5077194.490234375
+      }
+    },
+    "135_180": {
+      "inclusive": {
+        "N_expected": 768.8075807736608,
+        "statistical_uncertainty": 51.446145867104356,
+        "n_selected_raw": 623.0,
+        "sum_genWeight": 9421858.765625
+      },
+      "EBEB": {
+        "N_expected": 220.5426507132155,
+        "statistical_uncertainty": 27.421767324187456,
+        "n_selected_raw": 177.0,
+        "sum_genWeight": 2702785.142578125
+      },
+      "notEBEB": {
+        "N_expected": 548.2649000985725,
+        "statistical_uncertainty": 43.5287553971709,
+        "n_selected_raw": 446.0,
+        "sum_genWeight": 6719073.255859375
+      }
+    }
+  },
+  "comparison_to_part_b_excess": {
+    "N_expected_leakage_100_105_inclusive": 1609.7553462505982,
+    "N_expected_leakage_100_105_inclusive_stat_unc": 71.5487934582645,
+    "part_b_excess_100_105": 1604,
+    "fraction_of_part_b_excess_explained": 1.0035881211038642,
+    "verdict_fully_partly_no": "fully",
+    "part_b_excess_note": "Part B's flagged excess = observed 100-105 total (49,521) minus the power-law extrapolation's prediction (47,917 -- chi2/ndf=1.10, the better of the two fits)."
+  }
+}

@@ -1,0 +1,467 @@
+{
+  "fit_ranges": {
+    "105_180": {
+      "part1": {
+        "EBEB": {
+          "n_events_total_in_range": 66347,
+          "n_sideband_total": 66347,
+          "n_events_raw_selection": 90336,
+          "n_bins_total": 300,
+          "n_bins_sideband": 220
+        },
+        "notEBEB": {
+          "n_events_total_in_range": 66683,
+          "n_sideband_total": 66683,
+          "n_events_raw_selection": 92215,
+          "n_bins_total": 300,
+          "n_bins_sideband": 220
+        }
+      },
+      "part2_summary": {
+        "EBEB": {
+          "bernstein": {
+            "orders_tried": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "ftest_selected_order": 4,
+            "final_selected_order": 4,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.442689075726967,
+            "nll_at_final_order": -334014.92582451215,
+            "n_params_at_final_order": 5,
+            "cross_check_final_order": {
+              "scipy_nll": -334014.92582461453,
+              "migrad_nll": -334014.92582451215,
+              "improvement": 1.0238727554678917e-07,
+              "relative_improvement": 3.0653503071471224e-13,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          },
+          "expsum": {
+            "orders_tried": [
+              1,
+              2,
+              3
+            ],
+            "ftest_selected_order": 2,
+            "final_selected_order": 2,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.4776996475483923,
+            "nll_at_final_order": -334015.3527764013,
+            "n_params_at_final_order": 4,
+            "cross_check_final_order": {
+              "scipy_nll": -334015.35277744406,
+              "migrad_nll": -334015.3527764013,
+              "improvement": 1.0427320376038551e-06,
+              "relative_improvement": 3.1218087100980877e-12,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          },
+          "powersum": {
+            "orders_tried": [
+              1,
+              2,
+              3
+            ],
+            "ftest_selected_order": 1,
+            "final_selected_order": 1,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.4816816793953531,
+            "nll_at_final_order": -334014.5931751554,
+            "n_params_at_final_order": 2,
+            "cross_check_final_order": {
+              "scipy_nll": -334014.59317517286,
+              "migrad_nll": -334014.5931751554,
+              "improvement": 1.7462298274040222e-08,
+              "relative_improvement": 5.2280045934649e-14,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          },
+          "laurent": {
+            "orders_tried": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "ftest_selected_order": 2,
+            "final_selected_order": 2,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.4973727578976909,
+            "nll_at_final_order": -334014.8919261025,
+            "n_params_at_final_order": 2,
+            "cross_check_final_order": {
+              "scipy_nll": -334014.8919261214,
+              "migrad_nll": -334014.8919261025,
+              "improvement": 1.885928213596344e-08,
+              "relative_improvement": 5.6462399108048956e-14,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          }
+        },
+        "notEBEB": {
+          "bernstein": {
+            "orders_tried": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "ftest_selected_order": 5,
+            "final_selected_order": 5,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.6721394663354812,
+            "nll_at_final_order": -337228.45887266437,
+            "n_params_at_final_order": 6,
+            "cross_check_final_order": {
+              "scipy_nll": -337228.4588731641,
+              "migrad_nll": -337228.45887266437,
+              "improvement": 4.997127689421177e-07,
+              "relative_improvement": 1.4818226510675557e-12,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          },
+          "expsum": {
+            "orders_tried": [
+              1,
+              2,
+              3
+            ],
+            "ftest_selected_order": 2,
+            "final_selected_order": 2,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.5930456359812951,
+            "nll_at_final_order": -337225.4214827348,
+            "n_params_at_final_order": 4,
+            "cross_check_final_order": {
+              "scipy_nll": -337225.4215801126,
+              "migrad_nll": -337225.4214827348,
+              "improvement": 9.737780783325434e-05,
+              "relative_improvement": 2.887617647717578e-10,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          },
+          "powersum": {
+            "orders_tried": [
+              1,
+              2,
+              3
+            ],
+            "ftest_selected_order": 2,
+            "final_selected_order": 2,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.700984345882906,
+            "nll_at_final_order": -337228.37628614844,
+            "n_params_at_final_order": 4,
+            "cross_check_final_order": {
+              "scipy_nll": -337228.3762862702,
+              "migrad_nll": -337228.37628614844,
+              "improvement": 1.2177042663097382e-07,
+              "relative_improvement": 3.6109187480607487e-13,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          },
+          "laurent": {
+            "orders_tried": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "ftest_selected_order": 3,
+            "final_selected_order": 3,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.6150416520695915,
+            "nll_at_final_order": -337225.6034704141,
+            "n_params_at_final_order": 3,
+            "cross_check_final_order": {
+              "scipy_nll": -337225.6034704601,
+              "migrad_nll": -337225.6034704141,
+              "improvement": 4.598405212163925e-08,
+              "relative_improvement": 1.3635990757645298e-13,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          }
+        }
+      }
+    },
+    "110_180": {
+      "part1": {
+        "EBEB": {
+          "n_events_total_in_range": 47365,
+          "n_sideband_total": 47365,
+          "n_events_raw_selection": 90336,
+          "n_bins_total": 280,
+          "n_bins_sideband": 200
+        },
+        "notEBEB": {
+          "n_events_total_in_range": 46972,
+          "n_sideband_total": 46972,
+          "n_events_raw_selection": 92215,
+          "n_bins_total": 280,
+          "n_bins_sideband": 200
+        }
+      },
+      "part2_summary": {
+        "EBEB": {
+          "bernstein": {
+            "orders_tried": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "ftest_selected_order": 4,
+            "final_selected_order": 4,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.4439223010451308,
+            "nll_at_final_order": -222818.2667735021,
+            "n_params_at_final_order": 5,
+            "cross_check_final_order": {
+              "scipy_nll": -222818.2667735021,
+              "migrad_nll": -222818.2667735021,
+              "improvement": 0.0,
+              "relative_improvement": 0.0,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          },
+          "expsum": {
+            "orders_tried": [
+              1,
+              2,
+              3
+            ],
+            "ftest_selected_order": 2,
+            "final_selected_order": 2,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.4417789541456359,
+            "nll_at_final_order": -222817.7732595349,
+            "n_params_at_final_order": 4,
+            "cross_check_final_order": {
+              "scipy_nll": -222817.7732619531,
+              "migrad_nll": -222817.7732595349,
+              "improvement": 2.41817906498909e-06,
+              "relative_improvement": 1.0852720721575609e-11,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          },
+          "powersum": {
+            "orders_tried": [
+              1,
+              2,
+              3
+            ],
+            "ftest_selected_order": 1,
+            "final_selected_order": 1,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.45380272024000845,
+            "nll_at_final_order": -222817.17814904288,
+            "n_params_at_final_order": 2,
+            "cross_check_final_order": {
+              "scipy_nll": -222817.17814904332,
+              "migrad_nll": -222817.17814904288,
+              "improvement": 4.3655745685100555e-10,
+              "relative_improvement": 1.959263017678966e-15,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          },
+          "laurent": {
+            "orders_tried": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "ftest_selected_order": 2,
+            "final_selected_order": 2,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.46423983042761796,
+            "nll_at_final_order": -222817.3564956615,
+            "n_params_at_final_order": 2,
+            "cross_check_final_order": {
+              "scipy_nll": -222817.3564956615,
+              "migrad_nll": -222817.3564956615,
+              "improvement": 0.0,
+              "relative_improvement": 0.0,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          }
+        },
+        "notEBEB": {
+          "bernstein": {
+            "orders_tried": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "ftest_selected_order": 3,
+            "final_selected_order": 3,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.8152548996076098,
+            "nll_at_final_order": -221004.36990572113,
+            "n_params_at_final_order": 4,
+            "cross_check_final_order": {
+              "scipy_nll": -221004.36990572113,
+              "migrad_nll": -221004.36990572113,
+              "improvement": 0.0,
+              "relative_improvement": 0.0,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          },
+          "expsum": {
+            "orders_tried": [
+              1,
+              2,
+              3
+            ],
+            "ftest_selected_order": 2,
+            "final_selected_order": 2,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.7989399718679566,
+            "nll_at_final_order": -221003.93990087142,
+            "n_params_at_final_order": 4,
+            "cross_check_final_order": {
+              "scipy_nll": -221003.93990990188,
+              "migrad_nll": -221003.93990087142,
+              "improvement": 9.03045292943716e-06,
+              "relative_improvement": 4.086104950657286e-11,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          },
+          "powersum": {
+            "orders_tried": [
+              1,
+              2,
+              3
+            ],
+            "ftest_selected_order": 1,
+            "final_selected_order": 1,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.7670285258792747,
+            "nll_at_final_order": -221001.9158501087,
+            "n_params_at_final_order": 2,
+            "cross_check_final_order": {
+              "scipy_nll": -221001.91585011518,
+              "migrad_nll": -221001.9158501087,
+              "improvement": 6.490154191851616e-09,
+              "relative_improvement": 2.936695895547561e-14,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          },
+          "laurent": {
+            "orders_tried": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "ftest_selected_order": 2,
+            "final_selected_order": 2,
+            "gof_override_used": false,
+            "dropped_family_fails_gof_everywhere": false,
+            "gof_p_at_final_order": 0.7801247424938278,
+            "nll_at_final_order": -221002.30480870884,
+            "n_params_at_final_order": 2,
+            "cross_check_final_order": {
+              "scipy_nll": -221002.30480878288,
+              "migrad_nll": -221002.30480870884,
+              "improvement": 7.404014468193054e-08,
+              "relative_improvement": 3.350197851828598e-13,
+              "scipy_found_better": false,
+              "scipy_converged": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "part3_bias_study_status": {
+    "status": "PENDING -- pipeline built, unit-tested (22 tests, tests/test_background_model.py), and timed; NOT executed at full scale (see timing_test below)",
+    "timing_test": {
+      "method": "measured directly on this laptop before committing to a local run, per this task's own instruction",
+      "strategy_used": "iminuit MIGRAD strategy=1 for every toy fit (background-only and S+B), after a first attempt at strategy=0 gave an unacceptable ~10-70% per-combination fit-invalidity rate (is_above_max_edm) on this problem's mixed-scale parameters",
+      "measured_rate_sec_per_toy_pair": 0.05,
+      "measurement_basis": "100 toys x 8 test functions = 800 toy-pairs in 39.9s on one representative (category, truth family) combination; a smaller 4-combination x 20-30 toy cross-check gave per-toy-pair times in the same 0.03-0.10s range",
+      "full_grid_toy_pairs": {
+        "mass_125_toys_per_combo": 1000,
+        "other_4_masses_toys_per_combo": 300,
+        "combos_per_category": "12 truth variants (4 families x 3 leakage variants) x 8 test functions (4 families x [selected order, selected order + 1]) = 96",
+        "categories": 2,
+        "total_toy_pairs": 422400
+      },
+      "extrapolated_total_hours": 5.87,
+      "budget_hours": 3,
+      "decision": "STOP local execution of the full Part 3 grid; prepare PBS cluster jobs instead (not submitted -- see cluster/ scripts and the final chat message for exact commands)."
+    },
+    "pipeline_validated_by": [
+      "a 10-toy and a 100-toy end-to-end smoke run of cluster/run_bias_job.py against the real 105-180 GeV EBEB sideband fit, all 8 test functions, producing sane (if noisy, given the tiny toy count) spurious-S numbers and 0-45% per-test-function fit-failure rates, all correctly counted rather than silently dropped",
+      "the NLL invariant (NLL(S free) <= NLL(S=0) + 1e-6) held on every non-failed toy in that smoke run"
+    ],
+    "cluster_scripts": [
+      "cluster/make_job_list.py",
+      "cluster/run_bias_job.py",
+      "cluster/pbs_hgg_bias_array.sh",
+      "cluster/submit_bias_study.sh",
+      "cluster/status_bias_study.sh",
+      "cluster/merge_bias_results.py",
+      "cluster/plot_bias_heatmap.py"
+    ],
+    "exact_commands": "See BACKGROUND_MODEL_REPORT.md Part 3 and the final chat message."
+  },
+  "part4_robustness_status": {
+    "order_selection_110_180": "COMPLETE (see fit_ranges.110_180 above) -- no family dropped, orders selected for all 4 families in both categories",
+    "reduced_bias_check": {
+      "status": "PENDING -- depends on knowing the chosen function + 2 runners-up from the main (105-180) bias study, which is itself pending",
+      "cluster_scripts": [
+        "cluster/make_job_list_part4.py (ready)",
+        "cluster/pbs_hgg_bias_array.sh (reused, with FIT_RANGE=110_180 and TEST_FUNCTIONS set)"
+      ]
+    }
+  }
+}

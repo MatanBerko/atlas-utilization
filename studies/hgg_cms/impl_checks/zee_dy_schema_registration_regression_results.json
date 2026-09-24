@@ -1,0 +1,23 @@
+{
+  "description": "Regression proof for registering CMS record 35669 (DYJetsToLL_M-50, the Z->ee control region's DY simulation) in services.parsing.schemas.RECORD_ID_TO_SCHEMA as 'cms-nanoaod' -- the Z->ee pilot's DY subjobs failed with 'record ID 35669 ... is not registered' before this fix (the 8 H->gamma-gamma records were registered when task 6 started, but 35669 was only found and used later, in the Z->ee follow-up task, and was missed at that time). Same method as every prior addition to this mapping: FileParser._parse_opened_file run on real files, once with schemas.py BEFORE this addition (git stash of just that one file) and once AFTER (working tree with the addition), same repo checkout otherwise.",
+  "commit_under_test": "857f23c (feature/hgg-selection-and-output, HEAD at the start of this fix)",
+  "max_events_per_file": 2000,
+  "file_level_comparison": {
+    "30529": {"dataset": "/SingleElectron/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD", "status": "IDENTICAL"},
+    "30530": {"dataset": "/SingleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD", "status": "IDENTICAL"},
+    "30522": {"dataset": "/DoubleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD", "status": "IDENTICAL"},
+    "30555": {"dataset": "/DoubleMuon/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD", "status": "IDENTICAL"},
+    "atlas_2024r-pp": {
+      "dataset": "ATLAS DAOD_PHYSLITE mc20_13TeV, dsid 301204",
+      "status": "NOT INDEPENDENTLY RE-RUN THIS SESSION",
+      "reason": "This laptop environment has no XRootD/rucio client installed (fsspec_xrootd/XRootD both absent -- confirmed directly) and ATLAS rucio storage has no plain-HTTPS mirror equivalent to CERN Open Data's opendata.cern.ch redirector used for the 4 CMS files above, so this file could not be opened from here. Not re-run, not assumed passing by default -- the four CMS comparisons above WERE run for real, live, this session."
+    }
+  },
+  "why_atlas_is_still_safe_by_construction": "This change adds exactly one new dict entry (35669: 'cms-nanoaod') to RECORD_ID_TO_SCHEMA and touches no other line, no other file. It cannot affect ATLAS's own 'record_2024r-pp'-keyed schema lookup or any other already-registered record's lookup -- a dict lookup for an existing key is unaffected by an unrelated key being added. This is the identical reasoning the original 8-record H->gamma-gamma registration's own regression proof already used and verified for the ATLAS path specifically (schema_registration_regression_results.json's own 'atlas_2024r-pp: IDENTICAL' result, for the exact same class of change) -- not re-derived here, but not a new assumption either.",
+  "notes": [
+    "Schema registration only adds a dict entry for a record ID none of the 4 CMS test files/records use, so it cannot affect their output by construction -- confirmed directly (not just assumed) for the 4 CMS files above.",
+    "UnregisteredRecordSchemaError's new-error-path behavior is unchanged for these 4 records -- all were already registered before this fix, so that path is not reached by them either way.",
+    "record_schema_evidence.json's own '35669' entry documents the direct branch-format check (flat NanoAOD naming, run/luminosityBlock/event and genWeight all present) that justified adding this record as 'cms-nanoaod' in the first place."
+  ],
+  "overall_verdict": "IDENTICAL for all 4 CMS datasets (verified live, this session); ATLAS path unaffected by construction, consistent with the identical reasoning already verified for the original 8-record registration -- not independently re-run this session due to no rucio/XRootD access from this environment."
+}

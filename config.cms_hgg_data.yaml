@@ -1,0 +1,117 @@
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: cms_hgg_data
+  histogram_filename: cms_hgg_data.root
+run_metadata:
+  run_name: cms_hgg_data
+  base_output_dir: /storage/agrp/berkom/atlas-utilization/output/cms_hgg_data
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: false
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years: []
+  # DoubleEG, the H->gamma-gamma trigger stream: Run2016G (30521) + Run2016H
+  # (30554). NOT combined with the signal records in the same run/config --
+  # see docs/CMS_KNOWN_LIMITATIONS.md's "H->gamma-gamma configs" section for
+  # why: validated_runs_json's simulation guard must never see a simulation
+  # record, and read_event_weights must never be requested on a data record
+  # (both would raise); keeping data and simulation in separate configs
+  # makes this true by construction rather than by careful bookkeeping
+  # inside one shared config.
+  specific_record_ids:
+  - 30521
+  - 30554
+  parse_mc: false
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 8
+  env_threshold_memory_mb: 8000
+  chunk_yield_threshold_bytes: 2147483648
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  max_files_to_process: null
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  create_dirs: true
+  show_progress_bar: true
+  # CMS-certified good-for-physics lumisections (data only -- see the
+  # simulation guard in services/parsing/validated_runs.py, which would
+  # raise if this were ever applied to a simulation record).
+  validated_runs_json: data/cms/validated_runs/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt
+  # The H->gamma-gamma diphoton trigger, required in data AND simulation
+  # (see config.cms_hgg_signal.yaml) -- design doc Section 2 step 1.
+  trigger_requirements:
+    mode: any
+    paths:
+    - HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90
+  # Pileup info for data: PV_npvsGood only (Pileup_nTrueInt is simulation-only
+  # and is simply not requested for a data record -- see
+  # services/parsing/mc_weights.py). read_event_weights is deliberately
+  # NOT set here: genWeight does not exist in data, and requesting it would
+  # raise SimulationFieldRequestedOnDataError.
+  read_pileup_info: true
+  read_event_weights: false
+  # Photon ID/shower-shape/isolation fields needed for the H->gamma-gamma
+  # analysis-layer selection (trigger-mimicking cuts, category) -- see
+  # studies/hgg_cms/selection.py and physics_checks/common.py.
+  extra_object_fields:
+    Photons:
+    - electronVeto
+    - mvaID_WP90
+    - isScEtaEB
+    - isScEtaEE
+    - r9
+    - hoe
+    - sieie
+    - pfRelIso03_all
+    - pfRelIso03_chg
+    - mvaID
+    - cutBased
+    - pixelSeed
+  # No selection_by_record (no trigger-stream combination for a single
+  # DoubleEG stream) -- de-duplication is therefore never switched on for
+  # this config (orchestration/handlers/parsing_handler.py:
+  # "deduplicator = EventDeduplicator() if sel_by_record else None").
+  #
+  # particle_counts and kinematic_cuts below list ONLY "photons" --
+  # Electrons/Muons/Jets/Taus are read with their default schema fields
+  # (pt/eta/phi/mass) but have NO cut or count requirement applied at all
+  # (services/calculations/physics_calcs.py's filter_events_by_kinematics
+  # and filter_events_by_particle_counts only touch a collection that is
+  # explicitly listed in these blocks; an unlisted collection passes
+  # through completely untouched) -- confirmed by direct code reading, not
+  # by observing zero effect after the fact.
+  particle_counts:
+    photons:
+      min: 2
+      max: 20
+  kinematic_cuts:
+    photons:
+      pt:
+        min: 20.0
+      bool_require:
+      - electronVeto
+      - mvaID_WP90
+      bool_any_of:
+      - isScEtaEB
+      - isScEtaEE

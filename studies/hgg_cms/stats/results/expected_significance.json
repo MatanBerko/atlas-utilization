@@ -1,0 +1,708 @@
+{
+  "part_3_1_asimov_breakdown": {
+    "a_statistical_only": {
+      "floating_nuisances": [],
+      "q0": 16.442431204020977,
+      "Z": 4.054926781585702,
+      "mu_hat": 1.0,
+      "invariant_ok": true,
+      "both_valid": true,
+      "cross_check_null": {
+        "scipy_nll": -1081034.1409316156,
+        "migrad_nll": -1081033.6254715277,
+        "improvement": 0.5154600879177451,
+        "relative_improvement": 4.768215120902558e-07,
+        "scipy_found_better": false,
+        "scipy_converged": true
+      },
+      "cross_check_alt": {
+        "scipy_nll": -1081041.8466871297,
+        "migrad_nll": -1081041.8466871297,
+        "improvement": 0.0,
+        "relative_improvement": 0.0,
+        "scipy_found_better": false,
+        "scipy_converged": true
+      },
+      "elapsed_sec": 40.70586609840393
+    },
+    "b_plus_spurious_only": {
+      "floating_nuisances": [
+        "theta_spur_EBEB",
+        "theta_spur_notEBEB"
+      ],
+      "q0": 15.296484127175063,
+      "Z": 3.911071992072642,
+      "mu_hat": 1.0,
+      "invariant_ok": true,
+      "both_valid": true,
+      "cross_check_null": {
+        "scipy_nll": -1081034.199289844,
+        "migrad_nll": -1081034.198445066,
+        "improvement": 0.0008447777945548296,
+        "relative_improvement": 7.814533488116638e-10,
+        "scipy_found_better": false,
+        "scipy_converged": true
+      },
+      "cross_check_alt": {
+        "scipy_nll": -1081041.8466871297,
+        "migrad_nll": -1081041.8466871297,
+        "improvement": 0.0,
+        "relative_improvement": 0.0,
+        "scipy_found_better": false,
+        "scipy_converged": true
+      },
+      "elapsed_sec": 37.26448154449463
+    },
+    "c_full_model": {
+      "floating_nuisances": [
+        "theta_ID",
+        "theta_lumi",
+        "theta_mcstat_EBEB",
+        "theta_mcstat_notEBEB",
+        "theta_pileup_EBEB",
+        "theta_pileup_notEBEB",
+        "theta_res",
+        "theta_scale",
+        "theta_spur_EBEB",
+        "theta_spur_notEBEB",
+        "theta_theory",
+        "theta_trigger_EBEB",
+        "theta_trigger_notEBEB"
+      ],
+      "q0": 15.295078025199473,
+      "Z": 3.9108922287886525,
+      "mu_hat": 1.0,
+      "invariant_ok": true,
+      "both_valid": true,
+      "cross_check_null": {
+        "scipy_nll": -1081034.199148117,
+        "migrad_nll": -1081034.199148117,
+        "improvement": 0.0,
+        "relative_improvement": 0.0,
+        "scipy_found_better": false,
+        "scipy_converged": true
+      },
+      "cross_check_alt": {
+        "scipy_nll": -1081041.8466871297,
+        "migrad_nll": -1081041.8466871297,
+        "improvement": 0.0,
+        "relative_improvement": 0.0,
+        "scipy_found_better": false,
+        "scipy_converged": true
+      },
+      "elapsed_sec": 53.95802640914917
+    },
+    "c_per_category": {
+      "EBEB": {
+        "q0": 13.907612133771181,
+        "Z": 3.729291103382945,
+        "mu_hat": 1.0,
+        "invariant_ok": true,
+        "both_valid": true,
+        "elapsed_sec": 13.009497165679932
+      },
+      "notEBEB": {
+        "q0": 1.3879412359092385,
+        "Z": 1.178109178263729,
+        "mu_hat": 1.0,
+        "invariant_ok": true,
+        "both_valid": true,
+        "elapsed_sec": 13.54770565032959
+      }
+    },
+    "cost_of_option_C_pct": -3.547654427851463,
+    "per_category_quadrature_sum_check": {
+      "quadrature_sum_of_isolated_Z": 3.9109530001881154,
+      "combined_Z": 3.9108922287886525,
+      "consistent": true,
+      "note": "An earlier version of the per-category isolation zeroed the other category's DATA but still summed the two-category NLL, which does not decouple the shared mu -- fixed to use a genuine single-category NLL (Poisson term for one category + full Gaussian constraint term). This check (quadrature sum of isolated Z == combined Z, expected exactly at the Asimov point since all nuisances sit at their unconstrained optimum of theta=0) now passes."
+    }
+  },
+  "part_3_2_mu_uncertainty_breakdown": {
+    "sigma_mu_stat_only": 0.24954043995787423,
+    "sigma_mu_plus_spurious": 0.2583776903748376,
+    "sigma_mu_plus_signal_norm": 0.3257045024119165,
+    "sigma_mu_full": 0.32799410725016287,
+    "component_spurious": 0.06699701268762673,
+    "component_signal_norm_theory_lumi_id_trigger": 0.1983037871750277,
+    "component_energy_scale_resolution": 0.03868735580828994
+  },
+  "part_3_4_mass_scan": {
+    "scan": [
+      {
+        "mH": 110.0,
+        "Z": 0.11983162578020867,
+        "mu_hat": 0.04877657487600118,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 110.5,
+        "Z": 0.016077391796799352,
+        "mu_hat": 0.015341974292436333,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 111.0,
+        "Z": 0.0,
+        "mu_hat": -0.018117727976108,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 111.5,
+        "Z": 0.0,
+        "mu_hat": -0.05763769177590916,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 112.0,
+        "Z": 0.0,
+        "mu_hat": -0.09538035224198893,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 112.5,
+        "Z": 0.0,
+        "mu_hat": -0.13668598088694495,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 113.0,
+        "Z": 0.0,
+        "mu_hat": -0.1819610749890046,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 113.5,
+        "Z": 0.0,
+        "mu_hat": -0.2192205369735234,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 114.0,
+        "Z": 0.0,
+        "mu_hat": -0.2621114789767418,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 114.5,
+        "Z": 0.0,
+        "mu_hat": -0.2963984998810858,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 115.0,
+        "Z": 0.0,
+        "mu_hat": -0.33824155968130754,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 115.5,
+        "Z": 0.0,
+        "mu_hat": -0.3624458584077779,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 116.0,
+        "Z": 0.0,
+        "mu_hat": -0.3824459620034766,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 116.5,
+        "Z": 0.0,
+        "mu_hat": -0.40075466380977076,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 117.0,
+        "Z": 0.0,
+        "mu_hat": -0.40287563146699057,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 117.5,
+        "Z": 0.0,
+        "mu_hat": -0.40478654557185934,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 118.0,
+        "Z": 0.0,
+        "mu_hat": -0.3954680994239155,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 118.5,
+        "Z": 0.0,
+        "mu_hat": -0.3762233554444485,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 119.0,
+        "Z": 0.0,
+        "mu_hat": -0.35032804063359535,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 119.5,
+        "Z": 0.0,
+        "mu_hat": -0.31425601017752314,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 120.0,
+        "Z": 0.0,
+        "mu_hat": -0.26439891070486254,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 120.5,
+        "Z": 0.0,
+        "mu_hat": -0.19692994638930017,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 121.0,
+        "Z": 0.0,
+        "mu_hat": -0.11029560051565213,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 121.5,
+        "Z": 0.0,
+        "mu_hat": -0.001726503053337325,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 122.0,
+        "Z": 0.5129563039692602,
+        "mu_hat": 0.14055551986565362,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 122.5,
+        "Z": 1.144094034366716,
+        "mu_hat": 0.30905187893178265,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 123.0,
+        "Z": 1.8649101077815937,
+        "mu_hat": 0.503748176707628,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 123.5,
+        "Z": 2.6029421572895695,
+        "mu_hat": 0.6983574868718208,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 124.0,
+        "Z": 3.2521477145608353,
+        "mu_hat": 0.8558758868408667,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 124.5,
+        "Z": 3.7100928325307736,
+        "mu_hat": 0.9622381818334276,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 125.0,
+        "Z": 3.906250075697898,
+        "mu_hat": 0.9966355001020659,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 125.5,
+        "Z": 3.810359640998671,
+        "mu_hat": 0.9723703305999791,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 126.0,
+        "Z": 3.4321979772727285,
+        "mu_hat": 0.8781100761411693,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 126.5,
+        "Z": 2.8239875073227836,
+        "mu_hat": 0.7237045051572153,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 127.0,
+        "Z": 2.0778489057172402,
+        "mu_hat": 0.532279854501887,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 127.5,
+        "Z": 1.3059909576465516,
+        "mu_hat": 0.33019752986075446,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 128.0,
+        "Z": 0.5998853908666479,
+        "mu_hat": 0.14924884103173852,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 128.5,
+        "Z": 0.0,
+        "mu_hat": 0.0022908021161853753,
+        "invariant_ok": false,
+        "both_valid": true
+      },
+      {
+        "mH": 129.0,
+        "Z": 0.0,
+        "mu_hat": -0.11131933435359187,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 129.5,
+        "Z": 0.0,
+        "mu_hat": -0.19416952348784733,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 130.0,
+        "Z": 0.0,
+        "mu_hat": -0.25706384802844795,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 130.5,
+        "Z": 0.0,
+        "mu_hat": -0.29250535386377763,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 131.0,
+        "Z": 0.0,
+        "mu_hat": -0.31766886917214165,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 131.5,
+        "Z": 0.0,
+        "mu_hat": -0.3352090525922904,
+        "invariant_ok": true,
+        "both_valid": false
+      },
+      {
+        "mH": 132.0,
+        "Z": 0.0,
+        "mu_hat": -0.33949872076153653,
+        "invariant_ok": true,
+        "both_valid": false
+      },
+      {
+        "mH": 132.5,
+        "Z": 0.0,
+        "mu_hat": -0.3389333636415408,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 133.0,
+        "Z": 0.0,
+        "mu_hat": -0.3316298137498137,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 133.5,
+        "Z": 0.0,
+        "mu_hat": -0.3203635012959225,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 134.0,
+        "Z": 0.0,
+        "mu_hat": -0.30542328762124527,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 134.5,
+        "Z": 0.0,
+        "mu_hat": -0.28593475875493013,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 135.0,
+        "Z": 0.0,
+        "mu_hat": -0.2681590130253788,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 135.5,
+        "Z": 0.0,
+        "mu_hat": -0.24763842112684387,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 136.0,
+        "Z": 0.0,
+        "mu_hat": -0.22755304918590724,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 136.5,
+        "Z": 0.0,
+        "mu_hat": -0.20419136382528436,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 137.0,
+        "Z": 0.0,
+        "mu_hat": -0.1859444276732738,
+        "invariant_ok": true,
+        "both_valid": false
+      },
+      {
+        "mH": 137.5,
+        "Z": 0.0,
+        "mu_hat": -0.16493480223358148,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 138.0,
+        "Z": 0.0,
+        "mu_hat": -0.14477885399755053,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 138.5,
+        "Z": 0.0,
+        "mu_hat": -0.12599022426943662,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 139.0,
+        "Z": 0.0,
+        "mu_hat": -0.10708185805646764,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 139.5,
+        "Z": 0.0,
+        "mu_hat": -0.08814487998425236,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 140.0,
+        "Z": 0.0,
+        "mu_hat": -0.06966733954041615,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 140.5,
+        "Z": 0.0,
+        "mu_hat": -0.05297445101732734,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 141.0,
+        "Z": 0.0,
+        "mu_hat": -0.03477344822512407,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 141.5,
+        "Z": 0.0,
+        "mu_hat": -0.018628592487090145,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 142.0,
+        "Z": 0.0,
+        "mu_hat": -0.005078109918063234,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 142.5,
+        "Z": 0.05647238458363716,
+        "mu_hat": 0.01150071775502326,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 143.0,
+        "Z": 0.12962704766237046,
+        "mu_hat": 0.02503752518989799,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 143.5,
+        "Z": 0.1997870958625483,
+        "mu_hat": 0.03851448309927363,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 144.0,
+        "Z": 0.265946221190411,
+        "mu_hat": 0.05002309822515727,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 144.5,
+        "Z": 0.3272993508320544,
+        "mu_hat": 0.06148841283483719,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 145.0,
+        "Z": 0.3842026069506839,
+        "mu_hat": 0.07096749717660344,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 145.5,
+        "Z": 0.4326267316725577,
+        "mu_hat": 0.07696990682310911,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 146.0,
+        "Z": 0.4782390817178216,
+        "mu_hat": 0.08706056175631005,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 146.5,
+        "Z": 0.516721786290255,
+        "mu_hat": 0.09496391520092828,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 147.0,
+        "Z": 0.5473789958076258,
+        "mu_hat": 0.10230174217467436,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 147.5,
+        "Z": 0.574264445481612,
+        "mu_hat": 0.10265611744552317,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 148.0,
+        "Z": 0.5919830529852675,
+        "mu_hat": 0.10484543378921884,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 148.5,
+        "Z": 0.6042665428644594,
+        "mu_hat": 0.10779212457682874,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 149.0,
+        "Z": 0.6092364389812819,
+        "mu_hat": 0.10789560701006806,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 149.5,
+        "Z": 0.6090037176884855,
+        "mu_hat": 0.10620948860335133,
+        "invariant_ok": true,
+        "both_valid": true
+      },
+      {
+        "mH": 150.0,
+        "Z": 0.6033616749226826,
+        "mu_hat": 0.10362617756175396,
+        "invariant_ok": true,
+        "both_valid": true
+      }
+    ]
+  },
+  "part_3_6_110_180_statistical_only": {
+    "Z_statistical_only_110_180": 3.951315810435825,
+    "mu_hat": 1.0,
+    "invariant_ok": true,
+    "both_valid": true,
+    "note": "For information only -- no spurious-signal values exist for the 60-cell grid at 110-180 GeV, so this is statistical-only, not a full-model number."
+  }
+}

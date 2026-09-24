@@ -6,10 +6,11 @@ No orchestration logic, no state management.
 """
 
 import logging
+import time
 import awkward as ak
 import numpy as np
 import itertools
-from typing import Optional
+from typing import Callable, Optional
 
 from services.parsing import schemas
 from services.parsing.root_io import open_root_file
@@ -29,6 +30,79 @@ class PartialFileReadError(RuntimeError):
         )
 
 
+class RequiredScalarBranchMissingError(ValueError):
+    """A declared scalar branch group (e.g. "Trigger", "EventIds", or any
+    ``extra_scalar_branches`` group) is missing one or more of its declared
+    branches in one or more input files.
+
+    Subclasses ``ValueError`` (the type this replaces at the raise site
+    below) so any existing code or test that catches/asserts ``ValueError``
+    is unaffected; the distinct subclass lets ``FileParser.parse_file`` and
+    ``ThreadedFileProcessor.process_files`` deliberately NOT swallow this
+    one as an ordinary per-file parse failure (implementation task 3, Part
+    B3 -- "loud failure for missing required branches", as opposed to e.g. a
+    network error, which keeps today's silent-skip-and-log behaviour
+    exactly).
+
+    ``failures`` is a list of ``(file_path, group_name, missing_branches)``
+    tuples -- usually one entry (raised at a single file), but
+    ``ThreadedFileProcessor.process_files`` aggregates every such error seen
+    while parsing one record into a single instance with multiple entries,
+    so one clear error lists every affected file, not just the first.
+    """
+
+    def __init__(self, failures: list[tuple[str, str, list[str]]]):
+        self.failures = list(failures)
+        lines = [
+            f"  {file_path}: scalar branch group '{group_name}' is missing "
+            f"required branch(es) {sorted(missing)}"
+            for file_path, group_name, missing in self.failures
+        ]
+        super().__init__(
+            f"Required scalar branch(es) missing from {len(self.failures)} "
+            f"file(s); refusing to continue silently with those file(s) "
+            f"skipped:\n" + "\n".join(lines)
+        )
+
+
+class RequiredObjectFieldMissingError(RequiredScalarBranchMissingError):
+    """A per-object (jagged, one-value-per-particle) field requested via
+    ``extra_object_fields`` (implementation task 4) is missing from one or
+    more files' declared object collection -- e.g. ``Photon_electronVeto``
+    requested but not readable in this particular file.
+
+    Subclasses ``RequiredScalarBranchMissingError`` on purpose: it is caught
+    by exactly the same "do not swallow, abort the run" handling already in
+    ``FileParser.parse_file`` and ``ThreadedFileProcessor.process_files``
+    (implementation task 3), with no changes needed to either. ``failures``
+    entries use the collection name (e.g. ``"Photons"``) as the "group
+    name", for a message consistent in shape with the scalar-group case.
+    """
+
+
+class UnregisteredRecordSchemaError(RequiredScalarBranchMissingError):
+    """A CMS record ID (``release_year`` of the form ``"record_<id>"``) has
+    no entry in ``schemas.RECORD_ID_TO_SCHEMA``, so its branch-naming
+    schema is unknown.
+
+    Before implementation task 6, this silently fell back to
+    ``FileParser._auto_detect_branches`` with only a WARNING log line --
+    a fallback ``schemas.RECORD_ID_TO_SCHEMA``'s own comment documents as
+    broken for CMS NanoAOD's flat branch naming (the exact failure mode
+    that silently produced 0 events for the m0m1j0 analysis before its
+    record IDs were registered there). Auto-detection is still attempted
+    for a non-record ``release_year`` with no matching entry in
+    ``RELEASE_SCHEMAS`` (unchanged) -- only the CMS-record-ID case, where
+    auto-detection is known not to work at all, is now a loud, immediate
+    error instead.
+
+    Subclasses ``RequiredScalarBranchMissingError`` so it is caught by the
+    same non-swallowed, run-aborting handling already in
+    ``FileParser.parse_file`` and ``ThreadedFileProcessor.process_files``
+    (implementation task 3), with no further changes needed to either.
+    """
+
+
 class FileParser:
     """
     Service for parsing individual ROOT files.
@@ -44,16 +118,47 @@ class FileParser:
         batch_size: int = 40_000,
         enable_jet_tagging: bool = False,
         jet_btagging_thresholds: Optional[dict[str, float]] = None,
+        extra_scalar_branches: Optional[dict[str, list[str]]] = None,
+        extra_object_fields: Optional[dict[str, list[str]]] = None,
+        read_event_weights: bool = False,
+        read_pileup_info: bool = False,
+        on_probe_retry: Optional[Callable[[], None]] = None,
+        on_probe_final_failure: Optional[Callable[[str], None]] = None,
     ) -> Optional[ak.Array]:
         """
         Parse a single ROOT file and return events.
-        
+
         Args:
             file_path: Path or URI to ROOT file
             tree_names: List of possible tree names to search for
             release_year: Release year identifier (e.g., "2024r-pp")
             batch_size: Number of entries to process per batch
-            
+            extra_scalar_branches: Optional extra scalar (per-event, not
+                per-particle) branch groups to read on top of whatever the
+                schema already declares, e.g.
+                ``{"Trigger": ["HLT_SomeBit"]}``. Merged with the schema's
+                own groups (see ``schemas.get_scalar_branch_groups``);
+                absent/``None`` reproduces today's behaviour exactly.
+            extra_object_fields: Optional extra per-object (jagged,
+                one-value-per-particle) fields to read on top of whatever
+                the schema's default field list for that collection
+                already declares, e.g. ``{"Photons": ["electronVeto",
+                "mvaID_WP90"]}``. Merged with the schema's own default list
+                (see ``_resolve_object_fields``); absent/``None`` reproduces
+                today's behaviour exactly (implementation task 4).
+            read_event_weights: Optional (default False). Adds the
+                per-event ``genWeight`` scalar field -- simulation only;
+                raises if this file looks like real data (implementation
+                task 5, see ``services.parsing.mc_weights``).
+            read_pileup_info: Optional (default False). Adds ``PV_npvsGood``
+                (data and simulation) and, for simulation files only,
+                ``Pileup_nTrueInt`` (implementation task 5).
+            on_probe_retry: Optional callback(), invoked once per branch-
+                accessibility-probe retry (implementation task 5, Part B);
+                purely additive statistics, no effect on parsing.
+            on_probe_final_failure: Optional callback(branch_name), invoked
+                once per branch whose probe still fails after every retry.
+
         Returns:
             Awkward array of events with particle objects, or None if parsing failed
         """
@@ -67,13 +172,21 @@ class FileParser:
                     file_path,
                     enable_jet_tagging,
                     jet_btagging_thresholds,
+                    extra_scalar_branches=extra_scalar_branches,
+                    extra_object_fields=extra_object_fields,
+                    read_event_weights=read_event_weights,
+                    read_pileup_info=read_pileup_info,
+                    on_probe_retry=on_probe_retry,
+                    on_probe_final_failure=on_probe_final_failure,
                 )
         except PartialFileReadError:
+            raise
+        except RequiredScalarBranchMissingError:
             raise
         except Exception as e:
             logging.warning(f"Failed to parse file {file_path}: {e}")
             return None
-    
+
     @staticmethod
     def _parse_opened_file(
         root_file,
@@ -82,30 +195,87 @@ class FileParser:
         batch_size: int,
         file_path: str,
         enable_jet_tagging: bool,
-        jet_btagging_thresholds: Optional[dict[str, float]]
+        jet_btagging_thresholds: Optional[dict[str, float]],
+        extra_scalar_branches: Optional[dict[str, list[str]]] = None,
+        extra_object_fields: Optional[dict[str, list[str]]] = None,
+        read_event_weights: bool = False,
+        read_pileup_info: bool = False,
+        on_probe_retry: Optional[Callable[[], None]] = None,
+        on_probe_final_failure: Optional[Callable[[str], None]] = None,
     ) -> Optional[ak.Array]:
         """Parse an already-opened ROOT file."""
         tree_name = FileParser._get_data_tree_name(root_file.keys(), tree_names)
         tree = root_file[tree_name]
         all_tree_branches = set(tree.keys())
         n_entries = tree.num_entries
-        
+
+        # Simulation weights / pileup info (implementation task 5): the
+        # required field list depends on whether THIS file is data or
+        # simulation (see services.parsing.mc_weights.file_is_simulation),
+        # so it's resolved per file, then merged into whatever
+        # extra_scalar_branches the caller already passed, and handled by
+        # the exact same scalar-branch-group machinery as any other group
+        # (accessibility gate, hard-fail-if-any-declared-branch-missing).
+        if read_event_weights or read_pileup_info:
+            from services.parsing.mc_weights import resolve_weight_and_pileup_groups
+
+            mc_groups = resolve_weight_and_pileup_groups(
+                all_tree_branches, file_path, read_event_weights, read_pileup_info
+            )
+            if mc_groups:
+                merged_extra_scalar = dict(extra_scalar_branches or {})
+                for group_name, branches in mc_groups.items():
+                    merged_extra_scalar[group_name] = list(dict.fromkeys(
+                        list(merged_extra_scalar.get(group_name, [])) + branches
+                    ))
+                extra_scalar_branches = merged_extra_scalar
+
         obj_branches = FileParser._extract_branches_by_schema(
             all_tree_branches,
-            release_year
+            release_year,
+            extra_scalar_branches=extra_scalar_branches,
+            extra_object_fields=extra_object_fields,
+            file_path=file_path,
         )
 
         if not obj_branches:
             logging.warning(f"No particles found in schema for file {file_path}")
             return None
-        
-        obj_branches = FileParser._filter_accessible_branches(tree, obj_branches)
-        
+
+        # Resolved independently of _extract_branches_by_schema's return value
+        # (rather than having that method also return the group-name set) so
+        # its signature/return type stays exactly what existing tests mock.
+        scalar_groups = FileParser._resolve_scalar_groups(release_year, extra_scalar_branches)
+        declared_group_names = frozenset(name for name, branches in scalar_groups.items() if branches)
+
+        obj_branches = FileParser._filter_accessible_branches(
+            tree, obj_branches, scalar_group_names=declared_group_names,
+            file_path=file_path,
+            on_probe_retry=on_probe_retry,
+            on_probe_final_failure=on_probe_final_failure,
+        )
+
         if not obj_branches:
             logging.warning(f"No accessible particles found in file {file_path}")
             return None
-        
-        expects_event_ids = "EventIds" in obj_branches
+
+        # A field requested via extra_object_fields that turns out to be
+        # inaccessible in THIS file is a hard error, not a silent drop --
+        # matching task 3's scalar-group precedent (the object still passes
+        # the pt/eta/phi accessibility gate above on its default fields
+        # alone, so without this check a missing extra field would silently
+        # vanish here with no error at all). Only the extra fields are
+        # required in full; the schema's own default fields keep their
+        # existing (gate-based, not all-or-nothing) accessibility handling.
+        if extra_object_fields:
+            obj_field_failures: list[tuple[str, str, list[str]]] = []
+            for obj_name, declared_extra in extra_object_fields.items():
+                actual_quantities = set(obj_branches.get(obj_name, {}).values())
+                missing = sorted(set(declared_extra) - actual_quantities)
+                if missing:
+                    obj_field_failures.append((file_path, obj_name, missing))
+            if obj_field_failures:
+                raise RequiredObjectFieldMissingError(obj_field_failures)
 
         all_branches = set(itertools.chain.from_iterable(obj_branches.values()))
         obj_events, read_error = FileParser._read_file_in_batches(
@@ -122,26 +292,34 @@ class FileParser:
         if "DirectObjects" in obj_events.keys():
             obj_events.pop("DirectObjects")
 
-        # Pull the scalar per-event identity fields out before zipping the object
-        # collections, then re-attach them as top-level scalar columns. Kept after
-        # the physics objects so events.fields[0] is still a particle collection
-        # (downstream selection code relies on that).
-        event_id_fields = obj_events.pop("EventIds", None)
-        if expects_event_ids and (
-            event_id_fields is None or len(event_id_fields.fields) == 0
-        ):
-            raise ValueError(
-                f"{file_path}: schema declares per-event id branches "
-                f"(run / luminosityBlock / event) but none were readable; "
-                f"refusing to parse so de-duplication never runs on missing keys"
-            )
+        # Pull every declared scalar group's fields out before zipping the
+        # object collections, then re-attach them as top-level scalar
+        # columns. Kept after the physics objects so events.fields[0] is
+        # still a particle collection (downstream selection code relies on
+        # that). Generalizes the original EventIds-only logic to any number
+        # of named scalar groups (see schemas.get_scalar_branch_groups).
+        #
+        # A group that was declared but ends up with any branch missing or
+        # unreadable is a hard error, not a silent skip -- matching the
+        # original EventIds behaviour (declared-but-unreadable de-dup keys
+        # used to raise) and extending it to require the FULL declared set,
+        # not just a non-empty subset, per-group.
+        scalar_field_groups: dict[str, ak.Array] = {}
+        for group_name in declared_group_names:
+            group_fields = obj_events.pop(group_name, None)
+            declared_branches = set(scalar_groups[group_name])
+            actual_branches = set(group_fields.fields) if group_fields is not None else set()
+            if actual_branches != declared_branches:
+                missing = sorted(declared_branches - actual_branches)
+                raise RequiredScalarBranchMissingError([(file_path, group_name, missing)])
+            scalar_field_groups[group_name] = group_fields
 
         zipped = ak.zip(obj_events, depth_limit=1)
 
-        if event_id_fields is not None:
-            for id_field in event_id_fields.fields:
+        for group_fields in scalar_field_groups.values():
+            for field_name in group_fields.fields:
                 zipped = ak.with_field(
-                    zipped, event_id_fields[id_field], where=id_field
+                    zipped, group_fields[field_name], where=field_name
                 )
 
         record_id = None
@@ -249,13 +427,125 @@ class FileParser:
         return "CollectionTree"
     
     @staticmethod
+    def _resolve_scalar_groups(
+        release_year: str,
+        extra_scalar_branches: Optional[dict[str, list[str]]],
+        record_id: Optional[int] = None,
+    ) -> dict[str, list[str]]:
+        """
+        Combine the schema's own scalar branch groups (see
+        ``schemas.get_scalar_branch_groups``) with caller-requested extra
+        ones, validating that no group name or branch name collides with a
+        physics-object collection name or another reserved top-level field.
+
+        Called independently by both ``_extract_branches_by_schema`` (to
+        know what to read) and ``_parse_opened_file`` (to know which
+        ``obj_branches`` entries are scalar groups, for the accessibility-
+        gate exemption and the missing-branch check) -- kept as its own
+        pure, side-effect-free function rather than folded into either, so
+        neither one's signature/return type has to change shape for
+        existing callers (including a test that mocks
+        ``_extract_branches_by_schema`` with a plain dict return value).
+
+        Raises:
+            ValueError: a requested group name or branch name collides with
+                an existing physics-object collection name, "DirectObjects",
+                or "source_record"; or the same branch name is requested by
+                two different groups.
+        """
+        if release_year.startswith("record_") and record_id is None:
+            try:
+                record_id = int(release_year.split("_")[1])
+            except (ValueError, IndexError):
+                pass
+
+        groups = schemas.get_scalar_branch_groups(release_year, record_id=record_id)
+
+        try:
+            schema_config = schemas.get_schema_for_release(release_year, record_id=record_id)
+            object_names = set(schema_config.get("objects", {}).keys())
+        except KeyError:
+            object_names = set()
+
+        if extra_scalar_branches:
+            reserved_group_names = object_names | {"DirectObjects"}
+            for group_name, branches in extra_scalar_branches.items():
+                if group_name in reserved_group_names:
+                    raise ValueError(
+                        f"extra_scalar_branches group name '{group_name}' collides "
+                        f"with an existing object collection or reserved name"
+                    )
+                merged = groups.get(group_name, [])
+                groups[group_name] = list(dict.fromkeys(merged + list(branches)))
+
+        reserved_field_names = object_names | {"DirectObjects", "source_record"}
+        seen_branch_to_group: dict[str, str] = {}
+        for group_name, branches in groups.items():
+            for branch in branches:
+                if branch in reserved_field_names:
+                    raise ValueError(
+                        f"scalar branch '{branch}' in group '{group_name}' collides "
+                        f"with an existing object collection or reserved field name"
+                    )
+                existing_group = seen_branch_to_group.get(branch)
+                if existing_group is not None and existing_group != group_name:
+                    raise ValueError(
+                        f"scalar branch '{branch}' is requested by both group "
+                        f"'{existing_group}' and group '{group_name}' -- ambiguous "
+                        f"top-level field name"
+                    )
+                seen_branch_to_group[branch] = group_name
+
+        return groups
+
+    @staticmethod
+    def _resolve_object_fields(
+        objects: dict[str, list[str]],
+        extra_object_fields: Optional[dict[str, list[str]]],
+    ) -> dict[str, list[str]]:
+        """
+        Merge caller-requested extra per-object (jagged, one-value-per-
+        particle) fields into the schema's own default field list per
+        collection, e.g. adding ``"electronVeto"`` to the default
+        ``["pt", "eta", "phi", "mass"]`` for ``"Photons"``
+        (implementation task 4).
+
+        A field already in the default list is harmlessly de-duplicated,
+        not an error. ``extra_object_fields`` naming a collection the
+        schema doesn't declare at all (typo, or a collection this release
+        genuinely doesn't have) is a hard configuration error.
+
+        Returns a new dict (the schema's own ``objects`` dict is never
+        mutated); absent/``None`` ``extra_object_fields`` returns the
+        default list unchanged for every collection, reproducing today's
+        behaviour exactly.
+
+        Raises:
+            ValueError: ``extra_object_fields`` references a collection
+                name not present in ``objects``.
+        """
+        merged = {name: list(fields) for name, fields in objects.items()}
+        if extra_object_fields:
+            for obj_name, fields in extra_object_fields.items():
+                if obj_name not in merged:
+                    raise ValueError(
+                        f"extra_object_fields references unknown collection "
+                        f"'{obj_name}'; this schema declares: {sorted(merged)}"
+                    )
+                merged[obj_name] = list(dict.fromkeys(merged[obj_name] + list(fields)))
+        return merged
+
+    @staticmethod
     def _extract_branches_by_schema(
         tree_branches: set[str],
-        release_year: str
+        release_year: str,
+        extra_scalar_branches: Optional[dict[str, list[str]]] = None,
+        extra_object_fields: Optional[dict[str, list[str]]] = None,
+        file_path: str = "<unknown file>",
     ) -> dict[str, dict[str, str]]:
         """
         Extract branches by object based on release-specific schema.
-        
+
         Returns:
             Dict mapping object names to their branch mappings
             Format: {obj_name: {full_branch: quantity, ...}}
@@ -267,21 +557,39 @@ class FileParser:
                     record_id = int(release_year.split("_")[1])
                 except (ValueError, IndexError):
                     pass
-            
+
             schema_config = schemas.get_schema_for_release(release_year, record_id=record_id)
-        except KeyError:
+        except KeyError as e:
+            if release_year.startswith("record_"):
+                # implementation task 6, Part B1: a CMS record ID with no
+                # registered schema is a loud, immediate error, not a
+                # silent fall-through to a fallback known not to work for
+                # NanoAOD's flat branch naming -- see
+                # UnregisteredRecordSchemaError's own docstring.
+                raise UnregisteredRecordSchemaError([(
+                    file_path,
+                    "Schema",
+                    [
+                        f"record ID {record_id} (release_year={release_year!r}) is "
+                        f"not registered in schemas.RECORD_ID_TO_SCHEMA, so its "
+                        f"branch-naming schema is unknown; auto-detection is not "
+                        f"attempted for CMS record IDs (see that mapping's own "
+                        f"comment on why it does not work for NanoAOD's flat "
+                        f"branch naming) -- register this record's schema before "
+                        f"using it"
+                    ],
+                )]) from e
             logging.warning(
                 f"Release year '{release_year}' not found in schemas. "
                 "Attempting auto-detection."
             )
             return FileParser._auto_detect_branches(tree_branches)
-        
+
         obj_branches = {}
-        objects = schema_config["objects"]
+        objects = FileParser._resolve_object_fields(schema_config["objects"], extra_object_fields)
         direct_objects = schema_config.get("direct_objects", [])
-        event_id_branches = schema_config.get("event_id_branches", [])
         naming_pattern = schema_config.get("naming_pattern", "dotted")
-        
+
         for obj_name, fields in objects.items():
             if naming_pattern == "flat":
                 obj_branches_for_obj = FileParser._extract_flat_branches(
@@ -291,16 +599,19 @@ class FileParser:
                 obj_branches_for_obj = FileParser._extract_dotted_branches(
                     obj_name, fields, tree_branches, release_year, schema_config
                 )
-            
+
             if obj_branches_for_obj:
                 obj_branches[obj_name] = obj_branches_for_obj
         # Keep direct object names as-is, but store them under the "DirectObjects" key.
         obj_branches.update({"DirectObjects": {k: k for k in direct_objects}})
-        # Scalar per-event identity branches (run / luminosityBlock / event), read
-        # verbatim and stored under "EventIds". Only added when the schema declares
-        # them, so non-CMS releases are unaffected.
-        if event_id_branches:
-            obj_branches["EventIds"] = {k: k for k in event_id_branches}
+        # Scalar per-event branch groups (e.g. "EventIds": run/luminosityBlock/
+        # event), read verbatim, one dict entry per group. Only added when the
+        # schema (or the caller, via extra_scalar_branches) declares a
+        # non-empty group, so releases/calls that declare none are unaffected.
+        scalar_groups = FileParser._resolve_scalar_groups(release_year, extra_scalar_branches, record_id=record_id)
+        for group_name, branches in scalar_groups.items():
+            if branches:
+                obj_branches[group_name] = {b: b for b in branches}
         return obj_branches
     
     @staticmethod
@@ -474,21 +785,72 @@ class FileParser:
     ) -> bool:
         return ref_system.issubset(set(available_fields))
     
+    # Backoff schedule for a per-branch accessibility probe retry
+    # (implementation task 5, Part B). A constant, not a config key --
+    # overridable only by tests, via _filter_accessible_branches's
+    # retry_delays_sec parameter.
+    _PROBE_RETRY_DELAYS_SEC: list[float] = [2.0, 5.0, 10.0]
+
     @staticmethod
     def _filter_accessible_branches(
         tree,
-        obj_branches: dict[str, dict[str, str]]
+        obj_branches: dict[str, dict[str, str]],
+        scalar_group_names: frozenset = frozenset(),
+        file_path: str = "<unknown file>",
+        retry_delays_sec: Optional[list[float]] = None,
+        on_probe_retry: Optional[Callable[[], None]] = None,
+        on_probe_final_failure: Optional[Callable[[str], None]] = None,
     ) -> dict[str, dict[str, str]]:
         """
         Test branch accessibility and filter out inaccessible ones.
-        
+
         Reads ONE entry with ALL candidate branches at once to minimize
         HTTP round-trips for remote ROOT files.
+
+        ``scalar_group_names`` (like ``"DirectObjects"``) are exempt from
+        the physics-object pt/eta/phi accessibility requirement below --
+        they're one-value-per-event branches, not particle collections, so
+        that requirement doesn't apply to them. A scalar group that turns
+        out to have zero accessible branches still passes through here
+        (empty dict, same as today's "EventIds"); ``_parse_opened_file``
+        is what turns that into a hard error, not this function.
+
+        Implementation task 5, Part B: if the combined probe above fails
+        and a branch is tested individually, two cases are now
+        distinguished, instead of treating every read exception the same:
+
+        1. The branch name simply isn't in the tree's own branch list
+           (``tree.keys()``) -- genuinely absent. No retry (there is
+           nothing to retry); unchanged from before.
+        2. The branch name IS in the tree's branch list, but reading it
+           raised anyway -- treated as a possibly-transient failure (this
+           project's remote reads have shown exactly this kind of
+           intermittent flakiness repeatedly). Retried with backoff
+           (``retry_delays_sec``, default ``_PROBE_RETRY_DELAYS_SEC``) before
+           finally giving up and logging a WARNING naming the file, branch,
+           and final exception -- at which point the branch is treated as
+           inaccessible, exactly as before this fix (this function's return
+           value/behaviour for an ultimately-unreadable branch is
+           unchanged; only a branch that *recovers* on retry now survives
+           instead of being dropped after a single attempt).
+
+        The successful path (the combined probe succeeding) is entirely
+        unchanged: no retry logic is even reached, no extra reads happen.
+
+        ``on_probe_retry``/``on_probe_final_failure`` are optional
+        callbacks for purely additive statistics (implementation task 5,
+        Part B: "count probe retries and final probe failures per file");
+        absent (the default) does not change any branch-accessibility
+        decision.
         """
+        delays = retry_delays_sec if retry_delays_sec is not None else FileParser._PROBE_RETRY_DELAYS_SEC
+
         all_candidate_branches = []
         for branch_mapping in obj_branches.values():
             all_candidate_branches.extend(branch_mapping.keys())
-        
+
+        tree_branch_names = set(tree.keys())
+
         accessible_set = set()
         try:
             test_arr = tree.arrays(
@@ -499,17 +861,42 @@ class FileParser:
             accessible_set = set(test_arr.fields)
         except Exception:
             for branch_path in all_candidate_branches:
-                try:
-                    test_arr = tree.arrays(
-                        branch_path,
-                        entry_start=0, entry_stop=1,
-                        library="ak"
-                    )
-                    if branch_path in test_arr.fields:
-                        accessible_set.add(branch_path)
-                except Exception:
+                if branch_path not in tree_branch_names:
+                    # Genuinely absent from this file's tree -- no retry,
+                    # exactly today's behaviour.
                     continue
-        
+
+                last_exc: Optional[Exception] = None
+                succeeded = False
+                for attempt in range(len(delays) + 1):
+                    try:
+                        test_arr = tree.arrays(
+                            branch_path,
+                            entry_start=0, entry_stop=1,
+                            library="ak"
+                        )
+                        if branch_path in test_arr.fields:
+                            accessible_set.add(branch_path)
+                        succeeded = True
+                        break
+                    except Exception as e:
+                        last_exc = e
+                        if attempt < len(delays):
+                            if on_probe_retry is not None:
+                                on_probe_retry()
+                            time.sleep(delays[attempt])
+
+                if not succeeded:
+                    if on_probe_final_failure is not None:
+                        on_probe_final_failure(branch_path)
+                    logging.warning(
+                        f"Branch accessibility probe failed for '{branch_path}' "
+                        f"in {file_path} after {len(delays)} retr"
+                        f"{'y' if len(delays) == 1 else 'ies'}: "
+                        f"{type(last_exc).__name__}: {last_exc}. "
+                        f"Treating this branch as inaccessible for this file."
+                    )
+
         accessible_obj_branches = {}
         for obj_name, branch_mapping in obj_branches.items():
             accessible_branches = {
@@ -518,9 +905,9 @@ class FileParser:
             }
             if accessible_branches and FileParser._can_calculate_inv_mass(
                 list(accessible_branches.values())
-            ) or obj_name in ("DirectObjects", "EventIds"):
+            ) or obj_name == "DirectObjects" or obj_name in scalar_group_names:
                 accessible_obj_branches[obj_name] = accessible_branches
-        
+
         return accessible_obj_branches
     
     @staticmethod

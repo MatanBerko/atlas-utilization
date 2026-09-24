@@ -1,0 +1,44 @@
+{
+  "n_data_sidebands_total": 182551,
+  "data_category_composition": {
+    "EBEB": {
+      "n": 90336,
+      "fraction": 0.4948534929964777
+    },
+    "notEBEB": {
+      "n": 92215,
+      "fraction": 0.5051465070035223
+    }
+  },
+  "signal_category_composition_expected_yield_weighted": {
+    "EBEB": {
+      "N_expected": 533.530029296875,
+      "fraction": 0.6586087263270094
+    },
+    "notEBEB": {
+      "N_expected": 276.55645751953125,
+      "fraction": 0.3413912736729906
+    }
+  },
+  "note_signal_composition": "Signal composition is weighted by each event's contribution to the expected yield (genWeight * sigma*1000*BR*L/genEventSumw), not raw event counts -- so it reflects the physical mixture of the 6 production modes, dominated by ggH, not this run's arbitrary per-mode statistics.",
+  "signal_combined_all_modes_mode_and_sigma_eff68_per_category": {
+    "EBEB": {
+      "n_events_pooled_all_modes": 783528,
+      "mode_GeV": 124.75,
+      "sigma_eff68_GeV": 1.75
+    },
+    "notEBEB": {
+      "n_events_pooled_all_modes": 396409,
+      "mode_GeV": 124.75,
+      "sigma_eff68_GeV": 2.75
+    }
+  },
+  "per_label_n_selected": {
+    "ggh": 213592,
+    "vbf": 795811,
+    "wplush": 51846,
+    "wminush": 52101,
+    "zh": 51481,
+    "tth": 15106
+  }
+}

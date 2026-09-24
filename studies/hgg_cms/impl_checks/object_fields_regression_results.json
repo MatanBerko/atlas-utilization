@@ -1,0 +1,23 @@
+{
+  "description": "Regression proof for implementation task 4 (opt-in extra object fields + generic bool_require/bool_any_of/eta_exclude cut types): FileParser._parse_opened_file run on real files, once with feature/cms-trigger-requirement (132924a4042f87cb651a6d01280ec8df0c6826aa) and once with feature/cms-object-fields-and-bool-cuts, the new keys absent (default) in both. Also confirms config.yaml (the ATLAS default) parses to an identical ParsingConfig aside from the one new field, which defaults to None. Same 4 CMS files and 1 ATLAS file as implementation tasks 1/2/3's own regression proofs, at most 2,000 events per file.",
+  "base_commit": "132924a4042f87cb651a6d01280ec8df0c6826aa",
+  "feature_branch": "feature/cms-object-fields-and-bool-cuts",
+  "max_events_per_file": 2000,
+  "file_level_comparison": {
+    "30529": {"dataset": "/SingleElectron/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD", "status": "IDENTICAL"},
+    "30530": {"dataset": "/SingleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD", "status": "IDENTICAL"},
+    "30522": {"dataset": "/DoubleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD", "status": "IDENTICAL"},
+    "30555": {"dataset": "/DoubleMuon/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD", "status": "IDENTICAL"},
+    "atlas_2024r-pp": {"dataset": "ATLAS DAOD_PHYSLITE mc20_13TeV, dsid 301204", "status": "IDENTICAL"}
+  },
+  "config_level_comparison": {
+    "config_checked": "config.yaml (ATLAS default)",
+    "method": "PipelineConfig.from_dict(yaml.safe_load(open('config.yaml'))).parsing_config, compared field by field via dataclasses.asdict, once with the base checkout's PipelineConfig class and once with the branch's",
+    "result": "IDENTICAL for every field that existed before this branch; the one new field, extra_object_fields, is None on the branch (well-defined default, absent from config.yaml)"
+  },
+  "transient_network_failures_during_this_check": [
+    "30530 (feature branch) failed once with RequiredScalarBranchMissingError on the EventIds scalar group ('event','luminosityBlock','run' all reported missing) before succeeding on an immediate retry against the identical file/entry range. This is a real, live example of the transient branch-accessibility-probe failure mode identified in Part A's investigation of the muon field-drop bug (a single flaky read during FileParser._filter_accessible_branches's one-shot entry-0 probe can wrongly mark a genuinely-present branch as inaccessible for that attempt) -- not a difference between the base and feature branch (the base branch's dump of the identical file succeeded on its first attempt).",
+    "The ATLAS file (mc20_13TeV DAOD_PHYSLITE, rucio storage) failed transiently on both the base and feature branch during this session's checks (a generic ak.zip 'could not find backend for ()' error from a dropped/empty read), succeeding on retry each time -- consistent with ordinary remote-storage flakiness, unrelated to this task's code changes."
+  ],
+  "overall_verdict": "IDENTICAL for all 4 CMS datasets, one real ATLAS file, and the ATLAS default config.yaml's parsed configuration."
+}

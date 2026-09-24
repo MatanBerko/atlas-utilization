@@ -67,7 +67,71 @@ class ParsingConfig:
     # block above (kinematic_cuts stay global). Records not listed are unchanged.
     # Presence of this key also turns on cross-record event de-duplication.
     selection_by_record: Optional[dict] = None
-    
+
+    # Optional extra scalar (one-value-per-event, not one-per-particle) branch
+    # groups to read on top of whatever the schema already declares, e.g.
+    # {"Trigger": ["HLT_SomeBit"]}. Merged with the schema's own groups (see
+    # services.parsing.schemas.get_scalar_branch_groups); absent/None (the
+    # default) reproduces existing behaviour exactly for every current
+    # config. See services.parsing.file_parser.FileParser._resolve_scalar_groups
+    # for the collision/missing-branch rules applied to this.
+    extra_scalar_branches: Optional[dict] = None
+
+    # Optional path to a CMS "golden JSON" validated-runs file (see
+    # services.parsing.validated_runs and data/cms/validated_runs/README.md).
+    # Relative paths are resolved from the repository root; absolute paths
+    # are used as-is. Absent/None (the default, and every current config)
+    # means the filter is a complete no-op -- existing behaviour is
+    # unchanged. Loaded once per pipeline run, not once per file. Applying
+    # this to a simulated input raises an error rather than silently
+    # discarding every event (simulation has no real run to certify).
+    validated_runs_json: Optional[str] = None
+
+    # Optional HLT trigger requirement (data AND simulation -- no simulation
+    # guard, unlike validated_runs_json; the design requires the same trigger
+    # bit in MC too, see studies/hgg_cms/DESIGN_SELECTION.md Section 2 step
+    # 1). {"mode": "any"|"all", "paths": ["HLT_..."]}. "any" keeps an event if
+    # at least one listed path fired; "all" requires every listed path.
+    # Absent/None (the default, and every current config) is a complete
+    # no-op. The listed paths are read automatically via the "Trigger"
+    # scalar branch group (see services.parsing.trigger_requirements and
+    # services.parsing.file_parser.FileParser._resolve_scalar_groups) -- no
+    # need to also list them in extra_scalar_branches. May also be
+    # overridden per-record under selection_by_record[record]
+    # ["trigger_requirements"], same shape.
+    trigger_requirements: Optional[dict] = None
+
+    # Optional extra per-object (jagged, one-value-per-particle) fields to
+    # read on top of whatever the schema's default field list for that
+    # collection already declares, e.g. {"Photons": ["electronVeto",
+    # "mvaID_WP90"]}. Merged with the schema's own default list per
+    # collection (see services.parsing.file_parser.FileParser.
+    # _resolve_object_fields); absent/None (the default, and every current
+    # config) reproduces existing behaviour exactly -- identical fields,
+    # dtypes, and values for every collection. A collection name this
+    # release's schema doesn't declare at all is a configuration error
+    # (raised when the release/schema is resolved, not validated here,
+    # since this dataclass has no schema knowledge). A field genuinely
+    # missing from a specific file's tree is a loud, non-swallowed error
+    # (RequiredObjectFieldMissingError), not a silent drop.
+    extra_object_fields: Optional[dict] = None
+
+    # Optional (default False, and every current config): adds the
+    # per-event genWeight scalar field -- simulation only. Detected per
+    # file (see services.parsing.mc_weights.file_is_simulation), not via a
+    # global data/MC flag, since one run can process a mix of data and
+    # simulation CMS records (specific_record_ids aren't split into a
+    # data/MC pair the way ATLAS release_years are). Requesting this on a
+    # file that looks like real data (no genWeight branch) is a
+    # configuration error, not a silent no-op.
+    read_event_weights: bool = False
+
+    # Optional (default False, and every current config): adds PV_npvsGood
+    # (present in both data and simulation) and, for simulation files only,
+    # Pileup_nTrueInt (a generator-truth quantity that doesn't exist in
+    # data -- simply not requested for a data file, not an error).
+    read_pileup_info: bool = False
+
     def __post_init__(self):
         """Validate parsing configuration."""
         if self.threads <= 0:
@@ -108,6 +172,53 @@ class ParsingConfig:
                     "'jets' but not 'bjets'; the BJets collection will "
                     "receive NO kinematic cuts (see "
                     "docs/CMS_KNOWN_LIMITATIONS.md)"
+                )
+        if self.extra_scalar_branches is not None:
+            if not isinstance(self.extra_scalar_branches, dict):
+                raise ValueError("extra_scalar_branches must be a dict of group name -> branch list")
+            for group_name, branches in self.extra_scalar_branches.items():
+                if not isinstance(group_name, str) or not group_name:
+                    raise ValueError(f"extra_scalar_branches group names must be non-empty strings, got {group_name!r}")
+                if not isinstance(branches, (list, tuple)) or not all(isinstance(b, str) for b in branches):
+                    raise ValueError(
+                        f"extra_scalar_branches['{group_name}'] must be a list of branch name strings, got {branches!r}"
+                    )
+        if self.extra_object_fields is not None:
+            if not isinstance(self.extra_object_fields, dict):
+                raise ValueError("extra_object_fields must be a dict of collection name -> field list")
+            for collection_name, fields in self.extra_object_fields.items():
+                if not isinstance(collection_name, str) or not collection_name:
+                    raise ValueError(f"extra_object_fields collection names must be non-empty strings, got {collection_name!r}")
+                if not isinstance(fields, (list, tuple)) or not all(isinstance(f, str) for f in fields):
+                    raise ValueError(
+                        f"extra_object_fields['{collection_name}'] must be a list of field name strings, got {fields!r}"
+                    )
+        if not isinstance(self.read_event_weights, bool):
+            raise ValueError("read_event_weights must be a boolean")
+        if not isinstance(self.read_pileup_info, bool):
+            raise ValueError("read_pileup_info must be a boolean")
+        if self.validated_runs_json is not None and not isinstance(self.validated_runs_json, str):
+            raise ValueError(
+                f"validated_runs_json must be a path string, got {self.validated_runs_json!r}"
+            )
+        if self.trigger_requirements is not None:
+            if not isinstance(self.trigger_requirements, dict):
+                raise ValueError(
+                    f"trigger_requirements must be a dict, got {self.trigger_requirements!r}"
+                )
+            mode = self.trigger_requirements.get("mode", "any")
+            if mode not in ("any", "all"):
+                raise ValueError(
+                    f"trigger_requirements['mode'] must be 'any' or 'all', got {mode!r}"
+                )
+            paths = self.trigger_requirements.get("paths")
+            if not isinstance(paths, (list, tuple)) or not paths:
+                raise ValueError(
+                    "trigger_requirements['paths'] must be a non-empty list of branch name strings"
+                )
+            if not all(isinstance(p, str) and p for p in paths):
+                raise ValueError(
+                    f"trigger_requirements['paths'] entries must be non-empty strings, got {paths!r}"
                 )
 
 
@@ -332,6 +443,12 @@ class PipelineConfig:
                 particle_counts=parsing_dict.get("particle_counts"),
                 kinematic_cuts=parsing_dict.get("kinematic_cuts"),
                 selection_by_record=parsing_dict.get("selection_by_record"),
+                extra_scalar_branches=parsing_dict.get("extra_scalar_branches"),
+                validated_runs_json=parsing_dict.get("validated_runs_json"),
+                trigger_requirements=parsing_dict.get("trigger_requirements"),
+                extra_object_fields=parsing_dict.get("extra_object_fields"),
+                read_event_weights=parsing_dict.get("read_event_weights", False),
+                read_pileup_info=parsing_dict.get("read_pileup_info", False),
             )
         
         # Parse mass calculation config if enabled

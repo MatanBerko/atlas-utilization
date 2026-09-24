@@ -1,0 +1,132 @@
+paths:
+  parsed_data_path: ./output/parsed_data
+  im_arrays_path: ./output/im_arrays
+  im_arrays_processed_path: ./output/im_arrays_processed
+  histograms_path: ./output/histograms
+  metadata_cache_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+names:
+  run_name: cms_hgg_zee_data
+  histogram_filename: cms_hgg_zee_data.root
+run_metadata:
+  run_name: cms_hgg_zee_data
+  base_output_dir: /storage/agrp/berkom/atlas-utilization/output/cms_hgg_zee_data
+  batch_job_index: null
+  total_batch_jobs: null
+tasks:
+  do_parsing: true
+  do_mass_calculating: false
+  do_post_processing: false
+  do_histogram_creation: false
+testing_config:
+  is_on: false
+  test_run_index: null
+  testing_jobs_path: ./testing_jobs
+  limit_files_per_year: null
+  limit_combinations: null
+parsing_task_config:
+  output_path: ./output/parsed_data
+  file_urls_path: ./output/metadata_cache.json
+  jobs_logs_path: ./output/logs
+  release_years: []
+  # REVISED AGAIN (16 Sep 2026, second revision): reads SingleElectron
+  # (30529 Run2016G, 30562 Run2016H), NOT DoubleEG (30521/30554, the main
+  # H->gamma-gamma data config's own records). HLT_Ele27_WPTight_Gsf
+  # belongs to SingleElectron's own trigger-stream list, never DoubleEG's
+  # -- verified directly against the CERN Open Data portal's own record
+  # metadata for all 4 records (41 DoubleEG paths, none is Ele27; 50
+  # SingleElectron paths, includes Ele27) -- see
+  # studies/hgg_cms/impl_checks/mapping_check/
+  # zee_trigger_stream_verification.md for the full evidence, including a
+  # direct file-level branch check and a certified-run-coverage
+  # comparison against DoubleEG (identical: 70/70 G, 86/86 H). Using
+  # DoubleEG's own "Ele27 fired" subset would have been conditioned on
+  # ALSO firing a DoubleEG streaming trigger (very plausibly the diphoton
+  # path itself for many events) -- biasing the trigger-efficiency
+  # measurement upward and leaving Mass90 sculpting in the "energy scale"
+  # sample despite the FIRST revision's fix.
+  specific_record_ids:
+  - 30529
+  - 30562
+  parse_mc: false
+  use_multiprocessing: false
+  parallel_processes: 4
+  threads: 8
+  env_threshold_memory_mb: 8000
+  chunk_yield_threshold_bytes: 2147483648
+  count_retries_failed_files: 3
+  fetching_metadata_timeout: 60
+  max_files_to_process: null
+  possible_data_tree_names:
+  - Events
+  - CollectionTree
+  create_dirs: true
+  show_progress_bar: true
+  # Same validated-runs requirement as the main analysis (task 6, Part 4
+  # instruction: "same validated-runs ... cuts").
+  validated_runs_json: data/cms/validated_runs/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt
+  # First revision (16 Sep 2026) fixed the Mass90-sculpting bug by
+  # filtering on either trigger firing, on DoubleEG. Second revision
+  # (same day): filtering on DoubleEG at all was itself the remaining
+  # problem -- see the specific_record_ids comment above. Now: filter on
+  # HLT_Ele27_WPTight_Gsf ALONE (SingleElectron's own streaming trigger --
+  # an unbiased single-electron sample by construction, since this IS the
+  # dataset that trigger defines), and read the diphoton bit via
+  # extra_scalar_branches (attaches it as a plain output field WITHOUT
+  # making it part of the filter -- domain/config.py's existing, generic
+  # "read this branch, don't filter on it" mechanism; already used this
+  # way for exactly this purpose in this task's very first Z->ee design).
+  # Offline analysis (studies/hgg_cms/validation/zee/) then selects THREE
+  # non-overlapping sub-samples from this one parsed dataset:
+  #   (a) energy-scale/resolution: Ele27-fired events, 70-110 GeV.
+  #   (b) trigger efficiency: Ele27-fired events with offline mass > 95
+  #       GeV, checking (not filtering on) the diphoton bit.
+  #   (c) a demonstration, DY-only now (see mass90_sculpting_demo.py's
+  #       own module docstring for why data no longer has a meaningful
+  #       "diphoton-fired, Ele27 NOT fired" sub-sample once this dataset
+  #       is SingleElectron -- almost no SingleElectron event fires the
+  #       diphoton trigger without also firing Ele27, since Ele27 is
+  #       exactly this dataset's own defining trigger).
+  trigger_requirements:
+    mode: any
+    paths:
+    - HLT_Ele27_WPTight_Gsf
+  extra_scalar_branches:
+    ZeeDiphotonProbe:
+    - HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90
+  read_pileup_info: true
+  read_event_weights: false
+  extra_object_fields:
+    Photons:
+    - electronVeto
+    - mvaID_WP90
+    - isScEtaEB
+    - isScEtaEE
+    - r9
+    - hoe
+    - sieie
+    - pfRelIso03_all
+    - pfRelIso03_chg
+    - mvaID
+    - cutBased
+    - pixelSeed
+  particle_counts:
+    photons:
+      min: 2
+      max: 20
+  kinematic_cuts:
+    photons:
+      pt:
+        min: 20.0
+      # electronVeto DELIBERATELY OMITTED here -- see
+      # studies/hgg_cms/zee_selection.py's module docstring: there is no
+      # "must be False" cut type in services/calculations/physics_calcs.py
+      # (only bool_require="must be True" and bool_any_of="at least one
+      # True" exist), so BOTH electronVeto==True and ==False photons are
+      # deliberately let through parsing; zee_selection.py is what
+      # actually requires electronVeto==False (the inversion).
+      bool_require:
+      - mvaID_WP90
+      bool_any_of:
+      - isScEtaEB
+      - isScEtaEE

@@ -1,0 +1,282 @@
+{
+  "fit_range": "105_180",
+  "decision_reference": "BACKGROUND_MODEL_REPORT.md, 'Human decision after rerun 1' section",
+  "per_category": {
+    "EBEB": {
+      "chosen_function": {
+        "family": "bernstein",
+        "order": 6,
+        "n_params": 7,
+        "parameterization": "Bernstein polynomial, order 6 (7 non-negative coefficients c0..c6), density(x) = sum_i c_i * C(6,i) * x^i * (1-x)^(6-i), x = (m - 105) / 75 (normalized mass variable -- see families.py's own module docstring).",
+        "normalized_variable": "x = (m_gg - 105.0) / 75.0"
+      },
+      "sideband_fit": {
+        "fit_range_GeV": [
+          105.0,
+          180.0
+        ],
+        "bin_width_GeV": 0.25,
+        "sideband_only": true,
+        "param_names": [
+          "c0",
+          "c1",
+          "c2",
+          "c3",
+          "c4",
+          "c5",
+          "c6"
+        ],
+        "params": [
+          4251.868541022567,
+          1783.6298534385319,
+          1661.4277578426495,
+          483.4014786602565,
+          881.8817765897584,
+          394.28289901101704,
+          357.3385368638689
+        ],
+        "covariance": [
+          [
+            2585.262793833284,
+            -7175.246333797521,
+            9051.71414260759,
+            -6899.084270852565,
+            3255.49563778611,
+            -878.1301977943156,
+            105.11258615791897
+          ],
+          [
+            -7175.246333797521,
+            31534.62210062038,
+            -53971.66804401575,
+            47331.68052664498,
+            -24090.22236733473,
+            6800.944477766397,
+            -838.4890738315386
+          ],
+          [
+            9051.71414260759,
+            -53971.66804401575,
+            141217.82758855485,
+            -141937.2610113114,
+            77225.40409455971,
+            -22692.284170305717,
+            2874.007958524079
+          ],
+          [
+            -6899.084270852565,
+            47331.68052664498,
+            -141937.2610113114,
+            152933.4905127032,
+            -88161.8675557161,
+            27250.37212379971,
+            -3605.2533479181425
+          ],
+          [
+            3255.49563778611,
+            -24090.22236733473,
+            77225.40409455971,
+            -88161.8675557161,
+            54733.12307886734,
+            -18333.795149731057,
+            2620.200883427997
+          ],
+          [
+            -878.1301977943156,
+            6800.944477766397,
+            -22692.284170305717,
+            27250.37212379971,
+            -18333.795149731057,
+            7004.59314354116,
+            -1168.216149427137
+          ],
+          [
+            105.11258615791897,
+            -838.4890738315386,
+            2874.007958524079,
+            -3605.2533479181425,
+            2620.200883427997,
+            -1168.216149427137,
+            297.84825070407186
+          ]
+        ],
+        "param_uncertainties": [
+          50.845479581112066,
+          177.5799034255295,
+          375.7896054823162,
+          391.0671176571909,
+          233.95111258309362,
+          83.69344743491668,
+          17.258280641595555
+        ],
+        "nll": -334015.9766440661,
+        "valid": true,
+        "hesse_failed": false,
+        "verified_matches_order_selection_nll": true,
+        "nll_diff_from_order_selection": 0.0,
+        "goodness_of_fit": {
+          "chi2": 214.92835976088838,
+          "ndf": 213,
+          "p_value": 0.4500907914611203,
+          "n_bins_used": 220,
+          "n_bins_total_sideband": 220
+        }
+      },
+      "spurious_signal_systematic": {
+        "value_events": 32.1645570124977,
+        "source_cell": {
+          "truth_family": "expsum",
+          "leakage_variant": "leakage_plus",
+          "mass": 120.0
+        },
+        "signed_mean_S": 32.1645570124977,
+        "pct_of_expected_signal_yield": 5.893098870815237,
+        "treatment": "Additional signal-yield term S_spur * theta_spur in the eventual S+B fit, theta_spur a unit-Gaussian-constrained nuisance parameter, one per category, uncorrelated between categories, independent of the hypothesized mass (the maximum over the full mass scan is used at every mass point)."
+      },
+      "expected_signal_yield_events": 545.800396660376,
+      "sources": {
+        "order_selection": "results/order_selection_105_180.json",
+        "bias_study_merged": "results/bias_study_105_180_with_rerun1.json",
+        "signal_model": "../signal_model/results/signal_model.json"
+      }
+    },
+    "notEBEB": {
+      "chosen_function": {
+        "family": "bernstein",
+        "order": 6,
+        "n_params": 7,
+        "parameterization": "Bernstein polynomial, order 6 (7 non-negative coefficients c0..c6), density(x) = sum_i c_i * C(6,i) * x^i * (1-x)^(6-i), x = (m - 105) / 75 (normalized mass variable -- see families.py's own module docstring).",
+        "normalized_variable": "x = (m_gg - 105.0) / 75.0"
+      },
+      "sideband_fit": {
+        "fit_range_GeV": [
+          105.0,
+          180.0
+        ],
+        "bin_width_GeV": 0.25,
+        "sideband_only": true,
+        "param_names": [
+          "c0",
+          "c1",
+          "c2",
+          "c3",
+          "c4",
+          "c5",
+          "c6"
+        ],
+        "params": [
+          4492.062530754252,
+          1376.4264760117983,
+          2112.6258256507663,
+          290.25662951776786,
+          803.8753516747687,
+          430.0605140322893,
+          351.1603277840907
+        ],
+        "covariance": [
+          [
+            2712.350423734255,
+            -7598.624129296533,
+            9903.258919521284,
+            -7723.753734205393,
+            3712.2164285453223,
+            -1016.53693014695,
+            122.46144097030913
+          ],
+          [
+            -7598.624129296533,
+            33556.733648813,
+            -58972.64544572809,
+            52432.35845383413,
+            -26974.486327288432,
+            7684.9270380860835,
+            -949.1494964309238
+          ],
+          [
+            9903.258919521284,
+            -58972.64544572809,
+            155014.84523948366,
+            -156305.76945246925,
+            85404.07355754412,
+            -25208.38663198149,
+            3187.191852247287
+          ],
+          [
+            -7723.753734205393,
+            52432.35845383413,
+            -156305.76945246925,
+            167897.43945886247,
+            -96627.89781690655,
+            29842.8061459232,
+            -3923.975317274852
+          ],
+          [
+            3712.2164285453223,
+            -26974.486327288432,
+            85404.07355754412,
+            -96627.89781690655,
+            59444.9660645596,
+            -19753.381779057487,
+            2789.809222329611
+          ],
+          [
+            -1016.53693014695,
+            7684.9270380860835,
+            -25208.38663198149,
+            29842.8061459232,
+            -19753.381779057487,
+            7417.281253541318,
+            -1214.2075089710065
+          ],
+          [
+            122.46144097030913,
+            -949.1494964309238,
+            3187.191852247287,
+            -3923.975317274852,
+            2789.809222329611,
+            -1214.2075089710065,
+            301.8828761950015
+          ]
+        ],
+        "param_uncertainties": [
+          52.08023064209926,
+          183.18497113249492,
+          393.7192467221836,
+          409.75290048865116,
+          243.81338368629315,
+          86.12363934217665,
+          17.374777011374892
+        ],
+        "nll": -337230.08807854925,
+        "valid": true,
+        "hesse_failed": false,
+        "verified_matches_order_selection_nll": true,
+        "nll_diff_from_order_selection": 3.439770080149174e-05,
+        "goodness_of_fit": {
+          "chi2": 201.19906763455134,
+          "ndf": 213,
+          "p_value": 0.7089130631662357,
+          "n_bins_used": 220,
+          "n_bins_total_sideband": 220
+        }
+      },
+      "spurious_signal_systematic": {
+        "value_events": 109.26379513174238,
+        "source_cell": {
+          "truth_family": "powersum",
+          "leakage_variant": "nominal",
+          "mass": 120.0
+        },
+        "signed_mean_S": 109.26379513174238,
+        "pct_of_expected_signal_yield": 41.05717956094631,
+        "treatment": "Additional signal-yield term S_spur * theta_spur in the eventual S+B fit, theta_spur a unit-Gaussian-constrained nuisance parameter, one per category, uncorrelated between categories, independent of the hypothesized mass (the maximum over the full mass scan is used at every mass point)."
+      },
+      "expected_signal_yield_events": 266.12591585729473,
+      "sources": {
+        "order_selection": "results/order_selection_105_180.json",
+        "bias_study_merged": "results/bias_study_105_180_with_rerun1.json",
+        "signal_model": "../signal_model/results/signal_model.json"
+      }
+    }
+  }
+}

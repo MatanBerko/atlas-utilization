@@ -1,0 +1,31 @@
+{
+  "n_files_ok": 133,
+  "n_files_failed": 0,
+  "failed_files": [],
+  "run2016g": {
+    "n_certified_sections": 43014,
+    "n_certified_sections_present_in_files": 42682,
+    "n_certified_sections_missing_from_files": 332,
+    "n_sections_present_but_not_certified": 3636,
+    "n_runs_affected": 42,
+    "official_recorded_lumi_fb": 7.653261226,
+    "estimated_covered_lumi_fb": 7.5933694457430505
+  },
+  "run2016h": {
+    "n_certified_sections": 47793,
+    "n_certified_sections_present_in_files": 47443,
+    "n_certified_sections_missing_from_files": 350,
+    "n_sections_present_but_not_certified": 5100,
+    "n_runs_affected": 61,
+    "official_recorded_lumi_fb": 8.740119303,
+    "estimated_covered_lumi_fb": 8.67205466261177
+  },
+  "total_official_recorded_lumi_fb": 16.393380528999998,
+  "total_estimated_covered_lumi_fb": 16.26542410835482,
+  "pct_of_official_covered": 99.21946287759977,
+  "preset_interpretation_rule": "within 0.5% of official => full coverage, else use corrected value",
+  "verdict": "use the corrected (covered) luminosity value",
+  "important_caveat": "A luminosity gap here is not evidence of corrupted/missing files -- all 133 files (47 for Run2016G record 30521, 86 for Run2016H record 30554) opened and had their LuminosityBlocks tree read successfully; n_files_failed above is 0. The missing (run, section) pairs are certified-good lumisections where the DoubleEG primary dataset specifically recorded zero events -- CMS's per-run 'recorded' luminosity (Run2016Glumi.txt/Run2016Hlumi.txt, record 1059) is a detector-level quantity, counting every certified lumisection's full luminosity regardless of whether any given trigger/dataset had an accepted event in it. The missing sections are spread thinly across many runs (42 of 70 certified runs in G, 61 of 86 in H, each missing only a handful of sections -- see affected_runs_table.csv) rather than concentrated in a few runs, consistent with this being genuine sparse trigger-rate statistics, not a systematic data-loss pattern.",
+  "approximation_method": "Per affected run: estimated_missing_lumi_fb = (n_missing_certified_sections_in_run / n_certified_sections_in_run) * run_recorded_lumi_fb -- assumes luminosity is spread evenly across a run's certified lumisections. The portal's per-lumisection table (pp_2016lumibyls.csv, studies/hgg_cms/INVENTORY.md A.2) would remove this approximation if used instead; not used here to keep this check within the LuminosityBlocks-tree-only scope this task specifies.",
+  "method_note": "Run-number ranges used: Run2016G [278820,280385], Run2016H [280919,284044] (record 14220's own stated boundaries -- record 30554's own run_numbers list starts later, at 281613, but there are zero certified runs in the 280919-281613 gap either way, verified in golden_json_analysis_results.json, so this does not affect the result)."
+}

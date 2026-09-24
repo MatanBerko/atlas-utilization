@@ -1,0 +1,77 @@
+{
+  "method": "For the first file of each of the 6 postVFP signal records, read only run/luminosityBlock/event from the Events tree (no photon/physics payload) and checked for (luminosityBlock, event) duplication within each file and across every pair of records.",
+  "per_record": {
+    "37350": {
+      "label": "ggH",
+      "n_events": 533000,
+      "unique_run_values": [
+        1
+      ],
+      "n_unique_ls_event_pairs": 533000,
+      "n_within_file_duplicate_pairs": 0
+    },
+    "68497": {
+      "label": "VBF",
+      "n_events": 6000,
+      "unique_run_values": [
+        1
+      ],
+      "n_unique_ls_event_pairs": 6000,
+      "n_within_file_duplicate_pairs": 0
+    },
+    "71013": {
+      "label": "WplusH",
+      "n_events": 109105,
+      "unique_run_values": [
+        1
+      ],
+      "n_unique_ls_event_pairs": 109105,
+      "n_within_file_duplicate_pairs": 0
+    },
+    "70173": {
+      "label": "WminusH",
+      "n_events": 21392,
+      "unique_run_values": [
+        1
+      ],
+      "n_unique_ls_event_pairs": 21392,
+      "n_within_file_duplicate_pairs": 0
+    },
+    "74132": {
+      "label": "ZH",
+      "n_events": 3978,
+      "unique_run_values": [
+        1
+      ],
+      "n_unique_ls_event_pairs": 3978,
+      "n_within_file_duplicate_pairs": 0
+    },
+    "67611": {
+      "label": "ttH",
+      "n_events": 4378,
+      "unique_run_values": [
+        1
+      ],
+      "n_unique_ls_event_pairs": 4378,
+      "n_within_file_duplicate_pairs": 0
+    }
+  },
+  "cross_record_overlaps": {
+    "37350_vs_68497": 3000,
+    "37350_vs_71013": 0,
+    "37350_vs_70173": 528,
+    "37350_vs_74132": 0,
+    "37350_vs_67611": 0,
+    "68497_vs_71013": 0,
+    "68497_vs_70173": 0,
+    "68497_vs_74132": 0,
+    "68497_vs_67611": 0,
+    "71013_vs_70173": 1167,
+    "71013_vs_74132": 0,
+    "71013_vs_67611": 0,
+    "70173_vs_74132": 0,
+    "70173_vs_67611": 0,
+    "74132_vs_67611": 0
+  },
+  "any_cross_record_overlap_found": true
+}

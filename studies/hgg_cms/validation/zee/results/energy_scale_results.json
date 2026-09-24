@@ -1,0 +1,430 @@
+{
+  "fit_window": [
+    80.0,
+    100.0
+  ],
+  "bin_width": 0.5,
+  "n_bootstrap": 8,
+  "per_category": {
+    "inclusive": {
+      "data": {
+        "n_events": 4100571,
+        "fit": {
+          "params": {
+            "A": 2235932.5866671265,
+            "mu": -1.1262146629115475,
+            "sigma": 1.6665723788992761,
+            "alpha": 0.8482714887399391,
+            "n": 12.493420111743736
+          },
+          "param_errs": {
+            "A": 1253.7254971947432,
+            "mu": 0.004725952080842391,
+            "sigma": 0.004110314679769579,
+            "alpha": 0.007472908586475337,
+            "n": 0.8067324110364203
+          },
+          "peak_GeV": 89.98333333333333,
+          "peak_uncertainty_GeV": 0.0069041050590689336,
+          "sigma_GeV": 1.6665723788992761,
+          "sigma_uncertainty_GeV": 0.004110314679769579,
+          "chi2": 2586.7524654968342,
+          "ndf": 35,
+          "chi2_over_ndf": 73.90721329990954,
+          "fit_window": [
+            80.0,
+            100.0
+          ],
+          "bin_width": 0.5,
+          "M_Z_fixed": 91.1876,
+          "Gamma_Z_fixed": 2.4952
+        },
+        "mode_GeV": 90.125,
+        "median_GeV": 89.64476061359498,
+        "sigma_eff68_GeV": 3.1252670848149577,
+        "sigma_eff68_uncertainty_GeV": 0.0008593253445280774,
+        "sigma_eff68_window": [
+          86.5395304588097,
+          92.79006462843961
+        ]
+      },
+      "dy_no_pu": {
+        "n_events": 3494694,
+        "fit": {
+          "params": {
+            "A": 32267594628.16926,
+            "mu": -1.1645513142963506,
+            "sigma": 1.7327854379328034,
+            "alpha": 0.8595845582491137,
+            "n": 17.535794736002337
+          },
+          "param_errs": {
+            "A": 28672428.823614996,
+            "mu": 0.007609665074851073,
+            "sigma": 0.006622388036511938,
+            "alpha": 0.012360734224316066,
+            "n": 2.615188433011191
+          },
+          "peak_GeV": 89.95,
+          "peak_uncertainty_GeV": 0.0073736266769049395,
+          "sigma_GeV": 1.7327854379328034,
+          "sigma_uncertainty_GeV": 0.006622388036511938,
+          "chi2": 1834.8286570064743,
+          "ndf": 35,
+          "chi2_over_ndf": 52.42367591447069,
+          "fit_window": [
+            80.0,
+            100.0
+          ],
+          "bin_width": 0.5,
+          "M_Z_fixed": 91.1876,
+          "Gamma_Z_fixed": 2.4952
+        },
+        "mode_GeV": 90.125,
+        "median_GeV": 89.59668202387574,
+        "sigma_eff68_GeV": 3.1473292716610786,
+        "sigma_eff68_uncertainty_GeV": 0.002970933906131127,
+        "sigma_eff68_window": [
+          86.47486538729042,
+          92.76952393061258
+        ]
+      },
+      "dy_with_pu": {
+        "n_events": 3494694,
+        "fit": {
+          "params": {
+            "A": 32252930803.17456,
+            "mu": -1.1771484041125264,
+            "sigma": 1.7453335154531735,
+            "alpha": 0.8612893617160307,
+            "n": 17.957536140111813
+          },
+          "param_errs": {
+            "A": 30398700.778717116,
+            "mu": 0.008035805537763988,
+            "sigma": 0.006993932312294358,
+            "alpha": 0.013112576245462495,
+            "n": 2.925038545760879
+          },
+          "peak_GeV": 89.95,
+          "peak_uncertainty_GeV": 0.008314794192830509,
+          "sigma_GeV": 1.7453335154531735,
+          "sigma_uncertainty_GeV": 0.006993932312294358,
+          "chi2": 1702.4190549281102,
+          "ndf": 35,
+          "chi2_over_ndf": 48.64054442651744,
+          "fit_window": [
+            80.0,
+            100.0
+          ],
+          "bin_width": 0.5,
+          "M_Z_fixed": 91.1876,
+          "Gamma_Z_fixed": 2.4952
+        },
+        "mode_GeV": 90.125,
+        "median_GeV": 89.62094656105792,
+        "sigma_eff68_GeV": 3.1550969854705,
+        "sigma_eff68_uncertainty_GeV": 0.002901643836006261,
+        "sigma_eff68_window": [
+          86.50598335519919,
+          92.81617732614019
+        ]
+      },
+      "comparison_with_pu": {
+        "peak_relative_difference": 0.0003705762460626063,
+        "sigma_eff68_relative_difference": -0.009454511475530482,
+        "peak_pass": true,
+        "sigma_eff_pass": true,
+        "overall_pass": true
+      },
+      "comparison_without_pu": {
+        "peak_relative_difference": 0.0003705762460626063,
+        "sigma_eff68_relative_difference": -0.007009812111103639,
+        "peak_pass": true,
+        "sigma_eff_pass": true,
+        "overall_pass": true
+      },
+      "correction_if_fail": null
+    },
+    "EBEB": {
+      "data": {
+        "n_events": 2752568,
+        "fit": {
+          "params": {
+            "A": 1502939.500176706,
+            "mu": -0.9464156611470005,
+            "sigma": 1.505365804755747,
+            "alpha": 0.9106538302802971,
+            "n": 6.038283160179699
+          },
+          "param_errs": {
+            "A": 1078.7478421297976,
+            "mu": 0.0053043256989776565,
+            "sigma": 0.004799676573850367,
+            "alpha": 0.009531278840338867,
+            "n": 0.22694377449312092
+          },
+          "peak_GeV": 90.16666666666667,
+          "peak_uncertainty_GeV": 0.007816569927538026,
+          "sigma_GeV": 1.505365804755747,
+          "sigma_uncertainty_GeV": 0.004799676573850367,
+          "chi2": 1579.893827522198,
+          "ndf": 35,
+          "chi2_over_ndf": 45.139823643491376,
+          "fit_window": [
+            80.0,
+            100.0
+          ],
+          "bin_width": 0.5,
+          "M_Z_fixed": 91.1876,
+          "Gamma_Z_fixed": 2.4952
+        },
+        "mode_GeV": 90.125,
+        "median_GeV": 89.83259441612076,
+        "sigma_eff68_GeV": 3.0103299131748997,
+        "sigma_eff68_uncertainty_GeV": 0.0014376765366252253,
+        "sigma_eff68_window": [
+          86.89145527610872,
+          92.91211510245851
+        ]
+      },
+      "dy_no_pu": {
+        "n_events": 2299825,
+        "fit": {
+          "params": {
+            "A": 21884674227.005478,
+            "mu": -0.9955361661564643,
+            "sigma": 1.5392239195768131,
+            "alpha": 0.9284063328866694,
+            "n": 5.9955225387341065
+          },
+          "param_errs": {
+            "A": 25062553.00921458,
+            "mu": 0.00828193951271439,
+            "sigma": 0.007546828578464444,
+            "alpha": 0.015353967160430249,
+            "n": 0.36305733549858177
+          },
+          "peak_GeV": 90.13333333333333,
+          "peak_uncertainty_GeV": 0.008388704928071509,
+          "sigma_GeV": 1.5392239195768131,
+          "sigma_uncertainty_GeV": 0.007546828578464444,
+          "chi2": 413.4387848287713,
+          "ndf": 35,
+          "chi2_over_ndf": 11.812536709393466,
+          "fit_window": [
+            80.0,
+            100.0
+          ],
+          "bin_width": 0.5,
+          "M_Z_fixed": 91.1876,
+          "Gamma_Z_fixed": 2.4952
+        },
+        "mode_GeV": 90.125,
+        "median_GeV": 89.74261699263901,
+        "sigma_eff68_GeV": 3.020523931541213,
+        "sigma_eff68_uncertainty_GeV": 0.0026636740220327497,
+        "sigma_eff68_window": [
+          86.80768243922165,
+          92.84873030230408
+        ]
+      },
+      "dy_with_pu": {
+        "n_events": 2299825,
+        "fit": {
+          "params": {
+            "A": 22031899876.621487,
+            "mu": -1.00744980930491,
+            "sigma": 1.5532376479469334,
+            "alpha": 0.9322140423234869,
+            "n": 6.0189869118720365
+          },
+          "param_errs": {
+            "A": 26784859.646179724,
+            "mu": 0.008703867883234585,
+            "sigma": 0.0079389715546088,
+            "alpha": 0.016277939277181384,
+            "n": 0.39069219034406444
+          },
+          "peak_GeV": 90.11666666666667,
+          "peak_uncertainty_GeV": 0.00880586224492319,
+          "sigma_GeV": 1.5532376479469334,
+          "sigma_uncertainty_GeV": 0.0079389715546088,
+          "chi2": 385.6365254383343,
+          "ndf": 35,
+          "chi2_over_ndf": 11.018186441095265,
+          "fit_window": [
+            80.0,
+            100.0
+          ],
+          "bin_width": 0.5,
+          "M_Z_fixed": 91.1876,
+          "Gamma_Z_fixed": 2.4952
+        },
+        "mode_GeV": 90.375,
+        "median_GeV": 89.78390126175879,
+        "sigma_eff68_GeV": 3.0282327099155353,
+        "sigma_eff68_uncertainty_GeV": 0.0032707809504964793,
+        "sigma_eff68_window": [
+          86.81611088602737,
+          92.87257630585844
+        ]
+      },
+      "comparison_with_pu": {
+        "peak_relative_difference": 0.0005548363232845995,
+        "sigma_eff68_relative_difference": -0.005911962010718424,
+        "peak_pass": true,
+        "sigma_eff_pass": true,
+        "overall_pass": true
+      },
+      "comparison_without_pu": {
+        "peak_relative_difference": 0.00036982248520723725,
+        "sigma_eff68_relative_difference": -0.0033749172651354256,
+        "peak_pass": true,
+        "sigma_eff_pass": true,
+        "overall_pass": true
+      },
+      "correction_if_fail": null
+    },
+    "notEBEB": {
+      "data": {
+        "n_events": 1348003,
+        "fit": {
+          "params": {
+            "A": 736630.1145472719,
+            "mu": -1.72297250960238,
+            "sigma": 2.107865260825205,
+            "alpha": 1.0345914887595824,
+            "n": 20.182702082138796
+          },
+          "param_errs": {
+            "A": 761.942133233015,
+            "mu": 0.007360888574369884,
+            "sigma": 0.006567874090883829,
+            "alpha": 0.01840393908892514,
+            "n": 5.392059638730637
+          },
+          "peak_GeV": 89.41666666666667,
+          "peak_uncertainty_GeV": 0.007526906468639549,
+          "sigma_GeV": 2.107865260825205,
+          "sigma_uncertainty_GeV": 0.006567874090883829,
+          "chi2": 790.6541122498334,
+          "ndf": 35,
+          "chi2_over_ndf": 22.590117492852382,
+          "fit_window": [
+            80.0,
+            100.0
+          ],
+          "bin_width": 0.5,
+          "M_Z_fixed": 91.1876,
+          "Gamma_Z_fixed": 2.4952
+        },
+        "mode_GeV": 89.375,
+        "median_GeV": 89.21598616559703,
+        "sigma_eff68_GeV": 3.312001608018406,
+        "sigma_eff68_uncertainty_GeV": 0.0014072713329446333,
+        "sigma_eff68_window": [
+          85.93874999090923,
+          92.56275320694604
+        ]
+      },
+      "dy_no_pu": {
+        "n_events": 1194869,
+        "fit": {
+          "params": {
+            "A": 11308589300.943697,
+            "mu": -1.6665083562311103,
+            "sigma": 2.184204516982913,
+            "alpha": 1.025972949046888,
+            "n": 79.99999987347935
+          },
+          "param_errs": {
+            "A": 17363038.935946677,
+            "mu": 0.011573992057323587,
+            "sigma": 0.010275804711466774,
+            "alpha": 0.02878028388574742,
+            "n": 129.81430005484987
+          },
+          "peak_GeV": 89.48333333333333,
+          "peak_uncertainty_GeV": 4.71004299212378,
+          "sigma_GeV": 2.184204516982913,
+          "sigma_uncertainty_GeV": 0.010275804711466774,
+          "chi2": 209.14191524691097,
+          "ndf": 35,
+          "chi2_over_ndf": 5.975483292768885,
+          "fit_window": [
+            80.0,
+            100.0
+          ],
+          "bin_width": 0.5,
+          "M_Z_fixed": 91.1876,
+          "Gamma_Z_fixed": 2.4952
+        },
+        "mode_GeV": 89.375,
+        "median_GeV": 89.27695671336473,
+        "sigma_eff68_GeV": 3.359467540937281,
+        "sigma_eff68_uncertainty_GeV": 0.006008253766320868,
+        "sigma_eff68_window": [
+          86.01830292152944,
+          92.737238003404
+        ]
+      },
+      "dy_with_pu": {
+        "n_events": 1194869,
+        "fit": {
+          "params": {
+            "A": 11163843576.826944,
+            "mu": -1.6942299541021884,
+            "sigma": 2.2051046262586045,
+            "alpha": 1.033953418443208,
+            "n": 79.99999569522656
+          },
+          "param_errs": {
+            "A": 18247472.39506125,
+            "mu": 0.012164911823548504,
+            "sigma": 0.01081575908462308,
+            "alpha": 0.030956733356842934,
+            "n": 140.39806991893892
+          },
+          "peak_GeV": 89.45,
+          "peak_uncertainty_GeV": 4.67082183267491,
+          "sigma_GeV": 2.2051046262586045,
+          "sigma_uncertainty_GeV": 0.01081575908462308,
+          "chi2": 202.27187334150716,
+          "ndf": 35,
+          "chi2_over_ndf": 5.779196381185919,
+          "fit_window": [
+            80.0,
+            100.0
+          ],
+          "bin_width": 0.5,
+          "M_Z_fixed": 91.1876,
+          "Gamma_Z_fixed": 2.4952
+        },
+        "mode_GeV": 89.375,
+        "median_GeV": 89.25572241808925,
+        "sigma_eff68_GeV": 3.3708989239118736,
+        "sigma_eff68_uncertainty_GeV": 0.006536453013473878,
+        "sigma_eff68_window": [
+          85.98913221666444,
+          92.73093006448819
+        ]
+      },
+      "comparison_with_pu": {
+        "peak_relative_difference": -0.00037264766163590203,
+        "sigma_eff68_relative_difference": -0.017472287725886014,
+        "peak_pass": true,
+        "sigma_eff_pass": true,
+        "overall_pass": true
+      },
+      "comparison_without_pu": {
+        "peak_relative_difference": -0.0007450176941701941,
+        "sigma_eff68_relative_difference": -0.014129004772474302,
+        "peak_pass": true,
+        "sigma_eff_pass": true,
+        "overall_pass": true
+      },
+      "correction_if_fail": null
+    }
+  }
+}
