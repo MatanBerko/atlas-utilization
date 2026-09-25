@@ -1,0 +1,84 @@
+{
+  "dataset_label": "MET",
+  "scale_factor": 94.6713,
+  "funnel": {
+    "a_unscaled": 2118,
+    "b_unscaled": 302,
+    "b_scaled": 1668,
+    "c_unscaled": 191,
+    "d_unscaled": 134,
+    "d_scaled_estimate": 148
+  },
+  "d_unscaled_breakdown_by_object_count": {
+    "2": 65,
+    "3": 46,
+    "4": 23
+  },
+  "d_unscaled_breakdown_by_object_content": {
+    "jet-only": 29,
+    "b-jet-containing": 84,
+    "lepton+jet": 21
+  },
+  "d_scaled_breakdown_by_object_count": {
+    "3": 53,
+    "4": 27,
+    "2": 68
+  },
+  "d_scaled_breakdown_by_object_content": {
+    "jet-only": 31,
+    "b-jet-containing": 95,
+    "lepton+jet": 22
+  },
+  "top10_d_unscaled_by_events": [
+    [
+      "mass_j0j1_cat_0ex_0mx_2jx_0gx_0tx_0bx",
+      29997,
+      141
+    ],
+    [
+      "mass_j0j1j2_cat_0ex_0mx_3jx_0gx_0tx_0bx",
+      16194,
+      167
+    ],
+    [
+      "mass_j0j1_cat_0ex_0mx_3jx_0gx_0tx_0bx",
+      15871,
+      150
+    ],
+    [
+      "mass_j0b0_cat_0ex_0mx_1jx_0gx_0tx_1bx",
+      14128,
+      130
+    ],
+    [
+      "mass_j0j1_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+      13275,
+      183
+    ],
+    [
+      "mass_j0j1j2j3_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+      12782,
+      184
+    ],
+    [
+      "mass_j0j1j2_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+      11154,
+      206
+    ],
+    [
+      "mass_j0j1_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+      10888,
+      112
+    ],
+    [
+      "mass_j1b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+      10538,
+      93
+    ],
+    [
+      "mass_j0b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+      10074,
+      113
+    ]
+  ]
+}

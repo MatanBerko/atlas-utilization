@@ -1,0 +1,86 @@
+{
+  "dataset_label": "DoubleMuon",
+  "scale_factor": 19.5383,
+  "funnel": {
+    "a_unscaled": 2886,
+    "b_unscaled": 534,
+    "b_scaled": 1389,
+    "c_unscaled": 407,
+    "d_unscaled": 312,
+    "d_scaled_estimate": 331
+  },
+  "d_unscaled_breakdown_by_object_count": {
+    "2": 133,
+    "3": 112,
+    "4": 67
+  },
+  "d_unscaled_breakdown_by_object_content": {
+    "jet-only": 47,
+    "lepton+jet": 68,
+    "b-jet-containing": 196,
+    "lepton-only": 1
+  },
+  "d_scaled_breakdown_by_object_count": {
+    "2": 134,
+    "3": 117,
+    "4": 80
+  },
+  "d_scaled_breakdown_by_object_content": {
+    "jet-only": 49,
+    "lepton+jet": 72,
+    "b-jet-containing": 209,
+    "lepton-only": 1
+  },
+  "top10_d_unscaled_by_events": [
+    [
+      "mass_j0b0_cat_0ex_0mx_1jx_0gx_0tx_1bx",
+      242469,
+      162
+    ],
+    [
+      "mass_j0j1_cat_0ex_0mx_2jx_0gx_0tx_0bx",
+      224128,
+      164
+    ],
+    [
+      "mass_j0j1b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+      94887,
+      184
+    ],
+    [
+      "mass_j0b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+      94640,
+      167
+    ],
+    [
+      "mass_j0j1_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+      93621,
+      130
+    ],
+    [
+      "mass_j1b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+      87742,
+      103
+    ],
+    [
+      "mass_j0j1_cat_0ex_0mx_3jx_0gx_0tx_0bx",
+      79437,
+      175
+    ],
+    [
+      "mass_b0b1_cat_0ex_0mx_0jx_0gx_0tx_2bx",
+      77526,
+      96
+    ],
+    [
+      "mass_j0j1j2_cat_0ex_0mx_3jx_0gx_0tx_0bx",
+      73825,
+      173
+    ],
+    [
+      "mass_m0j0_cat_0ex_1mx_1jx_0gx_0tx_0bx",
+      55458,
+      60
+    ]
+  ]
+}
