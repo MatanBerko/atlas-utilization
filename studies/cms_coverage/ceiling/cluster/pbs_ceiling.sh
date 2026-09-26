@@ -69,6 +69,14 @@ if [[ "$WITH_MET" == "1" ]]; then
     WITH_MET_FLAG="--with-met"
 fi
 
+# /usr/bin/time -v's peak-RSS/wall-time is written to the job's own output
+# dir on SHARED storage (not node-local /tmp -- wipp-home round-robins
+# across several login nodes with their own local /tmp, confirmed during
+# this task's own interactive DoubleMuon pilot, where a node-local /tmp
+# redirect became unreadable from a later ssh connection landing on a
+# different node) so it can always be read back regardless of which
+# execute node this array subjob lands on.
+/usr/bin/time -v -o "${JOB_OUTPUT_DIR}/time.log" \
 python -u studies/cms_coverage/ceiling/cluster/run_ceiling_on_file.py \
     --record-id "$RECORD_ID" \
     --file-index 0 \

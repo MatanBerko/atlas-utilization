@@ -1,0 +1,17 @@
+# Not used by any script -- reference only, for building PBS mapping files.
+# label	record_id	is_mc	trigger_paths_or_NONE
+SingleMuon	30530	0	HLT_IsoMu24,HLT_IsoTkMu24
+DoubleMuon	30522	0	HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ,HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ
+SingleElectron	30529	0	HLT_Ele27_WPTight_Gsf
+DoubleEG	30521	0	HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ
+MuonEG	30528	0	HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ
+JetHT	30525	0	HLT_PFHT900,HLT_PFJet450
+Tau	30532	0	HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg,HLT_DoubleMediumIsoPFTau40_Trk1_eta2p1_Reg
+MET	30526	0	HLT_PFMET170_HBHECleaned,HLT_PFMET170_NotCleaned
+mc_ttbar	67801	1	NONE
+mc_drell_yan	35671	1	NONE
+mc_wjets	69747	1	NONE
+mc_diboson	72696	1	NONE
+mc_single_top	64759	1	NONE
+mc_qcd_multijet_170to300	63176	1	NONE
+mc_signals_hgg	37350	1	NONE
