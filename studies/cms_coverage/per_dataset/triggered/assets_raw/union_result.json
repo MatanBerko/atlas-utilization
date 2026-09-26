@@ -1,0 +1,540 @@
+{
+  "d": {
+    "per_dataset_counts": {
+      "SingleMuon": 217,
+      "DoubleMuon": 176,
+      "SingleElectron": 18,
+      "DoubleEG": 76,
+      "MuonEG": 136,
+      "JetHT": 28,
+      "mc_ttbar": 571,
+      "mc_drell_yan": 109,
+      "mc_wjets": 6,
+      "mc_diboson": 182,
+      "mc_single_top": 292,
+      "mc_qcd_multijet_170to300": 70,
+      "mc_signals_hgg": 30
+    },
+    "data_union": 339,
+    "mc_union": 682,
+    "combined_union": 709,
+    "data_by_n_datasets": {
+      "1": 174,
+      "2": 78,
+      "3": 56,
+      "4": 8,
+      "5": 17,
+      "6": 6
+    },
+    "mc_by_n_datasets": {
+      "1": 409,
+      "2": 115,
+      "3": 61,
+      "4": 68,
+      "5": 11,
+      "6": 15,
+      "7": 3
+    },
+    "combined_by_n_datasets": {
+      "1": 331,
+      "2": 139,
+      "3": 73,
+      "4": 32,
+      "5": 26,
+      "6": 36,
+      "7": 34,
+      "8": 11,
+      "9": 10,
+      "10": 3,
+      "11": 8,
+      "12": 3,
+      "13": 3
+    },
+    "data_per_dataset_unique": {
+      "SingleMuon": 85,
+      "DoubleMuon": 35,
+      "SingleElectron": 0,
+      "DoubleEG": 30,
+      "MuonEG": 24,
+      "JetHT": 0
+    },
+    "data_per_dataset_shared": {
+      "SingleMuon": 132,
+      "DoubleMuon": 141,
+      "SingleElectron": 18,
+      "DoubleEG": 46,
+      "MuonEG": 112,
+      "JetHT": 28
+    },
+    "mc_per_dataset_unique": {
+      "mc_ttbar": 311,
+      "mc_drell_yan": 32,
+      "mc_wjets": 0,
+      "mc_diboson": 15,
+      "mc_single_top": 51,
+      "mc_qcd_multijet_170to300": 0,
+      "mc_signals_hgg": 0
+    },
+    "mc_per_dataset_shared": {
+      "mc_ttbar": 260,
+      "mc_drell_yan": 77,
+      "mc_wjets": 6,
+      "mc_diboson": 167,
+      "mc_single_top": 241,
+      "mc_qcd_multijet_170to300": 70,
+      "mc_signals_hgg": 30
+    },
+    "data_20_most_shared": [
+      [
+        "mass_j0j1j2_cat_0ex_0mx_3jx_0gx_0tx_0bx",
+        6
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+        6
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_3jx_0gx_0tx_0bx",
+        6
+      ],
+      [
+        "mass_j0j1j2j3_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+        6
+      ],
+      [
+        "mass_j0j1j2_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+        6
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_2jx_0gx_0tx_0bx",
+        6
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j0j1j2b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_4jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j0b0_cat_0ex_0mx_1jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j0b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j0j1j2_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j0b0_cat_0ex_0mx_4jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j0j1b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j1b0_cat_0ex_0mx_4jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j0b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j1b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j0j1j2b0_cat_0ex_0mx_4jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j0j1b0_cat_0ex_0mx_4jx_0gx_0tx_1bx",
+        5
+      ]
+    ],
+    "combined_20_most_shared": [
+      [
+        "mass_j0j1_cat_0ex_0mx_2jx_0gx_0tx_0bx",
+        13
+      ],
+      [
+        "mass_j0j1j2_cat_0ex_0mx_3jx_0gx_0tx_0bx",
+        13
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_3jx_0gx_0tx_0bx",
+        13
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+        12
+      ],
+      [
+        "mass_j0j1j2j3_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+        12
+      ],
+      [
+        "mass_j0j1j2_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+        12
+      ],
+      [
+        "mass_j0b0_cat_0ex_0mx_1jx_0gx_0tx_1bx",
+        11
+      ],
+      [
+        "mass_j0j1b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        11
+      ],
+      [
+        "mass_j0b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        11
+      ],
+      [
+        "mass_j0j1j2b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        11
+      ],
+      [
+        "mass_j0b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        11
+      ],
+      [
+        "mass_j0j1j2_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        11
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        11
+      ],
+      [
+        "mass_j1b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        11
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        10
+      ],
+      [
+        "mass_j0j1b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        10
+      ],
+      [
+        "mass_j1b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        10
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_4jx_0gx_0tx_1bx",
+        9
+      ],
+      [
+        "mass_e0j0j1_cat_1ex_0mx_2jx_0gx_0tx_0bx",
+        9
+      ],
+      [
+        "mass_e0j0_cat_1ex_0mx_1jx_0gx_0tx_0bx",
+        9
+      ]
+    ],
+    "data_union_by_content": {
+      "jet-only": 54,
+      "b-jet-containing": 176,
+      "lepton+jet": 107,
+      "lepton-only": 2
+    },
+    "mc_union_by_content": {
+      "b-jet-containing": 436,
+      "jet-only": 71,
+      "lepton+jet": 165,
+      "lepton-only": 10
+    },
+    "combined_union_by_content": {
+      "b-jet-containing": 445,
+      "jet-only": 75,
+      "lepton+jet": 179,
+      "lepton-only": 10
+    },
+    "data_names_also_in_mc_union": 312
+  },
+  "b": {
+    "per_dataset_counts": {
+      "SingleMuon": 399,
+      "DoubleMuon": 373,
+      "SingleElectron": 56,
+      "DoubleEG": 228,
+      "MuonEG": 499,
+      "JetHT": 64,
+      "mc_ttbar": 1156,
+      "mc_drell_yan": 243,
+      "mc_wjets": 24,
+      "mc_diboson": 272,
+      "mc_single_top": 420,
+      "mc_qcd_multijet_170to300": 91,
+      "mc_signals_hgg": 78
+    },
+    "data_union": 816,
+    "mc_union": 1204,
+    "combined_union": 1204,
+    "data_by_n_datasets": {
+      "1": 372,
+      "2": 220,
+      "3": 155,
+      "4": 20,
+      "5": 32,
+      "6": 17
+    },
+    "mc_by_n_datasets": {
+      "1": 653,
+      "2": 290,
+      "3": 103,
+      "4": 94,
+      "5": 25,
+      "6": 32,
+      "7": 7
+    },
+    "combined_by_n_datasets": {
+      "1": 357,
+      "2": 254,
+      "3": 197,
+      "4": 131,
+      "5": 65,
+      "6": 47,
+      "7": 49,
+      "8": 40,
+      "9": 35,
+      "10": 5,
+      "11": 7,
+      "12": 10,
+      "13": 7
+    },
+    "data_per_dataset_unique": {
+      "SingleMuon": 44,
+      "DoubleMuon": 68,
+      "SingleElectron": 0,
+      "DoubleEG": 91,
+      "MuonEG": 169,
+      "JetHT": 0
+    },
+    "data_per_dataset_shared": {
+      "SingleMuon": 355,
+      "DoubleMuon": 305,
+      "SingleElectron": 56,
+      "DoubleEG": 137,
+      "MuonEG": 330,
+      "JetHT": 64
+    },
+    "mc_per_dataset_unique": {
+      "mc_ttbar": 605,
+      "mc_drell_yan": 30,
+      "mc_wjets": 0,
+      "mc_diboson": 0,
+      "mc_single_top": 18,
+      "mc_qcd_multijet_170to300": 0,
+      "mc_signals_hgg": 0
+    },
+    "mc_per_dataset_shared": {
+      "mc_ttbar": 551,
+      "mc_drell_yan": 213,
+      "mc_wjets": 24,
+      "mc_diboson": 272,
+      "mc_single_top": 402,
+      "mc_qcd_multijet_170to300": 91,
+      "mc_signals_hgg": 78
+    },
+    "data_20_most_shared": [
+      [
+        "mass_j0j1_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        6
+      ],
+      [
+        "mass_j0b0_cat_0ex_0mx_1jx_0gx_0tx_1bx",
+        6
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+        6
+      ],
+      [
+        "mass_j0j1j2j3_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+        6
+      ],
+      [
+        "mass_j0j1b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        6
+      ],
+      [
+        "mass_j0b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        6
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_2jx_0gx_0tx_0bx",
+        6
+      ],
+      [
+        "mass_j0j1j2b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        6
+      ],
+      [
+        "mass_j0b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        6
+      ],
+      [
+        "mass_j0j1j2_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        6
+      ],
+      [
+        "mass_j0j1j2_cat_0ex_0mx_3jx_0gx_0tx_0bx",
+        6
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_3jx_0gx_0tx_0bx",
+        6
+      ],
+      [
+        "mass_j0j1b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        6
+      ],
+      [
+        "mass_j0j1j2_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+        6
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        6
+      ],
+      [
+        "mass_j1b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        6
+      ],
+      [
+        "mass_j1b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        6
+      ],
+      [
+        "mass_j0j1b0_cat_0ex_0mx_2jx_0gx_0tx_2bx",
+        5
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_4jx_0gx_0tx_1bx",
+        5
+      ],
+      [
+        "mass_j0j1b0b1_cat_0ex_0mx_2jx_0gx_0tx_2bx",
+        5
+      ]
+    ],
+    "combined_20_most_shared": [
+      [
+        "mass_j0b0_cat_0ex_0mx_1jx_0gx_0tx_1bx",
+        13
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_2jx_0gx_0tx_0bx",
+        13
+      ],
+      [
+        "mass_j0j1j2_cat_0ex_0mx_3jx_0gx_0tx_0bx",
+        13
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+        13
+      ],
+      [
+        "mass_j0j1j2j3_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+        13
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_3jx_0gx_0tx_0bx",
+        13
+      ],
+      [
+        "mass_j0j1j2_cat_0ex_0mx_4jx_0gx_0tx_0bx",
+        13
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        12
+      ],
+      [
+        "mass_j0b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        12
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        12
+      ],
+      [
+        "mass_j1b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        12
+      ],
+      [
+        "mass_j0j1b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        12
+      ],
+      [
+        "mass_j0j1j2b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        12
+      ],
+      [
+        "mass_j0b0_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        12
+      ],
+      [
+        "mass_j0j1j2_cat_0ex_0mx_3jx_0gx_0tx_1bx",
+        12
+      ],
+      [
+        "mass_j0j1b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        12
+      ],
+      [
+        "mass_j1b0_cat_0ex_0mx_2jx_0gx_0tx_1bx",
+        12
+      ],
+      [
+        "mass_j0j1_cat_0ex_0mx_4jx_0gx_0tx_1bx",
+        11
+      ],
+      [
+        "mass_j0j1j2b0_cat_0ex_0mx_4jx_0gx_0tx_1bx",
+        11
+      ],
+      [
+        "mass_j0j1b0_cat_0ex_0mx_4jx_0gx_0tx_1bx",
+        11
+      ]
+    ],
+    "data_union_by_content": {
+      "b-jet-containing": 491,
+      "jet-only": 73,
+      "lepton+jet": 222,
+      "lepton-only": 30
+    },
+    "mc_union_by_content": {
+      "b-jet-containing": 764,
+      "jet-only": 96,
+      "lepton+jet": 306,
+      "lepton-only": 38
+    },
+    "combined_union_by_content": {
+      "b-jet-containing": 764,
+      "jet-only": 96,
+      "lepton+jet": 306,
+      "lepton-only": 38
+    },
+    "data_names_also_in_mc_union": 816
+  }
+}
