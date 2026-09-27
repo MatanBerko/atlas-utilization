@@ -26,6 +26,43 @@ coverage run's own criterion. Every histogram's ROOT-internal key is
 ROI_<bumpnet-name>_width_10, e.g.
 ROI_mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_0bx_width_10.
 
+UNCROPPED vs CROPPED -- FOUR FILES, TWO PAIRS
+------------------------------------------------
+There are now FOUR ROOT files, two "uncropped" and two "cropped":
+
+  doublemuon_bumpnet_min31bins.root          (uncropped, 316 histograms)
+  doublemuon_bumpnet_min31bins_cropped.root  (cropped,   316 histograms)
+  doublemuon_bumpnet_min26bins.root          (uncropped, 340 histograms)
+  doublemuon_bumpnet_min26bins_cropped.root  (cropped,   340 histograms)
+
+UNCROPPED means every histogram spans the shared pipeline's full fixed
+grid, 0-10,000 GeV in 10 GeV bins (1,000 bins total,
+FIXED_MASS_MIN_GEV/FIXED_MASS_MAX_GEV in
+services/pipelines/histograms_pipeline.py) -- this is the shared
+pipeline's own convention, used everywhere else in this project, and is
+what "same grid, same edges, comparable across categories" means. Because
+post-processing's peak-removal step always drops everything below the
+per-category peak mass, bin 1 (0-10 GeV) is empty in every one of these
+histograms by construction -- the pipeline's own trim_empty_tail sets a
+cosmetic axis DISPLAY range that hides this in a plot, but the underlying
+bin CONTENT is still there, still zero. A reader that inspects bin
+contents directly (rather than the display range) sees an empty bin 1
+regardless.
+
+CROPPED means the leading (and, if it occurs, trailing) all-empty region
+has been genuinely REMOVED -- a smaller TH1F, built by slicing the
+uncropped histogram's own values/edges array down to the window from its
+first to its last non-zero bin (any zero-content bins in between are kept
+untouched -- only the empty edges are cut). Bin width stays exactly 10
+GeV and every remaining bin edge stays aligned to the original grid (a
+bin that ran 140-150 GeV in the uncropped file still runs 140-150 GeV in
+the cropped one -- only the bin's INDEX changes). Name, title, and the
+ROI_ internal key are identical to the uncropped version. Bin 1 of every
+cropped histogram is non-empty by construction, and this was independently
+verified for all 316 and all 340 histograms, re-reading the written files
+from disk (build_summary.json / crop_summary.json have the full logs).
+**Use the _cropped files for BumpNet** -- that is what its reader needs.
+
 DATASET AND RUN RANGE
 ----------------------
 CMS Open Data, DoubleMuon primary dataset, NanoAODv9 (UL2016),
@@ -104,17 +141,26 @@ VERIFICATION PERFORMED FOR THIS DELIVERY
 
 FILES IN THIS DIRECTORY
 -------------------------
-doublemuon_bumpnet_min31bins.root   316 TH1F histograms (>30 bins).
-doublemuon_bumpnet_min26bins.root   340 TH1F histograms (>25 bins).
-manifest_min31bins.json             per-histogram detail for the 316.
-manifest_min26bins.json             per-histogram detail for the 340.
-build_summary.json                  the full build/verification log.
-plot_1_largest.png                  largest histogram by event count.
-plot_2_median.png                   median histogram by event count.
-plot_3_near_25bin_boundary.png      a histogram near the 25-bin cut.
-README.txt                          this file.
+doublemuon_bumpnet_min31bins.root                  316 histograms, UNCROPPED (>30 bins).
+doublemuon_bumpnet_min31bins_cropped.root          316 histograms, CROPPED  (>30 bins). Use this one for BumpNet.
+doublemuon_bumpnet_min26bins.root                  340 histograms, UNCROPPED (>25 bins).
+doublemuon_bumpnet_min26bins_cropped.root          340 histograms, CROPPED  (>25 bins). Use this one for BumpNet.
+manifest_min31bins.json                            per-histogram detail, uncropped 316.
+manifest_min26bins.json                            per-histogram detail, uncropped 340.
+manifest_doublemuon_bumpnet_min31bins_cropped.json per-histogram detail, cropped 316 (bins now count only the cropped window).
+manifest_doublemuon_bumpnet_min26bins_cropped.json per-histogram detail, cropped 340.
+build_summary.json                                 build/verification log for the two uncropped files.
+crop_summary.json                                  build/verification log for the two cropped files.
+plot_1_largest.png                                 largest histogram by event count (uncropped file).
+plot_2_median.png                                  median histogram by event count (uncropped file).
+plot_3_near_25bin_boundary.png                     a histogram near the 25-bin cut.
+plot_4_crop_comparison.png                         the same histogram, uncropped vs cropped, side by side.
+README.txt                                         this file.
 
-Produced by studies/cms_coverage/deliver/build_bumpnet_root.py and
-make_check_plots.py (branch deliver/doublemuon-bumpnet), from the
-existing coverage-run SQLite shards only -- no CMS data file was
-re-read, no selection or combination was re-run.
+Produced by studies/cms_coverage/deliver/build_bumpnet_root.py,
+make_check_plots.py, crop_bumpnet_root.py, and
+make_crop_comparison_plot.py (branch deliver/doublemuon-bumpnet). The
+uncropped files come from the existing coverage-run SQLite shards only;
+the cropped files come only from re-reading the uncropped files above --
+no CMS data file was re-read, no selection, combination, or threshold
+was re-run or changed, for either pair.
