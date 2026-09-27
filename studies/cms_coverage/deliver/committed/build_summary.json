@@ -1,0 +1,60 @@
+{
+  "shard_identity_check": {
+    "n_jobs_present": 57,
+    "total_n_read": 94148416,
+    "expected_total_events": 94148416,
+    "matches": true
+  },
+  "stage_b": 465,
+  "stage_c": 375,
+  "n_histograms_min31bins": 316,
+  "n_histograms_min26bins": 340,
+  "matches_committed_316": true,
+  "identical_to_merge_and_count_stage_d": true,
+  "shared_histograms_bin_identical_on_disk": true,
+  "n_m0m1j0_checked_vs_v2": 13,
+  "m0m1j0_matches_v2_bin_for_bin": true,
+  "extra_histograms_min26_vs_min31": {
+    "n_extra": 24,
+    "extra_names": [
+      "mass_e0m0_cat_1ex_2mx_1jx_0gx_0tx_0bx",
+      "mass_e0m0j1_cat_1ex_2mx_2jx_0gx_0tx_0bx",
+      "mass_j0b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "mass_j0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "mass_j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "mass_j1b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "mass_m0b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "mass_m0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "mass_m0j0_cat_0ex_3mx_1jx_0gx_0tx_0bx",
+      "mass_m0j0b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "mass_m0j0j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "mass_m0m1_cat_0ex_2mx_2jx_0gx_0tx_2bx",
+      "mass_m0m1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "mass_m0m1_cat_0ex_2mx_4jx_0gx_0tx_1bx",
+      "mass_m0m1b0_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "mass_m0m1j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "mass_m1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "mass_m1b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "mass_m1b1_cat_0ex_2mx_2jx_0gx_0tx_2bx",
+      "mass_m1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "mass_m1j0_cat_0ex_3mx_1jx_0gx_0tx_0bx",
+      "mass_m1j0_cat_1ex_2mx_1jx_0gx_0tx_0bx",
+      "mass_m1j0j1_cat_0ex_2mx_2jx_0gx_0tx_3bx",
+      "mass_m1j1_cat_0ex_2mx_4jx_0gx_0tx_2bx"
+    ],
+    "event_count_stats": {
+      "min": 105,
+      "median": 244.5,
+      "max": 2276
+    },
+    "bin_count_stats": {
+      "min": 26,
+      "median": 28.0,
+      "max": 30
+    }
+  },
+  "output_files": {
+    "doublemuon_bumpnet_min31bins.root": "/storage/agrp/berkom/atlas-utilization/output/deliver_doublemuon_bumpnet/doublemuon_bumpnet_min31bins.root",
+    "doublemuon_bumpnet_min26bins.root": "/storage/agrp/berkom/atlas-utilization/output/deliver_doublemuon_bumpnet/doublemuon_bumpnet_min26bins.root"
+  }
+}
