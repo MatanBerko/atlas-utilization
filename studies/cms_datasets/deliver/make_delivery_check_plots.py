@@ -83,6 +83,17 @@ def is_zero_lepton(final_state_category: str) -> bool:
     return n_e == 0 and n_m == 0
 
 
+def is_emu_category(final_state_category: str) -> bool:
+    """>=1 selected electron AND >=1 selected muon -- the MuonEG task's
+    own required category type among the 'new relative to prior
+    deliveries' picks."""
+    c = parse_fs_category(final_state_category)
+    if c is None:
+        return False
+    n_e, n_m, n_j, n_b = c
+    return n_e >= 1 and n_m >= 1
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--manifest-min31", required=True)
@@ -90,9 +101,13 @@ def main():
     p.add_argument("--root-min31", required=True)
     p.add_argument("--root-min26", required=True)
     p.add_argument("--root-min31-cropped", required=True)
-    p.add_argument("--old-manifest-min26", default=None)
+    p.add_argument("--old-manifest-min26", default=None,
+                    help="comma-separated list of prior deliveries' manifest_..._min26bins.json -- "
+                         "'new' means absent from the UNION of all of them")
     p.add_argument("--prefer-lepton-letter", default="m", choices=["e", "m"],
                     help="which lepton the 'at least one zero-jet dilepton category' pick should prefer (DoubleMuon: m, DoubleEG: e)")
+    p.add_argument("--require-emu-category", action="store_true",
+                    help="prioritize picking an e+mu category (>=1 electron AND >=1 muon) among the 'new' picks (MuonEG)")
     p.add_argument("--plot-largest-zero-lepton", action="store_true",
                     help="also plot the largest zero-selected-lepton histogram (0 electrons AND 0 muons)")
     p.add_argument("--out-dir", required=True)
@@ -129,14 +144,23 @@ def main():
 
     new_category_summary = []
     if args.old_manifest_min26:
-        old_manifest = json.loads(Path(args.old_manifest_min26).read_text())
-        old_names = set(e["name"] for e in old_manifest)
+        old_paths = args.old_manifest_min26.split(",")
+        old_names = set()
+        for old_path in old_paths:
+            old_manifest = json.loads(Path(old_path).read_text())
+            old_names |= set(e["name"] for e in old_manifest)
         new_entries = [e for e in manifest_b if e["name"] not in old_names]
-        print(f"{len(new_entries)} names in this delivery's >25-bin manifest are NEW relative to the old delivery")
+        print(f"{len(new_entries)} names in this delivery's >25-bin manifest are NEW relative to the "
+              f"union of {len(old_paths)} prior deliveries' manifests")
 
-        zero_jet_dilepton_new = [e for e in new_entries
-                                  if is_zero_jet_dilepton(e.get("final_state_category", ""), args.prefer_lepton_letter)]
         chosen = []
+        if args.require_emu_category:
+            emu_new = [e for e in new_entries if is_emu_category(e.get("final_state_category", ""))]
+            if emu_new:
+                chosen.append(max(emu_new, key=lambda e: e["n_events"]))
+        zero_jet_dilepton_new = [e for e in new_entries
+                                  if is_zero_jet_dilepton(e.get("final_state_category", ""), args.prefer_lepton_letter)
+                                  and e not in chosen]
         if zero_jet_dilepton_new:
             chosen.append(max(zero_jet_dilepton_new, key=lambda e: e["n_events"]))
         remaining = [e for e in new_entries if e not in chosen]
@@ -153,6 +177,7 @@ def main():
             new_category_summary.append({
                 "name": entry["name"], "n_events": entry["n_events"],
                 "is_zero_jet_dilepton": is_zero_jet_dilepton(entry.get("final_state_category", ""), args.prefer_lepton_letter),
+                "is_emu_category": is_emu_category(entry.get("final_state_category", "")),
             })
         print(json.dumps(new_category_summary, indent=2))
 
