@@ -1,0 +1,170 @@
+{
+  "data_DoubleMuon_G": {
+    "record_id": 30522,
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/05DD095C-F6C3-9A4F-9FB3-348A5A6403D5.root",
+    "n_entries_total": 2315223,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [
+      "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ",
+      "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ"
+    ],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "data_SingleMuon_G": {
+    "record_id": 30530,
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/0A4230E2-0C75-604D-890F-A4CE5E5C164E.root",
+    "n_entries_total": 2939781,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [
+      "HLT_IsoMu24",
+      "HLT_IsoTkMu24"
+    ],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "data_DoubleEG_G": {
+    "record_id": 30521,
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root",
+    "n_entries_total": 2014154,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [
+      "HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90"
+    ],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "data_SingleElectron_G": {
+    "record_id": 30529,
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleElectron/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/110000/43B00DA0-41AF-D042-9F41-7F95FBE5E59F.root",
+    "n_entries_total": 112955,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [
+      "HLT_Ele27_WPTight_Gsf"
+    ],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "data_MuonEG_G": {
+    "record_id": 30528,
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/MuonEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/2ADBED61-A06A-D64B-BE90-E9B267D15700.root",
+    "n_entries_total": 2238235,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [
+      "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL"
+    ],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "data_JetHT_G": {
+    "record_id": 30525,
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/JetHT/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/CD205112-3009-AB40-ACE1-9C3C31285B4A.root",
+    "n_entries_total": 107505,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [
+      "HLT_PFJet450"
+    ],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "data_MET_G": {
+    "record_id": 30526,
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/MET/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/1110000/498DAB22-324C-A744-9F94-B9403276F9FC.root",
+    "n_entries_total": 284924,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [
+      "HLT_PFMET120_PFMHT120_IDTight"
+    ],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "data_Tau_G": {
+    "record_id": 30532,
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/Tau/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/270000/06D59B66-2858-3E42-B867-8FDE59F4D206.root",
+    "n_entries_total": 2433947,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [
+      "HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg"
+    ],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "mc_ttbar": {
+    "record_id": "67801",
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/089E6E3A-DFD1-7148-BD6F-F611D22A1B62.root",
+    "n_entries_total": 136000,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "mc_drell_yan": {
+    "record_id": "35671",
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/14B6A8AE-C9FE-D744-80A4-DDE5D008C1CD.root",
+    "n_entries_total": 1434319,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "mc_wjets": {
+    "record_id": "69747",
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/00702195-E707-3743-8BBA-57EB9DEE1DBA.root",
+    "n_entries_total": 133692,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "mc_diboson": {
+    "record_id": "72696",
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WW_TuneCP5_13TeV-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/06EB69E5-1BCE-8043-9EF5-8F7ECCAC06D3.root",
+    "n_entries_total": 2016000,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "mc_single_top": {
+    "record_id": "64759",
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/100000/0164285F-F384-CD43-B796-F66C21D36DEF.root",
+    "n_entries_total": 861000,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "mc_qcd_multijet": {
+    "record_id": "63166",
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/QCD_Pt_15to30_TuneCP5_13TeV_pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/286467EF-8C57-6943-ACBF-051AF4A1B14A.root",
+    "n_entries_total": 1924000,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  },
+  "mc_signals_hgg": {
+    "record_id": "37350",
+    "file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/3231834B-7A6E-4840-8627-C97FDCF67268.root",
+    "n_entries_total": 533000,
+    "n_sample_read_ok": 2000,
+    "missing_required_branches": [],
+    "checked_trigger_paths": [],
+    "missing_trigger_paths": [],
+    "status": "parseable"
+  }
+}

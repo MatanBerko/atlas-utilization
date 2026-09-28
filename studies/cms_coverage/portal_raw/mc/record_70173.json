@@ -1,0 +1,483 @@
+{
+  "created": "2024-11-28T16:55:36.573244+00:00",
+  "id": "70173",
+  "links": {
+    "bucket": "https://opendata.cern.ch/api/files/1d3e9a79-17e8-47e1-bdb4-d0b6fa87f953",
+    "self": "https://opendata.cern.ch/api/records/70173"
+  },
+  "metadata": {
+    "$schema": "http://opendata.cern.ch/schema/records/record-v1.0.0.json",
+    "_availability_details": {
+      "online": 15
+    },
+    "_bucket": "1d3e9a79-17e8-47e1-bdb4-d0b6fa87f953",
+    "_file_indices": [
+      {
+        "availability": {
+          "online": 6
+        },
+        "bucket": "94569fc3-80e9-4857-bb71-e79741592dd7",
+        "description": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_2430000_file_index.json",
+        "files": [
+          {
+            "availability": "online",
+            "bucket": "94569fc3-80e9-4857-bb71-e79741592dd7",
+            "checksum": "adler32:f89ce9d6",
+            "file_id": "71890de7-ae6c-4bea-8811-e0e19c678e51",
+            "filename": "268E8006-DD41-CA42-8D4F-499DE634724E.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_2430000_file_index.json_0",
+            "size": 37882376,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2430000/268E8006-DD41-CA42-8D4F-499DE634724E.root",
+            "version_id": "be269f94-c9be-4be7-b12a-26517613b3eb"
+          },
+          {
+            "availability": "online",
+            "bucket": "94569fc3-80e9-4857-bb71-e79741592dd7",
+            "checksum": "adler32:9c5ef743",
+            "file_id": "dd9a84cd-deec-45d4-9fc4-5166021bf219",
+            "filename": "6B3AA2C5-70B4-E048-9BED-C3E3F70CF57E.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_2430000_file_index.json_1",
+            "size": 21681218,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2430000/6B3AA2C5-70B4-E048-9BED-C3E3F70CF57E.root",
+            "version_id": "93539c50-2dd9-407f-943a-31f049338dab"
+          },
+          {
+            "availability": "online",
+            "bucket": "94569fc3-80e9-4857-bb71-e79741592dd7",
+            "checksum": "adler32:44bb7f85",
+            "file_id": "9284e36e-4a88-4598-929c-ccd056039800",
+            "filename": "79730ADD-E5B8-6941-A87E-2C9A750D230C.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_2430000_file_index.json_2",
+            "size": 10241823,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2430000/79730ADD-E5B8-6941-A87E-2C9A750D230C.root",
+            "version_id": "36110a78-651b-4623-b8d3-90017af5e806"
+          },
+          {
+            "availability": "online",
+            "bucket": "94569fc3-80e9-4857-bb71-e79741592dd7",
+            "checksum": "adler32:b6a445aa",
+            "file_id": "0ec9895a-2124-4b96-a8d1-c9d9d3d3162a",
+            "filename": "81C17C62-E364-F648-A4A9-3659728C4C4C.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_2430000_file_index.json_3",
+            "size": 21649310,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2430000/81C17C62-E364-F648-A4A9-3659728C4C4C.root",
+            "version_id": "6728878d-54dc-41bd-83b9-447857043fa8"
+          },
+          {
+            "availability": "online",
+            "bucket": "94569fc3-80e9-4857-bb71-e79741592dd7",
+            "checksum": "adler32:0b50fe24",
+            "file_id": "bc687119-7418-4d8b-ac60-0616fa4ddcec",
+            "filename": "DA66B57C-DCD4-C748-96BB-E9285DCD129C.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_2430000_file_index.json_4",
+            "size": 15351515,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2430000/DA66B57C-DCD4-C748-96BB-E9285DCD129C.root",
+            "version_id": "467f1588-cebd-4ba5-a2bf-89644eb8c11e"
+          },
+          {
+            "availability": "online",
+            "bucket": "94569fc3-80e9-4857-bb71-e79741592dd7",
+            "checksum": "adler32:8e479fd3",
+            "file_id": "35da7d0d-7bcb-44cf-965b-7d2d05c7d34f",
+            "filename": "E6C47EAD-8AF5-D045-9F8D-02D4E522AC42.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_2430000_file_index.json_5",
+            "size": 3925089,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2430000/E6C47EAD-8AF5-D045-9F8D-02D4E522AC42.root",
+            "version_id": "4cc25a89-b77b-48e4-9f25-fe4ff291dabc"
+          }
+        ],
+        "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_2430000_file_index.json",
+        "number_files": 6,
+        "size": 110731331
+      },
+      {
+        "availability": {
+          "online": 7
+        },
+        "bucket": "bc824126-c2f9-43a9-b852-a472b84a8588",
+        "description": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_40000_file_index.json",
+        "files": [
+          {
+            "availability": "online",
+            "bucket": "bc824126-c2f9-43a9-b852-a472b84a8588",
+            "checksum": "adler32:30c8a077",
+            "file_id": "4851b220-8630-4f53-a826-d8c4cef2121b",
+            "filename": "015595C7-80CD-9549-B5FE-5D24B1078648.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_40000_file_index.json_0",
+            "size": 13002047,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/015595C7-80CD-9549-B5FE-5D24B1078648.root",
+            "version_id": "8097bcc9-0536-428e-a058-37202c953716"
+          },
+          {
+            "availability": "online",
+            "bucket": "bc824126-c2f9-43a9-b852-a472b84a8588",
+            "checksum": "adler32:88088f15",
+            "file_id": "0f707cb0-abec-4173-a4dd-c292a0be9b0f",
+            "filename": "116D6CA7-301F-124B-9EA5-DC7D9B4995EC.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_40000_file_index.json_1",
+            "size": 21677397,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/116D6CA7-301F-124B-9EA5-DC7D9B4995EC.root",
+            "version_id": "0bda015e-c4d9-4209-bf48-f8e1fc490315"
+          },
+          {
+            "availability": "online",
+            "bucket": "bc824126-c2f9-43a9-b852-a472b84a8588",
+            "checksum": "adler32:75f96ecc",
+            "file_id": "feca406b-373a-496c-9934-6907ffa95ad0",
+            "filename": "75ACFC40-BFAE-E747-AD34-D9A20F2EFA97.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_40000_file_index.json_2",
+            "size": 5461552,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/75ACFC40-BFAE-E747-AD34-D9A20F2EFA97.root",
+            "version_id": "f11f7892-bd78-4e1d-bf32-bc6820b585fb"
+          },
+          {
+            "availability": "online",
+            "bucket": "bc824126-c2f9-43a9-b852-a472b84a8588",
+            "checksum": "adler32:664149c4",
+            "file_id": "558bcdd3-1c2c-421c-925b-9751ad975626",
+            "filename": "81386450-6D05-6E46-BEA1-527725F1E923.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_40000_file_index.json_3",
+            "size": 7936721,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/81386450-6D05-6E46-BEA1-527725F1E923.root",
+            "version_id": "1b60fa7e-20c2-4dd5-9a73-1e1cd107854c"
+          },
+          {
+            "availability": "online",
+            "bucket": "bc824126-c2f9-43a9-b852-a472b84a8588",
+            "checksum": "adler32:00b1881e",
+            "file_id": "cea32611-b37a-4862-aeee-1129a72bb367",
+            "filename": "884A702C-07BA-744F-80DC-FAEB4FAFC889.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_40000_file_index.json_4",
+            "size": 37962537,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/884A702C-07BA-744F-80DC-FAEB4FAFC889.root",
+            "version_id": "2dcfb6e2-a7be-4f7d-b0f0-a80303082aba"
+          },
+          {
+            "availability": "online",
+            "bucket": "bc824126-c2f9-43a9-b852-a472b84a8588",
+            "checksum": "adler32:f673f927",
+            "file_id": "7193cf15-056c-4740-bc99-74ca4b697261",
+            "filename": "A237DF73-EA46-DF46-B985-BAF3C18F6510.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_40000_file_index.json_5",
+            "size": 47832556,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/A237DF73-EA46-DF46-B985-BAF3C18F6510.root",
+            "version_id": "3f08eba6-cad4-4655-a6e2-b5cfe7bac468"
+          },
+          {
+            "availability": "online",
+            "bucket": "bc824126-c2f9-43a9-b852-a472b84a8588",
+            "checksum": "adler32:679620ed",
+            "file_id": "5ff7be2f-7b4e-442c-be81-357b03193ecf",
+            "filename": "D8DEFE8C-3285-1448-A378-765A9D77848B.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_40000_file_index.json_6",
+            "size": 13015127,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/D8DEFE8C-3285-1448-A378-765A9D77848B.root",
+            "version_id": "bf36ea24-8b20-4471-a988-854100111b5a"
+          }
+        ],
+        "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_40000_file_index.json",
+        "number_files": 7,
+        "size": 146887937
+      },
+      {
+        "availability": {
+          "online": 2
+        },
+        "bucket": "fb0b474f-a474-4ab3-afd3-b54ca9b0461e",
+        "description": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_50000_file_index.json",
+        "files": [
+          {
+            "availability": "online",
+            "bucket": "fb0b474f-a474-4ab3-afd3-b54ca9b0461e",
+            "checksum": "adler32:824e1ed9",
+            "file_id": "a47cc671-1296-47ab-a10c-9c41d7c4ae4c",
+            "filename": "48E2C4E2-C079-614A-9513-8506D5E96614.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_50000_file_index.json_0",
+            "size": 22860774,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/50000/48E2C4E2-C079-614A-9513-8506D5E96614.root",
+            "version_id": "d4d58dad-3d98-4413-b07f-439988535bb6"
+          },
+          {
+            "availability": "online",
+            "bucket": "fb0b474f-a474-4ab3-afd3-b54ca9b0461e",
+            "checksum": "adler32:c12c44ad",
+            "file_id": "eadce8a6-5378-4441-b459-17862372ae3e",
+            "filename": "DE67EC1A-1CE6-9D47-9FAE-286EA23BD25B.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_50000_file_index.json_1",
+            "size": 3922501,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/50000/DE67EC1A-1CE6-9D47-9FAE-286EA23BD25B.root",
+            "version_id": "bbb144da-d067-4f71-b0e7-bd7d42914695"
+          }
+        ],
+        "key": "CMS_mc_RunIISummer20UL16NanoAODv9_WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_50000_file_index.json",
+        "number_files": 2,
+        "size": 26783275
+      }
+    ],
+    "abstract": {
+      "description": "<p>Simulated dataset WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>"
+    },
+    "accelerator": "CERN-LHC",
+    "availability": "online",
+    "categories": {
+      "primary": "Higgs Physics",
+      "secondary": [
+        "Standard Model"
+      ],
+      "source": "CMS Collaboration"
+    },
+    "collaboration": {
+      "name": "CMS Collaboration"
+    },
+    "collections": [
+      "CMS-Simulated-Datasets"
+    ],
+    "collision_information": {
+      "energy": "13TeV",
+      "type": "pp"
+    },
+    "dataset_semantics_files": {
+      "json": "/eos/opendata/cms/dataset-semantics/NanoAODSIM/70173/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_doc.json",
+      "url": "/eos/opendata/cms/dataset-semantics/NanoAODSIM/70173/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8_doc.html"
+    },
+    "date_created": [
+      "2016"
+    ],
+    "date_published": "2024",
+    "date_reprocessed": "2022",
+    "distribution": {
+      "formats": [
+        "nanoaodsim",
+        "root"
+      ],
+      "number_events": 147484,
+      "number_files": 15,
+      "size": 284402543
+    },
+    "doi": "10.7483/OPENDATA.CMS.CNMN.GD6F",
+    "experiment": [
+      "CMS"
+    ],
+    "files": [],
+    "license": {
+      "attribution": "CC0-1.0"
+    },
+    "methodology": {
+      "description": "<p>These data were generated in several steps (see also <a href=\"/docs/cms-mc-production-overview\">CMS Monte Carlo production overview</a>):</p>",
+      "steps": [
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n# GEN Script begin\nrm -f request_fragment_check.py\nwget -q https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/utils/request_fragment_check.py\nchmod +x request_fragment_check.py\n./request_fragment_check.py --bypass_status --prepid HIG-RunIISummer20UL16wmLHEGEN-01129\nGEN_ERR=$?\nif [ $GEN_ERR -ne 0 ]; then\n  echo \"GEN Checking Script returned exit code $GEN_ERR which means there are $GEN_ERR errors\"\n  echo \"Validation WILL NOT RUN\"\n  echo \"Please correct errors in the request and run validation again\"\n  exit $GEN_ERR\nfi\necho \"Running VALIDATION. GEN Request Checking Script returned no errors\"\n# GEN Script end\n\n# Download fragment from McM\ncurl -s -k https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-01129 --retry 3 --create-dirs -o Configuration/GenProduction/python/HIG-RunIISummer20UL16wmLHEGEN-01129-fragment.py\n[ -s Configuration/GenProduction/python/HIG-RunIISummer20UL16wmLHEGEN-01129-fragment.py ] || exit $?;\n\n# Check if fragment contais gridpack path ant that it is in cvmfs\nif grep -q \"gridpacks\" Configuration/GenProduction/python/HIG-RunIISummer20UL16wmLHEGEN-01129-fragment.py; then\n  if ! grep -q \"/cvmfs/cms.cern.ch/phys_generator/gridpacks\" Configuration/GenProduction/python/HIG-RunIISummer20UL16wmLHEGEN-01129-fragment.py; then\n    echo \"Gridpack inside fragment is not in cvmfs.\"\n    exit -1\n  fi\nfi\n\n# Dump actual test code to a HIG-RunIISummer20UL16wmLHEGEN-01129_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > HIG-RunIISummer20UL16wmLHEGEN-01129_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc700\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_10_6_20_patch1/src ] ; then\n  echo release CMSSW_10_6_20_patch1 already exists\nelse\n  scram p CMSSW CMSSW_10_6_20_patch1\nfi\ncd CMSSW_10_6_20_patch1/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 37.4042s\n# Threads for each sequence: 1\n# Time per event for single thread for each sequence: 1 * 37.4042s = 37.4042s\n# Which adds up to 37.4042s per event\n# Single core events that fit in validation duration: 20160s / 37.4042s = 538\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 538 and 10000, but more than 0 -> 538\n# It is estimated that this validation will produce: 538 * 1.0000 = 538 events\nEVENTS=538\n\n\n# cmsDriver command\ncmsDriver.py Configuration/GenProduction/python/HIG-RunIISummer20UL16wmLHEGEN-01129-fragment.py --python_filename HIG-RunIISummer20UL16wmLHEGEN-01129_1_cfg.py --eventcontent RAWSIM,LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN,LHE --fileout file:HIG-RunIISummer20UL16wmLHEGEN-01129.root --conditions 106X_mcRun2_asymptotic_v13 --beamspot Realistic25ns13TeV2016Collision --customise_commands process.source.numberEventsInLuminosityBlock=\"cms.untracked.uint32(100)\" --step LHE,GEN --geometry DB:Extended --era Run2_2016 --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=HIG-RunIISummer20UL16wmLHEGEN-01129_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME HIG-RunIISummer20UL16wmLHEGEN-01129_1_cfg.py || exit $? ;\n\n# Parse values from HIG-RunIISummer20UL16wmLHEGEN-01129_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of HIG-RunIISummer20UL16wmLHEGEN-01129 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of HIG-RunIISummer20UL16wmLHEGEN-01129_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x HIG-RunIISummer20UL16wmLHEGEN-01129_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/HIG-RunIISummer20UL16wmLHEGEN-01129_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "script": "import FWCore.ParameterSet.Config as cms\n\n# link to datacards: \n# https://github.com/cms-sw/genproductions/blob/master/bin/Powheg/production/2017/13TeV/Higgs/WminusHJ_HanythingJ_NNPDF31_13TeV/HWminusJ_HanythingJ_NNPDF31_13TeV_Vinclusive_template.input\n\nexternalLHEProducer = cms.EDProducer(\"ExternalLHEProducer\",\n    args = cms.vstring('/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/HWminusJ_HanythingJ_NNPDF31_13TeV_M125/HWJ_slc6_amd64_gcc630_CMSSW_9_3_0_HWminusJ_HanythingJ_NNPDF31_13TeV_M125_Vinclusive.tgz'),\n    nEvents = cms.untracked.uint32(5000),\n    numberOfParameters = cms.uint32(1),\n    outputFile = cms.string('cmsgrid_final.lhe'),\n    scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh')\n)\n\n#Link to GS fragment\n\nfrom Configuration.Generator.Pythia8CommonSettings_cfi import *\nfrom Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *\nfrom Configuration.Generator.PSweightsPythia.PythiaPSweightsSettings_cfi import *\nfrom Configuration.Generator.Pythia8PowhegEmissionVetoSettings_cfi import *\n\ngenerator = cms.EDFilter(\"Pythia8HadronizerFilter\",\n                         maxEventsToPrint = cms.untracked.int32(1),\n                         pythiaPylistVerbosity = cms.untracked.int32(1),\n                         filterEfficiency = cms.untracked.double(1.0),\n                         pythiaHepMCVerbosity = cms.untracked.bool(False),\n                         comEnergy = cms.double(13000.),\n                         PythiaParameters = cms.PSet(\n        pythia8CommonSettingsBlock,\n        pythia8CP5SettingsBlock,\n        pythia8PSweightsSettingsBlock,\n        pythia8PowhegEmissionVetoSettingsBlock,\n        processParameters = cms.vstring(\n            'POWHEG:nFinal = 3',   ## Number of final state particles\n                                   ## (BEFORE THE DECAYS) in the LHE\n                                   ## other than emitted extra parton\n            '25:m0 = 125.0',\n            '25:onMode = off',\n            '25:onIfMatch = 22 22'\n          ),\n        parameterSets = cms.vstring('pythia8CommonSettings',\n                                    'pythia8CP5Settings',\n                                    'pythia8PSweightsSettings',\n                                    'pythia8PowhegEmissionVetoSettings',\n                                    'processParameters'\n                                    )\n        )\n                         )\n\nProductionFilterSequence = cms.Sequence(generator)\n",
+              "title": "Hadronizer parameters",
+              "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-01129"
+            },
+            {
+              "cms_confdb_id": "1381abebcb484514b5c64ddb2efabff7",
+              "process": "GEN",
+              "title": "Configuration file"
+            },
+            {
+              "title": "Generator parameters: powheg.input",
+              "url": "/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/70173/powheg.input"
+            },
+            {
+              "title": "Generator parameters: runcmsgrid.sh",
+              "url": "/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/70173/runcmsgrid.sh"
+            }
+          ],
+          "generators": [
+            "pythia8",
+            "POWHEG V2"
+          ],
+          "global_tag": "106X_mcRun2_asymptotic_v13",
+          "release": "CMSSW_10_6_20_patch1",
+          "type": "LHE GEN"
+        },
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n\n# Dump actual test code to a HIG-RunIISummer20UL16SIM-02257_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > HIG-RunIISummer20UL16SIM-02257_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc700\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_10_6_17_patch1/src ] ; then\n  echo release CMSSW_10_6_17_patch1 already exists\nelse\n  scram p CMSSW CMSSW_10_6_17_patch1\nfi\ncd CMSSW_10_6_17_patch1/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 13.3371s\n# Threads for each sequence: 4\n# Time per event for single thread for each sequence: 4 * 13.3371s = 53.3484s\n# Which adds up to 53.3484s per event\n# Single core events that fit in validation duration: 20160s / 53.3484s = 377\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 377 and 10000, but more than 0 -> 377\n# It is estimated that this validation will produce: 377 * 1.0000 = 377 events\nEVENTS=377\n\n\n# cmsDriver command\ncmsDriver.py  --python_filename HIG-RunIISummer20UL16SIM-02257_1_cfg.py --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --fileout file:HIG-RunIISummer20UL16SIM-02257.root --conditions 106X_mcRun2_asymptotic_v13 --beamspot Realistic25ns13TeV2016Collision --step SIM --geometry DB:Extended --filein file:HIG-RunIISummer20UL16wmLHEGEN-01129.root --era Run2_2016 --runUnscheduled --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=HIG-RunIISummer20UL16SIM-02257_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME HIG-RunIISummer20UL16SIM-02257_1_cfg.py || exit $? ;\n\n# Parse values from HIG-RunIISummer20UL16SIM-02257_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of HIG-RunIISummer20UL16SIM-02257 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of HIG-RunIISummer20UL16SIM-02257_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x HIG-RunIISummer20UL16SIM-02257_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/HIG-RunIISummer20UL16SIM-02257_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "cms_confdb_id": "e6a60ae1b57b31212efffa4fe0db3bfe",
+              "process": "SIM",
+              "title": "Configuration file"
+            }
+          ],
+          "global_tag": "106X_mcRun2_asymptotic_v13",
+          "release": "CMSSW_10_6_17_patch1",
+          "type": "SIM"
+        },
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n\n# Dump actual test code to a HIG-RunIISummer20UL16DIGIPremix-02252_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > HIG-RunIISummer20UL16DIGIPremix-02252_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc700\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_10_6_17_patch1/src ] ; then\n  echo release CMSSW_10_6_17_patch1 already exists\nelse\n  scram p CMSSW CMSSW_10_6_17_patch1\nfi\ncd CMSSW_10_6_17_patch1/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 0.9919s\n# Threads for each sequence: 4\n# Time per event for single thread for each sequence: 4 * 0.9919s = 3.9676s\n# Which adds up to 3.9676s per event\n# Single core events that fit in validation duration: 20160s / 3.9676s = 5081\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 5081 and 10000, but more than 0 -> 5081\n# It is estimated that this validation will produce: 5081 * 1.0000 = 5081 events\nEVENTS=5081\n\n\n# cmsDriver command\ncmsDriver.py  --python_filename HIG-RunIISummer20UL16DIGIPremix-02252_1_cfg.py --eventcontent PREMIXRAW --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-DIGI --fileout file:HIG-RunIISummer20UL16DIGIPremix-02252.root --pileup_input \"dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL16_106X_mcRun2_asymptotic_v13-v1/PREMIX\" --conditions 106X_mcRun2_asymptotic_v13 --step DIGI,DATAMIX,L1,DIGI2RAW --procModifiers premix_stage2 --geometry DB:Extended --filein file:HIG-RunIISummer20UL16SIM-02257.root --datamix PreMix --era Run2_2016 --runUnscheduled --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=HIG-RunIISummer20UL16DIGIPremix-02252_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME HIG-RunIISummer20UL16DIGIPremix-02252_1_cfg.py || exit $? ;\n\n# Parse values from HIG-RunIISummer20UL16DIGIPremix-02252_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of HIG-RunIISummer20UL16DIGIPremix-02252 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of HIG-RunIISummer20UL16DIGIPremix-02252_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x HIG-RunIISummer20UL16DIGIPremix-02252_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/HIG-RunIISummer20UL16DIGIPremix-02252_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "cms_confdb_id": "e6a60ae1b57b31212efffa4fe0db6a22",
+              "process": "DIGI2RAW",
+              "title": "Configuration file"
+            }
+          ],
+          "global_tag": "106X_mcRun2_asymptotic_v13",
+          "release": "CMSSW_10_6_17_patch1",
+          "type": "DIGI2RAW"
+        },
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n\n# Dump actual test code to a HIG-RunIISummer20UL16HLT-02257_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > HIG-RunIISummer20UL16HLT-02257_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc530\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_8_0_33_UL/src ] ; then\n  echo release CMSSW_8_0_33_UL already exists\nelse\n  scram p CMSSW CMSSW_8_0_33_UL\nfi\ncd CMSSW_8_0_33_UL/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 0.3639s\n# Threads for each sequence: 4\n# Time per event for single thread for each sequence: 4 * 0.3639s = 1.4556s\n# Which adds up to 1.4556s per event\n# Single core events that fit in validation duration: 20160s / 1.4556s = 13849\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 13849 and 10000, but more than 0 -> 10000\n# It is estimated that this validation will produce: 10000 * 1.0000 = 10000 events\nEVENTS=10000\n\n\n# cmsDriver command\ncmsDriver.py  --python_filename HIG-RunIISummer20UL16HLT-02257_1_cfg.py --eventcontent RAWSIM --outputCommand \"keep *_mix_*_*,keep *_genPUProtons_*_*\" --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-RAW --inputCommands \"keep *\",\"drop *_*_BMTF_*\",\"drop *PixelFEDChannel*_*_*_*\" --fileout file:HIG-RunIISummer20UL16HLT-02257.root --conditions 80X_mcRun2_asymptotic_2016_TrancheIV_v6 --customise_commands 'process.source.bypassVersionCheck = cms.untracked.bool(True)' --step HLT:25ns15e33_v4 --geometry DB:Extended --filein file:HIG-RunIISummer20UL16DIGIPremix-02252.root --era Run2_2016 --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=HIG-RunIISummer20UL16HLT-02257_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME HIG-RunIISummer20UL16HLT-02257_1_cfg.py || exit $? ;\n\n# Parse values from HIG-RunIISummer20UL16HLT-02257_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of HIG-RunIISummer20UL16HLT-02257 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of HIG-RunIISummer20UL16HLT-02257_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x HIG-RunIISummer20UL16HLT-02257_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/HIG-RunIISummer20UL16HLT-02257_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "cms_confdb_id": "e6a60ae1b57b31212efffa4fe0dbac98",
+              "process": "HLT",
+              "title": "Configuration file"
+            }
+          ],
+          "global_tag": "80X_mcRun2_asymptotic_2016_TrancheIV_v6",
+          "release": "CMSSW_8_0_33_UL",
+          "type": "HLT"
+        },
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n\n# Dump actual test code to a HIG-RunIISummer20UL16RECO-02257_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > HIG-RunIISummer20UL16RECO-02257_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc700\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_10_6_17_patch1/src ] ; then\n  echo release CMSSW_10_6_17_patch1 already exists\nelse\n  scram p CMSSW CMSSW_10_6_17_patch1\nfi\ncd CMSSW_10_6_17_patch1/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 2.7827s\n# Threads for each sequence: 4\n# Time per event for single thread for each sequence: 4 * 2.7827s = 11.1308s\n# Which adds up to 11.1308s per event\n# Single core events that fit in validation duration: 20160s / 11.1308s = 1811\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 1811 and 10000, but more than 0 -> 1811\n# It is estimated that this validation will produce: 1811 * 1.0000 = 1811 events\nEVENTS=1811\n\n\n# cmsDriver command\ncmsDriver.py  --python_filename HIG-RunIISummer20UL16RECO-02257_1_cfg.py --eventcontent AODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier AODSIM --fileout file:HIG-RunIISummer20UL16RECO-02257.root --conditions 106X_mcRun2_asymptotic_v13 --step RAW2DIGI,L1Reco,RECO,RECOSIM --geometry DB:Extended --filein file:HIG-RunIISummer20UL16HLT-02257.root --era Run2_2016 --runUnscheduled --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=HIG-RunIISummer20UL16RECO-02257_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME HIG-RunIISummer20UL16RECO-02257_1_cfg.py || exit $? ;\n\n# Parse values from HIG-RunIISummer20UL16RECO-02257_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of HIG-RunIISummer20UL16RECO-02257 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of HIG-RunIISummer20UL16RECO-02257_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x HIG-RunIISummer20UL16RECO-02257_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/HIG-RunIISummer20UL16RECO-02257_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "cms_confdb_id": "e6a60ae1b57b31212efffa4fe0dbfe2b",
+              "process": "RECO",
+              "title": "Configuration file"
+            }
+          ],
+          "global_tag": "106X_mcRun2_asymptotic_v13",
+          "output_dataset": "/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13-v1/AODSIM",
+          "release": "CMSSW_10_6_17_patch1",
+          "type": "RECO"
+        },
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n\n# Dump actual test code to a HIG-RunIISummer20UL16MiniAODv2-02248_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > HIG-RunIISummer20UL16MiniAODv2-02248_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc700\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_10_6_25/src ] ; then\n  echo release CMSSW_10_6_25 already exists\nelse\n  scram p CMSSW CMSSW_10_6_25\nfi\ncd CMSSW_10_6_25/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 0.6212s\n# Threads for each sequence: 4\n# Time per event for single thread for each sequence: 4 * 0.6212s = 2.4848s\n# Which adds up to 2.4848s per event\n# Single core events that fit in validation duration: 20160s / 2.4848s = 8113\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 8113 and 10000, but more than 0 -> 8113\n# It is estimated that this validation will produce: 8113 * 1.0000 = 8113 events\nEVENTS=8113\n\n\n# cmsDriver command\ncmsDriver.py  --python_filename HIG-RunIISummer20UL16MiniAODv2-02248_1_cfg.py --eventcontent MINIAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier MINIAODSIM --fileout file:HIG-RunIISummer20UL16MiniAODv2-02248.root --conditions 106X_mcRun2_asymptotic_v17 --step PAT --procModifiers run2_miniAOD_UL --geometry DB:Extended --filein \"dbs:/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13-v1/AODSIM\" --era Run2_2016 --runUnscheduled --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=HIG-RunIISummer20UL16MiniAODv2-02248_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME HIG-RunIISummer20UL16MiniAODv2-02248_1_cfg.py || exit $? ;\n\n# Parse values from HIG-RunIISummer20UL16MiniAODv2-02248_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of HIG-RunIISummer20UL16MiniAODv2-02248 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of HIG-RunIISummer20UL16MiniAODv2-02248_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x HIG-RunIISummer20UL16MiniAODv2-02248_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/HIG-RunIISummer20UL16MiniAODv2-02248_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "cms_confdb_id": "81df1552c1c34d4195168eafae3391ab",
+              "process": "PAT",
+              "title": "Configuration file"
+            }
+          ],
+          "global_tag": "106X_mcRun2_asymptotic_v17",
+          "output_dataset": "/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+          "release": "CMSSW_10_6_25",
+          "type": "PAT"
+        },
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n\n# Dump actual test code to a HIG-RunIISummer20UL16NanoAODv9-02855_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > HIG-RunIISummer20UL16NanoAODv9-02855_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc700\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_10_6_26/src ] ; then\n  echo release CMSSW_10_6_26 already exists\nelse\n  scram p CMSSW CMSSW_10_6_26\nfi\ncd CMSSW_10_6_26/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 0.3402s\n# Threads for each sequence: 2\n# Time per event for single thread for each sequence: 2 * 0.3402s = 0.6804s\n# Which adds up to 0.6804s per event\n# Single core events that fit in validation duration: 20160s / 0.6804s = 29629\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 29629 and 10000, but more than 0 -> 10000\n# It is estimated that this validation will produce: 10000 * 1.0000 = 10000 events\nEVENTS=10000\n\n\n# cmsDriver command\ncmsDriver.py  --python_filename HIG-RunIISummer20UL16NanoAODv9-02855_1_cfg.py --eventcontent NANOEDMAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier NANOAODSIM --fileout file:HIG-RunIISummer20UL16NanoAODv9-02855.root --conditions 106X_mcRun2_asymptotic_v17 --step NANO --filein \"dbs:/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM\" --era Run2_2016,run2_nanoAOD_106Xv2 --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=HIG-RunIISummer20UL16NanoAODv9-02855_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME HIG-RunIISummer20UL16NanoAODv9-02855_1_cfg.py || exit $? ;\n\n# Parse values from HIG-RunIISummer20UL16NanoAODv9-02855_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of HIG-RunIISummer20UL16NanoAODv9-02855 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of HIG-RunIISummer20UL16NanoAODv9-02855_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x HIG-RunIISummer20UL16NanoAODv9-02855_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/HIG-RunIISummer20UL16NanoAODv9-02855_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "cms_confdb_id": "2b2cbd75f9bbe4d1c8a51835b2517746",
+              "process": "NANO",
+              "title": "Configuration file"
+            }
+          ],
+          "global_tag": "106X_mcRun2_asymptotic_v17",
+          "output_dataset": "/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+          "release": "CMSSW_10_6_26",
+          "type": "NANO"
+        }
+      ]
+    },
+    "pids": {
+      "oai": {
+        "id": "oai:cernopendata.cern:70173"
+      }
+    },
+    "pileup": {
+      "description": "<p>To make these simulated data comparable with the collision data, <a href=\"/docs/cms-guide-pileup-simulation\">pile-up events</a> are added to the simulated event in the DIGI2RAW step.</p>",
+      "links": [
+        {
+          "recid": "30595",
+          "title": "/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL16_106X_mcRun2_asymptotic_v13-v1/PREMIX"
+        }
+      ]
+    },
+    "publisher": "CERN Open Data Portal",
+    "recid": "70173",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "70172",
+        "type": "isParentOf"
+      }
+    ],
+    "run_period": [
+      "Run2016G",
+      "Run2016H"
+    ],
+    "system_details": {
+      "container_images": [
+        {
+          "name": "gitlab-registry.cern.ch/cms-cloud/root-vnc",
+          "registry": "gitlab"
+        },
+        {
+          "name": "gitlab-registry.cern.ch/cms-cloud/python-vnc",
+          "registry": "gitlab"
+        }
+      ],
+      "description": "<p>NANOAODSIM datasets are in the <a href=\"https://root.cern.ch/\">ROOT</a> tree format and their analysis does not require the use of CMSSW or CMS open data environments. They can be analysed with common ROOT and Python tools.<p>"
+    },
+    "title": "/WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "title_additional": "Simulated dataset WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8 in NANOAODSIM format for 2016 collision data",
+    "type": {
+      "primary": "Dataset",
+      "secondary": [
+        "Simulated"
+      ]
+    },
+    "usage": {
+      "description": "You can access these data through XRootD protocol or direct download, and they can be analysed with common ROOT and Python tools. See the instructions for getting started in",
+      "links": [
+        {
+          "description": "Using Docker containers",
+          "url": "/docs/cms-guide-docker#nanoaod"
+        },
+        {
+          "description": "Getting started with CMS NanoAOD",
+          "url": "/docs/cms-getting-started-nanoaod"
+        }
+      ]
+    },
+    "validation": {
+      "description": "The generation and simulation of Monte Carlo data has been validated through general CMS validation procedures."
+    }
+  },
+  "updated": "2025-06-05T18:11:23.380550+00:00"
+}

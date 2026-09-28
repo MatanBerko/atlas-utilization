@@ -1,0 +1,915 @@
+{
+  "created": "2024-11-28T16:16:43.645699+00:00",
+  "id": "67801",
+  "links": {
+    "bucket": "https://opendata.cern.ch/api/files/7389460b-89d9-4af2-9a67-cf26d3859b92",
+    "self": "https://opendata.cern.ch/api/records/67801"
+  },
+  "metadata": {
+    "$schema": "http://opendata.cern.ch/schema/records/record-v1.0.0.json",
+    "_availability_details": {
+      "online": 49
+    },
+    "_bucket": "7389460b-89d9-4af2-9a67-cf26d3859b92",
+    "_file_indices": [
+      {
+        "availability": {
+          "online": 11
+        },
+        "bucket": "4da035a7-272b-419d-8acd-06c4d1902a0f",
+        "description": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_120000_file_index.json",
+        "files": [
+          {
+            "availability": "online",
+            "bucket": "4da035a7-272b-419d-8acd-06c4d1902a0f",
+            "checksum": "adler32:45045db5",
+            "file_id": "79ffd555-8a6b-4941-bcd0-b6f8772f595b",
+            "filename": "089E6E3A-DFD1-7148-BD6F-F611D22A1B62.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_120000_file_index.json_0",
+            "size": 287639229,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/089E6E3A-DFD1-7148-BD6F-F611D22A1B62.root",
+            "version_id": "76e93cf6-2654-4e87-a4a4-aeb0d9a0bb5f"
+          },
+          {
+            "availability": "online",
+            "bucket": "4da035a7-272b-419d-8acd-06c4d1902a0f",
+            "checksum": "adler32:fa6b2c64",
+            "file_id": "bd6f675f-732b-4ed6-a531-219ccdb1ec21",
+            "filename": "13BF43D6-5798-9D4C-9E4A-B148CC97DD4A.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_120000_file_index.json_1",
+            "size": 2636736484,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/13BF43D6-5798-9D4C-9E4A-B148CC97DD4A.root",
+            "version_id": "d69901d5-489b-4dcf-b7bd-8725bba0033c"
+          },
+          {
+            "availability": "online",
+            "bucket": "4da035a7-272b-419d-8acd-06c4d1902a0f",
+            "checksum": "adler32:eec858a9",
+            "file_id": "d0068626-bffd-4982-bdf6-5760d7014497",
+            "filename": "FECF540F-823A-104E-B881-C1191CE580E0.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_120000_file_index.json_10",
+            "size": 2351704859,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/FECF540F-823A-104E-B881-C1191CE580E0.root",
+            "version_id": "622d763d-8613-429f-b003-d85944564b0f"
+          },
+          {
+            "availability": "online",
+            "bucket": "4da035a7-272b-419d-8acd-06c4d1902a0f",
+            "checksum": "adler32:b2613c15",
+            "file_id": "8980762e-a3a5-43db-bbc0-202cfcd2255c",
+            "filename": "3CFB3ECE-3C55-FA4C-BCCA-3A0E566710AC.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_120000_file_index.json_2",
+            "size": 1829975948,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/3CFB3ECE-3C55-FA4C-BCCA-3A0E566710AC.root",
+            "version_id": "5f0d5f61-512f-4d92-880f-271d9fc33be2"
+          },
+          {
+            "availability": "online",
+            "bucket": "4da035a7-272b-419d-8acd-06c4d1902a0f",
+            "checksum": "adler32:4702062f",
+            "file_id": "f1dd0511-4569-4460-89e1-22635973a660",
+            "filename": "4295A038-1506-FF44-A8EA-D0F727B626FC.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_120000_file_index.json_3",
+            "size": 2930334217,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/4295A038-1506-FF44-A8EA-D0F727B626FC.root",
+            "version_id": "78c16e08-27f0-4ca4-9885-439c358939e0"
+          },
+          {
+            "availability": "online",
+            "bucket": "4da035a7-272b-419d-8acd-06c4d1902a0f",
+            "checksum": "adler32:cf171241",
+            "file_id": "f31e6d05-302e-4362-826f-f47fdc89bc58",
+            "filename": "4A9AFE65-CC58-044A-AFBB-F4CAEA0A7FCD.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_120000_file_index.json_4",
+            "size": 2987248219,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/4A9AFE65-CC58-044A-AFBB-F4CAEA0A7FCD.root",
+            "version_id": "e1581fa9-9a92-4e2b-b48d-db2d12ac5494"
+          },
+          {
+            "availability": "online",
+            "bucket": "4da035a7-272b-419d-8acd-06c4d1902a0f",
+            "checksum": "adler32:c98d357d",
+            "file_id": "0d3aca26-fc42-46c3-a84c-a59eb5c2a487",
+            "filename": "6367234F-E189-FC40-A9A5-0FEA038107C7.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_120000_file_index.json_5",
+            "size": 1503789812,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/6367234F-E189-FC40-A9A5-0FEA038107C7.root",
+            "version_id": "ad154a1d-d8bf-4a0e-be56-b2929f986629"
+          },
+          {
+            "availability": "online",
+            "bucket": "4da035a7-272b-419d-8acd-06c4d1902a0f",
+            "checksum": "adler32:ae8f4903",
+            "file_id": "af4c0067-53ed-49cb-aab2-28d2396f8eb4",
+            "filename": "6C4A49EE-D257-7640-9A3A-BAE5D55100F1.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_120000_file_index.json_6",
+            "size": 1933173429,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/6C4A49EE-D257-7640-9A3A-BAE5D55100F1.root",
+            "version_id": "f5417bc9-bd52-44ba-9497-24d5309d215b"
+          },
+          {
+            "availability": "online",
+            "bucket": "4da035a7-272b-419d-8acd-06c4d1902a0f",
+            "checksum": "adler32:f93afda5",
+            "file_id": "b3b285aa-f1e7-4576-9f8d-9ba2f9885b63",
+            "filename": "A244D71A-A8D7-C54E-B1E2-8584416AAD48.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_120000_file_index.json_7",
+            "size": 178567670,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/A244D71A-A8D7-C54E-B1E2-8584416AAD48.root",
+            "version_id": "da2c9281-86d9-4f65-8868-333cca5be97a"
+          },
+          {
+            "availability": "online",
+            "bucket": "4da035a7-272b-419d-8acd-06c4d1902a0f",
+            "checksum": "adler32:e1e25dba",
+            "file_id": "f9c11d1c-9a2f-48d5-b3e2-43a7ecb46096",
+            "filename": "D6C8F4D5-7970-754C-944B-700A5A1C6402.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_120000_file_index.json_8",
+            "size": 2110710570,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/D6C8F4D5-7970-754C-944B-700A5A1C6402.root",
+            "version_id": "8b740899-1cf6-4dc1-a109-c34f3c172889"
+          },
+          {
+            "availability": "online",
+            "bucket": "4da035a7-272b-419d-8acd-06c4d1902a0f",
+            "checksum": "adler32:49384bf9",
+            "file_id": "9e73530b-6c7f-497f-bcc0-3cd589466c03",
+            "filename": "E765BB65-0604-D14D-B034-468CF1320428.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_120000_file_index.json_9",
+            "size": 107809537,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/E765BB65-0604-D14D-B034-468CF1320428.root",
+            "version_id": "664a13f7-4053-4462-a887-bd2ddd650435"
+          }
+        ],
+        "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_120000_file_index.json",
+        "number_files": 11,
+        "size": 18857689974
+      },
+      {
+        "availability": {
+          "online": 27
+        },
+        "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+        "description": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json",
+        "files": [
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:ca39ccdd",
+            "file_id": "c941fcf0-672a-4b7d-ba1e-909885395ac2",
+            "filename": "036C0AAB-FD0F-8647-93A9-575666C7003F.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_0",
+            "size": 2721889665,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/036C0AAB-FD0F-8647-93A9-575666C7003F.root",
+            "version_id": "59efde7e-f536-46f1-b908-f1fe20c6acba"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:973bc197",
+            "file_id": "5794e049-fb28-4f0b-a02e-87fc1a9ca07f",
+            "filename": "066D5CE0-7058-964A-B946-49F2B6EB9F92.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_1",
+            "size": 105655760,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/066D5CE0-7058-964A-B946-49F2B6EB9F92.root",
+            "version_id": "6c12aabb-1e79-46fa-8591-6e6f98701a22"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:93eb08d5",
+            "file_id": "0a4ea361-4842-40a0-82b6-6681b62aa920",
+            "filename": "4D1377CF-8912-D348-9743-6F596A6A7E67.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_10",
+            "size": 2986972539,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/4D1377CF-8912-D348-9743-6F596A6A7E67.root",
+            "version_id": "2728e2d7-0efc-449d-a015-426dff8d4073"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:698a0e86",
+            "file_id": "102c2b0d-0ebc-4dca-bd84-70457530a838",
+            "filename": "5191A307-7ECC-7F4D-9F0B-5333F5C7D0B7.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_11",
+            "size": 2865693476,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/5191A307-7ECC-7F4D-9F0B-5333F5C7D0B7.root",
+            "version_id": "17530ca5-2c5b-4605-8486-785271e8e7bd"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:53be6a1c",
+            "file_id": "f051ee7d-5987-442e-b796-d73f64e34871",
+            "filename": "52883E35-521E-B843-900E-DD006D7C3CF5.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_12",
+            "size": 2989662467,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/52883E35-521E-B843-900E-DD006D7C3CF5.root",
+            "version_id": "c6af978d-f2f3-4b63-a3a3-e193da176a3d"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:43225269",
+            "file_id": "e518313d-31a8-4391-871b-e66f18605ca0",
+            "filename": "5D83F3F8-FFC6-4D4E-9BAC-6A07FD851707.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_13",
+            "size": 2988463283,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/5D83F3F8-FFC6-4D4E-9BAC-6A07FD851707.root",
+            "version_id": "2cb56d69-b486-4cea-a779-9e2edf025209"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:74713b27",
+            "file_id": "da699229-d529-4ab2-92d0-5f4fee6cf899",
+            "filename": "5E81DEB8-5963-B348-BB58-56EC3A3C200C.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_14",
+            "size": 2101238754,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/5E81DEB8-5963-B348-BB58-56EC3A3C200C.root",
+            "version_id": "004ac18f-f333-4639-ad22-f60f8cd53ec6"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:7870cb3d",
+            "file_id": "e83ac034-9e19-4473-9ced-c98f43ff7b6a",
+            "filename": "746B14CA-7AA5-9F4A-A84A-36AD4B0C961A.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_15",
+            "size": 2951598986,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/746B14CA-7AA5-9F4A-A84A-36AD4B0C961A.root",
+            "version_id": "574f0468-90ce-4606-b5f8-0d5fdf5fd808"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:55093f0a",
+            "file_id": "bffc6775-d8ab-4c9a-a577-81a4ba45b21b",
+            "filename": "A7AE9140-B4B1-E848-BC3C-28C786CB2F4B.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_16",
+            "size": 1723548818,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/A7AE9140-B4B1-E848-BC3C-28C786CB2F4B.root",
+            "version_id": "9631854a-4ce7-4ea1-bafb-053b029edfff"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:dac1a4ba",
+            "file_id": "747f647d-66c2-42b7-8f21-bc39ea920e1b",
+            "filename": "ABFC2BAC-2988-0640-9930-1F4BD8137765.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_17",
+            "size": 2703619839,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/ABFC2BAC-2988-0640-9930-1F4BD8137765.root",
+            "version_id": "faf2d802-f677-4640-9b7d-cc0fe6c79279"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:00d2f268",
+            "file_id": "4d50863e-a14e-49d2-a8b1-d067ae08fa62",
+            "filename": "B3776CF6-361C-BF4B-B982-BC1CD4BF54B2.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_18",
+            "size": 2972862697,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/B3776CF6-361C-BF4B-B982-BC1CD4BF54B2.root",
+            "version_id": "06a23dc0-82b7-4d9a-ac7f-797c244a0c02"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:5d6960ca",
+            "file_id": "b818d808-ed45-4d18-9cd2-39eb54e091fa",
+            "filename": "BB9887B9-2A62-9A4A-8938-03E31218B663.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_19",
+            "size": 2987538751,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/BB9887B9-2A62-9A4A-8938-03E31218B663.root",
+            "version_id": "cc360c51-ee11-42bc-bfb3-9313d1b0e9bb"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:98799ab5",
+            "file_id": "0d070378-35db-4127-8f0c-2e9f4ecf9149",
+            "filename": "1492C5EE-560B-834F-AF4A-4F56C79B9FD6.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_2",
+            "size": 2109416879,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/1492C5EE-560B-834F-AF4A-4F56C79B9FD6.root",
+            "version_id": "5346e286-456a-4219-aa0d-dd9d4bf6d5ae"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:fd685fca",
+            "file_id": "7654849c-0492-43c7-8b37-7af060620f64",
+            "filename": "BF24693A-0A47-6E4F-A0AF-326C25DB68F5.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_20",
+            "size": 2183671506,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/BF24693A-0A47-6E4F-A0AF-326C25DB68F5.root",
+            "version_id": "000758ba-2927-4e4a-ad82-e29855413526"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:d9a2e0c0",
+            "file_id": "e276288f-0ef1-42d1-8d41-085445e18a94",
+            "filename": "DC988225-544C-3043-B704-F1CC440ACDC5.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_21",
+            "size": 1543905255,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/DC988225-544C-3043-B704-F1CC440ACDC5.root",
+            "version_id": "4adee83b-07c2-4ef7-8a44-2f0a3998a2d2"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:608d0f33",
+            "file_id": "47bec236-8f1d-4848-a620-4204b76a1b73",
+            "filename": "DE3F5F10-2A25-1349-9326-36672AFC3EC9.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_22",
+            "size": 2460723622,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/DE3F5F10-2A25-1349-9326-36672AFC3EC9.root",
+            "version_id": "03147d1d-86a9-43bf-8d9b-694246827094"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:1f669b92",
+            "file_id": "22886581-6b00-4cea-bfc4-091901599cb9",
+            "filename": "F1D80973-1256-8542-B865-AF1A955D7D14.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_23",
+            "size": 2285353835,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/F1D80973-1256-8542-B865-AF1A955D7D14.root",
+            "version_id": "7b1f8325-fd51-419d-90ab-59dbf9b914ed"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:67515c9a",
+            "file_id": "40c609cf-5949-40bb-a168-964a75c698b9",
+            "filename": "F6B9283D-DBF5-9748-B2BE-58529AED2689.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_24",
+            "size": 1603446887,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/F6B9283D-DBF5-9748-B2BE-58529AED2689.root",
+            "version_id": "cb027f7e-08fd-47e6-b704-3413c693e25e"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:fea7351e",
+            "file_id": "8b82bc87-725b-4e58-a11a-5de67d76c7b4",
+            "filename": "FC321F89-810B-0345-81AF-5A4A47CC905B.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_25",
+            "size": 2845285220,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/FC321F89-810B-0345-81AF-5A4A47CC905B.root",
+            "version_id": "da8b7e03-aee0-4065-915c-6334e4ad08f7"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:b6f4fc04",
+            "file_id": "c2e393a4-e566-465b-a020-b2e9cda4620f",
+            "filename": "FE1609BC-9F31-8F4D-9A23-B94E8B0E4299.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_26",
+            "size": 2987997149,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/FE1609BC-9F31-8F4D-9A23-B94E8B0E4299.root",
+            "version_id": "8d3fe2d7-f136-4c67-bc43-d0d687905ccb"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:cad985ef",
+            "file_id": "25c23535-a8be-4497-9608-644219b9854f",
+            "filename": "14931807-0754-7C4B-B0BE-85485CE0C151.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_3",
+            "size": 2972841289,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/14931807-0754-7C4B-B0BE-85485CE0C151.root",
+            "version_id": "7f080390-6a38-4e6f-bd51-7f81844a3391"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:b7d9383c",
+            "file_id": "acfa5ffd-e7a7-4e7f-a6dd-71a2d0de8c58",
+            "filename": "1873AC0B-CE31-D04B-ACB9-1D818DE62D46.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_4",
+            "size": 178591808,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/1873AC0B-CE31-D04B-ACB9-1D818DE62D46.root",
+            "version_id": "f3618271-604e-4477-99e7-4c3fab2d9967"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:e9d13a2f",
+            "file_id": "c69f5cb7-7d66-4502-bf52-cb89177b07fa",
+            "filename": "37C0752E-AA82-EB44-A843-794E2572E075.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_5",
+            "size": 1844355517,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/37C0752E-AA82-EB44-A843-794E2572E075.root",
+            "version_id": "c3a3da65-a472-465e-a34a-ba009b60346a"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:c51a4c16",
+            "file_id": "6eda26bb-42a4-4101-ad9e-86a228e0b219",
+            "filename": "393B5808-B947-424E-B29A-29DAFE9BF3D2.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_6",
+            "size": 163995198,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/393B5808-B947-424E-B29A-29DAFE9BF3D2.root",
+            "version_id": "51253212-5320-40fa-a7ae-881a9c9ea53a"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:d816856c",
+            "file_id": "1ffdf625-575b-403d-937d-d191edb048bb",
+            "filename": "444A624B-E220-054A-B294-F5FEEF152C52.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_7",
+            "size": 2009754601,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/444A624B-E220-054A-B294-F5FEEF152C52.root",
+            "version_id": "bbe99076-83fc-4647-adc6-0a713c6c3975"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:225d3c1a",
+            "file_id": "f74c3f30-19e3-4e0b-ba05-3d8adb52a594",
+            "filename": "46BDA348-B525-9949-BCBE-7393372267A8.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_8",
+            "size": 2084852854,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/46BDA348-B525-9949-BCBE-7393372267A8.root",
+            "version_id": "fece718f-8b42-4770-b4ec-5f9a019b6fbb"
+          },
+          {
+            "availability": "online",
+            "bucket": "23aa152f-bf0a-4bf1-bfe4-c33fa8a3e34b",
+            "checksum": "adler32:fa7166af",
+            "file_id": "b3ac83fb-5f15-40eb-ab8c-606954804a56",
+            "filename": "47F342FD-418A-584F-AF47-EFEFB9A464F9.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json_9",
+            "size": 178526334,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/47F342FD-418A-584F-AF47-EFEFB9A464F9.root",
+            "version_id": "be079845-a67d-43d2-a3a4-1ef2936acf30"
+          }
+        ],
+        "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_130000_file_index.json",
+        "number_files": 27,
+        "size": 57551462989
+      },
+      {
+        "availability": {
+          "online": 2
+        },
+        "bucket": "ec35e85d-13b6-4473-94a8-261c7b3b5063",
+        "description": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_270000_file_index.json",
+        "files": [
+          {
+            "availability": "online",
+            "bucket": "ec35e85d-13b6-4473-94a8-261c7b3b5063",
+            "checksum": "adler32:8ffa95bd",
+            "file_id": "29f617db-26c8-4322-be95-00258231bd1f",
+            "filename": "23B6A249-0CDD-BC4A-A2B8-ED3C9E1F8860.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_270000_file_index.json_0",
+            "size": 1080981101,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/23B6A249-0CDD-BC4A-A2B8-ED3C9E1F8860.root",
+            "version_id": "b0b2612a-596b-4d11-a512-bc3fc5660e8d"
+          },
+          {
+            "availability": "online",
+            "bucket": "ec35e85d-13b6-4473-94a8-261c7b3b5063",
+            "checksum": "adler32:3483af81",
+            "file_id": "0dc6fd91-3252-4485-8e86-1a0e7971dc10",
+            "filename": "97D424A1-D75F-5044-AB30-407BC129A045.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_270000_file_index.json_1",
+            "size": 2306335021,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/97D424A1-D75F-5044-AB30-407BC129A045.root",
+            "version_id": "38878768-3a8c-4bbe-834a-4bf3bb23311b"
+          }
+        ],
+        "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_270000_file_index.json",
+        "number_files": 2,
+        "size": 3387316122
+      },
+      {
+        "availability": {
+          "online": 3
+        },
+        "bucket": "c575a921-531e-4d42-86fb-ec91b8906b41",
+        "description": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_280000_file_index.json",
+        "files": [
+          {
+            "availability": "online",
+            "bucket": "c575a921-531e-4d42-86fb-ec91b8906b41",
+            "checksum": "adler32:6377f103",
+            "file_id": "0d090cf0-9dce-47f3-8ee3-26e3a8bb66a9",
+            "filename": "6293BAC8-2AB6-4A4A-BFEA-83E328B9C44F.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_280000_file_index.json_0",
+            "size": 1062623935,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/6293BAC8-2AB6-4A4A-BFEA-83E328B9C44F.root",
+            "version_id": "3a642669-efc1-4b9d-9339-11d8224c0992"
+          },
+          {
+            "availability": "online",
+            "bucket": "c575a921-531e-4d42-86fb-ec91b8906b41",
+            "checksum": "adler32:f7b62a5f",
+            "file_id": "22d3402e-29d9-4f13-9de7-b5afbf68edbd",
+            "filename": "826395F0-39C8-BF45-AA23-8C58A6C632B2.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_280000_file_index.json_1",
+            "size": 1685724154,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/826395F0-39C8-BF45-AA23-8C58A6C632B2.root",
+            "version_id": "1cb33f02-d96f-44ea-b77c-d3997257336d"
+          },
+          {
+            "availability": "online",
+            "bucket": "c575a921-531e-4d42-86fb-ec91b8906b41",
+            "checksum": "adler32:f5ce8d2c",
+            "file_id": "91e38d12-3e7a-47c4-a390-9478254ee9a8",
+            "filename": "F54BE4B6-A086-B24D-B11A-AF07FF7703DE.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_280000_file_index.json_2",
+            "size": 13553122,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/280000/F54BE4B6-A086-B24D-B11A-AF07FF7703DE.root",
+            "version_id": "6f93bf1c-6434-4c32-b8bf-a117327c2081"
+          }
+        ],
+        "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_280000_file_index.json",
+        "number_files": 3,
+        "size": 2761901211
+      },
+      {
+        "availability": {
+          "online": 6
+        },
+        "bucket": "f827dc23-16c4-4460-8a48-ad85834be83d",
+        "description": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_70000_file_index.json",
+        "files": [
+          {
+            "availability": "online",
+            "bucket": "f827dc23-16c4-4460-8a48-ad85834be83d",
+            "checksum": "adler32:219d925b",
+            "file_id": "dde4aeac-6a33-44ac-ac31-b50a1985088d",
+            "filename": "065AC2C6-0B33-9546-90F2-5819A044F0CE.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_70000_file_index.json_0",
+            "size": 2609188166,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/065AC2C6-0B33-9546-90F2-5819A044F0CE.root",
+            "version_id": "eb4d6334-bc0d-4b29-816b-cc1374ef1a8c"
+          },
+          {
+            "availability": "online",
+            "bucket": "f827dc23-16c4-4460-8a48-ad85834be83d",
+            "checksum": "adler32:cc0d2805",
+            "file_id": "306e1f41-c4d1-4551-b816-c87cf5861c48",
+            "filename": "1A9F756F-C380-B448-9C69-6454B5A75CB6.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_70000_file_index.json_1",
+            "size": 165911926,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/1A9F756F-C380-B448-9C69-6454B5A75CB6.root",
+            "version_id": "ffcaac7c-6835-4cef-bc09-3ddc6badaa01"
+          },
+          {
+            "availability": "online",
+            "bucket": "f827dc23-16c4-4460-8a48-ad85834be83d",
+            "checksum": "adler32:0ff8ce1b",
+            "file_id": "8dd5d74a-3d50-4671-b631-41253ab00fcd",
+            "filename": "9F50F913-6EC7-8242-A2BD-4FC37A03EAC9.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_70000_file_index.json_2",
+            "size": 1750873305,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/9F50F913-6EC7-8242-A2BD-4FC37A03EAC9.root",
+            "version_id": "ae49ffee-1eea-4779-9ea7-453a0d0f5369"
+          },
+          {
+            "availability": "online",
+            "bucket": "f827dc23-16c4-4460-8a48-ad85834be83d",
+            "checksum": "adler32:1a98b93c",
+            "file_id": "b84e1500-3968-47f3-ba3f-2410fa641ac8",
+            "filename": "A88779C1-45D8-5344-948D-316E98B248C7.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_70000_file_index.json_3",
+            "size": 347492901,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/A88779C1-45D8-5344-948D-316E98B248C7.root",
+            "version_id": "cd702c2a-5571-4159-b4f6-a9fa89025312"
+          },
+          {
+            "availability": "online",
+            "bucket": "f827dc23-16c4-4460-8a48-ad85834be83d",
+            "checksum": "adler32:3f8b8da1",
+            "file_id": "c3ca917e-3dab-4f0f-aa9e-e64c01f44c18",
+            "filename": "D31DE67D-37F2-3C4C-B4F3-476D1918B317.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_70000_file_index.json_4",
+            "size": 2896236389,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/D31DE67D-37F2-3C4C-B4F3-476D1918B317.root",
+            "version_id": "8f4b64bc-17db-4c4f-9494-0574fdcc35ff"
+          },
+          {
+            "availability": "online",
+            "bucket": "f827dc23-16c4-4460-8a48-ad85834be83d",
+            "checksum": "adler32:75c69699",
+            "file_id": "f7466264-81bd-4118-beaa-577ef1aa02dc",
+            "filename": "F31E8599-8744-664B-A935-833FDB1979CB.root",
+            "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_70000_file_index.json_5",
+            "size": 847494907,
+            "tags": {},
+            "uri": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/70000/F31E8599-8744-664B-A935-833FDB1979CB.root",
+            "version_id": "9a3b7b6f-3379-47ae-9675-8136addeb3a7"
+          }
+        ],
+        "key": "CMS_mc_RunIISummer20UL16NanoAODv9_TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_NANOAODSIM_106X_mcRun2_asymptotic_v17-v1_70000_file_index.json",
+        "number_files": 6,
+        "size": 8617197594
+      }
+    ],
+    "abstract": {
+      "description": "<p>Simulated dataset TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>"
+    },
+    "accelerator": "CERN-LHC",
+    "availability": "online",
+    "categories": {
+      "primary": "Standard Model Physics",
+      "secondary": [
+        "Top physics"
+      ],
+      "source": "CMS Collaboration"
+    },
+    "collaboration": {
+      "name": "CMS Collaboration"
+    },
+    "collections": [
+      "CMS-Simulated-Datasets"
+    ],
+    "collision_information": {
+      "energy": "13TeV",
+      "type": "pp"
+    },
+    "dataset_semantics_files": {
+      "json": "/eos/opendata/cms/dataset-semantics/NanoAODSIM/67801/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_doc.json",
+      "url": "/eos/opendata/cms/dataset-semantics/NanoAODSIM/67801/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_doc.html"
+    },
+    "date_created": [
+      "2016"
+    ],
+    "date_published": "2024",
+    "date_reprocessed": "2021",
+    "distribution": {
+      "formats": [
+        "nanoaodsim",
+        "root"
+      ],
+      "number_events": 43546000,
+      "number_files": 49,
+      "size": 91175567890
+    },
+    "doi": "10.7483/OPENDATA.CMS.4RTG.JPI2",
+    "experiment": [
+      "CMS"
+    ],
+    "files": [],
+    "license": {
+      "attribution": "CC0-1.0"
+    },
+    "methodology": {
+      "description": "<p>These data were generated in several steps (see also <a href=\"/docs/cms-mc-production-overview\">CMS Monte Carlo production overview</a>):</p>",
+      "steps": [
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n# GEN Script begin\nrm -f request_fragment_check.py\nwget -q https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/utils/request_fragment_check.py\nchmod +x request_fragment_check.py\n./request_fragment_check.py --bypass_status --prepid TOP-RunIISummer20UL16wmLHEGEN-00002\nGEN_ERR=$?\nif [ $GEN_ERR -ne 0 ]; then\n  echo \"GEN Checking Script returned exit code $GEN_ERR which means there are $GEN_ERR errors\"\n  echo \"Validation WILL NOT RUN\"\n  echo \"Please correct errors in the request and run validation again\"\n  exit $GEN_ERR\nfi\necho \"Running VALIDATION. GEN Request Checking Script returned no errors\"\n# GEN Script end\n\n# Download fragment from McM\ncurl -s -k https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/TOP-RunIISummer20UL16wmLHEGEN-00002 --retry 3 --create-dirs -o Configuration/GenProduction/python/TOP-RunIISummer20UL16wmLHEGEN-00002-fragment.py\n[ -s Configuration/GenProduction/python/TOP-RunIISummer20UL16wmLHEGEN-00002-fragment.py ] || exit $?;\n\n# Check if fragment contais gridpack path ant that it is in cvmfs\nif grep -q \"gridpacks\" Configuration/GenProduction/python/TOP-RunIISummer20UL16wmLHEGEN-00002-fragment.py; then\n  if ! grep -q \"/cvmfs/cms.cern.ch/phys_generator/gridpacks\" Configuration/GenProduction/python/TOP-RunIISummer20UL16wmLHEGEN-00002-fragment.py; then\n    echo \"Gridpack inside fragment is not in cvmfs.\"\n    exit -1\n  fi\nfi\n\n# Dump actual test code to a TOP-RunIISummer20UL16wmLHEGEN-00002_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > TOP-RunIISummer20UL16wmLHEGEN-00002_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc700\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_10_6_18/src ] ; then\n  echo release CMSSW_10_6_18 already exists\nelse\n  scram p CMSSW CMSSW_10_6_18\nfi\ncd CMSSW_10_6_18/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 2.8580s\n# Threads for each sequence: 1\n# Time per event for single thread for each sequence: 1 * 2.8580s = 2.8580s\n# Which adds up to 2.8580s per event\n# Single core events that fit in validation duration: 20160s / 2.8580s = 7053\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 7053 and 10000, but more than 0 -> 7053\n# It is estimated that this validation will produce: 7053 * 1.0000 = 7053 events\nEVENTS=7053\n\n\n# cmsDriver command\ncmsDriver.py Configuration/GenProduction/python/TOP-RunIISummer20UL16wmLHEGEN-00002-fragment.py --python_filename TOP-RunIISummer20UL16wmLHEGEN-00002_1_cfg.py --eventcontent RAWSIM,LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN,LHE --fileout file:TOP-RunIISummer20UL16wmLHEGEN-00002.root --conditions 106X_mcRun2_asymptotic_v13 --beamspot Realistic25ns13TeV2016Collision --customise_commands process.source.numberEventsInLuminosityBlock=\"cms.untracked.uint32(100)\" --step LHE,GEN --geometry DB:Extended --era Run2_2016 --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=TOP-RunIISummer20UL16wmLHEGEN-00002_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME TOP-RunIISummer20UL16wmLHEGEN-00002_1_cfg.py || exit $? ;\n\n# Parse values from TOP-RunIISummer20UL16wmLHEGEN-00002_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of TOP-RunIISummer20UL16wmLHEGEN-00002 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of TOP-RunIISummer20UL16wmLHEGEN-00002_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x TOP-RunIISummer20UL16wmLHEGEN-00002_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/TOP-RunIISummer20UL16wmLHEGEN-00002_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "script": "import FWCore.ParameterSet.Config as cms\n\nexternalLHEProducer = cms.EDProducer(\"ExternalLHEProducer\",\n    args = cms.vstring('/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/TT_hvq/TT_hdamp_NNPDF31_NNLO_dilepton.tgz'),\n    nEvents = cms.untracked.uint32(5000),\n    numberOfParameters = cms.uint32(1),\n    outputFile = cms.string('cmsgrid_final.lhe'),\n    scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh')\n)\n\n#Link to datacards:\n#https://github.com/jfernan2/genproductions/blob/54a8155135fb7f0d9cef82dbbbbdcdbb59ea55f0/bin/Powheg/production/2017/13TeV/TT_hvq/TT_hdamp_NNPDF31_NNLO_dilepton.input\n\n\nimport FWCore.ParameterSet.Config as cms\nfrom Configuration.Generator.Pythia8CommonSettings_cfi import *\nfrom Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *\nfrom Configuration.Generator.Pythia8PowhegEmissionVetoSettings_cfi import *\nfrom Configuration.Generator.PSweightsPythia.PythiaPSweightsSettings_cfi import *\ngenerator = cms.EDFilter(\"Pythia8HadronizerFilter\",\nmaxEventsToPrint = cms.untracked.int32(1),\npythiaPylistVerbosity = cms.untracked.int32(1),\nfilterEfficiency = cms.untracked.double(1.0),\npythiaHepMCVerbosity = cms.untracked.bool(False),\ncomEnergy = cms.double(13000.),\nPythiaParameters = cms.PSet(\npythia8CommonSettingsBlock,\npythia8CP5SettingsBlock,\npythia8PowhegEmissionVetoSettingsBlock,\npythia8PSweightsSettingsBlock,\nprocessParameters = cms.vstring(\n        'POWHEG:nFinal = 2', ## Number of final state particles\n        ## (BEFORE THE DECAYS) in the LHE\n        ## other than emitted extra parton\n        'TimeShower:mMaxGamma = 1.0',#cutting off lepton-pair production\n        ##in the electromagnetic shower\n        ##to not overlap with ttZ/gamma* samples\n        '6:m0 = 172.5',    # top mass'\n        ),\nparameterSets = cms.vstring('pythia8CommonSettings',\n'pythia8CP5Settings',\n'pythia8PowhegEmissionVetoSettings',\n'pythia8PSweightsSettings',\n'processParameters'\n)\n)\n)\nProductionFilterSequence = cms.Sequence(generator)",
+              "title": "Hadronizer parameters",
+              "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/TOP-RunIISummer20UL16wmLHEGEN-00002"
+            },
+            {
+              "cms_confdb_id": "25f234cce5b9bc5e508c93f7781217e8",
+              "process": "GEN",
+              "title": "Configuration file"
+            },
+            {
+              "title": "Generator parameters: powheg.input",
+              "url": "/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/67801/powheg.input"
+            },
+            {
+              "title": "Generator parameters: runcmsgrid.sh",
+              "url": "/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/67801/runcmsgrid.sh"
+            }
+          ],
+          "generators": [
+            "Powheg V2",
+            "Pythia8"
+          ],
+          "global_tag": "106X_mcRun2_asymptotic_v13",
+          "release": "CMSSW_10_6_18",
+          "type": "LHE GEN"
+        },
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n\n# Dump actual test code to a TOP-RunIISummer20UL16SIM-00002_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > TOP-RunIISummer20UL16SIM-00002_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc700\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_10_6_17_patch1/src ] ; then\n  echo release CMSSW_10_6_17_patch1 already exists\nelse\n  scram p CMSSW CMSSW_10_6_17_patch1\nfi\ncd CMSSW_10_6_17_patch1/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 13.3371s\n# Threads for each sequence: 8\n# Time per event for single thread for each sequence: 8 * 13.3371s = 106.6968s\n# Which adds up to 106.6968s per event\n# Single core events that fit in validation duration: 20160s / 106.6968s = 188\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 188 and 10000, but more than 0 -> 188\n# It is estimated that this validation will produce: 188 * 1.0000 = 188 events\nEVENTS=188\n\n\n# cmsDriver command\ncmsDriver.py  --python_filename TOP-RunIISummer20UL16SIM-00002_1_cfg.py --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --fileout file:TOP-RunIISummer20UL16SIM-00002.root --conditions 106X_mcRun2_asymptotic_v13 --beamspot Realistic25ns13TeV2016Collision --step SIM --geometry DB:Extended --filein file:TOP-RunIISummer20UL16wmLHEGEN-00002.root --era Run2_2016 --runUnscheduled --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=TOP-RunIISummer20UL16SIM-00002_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME TOP-RunIISummer20UL16SIM-00002_1_cfg.py || exit $? ;\n\n# Parse values from TOP-RunIISummer20UL16SIM-00002_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of TOP-RunIISummer20UL16SIM-00002 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of TOP-RunIISummer20UL16SIM-00002_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x TOP-RunIISummer20UL16SIM-00002_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/TOP-RunIISummer20UL16SIM-00002_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "cms_confdb_id": "d762e23304ef73cf0335517bd6e08158",
+              "process": "SIM",
+              "title": "Configuration file"
+            }
+          ],
+          "global_tag": "106X_mcRun2_asymptotic_v13",
+          "release": "CMSSW_10_6_17_patch1",
+          "type": "SIM"
+        },
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n\n# Dump actual test code to a TOP-RunIISummer20UL16DIGIPremix-00002_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > TOP-RunIISummer20UL16DIGIPremix-00002_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc700\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_10_6_17_patch1/src ] ; then\n  echo release CMSSW_10_6_17_patch1 already exists\nelse\n  scram p CMSSW CMSSW_10_6_17_patch1\nfi\ncd CMSSW_10_6_17_patch1/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 0.9919s\n# Threads for each sequence: 8\n# Time per event for single thread for each sequence: 8 * 0.9919s = 7.9352s\n# Which adds up to 7.9352s per event\n# Single core events that fit in validation duration: 20160s / 7.9352s = 2540\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 2540 and 10000, but more than 0 -> 2540\n# It is estimated that this validation will produce: 2540 * 1.0000 = 2540 events\nEVENTS=2540\n\n\n# cmsDriver command\ncmsDriver.py  --python_filename TOP-RunIISummer20UL16DIGIPremix-00002_1_cfg.py --eventcontent PREMIXRAW --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-DIGI --fileout file:TOP-RunIISummer20UL16DIGIPremix-00002.root --pileup_input \"dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL16_106X_mcRun2_asymptotic_v13-v1/PREMIX\" --conditions 106X_mcRun2_asymptotic_v13 --step DIGI,DATAMIX,L1,DIGI2RAW --procModifiers premix_stage2 --geometry DB:Extended --filein file:TOP-RunIISummer20UL16SIM-00002.root --datamix PreMix --era Run2_2016 --runUnscheduled --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=TOP-RunIISummer20UL16DIGIPremix-00002_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME TOP-RunIISummer20UL16DIGIPremix-00002_1_cfg.py || exit $? ;\n\n# Parse values from TOP-RunIISummer20UL16DIGIPremix-00002_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of TOP-RunIISummer20UL16DIGIPremix-00002 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of TOP-RunIISummer20UL16DIGIPremix-00002_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x TOP-RunIISummer20UL16DIGIPremix-00002_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/TOP-RunIISummer20UL16DIGIPremix-00002_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "cms_confdb_id": "2b438580ef8dab7939a77dce0e204956",
+              "process": "DIGI2RAW",
+              "title": "Configuration file"
+            }
+          ],
+          "global_tag": "106X_mcRun2_asymptotic_v13",
+          "release": "CMSSW_10_6_17_patch1",
+          "type": "DIGI2RAW"
+        },
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n\n# Dump actual test code to a TOP-RunIISummer20UL16HLT-00002_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > TOP-RunIISummer20UL16HLT-00002_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc530\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_8_0_33_UL/src ] ; then\n  echo release CMSSW_8_0_33_UL already exists\nelse\n  scram p CMSSW CMSSW_8_0_33_UL\nfi\ncd CMSSW_8_0_33_UL/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 0.3639s\n# Threads for each sequence: 8\n# Time per event for single thread for each sequence: 8 * 0.3639s = 2.9112s\n# Which adds up to 2.9112s per event\n# Single core events that fit in validation duration: 20160s / 2.9112s = 6924\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 6924 and 10000, but more than 0 -> 6924\n# It is estimated that this validation will produce: 6924 * 1.0000 = 6924 events\nEVENTS=6924\n\n\n# cmsDriver command\ncmsDriver.py  --python_filename TOP-RunIISummer20UL16HLT-00002_1_cfg.py --eventcontent RAWSIM --outputCommand \"keep *_mix_*_*,keep *_genPUProtons_*_*\" --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-RAW --inputCommands \"keep *\",\"drop *_*_BMTF_*\",\"drop *PixelFEDChannel*_*_*_*\" --fileout file:TOP-RunIISummer20UL16HLT-00002.root --conditions 80X_mcRun2_asymptotic_2016_TrancheIV_v6 --customise_commands 'process.source.bypassVersionCheck = cms.untracked.bool(True)' --step HLT:25ns15e33_v4 --geometry DB:Extended --filein file:TOP-RunIISummer20UL16DIGIPremix-00002.root --era Run2_2016 --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=TOP-RunIISummer20UL16HLT-00002_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME TOP-RunIISummer20UL16HLT-00002_1_cfg.py || exit $? ;\n\n# Parse values from TOP-RunIISummer20UL16HLT-00002_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of TOP-RunIISummer20UL16HLT-00002 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of TOP-RunIISummer20UL16HLT-00002_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x TOP-RunIISummer20UL16HLT-00002_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/TOP-RunIISummer20UL16HLT-00002_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "cms_confdb_id": "2b438580ef8dab7939a77dce0e20a6f3",
+              "process": "HLT",
+              "title": "Configuration file"
+            }
+          ],
+          "global_tag": "80X_mcRun2_asymptotic_2016_TrancheIV_v6",
+          "release": "CMSSW_8_0_33_UL",
+          "type": "HLT"
+        },
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n\n# Dump actual test code to a TOP-RunIISummer20UL16RECO-00002_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > TOP-RunIISummer20UL16RECO-00002_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc700\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_10_6_17_patch1/src ] ; then\n  echo release CMSSW_10_6_17_patch1 already exists\nelse\n  scram p CMSSW CMSSW_10_6_17_patch1\nfi\ncd CMSSW_10_6_17_patch1/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 2.7827s\n# Threads for each sequence: 8\n# Time per event for single thread for each sequence: 8 * 2.7827s = 22.2616s\n# Which adds up to 22.2616s per event\n# Single core events that fit in validation duration: 20160s / 22.2616s = 905\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 905 and 10000, but more than 0 -> 905\n# It is estimated that this validation will produce: 905 * 1.0000 = 905 events\nEVENTS=905\n\n\n# cmsDriver command\ncmsDriver.py  --python_filename TOP-RunIISummer20UL16RECO-00002_1_cfg.py --eventcontent AODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier AODSIM --fileout file:TOP-RunIISummer20UL16RECO-00002.root --conditions 106X_mcRun2_asymptotic_v13 --step RAW2DIGI,L1Reco,RECO,RECOSIM --geometry DB:Extended --filein file:TOP-RunIISummer20UL16HLT-00002.root --era Run2_2016 --runUnscheduled --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=TOP-RunIISummer20UL16RECO-00002_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME TOP-RunIISummer20UL16RECO-00002_1_cfg.py || exit $? ;\n\n# Parse values from TOP-RunIISummer20UL16RECO-00002_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of TOP-RunIISummer20UL16RECO-00002 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of TOP-RunIISummer20UL16RECO-00002_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x TOP-RunIISummer20UL16RECO-00002_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/TOP-RunIISummer20UL16RECO-00002_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "cms_confdb_id": "2b438580ef8dab7939a77dce0e20ed46",
+              "process": "RECO",
+              "title": "Configuration file"
+            }
+          ],
+          "global_tag": "106X_mcRun2_asymptotic_v13",
+          "output_dataset": "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13-v2/AODSIM",
+          "release": "CMSSW_10_6_17_patch1",
+          "type": "RECO"
+        },
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n\n# Dump actual test code to a TOP-RunIISummer20UL16MiniAODv2-00141_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > TOP-RunIISummer20UL16MiniAODv2-00141_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc700\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_10_6_25/src ] ; then\n  echo release CMSSW_10_6_25 already exists\nelse\n  scram p CMSSW CMSSW_10_6_25\nfi\ncd CMSSW_10_6_25/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 0.6212s\n# Threads for each sequence: 4\n# Time per event for single thread for each sequence: 4 * 0.6212s = 2.4848s\n# Which adds up to 2.4848s per event\n# Single core events that fit in validation duration: 20160s / 2.4848s = 8113\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 8113 and 10000, but more than 0 -> 8113\n# It is estimated that this validation will produce: 8113 * 1.0000 = 8113 events\nEVENTS=8113\n\n\n# cmsDriver command\ncmsDriver.py  --python_filename TOP-RunIISummer20UL16MiniAODv2-00141_1_cfg.py --eventcontent MINIAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier MINIAODSIM --fileout file:TOP-RunIISummer20UL16MiniAODv2-00141.root --conditions 106X_mcRun2_asymptotic_v17 --step PAT --procModifiers run2_miniAOD_UL --geometry DB:Extended --filein \"dbs:/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13-v2/AODSIM\" --era Run2_2016 --runUnscheduled --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=TOP-RunIISummer20UL16MiniAODv2-00141_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME TOP-RunIISummer20UL16MiniAODv2-00141_1_cfg.py || exit $? ;\n\n# Parse values from TOP-RunIISummer20UL16MiniAODv2-00141_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of TOP-RunIISummer20UL16MiniAODv2-00141 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of TOP-RunIISummer20UL16MiniAODv2-00141_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x TOP-RunIISummer20UL16MiniAODv2-00141_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/TOP-RunIISummer20UL16MiniAODv2-00141_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "cms_confdb_id": "c8dc83abb237e289eae3cfefea871409",
+              "process": "PAT",
+              "title": "Configuration file"
+            }
+          ],
+          "global_tag": "106X_mcRun2_asymptotic_v17",
+          "output_dataset": "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+          "release": "CMSSW_10_6_25",
+          "type": "PAT"
+        },
+        {
+          "configuration_files": [
+            {
+              "script": "#!/bin/bash\n\n\n# Dump actual test code to a TOP-RunIISummer20UL16NanoAODv9-00143_test.sh file that can be run in Singularity\ncat <<'EndOfTestFile' > TOP-RunIISummer20UL16NanoAODv9-00143_test.sh\n#!/bin/bash\n\nexport SCRAM_ARCH=slc7_amd64_gcc700\n\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nif [ -r CMSSW_10_6_26/src ] ; then\n  echo release CMSSW_10_6_26 already exists\nelse\n  scram p CMSSW CMSSW_10_6_26\nfi\ncd CMSSW_10_6_26/src\neval `scram runtime -sh`\n\nmv ../../Configuration .\nscram b\ncd ../..\n\n# Maximum validation duration: 28800s\n# Margin for validation duration: 30%\n# Validation duration with margin: 28800 * (1 - 0.30) = 20160s\n# Time per event for each sequence: 0.3402s\n# Threads for each sequence: 2\n# Time per event for single thread for each sequence: 2 * 0.3402s = 0.6804s\n# Which adds up to 0.6804s per event\n# Single core events that fit in validation duration: 20160s / 0.6804s = 29629\n# Produced events limit in McM is 10000\n# According to 1.0000 efficiency, validation should run 10000 / 1.0000 = 10000 events to reach the limit of 10000\n# Take the minimum of 29629 and 10000, but more than 0 -> 10000\n# It is estimated that this validation will produce: 10000 * 1.0000 = 10000 events\nEVENTS=10000\n\n\n# cmsDriver command\ncmsDriver.py  --python_filename TOP-RunIISummer20UL16NanoAODv9-00143_1_cfg.py --eventcontent NANOEDMAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier NANOAODSIM --fileout file:TOP-RunIISummer20UL16NanoAODv9-00143.root --conditions 106X_mcRun2_asymptotic_v17 --step NANO --filein \"dbs:/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM\" --era Run2_2016,run2_nanoAOD_106Xv2 --no_exec --mc -n $EVENTS || exit $? ;\n\n# Run generated config\nREPORT_NAME=TOP-RunIISummer20UL16NanoAODv9-00143_report.xml\n# Run the cmsRun\ncmsRun -e -j $REPORT_NAME TOP-RunIISummer20UL16NanoAODv9-00143_1_cfg.py || exit $? ;\n\n# Parse values from TOP-RunIISummer20UL16NanoAODv9-00143_report.xml report\nprocessedEvents=$(grep -Po \"(?<=<Metric Name=\\\"NumberEvents\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nproducedEvents=$(grep -Po \"(?<=<TotalEvents>)(\\d*)(?=</TotalEvents>)\" $REPORT_NAME | tail -n 1)\nthreads=$(grep -Po \"(?<=<Metric Name=\\\"NumberOfThreads\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueRss=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueRss\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\npeakValueVsize=$(grep -Po \"(?<=<Metric Name=\\\"PeakValueVsize\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSize=$(grep -Po \"(?<=<Metric Name=\\\"Timing-tstoragefile-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalSizeAlt=$(grep -Po \"(?<=<Metric Name=\\\"Timing-file-write-totalMegabytes\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobTime=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\ntotalJobCPU=$(grep -Po \"(?<=<Metric Name=\\\"TotalJobCPU\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\neventThroughput=$(grep -Po \"(?<=<Metric Name=\\\"EventThroughput\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\navgEventTime=$(grep -Po \"(?<=<Metric Name=\\\"AvgEventTime\\\" Value=\\\")(.*)(?=\\\"/>)\" $REPORT_NAME | tail -n 1)\nif [ -z \"$threads\" ]; then\n  echo \"Could not find NumberOfThreads in report, defaulting to 1\"\n  threads=1\nfi\nif [ -z \"$eventThroughput\" ]; then\n  eventThroughput=$(bc -l <<< \"scale=4; 1 / ($avgEventTime / $threads)\")\nfi\nif [ -z \"$totalSize\" ]; then\n  totalSize=$totalSizeAlt\nfi\nif [ -z \"$processedEvents\" ]; then\n  processedEvents=$EVENTS\nfi\necho \"Validation report of TOP-RunIISummer20UL16NanoAODv9-00143 sequence 1/1\"\necho \"Processed events: $processedEvents\"\necho \"Produced events: $producedEvents\"\necho \"Threads: $threads\"\necho \"Peak value RSS: $peakValueRss MB\"\necho \"Peak value Vsize: $peakValueVsize MB\"\necho \"Total size: $totalSize MB\"\necho \"Total job time: $totalJobTime s\"\necho \"Total CPU time: $totalJobCPU s\"\necho \"Event throughput: $eventThroughput\"\necho \"CPU efficiency: \"$(bc -l <<< \"scale=2; ($totalJobCPU * 100) / ($threads * $totalJobTime)\")\" %\"\necho \"Size per event: \"$(bc -l <<< \"scale=4; ($totalSize * 1024 / $producedEvents)\")\" kB\"\necho \"Time per event: \"$(bc -l <<< \"scale=4; (1 / $eventThroughput)\")\" s\"\necho \"Filter efficiency percent: \"$(bc -l <<< \"scale=8; ($producedEvents * 100) / $processedEvents\")\" %\"\necho \"Filter efficiency fraction: \"$(bc -l <<< \"scale=10; ($producedEvents) / $processedEvents\")\n\n# End of TOP-RunIISummer20UL16NanoAODv9-00143_test.sh file\nEndOfTestFile\n\n# Make file executable\nchmod +x TOP-RunIISummer20UL16NanoAODv9-00143_test.sh\n\nif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:amd64\" ]; then\n  CONTAINER_NAME=\"el7:amd64\"\nelif [ -e \"/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64\" ]; then\n  CONTAINER_NAME=\"el7:x86_64\"\nelse\n  echo \"Could not find amd64 or x86_64 for el7\"\n  exit 1\nfi\n# Run in singularity container\n# Mount afs, eos, cvmfs\n# Mount /etc/grid-security for xrootd\nexport SINGULARITY_CACHEDIR=\"/tmp/$(whoami)/singularity\"\nsingularity run -B /afs -B /eos -B /cvmfs -B /etc/grid-security -B /etc/pki/ca-trust --home $PWD:$PWD /cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/$CONTAINER_NAME $(echo $(pwd)/TOP-RunIISummer20UL16NanoAODv9-00143_test.sh)\n",
+              "title": "Production script"
+            },
+            {
+              "cms_confdb_id": "086c69c1b826c78c43be2aa70d80e01e",
+              "process": "NANO",
+              "title": "Configuration file"
+            }
+          ],
+          "global_tag": "106X_mcRun2_asymptotic_v17",
+          "output_dataset": "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+          "release": "CMSSW_10_6_26",
+          "type": "NANO"
+        }
+      ]
+    },
+    "pids": {
+      "oai": {
+        "id": "oai:cernopendata.cern:67801"
+      }
+    },
+    "pileup": {
+      "description": "<p>To make these simulated data comparable with the collision data, <a href=\"/docs/cms-guide-pileup-simulation\">pile-up events</a> are added to the simulated event in the DIGI2RAW step.</p>",
+      "links": [
+        {
+          "recid": "30595",
+          "title": "/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL16_106X_mcRun2_asymptotic_v13-v1/PREMIX"
+        }
+      ]
+    },
+    "publisher": "CERN Open Data Portal",
+    "recid": "67801",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "67800",
+        "type": "isParentOf"
+      }
+    ],
+    "run_period": [
+      "Run2016G",
+      "Run2016H"
+    ],
+    "system_details": {
+      "container_images": [
+        {
+          "name": "gitlab-registry.cern.ch/cms-cloud/root-vnc",
+          "registry": "gitlab"
+        },
+        {
+          "name": "gitlab-registry.cern.ch/cms-cloud/python-vnc",
+          "registry": "gitlab"
+        }
+      ],
+      "description": "<p>NANOAODSIM datasets are in the <a href=\"https://root.cern.ch/\">ROOT</a> tree format and their analysis does not require the use of CMSSW or CMS open data environments. They can be analysed with common ROOT and Python tools.<p>"
+    },
+    "title": "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "title_additional": "Simulated dataset TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8 in NANOAODSIM format for 2016 collision data",
+    "type": {
+      "primary": "Dataset",
+      "secondary": [
+        "Simulated"
+      ]
+    },
+    "usage": {
+      "description": "You can access these data through XRootD protocol or direct download, and they can be analysed with common ROOT and Python tools. See the instructions for getting started in",
+      "links": [
+        {
+          "description": "Using Docker containers",
+          "url": "/docs/cms-guide-docker#nanoaod"
+        },
+        {
+          "description": "Getting started with CMS NanoAOD",
+          "url": "/docs/cms-getting-started-nanoaod"
+        }
+      ]
+    },
+    "validation": {
+      "description": "The generation and simulation of Monte Carlo data has been validated through general CMS validation procedures."
+    }
+  },
+  "updated": "2025-06-05T17:52:18.861346+00:00"
+}
