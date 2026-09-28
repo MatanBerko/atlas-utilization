@@ -473,12 +473,13 @@ def main():
             if arr.size > max_signature_size:
                 max_signature_size = int(arr.size)
             if arr.size > COVERAGE_CAP_PER_SIGNATURE:
+                true_size = int(arr.size)
                 n_capped_signatures += 1
                 rng = np.random.default_rng(seed=0)
                 pick = rng.choice(arr.size, size=COVERAGE_CAP_PER_SIGNATURE, replace=False)
                 arr = arr[pick]
                 combo_is_exclusive = combo_is_exclusive[pick]
-                writer_incl.set_metadata(f"CAPPED::{signature}", f"true_size={int(arr.size)}")
+                writer_incl.set_metadata(f"CAPPED::{signature}", f"true_size={true_size}")
 
             writer_incl.append_array(signature, arr)
             n_signature_writes_incl += 1

@@ -33,6 +33,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 from studies.cms_datasets.cluster.gen_step4_pilot_mapping import PILOT_DATASET_LABELS, PILOT_FILE_INDEX  # noqa: E402
 from studies.cms_datasets.cluster.datasets_records import DATASETS  # noqa: E402
+from studies.cms_datasets.cluster.run_dataset_on_file import COVERAGE_CAP_PER_SIGNATURE  # noqa: E402
 
 MEM_RE = re.compile(r"Maximum resident set size \(kbytes\): (\d+)")
 WALL_RE = re.compile(r"Elapsed \(wall clock\) time.*: (?:(\d+):)?(\d+):(\d+(?:\.\d+)?)")
@@ -111,6 +112,10 @@ def main():
                 "wall_time_sec_from_log": time_v["wall_time_sec_from_log"],
                 "inclusive_shard_size_mb": meta["inclusive_shard_size_mb"],
                 "exclusive_shard_size_mb": meta["exclusive_shard_size_mb"],
+                "max_signature_size_this_job": meta["max_signature_size_this_job"],
+                "n_capped_signatures": meta["n_capped_signatures"],
+                "max_signature_fraction_of_cap": round(meta["max_signature_size_this_job"] / COVERAGE_CAP_PER_SIGNATURE, 4),
+                "coverage_cap_per_signature": COVERAGE_CAP_PER_SIGNATURE,
                 "diagnostics": meta["diagnostics"],
             })
 
@@ -227,6 +232,23 @@ def main():
     fig.savefig(plots_dir / "pilot_low_mass_dimuon.png", dpi=120)
     plt.close(fig)
 
+    found_jobs = [j for j in pilot_jobs if j["found"]]
+    signature_size_summary = {
+        "coverage_cap_per_signature": COVERAGE_CAP_PER_SIGNATURE,
+        "per_job": [
+            {
+                "dataset_label": j["dataset_label"], "era": j["era"],
+                "max_signature_size_this_job": j["max_signature_size_this_job"],
+                "n_capped_signatures": j["n_capped_signatures"],
+                "max_signature_fraction_of_cap": j["max_signature_fraction_of_cap"],
+            }
+            for j in found_jobs
+        ],
+        "largest_signature_overall": max((j["max_signature_size_this_job"] for j in found_jobs), default=None),
+        "largest_signature_fraction_of_cap_overall": max((j["max_signature_fraction_of_cap"] for j in found_jobs), default=None),
+        "n_capped_signatures_total": sum(j["n_capped_signatures"] for j in found_jobs),
+    }
+
     result = {
         "pilot_jobs": pilot_jobs,
         "cost_estimates": cost_estimates,
@@ -234,6 +256,7 @@ def main():
         "leading_muon_pt_fraction_25to28gev": frac_muon,
         "leading_electron_pt_fraction_25to30gev": frac_electron,
         "low_mass_dimuon_fraction_below_2gev": low_mass_below_2gev_fraction,
+        "signature_size_vs_cap_summary": signature_size_summary,
     }
     Path(args.out_json).write_text(json.dumps(result, indent=2))
     print(json.dumps({"z_peak_positions_gev": z_peaks, "cost_estimates": {k: v.get("estimated_total_core_hours_full_run") for k, v in cost_estimates.items()}}, indent=2))
