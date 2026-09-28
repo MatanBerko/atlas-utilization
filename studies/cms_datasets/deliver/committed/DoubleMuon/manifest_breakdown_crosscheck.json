@@ -1,0 +1,35 @@
+{
+  "lepton_letter": "m",
+  "min31bins": {
+    "n_total": 802,
+    "by_object_content_category": {
+      "b-jet-containing": 553,
+      "lepton+jet": 170,
+      "lepton-only": 14,
+      "jet-only": 65
+    },
+    "by_lepton_content": {
+      "0": 148,
+      "1": 266,
+      ">=2": 388
+    },
+    "n_zero_lepton": 148,
+    "n_ge2_selected_m": 339
+  },
+  "min26bins": {
+    "n_total": 910,
+    "by_object_content_category": {
+      "b-jet-containing": 621,
+      "lepton+jet": 190,
+      "lepton-only": 23,
+      "jet-only": 76
+    },
+    "by_lepton_content": {
+      "0": 156,
+      "1": 305,
+      ">=2": 449
+    },
+    "n_zero_lepton": 156,
+    "n_ge2_selected_m": 368
+  }
+}
