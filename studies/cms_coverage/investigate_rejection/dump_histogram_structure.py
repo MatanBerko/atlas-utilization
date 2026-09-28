@@ -37,8 +37,8 @@ def dump_one(key: str, hist) -> dict:
     fsumw2 = hist.member("fSumw2")
     fsumw2_len = len(fsumw2) if hasattr(fsumw2, "__len__") else None
 
-    has_negative = bool(np.any(values < 0)) or underflow < 0 or overflow < 0
-    has_nan = bool(np.any(np.isnan(values))) or np.isnan(underflow) or np.isnan(overflow)
+    has_negative = bool(np.any(values < 0) or underflow < 0 or overflow < 0)
+    has_nan = bool(np.any(np.isnan(values)) or np.isnan(underflow) or np.isnan(overflow))
 
     entry = {
         "root_key": key,
