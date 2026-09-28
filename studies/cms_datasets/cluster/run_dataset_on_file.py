@@ -305,6 +305,7 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array) -> dict:
             "mass_gev": m_mumu[opp_sign_mask].tolist(),
             "dr": dr_mumu[opp_sign_mask].tolist(),
         },
+        "n_events_ge2_selected_muons": int(has_2mu.sum()),
         "muon_charge_field_present": charge0 is not None,
     }
 
