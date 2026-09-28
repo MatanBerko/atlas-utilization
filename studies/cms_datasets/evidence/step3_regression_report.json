@@ -4,6 +4,18 @@
     {
       "record_id": 30522,
       "file_index": 0,
+      "event_count_check": {
+        "old_n_read": 2315223,
+        "new_v0_n_read": 2315223,
+        "old_n_after_v0_selection": 42602,
+        "new_v0_n_after_gate": 42602,
+        "n_read_matches": true,
+        "n_selected_events_matches": true,
+        "old_n_signature_writes": 1137,
+        "old_n_distinct_signatures_in_shard": 1017,
+        "new_v0_n_distinct_signatures_in_shard": 1017,
+        "note": "old_n_signature_writes counts every writer.append_array(...) call made during the old job (job_metadata.json's own field); it can exceed the number of DISTINCT signatures actually in the shard (old_n_distinct_signatures_in_shard) when more than one raw final-state value collapses onto the same capped/displayed BumpNet label (physics_calcs.limit_particles_in_fs) -- both are real numbers from the same job, they measure different things, and neither is 'wrong'."
+      },
       "check_i_v0_matches_old_coverage": {
         "name_a": "old_coverage_shard",
         "name_b": "new_v0_inclusive",
@@ -82,6 +94,18 @@
     {
       "record_id": 30522,
       "file_index": 1,
+      "event_count_check": {
+        "old_n_read": 2467200,
+        "new_v0_n_read": 2467200,
+        "old_n_after_v0_selection": 46294,
+        "new_v0_n_after_gate": 46294,
+        "n_read_matches": true,
+        "n_selected_events_matches": true,
+        "old_n_signature_writes": 1184,
+        "old_n_distinct_signatures_in_shard": 851,
+        "new_v0_n_distinct_signatures_in_shard": 851,
+        "note": "old_n_signature_writes counts every writer.append_array(...) call made during the old job (job_metadata.json's own field); it can exceed the number of DISTINCT signatures actually in the shard (old_n_distinct_signatures_in_shard) when more than one raw final-state value collapses onto the same capped/displayed BumpNet label (physics_calcs.limit_particles_in_fs) -- both are real numbers from the same job, they measure different things, and neither is 'wrong'."
+      },
       "check_i_v0_matches_old_coverage": {
         "name_a": "old_coverage_shard",
         "name_b": "new_v0_inclusive",
@@ -160,6 +184,18 @@
     {
       "record_id": 30555,
       "file_index": 0,
+      "event_count_check": {
+        "old_n_read": 2147195,
+        "new_v0_n_read": 2147195,
+        "old_n_after_v0_selection": 42417,
+        "new_v0_n_after_gate": 42417,
+        "n_read_matches": true,
+        "n_selected_events_matches": true,
+        "old_n_signature_writes": 958,
+        "old_n_distinct_signatures_in_shard": 722,
+        "new_v0_n_distinct_signatures_in_shard": 722,
+        "note": "old_n_signature_writes counts every writer.append_array(...) call made during the old job (job_metadata.json's own field); it can exceed the number of DISTINCT signatures actually in the shard (old_n_distinct_signatures_in_shard) when more than one raw final-state value collapses onto the same capped/displayed BumpNet label (physics_calcs.limit_particles_in_fs) -- both are real numbers from the same job, they measure different things, and neither is 'wrong'."
+      },
       "check_i_v0_matches_old_coverage": {
         "name_a": "old_coverage_shard",
         "name_b": "new_v0_inclusive",

@@ -281,8 +281,26 @@ read-only): record 30522 (Run2016G) file indices 0 and 1, and record
   output and the existing `coverage_shard.sqlite` — this also directly
   re-tests upstream master commit `b38f566`'s claim that its
   `sqlite_shards.py` reordering was behaviour-preserving, on real data,
-  and confirms it. For record 30522 file 0 specifically: 42,602 selected
-  events and 1,137 signatures in both the old and new outputs, byte-for-byte.
+  and confirms it. For record 30522 file 0 specifically (VERIFIED BY
+  RUNNING, `studies/cms_datasets/evidence/step3_regression_report.json`'s
+  `per_file[0].event_count_check`): **42,602 selected events** in both
+  the old job's own `n_after_v0_selection` and the new v0 job's own
+  `n_after_gate` (identical), and **1,017 distinct signatures** in both
+  the old `coverage_shard.sqlite` and the new v0 inclusive shard
+  (byte-for-byte identical arrays for every one of them). The old job's
+  own metadata separately reports **1,137** `n_signature_writes` — a
+  count of every shard-write *call* made during that job, not of distinct
+  signatures; it is larger than 1,017 because a small number of distinct
+  raw final-state values collapse onto the same displayed/capped BumpNet
+  category label (`physics_calcs.limit_particles_in_fs`), so more than
+  one write call lands under the same signature name. Both 1,137 and
+  1,017 are real, verified numbers from the same job — they measure
+  different things, and an earlier version of this report incorrectly
+  quoted 1,137 as if it were the shard's own distinct-signature count.
+  (The other two regression files show the same pattern: record 30522
+  file 1 — 46,294 events, 851 distinct signatures, 1,184 signature
+  writes; record 30555 file 0 — 42,417 events, 722 distinct signatures,
+  958 signature writes — all in the same evidence file.)
 - **(ii)**: every one of v0's signatures (which, by construction, always
   has ≥2 muons and ≥1 non-b jet — that is what "final state" encodes)
   appears in `--population generic`'s inclusive shard with an identical
