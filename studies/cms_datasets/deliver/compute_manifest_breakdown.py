@@ -61,6 +61,7 @@ def breakdown_one(manifest: list, lepton_letter: str) -> dict:
     lepton_content = Counter()
     n_zero_lepton = 0
     n_ge2_own_flavor = 0
+    n_ge1e_ge1mu = 0
     for e in manifest:
         c = parse_fs_category(e.get("final_state_category", ""))
         if c is None:
@@ -72,12 +73,15 @@ def breakdown_one(manifest: list, lepton_letter: str) -> dict:
         n_own = n_e if lepton_letter == "e" else n_m
         if n_own >= 2:
             n_ge2_own_flavor += 1
+        if n_e >= 1 and n_m >= 1:
+            n_ge1e_ge1mu += 1
     return {
         "n_total": len(manifest),
         "by_object_content_category": dict(by_object_content),
         "by_lepton_content": dict(lepton_content),
         "n_zero_lepton": n_zero_lepton,
         f"n_ge2_selected_{lepton_letter}": n_ge2_own_flavor,
+        "n_ge1_electron_and_ge1_muon": n_ge1e_ge1mu,
     }
 
 
@@ -86,9 +90,13 @@ def main():
     p.add_argument("--manifest-min31", required=True)
     p.add_argument("--manifest-min26", required=True)
     p.add_argument("--lepton-letter", required=True, choices=["e", "m"])
-    p.add_argument("--compare-manifest-min31", default=None)
-    p.add_argument("--compare-manifest-min26", default=None)
-    p.add_argument("--compare-label", default="other")
+    p.add_argument("--compare-manifests-min31", default=None,
+                    help="comma-separated list of other deliveries' manifest_..._min31bins.json, "
+                         "for a UNION comparison (e.g. DoubleMuon + DoubleEG)")
+    p.add_argument("--compare-manifests-min26", default=None,
+                    help="comma-separated list, same order as --compare-manifests-min31")
+    p.add_argument("--compare-labels", default="other",
+                    help="comma-separated labels, same order/count as --compare-manifests-min31")
     p.add_argument("--out-json", required=True)
     args = p.parse_args()
 
@@ -101,26 +109,44 @@ def main():
         "min26bins": breakdown_one(manifest_b, args.lepton_letter),
     }
 
-    if args.compare_manifest_min31 and args.compare_manifest_min26:
-        cmp_a = json.loads(Path(args.compare_manifest_min31).read_text())
-        cmp_b = json.loads(Path(args.compare_manifest_min26).read_text())
+    if args.compare_manifests_min31 and args.compare_manifests_min26:
+        cmp_paths_31 = args.compare_manifests_min31.split(",")
+        cmp_paths_26 = args.compare_manifests_min26.split(",")
+        cmp_labels = args.compare_labels.split(",")
         names_a = set(e["name"] for e in manifest_a)
         names_b = set(e["name"] for e in manifest_b)
-        cmp_names_a = set(e["name"] for e in cmp_a)
-        cmp_names_b = set(e["name"] for e in cmp_b)
-        result["comparison_vs"] = {
-            "label": args.compare_label,
+
+        union_names_31 = set()
+        union_names_26 = set()
+        per_dataset_31 = {}
+        per_dataset_26 = {}
+        for label, path31, path26 in zip(cmp_labels, cmp_paths_31, cmp_paths_26):
+            cmp_a = json.loads(Path(path31).read_text())
+            cmp_b = json.loads(Path(path26).read_text())
+            cmp_names_a = set(e["name"] for e in cmp_a)
+            cmp_names_b = set(e["name"] for e in cmp_b)
+            union_names_31 |= cmp_names_a
+            union_names_26 |= cmp_names_b
+            per_dataset_31[label] = len(cmp_names_a)
+            per_dataset_26[label] = len(cmp_names_b)
+
+        result["comparison_vs_union"] = {
+            "labels": cmp_labels,
             "min31bins": {
-                "n_this": len(names_a), "n_other": len(cmp_names_a),
-                "n_shared": len(names_a & cmp_names_a),
-                "n_only_in_this": len(names_a - cmp_names_a),
-                "n_only_in_other": len(cmp_names_a - names_a),
+                "n_this": len(names_a),
+                "n_per_other_dataset": per_dataset_31,
+                "n_union_of_others": len(union_names_31),
+                "n_shared_with_union": len(names_a & union_names_31),
+                "n_new_relative_to_union": len(names_a - union_names_31),
+                "n_running_union_all_datasets": len(names_a | union_names_31),
             },
             "min26bins": {
-                "n_this": len(names_b), "n_other": len(cmp_names_b),
-                "n_shared": len(names_b & cmp_names_b),
-                "n_only_in_this": len(names_b - cmp_names_b),
-                "n_only_in_other": len(cmp_names_b - names_b),
+                "n_this": len(names_b),
+                "n_per_other_dataset": per_dataset_26,
+                "n_union_of_others": len(union_names_26),
+                "n_shared_with_union": len(names_b & union_names_26),
+                "n_new_relative_to_union": len(names_b - union_names_26),
+                "n_running_union_all_datasets": len(names_b | union_names_26),
             },
         }
 
