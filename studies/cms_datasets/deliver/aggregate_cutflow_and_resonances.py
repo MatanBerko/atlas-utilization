@@ -114,7 +114,9 @@ def main():
     p.add_argument("--dataset-label", required=True)
     p.add_argument("--runs-dir", required=True)
     p.add_argument("--file-lists", required=True)
-    p.add_argument("--object-type", choices=["muon", "electron"], default="muon")
+    p.add_argument("--object-type", choices=["muon", "electron", "emu"], default="muon")
+    p.add_argument("--dr-fraction-thresholds", default="0.05,0.1,0.4",
+                    help="emu mode: comma-separated dR thresholds to report the cumulative fraction below")
     p.add_argument("--trigger-leg-gev", required=True, help="comma-separated, e.g. 17,8")
     p.add_argument("--muon-pt-cut-gev", type=float, default=25.0, help="object pT cut (same flag name for both lepton types)")
     p.add_argument("--pt-fraction-window-gev", default=None,
@@ -310,7 +312,7 @@ def main():
         result["jpsi_peak_fit"] = jpsi_fit
         result["low_mass_population"] = low_mass_summary
 
-    else:  # electron
+    elif args.object_type == "electron":
         edges_coarse, counts_coarse, n_entries_coarse, n_nan_coarse = sum_histograms(jobs, "raw_dielectron_mass_e0e1")
         centers_coarse = (edges_coarse[:-1] + edges_coarse[1:]) / 2
         z_fit = fit_peak(centers_coarse, counts_coarse, window=(70, 112), p0_sigma=4.0)
@@ -396,6 +398,166 @@ def main():
         result["z_peak_fit"] = z_fit
         result["leading_electron_pt_fraction"] = pt_fraction
         result["electron_eta_gap_region"] = gap_summary
+
+    else:  # emu -- MuonEG task, Step 5
+        # ---- Negative resonance check: raw m(e0,mu0), no Z peak expected ----
+        edges_emu, counts_emu, n_emu, _ = sum_histograms(jobs, "raw_emu_mass_e0mu0")
+        centers_emu = (edges_emu[:-1] + edges_emu[1:]) / 2
+        # Quantify "no bump near 91 GeV": ratio of the Z-window count to the
+        # average of two neighboring sidebands of the same width -- a value
+        # near 1 means no excess; this is NOT a fit (nothing to fit to, by
+        # design of this negative check), just a plain ratio for the report.
+        z_window = (centers_emu >= 85) & (centers_emu < 97)
+        side_lo = (centers_emu >= 73) & (centers_emu < 85)
+        side_hi = (centers_emu >= 97) & (centers_emu < 109)
+        n_window = int(counts_emu[z_window].sum())
+        n_sideband_avg = (counts_emu[side_lo].sum() + counts_emu[side_hi].sum()) / 2.0
+        z_peak_check = {
+            "window_85_97_gev_count": n_window,
+            "sideband_avg_count": float(n_sideband_avg),
+            "ratio_window_to_sideband": round(n_window / n_sideband_avg, 4) if n_sideband_avg else None,
+            "interpretation": "ratio near 1.0 means no excess/peak near the Z mass in m(e0,mu0)",
+        }
+        print(json.dumps(z_peak_check, indent=2))
+
+        edges_mumu, counts_mumu, _, _ = sum_histograms(jobs, "raw_dimuon_mass_mu0mu1")
+        edges_ee, counts_ee, _, _ = sum_histograms(jobs, "raw_dielectron_mass_e0e1")
+
+        fig, ax = plt.subplots(figsize=(9, 5))
+        ax.stairs(counts_emu, edges_emu, fill=False, label="m(e0,mu0)")
+        ax.stairs(counts_mumu, edges_mumu, fill=False, label="m(mu0,mu1) (where present)", alpha=0.7)
+        ax.stairs(counts_ee, edges_ee, fill=False, label="m(e0,e1) (where present)", alpha=0.7)
+        ax.axvline(91.2, color="gray", linestyle=":", label="Z mass (91.2 GeV)")
+        ax.set_yscale("log")
+        ax.set_xlabel("Mass [GeV] (raw, pre-post-processing)")
+        ax.set_ylabel("Pairs / 1 GeV")
+        ax.set_title(f"{args.dataset_label}: raw dilepton masses, full dataset ({n_jobs} files)\n"
+                      f"window/sideband ratio near Z mass in m(e0,mu0): "
+                      f"{z_peak_check['ratio_window_to_sideband']}", fontsize=10)
+        ax.legend()
+        fig.tight_layout()
+        fig.savefig(plots_dir / "raw_emu_mass_vs_same_flavor.png", dpi=130)
+        plt.close(fig)
+
+        # ---- Top-quark sanity: b-jet multiplicity, opposite/same-sign ----
+        bjet_mult_total = defaultdict(int)
+        n_os_total = 0
+        n_ss_total = 0
+        n_os_available = True
+        for j in jobs:
+            diag = j["diagnostics"]
+            for k, v in diag.get("emu_bjet_multiplicity", {}).items():
+                bjet_mult_total[k] += v
+            cp = diag.get("emu_charge_product", {})
+            if cp.get("n_opposite_sign") is None:
+                n_os_available = False
+            else:
+                n_os_total += cp["n_opposite_sign"]
+                n_ss_total += cp["n_same_sign"]
+
+        n_emu_events_total = sum(j["diagnostics"]["n_events_ge1e_ge1mu"] for j in jobs)
+        n_ge1_bjet = sum(v for k, v in bjet_mult_total.items() if k != "0")
+        top_sanity = {
+            "n_emu_events_total": n_emu_events_total,
+            "bjet_multiplicity": dict(bjet_mult_total),
+            "fraction_ge1_bjet": round(n_ge1_bjet / n_emu_events_total, 6) if n_emu_events_total else None,
+            "n_opposite_sign": n_os_total if n_os_available else None,
+            "n_same_sign": n_ss_total if n_os_available else None,
+            "opposite_sign_fraction": round(n_os_total / (n_os_total + n_ss_total), 6) if n_os_available and (n_os_total + n_ss_total) else None,
+        }
+        print(json.dumps(top_sanity, indent=2))
+
+        # ---- Electron-muon overlap: dR(e0,mu0), min dR(e,mu) ----
+        edges_dr0, counts_dr0, n_dr0, _ = sum_histograms(jobs, "dr_e0_mu0")
+        n_overflow_dr0 = sum(j["diagnostics"]["dr_e0_mu0"]["n_overflow"] for j in jobs)
+        edges_mindr, counts_mindr, n_mindr, _ = sum_histograms(jobs, "min_dr_any_e_any_mu")
+        n_overflow_mindr = sum(j["diagnostics"]["min_dr_any_e_any_mu"]["n_overflow"] for j in jobs)
+
+        centers_mindr = (edges_mindr[:-1] + edges_mindr[1:]) / 2
+        total_mindr = int(counts_mindr.sum()) + n_overflow_mindr
+        dr_thresholds = [float(x) for x in args.dr_fraction_thresholds.split(",")]
+        dr_fractions = {}
+        for thr in dr_thresholds:
+            n_below = int(counts_mindr[centers_mindr < thr].sum())
+            dr_fractions[str(thr)] = {
+                "n_below": n_below, "n_total": total_mindr,
+                "fraction": round(n_below / total_mindr, 6) if total_mindr else None,
+            }
+        print(json.dumps(dr_fractions, indent=2))
+
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5))
+        ax1.stairs(counts_dr0, edges_dr0, fill=False)
+        ax1.set_xlabel("dR(e0, mu0)")
+        ax1.set_ylabel(f"Events / 0.01 (overflow dR>=1.0: {n_overflow_dr0})")
+        ax1.set_title("dR(e0,mu0)")
+        ax2.stairs(counts_mindr, edges_mindr, fill=False, color="darkorange")
+        for thr in dr_thresholds:
+            ax2.axvline(thr, linestyle="--", alpha=0.6, label=f"dR<{thr}: {dr_fractions[str(thr)]['fraction']:.4%}" if dr_fractions[str(thr)]["fraction"] is not None else f"dR<{thr}")
+        ax2.set_xlabel("min dR(any selected e, any selected mu)")
+        ax2.set_ylabel(f"Events / 0.01 (overflow dR>=1.0: {n_overflow_mindr})")
+        ax2.set_title("Minimum dR over all e-mu pairs")
+        ax2.legend(fontsize=8)
+        fig.suptitle(f"{args.dataset_label}: electron-muon overlap, full dataset ({n_jobs} files, "
+                      f"{n_emu_events_total} e+mu events)")
+        fig.tight_layout()
+        fig.savefig(plots_dir / "electron_muon_dr.png", dpi=130)
+        plt.close(fig)
+
+        # ---- Low-mass m(e0,mu0) ----
+        edges_lm, counts_lm, n_lm, _ = sum_histograms(jobs, "emu_lowmass_m_e0mu0")
+        fig, ax = plt.subplots(figsize=(9, 5))
+        ax.stairs(counts_lm, edges_lm, fill=False)
+        ax.set_yscale("log")
+        ax.set_xlabel("m(e0,mu0) [GeV] (raw, pre-post-processing)")
+        ax.set_ylabel("Events / 0.05 GeV")
+        ax.set_title(f"{args.dataset_label}: low-mass m(e0,mu0), full dataset")
+        fig.tight_layout()
+        fig.savefig(plots_dir / "emu_lowmass_mass.png", dpi=130)
+        plt.close(fig)
+
+        # ---- Leading muon/electron pT for e+mu events ----
+        has_emu_pt_diag = "leading_muon_pt_emu_events" in jobs[0]["diagnostics"]
+        if has_emu_pt_diag:
+            edges_mupt, counts_mupt, _, _ = sum_histograms(jobs, "leading_muon_pt_emu_events")
+            edges_ept, counts_ept, _, _ = sum_histograms(jobs, "leading_electron_pt_emu_events")
+            pt_note = "leading pT restricted to e+mu events (diagnostic present for this dataset)"
+        else:
+            # This diagnostic was added AFTER MuonEG's own full run had
+            # already started under its pinned commit (Hard Rule 6) --
+            # not present in MuonEG's own job outputs. Falling back to the
+            # UNRESTRICTED leading muon/electron pT (over the whole
+            # inclusive population) as the closest available substitute,
+            # clearly labeled as such -- NOT the same population.
+            edges_mupt, counts_mupt, _, _ = sum_histograms(jobs, "leading_muon_pt")
+            edges_ept, counts_ept, _, _ = sum_histograms(jobs, "leading_electron_pt")
+            pt_note = ("UNVERIFIED for the exact e+mu-restricted population: this diagnostic did not exist "
+                       "when MuonEG's full run was submitted (added afterward, for future datasets, per "
+                       "Hard Rule 6's code-pinning discipline). Plot below uses the UNRESTRICTED leading "
+                       "muon/electron pT (whole inclusive population) as the closest available substitute.")
+        print(pt_note)
+
+        fig, ax = plt.subplots(figsize=(9, 5))
+        ax.stairs(counts_mupt, edges_mupt, fill=False, label="leading muon")
+        ax.stairs(counts_ept, edges_ept, fill=False, label="leading electron")
+        ax.axvline(args.muon_pt_cut_gev, color="red", linestyle="--", label=f"object cut ({args.muon_pt_cut_gev:.0f} GeV)")
+        for leg in trigger_legs:
+            ax.axvline(leg, color="orange", linestyle=":", label=f"trigger leg ({leg:.0f} GeV)")
+        ax.set_xlabel("Lepton pT [GeV]")
+        ax.set_ylabel("Events / 1 GeV")
+        ax.set_xlim(0, 100)
+        ax.set_title(f"{args.dataset_label}: leading muon/electron pT\n({pt_note[:80]}{'...' if len(pt_note) > 80 else ''})",
+                      fontsize=8)
+        ax.legend()
+        fig.tight_layout()
+        fig.savefig(plots_dir / "leading_muon_electron_pt_emu.png", dpi=130)
+        plt.close(fig)
+
+        result["z_peak_check_emu"] = z_peak_check
+        result["top_quark_sanity"] = top_sanity
+        result["dr_overlap_fractions"] = dr_fractions
+        result["dr_overflow_counts"] = {"dr_e0_mu0": n_overflow_dr0, "min_dr_any_e_any_mu": n_overflow_mindr}
+        result["leading_pt_emu_events_note"] = pt_note
+        result["leading_pt_emu_events_diagnostic_present"] = has_emu_pt_diag
 
     Path(args.out_json).write_text(json.dumps(result, indent=2))
     print(f"wrote {args.out_json}")
