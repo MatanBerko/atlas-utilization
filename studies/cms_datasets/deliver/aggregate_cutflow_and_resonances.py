@@ -155,6 +155,20 @@ def main():
         for path, count in j["trigger_per_path"].items():
             per_path_totals[path] += count
 
+    # Per-higher-priority-dataset veto totals (task Step 3c: "report each
+    # separately"). PRE-population-gate (job_metadata's own
+    # n_vetoed_by_each_higher_dataset field is computed on events_triggered,
+    # before the gate) -- NOT directly comparable to the POST-gate combined
+    # n_vetoed_total below (an event vetoed by BOTH datasets is counted once
+    # in each per-dataset total here, and pre-gate counts also include
+    # events that never passed the population gate at all). Both are
+    # reported; the report itself states the relationship precisely rather
+    # than forcing an equality that does not hold by construction.
+    vetoed_by_dataset_pregate = defaultdict(int)
+    for j in jobs:
+        for label, count in j.get("n_vetoed_by_each_higher_dataset", {}).items():
+            vetoed_by_dataset_pregate[label] += count
+
     g_key, h_key = f"{args.dataset_label}_G", f"{args.dataset_label}_H"
     portal_total_events = file_lists[g_key]["portal_number_events"] + file_lists[h_key]["portal_number_events"]
 
@@ -177,6 +191,7 @@ def main():
         # denominator is after_population_gate.
         "n_vetoed_total": total_n_after_gate - total_n_exclusive,
         "exclusive_fraction": round(total_n_exclusive / total_n_after_gate, 6) if total_n_after_gate else None,
+        "n_vetoed_by_each_higher_dataset_pregate": dict(vetoed_by_dataset_pregate),
         "portal_identity_check": {
             "sum_n_read": total_n_read,
             "portal_number_events_both_eras": portal_total_events,
