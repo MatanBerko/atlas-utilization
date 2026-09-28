@@ -354,6 +354,12 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array, bjets: ak.Array) -
 
     # ---- MuonEG task, Step 1: electron-muon overlap diagnostics ----
     has_1e1mu = ak.to_numpy((ak.num(electrons) >= 1) & (ak.num(muons) >= 1))
+    # Leading muon/electron pT restricted to events with >=1 of each --
+    # added after the MuonEG task's own full run had already started under
+    # a pinned commit (Hard Rule 6), so it is NOT present in MuonEG's own
+    # diagnostics; included here for the next dataset that needs it.
+    leading_mu_pt_emu = np.where(has_1e1mu, leading_mu_pt, np.nan)
+    leading_e_pt_emu = np.where(has_1e1mu, leading_e_pt, np.nan)
 
     dr_e0mu0 = ak.to_numpy(ak.fill_none(_p4(e0).deltaR(_p4(mu0)), np.nan))
     dr_e0mu0_masked = np.where(has_1e1mu, dr_e0mu0, np.nan)
@@ -415,6 +421,8 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array, bjets: ak.Array) -
             "n_same_sign": n_same_sign_emu,
         },
         "emu_bjet_multiplicity": bjet_multiplicity_emu,
+        "leading_muon_pt_emu_events": _histogram_1gev(leading_mu_pt_emu, DIAGNOSTIC_PT_BIN_EDGES),
+        "leading_electron_pt_emu_events": _histogram_1gev(leading_e_pt_emu, DIAGNOSTIC_PT_BIN_EDGES),
     }
 
 
