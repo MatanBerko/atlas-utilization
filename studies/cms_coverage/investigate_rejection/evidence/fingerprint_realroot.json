@@ -1,0 +1,24 @@
+{
+  "root_version": "6.40.02",
+  "test1_fresh_filled_histogram": {
+    "input_values": [
+      150.0,
+      155.0,
+      160.0,
+      160.0,
+      170.0
+    ],
+    "expected_sum_x": 795.0,
+    "expected_sum_x2": 126625.0,
+    "class_version": 3,
+    "GetSumw2N": 0,
+    "fTsumwx_via_getter": 795.0,
+    "written_path": "/storage/agrp/berkom/atlas-utilization/output/investigate_bumpnet_rejection/scratch/real_root_test.root"
+  },
+  "test2_trimmed_histogram": {
+    "GetFirst": 1,
+    "GetLast": 17,
+    "TestBit_kAxisRange": true,
+    "written_path": "/storage/agrp/berkom/atlas-utilization/output/investigate_bumpnet_rejection/scratch/real_root_trimmed.root"
+  }
+}
