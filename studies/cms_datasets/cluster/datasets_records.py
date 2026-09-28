@@ -64,6 +64,22 @@ NESTED_REFERENCE_PAIRS = [
     ("HLT_IsoMu24", "HLT_IsoMu27"),
     ("HLT_IsoTkMu24", "HLT_IsoTkMu27"),
     ("HLT_Ele27_WPTight_Gsf", "HLT_Ele32_eta2p1_WPTight_Gsf"),
+    # MuonEG: the DZ path requires everything the non-DZ path requires PLUS
+    # an extra dz-vertex-matching cut, so DZ firing implies the non-DZ
+    # path's own condition is met -- non-DZ is the "looser" reference here.
+    ("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL",
+     "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"),
+    ("HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL",
+     "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ"),
+    # MET: HLT_PFMET300 is a pure higher-MET-threshold version of the
+    # PFMET170 paths (same underlying quantity, higher cut), so it is a
+    # valid nested reference. HLT_PFMET110_PFMHT110_IDTight additionally
+    # requires MHT>110, which is NOT strictly implied by PFMET170 alone --
+    # it is read (MET_HIGHER_THRESHOLD_CANDIDATES) and its own marginal
+    # fire count is reported, but it is deliberately NOT used as a nested
+    # pair here (not a valid "stricter implies looser" test).
+    ("HLT_PFMET170_HBHECleaned", "HLT_PFMET300"),
+    ("HLT_PFMET170_NotCleaned", "HLT_PFMET300"),
 ]
 # MET: any higher-threshold PFMET path present is checked as a nested
 # reference against BOTH PFMET170 paths -- read as a list since which one
