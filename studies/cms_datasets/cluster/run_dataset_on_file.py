@@ -123,6 +123,11 @@ DIAGNOSTIC_MASS_BIN_EDGES = np.arange(0.0, 201.0, 1.0)
 # finer histogram exists solely so a genuine J/psi peak is visible in the
 # quality-gate report; it does not affect selection, gating, or shards.
 DIAGNOSTIC_LOWMASS_FINE_BIN_EDGES = np.arange(0.0, 10.0001, 0.02)
+# 0.02-wide eta bins, -2.6 to 2.6: fine enough to resolve the ECAL
+# barrel-endcap transition (gap) region, 1.4442 < |eta| < 1.566 (a
+# 0.1218-wide window) -- documentation only, does not affect selection
+# (electrons in the gap are not vetoed, per this task's own instruction).
+DIAGNOSTIC_ETA_BIN_EDGES = np.arange(-2.6, 2.6001, 0.02)
 LOW_MASS_DIMUON_CUTOFF_GEV = 5.0
 
 
@@ -253,11 +258,20 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array) -> dict:
     """Step 2 diagnostics (task spec), computed over the INCLUSIVE
     population (all events passing this dataset's own trigger + object
     selection, before the population gate -- 'inclusive population' as
-    named in the task brief): leading muon/electron pT (1 GeV bins,
-    0-200 GeV); opposite-sign dimuon mass and dR for pairs with m<5 GeV;
-    raw (pre-post-processing) dilepton masses m(mu0,mu1), m(e0,e1),
-    m(e0,mu0) (1 GeV bins, 0-200 GeV). Diagnostic only -- does not affect
-    selection, gating, or the written shards."""
+    named in the task brief): leading/subleading muon and electron pT
+    (1 GeV bins, 0-200 GeV); every selected electron's eta (0.02-wide
+    bins, documentation of the ECAL gap region only); opposite-sign
+    dimuon mass and dR for pairs with m<5 GeV; raw (pre-post-processing)
+    dilepton masses m(mu0,mu1), m(e0,e1), m(e0,mu0) (1 GeV bins,
+    0-200 GeV). Diagnostic only -- does not affect selection, gating, or
+    the written shards.
+
+    Added subleading_electron_pt and all_selected_electron_eta for the
+    DoubleEG delivery's Step 4 report (leading/subleading electron pT
+    plot; electron eta / ECAL-gap-fraction plot) -- neither existed when
+    DoubleMuon was run. This is a diagnostics-only addition (no selection,
+    gating, combination, or shard-writing code touched); every DoubleEG
+    job runs this same commit."""
     mu_order = ak.argsort(muons.pt, axis=1, ascending=False)
     sorted_mu = muons[mu_order]
     padded_mu = ak.pad_none(sorted_mu, 2, axis=1, clip=True)
@@ -271,6 +285,12 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array) -> dict:
     leading_mu_pt = ak.to_numpy(ak.fill_none(padded_mu[:, 0].pt, np.nan))
     subleading_mu_pt = ak.to_numpy(ak.fill_none(padded_mu[:, 1].pt, np.nan))
     leading_e_pt = ak.to_numpy(ak.fill_none(padded_e[:, 0].pt, np.nan))
+    subleading_e_pt = ak.to_numpy(ak.fill_none(padded_e[:, 1].pt, np.nan))
+    # Every selected electron's eta, across the whole inclusive population
+    # (not just leading/subleading) -- documentation of where selected
+    # electrons actually land relative to the ECAL gap, not a per-event
+    # leading/subleading quantity.
+    all_selected_electron_eta = ak.to_numpy(ak.flatten(electrons.eta, axis=None))
 
     def _p4(obj):
         import vector
@@ -296,6 +316,8 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array) -> dict:
         "leading_muon_pt": _histogram_1gev(leading_mu_pt, DIAGNOSTIC_PT_BIN_EDGES),
         "subleading_muon_pt": _histogram_1gev(subleading_mu_pt, DIAGNOSTIC_PT_BIN_EDGES),
         "leading_electron_pt": _histogram_1gev(leading_e_pt, DIAGNOSTIC_PT_BIN_EDGES),
+        "subleading_electron_pt": _histogram_1gev(subleading_e_pt, DIAGNOSTIC_PT_BIN_EDGES),
+        "all_selected_electron_eta": _histogram_1gev(all_selected_electron_eta, DIAGNOSTIC_ETA_BIN_EDGES),
         "raw_dimuon_mass_mu0mu1": _histogram_1gev(m_mumu, DIAGNOSTIC_MASS_BIN_EDGES),
         "raw_dimuon_mass_mu0mu1_lowmass_finebins": _histogram_1gev(m_mumu, DIAGNOSTIC_LOWMASS_FINE_BIN_EDGES),
         "raw_dielectron_mass_e0e1": _histogram_1gev(m_ee, DIAGNOSTIC_MASS_BIN_EDGES),
