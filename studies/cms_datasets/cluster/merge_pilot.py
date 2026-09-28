@@ -21,6 +21,7 @@ import argparse
 import json
 import re
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -68,11 +69,28 @@ def _weighted_peak(centers, counts):
     return float(centers[np.argmax(counts)])
 
 
+def _per_file_event_counts_by_dataset(preflight_dir: Path) -> dict:
+    """Real per-file event counts (n_read, i.e. tree.num_entries -- not
+    the portal's aggregate metadata), read directly from the Step 1
+    pre-flight scan's own per-file results. This is ground truth for the
+    file-size-variation this task's Step 4 asks to state -- Step 1 already
+    opened and read every one of the 732 files, so no extra reads are
+    needed here."""
+    by_label = defaultdict(list)
+    for f in preflight_dir.glob("job_*/preflight_result.json"):
+        d = json.loads(f.read_text())
+        for pf in d["per_file"]:
+            by_label[d["dataset_label"]].append(pf["n_read"])
+    return by_label
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--run-dir", required=True)
     p.add_argument("--pbs-log-dir", required=True)
     p.add_argument("--file-lists", required=True)
+    p.add_argument("--preflight-dir", required=True,
+                    help="Step 1 output dir, for real per-file event counts (file-size variation)")
     p.add_argument("--out-json", required=True)
     p.add_argument("--out-plots-dir", required=True)
     args = p.parse_args()
@@ -119,8 +137,25 @@ def main():
                 "diagnostics": meta["diagnostics"],
             })
 
-    # Per-dataset cost estimate: mean per-file elapsed time (over both era
-    # pilot files) x portal's own total file count for that dataset.
+    # Per-dataset cost estimate. File sizes vary enormously within every
+    # dataset (see per_file_event_counts below -- up to ~3700x within
+    # MuonEG alone), and the 2-file pilot sample can land on an outlier
+    # (e.g. SingleMuon's own H pilot file has only 14,113 events against
+    # a ~2.1M median for that dataset -- a small file dominated by fixed
+    # per-job overhead, not representative of steady-state throughput).
+    # A naive "mean pilot per-file time x n_total_files" estimate would
+    # apply whatever constant the 2 sampled files happened to average
+    # uniformly to every file regardless of its real size, which is
+    # exactly wrong when sizes vary this much. Instead: combine the
+    # pilot's own (events, elapsed_sec) into one events/sec rate, then
+    # scale by the REAL total event count for that dataset (both eras,
+    # summed directly from Step 1's own per-file reads -- ground truth,
+    # not the portal's aggregate metadata). This is still an estimate
+    # (the fixed per-job overhead is the same in seconds regardless of
+    # file size, so it is proportionally larger for the many small files
+    # a full run will also include) -- stated plainly, not hidden.
+    per_file_event_counts = _per_file_event_counts_by_dataset(Path(args.preflight_dir))
+
     cost_estimates = {}
     for label in PILOT_DATASET_LABELS:
         rows = [j for j in pilot_jobs if j["dataset_label"] == label and j["found"]]
@@ -128,18 +163,41 @@ def main():
             cost_estimates[label] = {"n_pilot_files": 0}
             continue
         elapsed = [r["elapsed_sec_metadata"] for r in rows]
+        n_events_pilot = [r["n_read"] for r in rows]
         d = by_label[label]
         n_total_files = file_lists[f"{label}_G"]["n_files_from_filepage_api"] + file_lists[f"{label}_H"]["n_files_from_filepage_api"]
-        n_events_pilot = [r["n_read"] for r in rows]
+
+        all_file_counts = np.array(per_file_event_counts.get(label, []))
+        total_real_events = int(all_file_counts.sum()) if all_file_counts.size else None
+
+        combined_events = sum(n_events_pilot)
+        combined_elapsed = sum(elapsed)
+        events_per_sec = combined_events / combined_elapsed if combined_elapsed else None
+        est_total_core_hours_event_rate = (
+            round(total_real_events / events_per_sec / 3600.0, 2)
+            if (events_per_sec and total_real_events) else None
+        )
+
         mean_sec_per_file = float(np.mean(elapsed))
-        est_total_core_hours = mean_sec_per_file * n_total_files / 3600.0
+        est_total_core_hours_naive_per_file = round(mean_sec_per_file * n_total_files / 3600.0, 2)
+
         cost_estimates[label] = {
             "n_pilot_files": len(rows),
             "pilot_elapsed_sec": elapsed,
             "pilot_n_events": n_events_pilot,
+            "file_size_variation_this_dataset": {
+                "n_files_total": int(all_file_counts.size),
+                "min_events_per_file": int(all_file_counts.min()) if all_file_counts.size else None,
+                "median_events_per_file": int(np.median(all_file_counts)) if all_file_counts.size else None,
+                "max_events_per_file": int(all_file_counts.max()) if all_file_counts.size else None,
+                "total_real_events_both_eras": total_real_events,
+            },
             "mean_elapsed_sec_per_file": round(mean_sec_per_file, 1),
             "n_total_files_full_run": n_total_files,
-            "estimated_total_core_hours_full_run": round(est_total_core_hours, 2),
+            "pilot_events_per_sec_combined": round(events_per_sec, 1) if events_per_sec else None,
+            "estimated_total_core_hours_full_run": est_total_core_hours_event_rate,
+            "estimated_total_core_hours_full_run_method": "event-rate scaling (pilot events/sec x real total events for this dataset)",
+            "estimated_total_core_hours_naive_per_file_method_for_comparison": est_total_core_hours_naive_per_file,
             "peak_mem_mb_observed": [r["peak_mem_mb"] for r in rows],
         }
 
