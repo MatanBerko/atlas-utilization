@@ -61,20 +61,30 @@ def fs_label_of(normalized_sig: str) -> str:
 
 
 def _list_signatures_ro(db_path: str) -> list:
-    """Read-only equivalent of services.storage.sqlite_shards.list_signatures
-    -- opens via a `mode=ro` URI so SQLite never attempts to create a
-    rollback-journal file next to the DB, even transiently. Required for
-    the two READ-ONLY cluster paths this task's hard rules name
-    explicitly; used uniformly here (including for this study's own
-    shards) for consistency."""
-    uri = f"file:{db_path}?mode=ro"
+    """Read-only equivalent of services.storage.sqlite_shards.list_signatures.
+
+    CORRECTION: `mode=ro` alone is NOT sufficient to guarantee zero writes
+    to the directory -- these shards are written with
+    `PRAGMA journal_mode=WAL` (SqliteArrayShardWriter.__init__), and
+    SQLite's WAL read path creates a `-shm` (and, if absent, a `-wal`)
+    companion file next to the DB even for a read-only connection, to
+    manage WAL-index consistency. Observed directly: a `mode=ro`-only
+    version of this function left empty `-shm`/`-wal` files behind under
+    the read-only cms_coverage_full directory (harmless -- the main .sqlite
+    file's own bytes were unchanged, confirmed by checksum -- but still a
+    write to a directory this task's hard rules mark read-only, and was
+    cleaned up by hand). `immutable=1` tells SQLite the file will never
+    change while this connection is open, which skips WAL-consistency
+    file creation entirely -- the correct flag for this use case (a
+    frozen, already-delivered shard that nothing else is writing to)."""
+    uri = f"file:{db_path}?mode=ro&immutable=1"
     with sqlite3.connect(uri, uri=True) as conn:
         rows = conn.execute("SELECT DISTINCT signature FROM array_chunks ORDER BY signature").fetchall()
     return [r[0] for r in rows]
 
 
 def _iter_arrays_for_signature_ro(db_path: str, signature: str):
-    uri = f"file:{db_path}?mode=ro"
+    uri = f"file:{db_path}?mode=ro&immutable=1"
     with sqlite3.connect(uri, uri=True) as conn:
         rows = conn.execute(
             "SELECT payload FROM array_chunks WHERE signature = ?", (signature,)
