@@ -1,0 +1,45 @@
+{
+  "source_dump": "/storage/agrp/berkom/atlas-utilization/output/investigate_bumpnet_rejection/dump_atlas_reference.json",
+  "n_total": 823,
+  "n_passing_bin1_gt0": 52,
+  "n_failing_bin1_eq0": 771,
+  "distinct_grid_nbins_xmin_xmax": [
+    {
+      "n_bins": 1000,
+      "fXmin": 0.0,
+      "fXmax": 10000.0,
+      "count": 823
+    }
+  ],
+  "passing_first_nonempty_bin_index_distribution": {
+    "1": 52
+  },
+  "pass_fail_by_object_content_category": {
+    "b-jet-containing": {
+      "n_pass": 1,
+      "n_fail": 222,
+      "n_total": 223,
+      "pass_rate_pct": 0.4
+    },
+    "jet-only": {
+      "n_pass": 0,
+      "n_fail": 76,
+      "n_total": 76,
+      "pass_rate_pct": 0.0
+    },
+    "lepton+jet": {
+      "n_pass": 23,
+      "n_fail": 414,
+      "n_total": 437,
+      "pass_rate_pct": 5.3
+    },
+    "lepton-only": {
+      "n_pass": 28,
+      "n_fail": 59,
+      "n_total": 87,
+      "pass_rate_pct": 32.2
+    }
+  },
+  "n_unmatched_names": 0,
+  "unmatched_names_sample": []
+}

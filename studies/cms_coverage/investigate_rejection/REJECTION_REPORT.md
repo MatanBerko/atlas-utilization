@@ -355,3 +355,151 @@ cluster path (or a copy) of the ATLAS ROOT file used in the comparison
 plot (Part 3's request), and get either BumpNet's reader code or its exact
 rejection error message from a real run — either one would convert several
 of Part 5's "unknown"s into a settled fact.
+
+---
+
+# Round 2 — the ATLAS reference file settles it
+
+**The rejection rule is now known, stated by the supervisor**: BumpNet's
+loader (`load_ATLAS`) hard-drops any histogram whose bin 1 content is
+zero. This resolves Round 1's single biggest open question (Part 5's
+"whether an empty bin 1, specifically, is what BumpNet's reader actually
+checks"). What remained open going into this round: her reading (a
+trimming bug, correlated with jet/b-jet-only categories) versus the
+technical lead's reading (nothing removes leading bins; the puzzle is why
+*any* histogram passes). Read-only investigation; her file was never
+written to, moved, or copied into this repo — only derived summary
+numbers, per this task's own instruction.
+
+## Part 1 — the ATLAS reference file
+
+Ran the existing `dump_histogram_structure.py` (unmodified) directly on
+`/storage/agrp/marybo/DDP/data_directed_samples_141225/testing_BumpNet/data/atlas_btag_Leptotriggers_test_bumpnet.root`
+in place. Full per-histogram detail: `evidence/dump_atlas_reference.json`
+(823 entries). Pass/fail and category breakdown computed by the new
+`analyze_atlas_reference.py`: `evidence/analysis_atlas_reference.json`.
+
+**823 histograms total. 52 have bin 1 > 0 (would pass); 771 have bin 1 ==
+0 (would be rejected)** — confirming her own report that some pass and
+some don't, not all-or-nothing like our CMS file.
+
+**All 823 — both the passing and the failing ones — are on the exact same
+grid**: `n_bins=1000, fXmin=0.0, fXmax=10000.0`. This is the *only*
+`(n_bins, fXmin, fXmax)` combination that appears anywhere in the file —
+not 823 histograms split across several grids, one combination, one count
+of 823. **This directly answers one of this part's own questions: the
+passing histograms are not built on a different range with a
+coincidentally-populated first bin — they are on the identical fixed grid
+every other histogram in the file (and every one of our own CMS
+histograms) uses.**
+
+**The passing histograms have genuine content in the true first bin**:
+for all 52, `first_nonempty_bin_index_1based == 1` (confirmed directly,
+not inferred) — real mass entries in the 0–10 GeV bin of the shared fixed
+grid, not an artifact of a shifted range.
+
+**Does the pattern correlate with category, as the supervisor suggested?
+Counts, not an assertion:**
+
+| Object-content category | Pass (bin1>0) | Fail (bin1==0) | Total | Pass rate |
+|---|---:|---:|---:|---:|
+| lepton-only | 28 | 59 | 87 | **32.2%** |
+| lepton+jet | 23 | 414 | 437 | 5.3% |
+| b-jet-containing | 1 | 222 | 223 | 0.4% |
+| jet-only | 0 | 76 | 76 | **0.0%** |
+
+**This is the opposite correlation from the one proposed.** Jet-only
+categories have a 0% pass rate (0 of 76) and b-jet-containing categories
+pass almost never (1 of 223, 0.4%) — if anything, pure jet/b-jet
+categories are the ones *most* likely to be rejected in this file, not
+the ones that pass. Lepton-only categories pass far more often (32.2%)
+than any other group. Sample names confirm this is not a labeling
+artifact: passing histograms are things like
+`ROI_mass_e0j0_cat_1ex_0mx_1jx_..._width_10.0` (electron+jet),
+`ROI_mass_e0m0_cat_1ex_1mx_..._width_10.0` (electron+muon) — lepton or
+lepton+jet combinations, not the pure-jet/b-jet ones the hypothesis named.
+
+**Which reading does the evidence support?** The technical lead's. Not
+because the supervisor's specific mechanism (jet/b-jet categories being
+exempt from trimming) is correct — the category data directly contradicts
+it — but because the *general* code-level claim holds up exactly: nothing
+removes leading bins for anyone, ever; a histogram passes precisely when
+`_find_rightmost_highest_peak` happens to land the detected peak inside
+the first 10 GeV bin for that specific category's mass distribution, and
+fails otherwise. Whether the peak lands there is a property of the
+underlying physics/reconstruction for that specific final state (e.g.
+opposite-flavor or single-lepton categories are never subject to the
+`z_peak_cutoff` dilepton floor — `_dilepton_flavor`,
+`services/pipelines/post_processing_pipeline.py:34-45`, only applies to a
+same-flavor `ee`/`mumu` pair — so nothing structurally prevents their peak
+from sitting near zero), not a bug in the pipeline that treats jet/b-jet
+categories specially. **UNVERIFIED**: this explains *why a peak near zero
+is possible* for lepton categories; it does not explain in detail why
+this *specific* file's lepton categories happen to peak there 32.2%/5.3%
+of the time while jet/b-jet ones essentially never do — that would need
+the underlying (pre-histogram) mass arrays for this file, which are
+outside this task's read-only, histogram-level scope.
+
+## Part 2 — what the code can and cannot produce
+
+**The "different grid" premise is empirically false** (Part 1: one grid,
+823/823 histograms) — so the question "what produces that different
+grid" does not arise; there is no different grid to explain.
+
+**Checked for completeness anyway, per the task's own instruction**:
+compared `services/pipelines/histograms_pipeline.py` and
+`services/pipelines/post_processing_pipeline.py` between this fork's
+`HEAD` (`8767f42`, before this round's own commits) and
+`upstream/master` (`fe5a560`, fetched read-only, never pushed to). A
+line-level diff restricted to binning/trim/peak-removal keywords
+(`bin_width`, `FIXED_MASS`, `trim`, `peak`, `nbins`, `crop`) across both
+files returns **zero differences** — the logic this round depends on is
+byte-identical between the two. Every config file in the repository
+(`config.yaml` and all ten `config.cms_*.yaml`/other variants) sets
+`bin_width_gev: 10.0` and `peak_detection_bin_width_gev: 10.0` uniformly
+— no config in this repository produces a different bin width, and
+`FIXED_MASS_MIN_GEV`/`FIXED_MASS_MAX_GEV` are hardcoded constants
+(`histograms_pipeline.py:22-23`), not config-driven at all, so no config
+change could produce a different range either.
+
+**No code path removes leading empty bins** — unchanged from Round 1's
+Part 4 (quoted there with `file:line`): `trim_empty_tail` only changes
+the axis *display* range (confirmed identical to real ROOT's own
+behavior, Round 1 Part 2); `_apply_peak_removal_to_histogram` zeroes bin
+*content* in place without changing `nbins`. Both findings hold for
+upstream master too — this file has no differences from our fork in the
+relevant regions.
+
+**Conclusion: this is not "an older code version, a different config, a
+different bin width, or a separate creation function."** The ATLAS
+reference file's 52 passing histograms are produced by exactly the same
+code, the same grid, and the same thresholds as its 771 failing ones and
+as our own 316 CMS histograms — the only thing that differs is where each
+category's own detected peak happens to fall.
+
+## Part 3 — CMS alignment audit
+
+Item-by-item, our standalone CMS post-processing/histogram code (never
+a live import of the shared pipeline's ROOT-dependent modules, for the
+environment reasons Round 1 documented) versus the shared pipeline itself:
+
+| Item | CMS side (file:line) | Shared pipeline (file:line) | Same / different |
+|---|---|---|---|
+| z-peak cutoff value | `115.0`, `studies/cms_coverage/cluster/merge_and_count.py:64` (cites `config.yaml:155`) | `115.0`, `config.yaml:155` | **Same value** — and the CMS side calls the real `_apply_z_peak_cut` function directly (`merge_and_count.py:48-51` import, `:170` call) rather than reimplementing it |
+| max-mass cutoff value | `10000.0`, `merge_and_count.py:65` (cites `config.yaml:156`) | `10000.0`, `config.yaml:156` | **Same value**, same real function usage pattern |
+| peak removal | calls the real `_find_rightmost_highest_peak` unmodified, `merge_and_count.py:49` (import), `:174` (call) | `services/pipelines/post_processing_pipeline.py:324-352` | **Identical — the literal same function**, not a reimplementation |
+| first-empty-bin outlier split | calls the real `_split_by_first_empty_bin` unmodified, `merge_and_count.py:50` (import), `:178` (call) | `post_processing_pipeline.py:355-388` | **Identical — the literal same function** |
+| `min_events_per_fs` | `100`, `merge_and_count.py:66` (cites `config.yaml:142`) | `100`, `config.yaml:142` | **Same value**; CMS calls the real `prune_final_states_below_min_events` (`services/storage/sqlite_shards.py`) unmodified too |
+| histogram grid | `FIXED_MASS_MIN_GEV=0.0`/`MAX_GEV=10000.0`, `BIN_WIDTH_GEV=10.0` — copied verbatim (not live-imported, documented reason: no PyROOT in the cluster env) into `studies/m0m1j0_cms/histograms.py:105-108`, citing `histograms_pipeline.py:22-23` as the source | `FIXED_MASS_MIN_GEV=0.0`/`MAX_GEV=10000.0`, `histograms_pipeline.py:22-23`; `bin_width_gev: 10.0`, `config.yaml:166` | **Same values**, confirmed independently in Round 1 Part 2 by a real-ROOT cross-check, not just a code read |
+| naming — BumpNet category name | `_convert_to_bumpnet_name`, copied verbatim into `studies/m0m1j0_cms/histograms.py:125-140`, citing `histograms_pipeline.py:419-453` | `histograms_pipeline.py:419-453` | **Identical function**, same output strings |
+| naming — ROI_ key suffix | `f"ROI_{name}_width_{int(BIN_WIDTH_GEV)}"` — `int()` truncates, giving **`_width_10`** (`studies/cms_coverage/deliver/build_bumpnet_root.py:160,175,285`; same pattern in `studies/m0m1j0_cms/cluster/merge_full_v2.py:240`) | `f"ROI_{signature}_width_{bin_width}"` where `bin_width` is the raw config float — giving **`_width_10.0`** (`histograms_pipeline.py:343`, confirmed directly: every one of the ATLAS reference file's 823 real histogram names ends `_width_10.0`) | **Different** — a real, previously-unremarked naming difference. Not shown by this investigation to cause rejection (the ATLAS file's own partial-rejection pattern shows the SAME `_width_10.0` names both passing and failing), but a genuine alignment gap worth closing regardless |
+| minimum-bins requirement | our delivery produced two separate files, `>30` bins and `>25` bins (`studies/cms_coverage/deliver/build_bumpnet_root.py`, `BINS_THRESHOLD_A=30`/`BINS_THRESHOLD_B=25`) | BumpNet itself enforces `>=25` (supervisor's report); nothing in the shared pipeline code enforces a bins minimum at all — that check lives in BumpNet's own loader, not in `histograms_pipeline.py`/`post_processing_pipeline.py` | **Not applicable to the shared pipeline** — this is a BumpNet-side rule, not a pipeline post-processing step; our `>25` file already matches BumpNet's own stated floor, our `>30` file is stricter than required |
+
+**What aligning the one real difference (naming) would mean**: changing
+`int(BIN_WIDTH_GEV)` to just `BIN_WIDTH_GEV` (no truncation) in the three
+CMS-side call sites above would make our `_width_10` become `_width_10.0`,
+matching the shared pipeline's own convention exactly. This is a
+one-line-per-call-site change in **new/study code only**
+(`studies/cms_coverage/deliver/`, `studies/m0m1j0_cms/cluster/`) — it does
+not touch `services/`, `config.yaml`, or anything shared, and is not
+applied here (out of scope for this task; see `FIX_PROPOSAL.md`).
