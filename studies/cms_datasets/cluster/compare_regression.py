@@ -31,6 +31,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sqlite3
 import sys
 from pathlib import Path
 
@@ -39,7 +40,7 @@ import numpy as np
 REPO_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO_ROOT))
 
-from services.storage.sqlite_shards import list_signatures, iter_arrays_for_signature  # noqa: E402
+from services.storage.sqlite_shards import _deserialize_array  # noqa: E402
 from studies.cms_datasets.cluster.gen_step3_mapping import REGRESSION_FILES  # noqa: E402
 
 SUFFIX_PATTERN = re.compile(r"(_FS_.*)$")
@@ -59,15 +60,53 @@ def fs_label_of(normalized_sig: str) -> str:
     return m.group(1) if m else "UNKNOWN"
 
 
+def _list_signatures_ro(db_path: str) -> list:
+    """Read-only equivalent of services.storage.sqlite_shards.list_signatures
+    -- opens via a `mode=ro` URI so SQLite never attempts to create a
+    rollback-journal file next to the DB, even transiently. Required for
+    the two READ-ONLY cluster paths this task's hard rules name
+    explicitly; used uniformly here (including for this study's own
+    shards) for consistency."""
+    uri = f"file:{db_path}?mode=ro"
+    with sqlite3.connect(uri, uri=True) as conn:
+        rows = conn.execute("SELECT DISTINCT signature FROM array_chunks ORDER BY signature").fetchall()
+    return [r[0] for r in rows]
+
+
+def _iter_arrays_for_signature_ro(db_path: str, signature: str):
+    uri = f"file:{db_path}?mode=ro"
+    with sqlite3.connect(uri, uri=True) as conn:
+        rows = conn.execute(
+            "SELECT payload FROM array_chunks WHERE signature = ?", (signature,)
+        ).fetchall()
+    for (payload,) in rows:
+        yield _deserialize_array(payload)
+
+
 def load_shard(path: str) -> dict:
     if not Path(path).exists():
         raise FileNotFoundError(path)
     out = {}
-    for sig in list_signatures(path):
-        arrs = list(iter_arrays_for_signature(path, sig))
+    for sig in _list_signatures_ro(path):
+        arrs = list(_iter_arrays_for_signature_ro(path, sig))
         combined = np.concatenate(arrs) if arrs else np.array([], dtype=np.float32)
         out[normalize(sig)] = np.sort(combined)
     return out
+
+
+def _n_signature_writes_from_metadata(job_dir: str) -> int:
+    """The old coverage run's own job_metadata.json 'n_signature_writes'
+    field -- the number of writer.append_array(...) CALLS made during that
+    job, which can exceed the number of DISTINCT signatures in the shard
+    (list_signatures/_list_signatures_ro) when more than one raw
+    final-state value collapses onto the same displayed/capped BumpNet
+    label (physics_calcs.limit_particles_in_fs) -- both numbers are real,
+    they just measure different things. Returns None if the file is
+    missing (should not happen for the read-only coverage directory)."""
+    meta_path = Path(job_dir) / "job_metadata.json"
+    if not meta_path.exists():
+        return None
+    return json.loads(meta_path.read_text()).get("n_signature_writes")
 
 
 def compare_shards(a: dict, b: dict, name_a: str, name_b: str) -> dict:
@@ -116,6 +155,32 @@ def main():
         geni = load_shard(gen_incl)
         gene = load_shard(gen_excl)
 
+        old_job_dir = f"{OLD_COVERAGE_BASE}/{existing_job_dir}"
+        old_meta = json.loads((Path(old_job_dir) / "job_metadata.json").read_text())
+        new_v0_meta = json.loads(
+            (Path(f"{NEW_RUN_BASE}/job_DoubleMuon_{record_id}_{file_index}_v0") / "job_metadata.json").read_text()
+        )
+        event_count_check = {
+            "old_n_read": old_meta.get("n_read"),
+            "new_v0_n_read": new_v0_meta.get("n_read"),
+            "old_n_after_v0_selection": old_meta.get("n_after_v0_selection"),
+            "new_v0_n_after_gate": new_v0_meta.get("n_after_gate"),
+            "n_read_matches": old_meta.get("n_read") == new_v0_meta.get("n_read"),
+            "n_selected_events_matches": old_meta.get("n_after_v0_selection") == new_v0_meta.get("n_after_gate"),
+            "old_n_signature_writes": old_meta.get("n_signature_writes"),
+            "old_n_distinct_signatures_in_shard": len(old),
+            "new_v0_n_distinct_signatures_in_shard": len(v0i),
+            "note": (
+                "old_n_signature_writes counts every writer.append_array(...) call made "
+                "during the old job (job_metadata.json's own field); it can exceed the "
+                "number of DISTINCT signatures actually in the shard "
+                "(old_n_distinct_signatures_in_shard) when more than one raw final-state "
+                "value collapses onto the same capped/displayed BumpNet label "
+                "(physics_calcs.limit_particles_in_fs) -- both are real numbers from the "
+                "same job, they measure different things, and neither is 'wrong'."
+            ),
+        }
+
         check_i = compare_shards(old, v0i, "old_coverage_shard", "new_v0_inclusive")
         check_iii_v0 = compare_shards(v0i, v0e, "new_v0_inclusive", "new_v0_exclusive")
         check_iii_generic = compare_shards(geni, gene, "new_generic_inclusive", "new_generic_exclusive")
@@ -149,6 +214,7 @@ def main():
         file_result = {
             "record_id": record_id,
             "file_index": file_index,
+            "event_count_check": event_count_check,
             "check_i_v0_matches_old_coverage": check_i,
             "check_ii_generic_superset_of_v0": check_ii,
             "check_iii_doublemuon_inclusive_eq_exclusive_v0": check_iii_v0,
@@ -157,6 +223,7 @@ def main():
         this_pass = (
             check_i["identical"] and check_ii["passes"]
             and check_iii_v0["identical"] and check_iii_generic["identical"]
+            and event_count_check["n_read_matches"] and event_count_check["n_selected_events_matches"]
         )
         file_result["all_checks_pass"] = this_pass
         overall_pass = overall_pass and this_pass

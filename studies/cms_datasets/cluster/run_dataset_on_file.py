@@ -385,6 +385,18 @@ def main():
         keep = ak.to_numpy((ak.num(muons) >= 2) & (ak.num(jets["Jets"]) >= 1))
         v0_result = selection.select_event_selection_cutflow(events_triggered)
         obj_record = v0_result["obj_record"]
+        # This driver's own externally-computed `keep` mask (used below to
+        # align is_exclusive_pretrigger with obj_record's row order) must
+        # select exactly the same events as select_event_selection_cutflow's
+        # own internal final_mask -- true by construction (same muons/jets
+        # selection functions, same >=2mu & >=1 light-jet condition), but
+        # asserted here rather than only assumed, since obj_record's actual
+        # row order/count comes from the internal call, not from `keep`.
+        assert len(obj_record) == int(keep.sum()), (
+            f"v0 population alignment check failed: len(obj_record)={len(obj_record)} "
+            f"!= keep.sum()={int(keep.sum())} -- externally recomputed gate mask does not "
+            f"match select_event_selection_cutflow's own internal population"
+        )
 
     n_after_gate = len(obj_record)
     is_exclusive_selected = is_exclusive_pretrigger[keep]
