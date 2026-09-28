@@ -91,7 +91,7 @@ BASE_OBJECT_BRANCHES = (
     "nMuon", "Muon_pt", "Muon_eta", "Muon_phi", "Muon_mass",
     "Muon_mediumId", "Muon_pfRelIso04_all", "Muon_charge",
     "nElectron", "Electron_pt", "Electron_eta", "Electron_phi", "Electron_mass",
-    "Electron_cutBased",
+    "Electron_cutBased", "Electron_charge",
     "nJet", "Jet_pt", "Jet_eta", "Jet_phi", "Jet_mass", "Jet_jetId",
     "Jet_btagDeepFlavB",
 )
@@ -129,6 +129,18 @@ DIAGNOSTIC_LOWMASS_FINE_BIN_EDGES = np.arange(0.0, 10.0001, 0.02)
 # (electrons in the gap are not vetoed, per this task's own instruction).
 DIAGNOSTIC_ETA_BIN_EDGES = np.arange(-2.6, 2.6001, 0.02)
 LOW_MASS_DIMUON_CUTOFF_GEV = 5.0
+# MuonEG task, Step 1: electron-muon overlap diagnostics. 0.01-wide dR
+# bins, 0-1.0 (100 bins) with an explicit overflow count (task spec) --
+# dR(e0,mu0) and the per-event minimum dR over every selected
+# electron-muon pair, restricted to events with >=1 selected electron AND
+# >=1 selected muon. Documentation only: no overlap removal is added
+# anywhere (this task's own explicit instruction).
+DIAGNOSTIC_DR_EMU_BIN_EDGES = np.arange(0.0, 1.0001, 0.01)
+# m(e0,mu0) bins: 0-5 GeV in 0.05 GeV steps (100 bins) -- a genuine
+# collimated e-mu pair (one real muon also reconstructed as a nearby
+# "electron") would show up as a low-mass excess here, the same idea as
+# the existing low-mass dimuon diagnostic.
+DIAGNOSTIC_EMU_LOWMASS_BIN_EDGES = np.arange(0.0, 5.0001, 0.05)
 
 
 def git_commit_hash(repo_root) -> str:
@@ -254,7 +266,21 @@ def _histogram_1gev(values: np.ndarray, edges: np.ndarray) -> dict:
             "n_entries": int(finite.size), "n_nan_or_missing": int(values.size - finite.size)}
 
 
-def compute_diagnostics(muons: ak.Array, electrons: ak.Array) -> dict:
+def _histogram_with_overflow(values: np.ndarray, edges: np.ndarray) -> dict:
+    """Like _histogram_1gev, but also tracks an explicit overflow count
+    (finite values >= edges[-1]) instead of silently excluding them --
+    needed for the dR(e,mu) diagnostics (MuonEG task, Step 1 spec: '0 to
+    1.0 in 0.01 bins, plus an overflow count')."""
+    finite = values[~np.isnan(values)]
+    in_range = finite[finite < edges[-1]]
+    overflow = finite[finite >= edges[-1]]
+    counts, _ = np.histogram(in_range, bins=edges)
+    return {"bin_edges_gev": edges.tolist(), "counts": counts.tolist(),
+            "n_entries": int(finite.size), "n_nan_or_missing": int(values.size - finite.size),
+            "n_overflow": int(overflow.size)}
+
+
+def compute_diagnostics(muons: ak.Array, electrons: ak.Array, bjets: ak.Array) -> dict:
     """Step 2 diagnostics (task spec), computed over the INCLUSIVE
     population (all events passing this dataset's own trigger + object
     selection, before the population gate -- 'inclusive population' as
@@ -271,7 +297,21 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array) -> dict:
     plot; electron eta / ECAL-gap-fraction plot) -- neither existed when
     DoubleMuon was run. This is a diagnostics-only addition (no selection,
     gating, combination, or shard-writing code touched); every DoubleEG
-    job runs this same commit."""
+    job runs this same commit.
+
+    MuonEG task, Step 1 addition (again diagnostics-only -- `bjets` is
+    only read via `ak.num`, never used to filter, select, or write
+    anything): for events with >=1 selected electron AND >=1 selected
+    muon -- dR(e0,mu0) and the per-event minimum dR over every selected
+    electron-muon pair (0-1.0, 0.01 bins, explicit overflow count);
+    m(e0,mu0) (0-5 GeV, 0.05 GeV bins); the e0*mu0 charge-product sign
+    (opposite vs. same); and the number of selected b-jets per event
+    (0/1/2/3/>=4). `electrons` may optionally carry a passthrough
+    'charge' field (added by the caller via ak.with_field, exactly as
+    already done for muons) -- if absent, the charge-product diagnostic
+    is skipped rather than guessed. Measures the known
+    no-electron-muon-overlap-removal gap; adds no overlap removal
+    anywhere."""
     mu_order = ak.argsort(muons.pt, axis=1, ascending=False)
     sorted_mu = muons[mu_order]
     padded_mu = ak.pad_none(sorted_mu, 2, axis=1, clip=True)
@@ -312,6 +352,42 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array) -> dict:
     else:
         opp_sign_mask = np.zeros_like(low_mass_mask)
 
+    # ---- MuonEG task, Step 1: electron-muon overlap diagnostics ----
+    has_1e1mu = ak.to_numpy((ak.num(electrons) >= 1) & (ak.num(muons) >= 1))
+
+    dr_e0mu0 = ak.to_numpy(ak.fill_none(_p4(e0).deltaR(_p4(mu0)), np.nan))
+    dr_e0mu0_masked = np.where(has_1e1mu, dr_e0mu0, np.nan)
+
+    # Per-event minimum dR over EVERY selected electron-muon pair (not
+    # just leading), via a flat (non-nested) per-event cartesian product.
+    electrons_p4_all = _p4(electrons)
+    muons_p4_all = _p4(muons)
+    pairs_e, pairs_mu = ak.unzip(ak.cartesian([electrons_p4_all, muons_p4_all]))
+    dr_all_pairs = pairs_e.deltaR(pairs_mu)
+    min_dr_emu = ak.to_numpy(ak.fill_none(ak.min(dr_all_pairs, axis=1), np.nan))
+    min_dr_emu_masked = np.where(has_1e1mu, min_dr_emu, np.nan)
+
+    m_emu_masked = np.where(has_1e1mu, m_emu, np.nan)
+
+    e_charge0 = ak.to_numpy(ak.fill_none(e0.charge, 0)) if "charge" in electrons.fields else None
+    if e_charge0 is not None and charge0 is not None:
+        emu_charge_product = np.where(has_1e1mu, e_charge0 * charge0, 0)
+        n_opposite_sign_emu = int(((emu_charge_product < 0) & has_1e1mu).sum())
+        n_same_sign_emu = int(((emu_charge_product > 0) & has_1e1mu).sum())
+    else:
+        n_opposite_sign_emu = None
+        n_same_sign_emu = None
+
+    n_bjets_per_event = ak.to_numpy(ak.num(bjets))
+    n_bjets_emu = n_bjets_per_event[has_1e1mu]
+    bjet_multiplicity_emu = {
+        "0": int((n_bjets_emu == 0).sum()),
+        "1": int((n_bjets_emu == 1).sum()),
+        "2": int((n_bjets_emu == 2).sum()),
+        "3": int((n_bjets_emu == 3).sum()),
+        ">=4": int((n_bjets_emu >= 4).sum()),
+    }
+
     return {
         "leading_muon_pt": _histogram_1gev(leading_mu_pt, DIAGNOSTIC_PT_BIN_EDGES),
         "subleading_muon_pt": _histogram_1gev(subleading_mu_pt, DIAGNOSTIC_PT_BIN_EDGES),
@@ -329,6 +405,16 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array) -> dict:
         },
         "n_events_ge2_selected_muons": int(has_2mu.sum()),
         "muon_charge_field_present": charge0 is not None,
+        "electron_charge_field_present": e_charge0 is not None,
+        "n_events_ge1e_ge1mu": int(has_1e1mu.sum()),
+        "dr_e0_mu0": _histogram_with_overflow(dr_e0mu0_masked, DIAGNOSTIC_DR_EMU_BIN_EDGES),
+        "min_dr_any_e_any_mu": _histogram_with_overflow(min_dr_emu_masked, DIAGNOSTIC_DR_EMU_BIN_EDGES),
+        "emu_lowmass_m_e0mu0": _histogram_1gev(m_emu_masked, DIAGNOSTIC_EMU_LOWMASS_BIN_EDGES),
+        "emu_charge_product": {
+            "n_opposite_sign": n_opposite_sign_emu,
+            "n_same_sign": n_same_sign_emu,
+        },
+        "emu_bjet_multiplicity": bjet_multiplicity_emu,
     }
 
 
@@ -404,7 +490,23 @@ def main():
     electrons = selection.select_electrons(events_triggered)
     jets = selection.select_and_split_jets(events_triggered, muons, electrons, apply_lepton_cleaning=True)
 
-    diagnostics = compute_diagnostics(muons, electrons)
+    # Diagnostics-only: an electron-charge passthrough, mirroring the
+    # muon-charge one above. selection.select_electrons itself has no
+    # extra_fields parameter (unlike select_muons), so this reproduces its
+    # own exact 3-condition mask externally, using ONLY that function's
+    # own imported constants (never re-typed), then adds the resulting
+    # per-event charge array as a new field via ak.with_field on a
+    # SEPARATE variable (electrons_diag) -- the real `electrons` used for
+    # gating/combinations/shards below is completely untouched.
+    electron_diag_mask = (
+        (events_triggered.Electron_pt > selection.ELECTRON_PT_MIN_GEV)
+        & (abs(events_triggered.Electron_eta) < selection.ELECTRON_ETA_MAX)
+        & (events_triggered.Electron_cutBased >= selection.ELECTRON_CUTBASED_MIN)
+    )
+    electron_charge_selected = events_triggered.Electron_charge[electron_diag_mask]
+    electrons_diag = ak.with_field(electrons, electron_charge_selected, "charge")
+
+    diagnostics = compute_diagnostics(muons, electrons_diag, jets["BJets"])
 
     v0_result = None
     if args.population == "generic":
