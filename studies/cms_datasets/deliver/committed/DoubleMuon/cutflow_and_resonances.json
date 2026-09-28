@@ -1,0 +1,49 @@
+{
+  "dataset_label": "DoubleMuon",
+  "n_jobs": 57,
+  "cutflow": {
+    "n_jobs": 57,
+    "read": 94148416,
+    "after_golden_json": 92609925,
+    "after_trigger_OR": 30943565,
+    "trigger_per_path_totals": {
+      "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": 27457432,
+      "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": 28094076
+    },
+    "after_population_gate": 21608716,
+    "n_exclusive": 21608716,
+    "inclusive_equals_exclusive": true,
+    "portal_identity_check": {
+      "sum_n_read": 94148416,
+      "portal_number_events_both_eras": 94148416,
+      "matches": true
+    }
+  },
+  "z_peak_fit": {
+    "method": "gaussian_fit",
+    "position_gev": 90.84592365912702,
+    "position_err_gev": 0.05383219922706018,
+    "sigma_gev": 2.093228409075403,
+    "amplitude": 1277720.6330280534,
+    "offset": 62226.389232125985,
+    "argmax_fallback_gev": 90.5
+  },
+  "jpsi_peak_fit": {
+    "method": "gaussian_fit",
+    "position_gev": 3.0940043653145795,
+    "position_err_gev": 0.0008553380351861605,
+    "sigma_gev": 0.03740312538616544,
+    "amplitude": 1310.7864129646518,
+    "offset": 163.47710136118312,
+    "argmax_fallback_gev": 3.09
+  },
+  "low_mass_population": {
+    "n_opposite_sign_pairs_m_lt_5gev": 80962,
+    "n_opposite_sign_pairs_m_lt_2gev": 53444,
+    "n_all_gated_events": 21608716,
+    "n_events_ge2_selected_muons": 9450067,
+    "fraction_of_all_gated_events": 0.002473,
+    "fraction_of_events_with_ge2_muons": 0.005655
+  },
+  "scipy_available_for_fits": true
+}
