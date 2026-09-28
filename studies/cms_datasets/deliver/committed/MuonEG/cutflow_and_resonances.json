@@ -1,0 +1,73 @@
+{
+  "dataset_label": "MuonEG",
+  "n_jobs": 48,
+  "object_type": "emu",
+  "cutflow": {
+    "n_jobs": 48,
+    "read": 63091128,
+    "after_golden_json": 62385800,
+    "after_trigger_OR": 10137471,
+    "trigger_per_path_totals": {
+      "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": 2664567,
+      "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": 9032090
+    },
+    "after_population_gate": 7531669,
+    "n_exclusive": 7361191,
+    "inclusive_equals_exclusive": false,
+    "n_vetoed_total": 170478,
+    "exclusive_fraction": 0.977365,
+    "n_vetoed_by_each_higher_dataset_pregate": {
+      "DoubleMuon": 136017,
+      "DoubleEG": 47146
+    },
+    "portal_identity_check": {
+      "sum_n_read": 63091128,
+      "portal_number_events_both_eras": 63091128,
+      "matches": true
+    }
+  },
+  "scipy_available_for_fits": true,
+  "z_peak_check_emu": {
+    "window_85_97_gev_count": 13088,
+    "sideband_avg_count": 13810.0,
+    "ratio_window_to_sideband": 0.9477,
+    "interpretation": "ratio near 1.0 means no excess/peak near the Z mass in m(e0,mu0)"
+  },
+  "top_quark_sanity": {
+    "n_emu_events_total": 159675,
+    "bjet_multiplicity": {
+      "0": 70237,
+      "1": 56584,
+      "2": 31588,
+      "3": 1198,
+      ">=4": 68
+    },
+    "fraction_ge1_bjet": 0.560125,
+    "n_opposite_sign": 148709,
+    "n_same_sign": 10966,
+    "opposite_sign_fraction": 0.931323
+  },
+  "dr_overlap_fractions": {
+    "0.05": {
+      "n_below": 863,
+      "n_total": 159675,
+      "fraction": 0.005405
+    },
+    "0.1": {
+      "n_below": 1252,
+      "n_total": 159675,
+      "fraction": 0.007841
+    },
+    "0.4": {
+      "n_below": 2587,
+      "n_total": 159675,
+      "fraction": 0.016202
+    }
+  },
+  "dr_overflow_counts": {
+    "dr_e0_mu0": 146357,
+    "min_dr_any_e_any_mu": 146046
+  },
+  "leading_pt_emu_events_note": "UNVERIFIED for the exact e+mu-restricted population: this diagnostic did not exist when MuonEG's full run was submitted (added afterward, for future datasets, per Hard Rule 6's code-pinning discipline). Plot below uses the UNRESTRICTED leading muon/electron pT (whole inclusive population) as the closest available substitute.",
+  "leading_pt_emu_events_diagnostic_present": false
+}

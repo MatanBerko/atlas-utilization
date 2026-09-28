@@ -1,0 +1,96 @@
+{
+  "dataset_label": "MuonEG",
+  "overall_pass": true,
+  "per_file": [
+    {
+      "record_id": 30528,
+      "file_index": 0,
+      "full_run_job_dir": "job_1",
+      "event_count_check": {
+        "pilot_n_read": 2238235,
+        "full_n_read": 2238235,
+        "pilot_n_after_gate": 203017,
+        "full_n_after_gate": 203017,
+        "pilot_n_exclusive": 197941,
+        "full_n_exclusive": 197941,
+        "n_read_matches": true,
+        "n_after_gate_matches": true,
+        "n_exclusive_matches": true,
+        "pilot_git_commit": "952e2f8a849896ac9f7da8b779a60e428f57a04f",
+        "full_git_commit": "bc1f74be14f0dd0c10ffde8b7a8c7c754b228f0e"
+      },
+      "inclusive_shard_check": {
+        "name_a": "pilot_inclusive",
+        "name_b": "full_run_inclusive",
+        "n_signatures_a": 2304,
+        "n_signatures_b": 2304,
+        "n_only_in_a": 0,
+        "n_only_in_b": 0,
+        "only_in_a_sample": [],
+        "only_in_b_sample": [],
+        "n_mismatched_common": 0,
+        "mismatched_sample": [],
+        "identical": true
+      },
+      "exclusive_shard_check": {
+        "name_a": "pilot_exclusive",
+        "name_b": "full_run_exclusive",
+        "n_signatures_a": 1677,
+        "n_signatures_b": 1677,
+        "n_only_in_a": 0,
+        "n_only_in_b": 0,
+        "only_in_a_sample": [],
+        "only_in_b_sample": [],
+        "n_mismatched_common": 0,
+        "mismatched_sample": [],
+        "identical": true
+      },
+      "all_checks_pass": true
+    },
+    {
+      "record_id": 30561,
+      "file_index": 0,
+      "full_run_job_dir": "job_30",
+      "event_count_check": {
+        "pilot_n_read": 1480020,
+        "full_n_read": 1480020,
+        "pilot_n_after_gate": 230652,
+        "full_n_after_gate": 230652,
+        "pilot_n_exclusive": 225858,
+        "full_n_exclusive": 225858,
+        "n_read_matches": true,
+        "n_after_gate_matches": true,
+        "n_exclusive_matches": true,
+        "pilot_git_commit": "952e2f8a849896ac9f7da8b779a60e428f57a04f",
+        "full_git_commit": "bc1f74be14f0dd0c10ffde8b7a8c7c754b228f0e"
+      },
+      "inclusive_shard_check": {
+        "name_a": "pilot_inclusive",
+        "name_b": "full_run_inclusive",
+        "n_signatures_a": 2409,
+        "n_signatures_b": 2409,
+        "n_only_in_a": 0,
+        "n_only_in_b": 0,
+        "only_in_a_sample": [],
+        "only_in_b_sample": [],
+        "n_mismatched_common": 0,
+        "mismatched_sample": [],
+        "identical": true
+      },
+      "exclusive_shard_check": {
+        "name_a": "pilot_exclusive",
+        "name_b": "full_run_exclusive",
+        "n_signatures_a": 1711,
+        "n_signatures_b": 1711,
+        "n_only_in_a": 0,
+        "n_only_in_b": 0,
+        "only_in_a_sample": [],
+        "only_in_b_sample": [],
+        "n_mismatched_common": 0,
+        "mismatched_sample": [],
+        "identical": true
+      },
+      "all_checks_pass": true
+    }
+  ]
+}

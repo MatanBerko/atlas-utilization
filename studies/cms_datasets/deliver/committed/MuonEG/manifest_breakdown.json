@@ -1,0 +1,65 @@
+{
+  "lepton_letter": "e",
+  "min31bins": {
+    "n_total": 998,
+    "by_object_content_category": {
+      "b-jet-containing": 658,
+      "lepton+jet": 236,
+      "lepton-only": 14,
+      "jet-only": 90
+    },
+    "by_lepton_content": {
+      "0": 138,
+      "1": 425,
+      ">=2": 435
+    },
+    "n_zero_lepton": 138,
+    "n_ge2_selected_e": 23,
+    "n_ge1_electron_and_ge1_muon": 346
+  },
+  "min26bins": {
+    "n_total": 1102,
+    "by_object_content_category": {
+      "b-jet-containing": 732,
+      "lepton+jet": 261,
+      "lepton-only": 17,
+      "jet-only": 92
+    },
+    "by_lepton_content": {
+      "0": 141,
+      "1": 456,
+      ">=2": 505
+    },
+    "n_zero_lepton": 141,
+    "n_ge2_selected_e": 45,
+    "n_ge1_electron_and_ge1_muon": 387
+  },
+  "comparison_vs_union": {
+    "labels": [
+      "DoubleMuon_generic",
+      "DoubleEG_generic"
+    ],
+    "min31bins": {
+      "n_this": 998,
+      "n_per_other_dataset": {
+        "DoubleMuon_generic": 802,
+        "DoubleEG_generic": 644
+      },
+      "n_union_of_others": 1283,
+      "n_shared_with_union": 679,
+      "n_new_relative_to_union": 319,
+      "n_running_union_all_datasets": 1602
+    },
+    "min26bins": {
+      "n_this": 1102,
+      "n_per_other_dataset": {
+        "DoubleMuon_generic": 910,
+        "DoubleEG_generic": 712
+      },
+      "n_union_of_others": 1412,
+      "n_shared_with_union": 780,
+      "n_new_relative_to_union": 322,
+      "n_running_union_all_datasets": 1734
+    }
+  }
+}
