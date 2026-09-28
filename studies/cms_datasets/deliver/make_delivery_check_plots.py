@@ -47,13 +47,40 @@ from studies.cms_coverage.deliver.make_check_plots import plot_one  # noqa: E402
 FS_CAT_PATTERN = re.compile(r"(\d+)ex_(\d+)mx_(\d+)jx_(\d+)gx(?:_(\d+)tx)?(?:_(\d+)bx)?")
 
 
-def is_zero_jet_dimuon(final_state_category: str) -> bool:
+def parse_fs_category(final_state_category: str):
+    """Returns (n_e, n_m, n_j, n_b) or None if the string doesn't match."""
     m = FS_CAT_PATTERN.search(final_state_category or "")
     if not m:
-        return False
+        return None
     n_e, n_m, n_j = int(m.group(1)), int(m.group(2)), int(m.group(3))
     n_b = int(m.group(6)) if m.group(6) else 0
+    return n_e, n_m, n_j, n_b
+
+
+def is_zero_jet_dimuon(final_state_category: str) -> bool:
+    c = parse_fs_category(final_state_category)
+    if c is None:
+        return False
+    n_e, n_m, n_j, n_b = c
     return n_m >= 2 and n_j == 0 and n_b == 0
+
+
+def is_zero_jet_dilepton(final_state_category: str, lepton_letter: str) -> bool:
+    """Generalization of is_zero_jet_dimuon: lepton_letter is 'e' or 'm'."""
+    c = parse_fs_category(final_state_category)
+    if c is None:
+        return False
+    n_e, n_m, n_j, n_b = c
+    n_lepton = n_e if lepton_letter == "e" else n_m
+    return n_lepton >= 2 and n_j == 0 and n_b == 0
+
+
+def is_zero_lepton(final_state_category: str) -> bool:
+    c = parse_fs_category(final_state_category)
+    if c is None:
+        return False
+    n_e, n_m, n_j, n_b = c
+    return n_e == 0 and n_m == 0
 
 
 def main():
@@ -64,6 +91,10 @@ def main():
     p.add_argument("--root-min26", required=True)
     p.add_argument("--root-min31-cropped", required=True)
     p.add_argument("--old-manifest-min26", default=None)
+    p.add_argument("--prefer-lepton-letter", default="m", choices=["e", "m"],
+                    help="which lepton the 'at least one zero-jet dilepton category' pick should prefer (DoubleMuon: m, DoubleEG: e)")
+    p.add_argument("--plot-largest-zero-lepton", action="store_true",
+                    help="also plot the largest zero-selected-lepton histogram (0 electrons AND 0 muons)")
     p.add_argument("--out-dir", required=True)
     args = p.parse_args()
 
@@ -103,10 +134,11 @@ def main():
         new_entries = [e for e in manifest_b if e["name"] not in old_names]
         print(f"{len(new_entries)} names in this delivery's >25-bin manifest are NEW relative to the old delivery")
 
-        zero_jet_dimuon_new = [e for e in new_entries if is_zero_jet_dimuon(e.get("final_state_category", ""))]
+        zero_jet_dilepton_new = [e for e in new_entries
+                                  if is_zero_jet_dilepton(e.get("final_state_category", ""), args.prefer_lepton_letter)]
         chosen = []
-        if zero_jet_dimuon_new:
-            chosen.append(max(zero_jet_dimuon_new, key=lambda e: e["n_events"]))
+        if zero_jet_dilepton_new:
+            chosen.append(max(zero_jet_dilepton_new, key=lambda e: e["n_events"]))
         remaining = [e for e in new_entries if e not in chosen]
         remaining_sorted = sorted(remaining, key=lambda e: -e["n_events"])
         for e in remaining_sorted:
@@ -118,9 +150,24 @@ def main():
             root_file = root_b if entry["name"] not in names_a else root_a
             plot_one(root_file, entry, out_dir / f"plot_new_category_{i}.png",
                       f"NEW vs. prior delivery ({root_file.name})")
-            new_category_summary.append({"name": entry["name"], "n_events": entry["n_events"],
-                                          "is_zero_jet_dimuon": is_zero_jet_dimuon(entry.get("final_state_category", ""))})
+            new_category_summary.append({
+                "name": entry["name"], "n_events": entry["n_events"],
+                "is_zero_jet_dilepton": is_zero_jet_dilepton(entry.get("final_state_category", ""), args.prefer_lepton_letter),
+            })
         print(json.dumps(new_category_summary, indent=2))
+
+    largest_zero_lepton_summary = None
+    if args.plot_largest_zero_lepton:
+        zero_lepton_entries = [e for e in manifest_b if is_zero_lepton(e.get("final_state_category", ""))]
+        if zero_lepton_entries:
+            entry = max(zero_lepton_entries, key=lambda e: e["n_events"])
+            root_file = root_b if entry["name"] not in names_a else root_a
+            plot_one(root_file, entry, out_dir / "plot_largest_zero_lepton.png",
+                      f"Largest zero-selected-lepton histogram ({root_file.name})")
+            largest_zero_lepton_summary = {"name": entry["name"], "n_events": entry["n_events"]}
+            print(json.dumps({"largest_zero_lepton": largest_zero_lepton_summary}, indent=2))
+        else:
+            print("NOTE: no zero-selected-lepton histograms found in the >25-bin manifest.")
 
     # Crop comparison: same histogram, uncropped vs cropped.
     key = f"ROI_{largest['name']}_width_10"
@@ -154,6 +201,7 @@ def main():
         "median": {"name": median_entry["name"], "n_events": median_entry["n_events"]},
         "near_25bin_boundary": {"name": near_boundary["name"], "n_filled_bins": near_boundary["n_filled_bins"]},
         "new_categories_plotted": new_category_summary,
+        "largest_zero_lepton": largest_zero_lepton_summary,
     }, indent=2))
 
 
