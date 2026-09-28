@@ -1,0 +1,51 @@
+{
+  "dataset_label": "DoubleEG",
+  "n_jobs": 133,
+  "object_type": "electron",
+  "cutflow": {
+    "n_jobs": 133,
+    "read": 164185704,
+    "after_golden_json": 159107970,
+    "after_trigger_OR": 17599145,
+    "trigger_per_path_totals": {
+      "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": 17599145
+    },
+    "after_population_gate": 15289956,
+    "n_exclusive": 15288986,
+    "inclusive_equals_exclusive": false,
+    "n_vetoed_total": 970,
+    "exclusive_fraction": 0.999937,
+    "portal_identity_check": {
+      "sum_n_read": 164185704,
+      "portal_number_events_both_eras": 164185704,
+      "matches": true
+    }
+  },
+  "scipy_available_for_fits": true,
+  "z_peak_fit": {
+    "method": "gaussian_fit",
+    "position_gev": 90.51635946913493,
+    "position_err_gev": 0.05920976248496226,
+    "sigma_gev": 2.6628502451928697,
+    "sigma_err_gev": 0.06403232249814961,
+    "amplitude": 704519.5201369615,
+    "offset": 27004.148159091517,
+    "argmax_fallback_gev": 90.5
+  },
+  "leading_electron_pt_fraction": {
+    "window_gev": [
+      25.0,
+      28.0
+    ],
+    "n_leading_electron_events_in_window": 520322,
+    "n_leading_electron_total": 10956271,
+    "fraction": 0.047491
+  },
+  "electron_eta_gap_region": {
+    "eta_gap_lo": 1.4442,
+    "eta_gap_hi": 1.566,
+    "n_selected_electrons_in_gap": 396513,
+    "n_selected_electrons_total": 17134693,
+    "fraction_in_gap": 0.023141
+  }
+}

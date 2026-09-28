@@ -1,0 +1,52 @@
+{
+  "lepton_letter": "e",
+  "min31bins": {
+    "n_total": 644,
+    "by_object_content_category": {
+      "b-jet-containing": 432,
+      "lepton-only": 11,
+      "lepton+jet": 142,
+      "jet-only": 59
+    },
+    "by_lepton_content": {
+      "0": 123,
+      "1": 209,
+      ">=2": 312
+    },
+    "n_zero_lepton": 123,
+    "n_ge2_selected_e": 303
+  },
+  "min26bins": {
+    "n_total": 712,
+    "by_object_content_category": {
+      "b-jet-containing": 472,
+      "lepton-only": 14,
+      "lepton+jet": 159,
+      "jet-only": 67
+    },
+    "by_lepton_content": {
+      "0": 126,
+      "1": 225,
+      ">=2": 361
+    },
+    "n_zero_lepton": 126,
+    "n_ge2_selected_e": 333
+  },
+  "comparison_vs": {
+    "label": "DoubleMuon_generic",
+    "min31bins": {
+      "n_this": 644,
+      "n_other": 802,
+      "n_shared": 163,
+      "n_only_in_this": 481,
+      "n_only_in_other": 639
+    },
+    "min26bins": {
+      "n_this": 712,
+      "n_other": 910,
+      "n_shared": 210,
+      "n_only_in_this": 502,
+      "n_only_in_other": 700
+    }
+  }
+}
