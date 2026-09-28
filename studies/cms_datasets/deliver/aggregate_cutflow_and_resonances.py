@@ -167,8 +167,16 @@ def main():
         "after_population_gate": total_n_after_gate,
         "n_exclusive": total_n_exclusive,
         "inclusive_equals_exclusive": total_n_exclusive == total_n_after_gate,
-        "n_vetoed_total": total_n_after_trigger - total_n_exclusive,
-        "exclusive_fraction": round(total_n_exclusive / total_n_after_trigger, 6) if total_n_after_trigger else None,
+        # NOTE: "exclusive" (n_exclusive, from is_exclusive_selected in
+        # run_dataset_on_file.py) is defined POST-population-gate, aligned
+        # with after_population_gate -- NOT with after_trigger_OR (which is
+        # PRE-gate). Dividing by after_trigger_OR here previously produced
+        # a wrong, much lower fraction (an earlier version of this line did
+        # exactly that, caught before being used in any report -- see
+        # DOUBLEEG_REPORT.md's own note on this). The correct, aligned
+        # denominator is after_population_gate.
+        "n_vetoed_total": total_n_after_gate - total_n_exclusive,
+        "exclusive_fraction": round(total_n_exclusive / total_n_after_gate, 6) if total_n_after_gate else None,
         "portal_identity_check": {
             "sum_n_read": total_n_read,
             "portal_number_events_both_eras": portal_total_events,
