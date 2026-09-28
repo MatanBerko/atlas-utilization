@@ -39,7 +39,7 @@ failure:
       silent subsample, per this task's own instruction.
   (b) Funnel: stages (a)-(d), via merge_and_count's own
       run_funnel_at_threshold, unmodified.
-  (c) Continuity check (only run when --old-delivery-root/--old-delivery-cropped
+  (c) Continuity check (only run when --old-delivery-min31/--old-delivery-min26
       are given -- meaningful only for a dataset that has a prior
       delivery to check against, e.g. DoubleMuon): every histogram in the
       given prior delivery file(s) must appear in this run's own
@@ -52,7 +52,7 @@ Usage:
         --preflight-dir /storage/.../output/cms_datasets/preflight \
         --file-lists studies/cms_datasets/evidence/record_file_lists.json \
         --population generic --inclusive-only \
-        --old-delivery-root /storage/.../deliver_doublemuon_bumpnet/doublemuon_bumpnet_min31bins.root \
+        --old-delivery-min31 /storage/.../deliver_doublemuon_bumpnet/doublemuon_bumpnet_min31bins.root \
         --old-delivery-min26 /storage/.../deliver_doublemuon_bumpnet/doublemuon_bumpnet_min26bins.root \
         --out-dir /storage/.../output/cms_datasets/deliver/DoubleMuon \
         --out-prefix doublemuon_generic
@@ -326,6 +326,12 @@ def main():
     )
     print(f"expected {len(expected_pairs)} (record,file) pairs; "
           f"expected total real events (from Step 1 scan) = {expected_real_total:,}")
+    if expected_n_files_preflight != len(expected_pairs):
+        print(f"STOP: Step 1's own pre-flight scan covered {expected_n_files_preflight} files for "
+              f"{args.dataset_label}, but the portal file list says {len(expected_pairs)} -- these must "
+              f"agree before any completeness check against Step 1's event totals can be trusted.",
+              file=sys.stderr)
+        sys.exit(1)
 
     shard_paths, per_job_metadata, capped_details = load_run_jobs(
         runs_dir, args.population, args.inclusive_only
