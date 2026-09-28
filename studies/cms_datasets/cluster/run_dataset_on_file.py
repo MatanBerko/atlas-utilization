@@ -117,6 +117,12 @@ COVERAGE_CAP_PER_SIGNATURE = 500_000
 # Step 2 diagnostics (task spec): 1 GeV bins, 0-200 GeV.
 DIAGNOSTIC_PT_BIN_EDGES = np.arange(0.0, 201.0, 1.0)
 DIAGNOSTIC_MASS_BIN_EDGES = np.arange(0.0, 201.0, 1.0)
+# 20 MeV bins, 0-10 GeV: 1 GeV bins cannot resolve the J/psi (natural width
+# ~93 keV, CMS dimuon mass resolution ~O(10-40 MeV) near 3.1 GeV) at all --
+# it would be completely washed out into the surrounding continuum. This
+# finer histogram exists solely so a genuine J/psi peak is visible in the
+# quality-gate report; it does not affect selection, gating, or shards.
+DIAGNOSTIC_LOWMASS_FINE_BIN_EDGES = np.arange(0.0, 10.0001, 0.02)
 LOW_MASS_DIMUON_CUTOFF_GEV = 5.0
 
 
@@ -263,6 +269,7 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array) -> dict:
     e0, e1 = padded_e[:, 0], padded_e[:, 1]
 
     leading_mu_pt = ak.to_numpy(ak.fill_none(padded_mu[:, 0].pt, np.nan))
+    subleading_mu_pt = ak.to_numpy(ak.fill_none(padded_mu[:, 1].pt, np.nan))
     leading_e_pt = ak.to_numpy(ak.fill_none(padded_e[:, 0].pt, np.nan))
 
     def _p4(obj):
@@ -287,8 +294,10 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array) -> dict:
 
     return {
         "leading_muon_pt": _histogram_1gev(leading_mu_pt, DIAGNOSTIC_PT_BIN_EDGES),
+        "subleading_muon_pt": _histogram_1gev(subleading_mu_pt, DIAGNOSTIC_PT_BIN_EDGES),
         "leading_electron_pt": _histogram_1gev(leading_e_pt, DIAGNOSTIC_PT_BIN_EDGES),
         "raw_dimuon_mass_mu0mu1": _histogram_1gev(m_mumu, DIAGNOSTIC_MASS_BIN_EDGES),
+        "raw_dimuon_mass_mu0mu1_lowmass_finebins": _histogram_1gev(m_mumu, DIAGNOSTIC_LOWMASS_FINE_BIN_EDGES),
         "raw_dielectron_mass_e0e1": _histogram_1gev(m_ee, DIAGNOSTIC_MASS_BIN_EDGES),
         "raw_emu_mass_e0mu0": _histogram_1gev(m_emu, DIAGNOSTIC_MASS_BIN_EDGES),
         "low_mass_opposite_sign_dimuon": {
