@@ -43,6 +43,18 @@ dataset's trigger bits the way generic/v0 do. generic and v0's own
 behaviour (branches read, trigger sets, gate, veto logic) is completely
 unaffected by this mode's existence.
 
+Top-4 truncation (top-4 task, --population matched ONLY): in addition to
+its normal inclusive/exclusive shards, a matched-mode job also writes
+dataset_shard_top4_inclusive.sqlite / dataset_shard_top4_exclusive.sqlite,
+built from the SAME accepted events with each event's selected objects
+truncated to at most 4 (priority: leptons by pT, then b-jets by pT, then
+light jets by pT -- see build_top4_object_record). Truncation happens
+strictly AFTER the matched-mode acceptance gate and the DoubleMuon-veto
+decision, so it never changes which events are accepted, which dataset an
+event belongs to, or n_after_gate/n_exclusive -- only which objects
+represent an already-accepted event in the final-state/combination step.
+generic and v0 are completely unaffected by this addition.
+
 Inclusive/exclusive de-duplication (task's own veto priority order, highest
 first: DoubleMuon > DoubleEG > MuonEG > SingleMuon > SingleElectron > JetHT
 > MET, services.datasets_records.VETO_ORDER): an event is "exclusive" to a
@@ -557,6 +569,166 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array, bjets: ak.Array) -
     }
 
 
+def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarray, job_tag: str,
+                             all_combinations: list, im_config: dict, logger,
+                             writer_incl: SqliteArrayShardWriter, writer_excl: SqliteArrayShardWriter) -> dict:
+    """The exact combination/shard-writing funnel that used to be main()'s
+    own inline for-loop, extracted verbatim (top-4 task, Step 1) so it can
+    be called a SECOND time on a top-4-truncated obj_record without
+    duplicating ~90 lines of code. Called with the UNCHANGED obj_record
+    (generic/v0/matched-normal), this produces byte-for-byte the same
+    shards and stats as before the refactor (Hard Rule 5) -- nothing about
+    the logic below differs from the pre-refactor inline version."""
+    calculator = IMCalculator(
+        events=obj_record, min_events_per_fs=1,
+        min_k=MIN_COUNT_PARTICLE_IN_COMBINATION, max_k=MAX_COUNT_PARTICLE_IN_COMBINATION,
+        min_n=MIN_PARTICLES_IN_COMBINATION, max_n=MAX_PARTICLES_IN_COMBINATION,
+    )
+
+    n_fs_groups = 0
+    n_signature_writes_incl = 0
+    n_signature_writes_excl = 0
+    n_values_written_incl = 0
+    n_values_written_excl = 0
+    max_signature_size = 0
+    n_capped_signatures = 0
+    label_event_counts_incl: dict[str, int] = {}
+    label_event_counts_excl: dict[str, int] = {}
+    skip_reason_totals: dict[str, int] = {}
+
+    for label, fs_events, group_mask in _group_by_final_state_with_mask(obj_record):
+        n_fs_groups += 1
+        n_this_group = len(fs_events)
+        label_event_counts_incl[label] = label_event_counts_incl.get(label, 0) + n_this_group
+        writer_incl.record_final_state_count(label, n_this_group)
+
+        fs_is_exclusive = is_exclusive_selected[group_mask]
+        n_excl_this_group = int(fs_is_exclusive.sum())
+        label_event_counts_excl[label] = label_event_counts_excl.get(label, 0) + n_excl_this_group
+        writer_excl.record_final_state_count(label, n_excl_this_group)
+
+        for combination in all_combinations:
+            if not physics_calcs.is_finalstate_contain_combination(label, combination):
+                continue
+
+            inv_mass, skip_reason = _calculate_combination_invariant_mass(
+                fs_events, combination, im_config, calculator, logger, label,
+            )
+            if inv_mass is None:
+                if skip_reason:
+                    skip_reason_totals[skip_reason] = skip_reason_totals.get(skip_reason, 0) + 1
+                continue
+
+            combo_row_mask = _recompute_exact_count_row_mask(fs_events, combination)
+            combo_is_exclusive = fs_is_exclusive[combo_row_mask]
+            assert combo_is_exclusive.size == len(inv_mass), (
+                f"alignment check failed for {label}/{combination}: "
+                f"{combo_is_exclusive.size} != {len(inv_mass)}"
+            )
+
+            arr = ak.to_numpy(inv_mass).astype(np.float32)
+            nan_mask = ~np.isnan(arr)
+            arr = arr[nan_mask]
+            combo_is_exclusive = combo_is_exclusive[nan_mask]
+            if arr.size == 0:
+                continue
+
+            signature = prepare_im_combination_name(job_tag, label, combination)
+            if arr.size > max_signature_size:
+                max_signature_size = int(arr.size)
+            if arr.size > COVERAGE_CAP_PER_SIGNATURE:
+                true_size = int(arr.size)
+                n_capped_signatures += 1
+                rng = np.random.default_rng(seed=0)
+                pick = rng.choice(arr.size, size=COVERAGE_CAP_PER_SIGNATURE, replace=False)
+                arr = arr[pick]
+                combo_is_exclusive = combo_is_exclusive[pick]
+                writer_incl.set_metadata(f"CAPPED::{signature}", f"true_size={true_size}")
+
+            writer_incl.append_array(signature, arr)
+            n_signature_writes_incl += 1
+            n_values_written_incl += int(arr.size)
+
+            excl_arr = arr[combo_is_exclusive]
+            if excl_arr.size > 0:
+                writer_excl.append_array(signature, excl_arr)
+                n_signature_writes_excl += 1
+                n_values_written_excl += int(excl_arr.size)
+
+    return {
+        "n_fs_groups": n_fs_groups,
+        "n_signature_writes_incl": n_signature_writes_incl,
+        "n_signature_writes_excl": n_signature_writes_excl,
+        "n_values_written_incl": n_values_written_incl,
+        "n_values_written_excl": n_values_written_excl,
+        "max_signature_size": max_signature_size,
+        "n_capped_signatures": n_capped_signatures,
+        "label_event_counts_incl": label_event_counts_incl,
+        "label_event_counts_excl": label_event_counts_excl,
+        "skip_reason_totals": skip_reason_totals,
+    }
+
+
+def build_top4_object_record(muons: ak.Array, electrons: ak.Array, light_jets: ak.Array, bjets: ak.Array):
+    """Top-4 truncation (Shikma/Maryna's request, top-4 task Step 1): keep
+    at most 4 selected objects per event, priority (1) leptons --
+    electrons and muons together, highest pT first, (2) b-jets by pT,
+    (3) light jets by pT. Events with <=4 total objects are unchanged.
+    Called AFTER all object selection/cleaning and AFTER the matched-mode
+    acceptance gate has already decided which events are kept -- truncation
+    never changes which events are accepted or which dataset an event
+    belongs to, only which objects represent it afterward. Each type's own
+    internal pT order is preserved (NanoAOD collections are already
+    pT-descending; boolean-mask slicing preserves that order), matching
+    "grouped by type and ordered by pT within each type as usual" once
+    build_object_record zips the truncated arrays back together.
+
+    Returns (top4_muons, top4_electrons, top4_light_jets, top4_bjets,
+    n_original_objects) -- n_original_objects (a plain numpy int array,
+    one entry per input event) is the per-event total selected-object
+    count BEFORE truncation, for the required truncation diagnostics."""
+    SRC_ELECTRON, SRC_MUON, SRC_BJET, SRC_JET = 0, 1, 2, 3
+
+    def _tag(arr, src):
+        return ak.zip({
+            "pt": arr.pt,
+            "src": ak.zeros_like(arr.pt, dtype=np.int64) + src,
+            "idx": ak.local_index(arr, axis=1),
+        })
+
+    tagged_e = _tag(electrons, SRC_ELECTRON)
+    tagged_m = _tag(muons, SRC_MUON)
+    tagged_b = _tag(bjets, SRC_BJET)
+    tagged_j = _tag(light_jets, SRC_JET)
+
+    leptons_combined = ak.concatenate([tagged_e, tagged_m], axis=1)
+    leptons_sorted = leptons_combined[ak.argsort(leptons_combined.pt, axis=1, ascending=False)]
+    bjets_sorted = tagged_b[ak.argsort(tagged_b.pt, axis=1, ascending=False)]
+    jets_sorted = tagged_j[ak.argsort(tagged_j.pt, axis=1, ascending=False)]
+
+    # Priority order: leptons (combined), then b-jets, then light jets --
+    # concatenation order IS priority order; local_index on the result is
+    # the priority rank (0 = highest priority).
+    priority_ordered = ak.concatenate([leptons_sorted, bjets_sorted, jets_sorted], axis=1)
+    priority_rank = ak.local_index(priority_ordered, axis=1)
+    n_original_objects = ak.to_numpy(ak.num(priority_ordered, axis=1))
+
+    kept = priority_ordered[priority_rank < 4]
+
+    def _keep_mask_for(orig_arr, src):
+        orig_idx = ak.local_index(orig_arr, axis=1)
+        kept_idx_this_src = kept[kept.src == src].idx
+        pairs_orig, pairs_kept = ak.unzip(ak.cartesian([orig_idx, kept_idx_this_src], nested=True))
+        return ak.fill_none(ak.any(pairs_orig == pairs_kept, axis=-1), False)
+
+    top4_electrons = electrons[_keep_mask_for(electrons, SRC_ELECTRON)]
+    top4_muons = muons[_keep_mask_for(muons, SRC_MUON)]
+    top4_bjets = bjets[_keep_mask_for(bjets, SRC_BJET)]
+    top4_light_jets = light_jets[_keep_mask_for(light_jets, SRC_JET)]
+
+    return top4_muons, top4_electrons, top4_light_jets, top4_bjets, n_original_objects
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--dataset-label", required=True, choices=list(TRIGGER_PATHS_BY_DATASET.keys()))
@@ -751,11 +923,6 @@ def main():
     )
     assert len(all_combinations) == 186, f"expected 186 combinations, got {len(all_combinations)}"
 
-    calculator = IMCalculator(
-        events=obj_record, min_events_per_fs=1,
-        min_k=MIN_COUNT_PARTICLE_IN_COMBINATION, max_k=MAX_COUNT_PARTICLE_IN_COMBINATION,
-        min_n=MIN_PARTICLES_IN_COMBINATION, max_n=MAX_PARTICLES_IN_COMBINATION,
-    )
     im_config = {"field_to_slice_by": FIELD_TO_SLICE_BY}
 
     job_tag = f"{dataset_label}_record{args.record_id}_file{args.file_index}"
@@ -767,75 +934,19 @@ def main():
     writer_incl = SqliteArrayShardWriter(str(incl_shard_path))
     writer_excl = SqliteArrayShardWriter(str(excl_shard_path))
 
-    n_fs_groups = 0
-    n_signature_writes_incl = 0
-    n_signature_writes_excl = 0
-    n_values_written_incl = 0
-    n_values_written_excl = 0
-    max_signature_size = 0
-    n_capped_signatures = 0
-    label_event_counts_incl: dict[str, int] = {}
-    label_event_counts_excl: dict[str, int] = {}
-    skip_reason_totals: dict[str, int] = {}
-
-    for label, fs_events, group_mask in _group_by_final_state_with_mask(obj_record):
-        n_fs_groups += 1
-        n_this_group = len(fs_events)
-        label_event_counts_incl[label] = label_event_counts_incl.get(label, 0) + n_this_group
-        writer_incl.record_final_state_count(label, n_this_group)
-
-        fs_is_exclusive = is_exclusive_selected[group_mask]
-        n_excl_this_group = int(fs_is_exclusive.sum())
-        label_event_counts_excl[label] = label_event_counts_excl.get(label, 0) + n_excl_this_group
-        writer_excl.record_final_state_count(label, n_excl_this_group)
-
-        for combination in all_combinations:
-            if not physics_calcs.is_finalstate_contain_combination(label, combination):
-                continue
-
-            inv_mass, skip_reason = _calculate_combination_invariant_mass(
-                fs_events, combination, im_config, calculator, logger, label,
-            )
-            if inv_mass is None:
-                if skip_reason:
-                    skip_reason_totals[skip_reason] = skip_reason_totals.get(skip_reason, 0) + 1
-                continue
-
-            combo_row_mask = _recompute_exact_count_row_mask(fs_events, combination)
-            combo_is_exclusive = fs_is_exclusive[combo_row_mask]
-            assert combo_is_exclusive.size == len(inv_mass), (
-                f"alignment check failed for {label}/{combination}: "
-                f"{combo_is_exclusive.size} != {len(inv_mass)}"
-            )
-
-            arr = ak.to_numpy(inv_mass).astype(np.float32)
-            nan_mask = ~np.isnan(arr)
-            arr = arr[nan_mask]
-            combo_is_exclusive = combo_is_exclusive[nan_mask]
-            if arr.size == 0:
-                continue
-
-            signature = prepare_im_combination_name(job_tag, label, combination)
-            if arr.size > max_signature_size:
-                max_signature_size = int(arr.size)
-            if arr.size > COVERAGE_CAP_PER_SIGNATURE:
-                true_size = int(arr.size)
-                n_capped_signatures += 1
-                rng = np.random.default_rng(seed=0)
-                pick = rng.choice(arr.size, size=COVERAGE_CAP_PER_SIGNATURE, replace=False)
-                arr = arr[pick]
-                combo_is_exclusive = combo_is_exclusive[pick]
-                writer_incl.set_metadata(f"CAPPED::{signature}", f"true_size={true_size}")
-
-            writer_incl.append_array(signature, arr)
-            n_signature_writes_incl += 1
-            n_values_written_incl += int(arr.size)
-
-            excl_arr = arr[combo_is_exclusive]
-            if excl_arr.size > 0:
-                writer_excl.append_array(signature, excl_arr)
-                n_signature_writes_excl += 1
-                n_values_written_excl += int(excl_arr.size)
+    funnel_result = run_combination_funnel(
+        obj_record, is_exclusive_selected, job_tag, all_combinations, im_config, logger, writer_incl, writer_excl,
+    )
+    n_fs_groups = funnel_result["n_fs_groups"]
+    n_signature_writes_incl = funnel_result["n_signature_writes_incl"]
+    n_signature_writes_excl = funnel_result["n_signature_writes_excl"]
+    n_values_written_incl = funnel_result["n_values_written_incl"]
+    n_values_written_excl = funnel_result["n_values_written_excl"]
+    max_signature_size = funnel_result["max_signature_size"]
+    n_capped_signatures = funnel_result["n_capped_signatures"]
+    label_event_counts_incl = funnel_result["label_event_counts_incl"]
+    label_event_counts_excl = funnel_result["label_event_counts_excl"]
+    skip_reason_totals = funnel_result["skip_reason_totals"]
 
     common_metadata = {
         "n_read": n_read,
@@ -856,6 +967,68 @@ def main():
             writer.set_metadata(k, v)
         writer.commit()
         writer.close()
+
+    # --- Top-4 truncation (Shikma/Maryna's request, top-4 task Step 1) ---
+    # --population matched ONLY -- generic/v0 are completely untouched
+    # (Hard Rule 5). Computed on the SAME accepted-event objects
+    # (muons[keep]/electrons[keep]/jets["Jets"][keep]/jets["BJets"][keep])
+    # already used to build the normal obj_record above -- truncation is
+    # purely a post-gate relabeling of which objects represent an already-
+    # accepted event, so it can never change n_after_gate/n_exclusive.
+    top4_diagnostics = None
+    if args.population == "matched":
+        top4_muons, top4_electrons, top4_light_jets, top4_bjets, n_original_objects = build_top4_object_record(
+            muons[keep], electrons[keep], jets["Jets"][keep], jets["BJets"][keep]
+        )
+        obj_record_top4 = selection.build_object_record(
+            top4_muons, top4_electrons, {"Jets": top4_light_jets, "BJets": top4_bjets}
+        )
+        assert len(obj_record_top4) == n_after_gate, (
+            f"top-4 truncation must not change the accepted-event count: "
+            f"len(obj_record_top4)={len(obj_record_top4)} != n_after_gate={n_after_gate}"
+        )
+
+        top4_incl_shard_path = output_dir / "dataset_shard_top4_inclusive.sqlite"
+        top4_excl_shard_path = output_dir / "dataset_shard_top4_exclusive.sqlite"
+        for path in (top4_incl_shard_path, top4_excl_shard_path):
+            if path.exists():
+                path.unlink()
+        writer_top4_incl = SqliteArrayShardWriter(str(top4_incl_shard_path))
+        writer_top4_excl = SqliteArrayShardWriter(str(top4_excl_shard_path))
+
+        top4_funnel_result = run_combination_funnel(
+            obj_record_top4, is_exclusive_selected, job_tag, all_combinations, im_config, logger,
+            writer_top4_incl, writer_top4_excl,
+        )
+
+        top4_common_metadata = dict(common_metadata)
+        top4_common_metadata["object_truncation"] = "top4"
+        for writer in (writer_top4_incl, writer_top4_excl):
+            for k, v in top4_common_metadata.items():
+                writer.set_metadata(k, v)
+            writer.commit()
+            writer.close()
+
+        n_truncated = int((n_original_objects > 4).sum())
+        from collections import Counter
+        original_object_count_distribution = {
+            str(k): int(v) for k, v in sorted(Counter(n_original_objects.tolist()).items())
+        }
+        top4_diagnostics = {
+            "n_accepted_events": n_after_gate,
+            "n_accepted_events_gt4_objects": n_truncated,
+            "original_object_count_distribution": original_object_count_distribution,
+            "n_fs_groups": top4_funnel_result["n_fs_groups"],
+            "n_signature_writes_inclusive": top4_funnel_result["n_signature_writes_incl"],
+            "n_signature_writes_exclusive": top4_funnel_result["n_signature_writes_excl"],
+            "n_values_written_inclusive": top4_funnel_result["n_values_written_incl"],
+            "n_values_written_exclusive": top4_funnel_result["n_values_written_excl"],
+            "max_signature_size_this_job": top4_funnel_result["max_signature_size"],
+            "n_capped_signatures": top4_funnel_result["n_capped_signatures"],
+            "final_state_label_event_counts_inclusive": top4_funnel_result["label_event_counts_incl"],
+            "final_state_label_event_counts_exclusive": top4_funnel_result["label_event_counts_excl"],
+            "skip_reason_totals": top4_funnel_result["skip_reason_totals"],
+        }
 
     elapsed = time.time() - t0
     incl_shard_size_mb = incl_shard_path.stat().st_size / (1024 * 1024)
@@ -894,6 +1067,7 @@ def main():
         "elapsed_sec": elapsed,
         "diagnostics": diagnostics,
         "matching_diagnostics": matching_diagnostics,
+        "top4_diagnostics": top4_diagnostics,
     }
     (output_dir / "job_metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
 
