@@ -1,0 +1,19 @@
+{
+  "version": "normal",
+  "n_doublemuon_shards": 57,
+  "n_singlemuon_shards": 152,
+  "n_distinct_raw_signatures": 227835,
+  "funnel": {
+    "b_after_min_events_per_fs_100": 1365,
+    "c_after_postprocessing_ge100_main": 1211,
+    "d_bumpnet_usable_gt30bins_ge100events": 1025
+  },
+  "n_histograms_min31bins": 1025,
+  "n_histograms_min26bins": 1097,
+  "output_files": {
+    "muon_combined_matched_bumpnet_min31bins.root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/muon_combined/muon_combined_matched_bumpnet_min31bins.root",
+    "muon_combined_matched_bumpnet_min26bins.root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/muon_combined/muon_combined_matched_bumpnet_min26bins.root",
+    "muon_combined_matched_bumpnet_min31bins_cropped.root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/muon_combined/muon_combined_matched_bumpnet_min31bins_cropped.root",
+    "muon_combined_matched_bumpnet_min26bins_cropped.root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/muon_combined/muon_combined_matched_bumpnet_min26bins_cropped.root"
+  }
+}
