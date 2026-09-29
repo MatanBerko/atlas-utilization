@@ -30,6 +30,19 @@ since that is the exact same 2-path set as this driver's own "own trigger"
 step for DoubleMuon. This mode is not meaningful for any other dataset and
 is not used for one in this study.
 
+--population matched (trigger-matching task, DoubleMuon and SingleMuon
+ONLY -- see studies/cms_datasets/matching/TRIGGER_MATCHING_SPEC.md): the
+population gate is CMS NanoAOD TrigObj-based trigger-object matching
+(offline selected muon(s) matched dR<0.1 to a trigger object carrying the
+path's own HLT filter bit, plus an online-pT floor), not just the event-
+level trigger bit used by generic/v0 -- see matched_acceptance_mask. In
+this mode ONLY, SingleMuon's own trigger set is HLT_IsoMu24 alone (not
+IsoTkMu24); its exclusive shard is vetoed ONLY against DoubleMuon's own
+ACCEPTANCE (fired AND matched), not against every higher-veto-priority
+dataset's trigger bits the way generic/v0 do. generic and v0's own
+behaviour (branches read, trigger sets, gate, veto logic) is completely
+unaffected by this mode's existence.
+
 Inclusive/exclusive de-duplication (task's own veto priority order, highest
 first: DoubleMuon > DoubleEG > MuonEG > SingleMuon > SingleElectron > JetHT
 > MET, services.datasets_records.VETO_ORDER): an event is "exclusive" to a
@@ -107,6 +120,33 @@ MAX_SUBLEADING_INDEX = 1
 FIELD_TO_SLICE_BY = "pt"
 
 MIN_TOTAL_SELECTED_OBJECTS = 2  # generic population gate
+
+# --- --population matched (trigger-matching task, see
+# studies/cms_datasets/matching/TRIGGER_MATCHING_SPEC.md for the full
+# derivation and cross-check against CMSSW_10_6_26's own
+# PhysicsTools/NanoAOD/python/triggerObjects_cff.py). NEW mode only --
+# --population generic and --population v0 are byte-for-byte unchanged
+# (Hard Rule 5). ---
+MATCHED_MODE_EXTRA_BRANCHES = (
+    "nTrigObj", "TrigObj_pt", "TrigObj_eta", "TrigObj_phi", "TrigObj_id", "TrigObj_filterBits",
+)
+# In matched mode ONLY, SingleMuon's own trigger set is HLT_IsoMu24 alone
+# (Maryna's explicit instruction) -- generic mode's SingleMuon trigger set
+# (both IsoMu24 and IsoTkMu24) is untouched, since datasets_records.py
+# itself is not modified.
+SINGLEMUON_MATCHED_TRIGGER_PATHS = ("HLT_IsoMu24",)
+TRIGOBJ_MUON_ID = 13
+TRIGOBJ_BIT_TRKISOVVL = 1     # dimuon TrkIsoVVL leg (both legs, both DZ paths -- cannot distinguish 17 vs 8 GeV, see spec)
+TRIGOBJ_BIT_ISO = 2           # Global("cr")-seeded isolated single-muon leg -- IsoMu24
+TRIGOBJ_BIT_ISOTKMU = 8       # Track-seeded isolated single-muon leg -- IsoTkMu24 (not used to accept, only documented)
+MATCH_DR_MAX = 0.1
+DOUBLEMUON_MATCHED_MIN_MUONS = 2
+DOUBLEMUON_MATCHED_LEADING_PT_MIN_GEV = 17.0
+SINGLEMUON_MATCHED_MIN_MUONS = 1
+SINGLEMUON_MATCHED_PT_MIN_GEV = 24.0
+# Efficiency-plot binning (Step 3d): 1 GeV bins, 20-200 GeV; 0.1-wide |eta| bins, 0-2.5.
+MATCHED_EFF_PT_BIN_EDGES = np.arange(20.0, 200.01, 1.0)
+MATCHED_EFF_ETA_BIN_EDGES = np.arange(0.0, 2.501, 0.1)
 
 READ_RETRY_ATTEMPTS = 4
 READ_RETRY_BACKOFF_SEC = 15
@@ -280,6 +320,97 @@ def _histogram_with_overflow(values: np.ndarray, edges: np.ndarray) -> dict:
             "n_overflow": int(overflow.size)}
 
 
+def _p4_no_mass_needed(obj, mass=None):
+    """vector.zip helper for objects that don't carry their own mass field
+    (TrigObj has none) -- deltaR/matching only needs pt/eta/phi, so a
+    zero mass is used when none is supplied; harmless since mass never
+    enters a deltaR calculation."""
+    import vector
+    vector.register_awkward()
+    if mass is None:
+        mass = ak.zeros_like(obj.pt)
+    return vector.zip({"pt": obj.pt, "eta": obj.eta, "phi": obj.phi, "mass": mass})
+
+
+def trigobj_best_match_pt(sel_muons: ak.Array, trigobj: ak.Array, required_bit: int,
+                            dr_max: float = MATCH_DR_MAX) -> ak.Array:
+    """For each selected muon (per event, jagged), the highest online pT
+    among TrigObj entries with id==13, `filterBits & required_bit != 0`,
+    within dR < dr_max -- or -inf if no such match exists for that muon.
+    See TRIGGER_MATCHING_SPEC.md for why this bit + dR + pT combination is
+    the matching/acceptance rule for these 2016-era files. Pure read of
+    `trigobj`/`sel_muons` -- never writes to or filters either input."""
+    trig_muon_mask = (trigobj.id == TRIGOBJ_MUON_ID) & ((trigobj.filterBits & required_bit) != 0)
+    trig_muons = trigobj[trig_muon_mask]
+    mu_p4 = _p4_no_mass_needed(sel_muons)
+    trig_p4 = _p4_no_mass_needed(trig_muons)
+    pairs_mu, pairs_trig = ak.unzip(ak.cartesian([mu_p4, trig_p4], nested=True))
+    dr = pairs_mu.deltaR(pairs_trig)
+    within = dr < dr_max
+    candidate_pt = ak.where(within, pairs_trig.pt, -np.inf)
+    best_pt = ak.max(candidate_pt, axis=-1)
+    return ak.fill_none(best_pt, -np.inf)
+
+
+def matched_acceptance_mask(sel_muons: ak.Array, trigobj: ak.Array, required_bit: int,
+                              min_matched: int, leading_pt_min_gev: float) -> np.ndarray:
+    """Per-event boolean: at least `min_matched` distinct selected muons
+    each matched (trigobj_best_match_pt) to a bit-`required_bit` TrigObj,
+    AND the highest such matched online pT >= leading_pt_min_gev. This is
+    the ACCEPTANCE test itself (does not check whether the event's own
+    HLT path fired -- callers apply that separately, since within
+    `events_triggered` the current dataset's own trigger has already been
+    required, but a cross-dataset veto check needs its own explicit
+    fired-mask)."""
+    best_pts = trigobj_best_match_pt(sel_muons, trigobj, required_bit)
+    matched_mask = best_pts > -np.inf
+    matched_pts = best_pts[matched_mask]
+    n_matched = ak.to_numpy(ak.num(matched_pts, axis=1))
+    leading_matched_pt = ak.to_numpy(ak.fill_none(ak.max(matched_pts, axis=1), -np.inf))
+    return (n_matched >= min_matched) & (leading_matched_pt >= leading_pt_min_gev)
+
+
+def compute_matching_diagnostics(muons: ak.Array, trigobj: ak.Array, required_bit: int,
+                                    min_matched: int, leading_pt_min_gev: float) -> dict:
+    """Step 2 diagnostics for --population matched (diagnostics-only --
+    does not feed `keep`/gating/shards). `muons`/`trigobj` come from
+    events_triggered, i.e. this dataset's own trigger has ALREADY been
+    required -- so 'trigger fired' is automatically true throughout this
+    population (see TRIGGER_MATCHING_SPEC.md), and the efficiency
+    denominator here is simply 'has the offline muons the trigger
+    requires' (n_has_required_offline_muons). Numerator is
+    matched_acceptance_mask's own accepted-event mask. Both are also
+    histogrammed vs. leading/subleading selected-muon pT and |eta| (1 GeV
+    / 0.1-wide bins) so a later report can plot numerator/denominator ==
+    matching efficiency in each bin (Step 3d)."""
+    has_required_muons = ak.to_numpy(ak.num(muons, axis=1) >= min_matched)
+    accepted = matched_acceptance_mask(muons, trigobj, required_bit, min_matched, leading_pt_min_gev)
+
+    mu_order = ak.argsort(muons.pt, axis=1, ascending=False)
+    sorted_mu = muons[mu_order]
+    padded_mu = ak.pad_none(sorted_mu, 2, axis=1, clip=True)
+    leading_pt = ak.to_numpy(ak.fill_none(padded_mu[:, 0].pt, np.nan))
+    subleading_pt = ak.to_numpy(ak.fill_none(padded_mu[:, 1].pt, np.nan))
+    leading_abseta = ak.to_numpy(ak.fill_none(abs(padded_mu[:, 0].eta), np.nan))
+    subleading_abseta = ak.to_numpy(ak.fill_none(abs(padded_mu[:, 1].eta), np.nan))
+
+    def _num_and_den(values, edges):
+        return {
+            "numerator_accepted": _histogram_1gev(values[accepted], edges),
+            "denominator_has_required_muons": _histogram_1gev(values[has_required_muons], edges),
+        }
+
+    return {
+        "n_trigger_fired": int(len(muons)),
+        "n_has_required_offline_muons": int(has_required_muons.sum()),
+        "n_accepted": int(accepted.sum()),
+        "leading_muon_pt": _num_and_den(leading_pt, MATCHED_EFF_PT_BIN_EDGES),
+        "subleading_muon_pt": _num_and_den(subleading_pt, MATCHED_EFF_PT_BIN_EDGES),
+        "leading_muon_abseta": _num_and_den(leading_abseta, MATCHED_EFF_ETA_BIN_EDGES),
+        "subleading_muon_abseta": _num_and_den(subleading_abseta, MATCHED_EFF_ETA_BIN_EDGES),
+    }
+
+
 def compute_diagnostics(muons: ak.Array, electrons: ak.Array, bjets: ak.Array) -> dict:
     """Step 2 diagnostics (task spec), computed over the INCLUSIVE
     population (all events passing this dataset's own trigger + object
@@ -432,7 +563,7 @@ def main():
     p.add_argument("--record-id", type=int, required=True)
     p.add_argument("--file-index", type=int, required=True)
     p.add_argument("--output-dir", required=True)
-    p.add_argument("--population", choices=["generic", "v0"], default="generic")
+    p.add_argument("--population", choices=["generic", "v0", "matched"], default="generic")
     p.add_argument("--validated-runs-json", default=DEFAULT_VALIDATED_RUNS_JSON)
     args = p.parse_args()
 
@@ -440,7 +571,15 @@ def main():
     logger = logging.getLogger("run_dataset_on_file")
 
     dataset_label = args.dataset_label
-    own_paths = TRIGGER_PATHS_BY_DATASET[dataset_label]
+    if dataset_label == "SingleMuon" and args.population == "matched":
+        # Matched mode's SingleMuon trigger set is HLT_IsoMu24 ONLY (Maryna's
+        # explicit instruction, TRIGGER_MATCHING_SPEC.md Section 4) --
+        # generic/v0's SingleMuon trigger set (both IsoMu24 and IsoTkMu24,
+        # from TRIGGER_PATHS_BY_DATASET) is untouched (Hard Rule 5); this
+        # override only ever fires for population=="matched".
+        own_paths = SINGLEMUON_MATCHED_TRIGGER_PATHS
+    else:
+        own_paths = TRIGGER_PATHS_BY_DATASET[dataset_label]
     higher_priority = VETO_ORDER[:VETO_ORDER.index(dataset_label)]
     veto_paths_by_label = {h: TRIGGER_PATHS_BY_DATASET[h] for h in higher_priority}
 
@@ -448,6 +587,8 @@ def main():
     for paths in veto_paths_by_label.values():
         all_trigger_branches.extend(paths)
     required_branches = list(BASE_OBJECT_BRANCHES) + sorted(set(all_trigger_branches))
+    if args.population == "matched":
+        required_branches = list(required_branches) + list(MATCHED_MODE_EXTRA_BRANCHES)
 
     t0 = time.time()
     output_dir = Path(args.output_dir)
@@ -517,12 +658,63 @@ def main():
     diagnostics = compute_diagnostics(muons, electrons_diag, jets["BJets"])
 
     v0_result = None
+    matching_diagnostics = None
     if args.population == "generic":
         total_objects = ak.num(muons) + ak.num(electrons) + ak.num(jets["Jets"]) + ak.num(jets["BJets"])
         keep = ak.to_numpy(total_objects >= MIN_TOTAL_SELECTED_OBJECTS)
         obj_record = selection.build_object_record(
             muons[keep], electrons[keep], {"Jets": jets["Jets"][keep], "BJets": jets["BJets"][keep]}
         )
+    elif args.population == "matched":
+        # Trigger-matching task (TRIGGER_MATCHING_SPEC.md). NEW mode only --
+        # does not touch the generic/v0 branches above/below (Hard Rule 5).
+        if dataset_label not in ("DoubleMuon", "SingleMuon"):
+            raise ValueError(
+                f"--population matched is only implemented for DoubleMuon and SingleMuon "
+                f"(see TRIGGER_MATCHING_SPEC.md) -- got dataset_label={dataset_label!r}"
+            )
+        trigobj = ak.zip({
+            "pt": events_triggered.TrigObj_pt,
+            "eta": events_triggered.TrigObj_eta,
+            "phi": events_triggered.TrigObj_phi,
+            "id": events_triggered.TrigObj_id,
+            "filterBits": events_triggered.TrigObj_filterBits,
+        })
+        if dataset_label == "DoubleMuon":
+            required_bit = TRIGOBJ_BIT_TRKISOVVL
+            min_matched = DOUBLEMUON_MATCHED_MIN_MUONS
+            leading_pt_min = DOUBLEMUON_MATCHED_LEADING_PT_MIN_GEV
+        else:  # SingleMuon
+            required_bit = TRIGOBJ_BIT_ISO
+            min_matched = SINGLEMUON_MATCHED_MIN_MUONS
+            leading_pt_min = SINGLEMUON_MATCHED_PT_MIN_GEV
+
+        keep = matched_acceptance_mask(muons, trigobj, required_bit, min_matched, leading_pt_min)
+        matching_diagnostics = compute_matching_diagnostics(muons, trigobj, required_bit, min_matched, leading_pt_min)
+        obj_record = selection.build_object_record(
+            muons[keep], electrons[keep], {"Jets": jets["Jets"][keep], "BJets": jets["BJets"][keep]}
+        )
+
+        if dataset_label == "SingleMuon":
+            # Matched mode's own exclusive-shard definition (task spec): veto
+            # ONLY against DoubleMuon, using ACCEPTANCE (DoubleMuon's own
+            # trigger fired AND DoubleMuon's own matching rule), evaluated on
+            # this SAME event -- NOT the generic-mode veto_masks computed
+            # above (bits-only, and also vetoes against DoubleEG/MuonEG,
+            # which are "not part of this combination" per the task's own
+            # scope). This override replaces is_exclusive_pretrigger for
+            # THIS branch only. DoubleMuon's own matched-mode run needs no
+            # override: higher_priority is already empty for DoubleMuon, so
+            # is_exclusive_pretrigger computed above is already all-True
+            # ("DoubleMuon identical to inclusive", per spec).
+            doublemuon_fired = np.zeros(n_events_triggered, dtype=bool)
+            for path in TRIGGER_PATHS_BY_DATASET["DoubleMuon"]:
+                doublemuon_fired |= ak.to_numpy(events_triggered[path]).astype(bool)
+            doublemuon_accepted = matched_acceptance_mask(
+                muons, trigobj, TRIGOBJ_BIT_TRKISOVVL,
+                DOUBLEMUON_MATCHED_MIN_MUONS, DOUBLEMUON_MATCHED_LEADING_PT_MIN_GEV,
+            )
+            is_exclusive_pretrigger = ~(doublemuon_fired & doublemuon_accepted)
     else:  # v0 -- regression-check mode only, see module docstring.
         keep = ak.to_numpy((ak.num(muons) >= 2) & (ak.num(jets["Jets"]) >= 1))
         v0_result = selection.select_event_selection_cutflow(events_triggered)
@@ -701,6 +893,7 @@ def main():
         "exclusive_shard_size_mb": round(excl_shard_size_mb, 3),
         "elapsed_sec": elapsed,
         "diagnostics": diagnostics,
+        "matching_diagnostics": matching_diagnostics,
     }
     (output_dir / "job_metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
 
