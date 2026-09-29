@@ -1,0 +1,31 @@
+{
+  "target_run": 279841,
+  "dm_lumi_coverage_min": 531,
+  "dm_lumi_coverage_max": 1034,
+  "dm_lumi_n_distinct": 71,
+  "full_run": {
+    "check_i_pass": true,
+    "check_i_overlap": 0,
+    "check_ii_pass": false,
+    "check_ii_n_vetoed": 2388,
+    "check_ii_present_and_accepted": 0,
+    "check_ii_present_not_accepted": 0,
+    "check_ii_absent": 2388,
+    "check_iii_pass": false,
+    "check_iii_lost": 2388,
+    "check_iii_gained": 0
+  },
+  "restricted_to_dm_lumi_coverage": {
+    "check_i_pass": true,
+    "check_i_overlap": 0,
+    "check_ii_pass": true,
+    "check_ii_n_vetoed": 0,
+    "check_ii_present_and_accepted": 0,
+    "check_ii_present_not_accepted": 0,
+    "check_ii_absent": 0,
+    "check_iii_pass": true,
+    "check_iii_lost": 0,
+    "check_iii_gained": 0
+  },
+  "n_vetoed_events_outside_dm_pilot_file_lumi_coverage": 2388
+}

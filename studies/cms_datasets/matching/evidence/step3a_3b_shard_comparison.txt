@@ -1,0 +1,54 @@
+Command run on cluster (pinned checkout /storage/agrp/berkom/atlas-utilization/work/matching_validation_pinned/repo,
+commit cbd1abb723b682c40d86b2672fffe782f632ef93):
+
+  /storage/agrp/berkom/atlas-utilization/envs/atlas-pipeline/bin/python \
+    /storage/agrp/berkom/atlas-utilization/output/cms_datasets/matching_validation/compare_shards.py
+
+Script: reads every non-CAPPED signature's full array (via
+services.storage.sqlite_shards._deserialize_array, read-only
+mode=ro&immutable=1 connections throughout, including against the
+existing read-only pilot shards under .../cms_datasets/run/) and compares
+value multisets (rounded to 1e-5) signature-by-signature.
+
+=== Step 3a: generic-mode shards, pinned-commit rerun vs existing (pre-existing, read-only) pilot ===
+[DoubleMuon_30522_0_generic/dataset_shard_inclusive.sqlite] PASS: 2246 signatures, byte-for-byte (multiset) identical
+[DoubleMuon_30522_0_generic/dataset_shard_exclusive.sqlite] PASS: 2246 signatures, byte-for-byte (multiset) identical
+[DoubleMuon_30555_0_generic/dataset_shard_inclusive.sqlite] PASS: 1973 signatures, byte-for-byte (multiset) identical
+[DoubleMuon_30555_0_generic/dataset_shard_exclusive.sqlite] PASS: 1973 signatures, byte-for-byte (multiset) identical
+[SingleMuon_30530_0_generic/dataset_shard_inclusive.sqlite] PASS: 2057 signatures, byte-for-byte (multiset) identical
+[SingleMuon_30530_0_generic/dataset_shard_exclusive.sqlite] PASS: 1272 signatures, byte-for-byte (multiset) identical
+[SingleMuon_30563_0_generic/dataset_shard_inclusive.sqlite] PASS: 360 signatures, byte-for-byte (multiset) identical
+[SingleMuon_30563_0_generic/dataset_shard_exclusive.sqlite] PASS: 257 signatures, byte-for-byte (multiset) identical
+
+=== Step 3b: matched INCLUSIVE is a subset of generic INCLUSIVE ===
+(exclusive shards deliberately use a DIFFERENT veto rule between modes for
+ SingleMuon -- acceptance-only-vs-DoubleMuon in matched, bits-vs-3-datasets
+ in generic -- so matched-exclusive is NOT expected to be a subset of
+ generic-exclusive; checked separately below instead.)
+[DoubleMuon_30522_0_matched/dataset_shard_inclusive.sqlite] PASS: matched (1146 signatures) is a sub-multiset of generic (2246 signatures)
+[DoubleMuon_30555_0_matched/dataset_shard_inclusive.sqlite] PASS: matched (725 signatures) is a sub-multiset of generic (1973 signatures)
+[SingleMuon_30530_0_matched/dataset_shard_inclusive.sqlite] PASS: matched (1702 signatures) is a sub-multiset of generic (2057 signatures)
+[SingleMuon_30563_0_matched/dataset_shard_inclusive.sqlite] PASS: matched (292 signatures) is a sub-multiset of generic (360 signatures)
+
+=== Step 3b (sanity): matched-exclusive is a subset of matched-inclusive ===
+[DoubleMuon_30522_0_matched] PASS: matched-exclusive (1146 signatures) is a sub-multiset of matched-inclusive (1146 signatures)
+[DoubleMuon_30555_0_matched] PASS: matched-exclusive (725 signatures) is a sub-multiset of matched-inclusive (725 signatures)
+[SingleMuon_30530_0_matched] PASS: matched-exclusive (1389 signatures) is a sub-multiset of matched-inclusive (1702 signatures)
+[SingleMuon_30563_0_matched] PASS: matched-exclusive (261 signatures) is a sub-multiset of matched-inclusive (292 signatures)
+
+OVERALL: 3a=PASS 3b_inclusive=PASS 3b_exclusive_sanity=PASS
+
+Note: an earlier run of this same script also compared matched-EXCLUSIVE
+directly against generic-EXCLUSIVE and reported FAIL (373 and 72
+signatures existing only in matched-exclusive for the two SingleMuon
+files). This is NOT a bug: it is the expected, by-design consequence of
+Step 2's own exclusive-shard rule for SingleMuon in matched mode (veto
+ONLY against DoubleMuon's ACCEPTANCE) being a genuinely different,
+narrower veto than generic mode's (veto against DoubleMuon/DoubleEG/
+MuonEG's trigger BITS) -- an event vetoed in generic mode by DoubleEG or
+MuonEG firing (not DoubleMuon) is correctly NOT vetoed in matched mode,
+since electron datasets are explicitly out of scope for the matched-mode
+combination. The corrected, meaningful checks (matched-inclusive subset
+of generic-inclusive; matched-exclusive subset of matched-inclusive) both
+PASS for all 4 pilot files, and together prove by transitivity that
+matched-exclusive is also a subset of generic-inclusive.

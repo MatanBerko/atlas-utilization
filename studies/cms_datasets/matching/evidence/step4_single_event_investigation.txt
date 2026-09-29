@@ -1,0 +1,66 @@
+Step 4 closure test: root-cause investigation of the ONE overlapping event
+found by check (i): (run=280016, luminosityBlock=24, event=42925881).
+
+Command: python step4_investigate_overlap.py (cluster, pinned checkout,
+commit cbd1abb723b682c40d86b2672fffe782f632ef93).
+
+Found in DoubleMuon file A3CE8422-11FF-5D4C-922D-B592FDD76682.root (index
+1284392) and SingleMuon file 1D280BA6-2EBB-A544-91EB-E821F3CF0B06.root
+(index 964130) -- i.e. the SAME (run,lumi,event) triple, reconstructed
+independently in each primary dataset's own production.
+
+--- DoubleMuon copy ---
+Muon_pt:    [50.473384857177734, 42.506839752197266]
+Muon_eta:   [0.716796875, 1.58935546875]
+Muon_phi:   [0.4317626953125, -2.2451171875]
+Muon_mediumId: [True, True]
+Muon_pfRelIso04_all: [0.10594150424003601, 0.020647743716835976]
+selected muons (both pass): pt=[50.473, 42.507]
+best_match_pt (bit1, dR<0.1): [50.5547, 41.5]
+matched_acceptance_mask: [True]  <-- DoubleMuon ACCEPTS this event
+
+--- SingleMuon copy (same physical event) ---
+Muon_pt:    [50.474098205566406, 42.50619888305664]     (differs from DM copy by ~0.0007-0.0006 GeV)
+Muon_eta:   [0.716796875, 1.58935546875]                 (identical)
+Muon_phi:   [0.4317626953125, -2.2451171875]              (identical)
+Muon_mediumId: [False, True]                              <-- DIFFERS: first muon fails mediumId here
+Muon_pfRelIso04_all: [0.10593997687101364, 0.0206480510532856]  (differs at the ~1e-5 level)
+selected muons (only 2nd passes mediumId): pt=[42.506]
+best_match_pt (bit1, dR<0.1): [41.5]
+matched_acceptance_mask: [False]  <-- SingleMuon's OWN copy does NOT think DoubleMuon accepts this event
+
+ROOT CAUSE (verified exactly, down to one branch value): the SAME physical
+muon (eta=0.716796875, phi=0.4317626953125 -- identical to full float32
+precision in both files) is stored with Muon_pt differing by ~0.0007 GeV
+and, critically, Muon_mediumId = True in the DoubleMuon file's own copy of
+this event but Muon_mediumId = False in the SingleMuon file's own copy of
+the SAME event. This is a genuine, tiny, per-production numerical
+difference between the two primary datasets' INDEPENDENTLY produced
+MiniAOD/NanoAOD copies of the same collision event (CMS produces each
+primary dataset as its own separate production job even though they
+represent overlapping raw trigger-selected event content) -- not a bug in
+this task's matching/veto code. The muon sits extremely close to the
+Medium ID's internal decision boundary, and the ~0.0007 GeV / ~1e-5-level
+numerical differences between the two independent reconstructions are
+enough to flip the ID flag in this one case.
+
+CONSEQUENCE for the veto logic: SingleMuon's own exclusive-shard
+computation evaluates "did DoubleMuon accept this event" using
+SingleMuon's OWN copy of the event's muon/trigobj data (by design --
+Step 2's spec requires evaluating DoubleMuon's acceptance "on the SAME
+event", meaning the same (run,lumi,event) as seen through the file
+currently being processed, since a driver processing a SingleMuon file
+never reads the DoubleMuon file at run time). Because SingleMuon's own
+copy has mediumId=False for the leading muon, SingleMuon's own view of
+"would DoubleMuon accept this" is False (only 1 muon selected, matched
+acceptance needs 2) -- so it is NOT vetoed and remains in SingleMuon's
+exclusive set, while DoubleMuon's OWN inclusive set separately (correctly)
+accepts it using DoubleMuon's OWN copy (mediumId=True,True). This is how
+the one-event overlap arises.
+
+SCALE: 1 overlapping event out of 263,540 events in the combined
+(DoubleMuon-inclusive union SingleMuon-inclusive) set for this one run
+(280016, 13 files) -- a rate of ~3.8e-6, i.e. negligible in absolute terms
+for any BumpNet-relevant histogram, but real, and reported exactly as
+found per the task's own instruction ("report counts and any exception
+exactly").

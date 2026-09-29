@@ -1,0 +1,54 @@
+{
+  "target_run": 280016,
+  "n_doublemuon_files": 5,
+  "n_singlemuon_files": 8,
+  "dm_urls": [
+    "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/05DD095C-F6C3-9A4F-9FB3-348A5A6403D5.root",
+    "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/78FA0801-28AF-3A45-A36A-AB7CC9A5506E.root",
+    "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/A3CE8422-11FF-5D4C-922D-B592FDD76682.root",
+    "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/ED3359B9-BF1E-044C-8418-ACDDE2B11FF0.root",
+    "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/EF0619CE-F699-5942-BA8B-206D2D434A33.root"
+  ],
+  "sm_urls": [
+    "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/0A4230E2-0C75-604D-890F-A4CE5E5C164E.root",
+    "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/1D280BA6-2EBB-A544-91EB-E821F3CF0B06.root",
+    "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/70000/08BEF135-37C0-F145-88E9-63F7A10D3BC7.root",
+    "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/70000/5BF83F4E-336D-1641-9576-53FC198765B5.root",
+    "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/70000/95AF7A2E-F973-5642-96C6-B37EA7C96FF7.root",
+    "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/70000/E801FC2F-0877-9F4C-978D-FE9C94B92CAF.root",
+    "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/70000/16CB6056-D4D5-2046-9D30-82D8985F831F.root",
+    "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/70000/20CCC9D4-0AD5-9E42-B642-DE86F25153ED.root"
+  ],
+  "dm_n_raw_for_run": 158520,
+  "sm_n_raw_for_run": 534798,
+  "dm_n_duplicate_rle_across_files": 0,
+  "sm_n_duplicate_rle_across_files": 0,
+  "dm_n_after_golden": 158520,
+  "sm_n_after_golden": 534798,
+  "dm_n_after_trigger": 49607,
+  "sm_n_after_trigger": 324815,
+  "dm_n_inclusive_accepted": 15331,
+  "sm_n_inclusive_accepted": 263336,
+  "sm_n_vetoed_by_dm_acceptance": 15126,
+  "sm_n_exclusive": 248210,
+  "check_i_disjoint": {
+    "pass": false,
+    "overlap_count": 1
+  },
+  "check_ii_vetoed_present_and_accepted_in_dm": {
+    "pass": true,
+    "n_checked": 15126,
+    "n_present_and_accepted": 15126,
+    "n_present_not_accepted": 0,
+    "n_absent": 0,
+    "exceptions": []
+  },
+  "check_iii_union_completeness": {
+    "pass": true,
+    "n_union_inclusive": 263540,
+    "n_union_exclusive": 263540,
+    "n_lost": 0,
+    "n_gained": 0
+  },
+  "overall_pass": false
+}
