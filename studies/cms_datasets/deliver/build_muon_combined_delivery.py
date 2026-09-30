@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 """
 Build the combined DoubleMuon+SingleMuon matched-trigger BumpNet delivery
-(top-4 task, Step 5). ONE version at a time (--version normal|top4).
+(top-4 task, Step 5; extended by the nonjet4 task, Step 5, for
+--version nonjet4). ONE version at a time (--version normal|top4|nonjet4).
 
 Combination rule (Matan's decision, unchanged from the design task): per
 signature, pool DoubleMuon's INCLUSIVE raw masses with SingleMuon's
@@ -40,6 +41,19 @@ Usage:
         --runs-matched-dir /storage/.../output/cms_datasets/runs_matched \
         --out-dir /storage/.../output/cms_datasets/deliver/muon_combined \
         --out-prefix muon_combined_matched_top4
+    python build_muon_combined_delivery.py --version nonjet4 \
+        --runs-matched-dir /storage/.../output/cms_datasets/runs_matched_nonjet4 \
+        --out-dir /storage/.../output/cms_datasets/deliver/muon_combined_nonjet4 \
+        --out-prefix muon_combined_matched_nonjet4
+
+nonjet4 task, Step 5 addition: a third `--version nonjet4` choice, reading
+`dataset_shard_nonjet4_inclusive/exclusive.sqlite` instead of the normal/
+top-4 shard names -- everything else (the funnel, thresholds, cropping,
+manifest/summary format) is the exact same shared code path, untouched.
+`--runs-matched-dir` for this version points at the nonjet4 production
+output directory (`runs_matched_nonjet4/`), which carries its own copies
+of `DoubleMuon_index.json`/`SingleMuon_index.json` (identical content to
+`runs_matched/`'s, since the file lists never changed).
 """
 from __future__ import annotations
 
@@ -86,6 +100,10 @@ SHARD_NAMES_BY_VERSION = {
         "doublemuon": "dataset_shard_top4_inclusive.sqlite",
         "singlemuon": "dataset_shard_top4_exclusive.sqlite",
     },
+    "nonjet4": {
+        "doublemuon": "dataset_shard_nonjet4_inclusive.sqlite",
+        "singlemuon": "dataset_shard_nonjet4_exclusive.sqlite",
+    },
 }
 
 
@@ -113,7 +131,7 @@ def gather_shard_paths(runs_matched_dir: Path, version: str):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--version", required=True, choices=["normal", "top4"])
+    p.add_argument("--version", required=True, choices=["normal", "top4", "nonjet4"])
     p.add_argument("--runs-matched-dir", required=True)
     p.add_argument("--out-dir", required=True)
     p.add_argument("--out-prefix", required=True)
