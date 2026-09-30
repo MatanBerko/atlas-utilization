@@ -1,0 +1,125 @@
+{
+  "mass_m0m1_cat_0ex_2mx_1jx_0gx_0tx_0bx": {
+    "plot": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_phase1/repo/studies/cms_mc_weights/phase1/plots/genweight_v3_V3a_dimuon_1jet_0b.png",
+    "per_sample_mc_contribution_sum": {
+      "DYJetsToLL_M-50_madgraphMLM (35671)": 21017.686415672302,
+      "TTTo2L2Nu (67801)": 2052.629587724805
+    },
+    "overall_data": 28496.0,
+    "overall_mc": 23070.316003397107,
+    "overall_data_over_mc": 1.2351803068412224,
+    "sub_range_ratios": [
+      {
+        "range_gev": [
+          120.0,
+          336.66666666666663
+        ],
+        "data": 27434.0,
+        "mc": 22308.712789535522,
+        "ratio": 1.2297437444651054
+      },
+      {
+        "range_gev": [
+          336.66666666666663,
+          553.3333333333333
+        ],
+        "data": 899.0,
+        "mc": 675.6913166046143,
+        "ratio": 1.3304892010711697
+      },
+      {
+        "range_gev": [
+          553.3333333333333,
+          770.0
+        ],
+        "data": 163.0,
+        "mc": 85.9118972569704,
+        "ratio": 1.8972925194801828
+      }
+    ]
+  },
+  "mass_m0m1b0_cat_0ex_2mx_1jx_0gx_0tx_1bx": {
+    "plot": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_phase1/repo/studies/cms_mc_weights/phase1/plots/genweight_v3_V3b_m0m1b0_1jet_1b.png",
+    "per_sample_mc_contribution_sum": {
+      "DYJetsToLL_M-50_madgraphMLM (35671)": 19928.127546310425,
+      "TTTo2L2Nu (67801)": 11295.991372063756
+    },
+    "overall_data": 43548.0,
+    "overall_mc": 31224.11891837418,
+    "overall_data_over_mc": 1.3946910756342814,
+    "sub_range_ratios": [
+      {
+        "range_gev": [
+          140.0,
+          460.0
+        ],
+        "data": 41480.0,
+        "mc": 29862.85068511963,
+        "ratio": 1.389016756550609
+      },
+      {
+        "range_gev": [
+          460.0,
+          780.0
+        ],
+        "data": 1859.0,
+        "mc": 1204.3625588417053,
+        "ratio": 1.5435551249516521
+      },
+      {
+        "range_gev": [
+          780.0,
+          1100.0
+        ],
+        "data": 209.0,
+        "mc": 156.90567441284657,
+        "ratio": 1.3320104628598968
+      }
+    ]
+  },
+  "mass_m0m1b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+    "plot": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_phase1/repo/studies/cms_mc_weights/phase1/plots/genweight_v3_V3b_m0m1b0_2jet_1b.png",
+    "per_sample_mc_contribution_sum": {
+      "DYJetsToLL_M-50_madgraphMLM (35671)": 4977.807388722897,
+      "TTTo2L2Nu (67801)": 5126.778251871467
+    },
+    "overall_data": 14418.0,
+    "overall_mc": 10104.585640594363,
+    "overall_data_over_mc": 1.426876916365263,
+    "sub_range_ratios": [
+      {
+        "range_gev": [
+          150.0,
+          433.3333333333333
+        ],
+        "data": 13085.0,
+        "mc": 9264.268495559692,
+        "ratio": 1.4124158865075598
+      },
+      {
+        "range_gev": [
+          433.3333333333333,
+          716.6666666666666
+        ],
+        "data": 1177.0,
+        "mc": 730.0951805114746,
+        "ratio": 1.6121185722325166
+      },
+      {
+        "range_gev": [
+          716.6666666666666,
+          1000.0
+        ],
+        "data": 156.0,
+        "mc": 110.22196452319622,
+        "ratio": 1.4153258896702916
+      }
+    ]
+  },
+  "mass_m0m1b0b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+    "plot": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_phase1/repo/studies/cms_mc_weights/phase1/plots/genweight_v4_leptoquark_overlay.png",
+    "data_total": 5623.0,
+    "lq_total_weighted": 2926.521232545376,
+    "chosen_reason": "2 muons + 1 light jet + 2 b-jets: best available match to the leptoquark pair's own b+mu, b+mu topology (both muons AND both b-jets used in one mass), and the largest-event-count 2-b-jet bin for the m0m1b0b1 combination in the delivered manifest (5,623 data events)."
+  }
+}
