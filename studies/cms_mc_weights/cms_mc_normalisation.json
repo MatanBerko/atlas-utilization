@@ -1,0 +1,77 @@
+{
+  "42407": {
+    "dataset_number": 42407,
+    "cross_section_pb": 2.276,
+    "sum_of_weights": null,
+    "k_factor": 1.0,
+    "gen_filt_eff": 1.0,
+    "n_events": 50000,
+    "physics_short": "LQToBMu_M-400_pair",
+    "generator": "madgraph (LO, pair production)",
+    "provenance": {
+      "label": "LQToBMu_M-400_pair (Tier0, no portal xsec)",
+      "portal_total_value_pb": null,
+      "portal_record_url": null,
+      "matching_filter_already_included": "N/A - no portal cross_section block",
+      "br_applied_description": "100% by construction (CMS sample decays only to b+mu)",
+      "br_value": "1.0",
+      "generator_level_sigma_pb": null,
+      "reference_sigma_pb": "2.276",
+      "reference_order": "NNLOapprox+NNLL stop-pair proxy (LHC SUSY WG), scalar-only + small-coupling caveat",
+      "reference_url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SUSYCrossSections13TeVstopsbottom",
+      "k_factor_from_table": "N/A (no generator-level sigma to compare)",
+      "decision": "Unchanged from v1.",
+      "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+    }
+  },
+  "67801": {
+    "dataset_number": 67801,
+    "cross_section_pb": 89.28,
+    "sum_of_weights": null,
+    "k_factor": 1.0,
+    "gen_filt_eff": 1.0,
+    "n_events": 43546000,
+    "physics_short": "TTTo2L2Nu",
+    "generator": "powheg",
+    "provenance": {
+      "label": "TTTo2L2Nu",
+      "portal_total_value_pb": 687.1,
+      "portal_record_url": "https://opendata.cern.ch/record/67800",
+      "matching_filter_already_included": "yes (R1)",
+      "br_applied_description": "BR(dilepton, e/mu/tau)=BR(Wlep)^2, PDG",
+      "br_value": "0.10706",
+      "generator_level_sigma_pb": 73.56,
+      "reference_sigma_pb": "89.28",
+      "reference_order": "NNLO+NNLL (TopWG) x BR(dilep)",
+      "reference_url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO",
+      "k_factor_from_table": "1.214",
+      "decision": "Unchanged from v1.",
+      "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+    }
+  },
+  "35671": {
+    "dataset_number": 35671,
+    "cross_section_pb": 5765.4,
+    "sum_of_weights": null,
+    "k_factor": 1.0,
+    "gen_filt_eff": 1.0,
+    "n_events": 82448537,
+    "physics_short": "DYJetsToLL_M-50_madgraphMLM",
+    "generator": "madgraphMLM",
+    "provenance": {
+      "label": "DYJetsToLL_M-50_madgraphMLM",
+      "portal_total_value_pb": 5396.0,
+      "portal_record_url": "https://opendata.cern.ch/record/35670",
+      "matching_filter_already_included": "yes (R1)",
+      "br_applied_description": "none needed (decay in ME, DYJetsToLL convention, tau included)",
+      "br_value": null,
+      "generator_level_sigma_pb": 5396.0,
+      "reference_sigma_pb": "5765.4",
+      "reference_order": "NNLO FEWZ v3.1 / RazorAnalyzer",
+      "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+      "k_factor_from_table": "1.068",
+      "decision": "KEPT 5765.4 pb (NNLO FEWZ, opened directly). Lead's 6077.22 pb (2025.74*3) NOT independently sourced this session -- searched CMS wiki/XSDB (XSDB requires CERN SSO, blocked)/general search; found a 5558-6077 pb spread across different tune/PDF choices in secondary search snippets only, none opened directly. UNVERIFIED, not adopted.",
+      "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+    }
+  }
+}
