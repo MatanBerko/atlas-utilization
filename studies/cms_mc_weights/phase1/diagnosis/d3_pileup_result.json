@@ -1,0 +1,19 @@
+{
+  "35671": {
+    "name": "DYJetsToLL_M-50_madgraphMLM",
+    "n_files_read": 61,
+    "n_files_missing_pileup_branch": 0,
+    "n_events_total": 82448537,
+    "pileup_nTrueInt_mean_unweighted": 21.855496344343866,
+    "pileup_nTrueInt_mean_weighted": 21.854711899900806
+  },
+  "67801": {
+    "name": "TTTo2L2Nu",
+    "n_files_read": 49,
+    "n_files_missing_pileup_branch": 0,
+    "n_events_total": 43546000,
+    "pileup_nTrueInt_mean_unweighted": 21.854667868460936,
+    "pileup_nTrueInt_mean_weighted": 21.853430835459537
+  },
+  "_note": "PV_npvsGood is not read by either the DoubleMuon data production (studies/cms_coverage/cluster/run_coverage_on_file.py) or the phase-1 MC driver (run_m0m1j0_on_mc_file_v2.py) -- confirmed absent from selection.NEEDED_BRANCHES. A true data-vs-MC PV_npvsGood comparison at the Z peak is therefore NOT possible without reprocessing the full DoubleMuon production, which is out of scope for this diagnosis round; this is reported as a verification gap, not silently skipped."
+}

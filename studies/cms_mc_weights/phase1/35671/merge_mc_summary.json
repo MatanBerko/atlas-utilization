@@ -1,0 +1,3356 @@
+{
+  "complete": true,
+  "record_id": "35671",
+  "n_files_present": 61,
+  "n_files_missing": 0,
+  "missing_file_indices": [],
+  "sum_genEventSumw": 82448537.0,
+  "n_files_in_sumw_aggregation": 61,
+  "cross_section_pb": 5765.4,
+  "target_luminosity_fb": 16.393,
+  "per_file_normalization_factor": 1.1463175168287099,
+  "n_histograms_written": 340,
+  "histograms_written": {
+    "mass_m0m1_cat_0ex_2mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 18758,
+      "n_raw_total_all_categories_this_name": 931668,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 770.0,
+      "sum_of_weights_this_histogram": 21017.686413600946
+    },
+    "mass_m0j0_cat_0ex_2mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 694934,
+      "n_raw_total_all_categories_this_name": 931668,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 1380.0,
+      "sum_of_weights_this_histogram": 778816.2342411184
+    },
+    "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 736227,
+      "n_raw_total_all_categories_this_name": 931668,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 1470.0,
+      "sum_of_weights_this_histogram": 824989.1892401482
+    },
+    "mass_m1j0_cat_0ex_2mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 648537,
+      "n_raw_total_all_categories_this_name": 931668,
+      "data_window_low_gev": 60.0,
+      "data_window_high_gev": 940.0,
+      "sum_of_weights_this_histogram": 726484.4796785334
+    },
+    "mass_m0m1_cat_0ex_2mx_1jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 408,
+      "n_raw_total_all_categories_this_name": 22089,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 640.0,
+      "sum_of_weights_this_histogram": 456.1554075831676
+    },
+    "mass_m0j0_cat_0ex_2mx_1jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 16232,
+      "n_raw_total_all_categories_this_name": 22089,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 940.0,
+      "sum_of_weights_this_histogram": 18108.83617767284
+    },
+    "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 18000,
+      "n_raw_total_all_categories_this_name": 22089,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 1070.0,
+      "sum_of_weights_this_histogram": 20079.276890453148
+    },
+    "mass_m0b0_cat_0ex_2mx_1jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 14530,
+      "n_raw_total_all_categories_this_name": 22089,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 1020.0,
+      "sum_of_weights_this_histogram": 16202.447475473076
+    },
+    "mass_m0m1b0_cat_0ex_2mx_1jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 17865,
+      "n_raw_total_all_categories_this_name": 22089,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 1100.0,
+      "sum_of_weights_this_histogram": 19928.12764246732
+    },
+    "mass_j0b0_cat_0ex_2mx_1jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 17127,
+      "n_raw_total_all_categories_this_name": 22089,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 940.0,
+      "sum_of_weights_this_histogram": 19103.612075560755
+    },
+    "mass_m0j0b0_cat_0ex_2mx_1jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 17304,
+      "n_raw_total_all_categories_this_name": 22089,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 1260.0,
+      "sum_of_weights_this_histogram": 19295.899604872928
+    },
+    "mass_m0m1j0b0_cat_0ex_2mx_1jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 14770,
+      "n_raw_total_all_categories_this_name": 22089,
+      "data_window_low_gev": 250.0,
+      "data_window_high_gev": 1610.0,
+      "sum_of_weights_this_histogram": 16455.411583648398
+    },
+    "mass_m1j0_cat_0ex_2mx_1jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 15577,
+      "n_raw_total_all_categories_this_name": 22089,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 820.0,
+      "sum_of_weights_this_histogram": 17365.073045185458
+    },
+    "mass_m1b0_cat_0ex_2mx_1jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 15408,
+      "n_raw_total_all_categories_this_name": 22089,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 700.0,
+      "sum_of_weights_this_histogram": 17185.28506892038
+    },
+    "mass_m1j0b0_cat_0ex_2mx_1jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 17290,
+      "n_raw_total_all_categories_this_name": 22089,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 1090.0,
+      "sum_of_weights_this_histogram": 19277.029838866656
+    },
+    "mass_m0m1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 18,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 470.0,
+      "sum_of_weights_this_histogram": 20.019753441057258
+    },
+    "mass_b0b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 548,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 640.0,
+      "sum_of_weights_this_histogram": 608.5182028851092
+    },
+    "mass_m0j0_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 748,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 770.0,
+      "sum_of_weights_this_histogram": 830.5473514848045
+    },
+    "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 805,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 730.0,
+      "sum_of_weights_this_histogram": 893.8725774537884
+    },
+    "mass_m0b0_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 692,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 110.0,
+      "data_window_high_gev": 710.0,
+      "sum_of_weights_this_histogram": 769.6806615853925
+    },
+    "mass_m0b0b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 690,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 1030.0,
+      "sum_of_weights_this_histogram": 766.6877912126076
+    },
+    "mass_m0m1b0_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 602,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 880.0,
+      "sum_of_weights_this_histogram": 669.2103114278493
+    },
+    "mass_m0m1b0b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 599,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 270.0,
+      "data_window_high_gev": 1010.0,
+      "sum_of_weights_this_histogram": 665.1432005440284
+    },
+    "mass_j0b0_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 659,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 110.0,
+      "data_window_high_gev": 830.0,
+      "sum_of_weights_this_histogram": 730.9649837307868
+    },
+    "mass_j0b0b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 663,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 1060.0,
+      "sum_of_weights_this_histogram": 735.7272561445595
+    },
+    "mass_m0j0b0_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 588,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 250.0,
+      "data_window_high_gev": 1110.0,
+      "sum_of_weights_this_histogram": 651.5091006789904
+    },
+    "mass_m0j0b0b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 559,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 340.0,
+      "data_window_high_gev": 1100.0,
+      "sum_of_weights_this_histogram": 619.9139390745181
+    },
+    "mass_m0m1j0b0_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 645,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 290.0,
+      "data_window_high_gev": 1220.0,
+      "sum_of_weights_this_histogram": 715.1888038824577
+    },
+    "mass_m1j0_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 721,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 660.0,
+      "sum_of_weights_this_histogram": 800.1078180921951
+    },
+    "mass_m0b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 614,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 580.0,
+      "sum_of_weights_this_histogram": 682.5776898649528
+    },
+    "mass_m1b0_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 571,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 530.0,
+      "sum_of_weights_this_histogram": 634.7723006027791
+    },
+    "mass_m1b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 553,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 510.0,
+      "sum_of_weights_this_histogram": 613.4805330413399
+    },
+    "mass_m1b0b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 606,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 700.0,
+      "sum_of_weights_this_histogram": 673.254335007499
+    },
+    "mass_m0m1b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 600,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 160.0,
+      "data_window_high_gev": 780.0,
+      "sum_of_weights_this_histogram": 666.7443957566958
+    },
+    "mass_j0b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 699,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 740.0,
+      "sum_of_weights_this_histogram": 776.148635715047
+    },
+    "mass_m0j0b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 749,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 920.0,
+      "sum_of_weights_this_histogram": 831.9993192183396
+    },
+    "mass_m1j0b0_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 638,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 1090.0,
+      "sum_of_weights_this_histogram": 707.584087420368
+    },
+    "mass_m1j0b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 742,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 900.0,
+      "sum_of_weights_this_histogram": 823.8610539269903
+    },
+    "mass_m1j0b0b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 593,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 290.0,
+      "data_window_high_gev": 1230.0,
+      "sum_of_weights_this_histogram": 657.2475927950914
+    },
+    "mass_m0m1j0b1_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 630,
+      "n_raw_total_all_categories_this_name": 952,
+      "data_window_low_gev": 260.0,
+      "data_window_high_gev": 1080.0,
+      "sum_of_weights_this_histogram": 698.9640079240139
+    },
+    "mass_m0m1_cat_0ex_2mx_2jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 4041,
+      "n_raw_total_all_categories_this_name": 185112,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 810.0,
+      "sum_of_weights_this_histogram": 4505.018281120774
+    },
+    "mass_j0j1_cat_0ex_2mx_2jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 143756,
+      "n_raw_total_all_categories_this_name": 185112,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 1540.0,
+      "sum_of_weights_this_histogram": 160379.87802212223
+    },
+    "mass_m0j0_cat_0ex_2mx_2jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 134080,
+      "n_raw_total_all_categories_this_name": 185112,
+      "data_window_low_gev": 110.0,
+      "data_window_high_gev": 1310.0,
+      "sum_of_weights_this_histogram": 149543.05355934464
+    },
+    "mass_m0j0j1_cat_0ex_2mx_2jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 140126,
+      "n_raw_total_all_categories_this_name": 185112,
+      "data_window_low_gev": 180.0,
+      "data_window_high_gev": 1940.0,
+      "sum_of_weights_this_histogram": 156246.26810483012
+    },
+    "mass_m0m1j0_cat_0ex_2mx_2jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 156333,
+      "n_raw_total_all_categories_this_name": 185112,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 1590.0,
+      "sum_of_weights_this_histogram": 174423.36606256498
+    },
+    "mass_m0m1j0j1_cat_0ex_2mx_2jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 152726,
+      "n_raw_total_all_categories_this_name": 185112,
+      "data_window_low_gev": 220.0,
+      "data_window_high_gev": 2090.0,
+      "sum_of_weights_this_histogram": 170347.17260161444
+    },
+    "mass_m0j1_cat_0ex_2mx_2jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 122567,
+      "n_raw_total_all_categories_this_name": 185112,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 1040.0,
+      "sum_of_weights_this_histogram": 136693.22422267176
+    },
+    "mass_m1j0_cat_0ex_2mx_2jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 127354,
+      "n_raw_total_all_categories_this_name": 185112,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 1100.0,
+      "sum_of_weights_this_histogram": 141996.59172099887
+    },
+    "mass_m1j1_cat_0ex_2mx_2jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 121731,
+      "n_raw_total_all_categories_this_name": 185112,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 830.0,
+      "sum_of_weights_this_histogram": 135764.94485035495
+    },
+    "mass_m1j0j1_cat_0ex_2mx_2jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 147193,
+      "n_raw_total_all_categories_this_name": 185112,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 1650.0,
+      "sum_of_weights_this_histogram": 164162.08819532982
+    },
+    "mass_m0m1j1_cat_0ex_2mx_2jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 159655,
+      "n_raw_total_all_categories_this_name": 185112,
+      "data_window_low_gev": 130.0,
+      "data_window_high_gev": 1280.0,
+      "sum_of_weights_this_histogram": 178155.92680156307
+    },
+    "mass_m0m1_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 128,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 470.0,
+      "sum_of_weights_this_histogram": 142.76752010274924
+    },
+    "mass_j0j1_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4344,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 900.0,
+      "sum_of_weights_this_histogram": 4811.491870864453
+    },
+    "mass_m0j0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4061,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 910.0,
+      "sum_of_weights_this_histogram": 4497.552358746604
+    },
+    "mass_m0j0j1_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4173,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 200.0,
+      "data_window_high_gev": 1270.0,
+      "sum_of_weights_this_histogram": 4620.89472837088
+    },
+    "mass_m0m1j0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4716,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 160.0,
+      "data_window_high_gev": 1030.0,
+      "sum_of_weights_this_histogram": 5226.895132761815
+    },
+    "mass_m0m1j0j1_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4587,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 240.0,
+      "data_window_high_gev": 1530.0,
+      "sum_of_weights_this_histogram": 5081.209899626298
+    },
+    "mass_m0b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4127,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 960.0,
+      "sum_of_weights_this_histogram": 4570.8311928110525
+    },
+    "mass_m0m1b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4493,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 1000.0,
+      "sum_of_weights_this_histogram": 4977.8073420979745
+    },
+    "mass_j0b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4043,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 110.0,
+      "data_window_high_gev": 970.0,
+      "sum_of_weights_this_histogram": 4477.973080766619
+    },
+    "mass_j0j1b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4184,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 1310.0,
+      "sum_of_weights_this_histogram": 4630.3290246257875
+    },
+    "mass_m0j0b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4212,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 220.0,
+      "data_window_high_gev": 1500.0,
+      "sum_of_weights_this_histogram": 4661.853902880475
+    },
+    "mass_m0j0j1b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4558,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 280.0,
+      "data_window_high_gev": 1590.0,
+      "sum_of_weights_this_histogram": 5047.414467646495
+    },
+    "mass_m0m1j0b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4006,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 290.0,
+      "data_window_high_gev": 1490.0,
+      "sum_of_weights_this_histogram": 4432.139219955439
+    },
+    "mass_m0j1_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4164,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 780.0,
+      "sum_of_weights_this_histogram": 4615.105560032079
+    },
+    "mass_m1j0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4349,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 790.0,
+      "sum_of_weights_this_histogram": 4816.743565498121
+    },
+    "mass_m1j1_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 3985,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 570.0,
+      "sum_of_weights_this_histogram": 4417.249111470819
+    },
+    "mass_m1j0j1_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4239,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 160.0,
+      "data_window_high_gev": 1140.0,
+      "sum_of_weights_this_histogram": 4692.980020381007
+    },
+    "mass_m0m1j1_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4622,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 910.0,
+      "sum_of_weights_this_histogram": 5123.8530919946925
+    },
+    "mass_m1b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4334,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 710.0,
+      "sum_of_weights_this_histogram": 4800.995230551113
+    },
+    "mass_j1b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4091,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 860.0,
+      "sum_of_weights_this_histogram": 4530.450872429289
+    },
+    "mass_m0j1b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4466,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 960.0,
+      "sum_of_weights_this_histogram": 4948.217746524922
+    },
+    "mass_m1j0b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4026,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 1290.0,
+      "sum_of_weights_this_histogram": 4454.252712227119
+    },
+    "mass_m1j1b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 4162,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 970.0,
+      "sum_of_weights_this_histogram": 4608.600788640981
+    },
+    "mass_m1j0j1b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 3709,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 290.0,
+      "data_window_high_gev": 1360.0,
+      "sum_of_weights_this_histogram": 4100.83268465507
+    },
+    "mass_m0m1j1b0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 3952,
+      "n_raw_total_all_categories_this_name": 5796,
+      "data_window_low_gev": 250.0,
+      "data_window_high_gev": 1280.0,
+      "sum_of_weights_this_histogram": 4375.247579545799
+    },
+    "mass_m0m1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 4,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 420.0,
+      "sum_of_weights_this_histogram": 4.4787955746892605
+    },
+    "mass_j0j1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 318,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 680.0,
+      "sum_of_weights_this_histogram": 353.02993716307475
+    },
+    "mass_b0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 216,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 110.0,
+      "data_window_high_gev": 690.0,
+      "sum_of_weights_this_histogram": 239.1137100260998
+    },
+    "mass_m0j0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 280,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 810.0,
+      "sum_of_weights_this_histogram": 311.2576225394826
+    },
+    "mass_m0j0j1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 320,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 950.0,
+      "sum_of_weights_this_histogram": 355.3744327455257
+    },
+    "mass_m0m1j0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 214,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 220.0,
+      "data_window_high_gev": 890.0,
+      "sum_of_weights_this_histogram": 237.84064812883273
+    },
+    "mass_m0m1j0j1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 247,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 300.0,
+      "data_window_high_gev": 1120.0,
+      "sum_of_weights_this_histogram": 273.9989490583262
+    },
+    "mass_m0b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 290,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 640.0,
+      "sum_of_weights_this_histogram": 322.07173405623223
+    },
+    "mass_m0b0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 259,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 230.0,
+      "data_window_high_gev": 850.0,
+      "sum_of_weights_this_histogram": 287.3105557700969
+    },
+    "mass_m0m1b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 252,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 200.0,
+      "data_window_high_gev": 790.0,
+      "sum_of_weights_this_histogram": 280.05600798281677
+    },
+    "mass_m0m1b0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 255,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 290.0,
+      "data_window_high_gev": 950.0,
+      "sum_of_weights_this_histogram": 283.2552319150336
+    },
+    "mass_j0b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 257,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 830.0,
+      "sum_of_weights_this_histogram": 284.8886029312474
+    },
+    "mass_j0b0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 276,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 230.0,
+      "data_window_high_gev": 980.0,
+      "sum_of_weights_this_histogram": 305.5453780030184
+    },
+    "mass_j0j1b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 303,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 210.0,
+      "data_window_high_gev": 1050.0,
+      "sum_of_weights_this_histogram": 336.10612773665025
+    },
+    "mass_j0j1b0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 296,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 300.0,
+      "data_window_high_gev": 1140.0,
+      "sum_of_weights_this_histogram": 328.179496841229
+    },
+    "mass_m0j0b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 298,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 250.0,
+      "data_window_high_gev": 1110.0,
+      "sum_of_weights_this_histogram": 330.53643210094134
+    },
+    "mass_m0j0b0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 278,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 350.0,
+      "data_window_high_gev": 1170.0,
+      "sum_of_weights_this_histogram": 308.21631843250424
+    },
+    "mass_m0j0j1b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 273,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 360.0,
+      "data_window_high_gev": 1310.0,
+      "sum_of_weights_this_histogram": 302.5313135669954
+    },
+    "mass_m0m1j0b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 259,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 350.0,
+      "data_window_high_gev": 1130.0,
+      "sum_of_weights_this_histogram": 287.6495142229611
+    },
+    "mass_m0j1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 283,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 590.0,
+      "sum_of_weights_this_histogram": 314.2323828728483
+    },
+    "mass_m1j0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 276,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 600.0,
+      "sum_of_weights_this_histogram": 306.6448791268109
+    },
+    "mass_m1j1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 290,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 510.0,
+      "sum_of_weights_this_histogram": 321.66581558868705
+    },
+    "mass_m1j0j1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 285,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 970.0,
+      "sum_of_weights_this_histogram": 316.27449537568526
+    },
+    "mass_m0m1j1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 267,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 160.0,
+      "data_window_high_gev": 670.0,
+      "sum_of_weights_this_histogram": 296.38677466740586
+    },
+    "mass_m0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 269,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 550.0,
+      "sum_of_weights_this_histogram": 298.9070175188057
+    },
+    "mass_m1b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 283,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 510.0,
+      "sum_of_weights_this_histogram": 314.73958341017067
+    },
+    "mass_m1b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 292,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 350.0,
+      "sum_of_weights_this_histogram": 324.0680390655105
+    },
+    "mass_m1b0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 279,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 740.0,
+      "sum_of_weights_this_histogram": 309.9150158606899
+    },
+    "mass_m0m1b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 286,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 650.0,
+      "sum_of_weights_this_histogram": 317.7102676283989
+    },
+    "mass_j0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 288,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 610.0,
+      "sum_of_weights_this_histogram": 319.19221708583717
+    },
+    "mass_j1b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 292,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 620.0,
+      "sum_of_weights_this_histogram": 324.2093578960172
+    },
+    "mass_j1b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 297,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 530.0,
+      "sum_of_weights_this_histogram": 329.7618324799202
+    },
+    "mass_j1b0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 249,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 200.0,
+      "data_window_high_gev": 830.0,
+      "sum_of_weights_this_histogram": 275.8463601552641
+    },
+    "mass_j0j1b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 321,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 160.0,
+      "data_window_high_gev": 890.0,
+      "sum_of_weights_this_histogram": 356.34868302359996
+    },
+    "mass_m0j0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 321,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 900.0,
+      "sum_of_weights_this_histogram": 356.51864821762877
+    },
+    "mass_m0j1b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 289,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 210.0,
+      "data_window_high_gev": 770.0,
+      "sum_of_weights_this_histogram": 320.74104859816333
+    },
+    "mass_m0j1b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 296,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 180.0,
+      "data_window_high_gev": 780.0,
+      "sum_of_weights_this_histogram": 328.40233230343887
+    },
+    "mass_m1j0b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 297,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 220.0,
+      "data_window_high_gev": 1080.0,
+      "sum_of_weights_this_histogram": 329.7449052975883
+    },
+    "mass_m1j0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 307,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 800.0,
+      "sum_of_weights_this_histogram": 340.55733142063565
+    },
+    "mass_m1j1b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 264,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 710.0,
+      "sum_of_weights_this_histogram": 293.172599331415
+    },
+    "mass_m1j1b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 288,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 580.0,
+      "sum_of_weights_this_histogram": 319.21972862534324
+    },
+    "mass_m0j1b0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 285,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 300.0,
+      "data_window_high_gev": 1050.0,
+      "sum_of_weights_this_histogram": 315.76836946730634
+    },
+    "mass_m1j0b0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 264,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 320.0,
+      "data_window_high_gev": 1120.0,
+      "sum_of_weights_this_histogram": 292.76492318141993
+    },
+    "mass_m1j1b0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 313,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 240.0,
+      "data_window_high_gev": 920.0,
+      "sum_of_weights_this_histogram": 347.40572180487874
+    },
+    "mass_m0j0j1b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 261,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 330.0,
+      "data_window_high_gev": 1170.0,
+      "sum_of_weights_this_histogram": 289.2637926057299
+    },
+    "mass_m1j0j1b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 252,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 340.0,
+      "data_window_high_gev": 1210.0,
+      "sum_of_weights_this_histogram": 279.3147769980033
+    },
+    "mass_m1j0j1b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 312,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 240.0,
+      "data_window_high_gev": 1070.0,
+      "sum_of_weights_this_histogram": 346.3816575421478
+    },
+    "mass_m0m1j0b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 262,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 290.0,
+      "data_window_high_gev": 900.0,
+      "sum_of_weights_this_histogram": 291.0754840423429
+    },
+    "mass_m0m1j1b0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 310,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 260.0,
+      "data_window_high_gev": 970.0,
+      "sum_of_weights_this_histogram": 344.14401839381486
+    },
+    "mass_m0m1j1b1_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 242,
+      "n_raw_total_all_categories_this_name": 388,
+      "data_window_low_gev": 270.0,
+      "data_window_high_gev": 890.0,
+      "sum_of_weights_this_histogram": 267.98705392957675
+    },
+    "mass_m0m1_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 894,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 470.0,
+      "sum_of_weights_this_histogram": 991.6200182682568
+    },
+    "mass_j0j1_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 29623,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 1480.0,
+      "sum_of_weights_this_histogram": 32884.14613925643
+    },
+    "mass_j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 27066,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 1680.0,
+      "sum_of_weights_this_histogram": 30010.56266458853
+    },
+    "mass_m0j0_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 27204,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 130.0,
+      "data_window_high_gev": 1340.0,
+      "sum_of_weights_this_histogram": 30191.807031455955
+    },
+    "mass_m0j0j1_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 27695,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 230.0,
+      "data_window_high_gev": 1960.0,
+      "sum_of_weights_this_histogram": 30720.387249876563
+    },
+    "mass_m0j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 26238,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 320.0,
+      "data_window_high_gev": 1820.0,
+      "sum_of_weights_this_histogram": 29084.298251023338
+    },
+    "mass_m0m1j0_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 30939,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 1590.0,
+      "sum_of_weights_this_histogram": 34348.0401221612
+    },
+    "mass_m0m1j0j1_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 26692,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 300.0,
+      "data_window_high_gev": 2170.0,
+      "sum_of_weights_this_histogram": 29599.026511005653
+    },
+    "mass_m0j1_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 24493,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 110.0,
+      "data_window_high_gev": 1150.0,
+      "sum_of_weights_this_histogram": 27174.395915249625
+    },
+    "mass_m1j0_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 27782,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 1040.0,
+      "sum_of_weights_this_histogram": 30829.25351396894
+    },
+    "mass_m1j1_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 28595,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 830.0,
+      "sum_of_weights_this_histogram": 31738.76325854044
+    },
+    "mass_m1j0j1_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 29038,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 180.0,
+      "data_window_high_gev": 1680.0,
+      "sum_of_weights_this_histogram": 32220.166718095486
+    },
+    "mass_m1j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 25662,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 280.0,
+      "data_window_high_gev": 1770.0,
+      "sum_of_weights_this_histogram": 28440.541685372413
+    },
+    "mass_m0m1j1_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 29697,
+      "n_raw_total_all_categories_this_name": 37287,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 1190.0,
+      "sum_of_weights_this_histogram": 32966.572358440404
+    },
+    "mass_m0m1_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 44,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 440.0,
+      "sum_of_weights_this_histogram": 49.066637346950834
+    },
+    "mass_j0j1_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1389,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 870.0,
+      "sum_of_weights_this_histogram": 1534.3143689232668
+    },
+    "mass_j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1192,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 1330.0,
+      "sum_of_weights_this_histogram": 1314.6561084731097
+    },
+    "mass_m0j0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1225,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 130.0,
+      "data_window_high_gev": 1030.0,
+      "sum_of_weights_this_histogram": 1352.0932007638867
+    },
+    "mass_m0j0j1_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1120,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 260.0,
+      "data_window_high_gev": 1270.0,
+      "sum_of_weights_this_histogram": 1236.0012847054043
+    },
+    "mass_m0j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1175,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 320.0,
+      "data_window_high_gev": 1220.0,
+      "sum_of_weights_this_histogram": 1296.7016540481923
+    },
+    "mass_m0m1j0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1341,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 1060.0,
+      "sum_of_weights_this_histogram": 1481.1198656897357
+    },
+    "mass_m0m1j0j1_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1204,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 300.0,
+      "data_window_high_gev": 1240.0,
+      "sum_of_weights_this_histogram": 1328.497597307486
+    },
+    "mass_m0b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1139,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 110.0,
+      "data_window_high_gev": 690.0,
+      "sum_of_weights_this_histogram": 1257.242422539883
+    },
+    "mass_m0m1b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1338,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 920.0,
+      "sum_of_weights_this_histogram": 1476.5589263887068
+    },
+    "mass_j0b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1125,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 840.0,
+      "sum_of_weights_this_histogram": 1240.5145098117493
+    },
+    "mass_j0j1b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1011,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 270.0,
+      "data_window_high_gev": 1230.0,
+      "sum_of_weights_this_histogram": 1113.7395294372577
+    },
+    "mass_j0j1j2b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1107,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 330.0,
+      "data_window_high_gev": 1470.0,
+      "sum_of_weights_this_histogram": 1219.454362093544
+    },
+    "mass_m0j0b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1268,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 220.0,
+      "data_window_high_gev": 1060.0,
+      "sum_of_weights_this_histogram": 1399.9285094367901
+    },
+    "mass_m0j0j1b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1265,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 340.0,
+      "data_window_high_gev": 1640.0,
+      "sum_of_weights_this_histogram": 1394.919535546942
+    },
+    "mass_m0m1j0b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 980,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 360.0,
+      "data_window_high_gev": 1440.0,
+      "sum_of_weights_this_histogram": 1079.1259968185382
+    },
+    "mass_m0j1_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1132,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 110.0,
+      "data_window_high_gev": 660.0,
+      "sum_of_weights_this_histogram": 1248.6456271261434
+    },
+    "mass_m1j0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1226,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 740.0,
+      "sum_of_weights_this_histogram": 1352.5283590732731
+    },
+    "mass_m1j1_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1164,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 490.0,
+      "sum_of_weights_this_histogram": 1284.4128643107902
+    },
+    "mass_m1j0j1_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1175,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 200.0,
+      "data_window_high_gev": 1080.0,
+      "sum_of_weights_this_histogram": 1295.330006902384
+    },
+    "mass_m1j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1309,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 250.0,
+      "data_window_high_gev": 1340.0,
+      "sum_of_weights_this_histogram": 1443.9062512607948
+    },
+    "mass_m0m1j1_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1341,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 940.0,
+      "sum_of_weights_this_histogram": 1479.5592402477412
+    },
+    "mass_m1b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1153,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 520.0,
+      "sum_of_weights_this_histogram": 1271.4053345447408
+    },
+    "mass_j1b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1245,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 700.0,
+      "sum_of_weights_this_histogram": 1375.5207924622641
+    },
+    "mass_m0j1b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1101,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 230.0,
+      "data_window_high_gev": 990.0,
+      "sum_of_weights_this_histogram": 1212.9622880706454
+    },
+    "mass_m1j0b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1211,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 200.0,
+      "data_window_high_gev": 1200.0,
+      "sum_of_weights_this_histogram": 1335.1485214120491
+    },
+    "mass_m1j1b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1245,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 160.0,
+      "data_window_high_gev": 800.0,
+      "sum_of_weights_this_histogram": 1373.3373740425059
+    },
+    "mass_m1j0j1b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1322,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 270.0,
+      "data_window_high_gev": 1360.0,
+      "sum_of_weights_this_histogram": 1459.0860941048343
+    },
+    "mass_m0m1j1b0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 1110,
+      "n_raw_total_all_categories_this_name": 1611,
+      "data_window_low_gev": 290.0,
+      "data_window_high_gev": 1110.0,
+      "sum_of_weights_this_histogram": 1222.5645631846794
+    },
+    "mass_m0m1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 4,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 390.0,
+      "sum_of_weights_this_histogram": 4.136344099477815
+    },
+    "mass_j0j1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 99,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 50.0,
+      "data_window_high_gev": 660.0,
+      "sum_of_weights_this_histogram": 108.91937213453033
+    },
+    "mass_j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 76,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 180.0,
+      "data_window_high_gev": 750.0,
+      "sum_of_weights_this_histogram": 83.7985815989422
+    },
+    "mass_b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 74,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 520.0,
+      "sum_of_weights_this_histogram": 81.17732294359642
+    },
+    "mass_m0j0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 67,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 680.0,
+      "sum_of_weights_this_histogram": 73.12928528301315
+    },
+    "mass_m0j0j1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 70,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 260.0,
+      "data_window_high_gev": 920.0,
+      "sum_of_weights_this_histogram": 76.50727921971158
+    },
+    "mass_m0j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 51,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 390.0,
+      "data_window_high_gev": 890.0,
+      "sum_of_weights_this_histogram": 56.069395432226266
+    },
+    "mass_m0m1j0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 67,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 200.0,
+      "data_window_high_gev": 650.0,
+      "sum_of_weights_this_histogram": 73.16460291404613
+    },
+    "mass_m0m1j0j1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 68,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 330.0,
+      "data_window_high_gev": 900.0,
+      "sum_of_weights_this_histogram": 74.51288897400872
+    },
+    "mass_m0b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 77,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 110.0,
+      "data_window_high_gev": 630.0,
+      "sum_of_weights_this_histogram": 84.05178762745818
+    },
+    "mass_m0b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 69,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 200.0,
+      "data_window_high_gev": 670.0,
+      "sum_of_weights_this_histogram": 75.90065507568826
+    },
+    "mass_m0m1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 73,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 180.0,
+      "data_window_high_gev": 570.0,
+      "sum_of_weights_this_histogram": 79.97511556604289
+    },
+    "mass_m0m1b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 60,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 300.0,
+      "data_window_high_gev": 730.0,
+      "sum_of_weights_this_histogram": 65.9319864259082
+    },
+    "mass_j0b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 79,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 130.0,
+      "data_window_high_gev": 820.0,
+      "sum_of_weights_this_histogram": 87.10504459002811
+    },
+    "mass_j0b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 69,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 250.0,
+      "data_window_high_gev": 990.0,
+      "sum_of_weights_this_histogram": 76.1958866937288
+    },
+    "mass_j0j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 52,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 350.0,
+      "data_window_high_gev": 930.0,
+      "sum_of_weights_this_histogram": 57.28068597973899
+    },
+    "mass_j0j1b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 36,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 490.0,
+      "data_window_high_gev": 970.0,
+      "sum_of_weights_this_histogram": 39.623274491103054
+    },
+    "mass_j0j1j2b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 53,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 420.0,
+      "data_window_high_gev": 950.0,
+      "sum_of_weights_this_histogram": 58.311626350874405
+    },
+    "mass_m0j0b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 56,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 310.0,
+      "data_window_high_gev": 900.0,
+      "sum_of_weights_this_histogram": 61.58429414748116
+    },
+    "mass_m0j0b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 63,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 380.0,
+      "data_window_high_gev": 1020.0,
+      "sum_of_weights_this_histogram": 69.52703573134605
+    },
+    "mass_m0j0j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 70,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 400.0,
+      "data_window_high_gev": 1210.0,
+      "sum_of_weights_this_histogram": 77.14712359619986
+    },
+    "mass_m0m1j0b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 63,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 340.0,
+      "data_window_high_gev": 1030.0,
+      "sum_of_weights_this_histogram": 69.31325303409284
+    },
+    "mass_m0j1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 89,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 550.0,
+      "sum_of_weights_this_histogram": 97.4879158748415
+    },
+    "mass_m1j0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 73,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 440.0,
+      "sum_of_weights_this_histogram": 80.15196486260037
+    },
+    "mass_m1j1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 87,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 450.0,
+      "sum_of_weights_this_histogram": 95.16568372348173
+    },
+    "mass_m1j0j1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 61,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 230.0,
+      "data_window_high_gev": 740.0,
+      "sum_of_weights_this_histogram": 66.78130186531286
+    },
+    "mass_m1j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 79,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 270.0,
+      "data_window_high_gev": 980.0,
+      "sum_of_weights_this_histogram": 86.5681965788531
+    },
+    "mass_m0m1j1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 74,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 180.0,
+      "data_window_high_gev": 570.0,
+      "sum_of_weights_this_histogram": 80.79557365170572
+    },
+    "mass_m0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 80,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 410.0,
+      "sum_of_weights_this_histogram": 87.78019149753689
+    },
+    "mass_m1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 56,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 400.0,
+      "sum_of_weights_this_histogram": 61.48531131082819
+    },
+    "mass_m1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 84,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 370.0,
+      "sum_of_weights_this_histogram": 92.26595658206536
+    },
+    "mass_m1b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 72,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 180.0,
+      "data_window_high_gev": 600.0,
+      "sum_of_weights_this_histogram": 79.48238746829729
+    },
+    "mass_m0m1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 81,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 570.0,
+      "sum_of_weights_this_histogram": 88.98859664447208
+    },
+    "mass_j0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 82,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 500.0,
+      "sum_of_weights_this_histogram": 90.30661619839564
+    },
+    "mass_j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 75,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 110.0,
+      "data_window_high_gev": 460.0,
+      "sum_of_weights_this_histogram": 82.45307154987387
+    },
+    "mass_j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 74,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 540.0,
+      "sum_of_weights_this_histogram": 81.17603342985976
+    },
+    "mass_j1b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 64,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 220.0,
+      "data_window_high_gev": 750.0,
+      "sum_of_weights_this_histogram": 70.12921609884177
+    },
+    "mass_j0j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 56,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 270.0,
+      "data_window_high_gev": 750.0,
+      "sum_of_weights_this_histogram": 61.91925444500093
+    },
+    "mass_j0j1j2b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 56,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 360.0,
+      "data_window_high_gev": 920.0,
+      "sum_of_weights_this_histogram": 61.627609387394095
+    },
+    "mass_m0j0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 79,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 220.0,
+      "data_window_high_gev": 910.0,
+      "sum_of_weights_this_histogram": 86.91366177058535
+    },
+    "mass_m0j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 77,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 220.0,
+      "data_window_high_gev": 670.0,
+      "sum_of_weights_this_histogram": 84.6238720985583
+    },
+    "mass_m0j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 86,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 180.0,
+      "data_window_high_gev": 640.0,
+      "sum_of_weights_this_histogram": 94.28201814705729
+    },
+    "mass_m1j0b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 60,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 250.0,
+      "data_window_high_gev": 700.0,
+      "sum_of_weights_this_histogram": 66.00811153324064
+    },
+    "mass_m1j0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 53,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 250.0,
+      "data_window_high_gev": 730.0,
+      "sum_of_weights_this_histogram": 58.29081703048863
+    },
+    "mass_m1j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 62,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 240.0,
+      "data_window_high_gev": 680.0,
+      "sum_of_weights_this_histogram": 67.6402991457603
+    },
+    "mass_m1j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 77,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 610.0,
+      "sum_of_weights_this_histogram": 84.68688212761806
+    },
+    "mass_m0j1b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 52,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 410.0,
+      "data_window_high_gev": 960.0,
+      "sum_of_weights_this_histogram": 56.75265589757969
+    },
+    "mass_m1j0b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 66,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 320.0,
+      "data_window_high_gev": 950.0,
+      "sum_of_weights_this_histogram": 73.03095359169535
+    },
+    "mass_m1j1b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 60,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 310.0,
+      "data_window_high_gev": 750.0,
+      "sum_of_weights_this_histogram": 66.02896137085452
+    },
+    "mass_m0j0j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 59,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 380.0,
+      "data_window_high_gev": 880.0,
+      "sum_of_weights_this_histogram": 65.22200884568791
+    },
+    "mass_m1j0j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 53,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 420.0,
+      "data_window_high_gev": 1020.0,
+      "sum_of_weights_this_histogram": 58.343044967368996
+    },
+    "mass_m1j0j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 56,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 360.0,
+      "data_window_high_gev": 910.0,
+      "sum_of_weights_this_histogram": 61.702057641755346
+    },
+    "mass_m0m1j0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 68,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 320.0,
+      "data_window_high_gev": 1010.0,
+      "sum_of_weights_this_histogram": 74.8194169728895
+    },
+    "mass_m0m1j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 71,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 310.0,
+      "data_window_high_gev": 860.0,
+      "sum_of_weights_this_histogram": 77.65244127811816
+    },
+    "mass_m0m1j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 68,
+      "n_raw_total_all_categories_this_name": 108,
+      "data_window_low_gev": 280.0,
+      "data_window_high_gev": 750.0,
+      "sum_of_weights_this_histogram": 74.68559430786135
+    },
+    "mass_j0j1_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 8173,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 1590.0,
+      "sum_of_weights_this_histogram": 9015.837343446521
+    },
+    "mass_j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 7504,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 260.0,
+      "data_window_high_gev": 1890.0,
+      "sum_of_weights_this_histogram": 8266.120089537237
+    },
+    "mass_j0j1j2j3_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 8383,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 300.0,
+      "data_window_high_gev": 1960.0,
+      "sum_of_weights_this_histogram": 9244.344295361605
+    },
+    "mass_m0j0_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 7547,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 160.0,
+      "data_window_high_gev": 1390.0,
+      "sum_of_weights_this_histogram": 8329.533999075302
+    },
+    "mass_m0j0j1_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 8633,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 260.0,
+      "data_window_high_gev": 1910.0,
+      "sum_of_weights_this_histogram": 9525.174713566192
+    },
+    "mass_m0j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 7896,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 390.0,
+      "data_window_high_gev": 2090.0,
+      "sum_of_weights_this_histogram": 8704.111640402536
+    },
+    "mass_m0m1j0_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 8412,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 200.0,
+      "data_window_high_gev": 1410.0,
+      "sum_of_weights_this_histogram": 9287.016049096166
+    },
+    "mass_m0m1j0j1_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 8404,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 330.0,
+      "data_window_high_gev": 1810.0,
+      "sum_of_weights_this_histogram": 9272.823998781678
+    },
+    "mass_m0j1_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 7609,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 800.0,
+      "sum_of_weights_this_histogram": 8398.974120398761
+    },
+    "mass_m1j0_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 7788,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 110.0,
+      "data_window_high_gev": 1070.0,
+      "sum_of_weights_this_histogram": 8593.92971939573
+    },
+    "mass_m1j1_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 8286,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 800.0,
+      "sum_of_weights_this_histogram": 9146.401335110017
+    },
+    "mass_m1j0j1_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 8159,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 230.0,
+      "data_window_high_gev": 1570.0,
+      "sum_of_weights_this_histogram": 9000.789296620358
+    },
+    "mass_m1j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 7123,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 370.0,
+      "data_window_high_gev": 1950.0,
+      "sum_of_weights_this_histogram": 7844.834784077843
+    },
+    "mass_m0m1j1_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 8301,
+      "n_raw_total_all_categories_this_name": 10496,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 1180.0,
+      "sum_of_weights_this_histogram": 9161.920717313285
+    },
+    "mass_m0m1_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 17,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 390.0,
+      "sum_of_weights_this_histogram": 18.883565709533364
+    },
+    "mass_j0j1_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 395,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 840.0,
+      "sum_of_weights_this_histogram": 434.5404727314779
+    },
+    "mass_j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 420,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 250.0,
+      "data_window_high_gev": 1170.0,
+      "sum_of_weights_this_histogram": 462.82344837180307
+    },
+    "mass_j0j1j2j3_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 314,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 430.0,
+      "data_window_high_gev": 1170.0,
+      "sum_of_weights_this_histogram": 345.45079574929605
+    },
+    "mass_m0j0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 421,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 840.0,
+      "sum_of_weights_this_histogram": 463.4335354064745
+    },
+    "mass_m0j0j1_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 401,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 300.0,
+      "data_window_high_gev": 1210.0,
+      "sum_of_weights_this_histogram": 441.9517743975566
+    },
+    "mass_m0j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 428,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 370.0,
+      "data_window_high_gev": 1440.0,
+      "sum_of_weights_this_histogram": 472.0309255625613
+    },
+    "mass_m0m1j0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 363,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 230.0,
+      "data_window_high_gev": 820.0,
+      "sum_of_weights_this_histogram": 400.40636745673845
+    },
+    "mass_m0m1j0j1_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 411,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 350.0,
+      "data_window_high_gev": 1260.0,
+      "sum_of_weights_this_histogram": 453.0459867048949
+    },
+    "mass_m0b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 363,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 590.0,
+      "sum_of_weights_this_histogram": 398.5620177336006
+    },
+    "mass_m0m1b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 418,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 160.0,
+      "data_window_high_gev": 730.0,
+      "sum_of_weights_this_histogram": 459.95322761136237
+    },
+    "mass_j0b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 425,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 130.0,
+      "data_window_high_gev": 950.0,
+      "sum_of_weights_this_histogram": 467.76618506611993
+    },
+    "mass_j0j1b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 469,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 210.0,
+      "data_window_high_gev": 1190.0,
+      "sum_of_weights_this_histogram": 516.8423338494476
+    },
+    "mass_j0j1j2b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 436,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 350.0,
+      "data_window_high_gev": 1270.0,
+      "sum_of_weights_this_histogram": 480.3265233159935
+    },
+    "mass_m0j0b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 427,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 270.0,
+      "data_window_high_gev": 1270.0,
+      "sum_of_weights_this_histogram": 469.64713725370683
+    },
+    "mass_m0j0j1b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 496,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 330.0,
+      "data_window_high_gev": 1660.0,
+      "sum_of_weights_this_histogram": 546.3062767524665
+    },
+    "mass_m0m1j0b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 445,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 320.0,
+      "data_window_high_gev": 1470.0,
+      "sum_of_weights_this_histogram": 489.614822162088
+    },
+    "mass_m0j1_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 426,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 670.0,
+      "sum_of_weights_this_histogram": 468.8750951716797
+    },
+    "mass_m1j0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 423,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 110.0,
+      "data_window_high_gev": 710.0,
+      "sum_of_weights_this_histogram": 466.0453142261483
+    },
+    "mass_m1j1_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 418,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 480.0,
+      "sum_of_weights_this_histogram": 459.6036180469701
+    },
+    "mass_m1j0j1_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 396,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 260.0,
+      "data_window_high_gev": 1070.0,
+      "sum_of_weights_this_histogram": 435.32103231376533
+    },
+    "mass_m1j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 333,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 430.0,
+      "data_window_high_gev": 1240.0,
+      "sum_of_weights_this_histogram": 367.16411562062825
+    },
+    "mass_m0m1j1_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 442,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 690.0,
+      "sum_of_weights_this_histogram": 486.7681294417035
+    },
+    "mass_m1b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 336,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 490.0,
+      "sum_of_weights_this_histogram": 369.4107505843231
+    },
+    "mass_j1b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 363,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 600.0,
+      "sum_of_weights_this_histogram": 397.9785481263832
+    },
+    "mass_m0j1b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 405,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 260.0,
+      "data_window_high_gev": 1050.0,
+      "sum_of_weights_this_histogram": 444.81828127234513
+    },
+    "mass_m1j0b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 466,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 990.0,
+      "sum_of_weights_this_histogram": 513.2272796921629
+    },
+    "mass_m1j1b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 335,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 240.0,
+      "data_window_high_gev": 800.0,
+      "sum_of_weights_this_histogram": 367.38008717059756
+    },
+    "mass_m1j0j1b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 444,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 330.0,
+      "data_window_high_gev": 1230.0,
+      "sum_of_weights_this_histogram": 488.8186504992355
+    },
+    "mass_m0m1j1b0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+      "n_raw_in_window": 467,
+      "n_raw_total_all_categories_this_name": 549,
+      "data_window_low_gev": 280.0,
+      "data_window_high_gev": 1210.0,
+      "sum_of_weights_this_histogram": 513.7720002759154
+    },
+    "mass_j0j1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 20,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 430.0,
+      "sum_of_weights_this_histogram": 21.459698148354615
+    },
+    "mass_j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 15,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 460.0,
+      "sum_of_weights_this_histogram": 16.359402320952928
+    },
+    "mass_j0j1j2j3_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 20,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 260.0,
+      "data_window_high_gev": 720.0,
+      "sum_of_weights_this_histogram": 21.515206682519597
+    },
+    "mass_b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 21,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 60.0,
+      "data_window_high_gev": 440.0,
+      "sum_of_weights_this_histogram": 22.540626256779216
+    },
+    "mass_m0j0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 19,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 600.0,
+      "sum_of_weights_this_histogram": 20.19550986566975
+    },
+    "mass_m0j0j1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 16,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 280.0,
+      "data_window_high_gev": 790.0,
+      "sum_of_weights_this_histogram": 16.944321597695627
+    },
+    "mass_m0j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 7,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 450.0,
+      "data_window_high_gev": 770.0,
+      "sum_of_weights_this_histogram": 7.753369047533473
+    },
+    "mass_m0m1j0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 12,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 300.0,
+      "data_window_high_gev": 680.0,
+      "sum_of_weights_this_histogram": 13.226185531135489
+    },
+    "mass_m0m1j0j1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 13,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 410.0,
+      "data_window_high_gev": 840.0,
+      "sum_of_weights_this_histogram": 13.834534424549739
+    },
+    "mass_m0b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 16,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 390.0,
+      "sum_of_weights_this_histogram": 17.46407304676055
+    },
+    "mass_m0b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 20,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 640.0,
+      "sum_of_weights_this_histogram": 21.134909178255477
+    },
+    "mass_m0m1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 19,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 560.0,
+      "sum_of_weights_this_histogram": 20.01358491513873
+    },
+    "mass_m0m1b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 17,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 290.0,
+      "data_window_high_gev": 640.0,
+      "sum_of_weights_this_histogram": 17.834536684969237
+    },
+    "mass_j0b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 12,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 230.0,
+      "data_window_high_gev": 500.0,
+      "sum_of_weights_this_histogram": 12.87098862049115
+    },
+    "mass_j0j1b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 13,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 430.0,
+      "data_window_high_gev": 790.0,
+      "sum_of_weights_this_histogram": 14.255396165093046
+    },
+    "mass_m0j0b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 16,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 330.0,
+      "data_window_high_gev": 800.0,
+      "sum_of_weights_this_histogram": 16.909667957257298
+    },
+    "mass_m0j0j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 8,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 500.0,
+      "data_window_high_gev": 790.0,
+      "sum_of_weights_this_histogram": 8.94193400791647
+    },
+    "mass_m0m1j0b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 15,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 470.0,
+      "data_window_high_gev": 910.0,
+      "sum_of_weights_this_histogram": 15.801265273610591
+    },
+    "mass_m0j1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 18,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 130.0,
+      "data_window_high_gev": 540.0,
+      "sum_of_weights_this_histogram": 18.98732438633712
+    },
+    "mass_m1j1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 21,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 400.0,
+      "sum_of_weights_this_histogram": 22.835547538816375
+    },
+    "mass_m1j0j1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 16,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 250.0,
+      "data_window_high_gev": 670.0,
+      "sum_of_weights_this_histogram": 17.039807449102128
+    },
+    "mass_m0m1j1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 19,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 670.0,
+      "sum_of_weights_this_histogram": 20.12240325766749
+    },
+    "mass_m0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 22,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 390.0,
+      "sum_of_weights_this_histogram": 23.08997987965927
+    },
+    "mass_m1b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 20,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 160.0,
+      "data_window_high_gev": 540.0,
+      "sum_of_weights_this_histogram": 20.90095915028796
+    },
+    "mass_m0m1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 24,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 490.0,
+      "sum_of_weights_this_histogram": 25.307582336300005
+    },
+    "mass_j0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 20,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 500.0,
+      "sum_of_weights_this_histogram": 20.955794948149688
+    },
+    "mass_j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 16,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 540.0,
+      "sum_of_weights_this_histogram": 17.538682003517216
+    },
+    "mass_j1b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 8,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 360.0,
+      "data_window_high_gev": 640.0,
+      "sum_of_weights_this_histogram": 8.767629097627186
+    },
+    "mass_j0j1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 20,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 300.0,
+      "data_window_high_gev": 810.0,
+      "sum_of_weights_this_histogram": 21.010521083024756
+    },
+    "mass_j0j1j2b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 18,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 390.0,
+      "data_window_high_gev": 980.0,
+      "sum_of_weights_this_histogram": 19.339608907693822
+    },
+    "mass_m0j0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 18,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 270.0,
+      "data_window_high_gev": 700.0,
+      "sum_of_weights_this_histogram": 18.941038338536178
+    },
+    "mass_m0j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 15,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 240.0,
+      "data_window_high_gev": 690.0,
+      "sum_of_weights_this_histogram": 16.667749973828037
+    },
+    "mass_m0j1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 17,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 240.0,
+      "data_window_high_gev": 600.0,
+      "sum_of_weights_this_histogram": 17.90449941570951
+    },
+    "mass_m1j0b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 21,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 240.0,
+      "data_window_high_gev": 680.0,
+      "sum_of_weights_this_histogram": 22.367278318322484
+    },
+    "mass_m1j0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 24,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 630.0,
+      "sum_of_weights_this_histogram": 25.44175291654817
+    },
+    "mass_m1j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 17,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 240.0,
+      "data_window_high_gev": 570.0,
+      "sum_of_weights_this_histogram": 18.525181671365004
+    },
+    "mass_m1j1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 24,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 580.0,
+      "sum_of_weights_this_histogram": 25.337642088321807
+    },
+    "mass_m1j1b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 18,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 340.0,
+      "data_window_high_gev": 730.0,
+      "sum_of_weights_this_histogram": 19.613165106894392
+    },
+    "mass_m0j0j1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 11,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 490.0,
+      "data_window_high_gev": 880.0,
+      "sum_of_weights_this_histogram": 11.458783182752564
+    },
+    "mass_m1j0j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 19,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 310.0,
+      "data_window_high_gev": 920.0,
+      "sum_of_weights_this_histogram": 21.100620192870004
+    },
+    "mass_m1j0j1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 17,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 350.0,
+      "data_window_high_gev": 780.0,
+      "sum_of_weights_this_histogram": 18.025167988405553
+    },
+    "mass_m0m1j0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 15,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 380.0,
+      "data_window_high_gev": 820.0,
+      "sum_of_weights_this_histogram": 15.834137590855537
+    },
+    "mass_m0m1j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 7,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 460.0,
+      "data_window_high_gev": 740.0,
+      "sum_of_weights_this_histogram": 7.730622621019984
+    },
+    "mass_m0m1j1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+      "n_raw_in_window": 20,
+      "n_raw_total_all_categories_this_name": 28,
+      "data_window_low_gev": 290.0,
+      "data_window_high_gev": 740.0,
+      "sum_of_weights_this_histogram": 21.266803482864518
+    },
+    "mass_e0m0_cat_1ex_2mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 92,
+      "n_raw_total_all_categories_this_name": 170,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 350.0,
+      "sum_of_weights_this_histogram": 101.03697839969438
+    },
+    "mass_e0m0m1_cat_1ex_2mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 80,
+      "n_raw_total_all_categories_this_name": 170,
+      "data_window_low_gev": 140.0,
+      "data_window_high_gev": 450.0,
+      "sum_of_weights_this_histogram": 87.59298420734098
+    },
+    "mass_e0j0_cat_1ex_2mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 108,
+      "n_raw_total_all_categories_this_name": 170,
+      "data_window_low_gev": 90.0,
+      "data_window_high_gev": 400.0,
+      "sum_of_weights_this_histogram": 118.4687014803209
+    },
+    "mass_e0m0j0_cat_1ex_2mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 84,
+      "n_raw_total_all_categories_this_name": 170,
+      "data_window_low_gev": 200.0,
+      "data_window_high_gev": 680.0,
+      "sum_of_weights_this_histogram": 92.30121135331783
+    },
+    "mass_e0m0m1j0_cat_1ex_2mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 102,
+      "n_raw_total_all_categories_this_name": 170,
+      "data_window_low_gev": 220.0,
+      "data_window_high_gev": 660.0,
+      "sum_of_weights_this_histogram": 112.07650051155389
+    },
+    "mass_m1j0_cat_1ex_2mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 98,
+      "n_raw_total_all_categories_this_name": 170,
+      "data_window_low_gev": 80.0,
+      "data_window_high_gev": 340.0,
+      "sum_of_weights_this_histogram": 107.92288630231104
+    },
+    "mass_e0m1j0_cat_1ex_2mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 124,
+      "n_raw_total_all_categories_this_name": 170,
+      "data_window_low_gev": 130.0,
+      "data_window_high_gev": 480.0,
+      "sum_of_weights_this_histogram": 136.5247729083242
+    },
+    "mass_e0m0j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 39,
+      "n_raw_total_all_categories_this_name": 49,
+      "data_window_low_gev": 120.0,
+      "data_window_high_gev": 380.0,
+      "sum_of_weights_this_histogram": 43.00023185635556
+    },
+    "mass_m0j0_cat_0ex_3mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 29,
+      "n_raw_total_all_categories_this_name": 52,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 360.0,
+      "sum_of_weights_this_histogram": 32.156165741064775
+    },
+    "mass_m0m1j0_cat_0ex_3mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 43,
+      "n_raw_total_all_categories_this_name": 52,
+      "data_window_low_gev": 130.0,
+      "data_window_high_gev": 450.0,
+      "sum_of_weights_this_histogram": 47.80618901622931
+    },
+    "mass_m1j0_cat_0ex_3mx_1jx_0gx_0tx_0bx": {
+      "n_raw_in_window": 36,
+      "n_raw_total_all_categories_this_name": 52,
+      "data_window_low_gev": 70.0,
+      "data_window_high_gev": 370.0,
+      "sum_of_weights_this_histogram": 39.99851601923798
+    },
+    "mass_b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 11,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 560.0,
+      "sum_of_weights_this_histogram": 12.066717474918779
+    },
+    "mass_m0b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 16,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 230.0,
+      "data_window_high_gev": 600.0,
+      "sum_of_weights_this_histogram": 17.684069023362994
+    },
+    "mass_m0b0b1b2_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 14,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 400.0,
+      "data_window_high_gev": 810.0,
+      "sum_of_weights_this_histogram": 15.50837866701265
+    },
+    "mass_m0m1b0_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 15,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 180.0,
+      "data_window_high_gev": 440.0,
+      "sum_of_weights_this_histogram": 16.52803099306133
+    },
+    "mass_m0m1b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 15,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 270.0,
+      "data_window_high_gev": 580.0,
+      "sum_of_weights_this_histogram": 16.607340426558014
+    },
+    "mass_j0b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 12,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 230.0,
+      "data_window_high_gev": 580.0,
+      "sum_of_weights_this_histogram": 13.374772797068177
+    },
+    "mass_m0j0b0_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 12,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 230.0,
+      "data_window_high_gev": 560.0,
+      "sum_of_weights_this_histogram": 13.295227024461914
+    },
+    "mass_m0j0b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 9,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 390.0,
+      "data_window_high_gev": 680.0,
+      "sum_of_weights_this_histogram": 9.984778449987695
+    },
+    "mass_m0m1j0b0_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 8,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 340.0,
+      "data_window_high_gev": 660.0,
+      "sum_of_weights_this_histogram": 8.849187681401183
+    },
+    "mass_m1b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 17,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 180.0,
+      "data_window_high_gev": 440.0,
+      "sum_of_weights_this_histogram": 18.79824674436735
+    },
+    "mass_m0m1b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 21,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 470.0,
+      "sum_of_weights_this_histogram": 23.280468313746603
+    },
+    "mass_j0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 16,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 100.0,
+      "data_window_high_gev": 370.0,
+      "sum_of_weights_this_histogram": 17.689427273045464
+    },
+    "mass_m0j0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 17,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 190.0,
+      "data_window_high_gev": 540.0,
+      "sum_of_weights_this_histogram": 18.868385209189682
+    },
+    "mass_m1j0b0_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 12,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 170.0,
+      "data_window_high_gev": 490.0,
+      "sum_of_weights_this_histogram": 13.32894706050784
+    },
+    "mass_m0m1j0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 7,
+      "n_raw_total_all_categories_this_name": 27,
+      "data_window_low_gev": 310.0,
+      "data_window_high_gev": 620.0,
+      "sum_of_weights_this_histogram": 7.7762779529144375
+    },
+    "mass_m1j0j1_cat_0ex_2mx_2jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 10,
+      "n_raw_total_all_categories_this_name": 15,
+      "data_window_low_gev": 150.0,
+      "data_window_high_gev": 420.0,
+      "sum_of_weights_this_histogram": 11.188120378253775
+    },
+    "mass_m0j0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": {
+      "n_raw_in_window": 13,
+      "n_raw_total_all_categories_this_name": 15,
+      "data_window_low_gev": 210.0,
+      "data_window_high_gev": 1300.0,
+      "sum_of_weights_this_histogram": 14.20239860585641
+    }
+  },
+  "n_mc_only_categories_not_written": 441,
+  "mc_only_categories": {
+    "mass_m0m1_cat_0ex_2mx_4jx_0gx_0tx_0bx": 10496,
+    "mass_m0m1_cat_0ex_2mx_4jx_0gx_0tx_2bx": 28,
+    "mass_j0b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": 28,
+    "mass_j0j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": 28,
+    "mass_j0j1j2b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": 28,
+    "mass_m0j0b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": 28,
+    "mass_m1j0_cat_0ex_2mx_4jx_0gx_0tx_2bx": 28,
+    "mass_m1j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_2bx": 28,
+    "mass_m1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx": 28,
+    "mass_m1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": 28,
+    "mass_j1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": 28,
+    "mass_m0j1b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": 28,
+    "mass_m1j0b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx": 28,
+    "mass_m0m1_cat_1ex_2mx_1jx_0gx_0tx_0bx": 170,
+    "mass_m0j0_cat_1ex_2mx_1jx_0gx_0tx_0bx": 170,
+    "mass_m0m1j0_cat_1ex_2mx_1jx_0gx_0tx_0bx": 170,
+    "mass_e0m1_cat_1ex_2mx_1jx_0gx_0tx_0bx": 170,
+    "mass_m0m1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_j0j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_e0m0_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_e0m0m1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_e0j0_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_e0j0j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_m0j0_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_m0j0j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_m0m1j0_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_m0m1j0j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_e0m0j0_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_e0m0j0j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_e0m0m1j0_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_e0m1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_e0j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_m0j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_m1j0_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_m1j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_m1j0j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_m0m1j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_e0m1j0_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_e0m1j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_e0m1j0j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_e0m0m1j1_cat_1ex_2mx_2jx_0gx_0tx_0bx": 49,
+    "mass_m0m1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j0j1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_b0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_b0b1b2_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0j0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0j0j1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0m1j0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0m1j0j1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0b0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0b0b1b2_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0m1b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0m1b0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j0b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j0b0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j0b0b1b2_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j0j1b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j0j1b0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j0j1j2b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0j0b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0j0b0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0j0j1b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0m1j0b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0j1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1j0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1j1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1j0j1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0m1j1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1b0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1b0b1b2_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0m1b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j1b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j1b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j1b0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j1b0b1b2_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j0j1b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_j0j1j2b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0j0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0j1b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0j1b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1j0b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1j0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1j1b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1j1b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0j1b0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1j0b0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1j1b0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0j0j1b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1j0j1b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m1j0j1b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0m1j0b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0m1j1b0_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0m1j1b1_cat_0ex_2mx_3jx_0gx_0tx_3bx": 2,
+    "mass_m0m1_cat_0ex_3mx_1jx_0gx_0tx_0bx": 52,
+    "mass_m0m1m2_cat_0ex_3mx_1jx_0gx_0tx_0bx": 52,
+    "mass_m0m1m2j0_cat_0ex_3mx_1jx_0gx_0tx_0bx": 52,
+    "mass_m0m1_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_b0b1b2_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_m0j0_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_m0b0_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_j0b0_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_j0b0b1b2_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_m1j0_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_m0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_m1b0_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_m1b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_m1b0b1b2_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_m1j0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_m1j0b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx": 27,
+    "mass_m0m1_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0m0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0m0m1_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0j0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_m0j0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_m0m1j0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_m0b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_m0m1b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_j0b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0m0j0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0m0m1j0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0m0b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0m0m1b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0j0b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_m0j0b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_m0m1j0b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0m0j0b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0m1_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_m1j0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_m1b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0m1j0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0m1b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_m1j0b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_e0m1j0b0_cat_1ex_2mx_1jx_0gx_0tx_1bx": 9,
+    "mass_m0m1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_j0j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_j0j1j2_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0m0_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0m0m1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0j0_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0j0j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0j0j1j2_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_m0j0_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_m0j0j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_m0j0j1j2_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_m0m1j0_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_m0m1j0j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0m0j0_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0m0j0j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0m0m1j0_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0m1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_m0j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_m1j0_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_m1j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_m1j0j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_m1j0j1j2_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_m0m1j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0m0j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0m1j0_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0m1j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0m1j0j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_e0m0m1j1_cat_1ex_2mx_3jx_0gx_0tx_0bx": 17,
+    "mass_m0m1_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_m0m1m2_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_j0j1_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_m0j0_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_m0j0j1_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_m0m1j0_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_m0m1j0j1_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_m0m1m2j0_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_m0j1_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_m1j0_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_m1j1_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_m1j0j1_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_m0m1j1_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_m0m1m2j1_cat_0ex_3mx_2jx_0gx_0tx_0bx": 14,
+    "mass_m0m1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_j0j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m0m1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0j0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0j0j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0j0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0j0j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0m1j0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0m1j0j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0m1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_j0b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_j0j1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m0j0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m0j0j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m0m1j0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m0b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m0m1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0j0b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0j0j1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0j0b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0j0j1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0m1j0b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m0j0b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m1j0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m1j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m1j0j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0m1j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_j1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m0j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m1j0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m1j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m1j0j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m0m1j1_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0j1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0j1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m1j0b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m1j1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m1j0j1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0m1j1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m0j1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m1j0b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_e0m1j1b0_cat_1ex_2mx_2jx_0gx_0tx_1bx": 4,
+    "mass_m0m1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_j0j1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_b0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_b0b1b2_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0j0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0j0j1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0m1j0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0m1j0j1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0b0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0b0b1b2_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0m1b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0m1b0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_j0b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_j0b0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_j0b0b1b2_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_j0j1b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_j0j1b0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0j0b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0j0b0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0j0j1b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0m1j0b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0j1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1j0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1j1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0m1j1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1b0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1b0b1b2_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0m1b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_j0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_j1b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_j1b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_j1b0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_j1b0b1b2_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_j0j1b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0j1b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0j1b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1j0b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1j0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1j1b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1j1b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0j1b0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1j0b0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1j1b0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0j0j1b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1j0j1b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m1j0j1b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0m1j0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0m1j1b0_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0m1j1b1_cat_0ex_2mx_2jx_0gx_0tx_3bx": 15,
+    "mass_m0m1_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m0m1m2_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_j0j1_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_j0j1j2_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m0j0_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m0j0j1_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m0j0j1j2_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m0m1j0_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m0m1j0j1_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m0m1m2j0_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m0j1_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m1j0_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m1j1_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m1j0j1_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m1j0j1j2_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m0m1j1_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m0m1m2j1_cat_0ex_3mx_3jx_0gx_0tx_0bx": 4,
+    "mass_m0m1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_b0b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_b0b1b2_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_b0b1b2b3_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0j0_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0b0_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0b0b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0b0b1b2_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0m1b0_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0m1b0b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_j0b0_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_j0b0b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_j0b0b1b2_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0j0b0_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0j0b0b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0m1j0b0_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m1j0_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m1b0_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m1b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m1b0b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m1b0b1b2_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0m1b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_j0b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0j0b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m1j0b0_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m1j0b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m1j0b0b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0m1j0b1_cat_0ex_2mx_1jx_0gx_0tx_4bx": 2,
+    "mass_m0m1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j0j1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j0j1j2j3_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_b0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_b0b1b2_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0j0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0j0j1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0m1j0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0m1j0j1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0b0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0b0b1b2_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0m1b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0m1b0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j0b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j0b0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j0b0b1b2_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j0j1b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j0j1b0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j0j1j2b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0j0b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0j0b0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0j0j1b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0m1j0b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0j1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1j0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1j1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1j0j1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0m1j1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1b0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1b0b1b2_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0m1b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j1b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j1b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j1b0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j1b0b1b2_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j0j1b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_j0j1j2b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0j0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0j1b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0j1b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1j0b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1j0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1j1b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1j1b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0j1b0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1j0b0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1j1b0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0j0j1b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1j0j1b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m1j0j1b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0m1j0b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0m1j1b0_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0m1j1b1_cat_0ex_2mx_4jx_0gx_0tx_3bx": 1,
+    "mass_m0m1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_j0j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_j0j1j2_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_j0j1j2j3_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0m0_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0m0m1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0j0_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0j0j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0j0j1j2_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_m0j0_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_m0j0j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_m0j0j1j2_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_m0m1j0_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_m0m1j0j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0m0j0_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0m0j0j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0m0m1j0_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0m1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_m0j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_m1j0_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_m1j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_m1j0j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_m1j0j1j2_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_m0m1j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0m0j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0m1j0_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0m1j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0m1j0j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_e0m0m1j1_cat_1ex_2mx_4jx_0gx_0tx_0bx": 4,
+    "mass_m0m1_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2,
+    "mass_m0m1m2_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2,
+    "mass_m0j0_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2,
+    "mass_m0m1j0_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2,
+    "mass_m0m1m2j0_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2,
+    "mass_m0b0_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2,
+    "mass_m0m1b0_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2,
+    "mass_m0m1m2b0_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2,
+    "mass_j0b0_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2,
+    "mass_m0j0b0_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2,
+    "mass_m0m1j0b0_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2,
+    "mass_m1j0_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2,
+    "mass_m1b0_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2,
+    "mass_m1j0b0_cat_0ex_3mx_1jx_0gx_0tx_1bx": 2
+  },
+  "n_skipped_unreproducible": 0,
+  "skipped_unreproducible": [],
+  "raw_count_flags_below_100": [
+    {
+      "name": "mass_m0m1_cat_0ex_2mx_1jx_0gx_0tx_2bx",
+      "n_raw_in_window": 18
+    },
+    {
+      "name": "mass_m0m1_cat_0ex_2mx_2jx_0gx_0tx_2bx",
+      "n_raw_in_window": 4
+    },
+    {
+      "name": "mass_m0m1_cat_0ex_2mx_3jx_0gx_0tx_1bx",
+      "n_raw_in_window": 44
+    },
+    {
+      "name": "mass_m0m1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 4
+    },
+    {
+      "name": "mass_j0j1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 99
+    },
+    {
+      "name": "mass_j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 76
+    },
+    {
+      "name": "mass_b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 74
+    },
+    {
+      "name": "mass_m0j0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 67
+    },
+    {
+      "name": "mass_m0j0j1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 70
+    },
+    {
+      "name": "mass_m0j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 51
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 67
+    },
+    {
+      "name": "mass_m0m1j0j1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 68
+    },
+    {
+      "name": "mass_m0b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 77
+    },
+    {
+      "name": "mass_m0b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 69
+    },
+    {
+      "name": "mass_m0m1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 73
+    },
+    {
+      "name": "mass_m0m1b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 60
+    },
+    {
+      "name": "mass_j0b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 79
+    },
+    {
+      "name": "mass_j0b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 69
+    },
+    {
+      "name": "mass_j0j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 52
+    },
+    {
+      "name": "mass_j0j1b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 36
+    },
+    {
+      "name": "mass_j0j1j2b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 53
+    },
+    {
+      "name": "mass_m0j0b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 56
+    },
+    {
+      "name": "mass_m0j0b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 63
+    },
+    {
+      "name": "mass_m0j0j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 70
+    },
+    {
+      "name": "mass_m0m1j0b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 63
+    },
+    {
+      "name": "mass_m0j1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 89
+    },
+    {
+      "name": "mass_m1j0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 73
+    },
+    {
+      "name": "mass_m1j1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 87
+    },
+    {
+      "name": "mass_m1j0j1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 61
+    },
+    {
+      "name": "mass_m1j0j1j2_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 79
+    },
+    {
+      "name": "mass_m0m1j1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 74
+    },
+    {
+      "name": "mass_m0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 80
+    },
+    {
+      "name": "mass_m1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 56
+    },
+    {
+      "name": "mass_m1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 84
+    },
+    {
+      "name": "mass_m1b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 72
+    },
+    {
+      "name": "mass_m0m1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 81
+    },
+    {
+      "name": "mass_j0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 82
+    },
+    {
+      "name": "mass_j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 75
+    },
+    {
+      "name": "mass_j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 74
+    },
+    {
+      "name": "mass_j1b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 64
+    },
+    {
+      "name": "mass_j0j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 56
+    },
+    {
+      "name": "mass_j0j1j2b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 56
+    },
+    {
+      "name": "mass_m0j0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 79
+    },
+    {
+      "name": "mass_m0j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 77
+    },
+    {
+      "name": "mass_m0j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 86
+    },
+    {
+      "name": "mass_m1j0b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 60
+    },
+    {
+      "name": "mass_m1j0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 53
+    },
+    {
+      "name": "mass_m1j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 62
+    },
+    {
+      "name": "mass_m1j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 77
+    },
+    {
+      "name": "mass_m0j1b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 52
+    },
+    {
+      "name": "mass_m1j0b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 66
+    },
+    {
+      "name": "mass_m1j1b0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 60
+    },
+    {
+      "name": "mass_m0j0j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 59
+    },
+    {
+      "name": "mass_m1j0j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 53
+    },
+    {
+      "name": "mass_m1j0j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 56
+    },
+    {
+      "name": "mass_m0m1j0b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 68
+    },
+    {
+      "name": "mass_m0m1j1b0_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 71
+    },
+    {
+      "name": "mass_m0m1j1b1_cat_0ex_2mx_3jx_0gx_0tx_2bx",
+      "n_raw_in_window": 68
+    },
+    {
+      "name": "mass_m0m1_cat_0ex_2mx_4jx_0gx_0tx_1bx",
+      "n_raw_in_window": 17
+    },
+    {
+      "name": "mass_j0j1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 20
+    },
+    {
+      "name": "mass_j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 15
+    },
+    {
+      "name": "mass_j0j1j2j3_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 20
+    },
+    {
+      "name": "mass_b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 21
+    },
+    {
+      "name": "mass_m0j0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 19
+    },
+    {
+      "name": "mass_m0j0j1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 16
+    },
+    {
+      "name": "mass_m0j0j1j2_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 7
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 12
+    },
+    {
+      "name": "mass_m0m1j0j1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 13
+    },
+    {
+      "name": "mass_m0b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 16
+    },
+    {
+      "name": "mass_m0b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 20
+    },
+    {
+      "name": "mass_m0m1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 19
+    },
+    {
+      "name": "mass_m0m1b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 17
+    },
+    {
+      "name": "mass_j0b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 12
+    },
+    {
+      "name": "mass_j0j1b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 13
+    },
+    {
+      "name": "mass_m0j0b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 16
+    },
+    {
+      "name": "mass_m0j0j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 8
+    },
+    {
+      "name": "mass_m0m1j0b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 15
+    },
+    {
+      "name": "mass_m0j1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 18
+    },
+    {
+      "name": "mass_m1j1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 21
+    },
+    {
+      "name": "mass_m1j0j1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 16
+    },
+    {
+      "name": "mass_m0m1j1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 19
+    },
+    {
+      "name": "mass_m0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 22
+    },
+    {
+      "name": "mass_m1b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 20
+    },
+    {
+      "name": "mass_m0m1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 24
+    },
+    {
+      "name": "mass_j0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 20
+    },
+    {
+      "name": "mass_j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 16
+    },
+    {
+      "name": "mass_j1b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 8
+    },
+    {
+      "name": "mass_j0j1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 20
+    },
+    {
+      "name": "mass_j0j1j2b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 18
+    },
+    {
+      "name": "mass_m0j0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 18
+    },
+    {
+      "name": "mass_m0j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 15
+    },
+    {
+      "name": "mass_m0j1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 17
+    },
+    {
+      "name": "mass_m1j0b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 21
+    },
+    {
+      "name": "mass_m1j0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 24
+    },
+    {
+      "name": "mass_m1j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 17
+    },
+    {
+      "name": "mass_m1j1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 24
+    },
+    {
+      "name": "mass_m1j1b0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 18
+    },
+    {
+      "name": "mass_m0j0j1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 11
+    },
+    {
+      "name": "mass_m1j0j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 19
+    },
+    {
+      "name": "mass_m1j0j1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 17
+    },
+    {
+      "name": "mass_m0m1j0b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 15
+    },
+    {
+      "name": "mass_m0m1j1b0_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 7
+    },
+    {
+      "name": "mass_m0m1j1b1_cat_0ex_2mx_4jx_0gx_0tx_2bx",
+      "n_raw_in_window": 20
+    },
+    {
+      "name": "mass_e0m0_cat_1ex_2mx_1jx_0gx_0tx_0bx",
+      "n_raw_in_window": 92
+    },
+    {
+      "name": "mass_e0m0m1_cat_1ex_2mx_1jx_0gx_0tx_0bx",
+      "n_raw_in_window": 80
+    },
+    {
+      "name": "mass_e0m0j0_cat_1ex_2mx_1jx_0gx_0tx_0bx",
+      "n_raw_in_window": 84
+    },
+    {
+      "name": "mass_m1j0_cat_1ex_2mx_1jx_0gx_0tx_0bx",
+      "n_raw_in_window": 98
+    },
+    {
+      "name": "mass_e0m0j1_cat_1ex_2mx_2jx_0gx_0tx_0bx",
+      "n_raw_in_window": 39
+    },
+    {
+      "name": "mass_m0j0_cat_0ex_3mx_1jx_0gx_0tx_0bx",
+      "n_raw_in_window": 29
+    },
+    {
+      "name": "mass_m0m1j0_cat_0ex_3mx_1jx_0gx_0tx_0bx",
+      "n_raw_in_window": 43
+    },
+    {
+      "name": "mass_m1j0_cat_0ex_3mx_1jx_0gx_0tx_0bx",
+      "n_raw_in_window": 36
+    },
+    {
+      "name": "mass_b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 11
+    },
+    {
+      "name": "mass_m0b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 16
+    },
+    {
+      "name": "mass_m0b0b1b2_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 14
+    },
+    {
+      "name": "mass_m0m1b0_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 15
+    },
+    {
+      "name": "mass_m0m1b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 15
+    },
+    {
+      "name": "mass_j0b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 12
+    },
+    {
+      "name": "mass_m0j0b0_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 12
+    },
+    {
+      "name": "mass_m0j0b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 9
+    },
+    {
+      "name": "mass_m0m1j0b0_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 8
+    },
+    {
+      "name": "mass_m1b0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 17
+    },
+    {
+      "name": "mass_m0m1b1_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 21
+    },
+    {
+      "name": "mass_j0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 16
+    },
+    {
+      "name": "mass_m0j0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 17
+    },
+    {
+      "name": "mass_m1j0b0_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 12
+    },
+    {
+      "name": "mass_m0m1j0b1_cat_0ex_2mx_1jx_0gx_0tx_3bx",
+      "n_raw_in_window": 7
+    },
+    {
+      "name": "mass_m1j0j1_cat_0ex_2mx_2jx_0gx_0tx_3bx",
+      "n_raw_in_window": 10
+    },
+    {
+      "name": "mass_m0j0b1_cat_0ex_2mx_2jx_0gx_0tx_3bx",
+      "n_raw_in_window": 13
+    }
+  ],
+  "root_path": "studies/cms_mc_weights/phase1/35671/35671_mc.root"
+}

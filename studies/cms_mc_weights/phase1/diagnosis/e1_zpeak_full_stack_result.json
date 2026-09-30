@@ -1,0 +1,278 @@
+{
+  "z_window_gev": [
+    60.0,
+    120.0
+  ],
+  "narrow_window_gev": [
+    76.0,
+    106.0
+  ],
+  "n_data_jobs_read": 57,
+  "n_data_jobs_missing": 0,
+  "stacks": {
+    "stack_a_madgraphMLM_DY": {
+      "samples": {
+        "35671": {
+          "name": "DYJetsToLL_M-50_madgraphMLM",
+          "n_files_expected": 61,
+          "n_files_found": 61,
+          "per_file_normalization_factor": 1.1463175168287099
+        },
+        "67801": {
+          "name": "TTTo2L2Nu",
+          "n_files_expected": 49,
+          "n_files_found": 49,
+          "per_file_normalization_factor": 0.0004660852761936444
+        },
+        "64895": {
+          "name": "ST_tW_top",
+          "n_files_expected": 11,
+          "n_files_found": 11,
+          "per_file_normalization_factor": 0.002933905240656769
+        },
+        "64839": {
+          "name": "ST_tW_antitop",
+          "n_files_expected": 10,
+          "n_files_found": 10,
+          "per_file_normalization_factor": 0.002699064379880601
+        },
+        "72676": {
+          "name": "WWTo2L2Nu",
+          "n_files_expected": 7,
+          "n_files_found": 7,
+          "per_file_normalization_factor": 0.006210018344319277
+        },
+        "72752": {
+          "name": "WZTo3LNu_amcatnloFXFX (k=1 flagged)",
+          "n_files_expected": 31,
+          "n_files_found": 31,
+          "per_file_normalization_factor": 0.0009679769994422933
+        },
+        "75589": {
+          "name": "ZZTo4L",
+          "n_files_expected": 99,
+          "n_files_found": 99,
+          "per_file_normalization_factor": 0.00029807797700703864
+        },
+        "68187": {
+          "name": "TTZToLLNuNu_M-10",
+          "n_files_expected": 42,
+          "n_files_found": 42,
+          "per_file_normalization_factor": 0.0028236416301535647
+        },
+        "68073": {
+          "name": "TTWJetsToLNu",
+          "n_files_expected": 12,
+          "n_files_found": 12,
+          "per_file_normalization_factor": 0.003008658860667701
+        }
+      },
+      "categories": {
+        "inclusive": {
+          "n_data_events_60_120": 1603536,
+          "n_mc_weighted_60_120": 1324137.4062623722,
+          "n_mc_weighted_stat_err_60_120": 1208.3298459618027,
+          "data_over_mc_60_120": 1.2110042299358366,
+          "data_over_mc_60_120_stat_err": 0.0020614179171356216,
+          "n_data_events_76_106": 1525255,
+          "n_mc_weighted_76_106": 1260654.7278198781,
+          "n_mc_weighted_stat_err_76_106": 1182.8930928594368,
+          "data_over_mc_76_106": 1.209891151273204,
+          "data_over_mc_76_106_stat_err": 0.002114920106834385
+        },
+        "jet_1": {
+          "n_data_events_60_120": 1246944,
+          "n_mc_weighted_60_120": 1054745.9109591842,
+          "n_mc_weighted_stat_err_60_120": 1081.1439453923108,
+          "data_over_mc_60_120": 1.182222170329185,
+          "data_over_mc_60_120_stat_err": 0.0022705172727749997,
+          "n_data_events_76_106": 1188713,
+          "n_mc_weighted_76_106": 1006442.2672501318,
+          "n_mc_weighted_stat_err_76_106": 1058.6847385082729,
+          "data_over_mc_76_106": 1.181104012302544,
+          "data_over_mc_76_106_stat_err": 0.002325715070781534
+        },
+        "jet_2": {
+          "n_data_events_60_120": 277832,
+          "n_mc_weighted_60_120": 213012.20233020026,
+          "n_mc_weighted_stat_err_60_120": 481.2335619698562,
+          "data_over_mc_60_120": 1.3043008661509423,
+          "data_over_mc_60_120_stat_err": 0.00542114983539508,
+          "n_data_events_76_106": 262778,
+          "n_mc_weighted_76_106": 201520.09110548723,
+          "n_mc_weighted_stat_err_76_106": 470.7144585640894,
+          "data_over_mc_76_106": 1.3039791643526344,
+          "data_over_mc_76_106_stat_err": 0.005589619411514545
+        },
+        "jet_ge3": {
+          "n_data_events_60_120": 78760,
+          "n_mc_weighted_60_120": 56379.29297298807,
+          "n_mc_weighted_stat_err_60_120": 244.13734826410024,
+          "data_over_mc_60_120": 1.3969667912957824,
+          "data_over_mc_60_120_stat_err": 0.011026989806282212,
+          "n_data_events_76_106": 73764,
+          "n_mc_weighted_76_106": 52692.36946425894,
+          "n_mc_weighted_stat_err_76_106": 238.43362196416575,
+          "data_over_mc_76_106": 1.3998990888051424,
+          "data_over_mc_76_106_stat_err": 0.011488917720523503
+        },
+        "bjet_0": {
+          "n_data_events_60_120": 1538238,
+          "n_mc_weighted_60_120": 1275804.407577863,
+          "n_mc_weighted_stat_err_60_120": 1192.2583854631032,
+          "data_over_mc_60_120": 1.2057004905010258,
+          "data_over_mc_60_120_stat_err": 0.00209888266229185,
+          "n_data_events_76_106": 1468764,
+          "n_mc_weighted_76_106": 1220426.626650146,
+          "n_mc_weighted_stat_err_76_106": 1167.2582636686375,
+          "data_over_mc_76_106": 1.2034840669049445,
+          "data_over_mc_76_106_stat_err": 0.0021440883093234503
+        },
+        "bjet_ge1": {
+          "n_data_events_60_120": 65298,
+          "n_mc_weighted_60_120": 48332.998684509475,
+          "n_mc_weighted_stat_err_60_120": 196.42036283183143,
+          "data_over_mc_60_120": 1.3510024574768984,
+          "data_over_mc_60_120_stat_err": 0.01077729792301303,
+          "n_data_events_76_106": 56491,
+          "n_mc_weighted_76_106": 40228.10116973207,
+          "n_mc_weighted_stat_err_76_106": 191.68780616367317,
+          "data_over_mc_76_106": 1.4042671256505703,
+          "data_over_mc_76_106_stat_err": 0.012599631201308676
+        }
+      }
+    },
+    "stack_b_amcatnloFXFX_DY": {
+      "samples": {
+        "35669": {
+          "name": "DYJetsToLL_M-50_amcatnloFXFX",
+          "n_files_expected": 41,
+          "n_files_found": 41,
+          "per_file_normalization_factor": 7.740971550432476e-05
+        },
+        "67801": {
+          "name": "TTTo2L2Nu",
+          "n_files_expected": 49,
+          "n_files_found": 49,
+          "per_file_normalization_factor": 0.0004660852761936444
+        },
+        "64895": {
+          "name": "ST_tW_top",
+          "n_files_expected": 11,
+          "n_files_found": 11,
+          "per_file_normalization_factor": 0.002933905240656769
+        },
+        "64839": {
+          "name": "ST_tW_antitop",
+          "n_files_expected": 10,
+          "n_files_found": 10,
+          "per_file_normalization_factor": 0.002699064379880601
+        },
+        "72676": {
+          "name": "WWTo2L2Nu",
+          "n_files_expected": 7,
+          "n_files_found": 7,
+          "per_file_normalization_factor": 0.006210018344319277
+        },
+        "72752": {
+          "name": "WZTo3LNu_amcatnloFXFX (k=1 flagged)",
+          "n_files_expected": 31,
+          "n_files_found": 31,
+          "per_file_normalization_factor": 0.0009679769994422933
+        },
+        "75589": {
+          "name": "ZZTo4L",
+          "n_files_expected": 99,
+          "n_files_found": 99,
+          "per_file_normalization_factor": 0.00029807797700703864
+        },
+        "68187": {
+          "name": "TTZToLLNuNu_M-10",
+          "n_files_expected": 42,
+          "n_files_found": 42,
+          "per_file_normalization_factor": 0.0028236416301535647
+        },
+        "68073": {
+          "name": "TTWJetsToLNu",
+          "n_files_expected": 12,
+          "n_files_found": 12,
+          "per_file_normalization_factor": 0.003008658860667701
+        }
+      },
+      "categories": {
+        "inclusive": {
+          "n_data_events_60_120": 1603536,
+          "n_mc_weighted_60_120": 1610259.0531347846,
+          "n_mc_weighted_stat_err_60_120": 2564.6162900869012,
+          "data_over_mc_60_120": 0.9958248623898767,
+          "data_over_mc_60_120_stat_err": 0.002372423664455027,
+          "n_data_events_76_106": 1525255,
+          "n_mc_weighted_76_106": 1530293.0371074902,
+          "n_mc_weighted_stat_err_76_106": 2508.1090089256027,
+          "data_over_mc_76_106": 0.9967077958369248,
+          "data_over_mc_76_106_stat_err": 0.0024406201015942366
+        },
+        "jet_1": {
+          "n_data_events_60_120": 1246944,
+          "n_mc_weighted_60_120": 1269260.7112257727,
+          "n_mc_weighted_stat_err_60_120": 2219.8938805920643,
+          "data_over_mc_60_120": 0.9824175513916124,
+          "data_over_mc_60_120_stat_err": 0.00259799200354796,
+          "n_data_events_76_106": 1188713,
+          "n_mc_weighted_76_106": 1208938.725988815,
+          "n_mc_weighted_stat_err_76_106": 2172.015349233214,
+          "data_over_mc_76_106": 0.9832698501966904,
+          "data_over_mc_76_106_stat_err": 0.0026684217273513647
+        },
+        "jet_2": {
+          "n_data_events_60_120": 277832,
+          "n_mc_weighted_60_120": 279653.1661918454,
+          "n_mc_weighted_stat_err_60_120": 1164.6392056268162,
+          "data_over_mc_60_120": 0.9934877683787924,
+          "data_over_mc_60_120_stat_err": 0.0060222901896651825,
+          "n_data_events_76_106": 262778,
+          "n_mc_weighted_76_106": 264339.51508956484,
+          "n_mc_weighted_stat_err_76_106": 1137.8535053454177,
+          "data_over_mc_76_106": 0.994092767064978,
+          "data_over_mc_76_106_stat_err": 0.006218331397834237
+        },
+        "jet_ge3": {
+          "n_data_events_60_120": 78760,
+          "n_mc_weighted_60_120": 61345.17571716648,
+          "n_mc_weighted_stat_err_60_120": 541.2424549182604,
+          "data_over_mc_60_120": 1.2838825397309972,
+          "data_over_mc_60_120_stat_err": 0.015902372877485863,
+          "n_data_events_76_106": 73764,
+          "n_mc_weighted_76_106": 57014.79602911029,
+          "n_mc_weighted_stat_err_76_106": 527.4936243427343,
+          "data_over_mc_76_106": 1.29376942719111,
+          "data_over_mc_76_106_stat_err": 0.016733382872612557
+        },
+        "bjet_0": {
+          "n_data_events_60_120": 1538238,
+          "n_mc_weighted_60_120": 1555034.9035621644,
+          "n_mc_weighted_stat_err_60_120": 2522.41505994047,
+          "data_over_mc_60_120": 0.989198375210944,
+          "data_over_mc_60_120_stat_err": 0.002402149367662266,
+          "n_data_events_76_106": 1468764,
+          "n_mc_weighted_76_106": 1483466.8536673686,
+          "n_mc_weighted_stat_err_76_106": 2466.9033884821724,
+          "data_over_mc_76_106": 0.9900888559585805,
+          "data_over_mc_76_106_stat_err": 0.0024634047501147353
+        },
+        "bjet_ge1": {
+          "n_data_events_60_120": 65298,
+          "n_mc_weighted_60_120": 55224.14957262026,
+          "n_mc_weighted_stat_err_60_120": 463.3346315187485,
+          "data_over_mc_60_120": 1.1824174841141288,
+          "data_over_mc_60_120_stat_err": 0.014547796733349926,
+          "n_data_events_76_106": 56491,
+          "n_mc_weighted_76_106": 46826.1834401214,
+          "n_mc_weighted_stat_err_76_106": 452.76757011621885,
+          "data_over_mc_76_106": 1.2063976999585586,
+          "data_over_mc_76_106_stat_err": 0.01674055094176671
+        }
+      }
+    }
+  }
+}

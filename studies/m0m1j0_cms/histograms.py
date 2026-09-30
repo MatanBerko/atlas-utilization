@@ -140,25 +140,48 @@ def _convert_to_bumpnet_name(fs_str: str, im_str: str) -> str:
     return result
 
 
-def make_fixed_grid_histogram(values) -> Histogram:
+def make_fixed_grid_histogram(values, weights=None) -> Histogram:
     """One (values, edges) histogram pair on the shared fixed grid,
     reproducing _fill_mass's own exact-10000.0-GeV boundary handling
     (services/pipelines/histograms_pipeline.py:67-72: nudge an exact max
     value down by one ULP so it lands in the last real bin, not
     overflow) -- see this module's docstring for why that function is
-    reimplemented rather than imported."""
+    reimplemented rather than imported.
+
+    `weights` (phase-1 MC task, studies/cms_mc_weights/DESIGN.md Sec 1/8):
+    optional, same length/order as `values`. Defaults to None, which
+    reproduces the original unweighted behaviour EXACTLY (every existing
+    data call site is unaffected -- see
+    studies/cms_mc_weights/phase1/prove_default_preserving.py, which reruns
+    this exact function, old signature vs new with weights=None, on a real
+    data job's mass_by_category.npz and confirms bit-identical output).
+    When given, each event contributes `weights[i]` instead of a hardcoded
+    1.0 -- both to the bin content AND to a second, per-bin sum-of-
+    weights-squared accumulator, returned as a third tuple element only
+    when `weights` is not None (so the (values, edges) 2-tuple contract is
+    unchanged for every existing caller that only ever unpacks two)."""
     n_bins = _n_bins()
     counts = np.zeros(n_bins, dtype=np.float64)
     edges = np.linspace(FIXED_MASS_MIN_GEV, FIXED_MASS_MAX_GEV, n_bins + 1)
 
     values_np = ak.to_numpy(values) if not isinstance(values, np.ndarray) else values
-    finite = values_np[~np.isnan(values_np)]
+    not_nan = ~np.isnan(values_np)
+    finite = values_np[not_nan]
     nudged = np.where(finite == FIXED_MASS_MAX_GEV, math.nextafter(FIXED_MASS_MAX_GEV, FIXED_MASS_MIN_GEV), finite)
     in_range = (nudged >= FIXED_MASS_MIN_GEV) & (nudged < FIXED_MASS_MAX_GEV)
     bin_idx = np.floor((nudged[in_range] - FIXED_MASS_MIN_GEV) / BIN_WIDTH_GEV).astype(np.int64)
     bin_idx = np.clip(bin_idx, 0, n_bins - 1)
-    np.add.at(counts, bin_idx, 1.0)
-    return counts, edges
+
+    if weights is None:
+        np.add.at(counts, bin_idx, 1.0)
+        return counts, edges
+
+    weights_np = ak.to_numpy(weights) if not isinstance(weights, np.ndarray) else weights
+    w_finite = weights_np[not_nan][in_range]
+    sumw2 = np.zeros(n_bins, dtype=np.float64)
+    np.add.at(counts, bin_idx, w_finite)
+    np.add.at(sumw2, bin_idx, w_finite ** 2)
+    return counts, edges, sumw2
 
 
 # --- Display-range parity with the shared pipeline's trim_empty_tail -----
@@ -326,7 +349,7 @@ def _set_trim_empty_tail_range(xaxis, last_filled_root_bin: int) -> None:
     xaxis._serialize = _serialize_with_axis_range
 
 
-def to_writable_th1f(values: np.ndarray, edges: np.ndarray, title: str):
+def to_writable_th1f(values: np.ndarray, edges: np.ndarray, title: str, sumw2: np.ndarray = None):
     """Builds a genuine, writable ROOT TH1F (float32 bin contents) from a
     (values, edges) numpy pair, via uproot.writing.identify.to_TH1x
     directly (see this module's docstring: uproot's plain
@@ -352,7 +375,18 @@ def to_writable_th1f(values: np.ndarray, edges: np.ndarray, title: str):
     is set to match the shared pipeline's own trim_empty_tail exactly --
     see the module-level comment above _last_nonempty_root_bin for the
     full derivation and citations.
-    """
+
+    `sumw2` (phase-1 MC task, DESIGN.md Sec 8): optional, same length as
+    `values` -- the per-bin sum of (per-event weight)^2, i.e. the correct
+    ROOT `TH1::Sumw2()` array. Defaults to None, which reproduces the
+    ORIGINAL behaviour exactly (fSumw2=None, unchanged fTsumw2 formula --
+    see studies/cms_mc_weights/phase1/prove_default_preserving.py). When
+    given, it is zero-padded the same way `data` is (under/overflow slots)
+    and written as the real `fSumw2` array, and `fTsumw2` is computed as
+    its correct sum (sum of per-event weight^2), not the pre-existing
+    sum-of-bin-content-squared approximation used in the unweighted path
+    (which is left untouched there deliberately -- out of scope to "fix in
+    passing" for the data path)."""
     n_bins = len(values)
     data = np.zeros(n_bins + 2, dtype=np.float32)
     data[1:-1] = values.astype(np.float32)
@@ -364,16 +398,26 @@ def to_writable_th1f(values: np.ndarray, edges: np.ndarray, title: str):
     _set_trim_empty_tail_range(xaxis, _last_nonempty_root_bin(values))
 
     values_f64 = values.astype(np.float64)
+
+    if sumw2 is None:
+        fSumw2 = None
+        fTsumw2 = float((values_f64 ** 2).sum())
+    else:
+        sumw2_padded = np.zeros(n_bins + 2, dtype=np.float64)
+        sumw2_padded[1:-1] = np.asarray(sumw2, dtype=np.float64)
+        fSumw2 = sumw2_padded
+        fTsumw2 = float(np.asarray(sumw2, dtype=np.float64).sum())
+
     return _uproot_identify.to_TH1x(
         fName=None,
         fTitle=title,
         data=data,
         fEntries=float(values_f64.sum()),
         fTsumw=float(values_f64.sum()),
-        fTsumw2=float((values_f64 ** 2).sum()),
+        fTsumw2=fTsumw2,
         fTsumwx=0.0,
         fTsumwx2=0.0,
-        fSumw2=None,
+        fSumw2=fSumw2,
         fXaxis=xaxis,
     )
 
