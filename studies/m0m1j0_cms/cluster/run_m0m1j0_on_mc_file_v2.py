@@ -219,15 +219,45 @@ def read_events_mc(file_url: str):
     return events, trigger_present
 
 
-def compute_all_combination_signatures(obj_record_with_weights: ak.Array, job_tag: str, logger):
+def compute_all_combination_signatures(obj_record: ak.Array, gen_weight_arr: np.ndarray,
+                                        l1_prefiring_arr: np.ndarray, job_tag: str, logger):
     """Mirrors studies.cms_coverage.cluster.run_coverage_on_file's main
     loop (group_by_final_state -> is_finalstate_contain_combination ->
-    filter+slice+calculate_invariant_mass) exactly, with genWeight/
-    L1PreFiringWeight_Nom preserved through filter+slice (is_exact_count=
-    FALSE, see module docstring) and stripped only immediately before
-    calculate_invariant_mass. Returns {signature: {"mass": arr,
-    "genWeight": arr, "l1_prefiring": arr}} plus {label: n_events} raw
-    final-state population counts (for the side report)."""
+    filter+slice+calculate_invariant_mass) exactly -- `obj_record` here is
+    OBJECT-ONLY (Electrons/Muons/Jets/BJets), same shape
+    run_coverage_on_file.py itself passes to IMCalculator/
+    group_by_final_state/calculate_invariant_mass, because those DO break
+    on an attached scalar field: group_by_final_state/IMCalculator both
+    call `ak.num(events)` on the WHOLE record with no axis given
+    (physics_calcs.py:64, im_calculator.py:60), which raises AxisError the
+    instant any field isn't itself jagged (confirmed directly, phase-1
+    interactive test on record 42407 file 0) -- and
+    calculate_invariant_mass iterates `.fields` unconditionally
+    (im_calculator.py:42-52), which would try to read `.pt`/`.phi`/`.eta`
+    off a flat float and crash differently. So genWeight/
+    L1PreFiringWeight_Nom are kept as SEPARATE, index-aligned numpy arrays
+    (`gen_weight_arr`, `l1_prefiring_arr`, same order as `obj_record`) and
+    re-sliced by hand at each stage using the IDENTICAL boolean masks the
+    shared functions compute internally but do not return to the caller:
+      - the per-(raw final state) grouping mask
+        (histograms.per_event_raw_and_capped_final_state's own `raw_fs`,
+        unmodified, imported -- same six-field formula
+        group_by_final_state uses, physics_calcs.py:61-84);
+      - the per-combination particle-count mask
+        (physics_calcs.filter_events_by_particle_counts's own combined_mask,
+        physics_calcs.py:144-180 -- recomputed here via the SAME
+        get_start/get_count helpers that function itself uses, imported
+        from services.calculations.combinatorics, not re-derived).
+    slice_by_field (rank-selection within an event, never changes which
+    EVENTS survive) and calculate_invariant_mass are called completely
+    unmodified, on object-only input, exactly as run_coverage_on_file.py
+    calls them.
+
+    Returns {bumpnet_name: {"mass", "genWeight", "l1_prefiring"}} plus
+    {label: n_events} raw final-state population counts (side report)."""
+    from services.calculations.combinatorics import get_count, get_start
+    from studies.m0m1j0_cms.histograms import per_event_raw_and_capped_final_state
+
     all_combinations = get_all_combinations(
         object_types=OBJECT_TYPES,
         min_particles=MIN_PARTICLES_IN_COMBINATION,
@@ -240,41 +270,61 @@ def compute_all_combination_signatures(obj_record_with_weights: ak.Array, job_ta
     )
     assert len(all_combinations) == 186, f"expected 186 combinations, got {len(all_combinations)}"
 
-    # Object-only view for the calculator constructor / group_by_final_state
-    # (both compute ak.num() per named object type -- an extra scalar field
-    # would not break THESE two, since neither iterates .fields the way
-    # calculate_invariant_mass does, but we keep the constructor's own
-    # input minimal and standard, matching run_coverage_on_file.py exactly).
-    object_only = ak.zip(
-        {k: obj_record_with_weights[k] for k in ("Electrons", "Muons", "Jets", "BJets")},
-        depth_limit=1,
-    )
     calculator = IMCalculator(
-        events=object_only, min_events_per_fs=1,
+        events=obj_record, min_events_per_fs=1,
         min_k=MIN_COUNT_PARTICLE_IN_COMBINATION, max_k=MAX_COUNT_PARTICLE_IN_COMBINATION,
         min_n=MIN_PARTICLES_IN_COMBINATION, max_n=MAX_PARTICLES_IN_COMBINATION,
     )
 
+    raw_fs, _capped = per_event_raw_and_capped_final_state(obj_record)
+
     out: dict = {}
     label_event_counts: dict = {}
 
-    for label, fs_events_full in physics_calcs.group_by_final_state(obj_record_with_weights):
+    for raw_value in np.unique(raw_fs):
+        group_mask = (raw_fs == raw_value)
+        fs_events_full = obj_record[group_mask]
+        gw_group = gen_weight_arr[group_mask]
+        l1_group = l1_prefiring_arr[group_mask]
+        label = physics_calcs.limit_particles_in_fs(str(raw_value), 4)
         label_event_counts[label] = label_event_counts.get(label, 0) + len(fs_events_full)
 
         for combination in all_combinations:
             if not physics_calcs.is_finalstate_contain_combination(label, combination):
                 continue
 
-            # is_exact_count=False: SAME boolean mask as the real pipeline's
-            # is_exact_count=True call (physics_calcs.py:144-180 -- mask
-            # computation does not depend on is_exact_count), but WITHOUT
-            # the field-stripping rebuild, so genWeight/L1PreFiringWeight_Nom
-            # survive (module docstring).
-            filtered = calculator.filter_by_particle_counts(
+            # Recompute filter_events_by_particle_counts's own combined_mask
+            # (physics_calcs.py:144-180) directly, so it can slice
+            # gw_group/l1_group in lockstep -- that function's mask isn't
+            # exposed to the caller (see docstring above).
+            keep_mask = np.ones(len(fs_events_full), dtype=bool)
+            for obj_name, value in combination.items():
+                if obj_name not in fs_events_full.fields:
+                    keep_mask &= False
+                    continue
+                cnt = ak.to_numpy(ak.num(fs_events_full[obj_name]))
+                keep_mask &= (cnt >= get_start(value) + get_count(value))
+            if not keep_mask.any():
+                continue
+
+            filtered = fs_events_full[keep_mask]
+            gw_filtered = gw_group[keep_mask]
+            l1_filtered = l1_group[keep_mask]
+
+            # Cross-check: this must be the SAME population
+            # filter_by_particle_counts(is_exact_count=False) itself would
+            # return -- verified once per combination, cheap relative to
+            # the physics calls below.
+            shared_filtered = calculator.filter_by_particle_counts(
                 events=fs_events_full, particle_counts=combination, is_exact_count=False,
             )
-            if len(filtered) == 0:
-                continue
+            if len(shared_filtered) != len(filtered):
+                raise AssertionError(
+                    f"internal mask mismatch for combination {combination} label {label}: "
+                    f"recomputed keep_mask gives {len(filtered)} events, "
+                    f"filter_by_particle_counts gives {len(shared_filtered)} -- "
+                    f"the two must agree exactly."
+                )
 
             sliced = calculator.slice_by_field(
                 events=filtered, particle_counts=combination, field_to_slice_by=FIELD_TO_SLICE_BY,
@@ -282,14 +332,6 @@ def compute_all_combination_signatures(obj_record_with_weights: ak.Array, job_ta
             if len(sliced) == 0:
                 continue
 
-            gw = ak.to_numpy(sliced["genWeight"])
-            l1 = ak.to_numpy(sliced["L1PreFiringWeight_Nom"])
-
-            # Strip to object-only fields immediately before
-            # calculate_invariant_mass (which iterates .fields internally
-            # and would crash on genWeight/L1PreFiringWeight_Nom -- module
-            # docstring) -- mirrors physics_calcs.py's own is_exact_count=
-            # True field selection, not a new algorithm.
             mass_input = ak.zip(
                 {k: sliced[k] for k in combination.keys() if k in sliced.fields},
                 depth_limit=1,
@@ -305,8 +347,8 @@ def compute_all_combination_signatures(obj_record_with_weights: ak.Array, job_ta
             arr = arr[not_nan]
             if arr.size == 0:
                 continue
-            gw_kept = gw[not_nan].astype(np.float64)
-            l1_kept = l1[not_nan].astype(np.float64)
+            gw_kept = gw_filtered[not_nan].astype(np.float64)
+            l1_kept = l1_filtered[not_nan].astype(np.float64)
 
             # prepare_im_combination_name's own output is
             # "<job_tag>_FS_<label>_IM_<im_str>" (im_pipeline.py:297-330);
@@ -381,25 +423,16 @@ def main():
     sum_gen_weight_selected = float(gen_weight_sel.sum())
     mean_l1_prefiring_selected = float(l1_prefiring_sel.mean()) if n_selected > 0 else None
 
-    # Build the object-record-plus-weights record the general combination
-    # step needs (Electrons/Muons/Jets/BJets from obj_record, genWeight/
-    # L1PreFiringWeight_Nom attached as sibling scalar fields -- safe here
-    # because group_by_final_state/filter_by_particle_counts(is_exact_count
-    # =False)/slice_by_field never iterate `.fields` the way
-    # calculate_invariant_mass does; see module docstring).
-    obj_record_with_weights = ak.zip(
-        {
-            "Electrons": obj_record["Electrons"], "Muons": obj_record["Muons"],
-            "Jets": obj_record["Jets"], "BJets": obj_record["BJets"],
-            "genWeight": sel_events["genWeight"],
-            "L1PreFiringWeight_Nom": sel_events["L1PreFiringWeight_Nom"],
-        },
-        depth_limit=1,
-    )
-
+    # obj_record stays OBJECT-ONLY (Electrons/Muons/Jets/BJets) -- genWeight/
+    # L1PreFiringWeight_Nom are kept as SEPARATE, index-aligned numpy arrays
+    # (gen_weight_sel/l1_prefiring_sel, computed above) and re-sliced by
+    # hand inside compute_all_combination_signatures using the same masks
+    # the shared functions compute internally (see that function's
+    # docstring for why attaching them to the record itself breaks
+    # ak.num()/group_by_final_state).
     job_tag = f"record{args.record_id}_file{args.file_index}"
     signatures, label_event_counts = compute_all_combination_signatures(
-        obj_record_with_weights, job_tag, logger,
+        obj_record, gen_weight_sel, l1_prefiring_sel, job_tag, logger,
     )
 
     npz_path = output_dir / "mc_combinations.npz"

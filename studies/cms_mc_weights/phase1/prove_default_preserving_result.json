@@ -1,0 +1,194 @@
+{
+  "synthetic_check": {
+    "n_input_values": 10,
+    "old_total_entries": 6.0,
+    "new_total_entries_default": 6.0,
+    "new_total_entries_explicit_none": 6.0,
+    "bin_contents_identical_vs_default_call": true,
+    "bin_contents_identical_vs_explicit_weights_none": true,
+    "return_is_still_2_tuple": true,
+    "PASS": true
+  },
+  "real_data_check": {
+    "npz_path": "/storage/agrp/berkom/atlas-utilization/output/m0m1j0_full_v2/job_5/mass_by_category.npz",
+    "n_categories": 29,
+    "per_category": {
+      "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_0bx": {
+        "n_raw_events": 30661,
+        "old_total_entries": 30661.0,
+        "new_total_entries": 30661.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_1bx": {
+        "n_raw_events": 1247,
+        "old_total_entries": 1247.0,
+        "new_total_entries": 1247.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_2bx": {
+        "n_raw_events": 206,
+        "old_total_entries": 206.0,
+        "new_total_entries": 206.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_1jx_0gx_0tx_3bx": {
+        "n_raw_events": 6,
+        "old_total_entries": 6.0,
+        "new_total_entries": 6.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_2jx_0gx_0tx_0bx": {
+        "n_raw_events": 7130,
+        "old_total_entries": 7130.0,
+        "new_total_entries": 7130.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_2jx_0gx_0tx_1bx": {
+        "n_raw_events": 441,
+        "old_total_entries": 441.0,
+        "new_total_entries": 441.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_2jx_0gx_0tx_2bx": {
+        "n_raw_events": 72,
+        "old_total_entries": 72.0,
+        "new_total_entries": 72.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_2jx_0gx_0tx_3bx": {
+        "n_raw_events": 4,
+        "old_total_entries": 4.0,
+        "new_total_entries": 4.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_3jx_0gx_0tx_0bx": {
+        "n_raw_events": 1601,
+        "old_total_entries": 1601.0,
+        "new_total_entries": 1601.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_3jx_0gx_0tx_1bx": {
+        "n_raw_events": 125,
+        "old_total_entries": 125.0,
+        "new_total_entries": 125.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_3jx_0gx_0tx_2bx": {
+        "n_raw_events": 28,
+        "old_total_entries": 28.0,
+        "new_total_entries": 28.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_3jx_0gx_0tx_3bx": {
+        "n_raw_events": 1,
+        "old_total_entries": 1.0,
+        "new_total_entries": 1.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_4jx_0gx_0tx_0bx": {
+        "n_raw_events": 452,
+        "old_total_entries": 452.0,
+        "new_total_entries": 452.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_4jx_0gx_0tx_1bx": {
+        "n_raw_events": 51,
+        "old_total_entries": 51.0,
+        "new_total_entries": 51.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_2mx_4jx_0gx_0tx_2bx": {
+        "n_raw_events": 11,
+        "old_total_entries": 11.0,
+        "new_total_entries": 11.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_3mx_1jx_0gx_0tx_0bx": {
+        "n_raw_events": 2,
+        "old_total_entries": 2.0,
+        "new_total_entries": 2.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_3mx_1jx_0gx_0tx_2bx": {
+        "n_raw_events": 1,
+        "old_total_entries": 1.0,
+        "new_total_entries": 1.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_3mx_2jx_0gx_0tx_0bx": {
+        "n_raw_events": 4,
+        "old_total_entries": 4.0,
+        "new_total_entries": 4.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_3mx_2jx_0gx_0tx_1bx": {
+        "n_raw_events": 2,
+        "old_total_entries": 2.0,
+        "new_total_entries": 2.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_3mx_2jx_0gx_0tx_2bx": {
+        "n_raw_events": 1,
+        "old_total_entries": 1.0,
+        "new_total_entries": 1.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_3mx_3jx_0gx_0tx_0bx": {
+        "n_raw_events": 1,
+        "old_total_entries": 1.0,
+        "new_total_entries": 1.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_3mx_4jx_0gx_0tx_0bx": {
+        "n_raw_events": 1,
+        "old_total_entries": 1.0,
+        "new_total_entries": 1.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_0ex_3mx_4jx_0gx_0tx_1bx": {
+        "n_raw_events": 1,
+        "old_total_entries": 1.0,
+        "new_total_entries": 1.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_1ex_2mx_1jx_0gx_0tx_0bx": {
+        "n_raw_events": 10,
+        "old_total_entries": 10.0,
+        "new_total_entries": 10.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_1ex_2mx_1jx_0gx_0tx_1bx": {
+        "n_raw_events": 1,
+        "old_total_entries": 1.0,
+        "new_total_entries": 1.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_1ex_2mx_2jx_0gx_0tx_0bx": {
+        "n_raw_events": 2,
+        "old_total_entries": 2.0,
+        "new_total_entries": 2.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_1ex_2mx_3jx_0gx_0tx_0bx": {
+        "n_raw_events": 1,
+        "old_total_entries": 1.0,
+        "new_total_entries": 1.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_1ex_3mx_1jx_0gx_0tx_1bx": {
+        "n_raw_events": 1,
+        "old_total_entries": 1.0,
+        "new_total_entries": 1.0,
+        "bin_contents_identical": true
+      },
+      "mass_m0m1j0_cat_2ex_2mx_1jx_0gx_0tx_0bx": {
+        "n_raw_events": 1,
+        "old_total_entries": 1.0,
+        "new_total_entries": 1.0,
+        "bin_contents_identical": true
+      }
+    },
+    "PASS": true
+  },
+  "OVERALL_PASS": true
+}
