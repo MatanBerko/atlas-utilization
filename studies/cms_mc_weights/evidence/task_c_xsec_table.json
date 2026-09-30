@@ -1,0 +1,928 @@
+{
+  "67801": {
+    "label": "TTTo2L2Nu",
+    "tier": 0,
+    "nano_title": "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "67800",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "67800",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "4.018e-03",
+      "total_value": "6.871e+02",
+      "total_value_uncertainty": "5.174e-01"
+    },
+    "title_match": true,
+    "nano_proc": "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
+    "mini_proc": "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8"
+  },
+  "42407": {
+    "label": "LQToBMu_M-400_pair",
+    "tier": 0,
+    "nano_title": "/LQToBMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "42406",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "42406",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/LQToBMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": null,
+    "title_match": true,
+    "nano_proc": "LQToBMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8",
+    "mini_proc": "LQToBMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8"
+  },
+  "35669": {
+    "label": "DYJetsToLL_M-50_amcatnloFXFX",
+    "tier": 1,
+    "nano_title": "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35668",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35668",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.4",
+      "neg_weight_fraction": "1.636e-01",
+      "total_value": "6.422e+03",
+      "total_value_uncertainty": "1.129e+01"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+    "mini_proc": "DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8"
+  },
+  "35671": {
+    "label": "DYJetsToLL_M-50_madgraphMLM",
+    "tier": 1,
+    "nano_title": "/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35670",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35670",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.4",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "5.396e+03",
+      "total_value_uncertainty": "1.314e+00"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8",
+    "mini_proc": "DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8"
+  },
+  "35631": {
+    "label": "DYJetsToLL_M-10to50_amcatnloFXFX",
+    "tier": 1,
+    "nano_title": "/DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35630",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35630",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.6",
+      "neg_weight_fraction": "1.251e-01",
+      "total_value": "2.048e+04",
+      "total_value_uncertainty": "1.550e+01"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+    "mini_proc": "DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8"
+  },
+  "35633": {
+    "label": "DYJetsToLL_M-10to50_madgraphMLM",
+    "tier": 1,
+    "nano_title": "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35632",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35632",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.8",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "1.588e+04",
+      "total_value_uncertainty": "2.497e+00"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8",
+    "mini_proc": "DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8"
+  },
+  "67993": {
+    "label": "TTToSemiLeptonic",
+    "tier": 1,
+    "nano_title": "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "67992",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "67992",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "4.017e-03",
+      "total_value": "6.871e+02",
+      "total_value_uncertainty": "5.174e-01"
+    },
+    "title_match": true,
+    "nano_proc": "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
+    "mini_proc": "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8"
+  },
+  "64895": {
+    "label": "ST_tW_top_NoFullyHadronic",
+    "tier": 1,
+    "nano_title": "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "64894",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "64894",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "2.048e-05",
+      "total_value": "3.245e+01",
+      "total_value_uncertainty": "2.338e-02"
+    },
+    "title_match": true,
+    "nano_proc": "ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8",
+    "mini_proc": "ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8"
+  },
+  "64839": {
+    "label": "ST_tW_antitop_NoFullyHadronic",
+    "tier": 1,
+    "nano_title": "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "64838",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "64838",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "2.463e-05",
+      "total_value": "3.251e+01",
+      "total_value_uncertainty": "2.346e-02"
+    },
+    "title_match": true,
+    "nano_proc": "ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8",
+    "mini_proc": "ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8"
+  },
+  "72676": {
+    "label": "WWTo2L2Nu",
+    "tier": 1,
+    "nano_title": "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "72675",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "72675",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "1.910e-03",
+      "total_value": "1.109e+01",
+      "total_value_uncertainty": "7.040e-03"
+    },
+    "title_match": true,
+    "nano_proc": "WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
+    "mini_proc": "WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8"
+  },
+  "72752": {
+    "label": "WZTo3LNu_amcatnloFXFX",
+    "tier": 1,
+    "nano_title": "/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "72751",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "72751",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.6",
+      "neg_weight_fraction": "1.701e-01",
+      "total_value": "5.218e+00",
+      "total_value_uncertainty": "5.017e-03"
+    },
+    "title_match": true,
+    "nano_proc": "WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+    "mini_proc": "WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8"
+  },
+  "75589": {
+    "label": "ZZTo4L",
+    "tier": 1,
+    "nano_title": "/ZZTo4L_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "75588",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "75588",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/ZZTo4L_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "5.057e-03",
+      "total_value": "1.325e+00",
+      "total_value_uncertainty": "1.220e-03"
+    },
+    "title_match": true,
+    "nano_proc": "ZZTo4L_TuneCP5_13TeV_powheg_pythia8",
+    "mini_proc": "ZZTo4L_TuneCP5_13TeV_powheg_pythia8"
+  },
+  "75567": {
+    "label": "ZZTo2L2Nu",
+    "tier": 1,
+    "nano_title": "/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "75566",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "75566",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "1.053e-03",
+      "total_value": "9.738e-01",
+      "total_value_uncertainty": "9.971e-04"
+    },
+    "title_match": true,
+    "nano_proc": "ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8",
+    "mini_proc": "ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8"
+  },
+  "38428": {
+    "label": "GluGluToContinToZZ",
+    "tier": 1,
+    "nano_title": "/GluGluToContinToZZTo2e2mu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "38427",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "38427",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/GluGluToContinToZZTo2e2mu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "3.292e+00",
+      "total_value_uncertainty": "1.190e-03"
+    },
+    "title_match": true,
+    "nano_proc": "GluGluToContinToZZTo2e2mu_TuneCP5_13TeV-mcfm701-pythia8",
+    "mini_proc": "GluGluToContinToZZTo2e2mu_TuneCP5_13TeV-mcfm701-pythia8"
+  },
+  "38430": {
+    "label": "GluGluToContinToZZ",
+    "tier": 1,
+    "nano_title": "/GluGluToContinToZZTo2e2nu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "38429",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "38429",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/GluGluToContinToZZTo2e2nu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "1.773e+01",
+      "total_value_uncertainty": "2.230e-03"
+    },
+    "title_match": true,
+    "nano_proc": "GluGluToContinToZZTo2e2nu_TuneCP5_13TeV-mcfm701-pythia8",
+    "mini_proc": "GluGluToContinToZZTo2e2nu_TuneCP5_13TeV-mcfm701-pythia8"
+  },
+  "38432": {
+    "label": "GluGluToContinToZZ",
+    "tier": 1,
+    "nano_title": "/GluGluToContinToZZTo2e2tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "38431",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "38431",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/GluGluToContinToZZTo2e2tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "3.294e+00",
+      "total_value_uncertainty": "1.204e-03"
+    },
+    "title_match": true,
+    "nano_proc": "GluGluToContinToZZTo2e2tau_TuneCP5_13TeV-mcfm701-pythia8",
+    "mini_proc": "GluGluToContinToZZTo2e2tau_TuneCP5_13TeV-mcfm701-pythia8"
+  },
+  "38434": {
+    "label": "GluGluToContinToZZ",
+    "tier": 1,
+    "nano_title": "/GluGluToContinToZZTo2mu2nu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "38433",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "38433",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/GluGluToContinToZZTo2mu2nu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "1.773e+01",
+      "total_value_uncertainty": "2.236e-03"
+    },
+    "title_match": true,
+    "nano_proc": "GluGluToContinToZZTo2mu2nu_TuneCP5_13TeV-mcfm701-pythia8",
+    "mini_proc": "GluGluToContinToZZTo2mu2nu_TuneCP5_13TeV-mcfm701-pythia8"
+  },
+  "38436": {
+    "label": "GluGluToContinToZZ",
+    "tier": 1,
+    "nano_title": "/GluGluToContinToZZTo2mu2tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "38435",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "38435",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/GluGluToContinToZZTo2mu2tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "3.294e+00",
+      "total_value_uncertainty": "1.130e-03"
+    },
+    "title_match": true,
+    "nano_proc": "GluGluToContinToZZTo2mu2tau_TuneCP5_13TeV-mcfm701-pythia8",
+    "mini_proc": "GluGluToContinToZZTo2mu2tau_TuneCP5_13TeV-mcfm701-pythia8"
+  },
+  "38438": {
+    "label": "GluGluToContinToZZ",
+    "tier": 1,
+    "nano_title": "/GluGluToContinToZZTo4e_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "38437",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "38437",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/GluGluToContinToZZTo4e_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "1.619e+00",
+      "total_value_uncertainty": "6.137e-03"
+    },
+    "title_match": true,
+    "nano_proc": "GluGluToContinToZZTo4e_TuneCP5_13TeV-mcfm701-pythia8",
+    "mini_proc": "GluGluToContinToZZTo4e_TuneCP5_13TeV-mcfm701-pythia8"
+  },
+  "38440": {
+    "label": "GluGluToContinToZZ",
+    "tier": 1,
+    "nano_title": "/GluGluToContinToZZTo4mu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "38439",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "38439",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/GluGluToContinToZZTo4mu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "1.609e+00",
+      "total_value_uncertainty": "1.142e-02"
+    },
+    "title_match": true,
+    "nano_proc": "GluGluToContinToZZTo4mu_TuneCP5_13TeV-mcfm701-pythia8",
+    "mini_proc": "GluGluToContinToZZTo4mu_TuneCP5_13TeV-mcfm701-pythia8"
+  },
+  "38442": {
+    "label": "GluGluToContinToZZ",
+    "tier": 1,
+    "nano_title": "/GluGluToContinToZZTo4tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "38441",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "38441",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/GluGluToContinToZZTo4tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "1.626e+00",
+      "total_value_uncertainty": "6.286e-03"
+    },
+    "title_match": true,
+    "nano_proc": "GluGluToContinToZZTo4tau_TuneCP5_13TeV-mcfm701-pythia8",
+    "mini_proc": "GluGluToContinToZZTo4tau_TuneCP5_13TeV-mcfm701-pythia8"
+  },
+  "68187": {
+    "label": "TTZToLLNuNu",
+    "tier": 1,
+    "nano_title": "/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "68186",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "68186",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "2.538e-01",
+      "total_value": "2.439e-01",
+      "total_value_uncertainty": "2.995e-04"
+    },
+    "title_match": true,
+    "nano_proc": "TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8",
+    "mini_proc": "TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8"
+  },
+  "68073": {
+    "label": "TTWJetsToLNu",
+    "tier": 1,
+    "nano_title": "/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "68072",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "68072",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.6",
+      "neg_weight_fraction": "2.281e-01",
+      "total_value": "2.151e-01",
+      "total_value_uncertainty": "1.129e-03"
+    },
+    "title_match": true,
+    "nano_proc": "TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8",
+    "mini_proc": "TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8"
+  },
+  "37728": {
+    "label": "GluGluHToZZTo4L_M125",
+    "tier": 1,
+    "nano_title": "/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "37727",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "37727",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "5.184e-03",
+      "total_value": "2.887e+01",
+      "total_value_uncertainty": "2.027e-02"
+    },
+    "title_match": true,
+    "nano_proc": "GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8",
+    "mini_proc": "GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8"
+  },
+  "68847": {
+    "label": "VBF_HToZZTo4L_M125",
+    "tier": 1,
+    "nano_title": "/VBF_HToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "68846",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "68846",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/VBF_HToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "6.888e-04",
+      "total_value": "3.935e+00",
+      "total_value_uncertainty": "1.774e-02"
+    },
+    "title_match": true,
+    "nano_proc": "VBF_HToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8",
+    "mini_proc": "VBF_HToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8"
+  },
+  "35651": {
+    "label": "DY_M50_HT_binned",
+    "tier": 2,
+    "nano_title": "/DYJetsToLL_M-50_HT-100to200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35650",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35650",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-50_HT-100to200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.1",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "1.402e+02",
+      "total_value_uncertainty": "4.557e-02"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-50_HT-100to200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8",
+    "mini_proc": "DYJetsToLL_M-50_HT-100to200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8"
+  },
+  "35653": {
+    "label": "DY_M50_HT_binned",
+    "tier": 2,
+    "nano_title": "/DYJetsToLL_M-50_HT-1200to2500_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35652",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35652",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-50_HT-1200to2500_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.1",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "1.332e-01",
+      "total_value_uncertainty": "9.084e-05"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-50_HT-1200to2500_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8",
+    "mini_proc": "DYJetsToLL_M-50_HT-1200to2500_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8"
+  },
+  "35655": {
+    "label": "DY_M50_HT_binned",
+    "tier": 2,
+    "nano_title": "/DYJetsToLL_M-50_HT-200to400_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35654",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35654",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-50_HT-200to400_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.1",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "3.838e+01",
+      "total_value_uncertainty": "1.531e-02"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-50_HT-200to400_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8",
+    "mini_proc": "DYJetsToLL_M-50_HT-200to400_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8"
+  },
+  "35657": {
+    "label": "DY_M50_HT_binned",
+    "tier": 2,
+    "nano_title": "/DYJetsToLL_M-50_HT-2500toInf_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35656",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35656",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-50_HT-2500toInf_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.1",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "2.977e-03",
+      "total_value_uncertainty": "3.412e-06"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-50_HT-2500toInf_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8",
+    "mini_proc": "DYJetsToLL_M-50_HT-2500toInf_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8"
+  },
+  "35659": {
+    "label": "DY_M50_HT_binned",
+    "tier": 2,
+    "nano_title": "/DYJetsToLL_M-50_HT-400to600_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35658",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35658",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-50_HT-400to600_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.1",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "5.212e+00",
+      "total_value_uncertainty": "3.149e-03"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-50_HT-400to600_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8",
+    "mini_proc": "DYJetsToLL_M-50_HT-400to600_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8"
+  },
+  "35661": {
+    "label": "DY_M50_HT_binned",
+    "tier": 2,
+    "nano_title": "/DYJetsToLL_M-50_HT-600to800_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35660",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35660",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-50_HT-600to800_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.1",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "1.266e+00",
+      "total_value_uncertainty": "7.976e-04"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-50_HT-600to800_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8",
+    "mini_proc": "DYJetsToLL_M-50_HT-600to800_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8"
+  },
+  "35663": {
+    "label": "DY_M50_HT_binned",
+    "tier": 2,
+    "nano_title": "/DYJetsToLL_M-50_HT-70to100_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35662",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35662",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-50_HT-70to100_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.2",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "1.400e+02",
+      "total_value_uncertainty": "5.294e-02"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-50_HT-70to100_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8",
+    "mini_proc": "DYJetsToLL_M-50_HT-70to100_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8"
+  },
+  "35665": {
+    "label": "DY_M50_HT_binned",
+    "tier": 2,
+    "nano_title": "/DYJetsToLL_M-50_HT-800to1200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35664",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35664",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-50_HT-800to1200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.1",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "5.686e-01",
+      "total_value_uncertainty": "4.332e-04"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-50_HT-800to1200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8",
+    "mini_proc": "DYJetsToLL_M-50_HT-800to1200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8"
+  },
+  "35673": {
+    "label": "DY_M50_Zpt_binned",
+    "tier": 2,
+    "nano_title": "/DYJetsToLL_M-50_Zpt-100to200_BPSFilter_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35672",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35672",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-50_Zpt-100to200_BPSFilter_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.1",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "2.638e+00",
+      "total_value_uncertainty": "2.095e-03"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-50_Zpt-100to200_BPSFilter_TuneCP5_13TeV-madgraphMLM-pythia8",
+    "mini_proc": "DYJetsToLL_M-50_Zpt-100to200_BPSFilter_TuneCP5_13TeV-madgraphMLM-pythia8"
+  },
+  "35675": {
+    "label": "DY_M50_Zpt_binned",
+    "tier": 2,
+    "nano_title": "/DYJetsToLL_M-50_Zpt-200toInf_BPSFilter_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "35674",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "35674",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/DYJetsToLL_M-50_Zpt-200toInf_BPSFilter_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "0.1",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "3.930e-01",
+      "total_value_uncertainty": "4.265e-04"
+    },
+    "title_match": true,
+    "nano_proc": "DYJetsToLL_M-50_Zpt-200toInf_BPSFilter_TuneCP5_13TeV-madgraphMLM-pythia8",
+    "mini_proc": "DYJetsToLL_M-50_Zpt-200toInf_BPSFilter_TuneCP5_13TeV-madgraphMLM-pythia8"
+  },
+  "42263": {
+    "label": "LQ_extra",
+    "tier": null,
+    "nano_title": "/LQToBEle_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "42262",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "42262",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/LQToBEle_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": null,
+    "title_match": true,
+    "nano_proc": "LQToBEle_M-400_pair_TuneCP2_13TeV-madgraph-pythia8",
+    "mini_proc": "LQToBEle_M-400_pair_TuneCP2_13TeV-madgraph-pythia8"
+  },
+  "42871": {
+    "label": "LQ_extra",
+    "tier": null,
+    "nano_title": "/LQToSMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "42870",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "42870",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/LQToSMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v3/MINIAODSIM",
+    "cross_section": null,
+    "title_match": true,
+    "nano_proc": "LQToSMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8",
+    "mini_proc": "LQToSMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8"
+  },
+  "42631": {
+    "label": "LQ_extra",
+    "tier": null,
+    "nano_title": "/LQToDEle_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "relations": [
+      {
+        "description": "The corresponding MINIAODSIM dataset:",
+        "recid": "42630",
+        "type": "isParentOf"
+      }
+    ],
+    "sibling_recid": "42630",
+    "sibling_via": "relations:The corresponding MINIAODSIM dataset:",
+    "mini_title": "/LQToDEle_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+    "cross_section": null,
+    "title_match": true,
+    "nano_proc": "LQToDEle_M-400_pair_TuneCP2_13TeV-madgraph-pythia8",
+    "mini_proc": "LQToDEle_M-400_pair_TuneCP2_13TeV-madgraph-pythia8"
+  }
+}

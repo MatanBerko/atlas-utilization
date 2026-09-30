@@ -1,0 +1,32 @@
+{
+  "source": "atlasopenmagic.get_all_metadata(), run on the Weizmann cluster analysis node (envs/atlas-pipeline, atlasopenmagic package), releases 2024r-pp, 2020e-13tev, 2025e-13tev-beta, 2025r-evgen-13tev, 2025r-evgen-13p6tev",
+  "query": "physics_short containing 'LQ' (case-insensitive), scanned across all cached releases",
+  "note": "Only release 2025r-evgen-13tev contains scalar-LQ PAIR PRODUCTION samples at mass points close to 400 GeV. No exact CMS-matching muon-decay M400 sample exists; the two M400 hits are both electron-decay.",
+  "M400_hits": [
+    {
+      "dsid": "312117",
+      "physics_short": "aMcAtNloPy8EG_A14N30NLO_LQu_el_ld_0p3_beta_0p5_hnd_1p0_M400",
+      "process": "scalar leptoquark pair production",
+      "cross_section_pb": 2.15,
+      "kFactor": 1.0,
+      "genFiltEff": 1.0,
+      "decay": "up-type-quark + electron (LQu_el)"
+    },
+    {
+      "dsid": "312159",
+      "physics_short": "aMcAtNloPy8EG_A14N30NLO_LQd_el_ld_0p3_beta_0p5_hnd_1p0_M400",
+      "process": "scalar leptoquark pair production",
+      "cross_section_pb": 2.15,
+      "kFactor": 1.0,
+      "genFiltEff": 1.0,
+      "decay": "down-type-quark + electron (LQd_el)"
+    }
+  ],
+  "other_mass_points_same_family_muon_decay": [
+    {"dsid": "310194", "physics_short": "aMcAtNloPy8EG_A14N30NLO_LQu_mu_ld_0p3_beta_0p5_hnd_1p0_M300", "cross_section_pb": 7.962},
+    {"dsid": "312142", "physics_short": "aMcAtNloPy8EG_A14N30NLO_LQu_mu_ld_0p3_beta_0p5_hnd_1p0_M850", "cross_section_pb": 0.0216},
+    {"dsid": "312256", "physics_short": "aMcAtNloPy8EG_A14N30NLO_LQd_mu_ld_0p3_beta_0p5_2ndG_M600", "cross_section_pb": 0.16539},
+    {"dsid": "312260", "physics_short": "aMcAtNloPy8EG_A14N30NLO_LQd_mu_ld_0p3_beta_0p5_2ndG_M700", "cross_section_pb": 0.063374}
+  ],
+  "conclusion": "No exact muon-decay ATLAS scalar-LQ-pair sample exists at M=400 GeV in the cached atlasopenmagic releases. The closest exact-mass match (312117/312159, M400) decays to an electron, not a muon -- a genuine decay-mode mismatch versus CMS's LQToBMu_M-400_pair (42407). The closest ATLAS muon-decay LQ-pair samples bracket 400 GeV at M300 (DSID 310194) and M600 (DSID 312256), not at 400 GeV exactly."
+}
