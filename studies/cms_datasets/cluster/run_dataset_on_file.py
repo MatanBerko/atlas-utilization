@@ -55,6 +55,28 @@ event belongs to, or n_after_gate/n_exclusive -- only which objects
 represent an already-accepted event in the final-state/combination step.
 generic and v0 are completely unaffected by this addition.
 
+nonjet4 final-state rule (nonjet4 task, --population matched ONLY; the
+group's own definition, attributed to Shikma): a matched-mode job also
+writes dataset_shard_nonjet4_inclusive.sqlite / _exclusive.sqlite, built
+from the SAME accepted events (trigger matching, DoubleMuon acceptance,
+the SingleMuon veto and the >=2-selected-objects gate are all evaluated
+exactly as for the normal/top4 versions, BEFORE this rule). Let
+N = (selected electrons + selected muons + selected b-jets) for an
+accepted event (light jets never enter N). If N > 4, the event is
+REJECTED from this version entirely (it contributes no rows to either
+nonjet4 shard) -- this is the ONLY difference from top-4. If N <= 4, the
+event's kept objects are identical to its top-4-truncated objects: ALL
+selected electrons/muons/b-jets, plus selected light jets in decreasing
+pT order up to 4 total kept objects (this is not a coincidence -- top-4's
+own priority order is leptons, then b-jets, then light jets, so whenever
+N<=4 every lepton/b-jet already has priority rank <4 and is kept
+unconditionally, and the remaining slots are filled by light-jet pT
+exactly as this rule specifies). The implementation therefore reuses
+build_top4_object_record's own output rather than re-deriving the
+truncation a second time, and then drops the N>4 rows. generic, v0 and
+the existing top-4 shards/diagnostics are completely unaffected by this
+addition (Hard Rule 5).
+
 Inclusive/exclusive de-duplication (task's own veto priority order, highest
 first: DoubleMuon > DoubleEG > MuonEG > SingleMuon > SingleElectron > JetHT
 > MET, services.datasets_records.VETO_ORDER): an event is "exclusive" to a
@@ -976,6 +998,7 @@ def main():
     # purely a post-gate relabeling of which objects represent an already-
     # accepted event, so it can never change n_after_gate/n_exclusive.
     top4_diagnostics = None
+    nonjet4_diagnostics = None
     if args.population == "matched":
         top4_muons, top4_electrons, top4_light_jets, top4_bjets, n_original_objects = build_top4_object_record(
             muons[keep], electrons[keep], jets["Jets"][keep], jets["BJets"][keep]
@@ -1030,6 +1053,96 @@ def main():
             "skip_reason_totals": top4_funnel_result["skip_reason_totals"],
         }
 
+        # --- nonjet4 rule (nonjet4 task, Step 1) -- see module docstring.
+        # Reuses the top4_* outputs just computed above (aligned to the
+        # accepted-event rows, i.e. muons[keep]/electrons[keep]/
+        # jets["Jets"][keep]/jets["BJets"][keep]); does not recompute the
+        # truncation. Only new work here: the N>4 reject mask and the
+        # required rejection diagnostics.
+        n_lepton_bjet = ak.to_numpy(
+            ak.num(electrons[keep], axis=1) + ak.num(muons[keep], axis=1) + ak.num(jets["BJets"][keep], axis=1)
+        )
+        nonjet4_keep_mask = n_lepton_bjet <= 4
+        n_rejected = int((~nonjet4_keep_mask).sum())
+
+        nonjet4_muons = top4_muons[nonjet4_keep_mask]
+        nonjet4_electrons = top4_electrons[nonjet4_keep_mask]
+        nonjet4_light_jets = top4_light_jets[nonjet4_keep_mask]
+        nonjet4_bjets = top4_bjets[nonjet4_keep_mask]
+        obj_record_nonjet4 = selection.build_object_record(
+            nonjet4_muons, nonjet4_electrons, {"Jets": nonjet4_light_jets, "BJets": nonjet4_bjets}
+        )
+        assert len(obj_record_nonjet4) == n_after_gate - n_rejected, (
+            f"nonjet4 rejection must remove exactly the N>4 events: "
+            f"len(obj_record_nonjet4)={len(obj_record_nonjet4)} != "
+            f"n_after_gate-n_rejected={n_after_gate - n_rejected}"
+        )
+
+        is_exclusive_selected_nonjet4 = is_exclusive_selected[nonjet4_keep_mask]
+
+        nonjet4_incl_shard_path = output_dir / "dataset_shard_nonjet4_inclusive.sqlite"
+        nonjet4_excl_shard_path = output_dir / "dataset_shard_nonjet4_exclusive.sqlite"
+        for path in (nonjet4_incl_shard_path, nonjet4_excl_shard_path):
+            if path.exists():
+                path.unlink()
+        writer_nonjet4_incl = SqliteArrayShardWriter(str(nonjet4_incl_shard_path))
+        writer_nonjet4_excl = SqliteArrayShardWriter(str(nonjet4_excl_shard_path))
+
+        nonjet4_funnel_result = run_combination_funnel(
+            obj_record_nonjet4, is_exclusive_selected_nonjet4, job_tag, all_combinations, im_config, logger,
+            writer_nonjet4_incl, writer_nonjet4_excl,
+        )
+
+        nonjet4_common_metadata = dict(common_metadata)
+        nonjet4_common_metadata["object_truncation"] = "nonjet4"
+        for writer in (writer_nonjet4_incl, writer_nonjet4_excl):
+            for k, v in nonjet4_common_metadata.items():
+                writer.set_metadata(k, v)
+            writer.commit()
+            writer.close()
+
+        # Required diagnostics (nonjet4 task, Step 1 spec): distribution of
+        # N and the electron/muon/b-jet composition of the REJECTED (N>4)
+        # events, and how many of the KEPT (N<=4) events had >=1 selected
+        # light jet dropped (more selected light jets existed than the
+        # remaining slots up to 4 total kept objects).
+        from collections import Counter as _Counter
+        rej_mask_np = ~nonjet4_keep_mask
+        rejected_N_distribution = {
+            str(k): int(v) for k, v in sorted(_Counter(n_lepton_bjet[rej_mask_np].tolist()).items())
+        }
+        n_e_rej = ak.to_numpy(ak.num(electrons[keep], axis=1))[rej_mask_np]
+        n_m_rej = ak.to_numpy(ak.num(muons[keep], axis=1))[rej_mask_np]
+        n_b_rej = ak.to_numpy(ak.num(jets["BJets"][keep], axis=1))[rej_mask_np]
+        rejected_event_composition = {
+            "electrons": {str(k): int(v) for k, v in sorted(_Counter(n_e_rej.tolist()).items())},
+            "muons": {str(k): int(v) for k, v in sorted(_Counter(n_m_rej.tolist()).items())},
+            "bjets": {str(k): int(v) for k, v in sorted(_Counter(n_b_rej.tolist()).items())},
+        }
+
+        n_orig_light_jets_kept_events = ak.to_numpy(ak.num(jets["Jets"][keep][nonjet4_keep_mask], axis=1))
+        n_kept_light_jets = ak.to_numpy(ak.num(nonjet4_light_jets, axis=1))
+        n_kept_events_with_light_jets_dropped = int((n_orig_light_jets_kept_events > n_kept_light_jets).sum())
+
+        nonjet4_diagnostics = {
+            "n_accepted_events_before_nonjet4_rule": n_after_gate,
+            "n_rejected_gt4_lepton_bjet": n_rejected,
+            "n_kept_le4_lepton_bjet": n_after_gate - n_rejected,
+            "rejected_N_distribution": rejected_N_distribution,
+            "rejected_event_composition": rejected_event_composition,
+            "n_kept_events_with_light_jets_dropped": n_kept_events_with_light_jets_dropped,
+            "n_fs_groups": nonjet4_funnel_result["n_fs_groups"],
+            "n_signature_writes_inclusive": nonjet4_funnel_result["n_signature_writes_incl"],
+            "n_signature_writes_exclusive": nonjet4_funnel_result["n_signature_writes_excl"],
+            "n_values_written_inclusive": nonjet4_funnel_result["n_values_written_incl"],
+            "n_values_written_exclusive": nonjet4_funnel_result["n_values_written_excl"],
+            "max_signature_size_this_job": nonjet4_funnel_result["max_signature_size"],
+            "n_capped_signatures": nonjet4_funnel_result["n_capped_signatures"],
+            "final_state_label_event_counts_inclusive": nonjet4_funnel_result["label_event_counts_incl"],
+            "final_state_label_event_counts_exclusive": nonjet4_funnel_result["label_event_counts_excl"],
+            "skip_reason_totals": nonjet4_funnel_result["skip_reason_totals"],
+        }
+
     elapsed = time.time() - t0
     incl_shard_size_mb = incl_shard_path.stat().st_size / (1024 * 1024)
     excl_shard_size_mb = excl_shard_path.stat().st_size / (1024 * 1024)
@@ -1068,6 +1181,7 @@ def main():
         "diagnostics": diagnostics,
         "matching_diagnostics": matching_diagnostics,
         "top4_diagnostics": top4_diagnostics,
+        "nonjet4_diagnostics": nonjet4_diagnostics,
     }
     (output_dir / "job_metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
 
