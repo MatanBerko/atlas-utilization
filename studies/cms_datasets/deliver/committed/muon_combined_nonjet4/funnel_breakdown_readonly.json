@@ -1,0 +1,33 @@
+{
+  "a_combined_ge1_event": 224,
+  "a_doublemuon_alone_inclusive_ge1_event": 102,
+  "a_singlemuon_alone_inclusive_ge1_event": 224,
+  "a2_combined_names_with_ge100_pooled_entries": 187,
+  "b_after_min_events_per_fs_100": 187,
+  "c_after_postprocessing_ge100_main": 180,
+  "d_gt25_bins_min26": 159,
+  "dprime_gt30_bins_min31": 148,
+  "confirm_vs_build_summary_nonjet4_json": {
+    "b": {
+      "computed": 187,
+      "expected": 187,
+      "match": true
+    },
+    "c": {
+      "computed": 180,
+      "expected": 180,
+      "match": true
+    },
+    "d_min26": {
+      "computed": 159,
+      "expected": 159,
+      "match": true
+    },
+    "dprime_min31": {
+      "computed": 148,
+      "expected": 148,
+      "match": true
+    }
+  },
+  "all_confirmed_match": true
+}
