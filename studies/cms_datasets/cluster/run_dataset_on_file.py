@@ -77,6 +77,27 @@ truncation a second time, and then drops the N>4 rows. generic, v0 and
 the existing top-4 shards/diagnostics are completely unaffected by this
 addition (Hard Rule 5).
 
+rare4 version (rare4 task, --population matched ONLY; the group's other
+candidate reading of the same final-state question, pending their
+decision between it and nonjet4): a matched-mode job also writes
+dataset_shard_rare4_inclusive.sqlite / _exclusive.sqlite, built from the
+SAME accepted events and the SAME N > 4 rejection rule as nonjet4 (N =
+selected electrons + selected muons + selected b-jets, using the TRUE
+per-event counts, never the display-capped label -- so rare4's own
+reject mask is identical to nonjet4's, and the task's own cross-check
+requires their rejected-event totals to match exactly). The ONLY
+difference from nonjet4: for a KEPT (N<=4) event, rare4 keeps EVERY
+selected object, including every selected light jet, completely
+unpadded/untruncated -- i.e. rare4 is simply the NORMAL version's own
+final-state grouping/labelling/combinations (including that version's
+own existing convention of capping each object type's DISPLAYED count at
+4 in the histogram name, e.g. 5 light jets shown as "4j") restricted to
+the N<=4 event rows. The implementation therefore reuses the normal
+version's own obj_record (already built above, byte-for-byte unmodified)
+and nonjet4's own reject mask, rather than re-deriving either. generic,
+v0, and the existing top-4/nonjet4 shards/diagnostics are completely
+unaffected by this addition (Hard Rule 5).
+
 Inclusive/exclusive de-duplication (task's own veto priority order, highest
 first: DoubleMuon > DoubleEG > MuonEG > SingleMuon > SingleElectron > JetHT
 > MET, services.datasets_records.VETO_ORDER): an event is "exclusive" to a
@@ -999,6 +1020,7 @@ def main():
     # accepted event, so it can never change n_after_gate/n_exclusive.
     top4_diagnostics = None
     nonjet4_diagnostics = None
+    rare4_diagnostics = None
     if args.population == "matched":
         top4_muons, top4_electrons, top4_light_jets, top4_bjets, n_original_objects = build_top4_object_record(
             muons[keep], electrons[keep], jets["Jets"][keep], jets["BJets"][keep]
@@ -1143,6 +1165,77 @@ def main():
             "skip_reason_totals": nonjet4_funnel_result["skip_reason_totals"],
         }
 
+        # --- rare4 rule (rare4 task, Step 1) -- see module docstring.
+        # Reuses nonjet4's own reject mask (n_lepton_bjet, nonjet4_keep_mask
+        # -- identical N>4 rule, same accepted-event rows) and the NORMAL
+        # version's own obj_record (built earlier, byte-for-byte
+        # unmodified) -- rare4 keeps every object of a kept event, so it
+        # is exactly obj_record restricted to the N<=4 rows, no re-
+        # derivation of truncation/padding needed at all.
+        rare4_keep_mask = nonjet4_keep_mask
+        n_rejected_rare4 = n_rejected
+        obj_record_rare4 = obj_record[rare4_keep_mask]
+        assert len(obj_record_rare4) == n_after_gate - n_rejected_rare4, (
+            f"rare4 rejection must remove exactly the N>4 events: "
+            f"len(obj_record_rare4)={len(obj_record_rare4)} != "
+            f"n_after_gate-n_rejected_rare4={n_after_gate - n_rejected_rare4}"
+        )
+        is_exclusive_selected_rare4 = is_exclusive_selected[rare4_keep_mask]
+
+        rare4_incl_shard_path = output_dir / "dataset_shard_rare4_inclusive.sqlite"
+        rare4_excl_shard_path = output_dir / "dataset_shard_rare4_exclusive.sqlite"
+        for path in (rare4_incl_shard_path, rare4_excl_shard_path):
+            if path.exists():
+                path.unlink()
+        writer_rare4_incl = SqliteArrayShardWriter(str(rare4_incl_shard_path))
+        writer_rare4_excl = SqliteArrayShardWriter(str(rare4_excl_shard_path))
+
+        rare4_funnel_result = run_combination_funnel(
+            obj_record_rare4, is_exclusive_selected_rare4, job_tag, all_combinations, im_config, logger,
+            writer_rare4_incl, writer_rare4_excl,
+        )
+
+        rare4_common_metadata = dict(common_metadata)
+        rare4_common_metadata["object_truncation"] = "rare4"
+        for writer in (writer_rare4_incl, writer_rare4_excl):
+            for k, v in rare4_common_metadata.items():
+                writer.set_metadata(k, v)
+            writer.commit()
+            writer.close()
+
+        # "Hidden" cases (rare4 task, Step 1 spec): rejected (N>4) events
+        # whose DISPLAY-CAPPED label (each object type's count capped at
+        # 4, physics_calcs.limit_particles_in_fs's own convention -- the
+        # SAME one the normal version's own final-state labels already
+        # use) would read e+m+b<=4, masking the true N>4 rejection --
+        # e.g. 5 muons/0 electrons/0 b-jets displays as "4m..." (capped
+        # digit sum 4, not >4). Reuses the rejected-event e/m/b arrays
+        # already computed above for nonjet4's own composition diagnostic
+        # (same rejected-event set, same counts).
+        capped_e_rej = np.minimum(n_e_rej, 4)
+        capped_m_rej = np.minimum(n_m_rej, 4)
+        capped_b_rej = np.minimum(n_b_rej, 4)
+        n_hidden_cases = int(((capped_e_rej + capped_m_rej + capped_b_rej) <= 4).sum())
+
+        rare4_diagnostics = {
+            "n_accepted_events_before_rare4_rule": n_after_gate,
+            "n_rejected_gt4_lepton_bjet": n_rejected_rare4,
+            "n_kept_le4_lepton_bjet": n_after_gate - n_rejected_rare4,
+            "n_hidden_cases": n_hidden_cases,
+            "rejected_N_distribution": rejected_N_distribution,
+            "rejected_event_composition": rejected_event_composition,
+            "n_fs_groups": rare4_funnel_result["n_fs_groups"],
+            "n_signature_writes_inclusive": rare4_funnel_result["n_signature_writes_incl"],
+            "n_signature_writes_exclusive": rare4_funnel_result["n_signature_writes_excl"],
+            "n_values_written_inclusive": rare4_funnel_result["n_values_written_incl"],
+            "n_values_written_exclusive": rare4_funnel_result["n_values_written_excl"],
+            "max_signature_size_this_job": rare4_funnel_result["max_signature_size"],
+            "n_capped_signatures": rare4_funnel_result["n_capped_signatures"],
+            "final_state_label_event_counts_inclusive": rare4_funnel_result["label_event_counts_incl"],
+            "final_state_label_event_counts_exclusive": rare4_funnel_result["label_event_counts_excl"],
+            "skip_reason_totals": rare4_funnel_result["skip_reason_totals"],
+        }
+
     elapsed = time.time() - t0
     incl_shard_size_mb = incl_shard_path.stat().st_size / (1024 * 1024)
     excl_shard_size_mb = excl_shard_path.stat().st_size / (1024 * 1024)
@@ -1182,6 +1275,7 @@ def main():
         "matching_diagnostics": matching_diagnostics,
         "top4_diagnostics": top4_diagnostics,
         "nonjet4_diagnostics": nonjet4_diagnostics,
+        "rare4_diagnostics": rare4_diagnostics,
     }
     (output_dir / "job_metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
 
