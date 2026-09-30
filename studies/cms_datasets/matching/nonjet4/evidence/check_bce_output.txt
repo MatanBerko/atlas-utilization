@@ -1,0 +1,26 @@
+=== Check (c): nonjet4 accepted == top4 accepted - rejected (incl & excl) ===
+  DoubleMuon_30522_0_matched: top4_incl=223393 - rejected=18 = 223375, nonjet4_incl(from FS sums)=223375, nonjet4_incl(diag)=223375 -> PASS
+           top4_excl=223393, nonjet4_excl=223375 (<=top4_excl, sanity bound only; exact exclusive identity verified independently in nonjet4_check_d_f.py) -> PASS
+  DoubleMuon_30555_0_matched: top4_incl=218886 - rejected=27 = 218859, nonjet4_incl(from FS sums)=218859, nonjet4_incl(diag)=218859 -> PASS
+           top4_excl=218886, nonjet4_excl=218859 (<=top4_excl, sanity bound only; exact exclusive identity verified independently in nonjet4_check_d_f.py) -> PASS
+  SingleMuon_30530_0_matched: top4_incl=1511878 - rejected=40 = 1511838, nonjet4_incl(from FS sums)=1511838, nonjet4_incl(diag)=1511838 -> PASS
+           top4_excl=1425358, nonjet4_excl=1425327 (<=top4_excl, sanity bound only; exact exclusive identity verified independently in nonjet4_check_d_f.py) -> PASS
+  SingleMuon_30563_0_matched: top4_incl=6919 - rejected=0 = 6919, nonjet4_incl(from FS sums)=6919, nonjet4_incl(diag)=6919 -> PASS
+           top4_excl=6529, nonjet4_excl=6529 (<=top4_excl, sanity bound only; exact exclusive identity verified independently in nonjet4_check_d_f.py) -> PASS
+Check (c) overall (inclusive identity HARD; exclusive bound here, exact identity in check_d_f): PASS
+
+=== Check (b): nonjet4 array is a sub-multiset of top-4 array, per signature ===
+=== Check (e): no nonjet4 category has total objects > 4 ===
+  DoubleMuon_30522_0_matched: check (e) PASS -- all 96 nonjet4 signatures have total<=4 and e+m+b<=4
+  DoubleMuon_30522_0_matched: check (b) inclusive=PASS, exclusive=PASS
+  DoubleMuon_30555_0_matched: check (e) PASS -- all 82 nonjet4 signatures have total<=4 and e+m+b<=4
+  DoubleMuon_30555_0_matched: check (b) inclusive=PASS, exclusive=PASS
+  SingleMuon_30530_0_matched: check (e) PASS -- all 198 nonjet4 signatures have total<=4 and e+m+b<=4
+  SingleMuon_30530_0_matched: check (b) inclusive=PASS, exclusive=PASS
+  SingleMuon_30563_0_matched: check (e) PASS -- all 86 nonjet4 signatures have total<=4 and e+m+b<=4
+  SingleMuon_30563_0_matched: check (b) inclusive=PASS, exclusive=PASS
+
+Check (b) overall: PASS
+Check (e) overall: PASS
+
+OVERALL checks (b)(c)(e): PASS

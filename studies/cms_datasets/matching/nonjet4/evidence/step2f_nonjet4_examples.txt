@@ -1,0 +1,224 @@
+nonjet4 task, Step 2 check (f): example events
+
+======================================================================
+
+PART 1: 10 accepted events with N (e+m+b) > 4 -- REJECTED from nonjet4
+
+--- DoubleMuon record 30522 file 0 event_index 5383: N=5, total_objects=5 -> REJECTED ---
+    Muon       pT=  48.772
+    Electron   pT=  44.106
+    Muon       pT=  39.021
+    BJet       pT=  31.406
+    Electron   pT=  26.992
+
+--- DoubleMuon record 30522 file 0 event_index 45718: N=5, total_objects=5 -> REJECTED ---
+    BJet       pT= 141.750
+    BJet       pT= 109.125
+    Electron   pT=  90.607
+    Muon       pT=  75.448
+    Muon       pT=  67.482
+
+--- DoubleMuon record 30522 file 0 event_index 95164: N=6, total_objects=6 -> REJECTED ---
+    BJet       pT= 141.750
+    BJet       pT= 133.375
+    BJet       pT= 104.062
+    BJet       pT= 103.250
+    Muon       pT=  94.180
+    Muon       pT=  75.936
+
+--- DoubleMuon record 30522 file 0 event_index 101515: N=5, total_objects=9 -> REJECTED ---
+    Jet        pT= 414.000
+    Jet        pT= 228.375
+    Jet        pT= 151.125
+    Muon       pT=  81.780
+    BJet       pT=  78.438
+    Muon       pT=  73.661
+    Jet        pT=  50.281
+    BJet       pT=  34.000
+    Muon       pT=  25.219
+
+--- DoubleMuon record 30522 file 0 event_index 104222: N=5, total_objects=5 -> REJECTED ---
+    BJet       pT= 156.000
+    Muon       pT= 121.291
+    BJet       pT=  83.625
+    Muon       pT=  66.889
+    BJet       pT=  40.625
+
+--- DoubleMuon record 30522 file 0 event_index 110148: N=5, total_objects=9 -> REJECTED ---
+    Jet        pT= 139.750
+    BJet       pT=  81.312
+    Muon       pT=  71.772
+    BJet       pT=  60.781
+    Jet        pT=  47.719
+    Muon       pT=  44.705
+    Jet        pT=  44.344
+    BJet       pT=  34.375
+    Jet        pT=  31.109
+
+--- DoubleMuon record 30522 file 0 event_index 122079: N=5, total_objects=6 -> REJECTED ---
+    BJet       pT= 148.000
+    Electron   pT= 134.783
+    Muon       pT=  59.611
+    Jet        pT=  47.656
+    Electron   pT=  47.049
+    Muon       pT=  42.765
+
+--- DoubleMuon record 30522 file 0 event_index 122696: N=5, total_objects=7 -> REJECTED ---
+    Muon       pT= 152.440
+    BJet       pT=  94.812
+    Muon       pT=  81.560
+    BJet       pT=  55.156
+    Jet        pT=  44.812
+    Jet        pT=  33.000
+    BJet       pT=  30.203
+
+--- DoubleMuon record 30522 file 0 event_index 147299: N=5, total_objects=5 -> REJECTED ---
+    BJet       pT= 136.000
+    Muon       pT=  83.506
+    BJet       pT=  61.656
+    BJet       pT=  49.531
+    Muon       pT=  35.230
+
+--- DoubleMuon record 30522 file 0 event_index 149428: N=5, total_objects=5 -> REJECTED ---
+    BJet       pT= 149.625
+    BJet       pT= 135.625
+    Muon       pT=  62.643
+    Muon       pT=  44.369
+    BJet       pT=  36.062
+
+======================================================================
+
+PART 2: 10 accepted events with N<=4 but >4 total objects -- KEPT, light jets dropped
+
+--- DoubleMuon record 30522 file 0 event_index 159: N=2, total_objects=6 -> KEPT (padded to 4) ---
+  Full object list:
+    Jet        pT= 225.500
+    Jet        pT=  81.688
+    Jet        pT=  63.594
+    Muon       pT=  44.618
+    Jet        pT=  42.750
+    Muon       pT=  34.196
+  KEPT (4 objects):
+    Muon       pT=  44.618  <-- KEPT
+    Muon       pT=  34.196  <-- KEPT
+    Jet        pT= 225.500  <-- KEPT
+    Jet        pT=  81.688  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 204: N=2, total_objects=5 -> KEPT (padded to 4) ---
+  Full object list:
+    Muon       pT= 111.531
+    Muon       pT=  84.574
+    Jet        pT=  82.812
+    Jet        pT=  65.125
+    Jet        pT=  49.062
+  KEPT (4 objects):
+    Muon       pT= 111.531  <-- KEPT
+    Muon       pT=  84.574  <-- KEPT
+    Jet        pT=  82.812  <-- KEPT
+    Jet        pT=  65.125  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 221: N=3, total_objects=5 -> KEPT (padded to 4) ---
+  Full object list:
+    Jet        pT=  99.000
+    Jet        pT=  94.562
+    Muon       pT=  52.631
+    Muon       pT=  38.883
+    BJet       pT=  34.312
+  KEPT (4 objects):
+    Muon       pT=  52.631  <-- KEPT
+    Muon       pT=  38.883  <-- KEPT
+    BJet       pT=  34.312  <-- KEPT
+    Jet        pT=  99.000  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 224: N=2, total_objects=6 -> KEPT (padded to 4) ---
+  Full object list:
+    Jet        pT= 269.000
+    Jet        pT= 183.750
+    Muon       pT= 130.921
+    Muon       pT=  95.438
+    Jet        pT=  39.188
+    Jet        pT=  32.438
+  KEPT (4 objects):
+    Muon       pT= 130.921  <-- KEPT
+    Muon       pT=  95.438  <-- KEPT
+    Jet        pT= 269.000  <-- KEPT
+    Jet        pT= 183.750  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 463: N=2, total_objects=5 -> KEPT (padded to 4) ---
+  Full object list:
+    Jet        pT= 234.250
+    Muon       pT= 154.053
+    Jet        pT=  83.062
+    Jet        pT=  38.406
+    Muon       pT=  35.436
+  KEPT (4 objects):
+    Muon       pT= 154.053  <-- KEPT
+    Muon       pT=  35.436  <-- KEPT
+    Jet        pT= 234.250  <-- KEPT
+    Jet        pT=  83.062  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 476: N=3, total_objects=5 -> KEPT (padded to 4) ---
+  Full object list:
+    Jet        pT=  84.250
+    Muon       pT=  70.765
+    BJet       pT=  69.562
+    Jet        pT=  42.812
+    Muon       pT=  36.544
+  KEPT (4 objects):
+    Muon       pT=  70.765  <-- KEPT
+    Muon       pT=  36.544  <-- KEPT
+    BJet       pT=  69.562  <-- KEPT
+    Jet        pT=  84.250  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 565: N=2, total_objects=5 -> KEPT (padded to 4) ---
+  Full object list:
+    Jet        pT=  61.031
+    Muon       pT=  52.133
+    Jet        pT=  37.625
+    Jet        pT=  34.500
+    Muon       pT=  29.013
+  KEPT (4 objects):
+    Muon       pT=  52.133  <-- KEPT
+    Muon       pT=  29.013  <-- KEPT
+    Jet        pT=  61.031  <-- KEPT
+    Jet        pT=  37.625  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 743: N=2, total_objects=5 -> KEPT (padded to 4) ---
+  Full object list:
+    Muon       pT=  55.287
+    Muon       pT=  42.135
+    Jet        pT=  38.219
+    Jet        pT=  31.406
+    Jet        pT=  31.312
+  KEPT (4 objects):
+    Muon       pT=  55.287  <-- KEPT
+    Muon       pT=  42.135  <-- KEPT
+    Jet        pT=  38.219  <-- KEPT
+    Jet        pT=  31.406  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 762: N=4, total_objects=6 -> KEPT (padded to 4) ---
+  Full object list:
+    BJet       pT= 132.875
+    Muon       pT= 129.337
+    Muon       pT=  71.088
+    Jet        pT=  70.125
+    BJet       pT=  34.281
+    Jet        pT=  31.047
+  KEPT (4 objects):
+    Muon       pT= 129.337  <-- KEPT
+    Muon       pT=  71.088  <-- KEPT
+    BJet       pT= 132.875  <-- KEPT
+    BJet       pT=  34.281  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 840: N=2, total_objects=5 -> KEPT (padded to 4) ---
+  Full object list:
+    Muon       pT=  68.623
+    Jet        pT=  52.188
+    Jet        pT=  51.781
+    Muon       pT=  38.630
+    Jet        pT=  35.656
+  KEPT (4 objects):
+    Muon       pT=  68.623  <-- KEPT
+    Muon       pT=  38.630  <-- KEPT
+    Jet        pT=  52.188  <-- KEPT
+    Jet        pT=  51.781  <-- KEPT
