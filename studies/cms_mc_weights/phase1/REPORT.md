@@ -241,22 +241,24 @@ normalization offset.
 The V3a (DY-dominated, zero-b-jet) ratio, **1.235, exceeds the stated
 5-10% expectation** (would be 1.05-1.10). The two b-jet-region ratios
 (1.395, 1.427) are larger still, consistent with "looser" as stated but
-larger than a first guess might suggest. The most likely explanation,
-stated plainly and not chased further (out of scope): **phase-1 only
-includes 2 of the ~15 Tier-1 background samples** (DY M-50 madgraphMLM +
-TTTo2L2Nu only — every other Tier-1 sample, including tW, TTToSemiLeptonic,
-WW/WZ/ZZ, ttZ/ttW, is explicitly out of scope for phase-1). A real "2
-muons + jet(s) [+ b-jet(s)]" data category also receives contributions
-from processes with real jets and (for the b-jet categories) real b-quarks
-that are missing from this MC stack entirely — tW and TTToSemiLeptonic in
-particular are exactly the kind of single-top/semileptonic-ttbar
-processes that would raise a b-jet category's MC yield, and their absence
-is a completely different effect from a weight-formula bug. Since V1/V2
-independently confirm the weight arithmetic itself is correct to
-2e-8-1e-7 relative precision, the most parsimonious reading of the V3
-gap is **missing backgrounds, not a normalization defect** — this is a
-scope limitation to flag for the next round (adding the rest of Tier-1),
-not something to fix by tuning phase-1's own numbers.
+larger than a first guess might suggest.
+
+**This was NOT left as a guess.** A dedicated diagnosis round
+(`studies/cms_mc_weights/phase1/DIAGNOSIS.md`) tested "missing
+backgrounds" as one of four candidate explanations, alongside a global
+normalisation issue, jet-multiplicity mismodelling, and LO-vs-NLO Drell-Yan
+modelling — by actually measuring the missing backgrounds (not guessing
+at their size), and by checking the most inclusive possible Z-peak ratio
+before any of phase-1's own category cuts. **Conclusion: missing
+backgrounds are real but explain only a modest fraction of the gap**
+(closing it from 1.235→1.164, 1.395→1.351, 1.427→1.379 once measured, not
+estimated); the larger effect is a ~21.5% excess already present in the
+fully inclusive Z-peak (a scale no plausible missing-background
+contribution can produce), plus a separate, clear jet-multiplicity-
+dependent trend, plus a substantial LO-vs-NLO Drell-Yan modelling effect
+specific to the zero-b-jet category. See `DIAGNOSIS.md`'s D0-D5 for the
+full evidence and reasoning; **do not read the V3 gap here as "missing
+backgrounds, not a bug" — that reading is superseded by DIAGNOSIS.md.**
 
 ## V4 -- Leptoquark overlay
 
@@ -311,12 +313,14 @@ plot, not a claim.
 ## Anything not verified
 
 - **Why V3's data/MC ratio (1.24-1.43) exceeds the naively-stated 5-10%
-  DY-dominated expectation was not independently confirmed to be
-  entirely explained by missing Tier-1 samples** — this is the most
-  parsimonious explanation given V1/V2's independent confirmation of the
-  weight arithmetic, but adding the remaining Tier-1 samples (explicitly
-  out of scope for phase-1) was not done to check whether it closes the
-  gap.
+  DY-dominated expectation was investigated in a dedicated diagnosis
+  round** (`DIAGNOSIS.md`) rather than left as an open question — see
+  that document for the full evidence. Superseded here: this report's
+  original "missing backgrounds, not a bug" reading was tested directly
+  and found insufficient on its own; `DIAGNOSIS.md` D5 gives the fuller
+  picture (a global-normalisation-level effect, a jet-multiplicity trend,
+  and a category-specific LO/NLO Drell-Yan effect, in addition to a real
+  but modest missing-background contribution).
 - The `GluGluHToZZTo4L_M125`-style unresolved k-factor gap and the
   `ZZTo2L2Nu` 42%-discrepancy question from `INVESTIGATION.md`/DESIGN.md
   remain exactly as flagged there — untouched by phase-1 (neither sample
@@ -332,14 +336,9 @@ plot, not a claim.
 ## Next step
 
 With V1/V2 passing at the 2e-8-1e-7 level (the weight arithmetic itself
-is correct) and V3 showing a real but explicable gap (missing Tier-1
-backgrounds), the logical next step is **extending this same phase-1
-machinery to the rest of the Tier-1 sample list** (tW top/antitop,
-TTToSemiLeptonic, WW/WZ/ZZ, ttZ/ttW, ggH/VBF -- everything
-`normalisation_table_v2.csv` already has a settled sigma_eff for, minus
-the explicitly-excluded ZZTo2L2Nu and gg->ZZ family) to build the full
-combined SM-background file DESIGN.md Sec 8 specifies, and re-running V3
-on the completed stack to see whether the data/MC gap narrows toward the
-originally-stated 5-10% once the missing processes are included — that
-re-check is the direct way to confirm (or rule out) this report's own
-"missing backgrounds, not a bug" reading of the V3 gap.
+is correct), the V3 gap was diagnosed in a dedicated follow-up round --
+see `studies/cms_mc_weights/phase1/DIAGNOSIS.md` for the full D0-D5
+evidence and its own logical next step (isolating the global-
+normalisation-level effect DIAGNOSIS.md's D5 identifies as the largest
+single contributor). This report's own original "missing backgrounds,
+not a bug" reading of the V3 gap is superseded by that document.
