@@ -116,8 +116,9 @@ import uproot  # noqa: E402
 from services.calculations import physics_calcs  # noqa: E402
 from services.calculations.combinatorics import get_all_combinations, get_count, get_start  # noqa: E402
 from services.calculations.im_calculator import IMCalculator  # noqa: E402
-from services.parsing.validated_runs import ValidatedRunsFilter, apply_validated_runs_filter  # noqa: E402
+from services.parsing.validated_runs import ValidatedRunsFilter, apply_validated_runs_filter, is_simulation  # noqa: E402
 from services.parsing.trigger_requirements import apply_trigger_requirement  # noqa: E402
+from services.parsing.mc_weights import read_runs_tree_sums  # noqa: E402
 from services.pipelines.im_pipeline import (  # noqa: E402
     _calculate_combination_invariant_mass,
     prepare_im_combination_name,
@@ -164,6 +165,18 @@ MIN_TOTAL_SELECTED_OBJECTS = 2  # generic population gate
 MATCHED_MODE_EXTRA_BRANCHES = (
     "nTrigObj", "TrigObj_pt", "TrigObj_eta", "TrigObj_phi", "TrigObj_id", "TrigObj_filterBits",
 )
+# CMS MC weights task (v2): --is-mc, --population matched ONLY. Read
+# alongside everything else, unconditionally required when --is-mc is
+# passed (fail loudly rather than silently weight events as 1.0) --
+# carried through every mask/gate/truncation step exactly like the object
+# branches themselves (a plain field of `events`/`events_triggered`, so
+# awkward's own `events[mask]` already keeps it aligned -- no separate
+# mask needs to be re-derived). --is-mc is False by default and every new
+# code path below is conditioned on it, so a data-mode (--is-mc absent)
+# run is byte-for-byte identical to before this addition (see DIAGNOSIS.md
+# reference in studies/cms_mc_weights/v2/REPORT.md for the regression
+# proof against the 4 nonjet4 pilot files).
+MC_ONLY_BRANCHES = ("genWeight", "L1PreFiringWeight_Nom")
 # In matched mode ONLY, SingleMuon's own trigger set is HLT_IsoMu24 alone
 # (Maryna's explicit instruction) -- generic mode's SingleMuon trigger set
 # (both IsoMu24 and IsoTkMu24) is untouched, since datasets_records.py
@@ -593,19 +606,45 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array, bjets: ak.Array) -
 
 def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarray, job_tag: str,
                              all_combinations: list, im_config: dict, logger,
-                             writer_incl: SqliteArrayShardWriter, writer_excl: SqliteArrayShardWriter) -> dict:
+                             writer_incl: SqliteArrayShardWriter, writer_excl: SqliteArrayShardWriter,
+                             event_weights: np.ndarray | None = None,
+                             writer_weights_incl: SqliteArrayShardWriter | None = None,
+                             writer_weights_excl: SqliteArrayShardWriter | None = None) -> dict:
     """The exact combination/shard-writing funnel that used to be main()'s
     own inline for-loop, extracted verbatim (top-4 task, Step 1) so it can
     be called a SECOND time on a top-4-truncated obj_record without
     duplicating ~90 lines of code. Called with the UNCHANGED obj_record
     (generic/v0/matched-normal), this produces byte-for-byte the same
     shards and stats as before the refactor (Hard Rule 5) -- nothing about
-    the logic below differs from the pre-refactor inline version."""
+    the logic below differs from the pre-refactor inline version.
+
+    `event_weights` (CMS MC weights task v2, --is-mc only): an optional
+    (N, 2) float64 array -- columns (genWeight, L1PreFiringWeight_Nom),
+    RAW (not yet multiplied by any cross section/luminosity/normalisation
+    factor -- that happens at delivery-build time, never here) -- aligned
+    row-for-row to `obj_record` (same row order/count). When given
+    (together with both weight writers), every row-reduction this
+    function already applies to the mass array on its way from
+    `obj_record` to a stored value (final-state grouping, the exact-count
+    combination mask, the NaN drop, the cap-subsample pick) is applied
+    IN LOCKSTEP to `event_weights`, so the weight stored at position i of
+    a signature's weight array always corresponds to the mass stored at
+    position i of that same signature's mass array. When `event_weights`
+    is None (every existing call site, and every --is-mc-absent call),
+    this function is 100% unchanged from before this parameter existed --
+    no new branch is taken, no new array is computed, nothing is written
+    beyond what was already written (data mode byte-for-byte identity)."""
     calculator = IMCalculator(
         events=obj_record, min_events_per_fs=1,
         min_k=MIN_COUNT_PARTICLE_IN_COMBINATION, max_k=MAX_COUNT_PARTICLE_IN_COMBINATION,
         min_n=MIN_PARTICLES_IN_COMBINATION, max_n=MAX_PARTICLES_IN_COMBINATION,
     )
+
+    has_weights = event_weights is not None
+    if has_weights:
+        assert len(event_weights) == len(obj_record) and writer_weights_incl is not None and writer_weights_excl is not None, (
+            "event_weights, when given, must be row-aligned to obj_record and both weight writers must be provided"
+        )
 
     n_fs_groups = 0
     n_signature_writes_incl = 0
@@ -629,6 +668,8 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
         label_event_counts_excl[label] = label_event_counts_excl.get(label, 0) + n_excl_this_group
         writer_excl.record_final_state_count(label, n_excl_this_group)
 
+        fs_weights = event_weights[group_mask] if has_weights else None
+
         for combination in all_combinations:
             if not physics_calcs.is_finalstate_contain_combination(label, combination):
                 continue
@@ -647,11 +688,14 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
                 f"alignment check failed for {label}/{combination}: "
                 f"{combo_is_exclusive.size} != {len(inv_mass)}"
             )
+            combo_weights = fs_weights[combo_row_mask] if has_weights else None
 
             arr = ak.to_numpy(inv_mass).astype(np.float32)
             nan_mask = ~np.isnan(arr)
             arr = arr[nan_mask]
             combo_is_exclusive = combo_is_exclusive[nan_mask]
+            if has_weights:
+                combo_weights = combo_weights[nan_mask]
             if arr.size == 0:
                 continue
 
@@ -665,17 +709,23 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
                 pick = rng.choice(arr.size, size=COVERAGE_CAP_PER_SIGNATURE, replace=False)
                 arr = arr[pick]
                 combo_is_exclusive = combo_is_exclusive[pick]
+                if has_weights:
+                    combo_weights = combo_weights[pick]
                 writer_incl.set_metadata(f"CAPPED::{signature}", f"true_size={true_size}")
 
             writer_incl.append_array(signature, arr)
             n_signature_writes_incl += 1
             n_values_written_incl += int(arr.size)
+            if has_weights:
+                writer_weights_incl.append_array(signature, combo_weights)
 
             excl_arr = arr[combo_is_exclusive]
             if excl_arr.size > 0:
                 writer_excl.append_array(signature, excl_arr)
                 n_signature_writes_excl += 1
                 n_values_written_excl += int(excl_arr.size)
+                if has_weights:
+                    writer_weights_excl.append_array(signature, combo_weights[combo_is_exclusive])
 
     return {
         "n_fs_groups": n_fs_groups,
@@ -759,7 +809,15 @@ def main():
     p.add_argument("--output-dir", required=True)
     p.add_argument("--population", choices=["generic", "v0", "matched"], default="generic")
     p.add_argument("--validated-runs-json", default=DEFAULT_VALIDATED_RUNS_JSON)
+    p.add_argument("--is-mc", action="store_true",
+                    help="CMS MC weights task (v2): read/carry genWeight+L1PreFiringWeight_Nom, "
+                         "skip the golden-JSON filter (asserting simulation instead), and write "
+                         "an extra MC-only weights shard alongside each mass shard. Only valid "
+                         "with --population matched. Absent (default False): behaviour is "
+                         "byte-for-byte identical to before this flag existed.")
     args = p.parse_args()
+    if args.is_mc and args.population != "matched":
+        raise ValueError("--is-mc is only implemented for --population matched")
 
     logging.basicConfig(level=logging.WARNING, format="%(asctime)s %(levelname)s %(message)s")
     logger = logging.getLogger("run_dataset_on_file")
@@ -783,6 +841,8 @@ def main():
     required_branches = list(BASE_OBJECT_BRANCHES) + sorted(set(all_trigger_branches))
     if args.population == "matched":
         required_branches = list(required_branches) + list(MATCHED_MODE_EXTRA_BRANCHES)
+    if args.is_mc:
+        required_branches = list(required_branches) + list(MC_ONLY_BRANCHES)
 
     t0 = time.time()
     output_dir = Path(args.output_dir)
@@ -795,8 +855,30 @@ def main():
     n_read = len(events)
     print(f"[{dataset_label}] read {n_read} events", flush=True)
 
-    validated_runs = ValidatedRunsFilter(args.validated_runs_json)
-    events_golden, golden_stats = apply_validated_runs_filter(events, validated_runs)
+    mc_sum_genweight_all_events_this_file = None
+    mc_runs_tree_sums = None
+    if args.is_mc:
+        # (i): golden-JSON is skipped entirely for MC, with a runtime
+        # assertion that the file really is simulation -- never silently
+        # applied (validated_runs.apply_validated_runs_filter itself would
+        # raise on simulation anyway; this makes the choice explicit and
+        # fails before that point if the assumption is wrong).
+        assert is_simulation(events), (
+            f"--is-mc was passed but {file_url} does not look like simulation "
+            f"(no genWeight field / run != 1 -- see services.parsing.validated_runs.is_simulation)"
+        )
+        events_golden = events
+        golden_stats = {"n_before": n_read, "n_after": n_read, "per_run": {}}
+        # Cheap (already in memory, no extra read): the FULL, pre-any-cut
+        # genWeight sum for this file, for the delivery builder's own
+        # bad-file policy (Sigma genWeight vs Runs genEventSumw agreement).
+        mc_sum_genweight_all_events_this_file = float(ak.to_numpy(events["genWeight"]).sum())
+        # (iii): per-file Runs-tree genEventSumw/genEventCount, read via
+        # fork master's existing, unmodified read_runs_tree_sums.
+        mc_runs_tree_sums = read_runs_tree_sums(file_url)
+    else:
+        validated_runs = ValidatedRunsFilter(args.validated_runs_json)
+        events_golden, golden_stats = apply_validated_runs_filter(events, validated_runs)
     n_after_golden_json = golden_stats["n_after"]
     print(f"[{dataset_label}] golden-JSON filter: {golden_stats['n_before']} -> {n_after_golden_json}", flush=True)
 
@@ -806,6 +888,15 @@ def main():
     n_after_trigger = trigger_stats["n_after"]
     print(f"[{dataset_label}] own-trigger requirement ({own_paths}): "
           f"{trigger_stats['n_before']} -> {n_after_trigger}, per_path={trigger_stats['per_path']}", flush=True)
+
+    # (ii): genWeight/L1PreFiringWeight_Nom are plain top-level scalar
+    # fields of `events_triggered` (read alongside everything else) -- no
+    # separate mask needs to be re-derived to keep them aligned: every
+    # reduction so far (`events[mask]`) already carries every field,
+    # scalar or jagged, in lockstep, exactly as it does for the object
+    # branches themselves.
+    gen_weight_triggered = ak.to_numpy(events_triggered["genWeight"]).astype(np.float64) if args.is_mc else None
+    l1_prefiring_triggered = ak.to_numpy(events_triggered["L1PreFiringWeight_Nom"]).astype(np.float64) if args.is_mc else None
 
     # Veto masks (Step 2 de-duplication), computed on events_triggered --
     # i.e. AFTER this dataset's own trigger, matching the task's own
@@ -853,6 +944,7 @@ def main():
 
     v0_result = None
     matching_diagnostics = None
+    event_weights = None
     if args.population == "generic":
         total_objects = ak.num(muons) + ak.num(electrons) + ak.num(jets["Jets"]) + ak.num(jets["BJets"])
         keep = ak.to_numpy(total_objects >= MIN_TOTAL_SELECTED_OBJECTS)
@@ -887,6 +979,10 @@ def main():
         matching_diagnostics = compute_matching_diagnostics(muons, trigobj, required_bit, min_matched, leading_pt_min)
         obj_record = selection.build_object_record(
             muons[keep], electrons[keep], {"Jets": jets["Jets"][keep], "BJets": jets["BJets"][keep]}
+        )
+        event_weights = (
+            np.stack([gen_weight_triggered[keep], l1_prefiring_triggered[keep]], axis=1)
+            if args.is_mc else None
         )
 
         if dataset_label == "SingleMuon":
@@ -956,8 +1052,22 @@ def main():
     writer_incl = SqliteArrayShardWriter(str(incl_shard_path))
     writer_excl = SqliteArrayShardWriter(str(excl_shard_path))
 
+    # MC-only weight shards (v2 task): a SEPARATE pair of files, never
+    # mixed into the data shard schema above. Created only when --is-mc.
+    writer_weights_incl = writer_weights_excl = None
+    weights_incl_shard_path = weights_excl_shard_path = None
+    if args.is_mc:
+        weights_incl_shard_path = output_dir / "dataset_shard_weights_inclusive.sqlite"
+        weights_excl_shard_path = output_dir / "dataset_shard_weights_exclusive.sqlite"
+        for path in (weights_incl_shard_path, weights_excl_shard_path):
+            if path.exists():
+                path.unlink()
+        writer_weights_incl = SqliteArrayShardWriter(str(weights_incl_shard_path))
+        writer_weights_excl = SqliteArrayShardWriter(str(weights_excl_shard_path))
+
     funnel_result = run_combination_funnel(
         obj_record, is_exclusive_selected, job_tag, all_combinations, im_config, logger, writer_incl, writer_excl,
+        event_weights=event_weights, writer_weights_incl=writer_weights_incl, writer_weights_excl=writer_weights_excl,
     )
     n_fs_groups = funnel_result["n_fs_groups"]
     n_signature_writes_incl = funnel_result["n_signature_writes_incl"]
@@ -989,6 +1099,12 @@ def main():
             writer.set_metadata(k, v)
         writer.commit()
         writer.close()
+    if args.is_mc:
+        for writer in (writer_weights_incl, writer_weights_excl):
+            for k, v in common_metadata.items():
+                writer.set_metadata(k, v)
+            writer.commit()
+            writer.close()
 
     # --- Top-4 truncation (Shikma/Maryna's request, top-4 task Step 1) ---
     # --population matched ONLY -- generic/v0 are completely untouched
@@ -1019,9 +1135,24 @@ def main():
         writer_top4_incl = SqliteArrayShardWriter(str(top4_incl_shard_path))
         writer_top4_excl = SqliteArrayShardWriter(str(top4_excl_shard_path))
 
+        # MC weights: top-4 truncation is row-preserving (asserted above,
+        # len(obj_record_top4) == n_after_gate), so the SAME event_weights
+        # array (unchanged) is still correctly row-aligned here.
+        writer_top4_weights_incl = writer_top4_weights_excl = None
+        if args.is_mc:
+            top4_weights_incl_shard_path = output_dir / "dataset_shard_top4_weights_inclusive.sqlite"
+            top4_weights_excl_shard_path = output_dir / "dataset_shard_top4_weights_exclusive.sqlite"
+            for path in (top4_weights_incl_shard_path, top4_weights_excl_shard_path):
+                if path.exists():
+                    path.unlink()
+            writer_top4_weights_incl = SqliteArrayShardWriter(str(top4_weights_incl_shard_path))
+            writer_top4_weights_excl = SqliteArrayShardWriter(str(top4_weights_excl_shard_path))
+
         top4_funnel_result = run_combination_funnel(
             obj_record_top4, is_exclusive_selected, job_tag, all_combinations, im_config, logger,
             writer_top4_incl, writer_top4_excl,
+            event_weights=event_weights, writer_weights_incl=writer_top4_weights_incl,
+            writer_weights_excl=writer_top4_weights_excl,
         )
 
         top4_common_metadata = dict(common_metadata)
@@ -1031,6 +1162,12 @@ def main():
                 writer.set_metadata(k, v)
             writer.commit()
             writer.close()
+        if args.is_mc:
+            for writer in (writer_top4_weights_incl, writer_top4_weights_excl):
+                for k, v in top4_common_metadata.items():
+                    writer.set_metadata(k, v)
+                writer.commit()
+                writer.close()
 
         n_truncated = int((n_original_objects > 4).sum())
         from collections import Counter
@@ -1079,6 +1216,7 @@ def main():
         )
 
         is_exclusive_selected_nonjet4 = is_exclusive_selected[nonjet4_keep_mask]
+        event_weights_nonjet4 = event_weights[nonjet4_keep_mask] if args.is_mc else None
 
         nonjet4_incl_shard_path = output_dir / "dataset_shard_nonjet4_inclusive.sqlite"
         nonjet4_excl_shard_path = output_dir / "dataset_shard_nonjet4_exclusive.sqlite"
@@ -1088,9 +1226,21 @@ def main():
         writer_nonjet4_incl = SqliteArrayShardWriter(str(nonjet4_incl_shard_path))
         writer_nonjet4_excl = SqliteArrayShardWriter(str(nonjet4_excl_shard_path))
 
+        writer_nonjet4_weights_incl = writer_nonjet4_weights_excl = None
+        if args.is_mc:
+            nonjet4_weights_incl_shard_path = output_dir / "dataset_shard_nonjet4_weights_inclusive.sqlite"
+            nonjet4_weights_excl_shard_path = output_dir / "dataset_shard_nonjet4_weights_exclusive.sqlite"
+            for path in (nonjet4_weights_incl_shard_path, nonjet4_weights_excl_shard_path):
+                if path.exists():
+                    path.unlink()
+            writer_nonjet4_weights_incl = SqliteArrayShardWriter(str(nonjet4_weights_incl_shard_path))
+            writer_nonjet4_weights_excl = SqliteArrayShardWriter(str(nonjet4_weights_excl_shard_path))
+
         nonjet4_funnel_result = run_combination_funnel(
             obj_record_nonjet4, is_exclusive_selected_nonjet4, job_tag, all_combinations, im_config, logger,
             writer_nonjet4_incl, writer_nonjet4_excl,
+            event_weights=event_weights_nonjet4, writer_weights_incl=writer_nonjet4_weights_incl,
+            writer_weights_excl=writer_nonjet4_weights_excl,
         )
 
         nonjet4_common_metadata = dict(common_metadata)
@@ -1100,6 +1250,12 @@ def main():
                 writer.set_metadata(k, v)
             writer.commit()
             writer.close()
+        if args.is_mc:
+            for writer in (writer_nonjet4_weights_incl, writer_nonjet4_weights_excl):
+                for k, v in nonjet4_common_metadata.items():
+                    writer.set_metadata(k, v)
+                writer.commit()
+                writer.close()
 
         # Required diagnostics (nonjet4 task, Step 1 spec): distribution of
         # N and the electron/muon/b-jet composition of the REJECTED (N>4)
@@ -1183,6 +1339,13 @@ def main():
         "top4_diagnostics": top4_diagnostics,
         "nonjet4_diagnostics": nonjet4_diagnostics,
     }
+    if args.is_mc:
+        # Purely additive -- every key above is untouched, so a data-mode
+        # (--is-mc absent) run's job_metadata.json is byte-for-byte
+        # identical to before this block existed.
+        metadata["is_mc"] = True
+        metadata["mc_runs_tree_sums_this_file"] = mc_runs_tree_sums
+        metadata["mc_sum_genweight_all_events_this_file"] = mc_sum_genweight_all_events_this_file
     (output_dir / "job_metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
 
     print(json.dumps({
