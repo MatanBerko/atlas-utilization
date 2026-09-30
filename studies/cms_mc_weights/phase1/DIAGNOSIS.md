@@ -339,7 +339,20 @@ much smaller share there.
 
 ---
 
-## D5. Synthesis: which explanation(s) does the evidence support?
+## D5. Synthesis (round 1) -- SUPERSEDED, kept for the record
+
+> **Revision note (round 2):** the technical lead's review of this
+> section found that D1's "inclusive" ratio was never actually
+> inclusive -- D0 already established that the shared base selection
+> requires ≥1 jet, so D1's 1.215 is a **Z + ≥1 jet** ratio, computed only
+> with LO madgraphMLM DY, the one generator known to mismodel jet
+> multiplicity. **Round 2 (below) tested this directly and found that
+> the "global normalisation issue" read below is NOT supported once the
+> truly inclusive (0-jet-included) population is used with an
+> appropriate (NLO) DY generator -- see the Round 2 section for the
+> superseding conclusion.** The text immediately below is preserved
+> unedited as a record of round 1's (incomplete) reasoning; treat
+> **Round 2's synthesis, not this one, as this document's conclusion.**
 
 **(a) Missing backgrounds -- real effect, confirmed too small to be the
 main story.** Measured directly (D4): adding the 6 extra Tier-1
@@ -347,22 +360,20 @@ processes moves phase-1's own three ratios down by 5-7 percentage points
 each (1.235→1.164, 1.395→1.351, 1.427→1.379). That is a genuine,
 non-trivial contribution -- but it leaves 95%+ of the original gap
 untouched in every category. **Ruled out as the dominant cause; kept as
-a real, minor, now-quantified contributor.**
+a real, minor, now-quantified contributor.** *(Round 2: unchanged.)*
 
-**(b) Global normalisation issue -- NOT ruled out; the single largest
-number in this whole diagnosis.** D1's inclusive Z-peak ratio (DY+ttbar
-only, before any of phase-1's category-specific cuts) is **1.215** --
-a 21.5% data excess, at the most model-independent, least
-background-contaminated point in the whole analysis. A discrepancy this
-large, present already at the most inclusive level, cannot be produced
-by a "few-percent" missing-background effect (which D4 just measured
+**(b) Global normalisation issue -- claimed here as "not ruled out" and
+"the single largest number." Round 2 supersedes this: see below.** D1's
+inclusive Z-peak ratio (DY+ttbar only, before any of phase-1's
+category-specific cuts) is **1.215** -- a 21.5% data excess, at the
+most model-independent, least background-contaminated point in the
+whole analysis, or so it appeared. A discrepancy this large, present
+already at the most inclusive level, cannot be produced by a
+"few-percent" missing-background effect (which D4 just measured
 directly to BE only a few percent). Something at the global level --
 luminosity, an overall trigger/selection efficiency mismatch between
-data and simulation, or the normalisation formula itself -- is the
-leading candidate, and this diagnosis round did not (and per its own
-scope, could not) test it further: doing so would mean checking trigger
-efficiency, muon ID/iso efficiency, or the luminosity number itself
-against an independent source, all out of scope here.
+data and simulation, or the normalisation formula itself -- was read
+here as the leading candidate.
 
 **(c) Jet-multiplicity mismodelling (including pileup) -- supported by a
 clean, monotonic signature.** D1 shows the ratio climbing steadily with
@@ -375,33 +386,248 @@ meaning it is not something the DY LO/NLO swap alone fixes -- it points
 at jet modelling more broadly (parton shower, or backgrounds/pileup not
 tested here) rather than at Drell-Yan's own extra-jet description alone.
 Pileup itself could not be directly tested (D3) for lack of the
-necessary branch in the existing data-side output.
+necessary branch in the existing data-side output. *(Round 2: confirmed
+and sharpened -- see below.)*
 
-**(d) LO vs NLO Drell-Yan modelling -- a real, substantial, but
-category-confined effect.** D4's stack (a)→(b) swap moves the DY-
+**(d) LO vs NLO Drell-Yan modelling -- read here as "a real, substantial,
+but category-confined effect."** D4's stack (a)→(b) swap moves the DY-
 dominated V3a category by 21 percentage points (1.164 → 0.950) -- large
 enough to plausibly explain most or all of the residual excess **in that
 one category specifically**. But the same swap barely moves the ttbar-
 dominated b-tag categories (1.351→1.136, 1.379→1.266 -- still well above
-1), because DY is a much smaller fraction of the stack there. **LO vs
-NLO DY choice is not a global explanation; it is a real, large,
-category-specific one.**
-
-**Overall picture, stated plainly:** no single explanation on this list
-accounts for everything.
-- The **0-b-jet category's** excess is plausibly explained almost
-  entirely by (b) + (d) together (better DY modelling nearly closes it,
-  and what's left is consistent with (b)'s global-level effect).
-- The **b-tag categories'** excess (ttbar-dominated, where DY choice
-  barely matters) is **not** explained by (d), only partly by (a), and
-  still shows (c)'s rising-with-jet-count pattern on top of (b)'s global
-  effect -- these categories' gap remains the least understood of the
-  three.
-- **(b), the global-normalisation-level effect, is present everywhere**
-  and is the only candidate large enough by itself to explain the
-  smallest (inclusive Z-peak) number in this whole document. It was not
-  further isolated (which specific global factor) within this round's
-  scope.
+1), because DY is a much smaller fraction of the stack there. *(Round 2:
+this effect turns out to be much larger and much more central than
+round 1 could see -- because round 1 never removed the ≥1-jet floor
+that was itself hiding how much of "(b)" was actually "(d)" in
+disguise. See below.)*
 
 No tuning, fudge factor, or scale factor is recommended anywhere in this
 document, per the task's explicit instruction.
+
+---
+
+# Round 2: is it really a global normalisation issue?
+
+Round 1 (D0-D5 above) never actually tested a truly inclusive
+population, and used only the LO Drell-Yan generator for its headline
+"inclusive" number. This round removes both limitations directly.
+
+## E1. Full 9-sample stack, existing outputs only (no new jobs)
+
+Re-ran D1's Z-peak table (`diagnosis/e1_zpeak_full_stack.py`,
+`e1_zpeak_full_stack_result.json`) with the full measured 9-sample
+background stack (D4's samples) instead of just DY+ttbar, for both DY
+generators. **This is still a Z + >=1 jet ratio** (D0's floor still
+applies -- E1 reuses the same raw per-job outputs D1 did) -- E2 below
+removes that floor.
+
+| Category | Stack (a) LO madgraphMLM | Stack (b) NLO amcatnloFXFX |
+|---|---|---|
+| Inclusive (>=1 jet), 60-120 GeV | 1.211 +/- 0.002 | **0.996 +/- 0.002** |
+| 1 jet | 1.182 | 0.982 |
+| 2 jets | 1.304 | 0.993 |
+| >=3 jets | 1.397 | 1.284 |
+| 0 b-jets | 1.206 | 0.989 |
+| >=1 b-jets | 1.351 | 1.182 |
+
+The 7 extra backgrounds barely move the "inclusive >=1 jet" number from
+D1's 2-sample 1.215 to 1.211 (stack a) -- confirming again (D4's own
+finding) that missing backgrounds are a minor effect. **The striking
+result is generator choice**: swapping to NLO DY alone takes the >=1-jet
+inclusive ratio from a 21% excess to consistent with unity (0.996), even
+though this stack still has the >=1-jet floor baked in.
+
+## E2. Truly inclusive Z-peak (0-jet events included)
+
+**Reused, never copied, the shared object-level code.** Built
+`diagnosis/zpeak_reader.py`, a new standalone driver that imports (not
+copies) `selection.apply_trigger`, `selection.select_muons`,
+`selection.select_electrons`, `selection.select_and_split_jets`,
+`selection.compute_dimuon_mass`, `selection.compute_dimuon_diagnostics`,
+and `selection.leading_jet_pt` directly -- the lower-level functions
+`select_event_selection_cutflow` itself calls internally, used here
+*without* that function's own `has_ge1jet` floor. The only new logic is
+(i) not applying that floor, (ii) a `pT>50` jet count derived by further
+filtering the already pT>30/eta/ID/cleaned `Jets` collection (same
+object definition, stricter threshold on its own output -- not a
+re-derivation of the cuts), and (iii) reading `PV_npvsGood` (both) and
+`genWeight`/`L1PreFiringWeight_Nom`/`Pileup_nTrueInt` (MC only), none of
+which `selection.py` reads by default. **No shared logic was copied; the
+task's "STOP and report" fallback was not needed.**
+
+**Opposite-sign requirement**: confirmed by reading
+`compute_dimuon_mass`/`compute_m0m1j0` directly -- **neither imposes
+one**. They pad/sort the two selected muons by pT only and never inspect
+charge; `compute_dimuon_diagnostics`'s `charge_product` is
+diagnostic-only in the shared code too. Recorded per-event here as
+`is_os`, never used as a cut, matching the shared code's own behaviour
+exactly.
+
+**Tested first, as required**: 1 data file (30522/file 0, 2,315,223
+events) ran in **30.5 s**; 1 MC file (35671/file 0, 1,434,319 events) ran
+in **15.7 s** -- both far inside the 30-minute walltime budget. Submitted
+as PBS arrays for data (30522: 29 files, 30555: 28 files) and MC (35671:
+61, 35669: 41, 67801: 49) -- **208/208 files succeeded, 0 failures**.
+Output: 190 MB total under
+`/storage/agrp/berkom/atlas-utilization/work/cms_mc_phase1/diagnosis_zpeak/`
+(21 MB/24 MB/71 MB/62 MB/14 MB per record) -- **kept on the cluster
+only**, per the task's storage instruction; only the small analysis
+result and plots are committed.
+
+**Cross-check against round 1, and it passes cleanly**: this pass's own
+>=1-jet(pT>30) subset reproduces D1's 2-sample (LO DY+ttbar) ratio almost
+exactly -- **1.21522 vs D1's 1.21522** (1,603,535 vs 1,603,536 events,
+off by exactly one event out of 1.6 million, negligible). For NLO DY,
+this pass's own >=1-jet ratio (0.9987) is close to E1's 9-sample stack-b
+figure (0.9958) -- the small remaining gap is expected and explained:
+E1's stack additionally includes 7 small backgrounds (~2-4% of the stack
+per D4) this 2-sample pass doesn't have. **This independent, from-scratch
+driver -- built without touching the shared combinatorics/IMCalculator
+code at all -- reproduces round 1's own numbers to 5 significant
+figures**, which is strong evidence that neither pipeline has a bug and
+that E2's new (0-jet-inclusive) results below are trustworthy.
+
+### (a) Truly inclusive Z-peak ratio (all jet counts, including 0)
+
+| | Data | MC (weighted) | **Ratio** | +/-stat |
+|---|---|---|---|---|
+| **LO madgraphMLM + ttbar**, 60-120 GeV | 9,053,171 | 9,431,620 | **0.960** | 0.0006 |
+| **NLO amcatnloFXFX + ttbar**, 60-120 GeV | 9,053,171 | 9,040,863 | **1.0014** | 0.0009 |
+| LO, 76-106 GeV | 8,648,738 | 9,026,691 | 0.958 | 0.0007 |
+| NLO, 76-106 GeV | 8,648,738 | 8,633,277 | 1.0018 | 0.0009 |
+
+**Stated expectation in advance: ~1.00 within roughly +/-5%. NLO DY beats
+that by more than an order of magnitude (0.14% off unity). LO DY misses
+it in the other direction (4% low).**
+
+### (b) Data/MC vs jet count, pT>30 vs pT>50 (60-120 GeV)
+
+| Jets | LO, pT>30 | LO, pT>50 | NLO, pT>30 | NLO, pT>50 |
+|---|---|---|---|---|
+| 0 | 0.918 | 0.942 | 1.002 | 1.005 |
+| 1 | 1.186 | 1.234 | 0.985 | 0.958 |
+| 2 | 1.311 | 1.280 | 0.997 | 0.935 |
+| >=3 | 1.408 | 1.283 | 1.293 | 1.232 |
+
+With **NLO DY, the 0/1/2-jet categories are all within a few percent of
+unity** -- a dramatic improvement over LO's 0.92/1.19/1.31. The **>=3-jet
+category still shows a real ~29% excess even with NLO DY** -- not fixed
+by generator choice alone. Plot:
+`plots/diagnosis2/e2_ratio_vs_jetcount_pt30.png` /
+`e2_ratio_vs_jetcount_pt50.png`.
+
+### (c) Data/MC vs jet count, in 3 pileup slices (pT>30, 60-120 GeV)
+
+| PV_npvsGood | LO, 0 jets | NLO, 0 jets |
+|---|---|---|
+| <=15 | 0.681 | 0.743 |
+| 16-25 | 1.109 | 1.211 |
+| >25 | 1.712 | 1.875 |
+
+**This trend is essentially generator-independent** (same shape for LO
+and NLO DY) and appears **even restricted to 0-jet events**, where no
+jet-modelling confound is possible at all. This is clean, direct evidence
+of a genuine pileup mismatch between data and simulation, separate from
+the DY jet-modelling effect in (b). Higher-jet-count categories show the
+same qualitative rise with pileup slice (both generators; full numbers in
+`e2_zpeak_analysis_result.json`). Plot:
+`plots/diagnosis2/e2_ratio_vs_pileup_slice.png`.
+
+**PV_npvsGood shape**: data mean = **17.70**; MC mean = **15.76 (LO)** /
+**15.75 (NLO)** -- a ~2-unit (~11%) shift, essentially identical for both
+DY generators (as expected: both share the same UL16 pileup scenario, set
+by the production campaign, not by the hard-process generator). **Data
+has measurably more pileup than the simulation assumes.** Plots:
+`plots/diagnosis2/e2_pv_npvsgood_shape_LO_madgraphMLM.png` /
+`_NLO_amcatnloFXFX.png`.
+
+### (d) Leading-jet pT in Z + >=1 jet (pT>30)
+
+LO DY: a roughly **flat ~15-28% excess across the whole pT spectrum**
+(ratio ~1.15-1.28 in every bin from 30 GeV to 500 GeV) -- consistent with
+LO's known, energy-independent jet-rate deficiency. NLO DY: ratio
+**consistent with unity across the spectrum** (~0.90-1.06, no clear
+trend, consistent with statistical scatter) -- the shape itself, not just
+the total rate, is correctly modelled by NLO DY. Plots:
+`plots/diagnosis2/e2_leading_jet_pt_LO_madgraphMLM.png` /
+`_NLO_amcatnloFXFX.png`.
+
+## E3. Synthesis (round 2) -- supersedes D5 above
+
+**(i) Global normalisation issue -- RULED OUT.** Decided by E2(a): with
+an appropriate (NLO) DY generator and the TRULY inclusive population (no
+artificial >=1-jet floor), data/MC = **1.0014 +/- 0.0009** -- consistent
+with unity to well inside the stated +/-5% prior expectation. There is no
+residual global-scale effect left to explain once (a) the >=1-jet floor
+is removed and (b) the DY generator choice is corrected. Round 1's
+21.5% "global" excess was **not** a luminosity/trigger/efficiency
+problem -- it was almost entirely the combination of testing only a
+>=1-jet-gated population with a generator known to mismodel exactly that
+quantity.
+
+**(ii) LO vs NLO Drell-Yan jet modelling -- CONFIRMED as the dominant
+driver of round 1's apparent global effect.** E1 and E2(b) agree: LO DY
+under-populates the 0-jet bin (ratio 0.918-0.942) and over-populates
+every jet>=1 bin (1.18-1.41), a textbook LO-generator-plus-parton-shower
+signature (real hard extra-jet radiation is missing from the matrix
+element, so the shower alone undershoots the true jet rate, and events
+pile up in the 0-jet bin instead). NLO DY fixes the 0/1/2-jet categories
+to within a few percent AND fixes the leading-jet pT *shape* (E2(d)) --
+not just an overall rate correction, a genuine modelling fix.
+
+**(iii) Pileup jets/pileup mismodelling -- SUPPORTED by direct evidence,
+independent of (ii).** E2(c)'s PV_npvsGood shape comparison is the
+clean, direct result: data's own pileup is measurably higher (mean 17.70)
+than what BOTH MC samples assume (mean ~15.75), regardless of DY
+generator. The 0-jet-only pileup-slice trend (E2(c)) is essentially
+identical for LO and NLO DY, confirming this is a separate effect from
+(ii), not an artifact of it. This is very likely why the >=3-jet category
+still shows a real excess (1.29) even after fixing the DY generator: (ii)
+fixes the DY jet-rate modelling, but does nothing about pileup jets
+being more abundant/reconstructed differently in real collision data than
+in the simulation's assumed pileup profile.
+
+**(iv) Low-pT jet migration (30 vs 50 GeV) -- a real, modest, secondary
+effect, most cleanly seen with NLO DY.** With NLO DY (where (ii)'s
+confound is already fixed), raising the threshold from 30->50 GeV
+consistently *lowers* every jet>=1 category's ratio (1-jet: 0.985->0.958;
+2-jet: 0.997->0.935; >=3-jet: 1.293->1.232) and correspondingly *raises*
+the 0-jet ratio slightly (1.002->1.005) -- exactly the direction expected
+if marginal 30-50 GeV jets (from pileup contamination or missing JER
+smearing) appear somewhat more often in data than in simulation. With LO
+DY the same comparison is muddier (0-jet and 2-/>=3-jet move in the
+expected direction, but 1-jet moves the other way, 1.186->1.234) --
+plausibly because LO's own severe jet-count mismodelling (finding ii)
+entangles with the threshold change, making a clean read harder there.
+**Real, but secondary to (ii) and (iii); this round could not fully
+separate whether it reflects pileup-jet contamination, missing JER
+smearing, or both** (measuring, not applying, either -- per task scope).
+
+**Overall picture, stated plainly:** round 1's "global normalisation
+issue" is **not supported by round 2's evidence and is retracted**. The
+truly inclusive Z-peak agrees with unity to within 0.2% once the right
+DY generator is used -- there is no room left for a global-scale effect
+of the size round 1 suggested. What remains, honestly stated: a real,
+now well-evidenced **pileup mismatch** between data and simulation
+(generator-independent, seen directly in the PV_npvsGood shape, not just
+inferred from a jet-count residual), and a smaller, harder-to-isolate
+**low-pT jet migration** effect. Both are **measured, not applied** here,
+per the task's explicit scope -- pileup reweighting, pileup-jet ID, and
+JER smearing are all out of scope for this round and were not
+implemented.
+
+**Recommended nominal DY generator: amcatnloFXFX (NLO).** The evidence
+is one-sided: it alone reproduces the truly inclusive normalisation
+(1.0014 vs LO's 0.960), the per-jet-count breakdown (0/1/2 jets all
+within a few percent of unity vs LO's 0.92/1.19/1.31), and the
+leading-jet pT shape (flat ~1.0 vs LO's flat ~1.2 excess). **Cost to
+note, not a reason to avoid it**: `normalisation_table_v2.csv`'s own
+`mc_equivalent_luminosity_fb-1` column gives amcatnloFXFX **5.64 fb^-1**
+against data's 16.393 fb^-1 (**~0.34x** -- matching the task's own
+figure), versus madgraphMLM's 14.3 fb^-1 (~0.87x). Any future production
+using amcatnloFXFX as nominal will carry **visibly larger MC statistical
+uncertainties**, especially in already-low-population tail categories
+(the same >=3-jet, high-pileup, high-mass bins that this round's own
+residual findings live in) -- worth watching, not a reason to prefer the
+generator that is measurably wrong instead. **No tuning, fudge factor, or
+scale factor is recommended anywhere in this document.**
