@@ -1,0 +1,26 @@
+{
+  "missing_meta": [],
+  "dup_files": [],
+  "n_read_sums": {
+    "DoubleMuon": 94148416,
+    "SingleMuon": 323952013
+  },
+  "n_read_all_pass": true,
+  "git_commits": [
+    "3c7c9c97cdc9788d108f61156c05963b7fc1f0a4"
+  ],
+  "shards_compared": 836,
+  "identity_fail_count": 0,
+  "capped_found_count": 0,
+  "submultiset_fail_count": 0,
+  "check_c_incl_fail_count": 0,
+  "check_d": {
+    "exact_pass": 126,
+    "bound_ok": 209,
+    "fail_count": 0,
+    "sum_certain": 5738,
+    "sum_ambiguous": 118,
+    "sum_rejected": 5738
+  },
+  "overall_pass": true
+}
