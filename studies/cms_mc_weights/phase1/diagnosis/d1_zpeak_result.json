@@ -1,0 +1,113 @@
+{
+  "z_window_gev": [
+    60.0,
+    120.0
+  ],
+  "narrow_window_gev": [
+    76.0,
+    106.0
+  ],
+  "bin_width_gev": 1.0,
+  "n_data_jobs_read": 57,
+  "n_data_jobs_missing": 0,
+  "mc_samples": {
+    "35671": {
+      "name": "DYJetsToLL_M-50_madgraphMLM",
+      "n_files_expected": 61,
+      "n_files_found": 61,
+      "per_file_normalization_factor": 1.1463175168287099
+    },
+    "67801": {
+      "name": "TTTo2L2Nu",
+      "n_files_expected": 49,
+      "n_files_found": 49,
+      "per_file_normalization_factor": 0.0004660852761936444
+    }
+  },
+  "categories": {
+    "inclusive": {
+      "n_data_events_60_120": 1603536,
+      "n_mc_weighted_60_120": 1319543.358424103,
+      "n_mc_weighted_stat_err_60_120": 1208.2396884035118,
+      "data_over_mc_60_120": 1.2152203940574278,
+      "data_over_mc_60_120_stat_err": 0.0020723726220900148,
+      "n_data_events_76_106": 1525255,
+      "n_mc_weighted_76_106": 1257404.464031525,
+      "n_mc_weighted_stat_err_76_106": 1182.8383737801398,
+      "data_over_mc_76_106": 1.2130185979376003,
+      "data_over_mc_76_106_stat_err": 0.002123276294788074
+    },
+    "jet_0": {
+      "n_data_events_60_120": 0,
+      "n_mc_weighted_60_120": 0.0,
+      "n_mc_weighted_stat_err_60_120": 0.0,
+      "data_over_mc_60_120": null,
+      "data_over_mc_60_120_stat_err": null,
+      "n_data_events_76_106": 0,
+      "n_mc_weighted_76_106": 0.0,
+      "n_mc_weighted_stat_err_76_106": 0.0,
+      "data_over_mc_76_106": null,
+      "data_over_mc_76_106_stat_err": null
+    },
+    "jet_1": {
+      "n_data_events_60_120": 1246944,
+      "n_mc_weighted_60_120": 1051664.5948721173,
+      "n_mc_weighted_stat_err_60_120": 1081.0729815133338,
+      "data_over_mc_60_120": 1.185686012517735,
+      "data_over_mc_60_120_stat_err": 0.002280650686585616,
+      "n_data_events_76_106": 1188713,
+      "n_mc_weighted_76_106": 1004313.6782403648,
+      "n_mc_weighted_stat_err_76_106": 1058.6422787981378,
+      "data_over_mc_76_106": 1.183607298949385,
+      "data_over_mc_76_106_stat_err": 0.002333233067846992
+    },
+    "jet_2": {
+      "n_data_events_60_120": 277832,
+      "n_mc_weighted_60_120": 211946.91726292155,
+      "n_mc_weighted_stat_err_60_120": 481.1828887360688,
+      "data_over_mc_60_120": 1.310856527605672,
+      "data_over_mc_60_120_stat_err": 0.005462969027932685,
+      "n_data_events_76_106": 262778,
+      "n_mc_weighted_76_106": 200744.41965406877,
+      "n_mc_weighted_stat_err_76_106": 470.68263271255734,
+      "data_over_mc_76_106": 1.3090177074552314,
+      "data_over_mc_76_106_stat_err": 0.005622824631856776
+    },
+    "jet_ge3": {
+      "n_data_events_60_120": 78760,
+      "n_mc_weighted_60_120": 55931.84628906443,
+      "n_mc_weighted_stat_err_60_120": 244.10526594667706,
+      "data_over_mc_60_120": 1.408142323658621,
+      "data_over_mc_60_120_stat_err": 0.011163176592440004,
+      "n_data_events_76_106": 73764,
+      "n_mc_weighted_76_106": 52346.36613709121,
+      "n_mc_weighted_stat_err_76_106": 238.41351323007552,
+      "data_over_mc_76_106": 1.4091522572324813,
+      "data_over_mc_76_106_stat_err": 0.01160646425537722
+    },
+    "bjet_0": {
+      "n_data_events_60_120": 1538238,
+      "n_mc_weighted_60_120": 1272134.6567534134,
+      "n_mc_weighted_stat_err_60_120": 1192.19263621932,
+      "data_over_mc_60_120": 1.2091785974337834,
+      "data_over_mc_60_120_stat_err": 0.0021081345727681695,
+      "n_data_events_76_106": 1468764,
+      "n_mc_weighted_76_106": 1217746.1709658317,
+      "n_mc_weighted_stat_err_76_106": 1167.2167595791116,
+      "data_over_mc_76_106": 1.2061331293984512,
+      "data_over_mc_76_106_stat_err": 0.002151305917175639
+    },
+    "bjet_ge1": {
+      "n_data_events_60_120": 65298,
+      "n_mc_weighted_60_120": 47408.70167068988,
+      "n_mc_weighted_stat_err_60_120": 196.2647772215967,
+      "data_over_mc_60_120": 1.377342084868147,
+      "data_over_mc_60_120_stat_err": 0.011092024298588465,
+      "n_data_events_76_106": 56491,
+      "n_mc_weighted_76_106": 39658.2930656933,
+      "n_mc_weighted_stat_err_76_106": 191.6028565666079,
+      "data_over_mc_76_106": 1.4244435560154745,
+      "data_over_mc_76_106_stat_err": 0.012875133268809251
+    }
+  }
+}

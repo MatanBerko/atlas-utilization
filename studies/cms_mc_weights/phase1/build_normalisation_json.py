@@ -29,24 +29,56 @@ from pathlib import Path
 # Phase-1 samples (task's own exact list and order).
 PHASE1_RECORD_IDS = ["42407", "67801", "35671"]
 
+# Diagnosis-round D4 samples (Tier-1 missing-background measurement + the
+# NLO DY alternative) -- built the same way, into the same normalisation
+# JSON, so merge_full_v2_mc.py (unchanged) can look any of them up by
+# record id. TTToSemiLeptonic (67993) is DELIBERATELY EXCLUDED from the
+# run itself (D4's own >250-file rule), but its entry is still built here
+# for completeness/bookkeeping -- it is simply never given to the MC
+# driver/merge for this round.
+D4_RECORD_IDS = [
+    "64895", "64839", "72676", "72752", "75589", "68187", "68073", "67993", "35669",
+]
+
 PORTAL_RECORD_URLS = {
     # NanoAODSIM record -> MiniAODSIM sibling (portal cross_section source),
     # per INVESTIGATION.md Sec C / evidence/task_c_xsec_table.json.
     "42407": None,  # leptoquark: no portal cross_section block at all (Sec C coverage)
     "67801": "https://opendata.cern.ch/record/67800",
     "35671": "https://opendata.cern.ch/record/35670",
+    # D4 samples: sibling MiniAODSIM URL not looked up this round --
+    # provenance-only field, not used in any weight computation.
+    "64895": None, "64839": None, "72676": None, "72752": None, "75589": None,
+    "68187": None, "68073": None, "67993": None, "35669": None,
 }
 
 GENERATOR_BY_RECORD = {
     "42407": "madgraph (LO, pair production)",
     "67801": "powheg",
     "35671": "madgraphMLM",
+    "64895": "powheg", "64839": "powheg",
+    "72676": "powheg",
+    "72752": "amcatnloFXFX",
+    "75589": "powheg",
+    "68187": "madgraphMLM (aMC@NLO ME + Pythia8 shower)",
+    "68073": "madgraphMLM (aMC@NLO ME + Pythia8 shower)",
+    "67993": "powheg",
+    "35669": "amcatnloFXFX",
 }
 
 PHYSICS_SHORT_BY_RECORD = {
     "42407": "LQToBMu_M-400_pair",
     "67801": "TTTo2L2Nu",
     "35671": "DYJetsToLL_M-50_madgraphMLM",
+    "64895": "ST_tW_top_5f_NoFullyHadronicDecays",
+    "64839": "ST_tW_antitop_5f_NoFullyHadronicDecays",
+    "72676": "WWTo2L2Nu",
+    "72752": "WZTo3LNu_amcatnloFXFX",
+    "75589": "ZZTo4L",
+    "68187": "TTZToLLNuNu_M-10",
+    "68073": "TTWJetsToLNu",
+    "67993": "TTToSemiLeptonic",
+    "35669": "DYJetsToLL_M-50_amcatnloFXFX",
 }
 
 
@@ -55,7 +87,7 @@ def build(table_path: Path) -> dict:
         rows = {r["recid"]: r for r in csv.DictReader(f) if r.get("recid")}
 
     out = {}
-    for recid in PHASE1_RECORD_IDS:
+    for recid in PHASE1_RECORD_IDS + D4_RECORD_IDS:
         if recid not in rows:
             raise KeyError(
                 f"record {recid} not found in {table_path} -- refusing to "

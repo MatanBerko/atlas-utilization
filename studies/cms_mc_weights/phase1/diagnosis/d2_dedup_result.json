@@ -1,0 +1,15 @@
+{
+  "n_files_checked": 57,
+  "n_files_failed": 0,
+  "failed_files": [],
+  "n_total_events_keyed": 94148416,
+  "n_duplicate_events_within_doublemuon": 0,
+  "duplicate_fraction": 0.0,
+  "per_record_total": {
+    "30522": 45235604,
+    "30555": 48912812
+  },
+  "per_record_duplicates": {},
+  "elapsed_sec": 241.95799469947815,
+  "note": "This checks WITHIN the DoubleMuon dataset only (records 30522+30555, the only two records used for this delivery). It does NOT check for the documented SingleElectron/SingleMuon cross-record ~2% overlap, which is a different mechanism not applicable here (DoubleMuon is a single primary dataset, not combined with SingleMuon/SingleElectron in this production)."
+}
