@@ -1,0 +1,45 @@
+{
+  "total_accepted_before": 172595115,
+  "total_rejected": 5738,
+  "total_kept": 172589377,
+  "total_light_jets_dropped": 1350059,
+  "per_dataset": {
+    "DoubleMuon": {
+      "accepted_before": 9449024,
+      "rejected": 1113,
+      "light_jets_dropped": 127000
+    },
+    "SingleMuon": {
+      "accepted_before": 163146091,
+      "rejected": 4625,
+      "light_jets_dropped": 1223059
+    }
+  },
+  "rejected_N_distribution": {
+    "5": 5455,
+    "6": 273,
+    "7": 9,
+    "8": 1
+  },
+  "rejected_electron_distribution": {
+    "0": 4353,
+    "1": 1335,
+    "2": 49,
+    "3": 1
+  },
+  "rejected_muon_distribution": {
+    "1": 3441,
+    "2": 2215,
+    "3": 72,
+    "4": 10
+  },
+  "rejected_bjet_distribution": {
+    "1": 31,
+    "2": 152,
+    "3": 3233,
+    "4": 2226,
+    "5": 94,
+    "6": 1,
+    "7": 1
+  }
+}
