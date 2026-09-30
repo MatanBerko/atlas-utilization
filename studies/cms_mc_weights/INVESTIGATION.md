@@ -17,6 +17,74 @@ marked **UNVERIFIED**.
 
 ---
 
+## Corrections (added on top of 6a4b86d)
+
+A technical-lead review of the first version of this report (commit
+`6a4b86d`) found four categories of error. Each was re-tested from scratch
+rather than taken on trust, with new evidence saved under `evidence/`. This
+section lists what changed and why; the sections below are corrected in
+place, with the old (wrong) reasoning removed rather than left alongside the
+fix, per instruction.
+
+1. **§C(2) conclusion was backwards (R1).** The original report concluded
+   the portal's `cross_section.total_value` is *before* matching/filter
+   efficiency, so both must be multiplied in by hand. **This was wrong.**
+   Three independent checks (an internal QCD-family sum, an external
+   Drell-Yan NNLO reference, and an external ttW reference — all detailed
+   in the corrected §C(2)) show `total_value` is already the **final**,
+   post-matching, post-filter cross section. The portal record page itself
+   says so directly: *"This cross section takes into account a filtering
+   efficiency of 1.311e-01, based on generator settings and/or filters."*
+   Multiplying by `filter_efficiency`/`matching_efficiency` again double-
+   counts. Confidence: **high**.
+2. **§C(3)'s claim that the ggH→ZZ→4ℓ portal value already includes the
+   H→ZZ→4ℓ branching ratio was wrong (R2).** Reading the actual generator
+   fragment (via the McM prepid, the same method used for the leptoquark in
+   §D) for every Tier-0/1 sample shows the decay is done by a **separate**
+   downstream step (JHUGen, for the two Higgs samples) for samples whose
+   process name doesn't itself name the decay, and *inside* the same
+   generator process for samples whose gridpack/process name already names
+   the leptonic final state (`ZZTo4L`, `WWTo2L2Nu`, `WZTo3LNu`,
+   `TTZToLLNuNu`, `TTWJetsToLNu`, DY's `dyellell...`). This had to be
+   established per sample, not assumed — done now for all 25 Tier-0/1
+   samples, tabulated in the new `normalisation_table.csv` (Task 2/4).
+3. **The 8 `GluGluToContinToZZ*` portal values are not usable as pb (R3).**
+   Compared against an independent MCFM reference for the same six
+   charged-4-lepton final states, every one of the portal's `total_value`
+   figures is high by a factor of essentially exactly **1000** (ratios
+   1015–1031 across all six checkable channels) — strong evidence the
+   field is actually in femtobarns for this specific record family, not
+   picobarns. All eight are marked UNUSABLE-AS-LISTED; a corrected
+   (÷1000) value is given alongside, clearly flagged.
+4. **Smaller errata (R4), all confirmed and fixed:**
+   - §A's claim that upstream `master` equals fork `master` (`4f50b99`) was
+     wrong — checked directly via `git ls-remote`, upstream `master` is
+     **`fe5a560`** (`fe5a5607972546c3c4843dd93686d3608934b421`).
+   - §C(1)'s "~9.4×" overcount figure was a conflation of two different
+     ratios; the correct portal-as-is-vs-88.29 pb overcount is **~7.8×**
+     (687.1/88.29), independently confirmed by a real CMS cross-section
+     database entry (`RazorAnalyzer/xSections.dat`) which lists **87.31 pb**
+     directly for the decay-exclusive TTTo2L2Nu channel.
+   - "Multiply by the branching ratio and it lines up" was overstated: doing
+     only that gives ≈73.6 pb (NLO-level), not 88.29 pb; reaching 88.29 pb
+     also needs the NNLO+NNLL upgrade (833.9/687.1 ≈ 1.21×) on top of the
+     branching-ratio correction. Both steps are now shown explicitly.
+   - The claim that `neg_weight_fraction` has inconsistent units (citing
+     apparent values of 1.251 and 2.4) was **not reproduced**: every one of
+     41 opened records' `neg_weight_fraction` values is a valid fraction in
+     [0, 1] once the scientific-notation exponent is read correctly (e.g.
+     `1.251e-01` = 0.1251, not 1.251) — see
+     `evidence/negweight_units_check.json`. This is *not* a blanket
+     clearance for the whole portal, only for the 41 records checked here.
+
+New deliverables from this round: `normalisation_table.csv` (Task 2/4, all
+25 Tier-0/1 samples), and new evidence under `evidence/fragments/` (25
+generator fragments), `evidence/razor_xsections.dat`, `evidence/qcd_family/`,
+`evidence/atlas_lq_full_metadata.json`, `evidence/lq_token_decoding.json`,
+and `evidence/negweight_units_check.json`.
+
+---
+
 ## A. State check
 
 **Git state** — all matched the brief exactly:
@@ -27,8 +95,12 @@ marked **UNVERIFIED**.
   Data inventory...") — matches; read via `git show
   origin/survey/full-inventory:<path>`, never checked out/merged.
 - Upstream PR #23 head = `9be20a9` ("fix: move WeightsRegistry import to top
-  of file"), not merged into upstream `master` (`4f50b99` also on upstream —
-  confirmed identical fork/upstream master at this point). Fetched via
+  of file"), not merged into upstream `master`. **Correction**: upstream
+  `master` is **not** `4f50b99` — checked directly via
+  `git ls-remote https://github.com/Zhavi221/atlas-utilization.git
+  refs/heads/master`, which returns `fe5a5607972546c3c4843dd93686d3608934b421`
+  (`fe5a560`). The fork and upstream have diverged; `4f50b99` is the fork's
+  own post-CMS-merge master, not shared with upstream. Fetched PR #23 via
   `git fetch https://github.com/Zhavi221/atlas-utilization.git pull/23/head`
   only; no `upstream` push, no PR interaction.
 
@@ -190,7 +262,78 @@ don't (`LQToBMu_M-400_pair` and its 3 LQ cousins — leptoquark MiniAODSIM
 records carry no `cross_section` field at all, checked directly). Of the 23
 Tier-1 candidate records specifically, **23/23 (100%) have a portal cross
 section**; Tier-0 is 1/2 (TTTo2L2Nu yes, the LQ sample no); Tier-2 (DY
-HT/Zpt-binned) is 10/10.
+HT/Zpt-binned) is 10/10. **"Present" ≠ "usable as printed" — see §C(5): 8 of
+the 23 Tier-1 records need a units correction before use.**
+
+### C(2): does the portal's σ already include the matching/filter efficiency? (test this first — C(1) depends on the answer)
+
+**Yes — `total_value` is already the final, post-matching, post-filter
+cross section. Multiplying by `filter_efficiency`/`matching_efficiency`
+again double-counts. Confidence: high**, from three independent checks plus
+the portal's own page text.
+
+**The exact sentence, quoted from the record page itself**
+(`https://opendata.cern.ch/record/63145`, MiniAODSIM sibling of
+`QCD_Pt-1000_MuEnrichedPt5`, fetched directly): *"This cross section takes
+into account a filtering efficiency of 1.311e-01, based on generator
+settings and/or filters."* This is the portal saying, in its own words, that
+the displayed number already has the filter folded in.
+
+**Check (a) — internal QCD-family sum.** The `QCD_Pt_1000to1400` /
+`_1400to1800` / `_1800to2400` / `_2400to3200` / `_3200toInf` inclusive
+(no-filter, `filter_efficiency = 1.000`) MiniAODSIM siblings (recids 63147,
+63157, 63177, 63187, 63211; saved in `evidence/qcd_family/`) sum to:
+
+```
+7.475 + 0.6482 + 0.08746 + 0.005235 + 0.0001352 = 8.2160 pb
+```
+
+Multiplying by the muon-filter efficiency from the `QCD_Pt-1000_MuEnrichedPt5`
+sibling (63145), `filter_efficiency = 0.1311`:
+
+```
+8.2160 pb × 0.1311 = 1.0771 pb
+```
+
+The MuEnriched sample's **own** `total_value` is **1.079 pb** — a match to
+0.2%. If `total_value` were *before* the filter (this report's original,
+wrong, conclusion), the MuEnriched sample's `total_value` should equal the
+*unfiltered* inclusive sum (8.216 pb), not 1/8th of it. It doesn't — it
+already has the filter applied.
+
+**Check (b) — Drell-Yan vs. a published NNLO reference, opened directly.**
+`arXiv:1712.09814` (fetched as HTML,
+`https://arxiv.org/html/1712.09814`), §0.3: *"The dilepton DY production
+for m_ℓℓ > 50 GeV is normalized to σ_th(DY) = 5.765 nb, which is computed
+at next-to-next-to-leading order (NNLO) with fewz (v3.1)."* An independent,
+real CMS cross-section reference file
+(`RazorAnalyzer/xSections.dat`, `evidence/razor_xsections.dat`, fetched
+directly) confirms the same number with its lepton-flavor composition
+spelled out: `DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8
+1921.8*3` = 5765.4 pb — i.e. 1921.8 pb per single lepton flavor, **×3 for
+e/μ/τ (τ is included)**. Portal `total_value` for `DYJetsToLL_M-50`
+madgraphMLM (this study's own Tier-1 pick) = **5396 pb**, and amcatnloFXFX
+= **6422 pb** — both already within 6–11% of 5765.4 pb, with **no**
+`matching_efficiency` (0.4–0.8 on these records) applied. Multiplying by
+0.4, as the original (wrong) conclusion would require, gives ≈2158 pb —
+off by more than a factor of 2 from the published value. Not multiplying
+is what matches.
+
+**Check (c) — ttW vs. a published measurement, opened directly.**
+`arXiv:2208.00924` (fetched, HTML), Introduction: *"σ_tW^SM = 71.7 ± 1.8
+(scale) ± 3.4 (PDF) pb"* is the NNLO tW reference (both top and antitop
+combined; ≈35.85 pb each, matching the identical 35.85 pb base value both
+`RazorAnalyzer/xSections.dat` and this study's ST_tW checks converge on).
+Independently, `TTWJetsToLNu`'s portal `total_value` = **0.2151 pb**
+(`matching_efficiency = 0.6`); `RazorAnalyzer/xSections.dat` lists
+`TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8 0.2043` pb
+directly — a 5.3% match, again with **no** `matching_efficiency`
+multiplication. Multiplying by 0.6 gives 0.129 pb, clearly too small
+against both references.
+
+No residual ambiguity remains from the original report's "before-matching
+vs. after-matching-but-before-filter" hedge: all three checks, plus the
+portal's own sentence, agree that `total_value` is the final number.
 
 ### C(1): TTTo2L2Nu portal value vs. the 88.29 pb reference
 
@@ -207,98 +350,104 @@ physically share a cross section unless the number recorded is the **shared
 inclusive ttbar cross section**, not the decay-mode-specific one — i.e. the
 portal's `total_value` here is the full-ttbar POWHEG generator cross
 section, carried over identically onto each of the decay-exclusive
-NanoAOD/MiniAOD samples, with no branching-ratio scaling applied to it and
-no generator filter recorded against it (`filter_efficiency = 1.000`,
-because CMS doesn't book-keep the decay-mode split as a "filter" in this
-field).
+NanoAOD/MiniAOD samples, with no branching-ratio scaling applied to it —
+even though, per §C(2), `filter_efficiency`/`matching_efficiency` are
+otherwise already-final: this specific decay-mode split is a genuine,
+functioning selection at generation time (confirmed directly by reading the
+generator fragment, `evidence/fragments/TOP-RunIISummer20UL16wmLHEGEN-00002.py`,
+whose gridpack is literally named `TT_hdamp_NNPDF31_NNLO_dilepton.tgz`) that
+CMS's bookkeeping simply doesn't record as a "filter" in this field
+(`filter_efficiency` stays 1.000 regardless). This is independently
+confirmed by a real CMS cross-section reference file
+(`RazorAnalyzer/xSections.dat`, `evidence/razor_xsections.dat`), which lists
+the decay-exclusive value **directly**: `TTTo2L2Nu_TuneCUETP8M2_ttHtranche3_
+13TeV-powheg-pythia8 87.31` pb — an older-tune number, but on the correct,
+BR-reduced side of the portal's 687.1 pb, not the inflated side.
 
 Reference check, using the LHC TopWG's own recommended value (opened
 directly, `https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO`):
 inclusive σ(ttbar) at 13 TeV, mtop = 172.5 GeV, **NNLO+NNLL = 833.9 pb**
-(Top++v2.0, ATLAS+CMS recommended). The task's 88.29 pb reference is this
-NNLO+NNLL value times the dilepton (any-flavor, e/μ/τ→ℓ) branching fraction
-(~10.6%, from W→ℓν branching fractions). The portal's 687.1 pb is ~82.4% of
-833.9 pb — a gap of the same size (~15–20%) that is well known to separate
-an NLO(-only) POWHEG generator cross section from the NNLO+NNLL-resummed
-value; applying the same 10.6% BR to the portal's 687.1 pb gives ≈72.8 pb,
-consistent with 88.29 pb at the same ~18% NLO-vs-NNLL gap.
+(Top++v2.0, ATLAS+CMS recommended). Using the PDG W-boson branching
+fractions (via search of the PDG listing pages, `pdg.lbl.gov/2018` and
+`/2019`: W→eν = 10.71%, W→μν = 10.63%, W→τν = 11.38%, sum = 32.72%),
+BR(dilepton, any flavor) = 32.72%² = **10.706%**. So:
 
-**Conclusion — is the portal σ usable?** Yes, but **only after correcting
-it**: for these decay-exclusive powheg ttbar samples, the recorded
-`total_value` must be multiplied by the appropriate ttbar decay-mode
-branching fraction before use (it is the shared inclusive cross section,
-not the exclusive one) — using it as-is would overcount TTTo2L2Nu's yield by
-roughly a factor of ~9.4 (833.9/88.29). Both `TTTo2L2Nu` and
+- Generator-level exclusive σ = 687.1 pb × 10.706% = **73.6 pb**.
+- Higher-order-corrected exclusive σ = 833.9 pb × 10.706% = **89.3 pb** —
+  close to, but not identical to, the task's own 88.29 pb reference figure;
+  the ~1% residual is consistent with 88.29 pb having been built from a
+  slightly older/different inclusive NNLO value (per the review, an older
+  ≈831.76 pb figure) and/or a slightly different W-branching-fraction
+  convention, not re-derived exactly here.
+- **k-factor = 89.3 / 73.6 = 1.21** — this is *not* an efficiency
+  correction, it is the well-known NLO(-level POWHEG)-to-NNLO+NNLL
+  enhancement for inclusive ttbar production, and it applies identically
+  whether looking at the dilepton or semileptonic channel (the BR cancels
+  out of the ratio).
+
+**Conclusion — is the portal σ usable?** Yes, but **only after two
+corrections, not one**: (1) multiply by the ttbar decay-mode branching
+fraction (it is the shared inclusive cross section, not the exclusive
+one), **and** (2) apply the NLO→NNLO+NNLL k-factor (≈1.21) to reach the
+best available reference. Using the portal value as-is (with neither
+correction) would overcount TTTo2L2Nu's yield by a factor of **687.1/88.29
+≈ 7.8**, not the ~9.4 originally (and wrongly) quoted. Both `TTTo2L2Nu` and
 `TTToSemiLeptonic`'s Tier-1 candidate rows in `candidate_samples.csv` carry
-this same 687.1 pb value for exactly this reason — this is not a data-entry
-error.
-
-### C(2): does the portal's σ already include the filter efficiency?
-
-**No — confirmed both from the portal's own documentation and from direct
-empirical cross-checks. Confidence: high.**
-
-The portal's own cross-section guide
-(`https://opendata.cern.ch/docs/cms-guide-xsec`, fetched directly) states
-CMS's GenXSecAnalyzer reports cross sections at up to three distinct
-stages: *"Before matching: the cross section before jet matching and any
-filter. After matching: the cross section after jet matching BUT before any
-filter. Filter efficiency: the efficiency of any filter. After filter: the
-cross section after jet matching and additional filters are applied. This
-is your final cross section."* — i.e. `total_value`, `matching_efficiency`
-and `filter_efficiency` are reported as separate factors specifically so
-they can be multiplied together; multiplying `total_value` by
-`filter_efficiency` (and `matching_efficiency`, where present) is exactly
-what's required, not a double-count.
-
-Empirical check on a record with `filter_efficiency` ≠ 1
-(`/QCD_Pt-1000_MuEnrichedPt5_TuneCP5_13TeV-pythia8/` → MiniAODSIM sibling
-63145, `evidence/record_qcd_muenriched_filtertest.json.gz`, fetched
-directly): `total_value` = 1.079 pb, `filter_efficiency` = 0.1311, no
-`matching_efficiency` key at all (no ME-jet matching involved for this
-pure-PYTHIA8 sample). The 1.079 pb is the right order of magnitude for the
-*raw*, pre-muon-filter QCD dijet cross section in this pT-hat bin — the
-final physical cross section for the muon-enriched, produced sample is
-1.079 × 0.1311 ≈ 0.1414 pb. Every Tier-1 candidate checked in this study
-happens to have `filter_efficiency = 1.000` (none of them use a generator
-filter), but several (the amcatnloFXFX and madgraphMLM DY/diboson samples)
-have `matching_efficiency` between 0.1 and 0.8, which the same "multiply
-in" rule applies to identically.
-
-One residual ambiguity, stated honestly: the guide distinguishes
-"before-matching" from "after-matching-but-before-filter," and it wasn't
-independently verified *which* of these two stages `total_value` always
-represents when both `matching_efficiency` and `filter_efficiency` are
-present together on the same record — but this doesn't change the
-double-counting answer either way, since both correction factors are always
-reported alongside `total_value` specifically for the user to apply.
+this same 687.1 pb value for exactly this reason — this is not a
+data-entry error. Full numbers, for every Tier-0/1 sample (not just
+ttbar), are in `normalisation_table.csv` (Task 2/4).
 
 ### C(3): reachable higher-order reference sources (only those actually opened)
 
 - **LHC Top WG** (ttbar, single top):
   `https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO` — opened
   directly; σ(ttbar, 13 TeV, NNLO+NNLL) = 833.9 pb (scale +20.5/−30.0 pb,
-  PDF+αs ±21.0 pb). No channel-split (dilepton/semilep/hadronic) number is
-  given on this page itself — that split was taken from the task's own
-  88.29 pb reference figure, not re-derived here.
-- **LHC Higgs WG**: `https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV`
-  — opened directly; ggH (N3LO QCD+NLO EW) = 48.52 pb at mH=125.09 GeV,
-  ggH (NNLO+NNLL QCD+NLO EW) = 44.08 pb; VBF (NNLO QCD+NLO EW) = 3.779 pb.
-  Compare portal (this study's siblings): ggH→ZZ→4l M125 portal σ =
-  28.87 pb (this already includes the small H→ZZ→4l branching fraction and
-  powheg2+JHUGen generator-level filtering, so it is *not* directly
-  comparable to the bare 44–48.5 pb production numbers above without also
-  applying the H→ZZ→4l branching ratio — not independently re-derived
-  here). VBF portal σ = 3.935 pb, close to the bare VBF production number
-  (3.779 pb) before the decay branching ratio is applied — **this is a
-  strong hint that at least this VBF sample's portal value is closer to a
-  raw production cross section than a fully-decay-inclusive one; not fully
-  resolved here, UNVERIFIED beyond this observation.**
-- **Drell-Yan / diboson published values**: not independently re-derived
-  from a theory paper in this session; the portal's own sibling values (see
-  `candidate_samples.csv`) were used as-is, cross-checked only via the
-  matching/filter-efficiency mechanics in C(2), not against an external NNLO
-  DY/diboson calculation.
+  PDF+αs ±21.0 pb). Single top (tW): `arXiv:2208.00924` (fetched, HTML),
+  σ_tW = 71.7 ± 1.8 (scale) ± 3.4 (PDF) pb (NNLO), both top and antitop
+  combined.
+- **LHC Higgs WG**: production, `https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV`
+  — ggH (NNLO+NNLL QCD+NLO EW) = 44.08 pb at mH=125.09 GeV, VBF (NNLO
+  QCD+NLO EW) = 3.779 pb; decay branching ratio,
+  `https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR`
+  — BR(H→ℓ⁺ℓ⁻ℓ⁺ℓ⁻, ℓ=e,μ,τ) = **2.768×10⁻⁴** at mH=125.09 GeV, τ included.
+  **Corrected from the original report**: reading the actual generator
+  fragments (McM prepids `HIG-RunIISummer20UL16wmLHEGEN-00085` and `-00123`,
+  `evidence/fragments/`) shows both Higgs samples' decay is done by a
+  **separate** downstream JHUGen step (`ZZ4l_withtaus.input` — τ named
+  explicitly in the decay card itself), distinct from the POWHEG
+  gg→H / VBF→H *production* step whose cross section is what
+  `total_value` actually reports. So neither portal value includes
+  BR(H→4ℓ) — VBF's portal σ (3.935 pb) matches the bare production
+  reference (3.779 pb) to ~4%, confirming this directly; ggH's portal σ
+  (28.87 pb) sits ~35% below the bare production reference (44.08 pb),
+  which is *not* explained by a missing branching ratio (applying
+  BR=2.768×10⁻⁴ would send it three more orders of magnitude lower still) —
+  this residual gap is **not resolved** in this session (possibly a
+  lower-order/different-tool artifact of the specific
+  "quark-mass-effects" POWHEG implementation used, but not confirmed).
+  Full k-factor and BR-inclusive σ_eff for both Higgs samples: see
+  `normalisation_table.csv`.
+- **Drell-Yan / diboson / ttV published values**: `arXiv:1712.09814`
+  (NNLO FEWZ, DY m>50 = 5.765 nb, τ included) and a real CMS
+  cross-section reference file,
+  `https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat`
+  (`evidence/razor_xsections.dat`, fetched directly) — this one file
+  alone gave independently-sourced comparison numbers for 8 of this
+  study's 23 Tier-1 samples (DY×2 mass windows, WW, WZ, ZZ×2, ttZ, ttW),
+  all agreeing with the corresponding portal `total_value` to within
+  ~5–18%, confirming §C(2)'s "already final" conclusion sample-by-sample.
+  Full table: `normalisation_table.csv`.
+- **`GluGluToContinToZZ*` (gg→ZZ continuum, 8 records) — a genuine unit
+  problem, not resolved by matching/filter mechanics.** The same
+  `RazorAnalyzer/xSections.dat` file separately lists
+  `GluGluToZZTo2e2mu_BackgroundOnly_13TeV_MCFM 0.003194`,
+  `GluGluToZZTo4e_BackgroundOnly_13TeV_MCFM 0.001586`, etc. (all 6
+  charged-4-lepton final states this sample family covers). Every one of
+  this study's portal `total_value` figures for the same 6 final states is
+  higher by a factor of **1015–1031** — essentially exactly 1000. All
+  eight `GluGluToContinToZZ*` records are marked **UNUSABLE AS LISTED**;
+  see the new §C(5) below and `normalisation_table.csv` for the
+  ÷1000-corrected values (flagged, not certain).
 - **LHC SUSY WG top-squark pair tables** (for the scalar-LQ proxy):
   `https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SUSYCrossSections13TeVstopsbottom`
   — opened directly; NNLOapprox+NNLL stop-pair cross section at m(stop) =
@@ -312,7 +461,9 @@ reported alongside `total_value` specifically for the user to apply.
   (arXiv:2108.11404, abstract fetched directly) states corrections from
   t-channel lepton-exchange diagrams can reach **~60%** in some scenarios —
   so this caveat is not a formality; it can matter a lot, and was not
-  checked case-by-case for the M-400 sample here.
+  checked case-by-case for the M-400 sample here. For comparison, ATLAS's
+  own aMC@NLO LO value for the same mass (DSID 312117/312159, §D) is
+  2.15 pb — same order, independent generator, some corroboration.
 
 ### C(4): 2016 G+H golden-JSON luminosity
 
@@ -334,16 +485,56 @@ fb⁻¹ ≈ 16.39 fb⁻¹** (delivered: 17.169 fb⁻¹). This directly resolves 
 "not independently verified" gap flagged in `studies/m0m1j0_cms/RECIPE.md`
 §8 point 5 for this exact DoubleMuon dataset.
 
-> **Plain-language summary:** The cross sections we need live one page away
-> from the NanoAOD record, on its "MiniAOD sibling," and every sample we
-> checked has one *except* the leptoquark samples. The ttbar dilepton
-> number needs a correction (multiply by the dilepton branching fraction)
-> because CMS recorded the shared, whole-ttbar number on it, not the
-> dilepton-only one — once corrected it lines up with the standard
-> reference. The displayed cross section is deliberately *before* any
-> generator filter or matching efficiency, so those extra factors must be
-> multiplied in, not skipped. We now have a real, sourced number for the
-> 2016 G+H luminosity (16.39 fb⁻¹) where before it was an open question.
+### C(5): the `GluGluToContinToZZ*` factor-1000 problem (R3), in full
+
+Portal `total_value` (this study, Tier-1) vs. the independent MCFM
+reference (`RazorAnalyzer/xSections.dat`, both fetched directly):
+
+| Final state | Portal `total_value` (pb, as listed) | MCFM reference (pb) | Ratio |
+|---|---:|---:|---:|
+| 2e2μ | 3.292 | 0.003194 | 1030.7 |
+| 2e2τ | 3.294 | 0.003194 | 1031.3 |
+| 2μ2τ | 3.294 | 0.003194 | 1031.3 |
+| 4e | 1.619 | 0.001586 | 1020.8 |
+| 4μ | 1.609 | 0.001586 | 1014.5 |
+| 4τ | 1.626 | 0.001586 | 1025.2 |
+| 2e2ν | 17.73 | (no reference found) | — |
+| 2μ2ν | 17.73 | (no reference found) | — |
+
+All six checkable ratios cluster at 1000 ± 3% — the residual few percent is
+consistent with the normal old-tune-vs-new-tune spread seen everywhere else
+in this table (5–18%), not evidence against the ×1000 explanation. This
+strongly suggests the portal's `total_value` for this specific record
+family is actually in **femtobarns**, not picobarns as labeled/assumed
+everywhere else on the portal — but this was **not** confirmed against any
+official CMS documentation stating a units bug, only inferred from this
+numerical pattern. Recommendation: treat all 8 raw portal values as
+**UNUSABLE**; if a number is needed now, divide by 1000 (this recovers
+agreement with the independent MCFM reference to a few percent, the same
+quality as every other cross-check in this document) — but flag it as
+**medium-high, not certain, confidence**, and raise it with whoever
+maintains the portal's CMS MC metadata pipeline.
+
+> **Plain-language summary (corrected):** The cross sections we need live
+> one page away from the NanoAOD record, on its "MiniAOD sibling," and
+> every sample we checked has one *except* the leptoquark samples. **The
+> displayed number is already the final one** — it already has any
+> generator filter and any parton-shower-matching efficiency folded in
+> (three independent checks now confirm this, reversing what the first
+> version of this report said); do not multiply those factors in again.
+> The two things that genuinely still need correcting by hand, sample by
+> sample, are: whether the recorded number is for the whole physics
+> process or only a specific decay channel that was chosen at generation
+> time (ttbar's dilepton/semileptonic samples are the clearest example —
+> both show the *same*, whole-process number), and whether a
+> higher-order theory number gives something meaningfully different from
+> what the sample's own generator computed. Both are now worked out for
+> every one of the 25 samples Matan asked about, in
+> `normalisation_table.csv`. One record family (`GluGluToContinToZZ`, the
+> gluon-initiated ZZ background, 8 samples) has cross-section numbers that
+> are off by almost exactly 1000× and should not be used as printed. We
+> still have a real, sourced number for the 2016 G+H luminosity
+> (16.39 fb⁻¹) where before it was an open question.
 
 ---
 
@@ -396,15 +587,72 @@ paper over. If Maryna's reference sample is indeed one of these two
 `LQToBMu`/`LQToBEle` pair (42407/42263) brackets both ATLAS decay flavors at
 M=400, but only the **electron**-decay CMS sibling (`LQToBEle_M-400_pair`,
 42263) matches ATLAS's exact-mass decay flavor; the muon-decay CMS sample
-Matan already has selected does not.
+Matan already has selected does not. This choice between the two is
+Maryna's call, not decided here.
 
-> **Plain-language summary:** CMS's 400 GeV leptoquark sample is a genuine,
-> low-order ("leading order") MadGraph pair-production sample of a scalar
-> leptoquark decaying to a b-quark and a muon. ATLAS's closest 400 GeV
-> scalar leptoquark samples decay to an **electron**, not a muon — so if
-> Maryna's ATLAS reference is one of those two, the decay channel doesn't
-> match ours exactly; the electron-decay CMS sibling would be the fairer
-> comparison, not the muon one currently selected.
+**Full decoding of the ATLAS sample's naming tokens** (Task 5, added this
+round). `atlasopenmagic.get_all_metadata()` was re-queried on the cluster
+for DSIDs 312117, 312159 (M=400, electron), 310194 (M=300, muon), and
+312256/312260 (M=600/700, muon, "2ndG") — full metadata saved to
+`evidence/atlas_lq_full_metadata.json`. Two further, decisive facts came
+out of this:
+
+1. **These ATLAS samples are generator-level only — no detector
+   simulation, no reconstruction.** Every `file_list` entry for all 5
+   DSIDs checked is a `HEPMC.<n>.tar.gz` file — a HepMC truth-level event
+   record, not an AOD/DAOD/derivation file. Comparing these directly to
+   CMS's fully-reconstructed NanoAOD `LQToBMu`/`LQToBEle` samples means
+   comparing generator truth to full detector-simulated-and-reconstructed
+   output — a mismatch in analysis level, on top of the decay-flavor
+   mismatch already found.
+2. **The naming tokens are fully decoded**, by fetching the actual ATLAS
+   generation-control script referenced by the job-option file
+   (`https://gitlab.cern.ch/atlas-physics/pmg/infrastructure/mc15joboptions/-/raw/master/common/MadGraph/MadGraphControl_Leptoquarks_OffDiagonal.py`,
+   fetched directly; full quotes in `evidence/lq_token_decoding.json`):
+   - **`ld`** = λ, the leptoquark-quark-lepton Yukawa coupling strength
+     (`ld_0p3` → λ = 0.3).
+   - **`beta`** = β, **the branching fraction to a charged lepton** (vs.
+     neutrino): *"couplings are calculated as lambda * sqrt(beta) and
+     lambda * sqrt(1 - beta) for decays in charged and uncharged leptons,
+     respectively"* — `beta_0p5` means this ATLAS sample decays to a
+     **charged lepton only 50% of the time** (the other 50% goes to
+     neutrino + quark, an invisible-at-this-vertex channel). **This is a
+     second, independent physics difference from CMS's own sample, beyond
+     the electron-vs-muon flavor mismatch already found**: CMS's own
+     gridpack name (`LQToBMu_madgraph_LO_pair-M400`) carries no visible
+     "beta" token, consistent with the standard CMS convention for these
+     2nd/3rd-generation scalar-LQ-pair searches of assuming β=1 (100%
+     charged-lepton decay) — **but this was not independently confirmed
+     for this exact CMS gridpack in this session; flagged UNVERIFIED for
+     the CMS side**, confirmed only for the ATLAS side (β=0.5, directly
+     from the fetched control script).
+   - **`hnd`** = the fraction of the charged-lepton coupling that is
+     left-handed: *"hnd is the fraction of charged leptons that are
+     left-handed... applied as sqrt(hnd) for left- and sqrt(1-hnd) for
+     right-handed leptons"* — `hnd_1p0` = 100% left-handed. Note: DSIDs
+     312256/312260 (M=600/700, muon) do **not** carry an `_hnd_...` token
+     in their `physics_short` at all — whether they still default to
+     hnd=1.0 or use a different convention was **not independently
+     verified; UNVERIFIED**.
+   - The model import is `LQmix_NLO` — confirming, independently of
+     atlasopenmagic's own `process: "scalar leptoquark pair production"`
+     metadata field, that this is a **scalar** model.
+   - PDG ID 43 = up-type LQ, 42 = down-type LQ (explains `LQu`/`LQd`).
+
+> **Plain-language summary (extended):** CMS's 400 GeV leptoquark sample is
+> a genuine, low-order ("leading order") MadGraph pair-production sample of
+> a scalar leptoquark decaying to a b-quark and a muon. ATLAS's closest
+> 400 GeV scalar leptoquark samples decay to an **electron**, not a muon —
+> so if Maryna's ATLAS reference is one of those two, the decay channel
+> doesn't match ours exactly; the electron-decay CMS sibling would be the
+> fairer comparison, not the muon one currently selected. Two further
+> things worth knowing before comparing them: ATLAS's samples are
+> generator-truth only, with no detector simulation applied at all (unlike
+> CMS's fully-reconstructed sample), and ATLAS's sample is deliberately
+> built so only half its leptoquarks decay to a visible charged lepton (the
+> other half go to an invisible neutrino) — whether CMS's own sample makes
+> the same choice was not confirmed in this session. None of this decides
+> which sample to use; that's Maryna's call.
 
 ---
 
@@ -533,9 +781,19 @@ implement any such stitching logic, so Tier-2 samples are listed for
 completeness but are **not** ready to combine with Tier-1's inclusive DY
 samples as-is.
 
-**Cross-section coverage**: Tier-1 = **23/23 (100%)** have a sibling portal
-cross section; Tier-0 = 1/2 (only TTTo2L2Nu; leptoquark MiniAODSIM records
-carry no `cross_section` block at all); Tier-2 = 10/10.
+**Cross-section coverage**: Tier-1 = **23/23 (100%)** have *a* sibling
+portal `cross_section` block present; Tier-0 = 1/2 (only TTTo2L2Nu;
+leptoquark MiniAODSIM records carry no `cross_section` block at all);
+Tier-2 = 10/10. **Correction, this round**: "present" is not the same as
+"usable as printed". Of the 23 Tier-1 records, 8 (the
+`GluGluToContinToZZ*` family) are now flagged **UNUSABLE AS LISTED** — a
+likely factor-1000 units problem, §C(5) — and every one of the other 22
+Tier-0/1 records needed at least one further correction (a decay-mode
+branching fraction, a higher-order k-factor, or both) before its number is
+a usable σ_eff. The fully-corrected, per-sample numbers (generator-level
+σ, higher-order reference, k-factor, BR applied, final σ_eff, expected
+yield at 16.393 fb⁻¹) are in the new `normalisation_table.csv` — see also
+§C(1)–§C(5).
 
 **QCD and W+jets — kept out, one-line reason each**: QCD multijet production
 has a total cross section of order tens of mb–μb at the LHC (many orders of
@@ -547,14 +805,21 @@ missing-transverse-energy-dependent modeling/estimation approach (and is
 almost always HT/pT-binned like the excluded Tier-2 DY family, with the same
 stitching requirement) that is out of scope here.
 
-> **Plain-language summary:** We now have a clean, deduplicated shortlist of
-> 35 specific CMS Monte Carlo samples — the ttbar and leptoquark ones Matan
-> named directly, plus one "standard" version of every other background
-> process on his list (Drell-Yan, single top, WW/WZ/ZZ, ttZ/ttW, Higgs→ZZ→4l)
-> with every tune/mass/systematic-variation duplicate explicitly excluded and
-> named. Every single one of the 23 "standard background" samples has a
-> usable cross section on the portal. QCD and W+jets were deliberately left
-> off this list because they need their own dedicated background-estimation
+> **Plain-language summary (corrected):** We now have a clean, deduplicated
+> shortlist of 35 specific CMS Monte Carlo samples — the ttbar and
+> leptoquark ones Matan named directly, plus one "standard" version of
+> every other background process on his list (Drell-Yan, single top,
+> WW/WZ/ZZ, ttZ/ttW, Higgs→ZZ→4l) with every tune/mass/systematic-variation
+> duplicate explicitly excluded and named. All 23 "standard background"
+> samples have *a* cross-section number on the portal, but "has a number"
+> and "that number is ready to use" turned out to be different questions:
+> 15 of the 23 needed a further, now-worked-out correction (a decay
+> branching fraction and/or a higher-order theory k-factor), and 8 of them
+> (the gluon-initiated ZZ background family) have a cross section that
+> looks to be off by a factor of about 1000 and should not be used as
+> printed at all. The corrected version of every number is in
+> `normalisation_table.csv`. QCD and W+jets were deliberately left off this
+> list because they need their own dedicated background-estimation
 > techniques that this project doesn't have.
 
 ---
@@ -644,9 +909,20 @@ directly (`arxiv.org/html/2107.11573`):
 ## Deliverables in this branch
 
 - `studies/cms_mc_weights/INVESTIGATION.md` — this file.
-- `studies/cms_mc_weights/candidate_samples.csv` — 35-row Task F table.
+- `studies/cms_mc_weights/candidate_samples.csv` — 35-row Task F table
+  (unchanged this round).
+- `studies/cms_mc_weights/normalisation_table.csv` — **new this round**:
+  all 25 Tier-0/1 samples, with portal σ, matching/filter status,
+  decay-BR applied (value+source), generator-level σ, higher-order
+  reference σ (value+order+URL), k-factor, final σ_eff, expected events at
+  16.393 fb⁻¹, negative-weight fraction, and approximate MC-equivalent
+  luminosity.
 - `studies/cms_mc_weights/evidence/` — raw portal JSON (gzipped), the two
-  luminosity `.txt` files, and small per-file JSON readouts from the one
-  cluster job.
+  luminosity `.txt` files, small per-file JSON readouts from the one
+  cluster job, **new this round:** `fragments/` (25 generator fragments,
+  fetched from the McM API), `razor_xsections.dat` (an independent, real
+  CMS cross-section reference file), `qcd_family/` (the 6 records used for
+  the R1(a) internal check), `atlas_lq_full_metadata.json`,
+  `lq_token_decoding.json`, and `negweight_units_check.json`.
 - `studies/cms_mc_weights/plots/genweight_<recid>.png` — 3 PNGs, one per
-  Task B sample.
+  Task B sample (unchanged this round).

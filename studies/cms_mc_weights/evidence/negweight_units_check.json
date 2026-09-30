@@ -1,0 +1,13 @@
+{
+  "purpose": "R4 claimed the portal neg_weight_fraction field has inconsistent units, citing apparent values of 1.251 and 2.4 (i.e. >1, impossible for a genuine fraction).",
+  "method": "Scanned every saved cross_section block across all 41 opened records (35 Tier0/1/2 candidate siblings + the LQ family + the QCD family used for the R1(a) check) for neg_weight_fraction values outside [0,1].",
+  "result": "No value outside [0,1] was found in any of the 41 records checked. All raw string values (e.g. '1.251e-01') are valid fractions once the scientific-notation exponent is read correctly.",
+  "distinct_values_seen": [
+    "0.000e+00", "6.888e-04", "1.053e-03", "1.910e-03", "2.048e-05", "2.463e-05",
+    "4.017e-03", "4.018e-03", "5.057e-03", "5.184e-03", "1.251e-01", "1.636e-01",
+    "1.701e-01", "2.281e-01", "2.538e-01"
+  ],
+  "likely_explanation_for_the_review_claim": "'1.251e-01' misread/transcribed as '1.251' (dropping the exponent) would exactly reproduce the '1.251' figure the review cited. No record with a genuine '2.4'-prefixed anomaly was found among those checked, but the full CMS Open Data inventory (thousands of MC records) was not exhaustively re-scanned in this session -- this finding is limited to the 41 records actually opened here.",
+  "verdict": "Not reproduced in the records checked. Recommend treating neg_weight_fraction as a normal [0,1] fraction for any of the Tier0/1/2 samples in this study's candidate list, but this is not a blanket clearance for every MC record on the whole portal.",
+  "n_records_checked": 41
+}

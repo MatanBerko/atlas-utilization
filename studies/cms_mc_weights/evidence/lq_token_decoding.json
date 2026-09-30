@@ -1,0 +1,35 @@
+{
+  "source_url": "https://gitlab.cern.ch/atlas-physics/pmg/infrastructure/mc15joboptions/-/raw/master/common/MadGraph/MadGraphControl_Leptoquarks_OffDiagonal.py",
+  "fetched_via": "WebFetch, this session",
+  "note": "Quoted lines below are as returned by the fetch tool's extraction of the raw file; not re-verified byte-for-byte against a locally saved copy of the file.",
+  "tokens": {
+    "ld": {
+      "meaning": "lambda_cp -- the leptoquark-quark-lepton Yukawa coupling strength",
+      "code": "lambda_cp = 0.3\nif \"ld\" in JOlist: lambda_cp = eval( JOlist[ JOlist.index(\"ld\")+1 ].replace('p','.') )",
+      "example": "ld_0p3 -> lambda = 0.3"
+    },
+    "beta": {
+      "meaning": "branching fraction of LQ decays to a CHARGED lepton + quark (vs neutrino + quark)",
+      "code": "beta = 0.5\nif \"beta\" in JOlist: beta = eval( JOlist[ JOlist.index(\"beta\")+1 ].replace('p','.') )",
+      "comment_quoted": "couplings are calculated as lambda * sqrt(beta) and lambda * sqrt(1 - beta) for decays in charged and uncharged leptons, respectively",
+      "example": "beta_0p5 -> 50% of LQ decays go to charged lepton + quark, 50% to neutrino + quark, by coupling construction"
+    },
+    "hnd": {
+      "meaning": "fraction of the charged-lepton coupling that is LEFT-handed",
+      "code": "hnd = 1.0\nif \"hnd\" in JOlist: hnd = eval( JOlist[ JOlist.index(\"hnd\")+1 ].replace('p','.') )",
+      "comment_quoted": "hnd is the fraction of charged leptons that are left-handed, i.e. applied as sqrt(hdn) for left- and sqrt(1 - hnd) for right-handed leptons",
+      "example": "hnd_1p0 -> 100% left-handed charged-lepton coupling"
+    },
+    "M<mass>": {
+      "meaning": "leptoquark mass in GeV, extracted from the job-option filename",
+      "code": "matchesMass = re.search(\"M([0-9]+)\\\\.py\", JOname)"
+    },
+    "LQu / LQd": {
+      "meaning": "up-type (PDG ID 43, charge +2/3) vs down-type (PDG ID 42, charge -1/3) scalar leptoquark",
+      "model": "import model LQmix_NLO -- a SCALAR leptoquark UFO model (matches the 'process: scalar leptoquark pair production' field independently reported by atlasopenmagic's own metadata)"
+    },
+    "decay_lines_example": "decay lqsu > u e+  (quoted pattern from the fetched file; exact per-DSID decay list not independently re-derived here)"
+  },
+  "generator_level_note": "All file_list entries for DSIDs 312117/312159/310194/312256/312260 are 'HEPMC.<n>.tar.gz' -- HepMC truth-level event records. No AOD/DAOD/derivation file is listed for any of these DSIDs in the 2025r-evgen-13tev release metadata. This directly confirms 2025r-evgen-13tev is GENERATOR-LEVEL ONLY for these samples -- no ATLAS detector simulation or reconstruction has been applied.",
+  "cross_check_hnd_missing_on_M600_M700": "DSIDs 312256 (M600) and 312260 (M700), both muon-decay/2nd-generation, do NOT carry an '_hnd_...' token in their physics_short (unlike 312117/312159/310194 which do). Whether they use the hnd=1.0 default or a different convention was NOT independently verified in this session -- flagged UNVERIFIED."
+}
