@@ -76,10 +76,92 @@ DR_EMU_THRESHOLDS = [0.02, 0.05, 0.1]
 # Candidate matched-electron pT thresholds for SingleElectron (Step 2).
 SE_CANDIDATE_THRESHOLDS = [25.0, 27.0, 28.0, 30.0, 32.0, 35.0]
 
+# Probe-purity diagnostic. The production electron definition
+# (selection.select_electrons: pT > 25, |eta| < 2.5, cutBased >= 3) is NOT
+# changed anywhere -- it is imported and used exactly as delivered. But in a
+# muon-triggered sample most electrons passing it are non-prompt (from
+# jets), and those can never fire a WPTight single-electron trigger, so the
+# as-specified probe measures trigger efficiency TIMES prompt purity. A
+# second, prompt-enriched probe variant is therefore reported alongside,
+# defined only by an extra isolation requirement on the PROBE -- a
+# diagnostic selection, never a change to the delivered object definition.
+PROBE_ISO_BRANCH = "Electron_pfRelIso03_all"
+PROBE_PROMPT_ISO_MAX = 0.10
+
+# Bits to census, so that every claim about which bit tags which leg rests on
+# a committed measurement rather than on reading filter-name patterns.
+ELECTRON_BITS_TO_CENSUS = [(1, "CaloIdL_TrackIdL_IsoVL"), (2, "1e (WPTight)"),
+                           (16, "2e"), (32, "1e-1mu"), (2048, "1e (CaloIdVT_GsfTrkIdT)")]
+MUON_BITS_TO_CENSUS = [(1, "TrkIsoVVL"), (2, "Iso"), (4, "OverlapFilter PFTau"),
+                       (8, "IsoTkMu"), (1024, "1mu (Mu50)")]
+
 
 def hist_counts(values: np.ndarray, edges: np.ndarray) -> list:
     h, _ = np.histogram(values, bins=edges)
     return [int(x) for x in h]
+
+
+def selected_electron_iso(events: ak.Array) -> ak.Array:
+    """pfRelIso03_all for the SELECTED electrons, in the same per-event order
+    selection.select_electrons returns them.
+
+    Reproduces that function's own 3-condition mask externally, using ONLY
+    its own imported constants (never re-typed) -- exactly the pattern
+    run_dataset_on_file already uses for its electron-charge diagnostic. The
+    production function, and the electrons used for physics, are untouched.
+    """
+    from studies.m0m1j0_cms import selection as sel
+    mask = (
+        (events.Electron_pt > sel.ELECTRON_PT_MIN_GEV)
+        & (abs(events.Electron_eta) < sel.ELECTRON_ETA_MAX)
+        & (events.Electron_cutBased >= sel.ELECTRON_CUTBASED_MIN)
+    )
+    return events[PROBE_ISO_BRANCH][mask]
+
+
+def best_matched_bits(objs: ak.Array, trigobj: ak.Array, obj_id: int,
+                      dr_max: float = MATCH_DR_MAX) -> ak.Array:
+    """filterBits of the best (largest-bits) trigger object of type `obj_id`
+    within dR < dr_max of each offline object, or 0 if there is none.
+
+    Diagnostic only. This is what turns "which bit actually tags this leg"
+    from an inference about filter-name wildcards into a measurement.
+    """
+    tsel = trigobj[trigobj.id == obj_id]
+    po, pt_ = ak.unzip(ak.cartesian([objs, tsel], nested=True))
+    deta = po.eta - pt_.eta
+    dphi = (po.phi - pt_.phi + np.pi) % (2 * np.pi) - np.pi
+    dr = np.sqrt(deta ** 2 + dphi ** 2)
+    b = ak.where(dr < dr_max, pt_.filterBits, 0)
+    return ak.fill_none(ak.max(b, axis=-1), 0)
+
+
+def measure_bit_census(label, events, muons, electrons, trigobj, out):
+    """Which trigger-object bits do the offline objects in this dataset's own
+    triggered events actually carry? Pure measurement, no selection."""
+    d = dataset_by_label(label)
+    fired = fire_mask(events, d.trigger_paths)
+    res = {"n_fired": int(fired.sum()), "objects": {}}
+    for name, objs, oid, bits in (
+        ("electrons", electrons[fired], TRIGOBJ_ELECTRON_ID, ELECTRON_BITS_TO_CENSUS),
+        ("muons", muons[fired], TRIGOBJ_MUON_ID, MUON_BITS_TO_CENSUS),
+    ):
+        bb = ak.to_numpy(ak.flatten(best_matched_bits(objs, trigobj[fired], oid)))
+        n = int(bb.size)
+        entry = {
+            "n_objects": n,
+            "n_with_no_matched_trigger_object": int((bb == 0).sum()),
+            "fraction_with_no_matched_trigger_object": (float((bb == 0).mean()) if n else None),
+            "fraction_with_bit": {},
+        }
+        for bit, meaning in bits:
+            entry["fraction_with_bit"][str(bit)] = {
+                "meaning_from_branch_title": meaning,
+                "fraction": float(((bb & bit) != 0).mean()) if n else None,
+                "n": int(((bb & bit) != 0).sum()),
+            }
+        res["objects"][name] = entry
+    out["bit_census"] = res
 
 
 def _fs_label(n_e, n_m, n_j, n_b) -> np.ndarray:
@@ -113,20 +195,29 @@ def measure_turnon(events, muons, electrons, trigobj, out):
     e_fired = np.repeat(probe_fired[keep], n_probe_per_event)
     e_pass = e_matched & e_fired
 
+    e_iso = ak.to_numpy(ak.flatten(selected_electron_iso(events)[keep]))
     regions = eta_region(np.abs(e_eta))
     res = {"n_tag_events": int(is_tag_event.sum()),
            "n_tag_fired": int(tag_fired.sum()),
            "n_probes": int(e_pt.size),
+           "probe_iso_branch": PROBE_ISO_BRANCH,
+           "probe_prompt_iso_max": PROBE_PROMPT_ISO_MAX,
            "bin_edges": [float(x) for x in TURNON_BIN_EDGES],
-           "by_region": {}}
-    for reg in ("barrel", "gap", "endcap"):
-        m = regions == reg
-        res["by_region"][reg] = {
-            "denominator": hist_counts(e_pt[m], TURNON_BIN_EDGES),
-            "numerator": hist_counts(e_pt[m & e_pass], TURNON_BIN_EDGES),
-            "n_probes": int(m.sum()),
-            "n_pass": int((m & e_pass).sum()),
-        }
+           "variants": {}}
+    for vname, vmask in (("all", np.ones(e_pt.shape, dtype=bool)),
+                         ("prompt_like", e_iso < PROBE_PROMPT_ISO_MAX)):
+        v = {"n_probes": int(vmask.sum()), "by_region": {}}
+        for reg in ("barrel", "gap", "endcap"):
+            m = (regions == reg) & vmask
+            v["by_region"][reg] = {
+                "denominator": hist_counts(e_pt[m], TURNON_BIN_EDGES),
+                "numerator": hist_counts(e_pt[m & e_pass], TURNON_BIN_EDGES),
+                "n_probes": int(m.sum()),
+                "n_pass": int((m & e_pass).sum()),
+            }
+        res["variants"][vname] = v
+    # Alias so the as-specified variant also sits at the original key.
+    res["by_region"] = res["variants"]["all"]["by_region"]
     out["step2_ele27_turnon"] = res
 
 
@@ -293,7 +384,8 @@ def main():
     rec = record_for(label, era)
     d = dataset_by_label(label)
 
-    branches = list(drv.BASE_OBJECT_BRANCHES) + list(TRIGOBJ_BRANCHES) + list(d.trigger_paths)
+    branches = (list(drv.BASE_OBJECT_BRANCHES) + list(TRIGOBJ_BRANCHES)
+                + list(d.trigger_paths) + [PROBE_ISO_BRANCH])
     if label == "SingleMuon":
         branches += [TAG_PATH, PROBE_PATH]
     branches = sorted(set(branches))
@@ -319,9 +411,11 @@ def main():
         measure_turnon(events, muons, electrons, trigobj, out)
     elif label in ("DoubleEG", "MuonEG"):
         measure_leg_matching(label, events, muons, electrons, trigobj, out)
+        measure_bit_census(label, events, muons, electrons, trigobj, out)
         if label == "MuonEG":
             measure_emu_overlap(label, events, muons, electrons, jets, trigobj, out)
     elif label == "SingleElectron":
+        measure_bit_census(label, events, muons, electrons, trigobj, out)
         measure_se_threshold_loss(events, electrons, trigobj, out)
         measure_emu_overlap(label, events, muons, electrons, jets, trigobj, out)
 

@@ -7,7 +7,7 @@
 # jobs finish.
 #
 # Sampling (deliberate, and stated in the spec/HANDOFF):
-#   SingleMuon     40 files (20 G + 20 H, evenly spaced) -- Step 2 turn-on
+#   SingleMuon     60 files (30 G + 30 H, evenly spaced) -- Step 2 turn-on
 #                  tag-and-probe. 26% of the 152 SingleMuon files, well above
 #                  the 10% starting point in the brief: electrons are rare in
 #                  muon-triggered events (a 14k-event pilot file yielded only
@@ -39,7 +39,7 @@ python - "$OUTPUT_DIR/joblist.txt" <<'PYEOF'
 import sys
 # (label, era, n_files_total, n_to_sample)
 PLAN = [
-    ("SingleMuon",     "G", 70, 20), ("SingleMuon",     "H", 82, 20),
+    ("SingleMuon",     "G", 70, 30), ("SingleMuon",     "H", 82, 30),
     ("DoubleEG",       "G", 47,  8), ("DoubleEG",       "H", 86,  8),
     ("MuonEG",         "G", 29,  8), ("MuonEG",         "H", 19,  8),
     ("SingleElectron", "G", 71,  8), ("SingleElectron", "H", 80,  8),
