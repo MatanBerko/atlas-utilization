@@ -1,0 +1,184 @@
+rare4 task, Step 2 check (e): example events
+
+======================================================================
+
+PART 1: 10 accepted events with N (e+m+b) > 4 -- REJECTED from rare4
+
+--- DoubleMuon record 30522 file 0 event_index 5383: N=5 (e=2,m=2,b=1), 0 light jets -- true final state (uncapped)='2e_2m_0j_1b' -> REJECTED (capped display label would have been '2e_2m_0j_0g_0t_1b') ---
+    Muon       pT=  48.772
+    Electron   pT=  44.106
+    Muon       pT=  39.021
+    BJet       pT=  31.406
+    Electron   pT=  26.992
+
+--- DoubleMuon record 30522 file 0 event_index 45718: N=5 (e=1,m=2,b=2), 0 light jets -- true final state (uncapped)='1e_2m_0j_2b' -> REJECTED (capped display label would have been '1e_2m_0j_0g_0t_2b') ---
+    BJet       pT= 141.750
+    BJet       pT= 109.125
+    Electron   pT=  90.607
+    Muon       pT=  75.448
+    Muon       pT=  67.482
+
+--- DoubleMuon record 30522 file 0 event_index 95164: N=6 (e=0,m=2,b=4), 0 light jets -- true final state (uncapped)='0e_2m_0j_4b' -> REJECTED (capped display label would have been '0e_2m_0j_0g_0t_4b') ---
+    BJet       pT= 141.750
+    BJet       pT= 133.375
+    BJet       pT= 104.062
+    BJet       pT= 103.250
+    Muon       pT=  94.180
+    Muon       pT=  75.936
+
+--- DoubleMuon record 30522 file 0 event_index 101515: N=5 (e=0,m=3,b=2), 4 light jets -- true final state (uncapped)='0e_3m_4j_2b' -> REJECTED (capped display label would have been '0e_3m_4j_0g_0t_2b') ---
+    Jet        pT= 414.000
+    Jet        pT= 228.375
+    Jet        pT= 151.125
+    Muon       pT=  81.780
+    BJet       pT=  78.438
+    Muon       pT=  73.661
+    Jet        pT=  50.281
+    BJet       pT=  34.000
+    Muon       pT=  25.219
+
+--- DoubleMuon record 30522 file 0 event_index 104222: N=5 (e=0,m=2,b=3), 0 light jets -- true final state (uncapped)='0e_2m_0j_3b' -> REJECTED (capped display label would have been '0e_2m_0j_0g_0t_3b') ---
+    BJet       pT= 156.000
+    Muon       pT= 121.291
+    BJet       pT=  83.625
+    Muon       pT=  66.889
+    BJet       pT=  40.625
+
+--- DoubleMuon record 30522 file 0 event_index 110148: N=5 (e=0,m=2,b=3), 4 light jets -- true final state (uncapped)='0e_2m_4j_3b' -> REJECTED (capped display label would have been '0e_2m_4j_0g_0t_3b') ---
+    Jet        pT= 139.750
+    BJet       pT=  81.312
+    Muon       pT=  71.772
+    BJet       pT=  60.781
+    Jet        pT=  47.719
+    Muon       pT=  44.705
+    Jet        pT=  44.344
+    BJet       pT=  34.375
+    Jet        pT=  31.109
+
+--- DoubleMuon record 30522 file 0 event_index 122079: N=5 (e=2,m=2,b=1), 1 light jets -- true final state (uncapped)='2e_2m_1j_1b' -> REJECTED (capped display label would have been '2e_2m_1j_0g_0t_1b') ---
+    BJet       pT= 148.000
+    Electron   pT= 134.783
+    Muon       pT=  59.611
+    Jet        pT=  47.656
+    Electron   pT=  47.049
+    Muon       pT=  42.765
+
+--- DoubleMuon record 30522 file 0 event_index 122696: N=5 (e=0,m=2,b=3), 2 light jets -- true final state (uncapped)='0e_2m_2j_3b' -> REJECTED (capped display label would have been '0e_2m_2j_0g_0t_3b') ---
+    Muon       pT= 152.440
+    BJet       pT=  94.812
+    Muon       pT=  81.560
+    BJet       pT=  55.156
+    Jet        pT=  44.812
+    Jet        pT=  33.000
+    BJet       pT=  30.203
+
+--- DoubleMuon record 30522 file 0 event_index 147299: N=5 (e=0,m=2,b=3), 0 light jets -- true final state (uncapped)='0e_2m_0j_3b' -> REJECTED (capped display label would have been '0e_2m_0j_0g_0t_3b') ---
+    BJet       pT= 136.000
+    Muon       pT=  83.506
+    BJet       pT=  61.656
+    BJet       pT=  49.531
+    Muon       pT=  35.230
+
+--- DoubleMuon record 30522 file 0 event_index 149428: N=5 (e=0,m=2,b=3), 0 light jets -- true final state (uncapped)='0e_2m_0j_3b' -> REJECTED (capped display label would have been '0e_2m_0j_0g_0t_3b') ---
+    BJet       pT= 149.625
+    BJet       pT= 135.625
+    Muon       pT=  62.643
+    Muon       pT=  44.369
+    BJet       pT=  36.062
+
+======================================================================
+
+PART 2: 10 accepted events with N<=4 but >4 light jets -- KEPT, ALL objects retained (rare4 never truncates)
+
+--- DoubleMuon record 30522 file 0 event_index 7450: N=2 (e=0,m=2,b=0), 5 light jets -> KEPT, all 7 objects retained; display label = '0e_2m_4j_0g_0t_0b' (light jets capped to '4j' in the name, but all 5 are still used in the mass combinations) ---
+    Jet        pT= 216.125  <-- KEPT
+    Jet        pT= 185.750  <-- KEPT
+    Muon       pT=  61.604  <-- KEPT
+    Jet        pT=  51.719  <-- KEPT
+    Muon       pT=  40.187  <-- KEPT
+    Jet        pT=  33.250  <-- KEPT
+    Jet        pT=  30.281  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 7605: N=2 (e=0,m=2,b=0), 5 light jets -> KEPT, all 7 objects retained; display label = '0e_2m_4j_0g_0t_0b' (light jets capped to '4j' in the name, but all 5 are still used in the mass combinations) ---
+    Muon       pT= 238.631  <-- KEPT
+    Jet        pT= 117.062  <-- KEPT
+    Jet        pT=  52.719  <-- KEPT
+    Jet        pT=  52.219  <-- KEPT
+    Jet        pT=  49.906  <-- KEPT
+    Muon       pT=  46.872  <-- KEPT
+    Jet        pT=  41.250  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 8791: N=2 (e=0,m=2,b=0), 5 light jets -> KEPT, all 7 objects retained; display label = '0e_2m_4j_0g_0t_0b' (light jets capped to '4j' in the name, but all 5 are still used in the mass combinations) ---
+    Jet        pT=  90.875  <-- KEPT
+    Muon       pT=  49.079  <-- KEPT
+    Jet        pT=  39.750  <-- KEPT
+    Jet        pT=  32.969  <-- KEPT
+    Jet        pT=  31.750  <-- KEPT
+    Jet        pT=  31.000  <-- KEPT
+    Muon       pT=  30.155  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 9657: N=2 (e=0,m=2,b=0), 5 light jets -> KEPT, all 7 objects retained; display label = '0e_2m_4j_0g_0t_0b' (light jets capped to '4j' in the name, but all 5 are still used in the mass combinations) ---
+    Jet        pT= 542.500  <-- KEPT
+    Muon       pT= 349.837  <-- KEPT
+    Jet        pT= 276.250  <-- KEPT
+    Muon       pT= 221.893  <-- KEPT
+    Jet        pT=  86.125  <-- KEPT
+    Jet        pT=  40.031  <-- KEPT
+    Jet        pT=  37.375  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 13706: N=2 (e=0,m=2,b=0), 5 light jets -> KEPT, all 7 objects retained; display label = '0e_2m_4j_0g_0t_0b' (light jets capped to '4j' in the name, but all 5 are still used in the mass combinations) ---
+    Jet        pT= 147.875  <-- KEPT
+    Jet        pT= 101.125  <-- KEPT
+    Jet        pT=  61.719  <-- KEPT
+    Jet        pT=  50.062  <-- KEPT
+    Muon       pT=  49.130  <-- KEPT
+    Jet        pT=  37.594  <-- KEPT
+    Muon       pT=  32.930  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 17620: N=2 (e=0,m=2,b=0), 5 light jets -> KEPT, all 7 objects retained; display label = '0e_2m_4j_0g_0t_0b' (light jets capped to '4j' in the name, but all 5 are still used in the mass combinations) ---
+    Jet        pT= 268.750  <-- KEPT
+    Jet        pT= 124.812  <-- KEPT
+    Muon       pT=  97.161  <-- KEPT
+    Jet        pT=  62.031  <-- KEPT
+    Jet        pT=  50.438  <-- KEPT
+    Jet        pT=  36.719  <-- KEPT
+    Muon       pT=  35.992  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 19707: N=2 (e=0,m=2,b=0), 5 light jets -> KEPT, all 7 objects retained; display label = '0e_2m_4j_0g_0t_0b' (light jets capped to '4j' in the name, but all 5 are still used in the mass combinations) ---
+    Jet        pT=  94.000  <-- KEPT
+    Jet        pT=  71.000  <-- KEPT
+    Jet        pT=  62.406  <-- KEPT
+    Muon       pT=  60.917  <-- KEPT
+    Jet        pT=  57.875  <-- KEPT
+    Jet        pT=  39.594  <-- KEPT
+    Muon       pT=  28.015  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 19825: N=2 (e=0,m=2,b=0), 6 light jets -> KEPT, all 8 objects retained; display label = '0e_2m_4j_0g_0t_0b' (light jets capped to '4j' in the name, but all 6 are still used in the mass combinations) ---
+    Jet        pT= 146.500  <-- KEPT
+    Jet        pT=  80.250  <-- KEPT
+    Jet        pT=  77.312  <-- KEPT
+    Jet        pT=  66.875  <-- KEPT
+    Muon       pT=  63.986  <-- KEPT
+    Muon       pT=  57.238  <-- KEPT
+    Jet        pT=  39.125  <-- KEPT
+    Jet        pT=  36.594  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 20566: N=2 (e=0,m=2,b=0), 6 light jets -> KEPT, all 8 objects retained; display label = '0e_2m_4j_0g_0t_0b' (light jets capped to '4j' in the name, but all 6 are still used in the mass combinations) ---
+    Jet        pT= 250.125  <-- KEPT
+    Jet        pT=  94.438  <-- KEPT
+    Muon       pT=  84.417  <-- KEPT
+    Jet        pT=  72.875  <-- KEPT
+    Jet        pT=  62.250  <-- KEPT
+    Jet        pT=  42.938  <-- KEPT
+    Jet        pT=  31.203  <-- KEPT
+    Muon       pT=  28.832  <-- KEPT
+
+--- DoubleMuon record 30522 file 0 event_index 20871: N=3 (e=0,m=2,b=1), 5 light jets -> KEPT, all 8 objects retained; display label = '0e_2m_4j_0g_0t_1b' (light jets capped to '4j' in the name, but all 5 are still used in the mass combinations) ---
+    Jet        pT= 116.812  <-- KEPT
+    Jet        pT= 101.312  <-- KEPT
+    Jet        pT=  87.750  <-- KEPT
+    Jet        pT=  69.938  <-- KEPT
+    BJet       pT=  46.969  <-- KEPT
+    Jet        pT=  42.312  <-- KEPT
+    Muon       pT=  34.625  <-- KEPT
+    Muon       pT=  33.992  <-- KEPT

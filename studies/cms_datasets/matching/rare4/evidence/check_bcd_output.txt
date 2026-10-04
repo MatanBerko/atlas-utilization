@@ -1,0 +1,21 @@
+=== Check (d): rare4 rejected == nonjet4 rejected, per file ===
+  DoubleMuon_30522_0_matched: nonjet4_rejected=18, rare4_rejected=18, hidden_cases=0 -> PASS
+  DoubleMuon_30555_0_matched: nonjet4_rejected=27, rare4_rejected=27, hidden_cases=0 -> PASS
+  SingleMuon_30530_0_matched: nonjet4_rejected=40, rare4_rejected=40, hidden_cases=0 -> PASS
+  SingleMuon_30563_0_matched: nonjet4_rejected=0, rare4_rejected=0, hidden_cases=0 -> PASS
+Check (d) overall: PASS
+
+=== Checks (b) and (c) ===
+  DoubleMuon_30522_0_matched: check (b) inclusive=PASS, exclusive=PASS
+  DoubleMuon_30522_0_matched: check (c): label>4 signatures with stray rare4 entries=0, label<=4 exact-match=691, label<=4 differing=0 (n_hidden_cases this job=0) -> PASS
+  DoubleMuon_30555_0_matched: check (b) inclusive=PASS, exclusive=PASS
+  DoubleMuon_30555_0_matched: check (c): label>4 signatures with stray rare4 entries=0, label<=4 exact-match=577, label<=4 differing=0 (n_hidden_cases this job=0) -> PASS
+  SingleMuon_30530_0_matched: check (b) inclusive=PASS, exclusive=PASS
+  SingleMuon_30530_0_matched: check (c): label>4 signatures with stray rare4 entries=0, label<=4 exact-match=1296, label<=4 differing=0 (n_hidden_cases this job=0) -> PASS
+  SingleMuon_30563_0_matched: check (b) inclusive=PASS, exclusive=PASS
+  SingleMuon_30563_0_matched: check (c): label>4 signatures with stray rare4 entries=0, label<=4 exact-match=292, label<=4 differing=0 (n_hidden_cases this job=0) -> PASS
+
+Check (b) overall: PASS
+Check (c) overall: PASS
+
+OVERALL checks (b)(c)(d): PASS
