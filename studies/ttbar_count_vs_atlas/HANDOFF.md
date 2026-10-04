@@ -1,9 +1,11 @@
 # HANDOFF - ttbar_count_vs_atlas
 
-**Status: Steps 1-10 complete.** The headline result is in `REPORT.md`; the
-per-variant tables are in `STEP6_RESULTS.md`. The one thing still outstanding is
-Step 8's actual comparison, which needs Maryna's ATLAS ROOT file - the tool is
-written and self-tested, see section 8.
+**Status: Steps 1-10 complete. Step 8 is BLOCKED on a file permission.** The
+headline result is in `REPORT.md`; the per-variant tables are in
+`STEP6_RESULTS.md`. The one thing still outstanding is Step 8's actual
+comparison, which needs Maryna's ATLAS ROOT file - the tool is written and
+self-tested (section 8), but as of 2026-10-04 that file is still **not
+readable**. See section 8c for the exact diagnosis and the exact fix needed.
 
 Result at ATLAS's own threshold (>= 25 filled bins, >= 100 events), all
 VERIFIED BY RUNNING except the ATLAS row:
@@ -257,3 +259,117 @@ All 18 ROOT files were read back with real PyROOT 6.40.02 and all 9 pairs PASS.
 * No MC weighting, cross sections, pileup or scale factors; no other MC sample;
   no electron datasets, taus or photons; no BumpNet run and no excess
   interpretation.
+
+## 8c. BLOCKED 2026-10-04: the ATLAS ROOT file is still not readable
+
+Step 8 was attempted on 2026-10-04 and could not start. The blocker is a single
+directory permission bit, not a missing file.
+
+### What was checked, by running
+
+Every component of the path was stat-ed as user `berkom` (groups: `watlas`):
+
+| path component | mode | owner:group | we can read |
+|---|---|---|---|
+| `/storage/agrp/marybo` | `drwxr-xr-x` | `marybo:watlas` | yes |
+| `.../DDP` | `drwxr-xr-x` | `marybo:watlas` | yes |
+| `.../BumpNet4AtlasOpenData` | `drwxr-xr-x` | `marybo:watlas` | yes |
+| `.../Test_master_atlas-utilization` | `drwxr-xr-x` | `marybo:watlas` | yes |
+| `.../data` | `drwxr-xr-x` | `marybo:watlas` | yes |
+| `.../atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612` | `drwxr-xr-x` | `marybo:watlas` | yes |
+| `.../histograms` | **`drwx------`** | `marybo:watlas` | **NO** |
+
+So the run directory is world-readable, but the `histograms/` subdirectory inside
+it is owner-only. `getfacl` on that directory shows `group::---` and
+`other::---` with no POSIX ACL entries, so this is plain mode bits, not an ACL.
+
+Because that directory is not even traversable (no `x` bit for group or other),
+the two ROOT files inside cannot be stat-ed, let alone opened:
+
+* `atlas_opendata_bumpnet.root` - the main post-processed file (Step 2/3/4 input)
+* `atlas_btag_ttbar_test_bumpnet_nopostproc.root` - the pre-post-processing file
+
+Both are confirmed to exist and to have been written successfully, from her own
+world-readable `logs/pipeline.out`, copied into `atlas_input/run_logs/`.
+
+The sample list is blocked separately, at file level rather than directory level:
+
+| path | mode | we can read |
+|---|---|---|
+| `.../atlas-utilization/metadata_ttbar_cache.json` | `-rw-------` | **NO** |
+
+Its parent directory is world-readable; only the file's own bits block us. It is
+**not** recoverable through git: her checkout is on branch
+`feature/overlap-removal` at `ba57abc`, and `git show
+HEAD:metadata_ttbar_cache.json` reports "exists on disk, but not in HEAD" - it is
+an untracked runtime cache. (Read with `git -C <her checkout>
+--no-optional-locks -c safe.directory=<her checkout> ...`; her repository was
+never written to.)
+
+### Confirmed: there is no readable copy anywhere else
+
+* `find /storage/agrp -maxdepth 8 -name atlas_opendata_bumpnet.root -readable`
+  returns **nothing**.
+* `find /storage/agrp/marybo -name "*.root" -readable -newermt 2026-10-03`
+  returns **nothing**.
+* The only readable `*ttbar*.root` files in her area are two ~130-byte
+  FastFrames test fixtures, unrelated to BumpNet.
+* The `*_nopostproc.root` files that *are* readable belong to **other** runs
+  (`up4j_histograms_v2`, `up4j_histograms_minEvt10`, `maxTot4_histograms`) and
+  are data or other MC, not this ttbar MC run. They are not substitutes.
+
+### The exact fix needed
+
+Nothing in `/storage/agrp/marybo/` may be modified by us (strictly read-only for
+this study), so this has to be done by Maryna. `berkom` and `marybo` share the
+group `watlas`, so **group** read is the minimal change:
+
+```bash
+R=/storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization
+H=$R/data/atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612/histograms
+chmod g+rx "$H"
+chmod g+r  "$H"/atlas_opendata_bumpnet.root
+chmod g+r  "$H"/atlas_btag_ttbar_test_bumpnet_nopostproc.root
+chmod g+r  "$R"/atlas-utilization/metadata_ttbar_cache.json
+```
+
+The `g+rx` on the directory is the essential one: without it the files inside are
+unreachable regardless of their own bits. The last line is optional - it only
+decides whether the sample composition (Step 1) can be reported as VERIFIED
+rather than unavailable.
+
+### What Steps 0-2 could still establish without the file
+
+From her **world-readable** `logs/config.yaml` and `logs/pipeline.out`, both
+already copied into `work/ttbar_count_vs_atlas/atlas_input/run_logs/`. These are
+VERIFIED BY READING those two files; they are not measurements of the ROOT file.
+
+* `pipeline.out` states "Grouped 8052 signatures into 2684 unique histogram
+  signatures", "Applied global tail display ranges to 2684 merged histogram(s)"
+  and "Wrote 2684 histograms to ...nopostproc.root". This **corroborates
+  Maryna's 2,684 total**, but it is her log, not our measurement. The 2,161 and
+  2,146 numbers and the 135 final states are bin-cut and entry-cut quantities
+  that exist only inside the ROOT file, and remain UNVERIFIED.
+* Binning is **identical to ours**: `bin_width_gev: 10.0`, `max_mass_cutoff:
+  10000.0` GeV, masses in **GeV**. Ours is fixed 10 GeV bins over 0-10,000 GeV
+  (1,000 bins), also GeV. There is no binning difference to explain any gap.
+* Her per-type caps are `electrons/muons/jets/bjets: {min: 0, max: 4}` - four
+  *independent* caps, with **no** combined `electrons + muons + bjets <= 4`
+  rule. This re-confirms `ATLAS_PROVENANCE.md`.
+* `min_events_per_fs: 10` (ours 100), `z_peak_cutoff: 110.0` GeV (ours 115),
+  `trigger_config.enabled: false`, `parse_mc: true`, `max_files_to_process: 40`,
+  `DL1d: 2.51`.
+* `metadata_cache_path` points at the unreadable `metadata_ttbar_cache.json`,
+  which is why Step 1 cannot be answered: the DSID list, the physics names and
+  the number of events processed are all inside it. **Whether the ATLAS ttbar
+  sample is dilepton-only or also includes semileptonic (one-lepton) decays is
+  therefore UNVERIFIED and unavailable.**
+
+### Resuming
+
+The moment the `chmod` above is done, resume at Step 0 with no other change:
+copy the two ROOT files and the JSON into `work/ttbar_count_vs_atlas/atlas_input/`,
+recording `sha256` of source and copy, then run the Step 8 command in section 8
+above once per variant, with `pr31_noOR` as the main comparison. Nothing else in
+the study needs to be re-run.
+
