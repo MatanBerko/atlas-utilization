@@ -5,7 +5,17 @@ headline result is in `REPORT.md`; the per-variant tables are in
 `STEP6_RESULTS.md`. The one thing still outstanding is Step 8's actual
 comparison, which needs Maryna's ATLAS ROOT file - the tool is written and
 self-tested (section 8), but as of 2026-10-04 that file is still **not
-readable**. See section 8c for the exact diagnosis and the exact fix needed.
+readable** - re-checked twice that day, see section 8c for the exact diagnosis
+and the exact fix needed.
+
+A second, separate question *was* answered without the ROOT file: **why Maryna's
+and Ariel's own ATLAS runs disagree** (135 / 132 / 129 final states). Her run
+logs and configs are world-readable even though the histogram files are not. The
+answer is in `COMPARISON_WITH_ATLAS.md` section 4; the headline is that the
+trigger is a ~1% effect, overlap removal is a ~15% effect, and there is a third,
+previously unnoticed difference (photons and taus are uncapped in the 3 October
+runs and forced to zero in all others) that makes the 135-vs-129 comparison
+confounded.
 
 Result at ATLAS's own threshold (>= 25 filled bins, >= 100 events), all
 VERIFIED BY RUNNING except the ATLAS row:
@@ -372,4 +382,40 @@ copy the two ROOT files and the JSON into `work/ttbar_count_vs_atlas/atlas_input
 recording `sha256` of source and copy, then run the Step 8 command in section 8
 above once per variant, with `pr31_noOR` as the main comparison. Nothing else in
 the study needs to be re-run.
+
+## 8d. Second re-check 2026-10-04 (evening): still blocked, and it is every run
+
+Re-checked after Maryna reported having opened the folder. **It is still
+`drwx------`**, and its own mtime is unchanged at 2026-10-03 21:29, so it was not
+in fact re-opened. `getfacl` shows `group::---` / `other::---` with no ACL.
+
+New facts from this pass (all **RAN**):
+
+* The block is **not** specific to one run: all **49** run directories under her
+  `data/` have `histograms/` set to `drwx------`. There is no readable
+  `atlas_opendata_bumpnet.root` anywhere under `/storage/agrp`.
+* `metadata_ttbar_cache.json` is still `-rw-------` and is still untracked in
+  git, so the sample composition stays UNVERIFIED.
+* Her checkout `HEAD` moved to `747b5d5` (4 Oct 18:25, "Remove NumTrkPt500 from
+  Jets schema - mu-jet falls back to dR-only"). The final-state logic
+  (`im_calculator.py`, `event_selection.py`) is byte-identical to `ba57abc`, and
+  `im_calculator.py` is unchanged since 9 September.
+
+What *is* now readable and was harvested instead: `logs/config.yaml`,
+`logs/pipeline.out` and `logs/submit_mc.sh` from **49** of her run directories,
+copied to `atlas_input/other_runs/` with sha256 of source and copy in
+`other_runs/CHECKSUMS.tsv` (134 files, **0 mismatches**), summarised into
+`atlas_input/atlas_runs_survey.json` by
+`studies/ttbar_count_vs_atlas/extract_runs.py`. Only `data/` was examined;
+nothing in `/storage/agrp/marybo/` was written, and her git checkout was read
+with `--no-optional-locks -c safe.directory=...` only.
+
+Confirmed **by reading her code** (previously only inferred from her config):
+`_is_valid_fs` in `services/calculations/im_calculator.py` limits the number of
+object **types** to 4 and each type's count to 4, with **no rule on the sum** -
+so `4e_4m_4j_4b` (16 objects) is valid for her and rejected by PR #31. A grep of
+her checkout finds no sum-based rule anywhere.
+
+See `COMPARISON_WITH_ATLAS.md` for the full ATLAS-run survey and the
+"Why the ATLAS runs differ" analysis.
 
