@@ -111,10 +111,55 @@ _recompute_exact_count_mask below -- never a second pass through
 IMCalculator/_calculate_combination_invariant_mass. This is the "compute
 once, split by mask" this study's own spec requires.
 
+--population notrigger (ttbar-count-vs-atlas study; STUDY-ONLY, requires
+--is-mc and raises otherwise): the population used to compare our CMS MC
+ttbar histogram yield against ATLAS's. No HLT requirement, no
+trigger-object matching, and no dataset-vs-dataset de-duplication at all
+-- one pass per file over every event in it. Object definitions are the
+unchanged studies.m0m1j0_cms.selection ones, and the gate is the same
+">= 2 selected objects of any type" (MIN_TOTAL_SELECTED_OBJECTS) that
+--population generic uses. Because there is no de-duplication, "exclusive"
+has no meaning in this mode and no exclusive shard is written (see
+run_combination_funnel's `write_exclusive` parameter, which defaults to
+True so every existing call site is unchanged). Masses are RAW counts:
+genWeight is read and summed for information only and is never applied to
+a shard -- Maryna's ATLAS reference counts are raw too.
+
+Three final-state VARIANTS are written per file, as three independent
+shard pairs, from the one pass:
+
+  (a) dataset_shard_notrigger_rare4_inclusive.sqlite -- identical
+      final-state logic to the existing rare4 version: events with
+      e + mu + b > 4 are rejected; ALL light jets are kept; an event with
+      >= 5 light jets is simply labelled "4j" by the shared display cap
+      (physics_calcs.limit_particles_in_fs).
+
+  (b) dataset_shard_notrigger_pr31_inclusive.sqlite -- as (a) but events
+      with >= 5 light jets are DROPPED outright, reproducing upstream
+      PR #31's IMCalculator._is_valid_fs behaviour (with
+      max_count_particle_in_combination = 4, any final state with a
+      per-type count > 4 is marked invalid and the event never enters a
+      final-state group at all).
+
+  (c) dataset_shard_notrigger_pr31_noOR_inclusive.sqlite -- as (b) but
+      WITHOUT our jet-lepton dR < 0.4 overlap removal
+      (selection.select_and_split_jets(apply_lepton_cleaning=False), that
+      function's own existing parameter). DIAGNOSTIC ONLY, to measure the
+      size of the overlap-removal effect; it is not a delivered product.
+      Because the jet collections differ, (c) re-derives its own gate and
+      its own rejection masks from its own objects.
+
+Data mode (--is-mc absent) and --population matched are untouched by this
+addition: every new code path is reached only when population == "notrigger".
+
 Usage:
     python run_dataset_on_file.py --dataset-label SingleMuon --record-id 30530 \
         --file-index 0 --output-dir /storage/.../job_SingleMuon_G_0 \
         --population generic
+
+    python run_dataset_on_file.py --dataset-label DoubleMuon --record-id 67801 \
+        --file-index 0 --output-dir /storage/.../job_ttbar_0 \
+        --population notrigger --is-mc
 """
 from __future__ import annotations
 
@@ -630,7 +675,8 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
                              writer_incl: SqliteArrayShardWriter, writer_excl: SqliteArrayShardWriter,
                              event_weights: np.ndarray | None = None,
                              writer_weights_incl: SqliteArrayShardWriter | None = None,
-                             writer_weights_excl: SqliteArrayShardWriter | None = None) -> dict:
+                             writer_weights_excl: SqliteArrayShardWriter | None = None,
+                             write_exclusive: bool = True) -> dict:
     """The exact combination/shard-writing funnel that used to be main()'s
     own inline for-loop, extracted verbatim (top-4 task, Step 1) so it can
     be called a SECOND time on a top-4-truncated obj_record without
@@ -654,13 +700,26 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
     is None (every existing call site, and every --is-mc-absent call),
     this function is 100% unchanged from before this parameter existed --
     no new branch is taken, no new array is computed, nothing is written
-    beyond what was already written (data mode byte-for-byte identity)."""
+    beyond what was already written (data mode byte-for-byte identity).
+
+    `write_exclusive` (ttbar-count-vs-atlas study, --population notrigger
+    only): defaults to True, in which case this function behaves exactly
+    as it always has. Passing False is legal ONLY in a mode that performs
+    no dataset-vs-dataset de-duplication, where "exclusive" is undefined:
+    it suppresses the exclusive shard entirely (no per-final-state count
+    recorded, no array appended) and permits `writer_excl` to be None. The
+    inclusive side -- the only side the study reads -- is bit-for-bit
+    whatever it would have been with write_exclusive=True, because the
+    exclusive split is a pure read-only consumer of the already-computed
+    inclusive array and never feeds back into it."""
     calculator = IMCalculator(
         events=obj_record, min_events_per_fs=1,
         min_k=MIN_COUNT_PARTICLE_IN_COMBINATION, max_k=MAX_COUNT_PARTICLE_IN_COMBINATION,
         min_n=MIN_PARTICLES_IN_COMBINATION, max_n=MAX_PARTICLES_IN_COMBINATION,
     )
 
+    if write_exclusive:
+        assert writer_excl is not None, "write_exclusive=True requires writer_excl"
     has_weights = event_weights is not None
     if has_weights:
         assert len(event_weights) == len(obj_record) and writer_weights_incl is not None and writer_weights_excl is not None, (
@@ -685,9 +744,10 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
         writer_incl.record_final_state_count(label, n_this_group)
 
         fs_is_exclusive = is_exclusive_selected[group_mask]
-        n_excl_this_group = int(fs_is_exclusive.sum())
-        label_event_counts_excl[label] = label_event_counts_excl.get(label, 0) + n_excl_this_group
-        writer_excl.record_final_state_count(label, n_excl_this_group)
+        if write_exclusive:
+            n_excl_this_group = int(fs_is_exclusive.sum())
+            label_event_counts_excl[label] = label_event_counts_excl.get(label, 0) + n_excl_this_group
+            writer_excl.record_final_state_count(label, n_excl_this_group)
 
         fs_weights = event_weights[group_mask] if has_weights else None
 
@@ -740,6 +800,8 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
             if has_weights:
                 writer_weights_incl.append_array(signature, combo_weights)
 
+            if not write_exclusive:
+                continue
             excl_arr = arr[combo_is_exclusive]
             if excl_arr.size > 0:
                 writer_excl.append_array(signature, excl_arr)
@@ -828,7 +890,7 @@ def main():
     p.add_argument("--record-id", type=int, required=True)
     p.add_argument("--file-index", type=int, required=True)
     p.add_argument("--output-dir", required=True)
-    p.add_argument("--population", choices=["generic", "v0", "matched"], default="generic")
+    p.add_argument("--population", choices=["generic", "v0", "matched", "notrigger"], default="generic")
     p.add_argument("--validated-runs-json", default=DEFAULT_VALIDATED_RUNS_JSON)
     p.add_argument("--is-mc", action="store_true",
                     help="CMS MC weights task (v2): read/carry genWeight+L1PreFiringWeight_Nom, "
@@ -837,14 +899,35 @@ def main():
                          "with --population matched. Absent (default False): behaviour is "
                          "byte-for-byte identical to before this flag existed.")
     args = p.parse_args()
-    if args.is_mc and args.population != "matched":
-        raise ValueError("--is-mc is only implemented for --population matched")
+    if args.is_mc and args.population not in ("matched", "notrigger"):
+        raise ValueError("--is-mc is only implemented for --population matched and --population notrigger")
+    # --population notrigger is a STUDY-ONLY mode (ttbar-count-vs-atlas):
+    # it skips the golden-JSON filter, the HLT requirement and the
+    # dataset de-duplication, none of which is ever acceptable on real
+    # data, so it is hard-refused unless --is-mc is also given.
+    if args.population == "notrigger" and not args.is_mc:
+        raise ValueError(
+            "--population notrigger requires --is-mc: it removes the HLT requirement, the "
+            "golden-JSON filter and the dataset de-duplication, which is only meaningful "
+            "for simulation (ttbar-count-vs-atlas study)"
+        )
 
     logging.basicConfig(level=logging.WARNING, format="%(asctime)s %(levelname)s %(message)s")
     logger = logging.getLogger("run_dataset_on_file")
 
     dataset_label = args.dataset_label
-    if dataset_label == "SingleMuon" and args.population == "matched":
+    if args.population == "notrigger":
+        # ttbar-count-vs-atlas study: no HLT requirement and no
+        # de-duplication at all, so this job has neither an "own trigger
+        # set" nor any higher-priority dataset to veto against. Both
+        # collections are left empty, which also means no HLT branch is
+        # added to required_branches and the veto loop below iterates
+        # zero times (is_exclusive_pretrigger therefore stays all-True,
+        # and no exclusive shard is written -- see write_exclusive).
+        own_paths = ()
+        higher_priority = []
+        veto_paths_by_label = {}
+    elif dataset_label == "SingleMuon" and args.population == "matched":
         # Matched mode's SingleMuon trigger set is HLT_IsoMu24 ONLY (Maryna's
         # explicit instruction, TRIGGER_MATCHING_SPEC.md Section 4) --
         # generic/v0's SingleMuon trigger set (both IsoMu24 and IsoTkMu24,
@@ -853,8 +936,9 @@ def main():
         own_paths = SINGLEMUON_MATCHED_TRIGGER_PATHS
     else:
         own_paths = TRIGGER_PATHS_BY_DATASET[dataset_label]
-    higher_priority = VETO_ORDER[:VETO_ORDER.index(dataset_label)]
-    veto_paths_by_label = {h: TRIGGER_PATHS_BY_DATASET[h] for h in higher_priority}
+    if args.population != "notrigger":
+        higher_priority = VETO_ORDER[:VETO_ORDER.index(dataset_label)]
+        veto_paths_by_label = {h: TRIGGER_PATHS_BY_DATASET[h] for h in higher_priority}
 
     all_trigger_branches = list(own_paths)
     for paths in veto_paths_by_label.values():
@@ -903,9 +987,19 @@ def main():
     n_after_golden_json = golden_stats["n_after"]
     print(f"[{dataset_label}] golden-JSON filter: {golden_stats['n_before']} -> {n_after_golden_json}", flush=True)
 
-    events_triggered, trigger_stats = apply_trigger_requirement(
-        events_golden, {"mode": "any", "paths": own_paths}
-    )
+    if args.population == "notrigger":
+        # ttbar-count-vs-atlas study: NO HLT requirement whatsoever. The
+        # variable keeps its name so every line below is unchanged, but
+        # it is simply every event that survived the (skipped-for-MC)
+        # golden-JSON step. apply_trigger_requirement is not called at
+        # all -- not called with an empty path list, which would be a
+        # different and much less obvious thing to read.
+        events_triggered = events_golden
+        trigger_stats = {"n_before": len(events_golden), "n_after": len(events_golden), "per_path": {}}
+    else:
+        events_triggered, trigger_stats = apply_trigger_requirement(
+            events_golden, {"mode": "any", "paths": own_paths}
+        )
     n_after_trigger = trigger_stats["n_after"]
     print(f"[{dataset_label}] own-trigger requirement ({own_paths}): "
           f"{trigger_stats['n_before']} -> {n_after_trigger}, per_path={trigger_stats['per_path']}", flush=True)
@@ -966,7 +1060,25 @@ def main():
     v0_result = None
     matching_diagnostics = None
     event_weights = None
-    if args.population == "generic":
+    notrigger_diagnostics = None
+    if args.population == "notrigger":
+        # ttbar-count-vs-atlas study. Same object definitions as every
+        # other mode (the `muons`/`electrons`/`jets` built above, with
+        # jet-lepton cleaning ON) and the same ">= 2 selected objects of
+        # any type" gate --population generic uses -- the ONLY difference
+        # from generic is that no HLT requirement and no de-duplication
+        # were applied upstream of this point.
+        total_objects = ak.num(muons) + ak.num(electrons) + ak.num(jets["Jets"]) + ak.num(jets["BJets"])
+        keep = ak.to_numpy(total_objects >= MIN_TOTAL_SELECTED_OBJECTS)
+        obj_record = selection.build_object_record(
+            muons[keep], electrons[keep], {"Jets": jets["Jets"][keep], "BJets": jets["BJets"][keep]}
+        )
+        # genWeight is carried for INFORMATION ONLY in this mode (the
+        # study's histograms are raw counts, like Maryna's ATLAS ones);
+        # it is deliberately NOT handed to run_combination_funnel, so no
+        # weight shard is produced and no mass is ever weighted.
+        event_weights = None
+    elif args.population == "generic":
         total_objects = ak.num(muons) + ak.num(electrons) + ak.num(jets["Jets"]) + ak.num(jets["BJets"])
         keep = ak.to_numpy(total_objects >= MIN_TOTAL_SELECTED_OBJECTS)
         obj_record = selection.build_object_record(
@@ -1065,41 +1177,60 @@ def main():
     im_config = {"field_to_slice_by": FIELD_TO_SLICE_BY}
 
     job_tag = f"{dataset_label}_record{args.record_id}_file{args.file_index}"
-    incl_shard_path = output_dir / "dataset_shard_inclusive.sqlite"
-    excl_shard_path = output_dir / "dataset_shard_exclusive.sqlite"
-    for path in (incl_shard_path, excl_shard_path):
-        if path.exists():
-            path.unlink()
-    writer_incl = SqliteArrayShardWriter(str(incl_shard_path))
-    writer_excl = SqliteArrayShardWriter(str(excl_shard_path))
-
-    # MC-only weight shards (v2 task): a SEPARATE pair of files, never
-    # mixed into the data shard schema above. Created only when --is-mc.
-    writer_weights_incl = writer_weights_excl = None
-    weights_incl_shard_path = weights_excl_shard_path = None
-    if args.is_mc:
-        weights_incl_shard_path = output_dir / "dataset_shard_weights_inclusive.sqlite"
-        weights_excl_shard_path = output_dir / "dataset_shard_weights_exclusive.sqlite"
-        for path in (weights_incl_shard_path, weights_excl_shard_path):
+    # --- Normal (no final-state rule) shard pair -----------------------
+    # Skipped entirely for --population notrigger (ttbar-count-vs-atlas
+    # study): that mode performs no de-duplication, so an "exclusive"
+    # shard would be a meaningless duplicate of the inclusive one, and the
+    # study's own three variants (rare4 / pr31 / pr31_noOR, written below)
+    # are the products it needs. The placeholder values assigned here are
+    # the ones that then land in job_metadata.json for this mode -- the
+    # real per-variant numbers live under notrigger_diagnostics. Every
+    # other population reaches the unmodified block below.
+    incl_shard_path = excl_shard_path = None
+    n_fs_groups = 0
+    n_signature_writes_incl = n_signature_writes_excl = 0
+    n_values_written_incl = n_values_written_excl = 0
+    max_signature_size = 0
+    n_capped_signatures = 0
+    label_event_counts_incl = {}
+    label_event_counts_excl = {}
+    skip_reason_totals = {}
+    if args.population != "notrigger":
+        incl_shard_path = output_dir / "dataset_shard_inclusive.sqlite"
+        excl_shard_path = output_dir / "dataset_shard_exclusive.sqlite"
+        for path in (incl_shard_path, excl_shard_path):
             if path.exists():
                 path.unlink()
-        writer_weights_incl = SqliteArrayShardWriter(str(weights_incl_shard_path))
-        writer_weights_excl = SqliteArrayShardWriter(str(weights_excl_shard_path))
+        writer_incl = SqliteArrayShardWriter(str(incl_shard_path))
+        writer_excl = SqliteArrayShardWriter(str(excl_shard_path))
 
-    funnel_result = run_combination_funnel(
-        obj_record, is_exclusive_selected, job_tag, all_combinations, im_config, logger, writer_incl, writer_excl,
-        event_weights=event_weights, writer_weights_incl=writer_weights_incl, writer_weights_excl=writer_weights_excl,
-    )
-    n_fs_groups = funnel_result["n_fs_groups"]
-    n_signature_writes_incl = funnel_result["n_signature_writes_incl"]
-    n_signature_writes_excl = funnel_result["n_signature_writes_excl"]
-    n_values_written_incl = funnel_result["n_values_written_incl"]
-    n_values_written_excl = funnel_result["n_values_written_excl"]
-    max_signature_size = funnel_result["max_signature_size"]
-    n_capped_signatures = funnel_result["n_capped_signatures"]
-    label_event_counts_incl = funnel_result["label_event_counts_incl"]
-    label_event_counts_excl = funnel_result["label_event_counts_excl"]
-    skip_reason_totals = funnel_result["skip_reason_totals"]
+        # MC-only weight shards (v2 task): a SEPARATE pair of files, never
+        # mixed into the data shard schema above. Created only when --is-mc.
+        writer_weights_incl = writer_weights_excl = None
+        weights_incl_shard_path = weights_excl_shard_path = None
+        if args.is_mc:
+            weights_incl_shard_path = output_dir / "dataset_shard_weights_inclusive.sqlite"
+            weights_excl_shard_path = output_dir / "dataset_shard_weights_exclusive.sqlite"
+            for path in (weights_incl_shard_path, weights_excl_shard_path):
+                if path.exists():
+                    path.unlink()
+            writer_weights_incl = SqliteArrayShardWriter(str(weights_incl_shard_path))
+            writer_weights_excl = SqliteArrayShardWriter(str(weights_excl_shard_path))
+
+        funnel_result = run_combination_funnel(
+            obj_record, is_exclusive_selected, job_tag, all_combinations, im_config, logger, writer_incl, writer_excl,
+            event_weights=event_weights, writer_weights_incl=writer_weights_incl, writer_weights_excl=writer_weights_excl,
+        )
+        n_fs_groups = funnel_result["n_fs_groups"]
+        n_signature_writes_incl = funnel_result["n_signature_writes_incl"]
+        n_signature_writes_excl = funnel_result["n_signature_writes_excl"]
+        n_values_written_incl = funnel_result["n_values_written_incl"]
+        n_values_written_excl = funnel_result["n_values_written_excl"]
+        max_signature_size = funnel_result["max_signature_size"]
+        n_capped_signatures = funnel_result["n_capped_signatures"]
+        label_event_counts_incl = funnel_result["label_event_counts_incl"]
+        label_event_counts_excl = funnel_result["label_event_counts_excl"]
+        skip_reason_totals = funnel_result["skip_reason_totals"]
 
     common_metadata = {
         "n_read": n_read,
@@ -1115,17 +1246,18 @@ def main():
         "own_trigger_paths": ",".join(own_paths),
         "higher_priority_datasets": ",".join(higher_priority),
     }
-    for writer in (writer_incl, writer_excl):
-        for k, v in common_metadata.items():
-            writer.set_metadata(k, v)
-        writer.commit()
-        writer.close()
-    if args.is_mc:
-        for writer in (writer_weights_incl, writer_weights_excl):
+    if args.population != "notrigger":
+        for writer in (writer_incl, writer_excl):
             for k, v in common_metadata.items():
                 writer.set_metadata(k, v)
             writer.commit()
             writer.close()
+        if args.is_mc:
+            for writer in (writer_weights_incl, writer_weights_excl):
+                for k, v in common_metadata.items():
+                    writer.set_metadata(k, v)
+                writer.commit()
+                writer.close()
 
     # --- Top-4 truncation (Shikma/Maryna's request, top-4 task Step 1) ---
     # --population matched ONLY -- generic/v0 are completely untouched
@@ -1392,9 +1524,150 @@ def main():
             "skip_reason_totals": rare4_funnel_result["skip_reason_totals"],
         }
 
+    # --- --population notrigger: the three study variants ---------------
+    # ttbar-count-vs-atlas study. Reached ONLY for population=="notrigger"
+    # (which itself requires --is-mc), so matched/generic/v0 and every
+    # data-mode run are completely unaffected (Hard Rule 5).
+    if args.population == "notrigger":
+        # Objects for variants (a) and (b): exactly the ones already
+        # selected above -- same select_muons/select_electrons/
+        # select_and_split_jets calls, jet-lepton cleaning ON -- restricted
+        # to the gate-passing rows, i.e. the same arrays the normal
+        # obj_record was built from.
+        v_muons = muons[keep]
+        v_electrons = electrons[keep]
+        v_light_jets = jets["Jets"][keep]
+        v_bjets = jets["BJets"][keep]
+
+        # Variant (c) needs its OWN object selection: no jet-lepton
+        # overlap removal, via select_and_split_jets's own existing
+        # apply_lepton_cleaning parameter (not a reimplementation). Muons
+        # and electrons are identical to (a)/(b) -- overlap removal only
+        # ever removes jets -- but the jet collections differ, so the
+        # >= 2-object gate has to be re-derived from (c)'s own objects
+        # rather than reusing `keep`.
+        jets_noOR = selection.select_and_split_jets(
+            events_triggered, muons, electrons, apply_lepton_cleaning=False
+        )
+        total_objects_noOR = (
+            ak.num(muons) + ak.num(electrons) + ak.num(jets_noOR["Jets"]) + ak.num(jets_noOR["BJets"])
+        )
+        keep_noOR = ak.to_numpy(total_objects_noOR >= MIN_TOTAL_SELECTED_OBJECTS)
+
+        def _run_notrigger_variant(name, sel_muons, sel_electrons, sel_light_jets, sel_bjets,
+                                   drop_ge5_light_jets):
+            """One variant: apply the e+mu+b > 4 rejection (our rare4
+            rule), optionally also drop events with >= 5 light jets
+            (PR #31's _is_valid_fs behaviour), then run the SHARED,
+            unmodified combination funnel on what is left and write a
+            single inclusive shard. Returns the variant's own event
+            counters alongside the funnel's own statistics."""
+            n_gate = len(sel_muons)
+            n_e = ak.to_numpy(ak.num(sel_electrons, axis=1))
+            n_m = ak.to_numpy(ak.num(sel_muons, axis=1))
+            n_b = ak.to_numpy(ak.num(sel_bjets, axis=1))
+            n_j = ak.to_numpy(ak.num(sel_light_jets, axis=1))
+
+            # Our rare4 rule, identical formula to the matched-mode one
+            # above: reject on the TRUE per-event counts of the
+            # non-light-jet types, never on the display-capped label.
+            keep_rare4 = (n_e + n_m + n_b) <= 4
+            n_rejected_nonlight = int((~keep_rare4).sum())
+
+            # PR #31's extra drop. IMCalculator._is_valid_fs rejects a
+            # final state when ANY per-type count exceeds
+            # max_count_particle_in_combination (4); with e+mu+b already
+            # capped at 4 each by the rule above, the only type that can
+            # still exceed it is the light jets, so ">= 5 light jets" is
+            # exactly the remaining difference.
+            if drop_ge5_light_jets:
+                keep_mask = keep_rare4 & (n_j <= 4)
+                n_dropped_ge5_light_jets = int((keep_rare4 & (n_j > 4)).sum())
+            else:
+                keep_mask = keep_rare4
+                n_dropped_ge5_light_jets = 0
+
+            rec = selection.build_object_record(
+                sel_muons[keep_mask], sel_electrons[keep_mask],
+                {"Jets": sel_light_jets[keep_mask], "BJets": sel_bjets[keep_mask]},
+            )
+            n_kept = len(rec)
+            assert n_kept == n_gate - n_rejected_nonlight - n_dropped_ge5_light_jets, (
+                f"{name}: kept/rejected bookkeeping disagrees -- n_kept={n_kept}, "
+                f"n_gate={n_gate}, rejected_nonlight={n_rejected_nonlight}, "
+                f"dropped_ge5j={n_dropped_ge5_light_jets}"
+            )
+
+            shard_path = output_dir / f"dataset_shard_notrigger_{name}_inclusive.sqlite"
+            if shard_path.exists():
+                shard_path.unlink()
+            writer = SqliteArrayShardWriter(str(shard_path))
+            # is_exclusive is all-True and write_exclusive=False: this mode
+            # does no de-duplication, so no exclusive shard exists at all.
+            result = run_combination_funnel(
+                rec, np.ones(n_kept, dtype=bool), job_tag, all_combinations, im_config, logger,
+                writer, None, write_exclusive=False,
+            )
+            meta = dict(common_metadata)
+            meta["object_truncation"] = f"notrigger_{name}"
+            meta["notrigger_variant"] = name
+            meta["notrigger_overlap_removal"] = "off" if name == "pr31_noOR" else "on"
+            meta["notrigger_drop_ge5_light_jets"] = str(bool(drop_ge5_light_jets))
+            meta["weighting"] = "raw_unweighted_counts"
+            for k, v in meta.items():
+                writer.set_metadata(k, v)
+            writer.commit()
+            writer.close()
+
+            return {
+                "variant": name,
+                "overlap_removal": "off" if name == "pr31_noOR" else "on",
+                "drop_ge5_light_jets": bool(drop_ge5_light_jets),
+                "n_events_read_this_file": n_read,
+                "n_events_passing_gate": n_gate,
+                "n_rejected_e_mu_b_gt4": n_rejected_nonlight,
+                "n_dropped_ge5_light_jets": n_dropped_ge5_light_jets,
+                "n_events_into_combinations": n_kept,
+                "shard_path": str(shard_path),
+                "shard_size_mb": round(shard_path.stat().st_size / (1024 * 1024), 3),
+                "n_fs_groups": result["n_fs_groups"],
+                "n_signature_writes_inclusive": result["n_signature_writes_incl"],
+                "n_values_written_inclusive": result["n_values_written_incl"],
+                "max_signature_size_this_job": result["max_signature_size"],
+                "n_capped_signatures": result["n_capped_signatures"],
+                "final_state_label_event_counts_inclusive": result["label_event_counts_incl"],
+                "skip_reason_totals": result["skip_reason_totals"],
+            }
+
+        variants = {
+            "rare4": _run_notrigger_variant(
+                "rare4", v_muons, v_electrons, v_light_jets, v_bjets, drop_ge5_light_jets=False),
+            "pr31": _run_notrigger_variant(
+                "pr31", v_muons, v_electrons, v_light_jets, v_bjets, drop_ge5_light_jets=True),
+            "pr31_noOR": _run_notrigger_variant(
+                "pr31_noOR", muons[keep_noOR], electrons[keep_noOR],
+                jets_noOR["Jets"][keep_noOR], jets_noOR["BJets"][keep_noOR],
+                drop_ge5_light_jets=True),
+        }
+
+        notrigger_diagnostics = {
+            "gate": f">= {MIN_TOTAL_SELECTED_OBJECTS} selected objects of any type",
+            "hlt_requirement": "none",
+            "trigger_matching": "none",
+            "deduplication": "none",
+            "weighting": "raw unweighted counts (genWeight recorded for information only)",
+            "n_events_read_this_file": n_read,
+            "n_events_passing_gate_with_overlap_removal": int(keep.sum()),
+            "n_events_passing_gate_without_overlap_removal": int(keep_noOR.sum()),
+            "sum_genweight_all_events_this_file": mc_sum_genweight_all_events_this_file,
+            "sum_genweight_gate_passing_events": float(gen_weight_triggered[keep].sum()),
+            "variants": variants,
+        }
+
     elapsed = time.time() - t0
-    incl_shard_size_mb = incl_shard_path.stat().st_size / (1024 * 1024)
-    excl_shard_size_mb = excl_shard_path.stat().st_size / (1024 * 1024)
+    # None only for --population notrigger, which writes no normal shard pair.
+    incl_shard_size_mb = incl_shard_path.stat().st_size / (1024 * 1024) if incl_shard_path else 0.0
+    excl_shard_size_mb = excl_shard_path.stat().st_size / (1024 * 1024) if excl_shard_path else 0.0
 
     metadata = {
         "created_utc": datetime.now(timezone.utc).isoformat(),
@@ -1432,6 +1705,7 @@ def main():
         "top4_diagnostics": top4_diagnostics,
         "nonjet4_diagnostics": nonjet4_diagnostics,
         "rare4_diagnostics": rare4_diagnostics,
+        "notrigger_diagnostics": notrigger_diagnostics,
     }
     if args.is_mc:
         # Purely additive -- every key above is untouched, so a data-mode
@@ -1449,8 +1723,18 @@ def main():
         "n_signature_writes_exclusive": n_signature_writes_excl,
         "elapsed_sec": round(elapsed, 1),
     }, indent=2))
-    print(f"[{dataset_label}] wrote {incl_shard_path}, {excl_shard_path}, and job_metadata.json "
-          f"under {output_dir} ({elapsed:.1f}s elapsed)")
+    if args.population == "notrigger":
+        for name, v in notrigger_diagnostics["variants"].items():
+            print(f"[{dataset_label}] notrigger/{name}: read={v['n_events_read_this_file']} "
+                  f"gate={v['n_events_passing_gate']} rejected_e_mu_b_gt4={v['n_rejected_e_mu_b_gt4']} "
+                  f"dropped_ge5j={v['n_dropped_ge5_light_jets']} "
+                  f"into_combinations={v['n_events_into_combinations']} "
+                  f"fs_groups={v['n_fs_groups']} signatures={v['n_signature_writes_inclusive']}")
+        print(f"[{dataset_label}] wrote 3 notrigger variant shards and job_metadata.json "
+              f"under {output_dir} ({elapsed:.1f}s elapsed)")
+    else:
+        print(f"[{dataset_label}] wrote {incl_shard_path}, {excl_shard_path}, and job_metadata.json "
+              f"under {output_dir} ({elapsed:.1f}s elapsed)")
 
 
 if __name__ == "__main__":
