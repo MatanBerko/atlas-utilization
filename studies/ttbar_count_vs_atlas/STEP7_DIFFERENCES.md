@@ -10,6 +10,20 @@ Two codebases are compared:
   configuration (`release_years: 2024r-pp`, cuts in MeV), i.e. the configuration
   behind Maryna's 2,146-histogram / 135-category ATLAS ttbar number.
 
+**Which PR #31 config was used, and one caveat.** PR #31 carries six YAML
+configs. `config.yaml` is the one both `submit.sh` and `submit_mc.sh` hardcode
+(`CONFIG="config.yaml"`), and the only one with `parse_mc: true`, jet tagging on,
+`BJets` in `objects_to_calculate`, a `trigger_config` block and the
+Z-peak / max-mass cutoffs - so it is the one an ATLAS ttbar **MC** run must have
+used, and every PR #31 number below comes from it. The one that might look like a
+better candidate, `configWmaxTotal_up4j_minEvt100_subleading.yaml`, writes into
+Maryna's own directory but is **not** an MC config: it sets `parse_mc: false`,
+`max_files_to_process: 3`, jet \|eta\| < 4.5, no jet tagging, and
+`objects_to_calculate: [Electrons, Muons, Jets, Photons]` - photons instead of
+b-jets, which would be a different category space entirely. **UNVERIFIED:** which
+config Maryna actually ran is worth one confirming question to her, because if it
+were the second one the category comparison would not be like-for-like.
+
 Every row says whether the statement was established by **RUNNING** code or by
 **READING** it. "RUNNING" means a script in this directory executed that
 codebase's own function, imported from its own checkout, and the result is in
@@ -143,7 +157,7 @@ same shared pruning function. READ for PR #31, RUNNING for ours (it is the chain
 | Z-peak cutoff | 115 GeV, applied **only** to same-flavour dilepton channels (`_dilepton_flavor`) | 115 GeV, same function | RUNNING / READ |
 | max-mass cutoff | 10,000 GeV | 10,000 GeV | RUNNING |
 | peak removal | `_find_rightmost_highest_peak` on 10 GeV grid-aligned bins, then keep mass >= peak. **Data-driven; `KNOWN_MASSES` plays no part in it** | identical function | RUNNING |
-| `KNOWN_MASSES` | GeV values, and **never used on CMS objects**: `get_particle_known_mass` returns the array's own `mass` field when present, which NanoAOD always has | MeV values (ATLAS convention) | READ |
+| `KNOWN_MASSES` | GeV values, and **never used on CMS objects**: `get_particle_known_mass` returns the array's own `mass` field when present. RAN on a real object record built by `selection.build_object_record`: all four types (Electrons, Muons, Jets, BJets) carry their own `mass` field, so the fall-back never fires | MeV values (ATLAS convention) | RUNNING (ours) / READ (PR #31) |
 | outlier / first-empty-bin split | `_split_by_first_empty_bin`, edges from `linspace(min, max, nbins+1)` - **not** grid-aligned | **identical** | RUNNING |
 | upstream #27 (`_aligned_bin_edges`) | **absent** | **absent** (present on upstream master) | RUNNING |
 | cropping | each histogram cropped to its first..last filled bin, written as a second `_cropped.root` | `exclude_outliers: true`, with its own in-code note that it misbehaves during merging | READ |

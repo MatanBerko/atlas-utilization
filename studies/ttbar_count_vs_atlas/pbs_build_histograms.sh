@@ -37,8 +37,24 @@ source "$CONDA_PROFILE"
 conda activate "$CONDA_ENV"
 cd "$REPO_DIR"
 
-# Keep the shard scratch copies on the node's own temporary space.
-export TMPDIR="${TMPDIR:-/tmp}"
+# run_funnel_at_threshold works on scratch COPIES of the shards (it mutates
+# them), so this job needs a few GB of writable scratch. Prefer the node's
+# own local space; fall back to a per-job directory on Lustre if the node
+# does not have room, rather than failing halfway through the copy.
+NEED_KB=$((6 * 1024 * 1024))   # 6 GB
+LOCAL_TMP="${TMPDIR:-/tmp}"
+AVAIL_KB=$(df -Pk "$LOCAL_TMP" 2>/dev/null | awk 'NR==2{print $4}')
+if [ -n "${AVAIL_KB:-}" ] && [ "$AVAIL_KB" -ge "$NEED_KB" ]; then
+    export TMPDIR="$LOCAL_TMP"
+else
+    export TMPDIR="${OUT_BASE}/_scratch_${VARIANT}_${PBS_JOBID%%.*}"
+    mkdir -p "$TMPDIR"
+    echo "node scratch $LOCAL_TMP has only ${AVAIL_KB:-unknown} KB free; using $TMPDIR"
+fi
+echo "TMPDIR=$TMPDIR ($(df -Ph "$TMPDIR" | awk 'NR==2{print $4}') free)"
+# The study's own scratch directory, if we made one, is ours to remove.
+cleanup() { case "$TMPDIR" in "${OUT_BASE}/_scratch_"*) rm -rf "$TMPDIR" ;; esac; }
+trap cleanup EXIT
 
 OUT_DIR="${OUT_BASE}/${VARIANT}"
 mkdir -p "$OUT_DIR"

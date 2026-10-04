@@ -193,7 +193,8 @@ def plot_per_category(pr31_hists, cms_hists, out_path):
     fig.patch.set_facecolor(SURFACE)
     y = np.arange(len(shared))
     ax.barh(y + 0.19, [a[c] for c in shared], height=0.34, color=C_BLUE,
-            edgecolor=SURFACE, linewidth=2, zorder=3, label="ttbar MC, variant (b) pr31")
+            edgecolor=SURFACE, linewidth=2, zorder=3,
+            label="ttbar MC, variant (b) pr31 (> 25 bins)")
     ax.barh(y - 0.19, [b[c] for c in shared], height=0.34, color=C_ORANGE,
             edgecolor=SURFACE, linewidth=2, zorder=3, label="CMS data delivery (rare4)")
     for yi, c in zip(y, shared):
@@ -203,7 +204,7 @@ def plot_per_category(pr31_hists, cms_hists, out_path):
     ax.set_yticklabels([c.replace("x", "") for c in shared], fontsize=7)
     ax.invert_yaxis()
     style(ax, title=f"Histograms per category, {len(shared)} shared categories "
-                    f"(>= 25 filled bins)", xlabel="histograms")
+                    f"(both sides at > 25 filled bins)", xlabel="histograms")
     ax.grid(axis="y", visible=False)
     ax.grid(axis="x", color=GRID, linewidth=0.8, zorder=0)
     ax.legend(frameon=False, fontsize=9, loc="lower right", labelcolor=INK_2)
@@ -298,11 +299,14 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
 
     summaries = {}
-    roots = {}
+    roots = {}        # >= 25 filled bins (the ATLAS wording)
+    roots_gt25 = {}   # >  25 filled bins (what our CMS data delivery uses)
     for v in ("rare4", "pr31", "pr31_noOR"):
         summaries[v] = json.loads((study / v / f"build_summary_{v}.json").read_text())
         roots[v] = read_root(str(study / v / f"{args.prefix}_{v}_ge25bins.root"))
-        print(f"{v}: {len(roots[v])} histograms at >= 25 filled bins")
+        roots_gt25[v] = read_root(str(study / v / f"{args.prefix}_{v}_min26bins.root"))
+        print(f"{v}: {len(roots[v])} histograms at >= 25 filled bins, "
+              f"{len(roots_gt25[v])} at > 25")
 
     cms = read_root(args.cms_delivery_root)
     cms_cats = sorted({category_of(n) for n in cms})
@@ -310,7 +314,7 @@ def main():
 
     manifest = {}
     plot_categories(summaries, cms_cats, out_dir / "1_categories_by_lepton_content.png")
-    plot_per_category(roots["pr31"], cms, out_dir / "2_per_category_pr31_vs_cms_data.png")
+    plot_per_category(roots_gt25["pr31"], cms, out_dir / "2_per_category_pr31_vs_cms_data.png")
     manifest["examples"] = plot_examples(roots["rare4"], out_dir / "3_example_histograms.png")
     manifest["overlap"] = plot_overlap_effect(
         roots["pr31"], roots["pr31_noOR"], out_dir / "4_overlap_removal_effect.png")
