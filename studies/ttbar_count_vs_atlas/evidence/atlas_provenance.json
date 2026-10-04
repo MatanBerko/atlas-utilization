@@ -1,0 +1,216 @@
+{
+  "what": "provenance of Maryna's ATLAS ttbar BumpNet histogram file",
+  "atlas_root_file": "/storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization/data/atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612/histograms/atlas_opendata_bumpnet.root",
+  "atlas_root_file_readable": false,
+  "sample_list_readable": false,
+  "copied_inputs_sha256": {
+    "code/domain/config.py": "b7ed5d2dd9fe8b2d658e823016363f28147e5823e1e7bfddeeba6f8b3e834c2b",
+    "code/orchestration/handlers/parsing_handler.py": "4f9553b50fcbdec3416330a6d249090d4a35548353477df43de1417545675143",
+    "code/services/calculations/im_calculator.py": "6e44cc177b4fac304f81c0277587602d34ee04f3f5edf936df94f0212665c896",
+    "code/services/calculations/physics_calcs.py": "c873f659d844c395bf1b9ab70c4236c2f9cb4a38c617574ccc265a06e2b5664b",
+    "code/services/parsing/event_selection.py": "0551ead79b6faefe82abf89e54c9b84a5082554c12591492590fd2c4aceaf3b1",
+    "code/services/pipelines/post_processing_pipeline.py": "0c80bbc97932bad5b10f2d88be22b5ece475d707da0faff71c7d7b6cbdfd4bd6",
+    "run_logs/config.yaml": "b44f0abee5e012102bd0bb6a9f01db04eed6998280e904eb9b808dbf72ec45bc",
+    "run_logs/pipeline.out": "5b14a1253788010168ec775700c470409bd40ff83bc37d9ca043f5df6cbd125c",
+    "run_logs/submit_mc.sh": "81d87b9819271f5b403f3690bea01bae5badb853cfd37fbc92f9f888f85f6a04"
+  },
+  "checkout": {
+    "path": "/storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization/atlas-utilization",
+    "head_commit": "ba57abc20467782d8a98a216e45fed6d7648296f",
+    "branch": "feature/overlap-removal",
+    "recent_commits": [
+      "ba57abc Add xrootd timeout + retry with backoff for stuck CERN connections",
+      "4b9ef6a Fix overlap removal: drop NumTrkPt500 before save, use ak.with_field to preserve layout",
+      "252637f Fix overlap removal: skip steps when particle collection is empty",
+      "459a0af Fix overlap removal: use flat numpy dR, bypass awkward layout bugs",
+      "8cd9acd Add ATLAS-style overlap removal (arXiv:1606.03903, Table 2)",
+      "fe5a560 Fix trigger-config wiring (#29)",
+      "bea982d Feat/trigger matching (#22)",
+      "c296b92 Merge pull request #17 from aesenc/bugfix/bughunt"
+    ],
+    "is_upstream_master": false,
+    "is_pr31": false,
+    "upstream_master_is_ancestor": false,
+    "pr31_is_ancestor": false,
+    "merge_base_with_upstream_master": "fe5a5607972546c3c4843dd93686d3608934b421",
+    "commits_on_her_branch_not_in_upstream_master": [
+      "ba57abc Add xrootd timeout + retry with backoff for stuck CERN connections",
+      "4b9ef6a Fix overlap removal: drop NumTrkPt500 before save, use ak.with_field to preserve layout",
+      "252637f Fix overlap removal: skip steps when particle collection is empty",
+      "459a0af Fix overlap removal: use flat numpy dR, bypass awkward layout bugs",
+      "8cd9acd Add ATLAS-style overlap removal (arXiv:1606.03903, Table 2)"
+    ],
+    "commits_in_upstream_master_not_on_her_branch": [
+      "8120fb8 Align outlier split to bin edges (#27)"
+    ],
+    "uncommitted_tracked_changes": [],
+    "untracked_files_count": 34
+  },
+  "config_used_for_this_run": {
+    "source": "the run's own logs/config.yaml snapshot (copied, sha256-verified)",
+    "which_config_file": "config.yaml, per submit_mc.sh in the same log directory",
+    "submit_sets_CONFIG": [
+      "CONFIG=\"config.yaml\""
+    ],
+    "run_name": "atlas_mc_UnlimetedJets_test_ttbar",
+    "trigger_config": {
+      "enabled": false
+    },
+    "parse_mc": true,
+    "max_files_to_process": 40,
+    "enable_jet_tagging": true,
+    "jet_btagging_thresholds": {
+      "btagDeepFlavB": 0.5,
+      "DL1d": 2.51
+    },
+    "particle_counts": {
+      "electrons": {
+        "min": 0,
+        "max": 4
+      },
+      "muons": {
+        "min": 0,
+        "max": 4
+      },
+      "jets": {
+        "min": 0,
+        "max": 4
+      },
+      "bjets": {
+        "min": 0,
+        "max": 4
+      }
+    },
+    "kinematic_cuts": {
+      "electrons": {
+        "pt_min": 25000.0,
+        "eta_max": 2.47,
+        "rel_isolation_max": 0.06
+      },
+      "muons": {
+        "pt_min": 25000.0,
+        "eta_max": 2.5
+      },
+      "jets": {
+        "pt_min": 30000.0,
+        "eta_max": 2.5
+      },
+      "bjets": {
+        "pt_min": 30000.0,
+        "eta_max": 2.5
+      },
+      "photons": {
+        "pt_min": 25000.0,
+        "eta_max": 2.37
+      },
+      "taus": {
+        "pt_min": 20000.0,
+        "eta_max": 2.5
+      }
+    },
+    "objects_to_calculate": [
+      "Electrons",
+      "Muons",
+      "Jets",
+      "BJets"
+    ],
+    "mass_calculation_task_config": {
+      "input_dir": "/data/atlas_pp_root_files",
+      "output_dir": "./output/im_arrays",
+      "field_to_slice_by": "pt",
+      "use_multiprocessing": true,
+      "parallel_processes": 4,
+      "fs_chunk_threshold_bytes": 2000000000,
+      "objects_to_calculate": [
+        "Electrons",
+        "Muons",
+        "Jets",
+        "BJets"
+      ],
+      "min_particles_in_combination": 1,
+      "max_particles_in_combination": 4,
+      "min_count_particle_in_combination": 1,
+      "max_count_particle_in_combination": 4,
+      "max_total_particles_in_combination": 4,
+      "min_events_per_fs": 10,
+      "include_subleading": true,
+      "max_subleading_index": 1
+    },
+    "post_processing_task_config": {
+      "input_dir": "./output/im_arrays",
+      "output_dir": "./output/im_arrays_processed",
+      "peak_detection_bin_width_gev": 10.0,
+      "z_peak_cutoff": 110.0,
+      "max_mass_cutoff": 10000.0
+    },
+    "histogram_creation_task_config": {
+      "input_dir": "./output/im_arrays_processed",
+      "output_dir": "./output/histograms",
+      "bin_width_gev": 10.0,
+      "single_output_file": true,
+      "output_filename": "atlas_opendata_bumpnet.root",
+      "exclude_outliers": true,
+      "use_bumpnet_naming": true,
+      "apply_peak_removal_at_histogram_level": false,
+      "also_save_pre_postproc": true,
+      "pre_postproc_filename": "atlas_btag_ttbar_test_bumpnet_nopostproc.root"
+    },
+    "enable_overlap_removal_present_in_config": false,
+    "enable_overlap_removal_value": null
+  },
+  "answers": {
+    "1_five_or_more_light_jets": {
+      "verdict": "DROPPED - not grouped as 4j, and not kept as their own categories",
+      "how": "READ (her own code + the run's own config snapshot)",
+      "why": [
+        "the run config sets particle_counts.jets.max = 4",
+        "her apply_parsing_event_selection passes particle_counts straight to filter_events_by_particle_counts with is_particle_counts_range=True, which builds the EVENT-level mask (obj_count >= min) & (obj_count <= max) and drops events outside it -- she does NOT have PR #31's override that raises the light-jet max to infinity (no LIGHT_JET_FIELD logic in her event_selection.py at all)",
+        "and IMCalculator._is_valid_fs, with max_count_particle_in_combination = 4, would drop any surviving final state with a per-type count above that anyway"
+      ],
+      "caveat": "the run directory is named 'UnlimetedJets', which suggests the opposite intent. The config snapshot stored with the run says jets max 4. Worth confirming with Maryna.",
+      "has_pr31_light_jet_override": false
+    },
+    "2_jet_lepton_overlap_removal": {
+      "verdict": "NOT APPLIED in this run, although the code for it is on her branch",
+      "how": "READ (her parsing_handler.py, domain/config.py and the run config)",
+      "why": [
+        "her branch adds ATLAS-style overlap removal (arXiv:1606.03903 Table 2) in services/parsing/event_selection.apply_overlap_removal",
+        "parsing_handler.py calls it only under `if parsing_config.enable_overlap_removal:`",
+        "domain/config.py defines `enable_overlap_removal: bool = False` and reads it with parsing_dict.get('enable_overlap_removal', False)",
+        "the run's own config snapshot has no enable_overlap_removal key (present=False), so the default False applied"
+      ],
+      "apply_overlap_removal_defined": true,
+      "gated_on_enable_flag": true,
+      "default_is_false": true
+    },
+    "3_btag_selection": {
+      "verdict": "jet tagging ON; ATLAS DL1d discriminant with threshold 2.51",
+      "how": "READ (run config snapshot + her file_parser b-tag split)",
+      "enable_jet_tagging": true,
+      "thresholds": {
+        "btagDeepFlavB": 0.5,
+        "DL1d": 2.51
+      },
+      "note": "btagDeepFlavB 0.5 is also listed but is the CMS branch; for ATLAS PHYSLITE input the DL1d score (threshold 2.51) is the one in force."
+    },
+    "4_upstream_27_present": {
+      "verdict": "NO - upstream #27 is absent from her run",
+      "how": "READ (git log) and RAN (hasattr probe on the copied module is not possible without importing her tree; the textual check is definitive)",
+      "evidence": "the ONLY commit upstream master has that her branch does not is 'Align outlier split to bin edges (#27)'",
+      "has_aligned_bin_edges_helper": false
+    },
+    "5_config_actually_used": "see config_used_for_this_run above"
+  },
+  "differences_from_what_the_original_task_assumed": [
+    "Her file was NOT produced by PR #31. Her HEAD is ba57abc on branch feature/overlap-removal; neither PR #31 (81dd40a) nor upstream master (8120fb8) is an ancestor of it.",
+    "Her branch = upstream master MINUS #27, PLUS 5 overlap-removal commits (which were not switched on for this run).",
+    "min_events_per_fs is 10 in her run, not the 100 our pipeline uses.",
+    "z_peak_cutoff is 110 GeV in her run, not the 115 GeV our pipeline uses.",
+    "max_files_to_process is 40."
+  ],
+  "counts_reported_in_her_pipeline_log": [
+    "2026-10-03 21:29:49,979 - PipelineExecutor - INFO - Applied global tail display ranges to 2684 merged histogram(s)",
+    "2026-10-03 21:29:50,235 - services.pipelines.histograms_pipeline - INFO - Grouped 8052 signatures into 2684 unique histogram signatures",
+    "2026-10-03 21:35:26,553 - services.pipelines.histograms_pipeline - INFO - Wrote 2684 histograms to shared file ../data/atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612/histograms/atlas_btag_ttbar_test_bumpnet_nopostproc.root"
+  ]
+}
