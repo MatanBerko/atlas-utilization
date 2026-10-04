@@ -1,0 +1,143 @@
+{
+  "config_in_force": {
+    "btag_threshold_btagDeepFlavB": 0.5,
+    "histogram_bin_width_gev": 10.0,
+    "kinematic_cuts": {
+      "bjets": {
+        "eta_max": 2.5,
+        "pt_min": 30000.0
+      },
+      "electrons": {
+        "eta_max": 2.47,
+        "pt_min": 25000.0,
+        "rel_isolation_max": 0.06
+      },
+      "jets": {
+        "eta_max": 2.5,
+        "pt_min": 30000.0
+      },
+      "muons": {
+        "eta_max": 2.5,
+        "pt_min": 25000.0
+      },
+      "photons": {
+        "eta_max": 2.37,
+        "pt_min": 25000.0
+      },
+      "taus": {
+        "eta_max": 2.5,
+        "pt_min": 20000.0
+      }
+    },
+    "max_count_particle_in_combination": 4,
+    "max_mass_cutoff_gev": 10000.0,
+    "max_particles_in_combination": 4,
+    "min_count_particle_in_combination": 1,
+    "min_events_per_fs": 100,
+    "min_particles_in_combination": 1,
+    "particle_counts": {
+      "bjets": {
+        "max": 4,
+        "min": 0
+      },
+      "electrons": {
+        "max": 4,
+        "min": 0
+      },
+      "jets": {
+        "max": 4,
+        "min": 0
+      },
+      "muons": {
+        "max": 4,
+        "min": 0
+      }
+    },
+    "peak_detection_bin_width_gev": 10.0,
+    "source": "PR #31 config.yaml",
+    "trigger_enabled": false,
+    "z_peak_cutoff_gev": 115.0
+  },
+  "finding_i_mass_calculation": {
+    "3_light_jets": {
+      "final_state_counts": {
+        "0e_1m_3j_1b": 1
+      },
+      "labels_after_display_cap": [
+        "0e_1m_3j_1b"
+      ],
+      "survives_mass_calculation": true
+    },
+    "4_light_jets": {
+      "final_state_counts": {
+        "0e_1m_4j_1b": 1
+      },
+      "labels_after_display_cap": [
+        "0e_1m_4j_1b"
+      ],
+      "survives_mass_calculation": true
+    },
+    "5_light_jets": {
+      "final_state_counts": {},
+      "labels_after_display_cap": [],
+      "survives_mass_calculation": false
+    },
+    "6_light_jets": {
+      "final_state_counts": {},
+      "labels_after_display_cap": [],
+      "survives_mass_calculation": false
+    }
+  },
+  "finding_i_parsing": {
+    "3_light_jets": {
+      "n_light_jets_after": 3,
+      "survives_parsing": true
+    },
+    "4_light_jets": {
+      "n_light_jets_after": 4,
+      "survives_parsing": true
+    },
+    "5_light_jets": {
+      "n_light_jets_after": 5,
+      "survives_parsing": true
+    },
+    "6_light_jets": {
+      "n_light_jets_after": 6,
+      "survives_parsing": true
+    }
+  },
+  "finding_i_parsing_non_light_jet_cap": {
+    "1_muon_plus_3_bjets": {
+      "n_non_light_jet_objects": 4,
+      "survives_parsing": true
+    },
+    "1_muon_plus_4_bjets": {
+      "n_non_light_jet_objects": 5,
+      "survives_parsing": false
+    },
+    "1_muon_plus_5_bjets": {
+      "n_non_light_jet_objects": 6,
+      "survives_parsing": false
+    }
+  },
+  "finding_ii_overlap": {
+    "jet_was_removed": false,
+    "n_light_jets_after_parsing_selection": 1,
+    "n_light_jets_before": 1,
+    "probe": "1 muon at (eta=0, phi=0) and 1 light jet at (eta=0, phi=0.1), dR = 0.1"
+  },
+  "finding_iv_outlier_split": {
+    "first_outlier": null,
+    "has_aligned_bin_edges_helper": false,
+    "max_of_main": 255.0,
+    "n_main": 80,
+    "n_outliers": 0,
+    "peak_mass_returned": 250.0,
+    "probe": "40 values in [203,207] + 40 values in [251,255], 10 GeV bins",
+    "split_boundary_is_on_the_10gev_grid": null
+  },
+  "imported_im_calculator_from": "/storage/agrp/berkom/atlas-utilization/work/ttbar_count_vs_atlas/pr31_ro/services/calculations/im_calculator.py",
+  "repo": "/storage/agrp/berkom/atlas-utilization/work/ttbar_count_vs_atlas/pr31_ro",
+  "repo_head": "81dd40aa6a0713088e811ae2732558766d854691",
+  "side": "pr31"
+}

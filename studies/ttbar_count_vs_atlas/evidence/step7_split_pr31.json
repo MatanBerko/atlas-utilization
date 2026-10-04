@@ -1,0 +1,54 @@
+{
+  "bin_width_gev": 10.0,
+  "has_aligned_bin_edges_helper": false,
+  "imported_from": "/storage/agrp/berkom/atlas-utilization/work/ttbar_count_vs_atlas/pr31_ro/services/pipelines/post_processing_pipeline.py",
+  "probes": {
+    "probe1_clean_gap": [
+      205.0,
+      215.0,
+      345.0
+    ],
+    "probe2_decisive_gap_at_220": [
+      205.0,
+      210.0,
+      250.0
+    ],
+    "probe3_no_gap": [
+      205.0,
+      212.0,
+      221.0
+    ]
+  },
+  "repo": "/storage/agrp/berkom/atlas-utilization/work/ttbar_count_vs_atlas/pr31_ro",
+  "repo_head": "81dd40aa6a0713088e811ae2732558766d854691",
+  "results": {
+    "probe1_clean_gap": {
+      "did_split": true,
+      "max_of_main": 215.0,
+      "min_of_outliers": 345.0,
+      "n_input": 120,
+      "n_main": 80,
+      "n_outliers": 40,
+      "peak_mass": 340.0
+    },
+    "probe2_decisive_gap_at_220": {
+      "did_split": false,
+      "max_of_main": 250.0,
+      "min_of_outliers": null,
+      "n_input": 120,
+      "n_main": 120,
+      "n_outliers": 0,
+      "peak_mass": 240.0
+    },
+    "probe3_no_gap": {
+      "did_split": false,
+      "max_of_main": 221.0,
+      "min_of_outliers": null,
+      "n_input": 120,
+      "n_main": 120,
+      "n_outliers": 0,
+      "peak_mass": 220.0
+    }
+  },
+  "side": "pr31"
+}

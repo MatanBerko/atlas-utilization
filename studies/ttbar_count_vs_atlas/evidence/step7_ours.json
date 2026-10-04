@@ -1,0 +1,115 @@
+{
+  "config_in_force": {
+    "btag_threshold_btagDeepFlavB": 0.2598,
+    "electron_cutBased_min": 3,
+    "electron_eta_max": 2.5,
+    "electron_pt_min_gev": 25.0,
+    "histogram_bin_width_gev": 10.0,
+    "jet_eta_max": 2.5,
+    "jet_lepton_clean_dr": 0.4,
+    "jet_pt_min_gev": 30.0,
+    "max_count_particle_in_combination": 4,
+    "max_mass_cutoff_gev": 10000.0,
+    "max_particles_in_combination": 4,
+    "min_count_particle_in_combination": 1,
+    "min_events_per_fs": 100,
+    "min_particles_in_combination": 1,
+    "muon_eta_max": 2.4,
+    "muon_iso_max_pfRelIso04_all": 0.15,
+    "muon_pt_min_gev": 25.0,
+    "source": "the modules that actually apply the values",
+    "trigger_enabled": "yes for data and for --population matched; no for --population notrigger (study only)",
+    "z_peak_cutoff_gev": 115.0
+  },
+  "finding_i_mass_calculation": {
+    "3_light_jets": {
+      "final_state_counts": {
+        "0e_1m_3j_0g_0t_1b": 1
+      },
+      "labels_after_display_cap": [
+        "0e_1m_3j_0g_0t_1b"
+      ],
+      "survives_mass_calculation": true
+    },
+    "4_light_jets": {
+      "final_state_counts": {
+        "0e_1m_4j_0g_0t_1b": 1
+      },
+      "labels_after_display_cap": [
+        "0e_1m_4j_0g_0t_1b"
+      ],
+      "survives_mass_calculation": true
+    },
+    "5_light_jets": {
+      "final_state_counts": {},
+      "labels_after_display_cap": [],
+      "survives_mass_calculation": false
+    },
+    "6_light_jets": {
+      "final_state_counts": {},
+      "labels_after_display_cap": [],
+      "survives_mass_calculation": false
+    }
+  },
+  "finding_i_mass_calculation_note": "IMCalculator._is_valid_fs is the same class on both sides, so both sides answer the same way HERE. That is not the comparison that matters: PR #31's im_pipeline really does group events through IMCalculator, while our driver does NOT -- it groups with its own run_dataset_on_file._group_by_final_state_with_mask, which applies no validity filter at all. See finding_i_our_driver_grouping below for what our production code path actually does with the same events.",
+  "finding_i_our_driver_grouping": {
+    "3_light_jets": {
+      "labels": [
+        "0e_1m_3j_0g_0t_1b"
+      ],
+      "n_events_per_label": {
+        "0e_1m_3j_0g_0t_1b": 1
+      },
+      "survives_our_driver_grouping": true
+    },
+    "4_light_jets": {
+      "labels": [
+        "0e_1m_4j_0g_0t_1b"
+      ],
+      "n_events_per_label": {
+        "0e_1m_4j_0g_0t_1b": 1
+      },
+      "survives_our_driver_grouping": true
+    },
+    "5_light_jets": {
+      "labels": [
+        "0e_1m_4j_0g_0t_1b"
+      ],
+      "n_events_per_label": {
+        "0e_1m_4j_0g_0t_1b": 1
+      },
+      "survives_our_driver_grouping": true
+    },
+    "6_light_jets": {
+      "labels": [
+        "0e_1m_4j_0g_0t_1b"
+      ],
+      "n_events_per_label": {
+        "0e_1m_4j_0g_0t_1b": 1
+      },
+      "survives_our_driver_grouping": true
+    }
+  },
+  "finding_ii_overlap": {
+    "clean_dr": 0.4,
+    "jet_was_removed": true,
+    "n_light_jets_before": 1,
+    "n_light_jets_with_overlap_removal": 0,
+    "n_light_jets_without_overlap_removal": 1,
+    "probe": "1 muon at (eta=0, phi=0) and 1 light jet at (eta=0, phi=0.1), dR = 0.1"
+  },
+  "finding_iv_outlier_split": {
+    "first_outlier": null,
+    "has_aligned_bin_edges_helper": false,
+    "max_of_main": 255.0,
+    "n_main": 80,
+    "n_outliers": 0,
+    "peak_mass_returned": 250.0,
+    "probe": "40 values in [203,207] + 40 values in [251,255], 10 GeV bins",
+    "split_boundary_is_on_the_10gev_grid": null
+  },
+  "imported_im_calculator_from": "/storage/agrp/berkom/atlas-utilization/work/ttbar_count_vs_atlas/dev/services/calculations/im_calculator.py",
+  "repo": "/storage/agrp/berkom/atlas-utilization/work/ttbar_count_vs_atlas/dev",
+  "repo_head": "cc1a039e65c5b5cb70e6a561e3b15bf0e156b0ba",
+  "side": "ours"
+}

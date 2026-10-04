@@ -1,0 +1,104 @@
+{
+  "what": "matched --is-mc identity: one TTTo2L2Nu file, new driver vs paused MC v2 run",
+  "new_dir": "/storage/agrp/berkom/atlas-utilization/work/ttbar_count_vs_atlas/step3_mc_identity/DoubleMuon_job_0",
+  "old_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v2/67801/DoubleMuon/job_0",
+  "old_git_commit": "b88a3229c8668a54df3cd01a125b628189850240",
+  "new_git_commit": "cc1a039e65c5b5cb70e6a561e3b15bf0e156b0ba",
+  "file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/089E6E3A-DFD1-7148-BD6F-F611D22A1B62.root",
+  "rare4_shard_in_paused_run": false,
+  "note_rare4": "the paused MC v2 run was produced before the rare4 version existed, so it carries no rare4 shard and none is compared here",
+  "overall_pass": true,
+  "shard_checks": [
+    {
+      "label": "dataset_shard_inclusive.sqlite",
+      "pass": true,
+      "n_signatures": 809,
+      "n_mismatched": 0,
+      "mismatched_sample": []
+    },
+    {
+      "label": "dataset_shard_exclusive.sqlite",
+      "pass": true,
+      "n_signatures": 809,
+      "n_mismatched": 0,
+      "mismatched_sample": []
+    },
+    {
+      "label": "dataset_shard_top4_inclusive.sqlite",
+      "pass": true,
+      "n_signatures": 83,
+      "n_mismatched": 0,
+      "mismatched_sample": []
+    },
+    {
+      "label": "dataset_shard_top4_exclusive.sqlite",
+      "pass": true,
+      "n_signatures": 83,
+      "n_mismatched": 0,
+      "mismatched_sample": []
+    },
+    {
+      "label": "dataset_shard_nonjet4_inclusive.sqlite",
+      "pass": true,
+      "n_signatures": 83,
+      "n_mismatched": 0,
+      "mismatched_sample": []
+    },
+    {
+      "label": "dataset_shard_nonjet4_exclusive.sqlite",
+      "pass": true,
+      "n_signatures": 83,
+      "n_mismatched": 0,
+      "mismatched_sample": []
+    },
+    {
+      "label": "dataset_shard_weights_inclusive.sqlite",
+      "pass": true,
+      "comparison": "exact, order-preserving",
+      "n_signatures": 809,
+      "n_mismatched": 0,
+      "mismatched_sample": []
+    },
+    {
+      "label": "dataset_shard_weights_exclusive.sqlite",
+      "pass": true,
+      "comparison": "exact, order-preserving",
+      "n_signatures": 809,
+      "n_mismatched": 0,
+      "mismatched_sample": []
+    },
+    {
+      "label": "dataset_shard_top4_weights_inclusive.sqlite",
+      "pass": true,
+      "comparison": "exact, order-preserving",
+      "n_signatures": 83,
+      "n_mismatched": 0,
+      "mismatched_sample": []
+    },
+    {
+      "label": "dataset_shard_top4_weights_exclusive.sqlite",
+      "pass": true,
+      "comparison": "exact, order-preserving",
+      "n_signatures": 83,
+      "n_mismatched": 0,
+      "mismatched_sample": []
+    },
+    {
+      "label": "dataset_shard_nonjet4_weights_inclusive.sqlite",
+      "pass": true,
+      "comparison": "exact, order-preserving",
+      "n_signatures": 83,
+      "n_mismatched": 0,
+      "mismatched_sample": []
+    },
+    {
+      "label": "dataset_shard_nonjet4_weights_exclusive.sqlite",
+      "pass": true,
+      "comparison": "exact, order-preserving",
+      "n_signatures": 83,
+      "n_mismatched": 0,
+      "mismatched_sample": []
+    }
+  ],
+  "metadata_mismatches": []
+}

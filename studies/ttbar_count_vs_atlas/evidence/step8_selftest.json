@@ -1,0 +1,30 @@
+{
+  "self_test_1_identity": {
+    "pass": true,
+    "summary": {
+      "ATLAS": 960,
+      "CMS": 960,
+      "both": 960,
+      "ATLAS_only": 0,
+      "CMS_only": 0
+    }
+  },
+  "self_test_2_synthetic_atlas": {
+    "pass": true,
+    "synthetic_file": "/storage/agrp/berkom/atlas-utilization/work/ttbar_count_vs_atlas/dev/studies/ttbar_count_vs_atlas/evidence/step8_selftest.synthetic_atlas.root",
+    "n_synthetic_histograms": 14,
+    "n_respelled_from_ours": 12,
+    "summary": {
+      "ATLAS": 14,
+      "CMS": 960,
+      "both": 12,
+      "ATLAS_only": 2,
+      "CMS_only": 948
+    },
+    "atlas_only_categories": [
+      "0e_0m_0j_0g_3t_0b",
+      "0e_0m_0j_2g_0t_0b"
+    ]
+  },
+  "overall_pass": true
+}
