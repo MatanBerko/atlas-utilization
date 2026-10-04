@@ -1,0 +1,86 @@
+{
+  "what": "cost estimate for a full matched production of the three electron datasets",
+  "measured_runs": {
+    "DoubleMuon_generic": {
+      "n_jobs": 57,
+      "core_hours": 5.963048442204793,
+      "n_events_read": 94148416,
+      "sec_per_Mevent": 228.01206121128214
+    },
+    "DoubleMuon_matched": {
+      "n_jobs": 57,
+      "core_hours": 1.6357652521133423,
+      "n_events_read": 94148416,
+      "sec_per_Mevent": 62.54757284082222
+    },
+    "SingleMuon_matched": {
+      "n_jobs": 152,
+      "core_hours": 13.01606879333655,
+      "n_events_read": 323952013,
+      "sec_per_Mevent": 144.64440959041542
+    },
+    "DoubleEG_generic": {
+      "n_jobs": 133,
+      "core_hours": 5.478339883552657,
+      "n_events_read": 164185704,
+      "sec_per_Mevent": 120.12022423578101
+    },
+    "MuonEG_generic": {
+      "n_jobs": 48,
+      "core_hours": 5.295256165729628,
+      "n_events_read": 63091128,
+      "sec_per_Mevent": 302.1490152565772
+    }
+  },
+  "matched_vs_generic_cost_ratio_from_DoubleMuon": 0.2743169484480207,
+  "note_on_ratio": "DoubleMuon's matched run is CHEAPER per event than its generic run (ratio 0.274 if not None) because the trigger-matching requirement removes events before the expensive combinatorics. So the generic-rate column is an UPPER bound for matched running.",
+  "singleelectron_event_estimate": {
+    "n_files_sampled": 2,
+    "mean_events_per_sampled_file": 110480.5,
+    "estimated_total_events": 16682555.5,
+    "status": "UNVERIFIED ESTIMATE -- no SingleElectron generic production exists to read; scaled from the files this study sampled"
+  },
+  "per_dataset": {
+    "DoubleEG": {
+      "n_files": 133,
+      "n_jobs": 133,
+      "n_events": 164185704,
+      "n_events_is_estimate": false,
+      "generic_sec_per_Mevent": 120.12022423578101,
+      "generic_rate_source": "this dataset's own generic run",
+      "core_hours_upper_bound_generic_rate": 5.478339883552657,
+      "core_hours_lower_bound_matched_rate": 2.8526159112115765
+    },
+    "MuonEG": {
+      "n_files": 48,
+      "n_jobs": 48,
+      "n_events": 63091128,
+      "n_events_is_estimate": false,
+      "generic_sec_per_Mevent": 302.1490152565772,
+      "generic_rate_source": "this dataset's own generic run",
+      "core_hours_upper_bound_generic_rate": 5.295256165729628,
+      "core_hours_lower_bound_matched_rate": 1.0961658122748994
+    },
+    "SingleElectron": {
+      "n_files": 151,
+      "n_jobs": 151,
+      "n_events": 16682555,
+      "n_events_is_estimate": true,
+      "generic_sec_per_Mevent": 211.13461974617908,
+      "generic_rate_source": "mean of DoubleEG and MuonEG generic rates (no SingleElectron generic run exists)",
+      "core_hours_upper_bound_generic_rate": 0.9784069477463968,
+      "core_hours_lower_bound_matched_rate": 0.28984815425203037
+    }
+  },
+  "totals": {
+    "n_files": 332,
+    "n_jobs": 332,
+    "core_hours_upper_bound": 11.752002997028683,
+    "core_hours_lower_bound": 4.238629877738506,
+    "matches_brief_file_count": true
+  },
+  "brief_expectation": {
+    "files": 332,
+    "core_hours": "25-35"
+  }
+}
