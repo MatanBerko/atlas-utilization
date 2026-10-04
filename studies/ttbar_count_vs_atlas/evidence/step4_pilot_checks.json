@@ -1,0 +1,243 @@
+{
+  "jobs_dir": "/storage/agrp/berkom/atlas-utilization/work/ttbar_count_vs_atlas/step4_pilot",
+  "n_files": 2,
+  "overall_pass": true,
+  "pooled_counters": {
+    "rare4": {
+      "n_events_read": 1396000,
+      "n_events_passing_gate": 1312557,
+      "n_rejected_e_mu_b_gt4": 2929,
+      "n_dropped_ge5_light_jets": 0,
+      "n_events_into_combinations": 1309628,
+      "arithmetic_consistent": 2,
+      "n_fs_groups": 456,
+      "n_signature_writes_inclusive": 8895
+    },
+    "pr31": {
+      "n_events_read": 1396000,
+      "n_events_passing_gate": 1312557,
+      "n_rejected_e_mu_b_gt4": 2929,
+      "n_dropped_ge5_light_jets": 24484,
+      "n_events_into_combinations": 1285144,
+      "arithmetic_consistent": 2,
+      "n_fs_groups": 271,
+      "n_signature_writes_inclusive": 4830
+    },
+    "pr31_noOR": {
+      "n_events_read": 1396000,
+      "n_events_passing_gate": 1328176,
+      "n_rejected_e_mu_b_gt4": 4442,
+      "n_dropped_ge5_light_jets": 65468,
+      "n_events_into_combinations": 1258266,
+      "arithmetic_consistent": 2,
+      "n_fs_groups": 247,
+      "n_signature_writes_inclusive": 4754
+    }
+  },
+  "per_file": [
+    {
+      "job": "job_0",
+      "file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/089E6E3A-DFD1-7148-BD6F-F611D22A1B62.root",
+      "counters": {
+        "rare4": {
+          "n_events_read": 136000,
+          "n_events_passing_gate": 127934,
+          "n_rejected_e_mu_b_gt4": 258,
+          "n_dropped_ge5_light_jets": 0,
+          "n_events_into_combinations": 127676,
+          "arithmetic_consistent": true,
+          "n_fs_groups": 200,
+          "n_signature_writes_inclusive": 3733
+        },
+        "pr31": {
+          "n_events_read": 136000,
+          "n_events_passing_gate": 127934,
+          "n_rejected_e_mu_b_gt4": 258,
+          "n_dropped_ge5_light_jets": 2397,
+          "n_events_into_combinations": 125279,
+          "arithmetic_consistent": true,
+          "n_fs_groups": 127,
+          "n_signature_writes_inclusive": 2197
+        },
+        "pr31_noOR": {
+          "n_events_read": 136000,
+          "n_events_passing_gate": 129498,
+          "n_rejected_e_mu_b_gt4": 390,
+          "n_dropped_ge5_light_jets": 6495,
+          "n_events_into_combinations": 122613,
+          "arithmetic_consistent": true,
+          "n_fs_groups": 115,
+          "n_signature_writes_inclusive": 2169
+        }
+      },
+      "counters_arithmetic_pass": true,
+      "check_a": {
+        "check": "(a) rare4 == pr31 on final states with <= 3 light jets, row for row",
+        "pass": true,
+        "n_signatures_compared": 1649,
+        "n_signatures_rare4_le3j": 1649,
+        "n_signatures_pr31_le3j": 1649,
+        "n_only_rare4": 0,
+        "n_only_pr31": 0,
+        "only_rare4_sample": [],
+        "only_pr31_sample": [],
+        "n_mismatched": 0,
+        "mismatched_sample": [],
+        "n_signatures_rare4_total": 2216,
+        "n_signatures_pr31_total": 2197,
+        "pr31_signatures_are_subset_of_rare4": true
+      },
+      "check_b_pr31": {
+        "check": "(b) pr31 has no final state with > 4 of any type",
+        "pass": true,
+        "n_distinct_labels_pr31": 127,
+        "n_labels_pr31_with_more_than_one_raw_group": 0,
+        "pr31_collapsed_sample": {},
+        "n_labels_with_a_digit_above_4": 0,
+        "n_distinct_labels_rare4": 128,
+        "n_labels_rare4_with_more_than_one_raw_group": 21,
+        "rare4_collapsed_sample": {
+          "0e_0m_4j_0g_0t_0b": 5,
+          "0e_0m_4j_0g_0t_1b": 6,
+          "0e_0m_4j_0g_0t_2b": 6,
+          "0e_0m_4j_0g_0t_3b": 4,
+          "0e_1m_4j_0g_0t_0b": 5,
+          "0e_1m_4j_0g_0t_1b": 5,
+          "0e_1m_4j_0g_0t_2b": 5,
+          "0e_1m_4j_0g_0t_3b": 3,
+          "0e_2m_4j_0g_0t_0b": 5,
+          "0e_2m_4j_0g_0t_1b": 5
+        },
+        "n_rare4_collapsed_labels_that_are_not_4j": 0,
+        "note": "a label carrying more than one final_state_counts row means two or more RAW final states collapsed onto it, i.e. a per-type count above 4 was display-capped. pr31 must have none; rare4 is expected to have them, and only for 4j labels."
+      },
+      "check_b_pr31_noOR": {
+        "check": "(b, applied to pr31_noOR too) no final state with > 4 of any type",
+        "pass": true,
+        "n_distinct_labels_pr31": 115,
+        "n_labels_pr31_with_more_than_one_raw_group": 0,
+        "pr31_collapsed_sample": {},
+        "n_labels_with_a_digit_above_4": 0,
+        "n_distinct_labels_rare4": 128,
+        "n_labels_rare4_with_more_than_one_raw_group": 21,
+        "rare4_collapsed_sample": {
+          "0e_0m_4j_0g_0t_0b": 5,
+          "0e_0m_4j_0g_0t_1b": 6,
+          "0e_0m_4j_0g_0t_2b": 6,
+          "0e_0m_4j_0g_0t_3b": 4,
+          "0e_1m_4j_0g_0t_0b": 5,
+          "0e_1m_4j_0g_0t_1b": 5,
+          "0e_1m_4j_0g_0t_2b": 5,
+          "0e_1m_4j_0g_0t_3b": 3,
+          "0e_2m_4j_0g_0t_0b": 5,
+          "0e_2m_4j_0g_0t_1b": 5
+        },
+        "n_rare4_collapsed_labels_that_are_not_4j": 0,
+        "note": "a label carrying more than one final_state_counts row means two or more RAW final states collapsed onto it, i.e. a per-type count above 4 was display-capped. pr31 must have none; rare4 is expected to have them, and only for 4j labels."
+      },
+      "all_pass": true
+    },
+    {
+      "job": "job_1",
+      "file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/13BF43D6-5798-9D4C-9E4A-B148CC97DD4A.root",
+      "counters": {
+        "rare4": {
+          "n_events_read": 1260000,
+          "n_events_passing_gate": 1184623,
+          "n_rejected_e_mu_b_gt4": 2671,
+          "n_dropped_ge5_light_jets": 0,
+          "n_events_into_combinations": 1181952,
+          "arithmetic_consistent": true,
+          "n_fs_groups": 256,
+          "n_signature_writes_inclusive": 5162
+        },
+        "pr31": {
+          "n_events_read": 1260000,
+          "n_events_passing_gate": 1184623,
+          "n_rejected_e_mu_b_gt4": 2671,
+          "n_dropped_ge5_light_jets": 22087,
+          "n_events_into_combinations": 1159865,
+          "arithmetic_consistent": true,
+          "n_fs_groups": 144,
+          "n_signature_writes_inclusive": 2633
+        },
+        "pr31_noOR": {
+          "n_events_read": 1260000,
+          "n_events_passing_gate": 1198678,
+          "n_rejected_e_mu_b_gt4": 4052,
+          "n_dropped_ge5_light_jets": 58973,
+          "n_events_into_combinations": 1135653,
+          "arithmetic_consistent": true,
+          "n_fs_groups": 132,
+          "n_signature_writes_inclusive": 2585
+        }
+      },
+      "counters_arithmetic_pass": true,
+      "check_a": {
+        "check": "(a) rare4 == pr31 on final states with <= 3 light jets, row for row",
+        "pass": true,
+        "n_signatures_compared": 1906,
+        "n_signatures_rare4_le3j": 1906,
+        "n_signatures_pr31_le3j": 1906,
+        "n_only_rare4": 0,
+        "n_only_pr31": 0,
+        "only_rare4_sample": [],
+        "only_pr31_sample": [],
+        "n_mismatched": 0,
+        "mismatched_sample": [],
+        "n_signatures_rare4_total": 2730,
+        "n_signatures_pr31_total": 2633,
+        "pr31_signatures_are_subset_of_rare4": true
+      },
+      "check_b_pr31": {
+        "check": "(b) pr31 has no final state with > 4 of any type",
+        "pass": true,
+        "n_distinct_labels_pr31": 144,
+        "n_labels_pr31_with_more_than_one_raw_group": 0,
+        "pr31_collapsed_sample": {},
+        "n_labels_with_a_digit_above_4": 0,
+        "n_distinct_labels_rare4": 153,
+        "n_labels_rare4_with_more_than_one_raw_group": 26,
+        "rare4_collapsed_sample": {
+          "0e_0m_4j_0g_0t_0b": 6,
+          "0e_0m_4j_0g_0t_1b": 6,
+          "0e_0m_4j_0g_0t_2b": 6,
+          "0e_0m_4j_0g_0t_3b": 6,
+          "0e_0m_4j_0g_0t_4b": 4,
+          "0e_1m_4j_0g_0t_0b": 6,
+          "0e_1m_4j_0g_0t_1b": 6,
+          "0e_1m_4j_0g_0t_2b": 6,
+          "0e_1m_4j_0g_0t_3b": 5,
+          "0e_2m_4j_0g_0t_0b": 5
+        },
+        "n_rare4_collapsed_labels_that_are_not_4j": 0,
+        "note": "a label carrying more than one final_state_counts row means two or more RAW final states collapsed onto it, i.e. a per-type count above 4 was display-capped. pr31 must have none; rare4 is expected to have them, and only for 4j labels."
+      },
+      "check_b_pr31_noOR": {
+        "check": "(b, applied to pr31_noOR too) no final state with > 4 of any type",
+        "pass": true,
+        "n_distinct_labels_pr31": 132,
+        "n_labels_pr31_with_more_than_one_raw_group": 0,
+        "pr31_collapsed_sample": {},
+        "n_labels_with_a_digit_above_4": 0,
+        "n_distinct_labels_rare4": 153,
+        "n_labels_rare4_with_more_than_one_raw_group": 26,
+        "rare4_collapsed_sample": {
+          "0e_0m_4j_0g_0t_0b": 6,
+          "0e_0m_4j_0g_0t_1b": 6,
+          "0e_0m_4j_0g_0t_2b": 6,
+          "0e_0m_4j_0g_0t_3b": 6,
+          "0e_0m_4j_0g_0t_4b": 4,
+          "0e_1m_4j_0g_0t_0b": 6,
+          "0e_1m_4j_0g_0t_1b": 6,
+          "0e_1m_4j_0g_0t_2b": 6,
+          "0e_1m_4j_0g_0t_3b": 5,
+          "0e_2m_4j_0g_0t_0b": 5
+        },
+        "n_rare4_collapsed_labels_that_are_not_4j": 0,
+        "note": "a label carrying more than one final_state_counts row means two or more RAW final states collapsed onto it, i.e. a per-type count above 4 was display-capped. pr31 must have none; rare4 is expected to have them, and only for 4j labels."
+      },
+      "all_pass": true
+    }
+  ]
+}
