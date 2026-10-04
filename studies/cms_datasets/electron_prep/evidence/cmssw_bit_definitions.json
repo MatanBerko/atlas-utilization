@@ -1,0 +1,35 @@
+{
+  "source_url": "https://raw.githubusercontent.com/cms-sw/cmssw/CMSSW_10_6_26/PhysicsTools/NanoAOD/python/triggerObjects_cff.py",
+  "cmssw_release": "CMSSW_10_6_26",
+  "why_this_release": "the NANO-step release recorded on the CERN Open Data portal for these records (same cross-check TRIGGER_MATCHING_SPEC.md Section 0 did for the muons)",
+  "selections_replaced_by_the_2016_override": [
+    "Muon",
+    "Tau"
+  ],
+  "electron_is_overridden_for_2016": false,
+  "consequence": "The 2016 override replaces the qualityBits formula for Muon and Tau ONLY. The Electron selection keeps the DEFAULT (Run-2-latest) formula, which is why the real 2016 files' Electron portion of the TrigObj_filterBits title carries all 14 bits while the Muon portion carries only the 5 override bits.",
+  "electron_qualityBitsDoc_default": "1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200)",
+  "muon_qualityBitsDoc_default_NOT_used_for_2016": "1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = 1mu, 16 = 2mu, 32 = 1mu-1e, 64 = 1mu-1tau, 128 = 3mu, 256 = 2mu-1e, 512 = 1mu-2e, 1024 = 1mu (Mu50), 2048 = 1mu (Mu100)",
+  "muon_qualityBitsDoc_2016_override_IN_FORCE": "1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50)",
+  "muon_qualityBits_2016_override_formula": "filter('*RelTrkIso*Filtered0p4') + 2*filter('hltL3cr*IsoFiltered0p09') + 4*filter('*OverlapFilter*IsoMu*PFTau*') + 8*filter('hltL3f*IsoFiltered0p09') + 1024*max(filter('hltL3fL1sMu*L3Filtered50*'),filter('hltL3fL1sMu*TkFiltered50*'))",
+  "electron_bits_used_by_this_study": {
+    "1": {
+      "filter_pattern": "filter('*CaloIdLTrackIdLIsoVL*TrackIso*Filter')",
+      "present_in_source": true
+    },
+    "2": {
+      "filter_pattern": "filter('hltEle*WPTight*TrackIsoFilter*')",
+      "present_in_source": true
+    },
+    "16": {
+      "filter_pattern": "filter('hltEle*Ele*CaloIdLTrackIdLIsoVL*Filter')",
+      "present_in_source": true
+    },
+    "32": {
+      "filter_pattern": "filter('hltMu*TrkIsoVVL*Ele*CaloIdLTrackIdLIsoVL*Filter*')",
+      "present_in_source": true
+    }
+  },
+  "key_finding_muon_side": "The DEFAULT muon formula contains a cross-trigger bit 32*filter('hltMu*TrkIsoVVL*Ele*CaloIdLTrackIdLIsoVL*Filter*') = '1mu-1e'. The 2016 override REPLACES the whole formula and does NOT include it. So for these files there is NO muon bit that identifies the MuonEG muon leg specifically: the only usable muon bit is bit 1 (TrkIsoVVL), whose 2016 pattern '*RelTrkIso*Filtered0p4' is wildcarded and is shared with the DoubleMuon dimuon legs.",
+  "key_finding_electron_side": "The electron side DOES have per-path bits, because it kept the default formula: bit 16 ('2e', hltEle*Ele*CaloIdLTrackIdLIsoVL*Filter) is the DIELECTRON filter (DoubleEG), bit 32 ('1e-1mu', hltMu*TrkIsoVVL*Ele*CaloIdLTrackIdLIsoVL*Filter*) is the MUON-ELECTRON cross filter (MuonEG electron leg), and bit 2 ('1e (WPTight)', hltEle*WPTight*TrackIsoFilter*) is the single-electron WPTight filter (SingleElectron). This is a genuine bit-level separation, better than what the 2016 muon bits allow."
+}
