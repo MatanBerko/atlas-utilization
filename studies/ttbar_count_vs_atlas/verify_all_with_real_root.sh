@@ -15,8 +15,12 @@ STUDY_DIR="${1:?usage: verify_all_with_real_root.sh <study-dir>}"
 REPO_DIR="${REPO_DIR:-$(pwd)}"
 LCG_VIEW="${LCG_VIEW:-/cvmfs/sft.cern.ch/lcg/views/LCG_110/x86_64-el9-gcc13-opt}"
 
+# The LCG view's setup.sh reads unset variables (COMPILER, ...), so -u has to
+# come off around it; it goes straight back on afterwards.
+set +u
 # shellcheck disable=SC1091
 source "$LCG_VIEW/setup.sh"
+set -u
 cd "$REPO_DIR"
 
 n_pairs=0

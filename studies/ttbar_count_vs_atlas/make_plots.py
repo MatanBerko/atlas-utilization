@@ -277,8 +277,20 @@ def plot_overlap_effect(pr31_hists, noor_hists, out_path):
             label=f"(c) pr31_noOR, overlap removal OFF  -  {int(vc.sum())} events")
     short = name.replace("mass_", "").replace("_cat_", "  cat ").replace("x", "")
     style(ax, title=f"Effect of the jet-lepton dR < 0.4 overlap removal\n{short}",
-          xlabel="invariant mass [GeV]", ylabel="events")
-    ax.legend(frameon=False, fontsize=9, labelcolor=INK_2)
+          xlabel="invariant mass [GeV]", ylabel="events (log scale)")
+    # Log y: on a linear scale the very-low-mass spike that overlap removal
+    # exists to kill -- a muon also reconstructed as a jet right next to it, so
+    # the pair carries almost no invariant mass -- is so tall that the rest of
+    # the distribution is squashed flat and the two curves cannot be compared.
+    ax.set_yscale("log")
+    both = np.concatenate([vb[lo:hi], vc[lo:hi]])
+    positive = both[both > 0]
+    if positive.size:
+        ax.set_ylim(bottom=max(1.0, float(positive.min()) * 0.5))
+    ax.legend(frameon=False, fontsize=9, labelcolor=INK_2, loc="upper right")
+    ax.annotate("low-mass spike: \"jets\" that are really the muon\n"
+                "(removed by the dR < 0.4 cut)",
+                xy=(0.04, 0.10), xycoords="axes fraction", fontsize=8.5, color=INK_2)
     fig.tight_layout()
     fig.savefig(out_path, facecolor=SURFACE, bbox_inches="tight")
     plt.close(fig)

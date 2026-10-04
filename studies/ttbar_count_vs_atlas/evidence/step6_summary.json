@@ -1,0 +1,166 @@
+{
+  "atlas_reported": {
+    "categories": 135,
+    "histograms": 2146,
+    "status": "reported by Maryna, NOT verified here"
+  },
+  "cms_data_delivery": {
+    "root": "studies/cms_datasets/deliver/committed/muon_combined_rare4/muon_combined_matched_rare4_bumpnet_min26bins.root",
+    "categories": 55,
+    "histograms": 960,
+    "categories_by_lepton_content": {
+      "at_least_one_muon": 55
+    },
+    "histograms_by_lepton_content": {
+      "at_least_one_muon": 960
+    }
+  },
+  "variants": {
+    "rare4": {
+      "description": "(a) rare4 - our delivered final-state rule (>= 5 light jets kept, labelled 4j)",
+      "n_input_files": 49,
+      "event_counts": {
+        "n_events_read": 43546000,
+        "n_events_passing_gate": 40947069,
+        "n_rejected_e_mu_b_gt4": 88738,
+        "n_dropped_ge5_light_jets": 0,
+        "n_events_into_combinations": 40858331
+      },
+      "sum_genweight_all_events": 3140127233.6875,
+      "funnel": {
+        "a_names_with_at_least_1_event": 3987,
+        "b_after_min_events_per_final_state_100": 2325,
+        "c_after_postprocessing_ge100_main_events": 2136,
+        "d_ge25_bins": 2038,
+        "d_gt25_bins_min26bins": 2028,
+        "d_gt30_bins_min31bins": 1955
+      },
+      "ge25": 2038,
+      "ge25_categories": 127,
+      "ge25_categories_by_lepton_content": {
+        "no_lepton": 22,
+        "at_least_one_muon": 69,
+        "electrons_but_no_muon": 36
+      },
+      "ge25_histograms_by_lepton_content": {
+        "no_lepton": 188,
+        "at_least_one_muon": 1227,
+        "electrons_but_no_muon": 623
+      },
+      "gt25": 2028,
+      "gt25_categories": 127,
+      "gt30": 1955,
+      "gt30_categories": 124,
+      "object_content_ge25": {
+        "b-jet-containing": 1295,
+        "jet-only": 136,
+        "lepton+jet": 531,
+        "lepton-only": 76
+      }
+    },
+    "pr31": {
+      "description": "(b) pr31 - as (a) but >= 5 light jets dropped, reproducing PR #31",
+      "n_input_files": 49,
+      "event_counts": {
+        "n_events_read": 43546000,
+        "n_events_passing_gate": 40947069,
+        "n_rejected_e_mu_b_gt4": 88738,
+        "n_dropped_ge5_light_jets": 762859,
+        "n_events_into_combinations": 40095472
+      },
+      "sum_genweight_all_events": 3140127233.6875,
+      "funnel": {
+        "a_names_with_at_least_1_event": 2960,
+        "b_after_min_events_per_final_state_100": 2315,
+        "c_after_postprocessing_ge100_main_events": 2136,
+        "d_ge25_bins": 2038,
+        "d_gt25_bins_min26bins": 2028,
+        "d_gt30_bins_min31bins": 1955
+      },
+      "ge25": 2038,
+      "ge25_categories": 127,
+      "ge25_categories_by_lepton_content": {
+        "no_lepton": 22,
+        "at_least_one_muon": 69,
+        "electrons_but_no_muon": 36
+      },
+      "ge25_histograms_by_lepton_content": {
+        "no_lepton": 188,
+        "at_least_one_muon": 1227,
+        "electrons_but_no_muon": 623
+      },
+      "gt25": 2028,
+      "gt25_categories": 127,
+      "gt30": 1955,
+      "gt30_categories": 124,
+      "object_content_ge25": {
+        "b-jet-containing": 1295,
+        "jet-only": 136,
+        "lepton+jet": 531,
+        "lepton-only": 76
+      }
+    },
+    "pr31_noOR": {
+      "description": "(c) pr31_noOR - as (b) without our jet-lepton dR < 0.4 overlap removal",
+      "n_input_files": 49,
+      "event_counts": {
+        "n_events_read": 43546000,
+        "n_events_passing_gate": 41435020,
+        "n_rejected_e_mu_b_gt4": 136007,
+        "n_dropped_ge5_light_jets": 2040599,
+        "n_events_into_combinations": 39258414
+      },
+      "sum_genweight_all_events": 3140127233.6875,
+      "funnel": {
+        "a_names_with_at_least_1_event": 2843,
+        "b_after_min_events_per_final_state_100": 2459,
+        "c_after_postprocessing_ge100_main_events": 2343,
+        "d_ge25_bins": 2220,
+        "d_gt25_bins_min26bins": 2203,
+        "d_gt30_bins_min31bins": 2101
+      },
+      "ge25": 2220,
+      "ge25_categories": 119,
+      "ge25_categories_by_lepton_content": {
+        "no_lepton": 22,
+        "at_least_one_muon": 62,
+        "electrons_but_no_muon": 35
+      },
+      "ge25_histograms_by_lepton_content": {
+        "no_lepton": 188,
+        "at_least_one_muon": 1406,
+        "electrons_but_no_muon": 626
+      },
+      "gt25": 2203,
+      "gt25_categories": 119,
+      "gt30": 2101,
+      "gt30_categories": 117,
+      "object_content_ge25": {
+        "b-jet-containing": 1376,
+        "jet-only": 158,
+        "lepton+jet": 623,
+        "lepton-only": 63
+      }
+    }
+  },
+  "muon_restriction_effect_on_categories_ge25": {
+    "rare4": {
+      "total": 127,
+      "with_muon": 69,
+      "lost": 58,
+      "share_lost": 0.4566929133858268
+    },
+    "pr31": {
+      "total": 127,
+      "with_muon": 69,
+      "lost": 58,
+      "share_lost": 0.4566929133858268
+    },
+    "pr31_noOR": {
+      "total": 119,
+      "with_muon": 62,
+      "lost": 57,
+      "share_lost": 0.4789915966386555
+    }
+  }
+}

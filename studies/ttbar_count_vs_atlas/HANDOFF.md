@@ -1,5 +1,21 @@
 # HANDOFF - ttbar_count_vs_atlas
 
+**Status: Steps 1-10 complete.** The headline result is in `REPORT.md`; the
+per-variant tables are in `STEP6_RESULTS.md`. The one thing still outstanding is
+Step 8's actual comparison, which needs Maryna's ATLAS ROOT file - the tool is
+written and self-tested, see section 8.
+
+Result at ATLAS's own threshold (>= 25 filled bins, >= 100 events), all
+VERIFIED BY RUNNING except the ATLAS row:
+
+| | categories | histograms |
+|---|---:|---:|
+| ATLAS ttbar via PR #31 (reported by Maryna, NOT reproduced here) | 135 | 2,146 |
+| CMS ttbar, variant (a) rare4, no trigger | 127 | 2,038 |
+| CMS ttbar, variant (b) pr31, no trigger | 127 | 2,038 |
+| CMS ttbar, variant (c) pr31_noOR (diagnostic) | 119 | 2,220 |
+| our delivered CMS data (muon-triggered) | 55 | 960 |
+
 Everything needed to pick this study up from a cold start: what is pinned where,
 which cluster jobs ran, where the outputs live, how to resume, and how to run the
 ATLAS comparison the moment Maryna's ROOT file arrives.
@@ -31,12 +47,14 @@ untouched until the jobs finish.
 | path | commit | used for |
 |---|---|---|
 | `work/ttbar_count_vs_atlas/pinned/repo` | `cc1a039` | Step 3 proofs, Step 4 pilot |
-| `work/ttbar_count_vs_atlas/pinned/repo` | `05062d0` | Step 5 full run, Step 6 builds |
+| `work/ttbar_count_vs_atlas/pinned/repo` | `05062d0` | Step 5 full run |
+| `work/ttbar_count_vs_atlas/pinned/repo` | `27a1cea` | Step 6 builds |
 
-`run_dataset_on_file.py` is byte-identical between `cc1a039` and `05062d0`
-(`git diff cc1a039 05062d0 -- studies/cms_datasets/cluster/run_dataset_on_file.py`
-is empty), so the Step 3/4 proofs carry over to the Step 5 run unchanged. Each
-job also records its own `git_commit` in `job_metadata.json`.
+`run_dataset_on_file.py` is byte-identical across `cc1a039`, `05062d0` and
+`27a1cea` (`git diff <a> <b> -- studies/cms_datasets/cluster/run_dataset_on_file.py`
+is empty for each pair), so the Step 3/4 proofs carry over to the Step 5 run
+unchanged. Each job also records its own `git_commit` in `job_metadata.json`; every
+one of the 49 Step 5 jobs recorded `05062d0`.
 
 Development happens in `work/ttbar_count_vs_atlas/dev` (a normal clone of the
 fork). The cluster has no GitHub credentials, so pushes go out through a mirror
@@ -51,6 +69,9 @@ fork.
 | `5177141` | Step 3 proof 2 - `--population matched --is-mc` on TTTo2L2Nu file 0 | 1 |
 | `5177142[]` | Step 4 - notrigger pilot, record 67801 files 0 and 1 | 2 |
 | `5177181[]` | Step 5 - full notrigger run, all 49 files of record 67801 | 49 |
+| `5177314[]` | Step 6 - build the study histograms, one element per variant | 3 |
+
+All finished, none failed. Step 5: 49/49, longest element 3,223 s. Step 6: 3/3.
 
 All submitted to queue `N`, `#PBS -m n`, `walltime 02:00:00`,
 `select=1:ncpus=1:mem=8gb`, `-l io=30`, OMP/OPENBLAS/MKL threads 1, with unique
@@ -68,8 +89,8 @@ with `mode=ro&immutable=1`.
 | `work/ttbar_count_vs_atlas/step3_mc_identity/` | re-run matched `--is-mc` shards for the identity check |
 | `work/ttbar_count_vs_atlas/step4_pilot/` | notrigger pilot, 2 files |
 | `work/ttbar_count_vs_atlas/step5_full/` | notrigger full run, 49 files, `job_<0..48>/` |
-| `output/cms_datasets/studies/ttbar_count_vs_atlas/<variant>/` | per-variant ROOT files + manifests + build summary |
-| `output/cms_datasets/studies/ttbar_count_vs_atlas/plots/` | the PNG plots |
+| `output/cms_datasets/studies/ttbar_count_vs_atlas/<variant>/` | per-variant ROOT files + manifests + build summary + real-ROOT verification |
+| `output/cms_datasets/studies/ttbar_count_vs_atlas/plots/` | the PNG plots (also committed under `studies/ttbar_count_vs_atlas/plots/`) |
 | `logs/ttbar_count_vs_atlas/` | PBS stdout/stderr |
 
 Each `step5_full/job_<i>/` holds three inclusive shards and a
@@ -123,14 +144,17 @@ qsub -J 0-2 -v "REPO_DIR=$B/pinned/repo,JOBS_DIR=$B/step5_full,OUT_BASE=$OUT,EXP
      -e "/storage/agrp/berkom/atlas-utilization/logs/ttbar_count_vs_atlas/build_^array_index^.err" \
      studies/ttbar_count_vs_atlas/pbs_build_histograms.sh
 
-# 4. real-ROOT readback of every written file (CVMFS LCG view, not the conda env)
-source /cvmfs/sft.cern.ch/lcg/views/LCG_110/x86_64-el9-gcc13-opt/setup.sh
-python3 studies/cms_datasets/deliver/verify_with_real_root.py \
-    --uncropped $OUT/rare4/ttbar_notrigger_rare4_ge25bins.root \
-    --cropped   $OUT/rare4/ttbar_notrigger_rare4_ge25bins_cropped.root \
-    --out-json  $OUT/rare4/real_root_verify_ge25bins.json
+# 4. real-ROOT readback of ALL 18 written files (CVMFS LCG view, not the conda
+#    env). The wrapper sources the view itself and loops over all 9 pairs.
+REPO_DIR=$B/dev bash studies/ttbar_count_vs_atlas/verify_all_with_real_root.sh $OUT
 
-# 5. the plots
+# 5. the cross-variant results table (writes STEP6_RESULTS.md)
+python studies/ttbar_count_vs_atlas/step6_summary.py --study-dir $OUT \
+    --cms-delivery-root studies/cms_datasets/deliver/committed/muon_combined_rare4/muon_combined_matched_rare4_bumpnet_min26bins.root \
+    --out-md studies/ttbar_count_vs_atlas/STEP6_RESULTS.md \
+    --out-json studies/ttbar_count_vs_atlas/evidence/step6_summary.json
+
+# 6. the plots
 python studies/ttbar_count_vs_atlas/make_plots.py --study-dir $OUT \
     --cms-delivery-root studies/cms_datasets/deliver/committed/muon_combined_rare4/muon_combined_matched_rare4_bumpnet_min26bins.root \
     --out-dir $OUT/plots
@@ -201,6 +225,22 @@ matched and exactly the 2 are reported as ATLAS-only.
 If the ATLAS file turns out to use a naming convention neither branch handles,
 the only thing to change is `parse_name`/`strip_root_key` in
 `compare_with_atlas.py`; nothing else in the study depends on the spelling.
+
+## 8b. What each output file is
+
+Per variant, under `output/cms_datasets/studies/ttbar_count_vs_atlas/<variant>/`:
+
+| file | what |
+|---|---|
+| `ttbar_notrigger_<v>_ge25bins.root` | histograms with **>= 25** filled bins and >= 100 entries (ATLAS's wording) |
+| `ttbar_notrigger_<v>_min26bins.root` | **> 25** filled bins (what our delivery uses) |
+| `ttbar_notrigger_<v>_min31bins.root` | **> 30** filled bins |
+| `..._cropped.root` | the same, cropped to each histogram's first..last filled bin |
+| `manifest_..._<tag>.json` | per-histogram name, combination, category, entries, filled bins, mass range |
+| `build_summary_<v>.json` | event counts, the funnel, the lepton-content breakdown |
+| `real_root_verify_<tag>.json` | the real-PyROOT readback result for that pair |
+
+All 18 ROOT files were read back with real PyROOT 6.40.02 and all 9 pairs PASS.
 
 ## 9. Things deliberately NOT done
 
