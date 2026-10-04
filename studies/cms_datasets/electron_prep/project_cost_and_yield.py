@@ -44,8 +44,10 @@ import numpy as np  # noqa: E402
 import uproot  # noqa: E402
 
 OUT_BASE = "/storage/agrp/berkom/atlas-utilization/output/cms_datasets"
-DELIVERED_RARE4 = (f"{OUT_BASE}/deliver/committed/muon_combined_rare4/"
-                   "muon_combined_matched_rare4_bumpnet_min26bins.root")
+# The delivered rare4 BumpNet file is committed IN THE REPO, not under output/.
+DELIVERED_RARE4 = str(Path(__file__).resolve().parents[3]
+                      / "studies/cms_datasets/deliver/committed/muon_combined_rare4"
+                      / "muon_combined_matched_rare4_bumpnet_min26bins.root")
 MEASUREMENTS_DEFAULT = ("/storage/agrp/berkom/atlas-utilization/work/electron_prep/"
                         "measurements_v2")
 

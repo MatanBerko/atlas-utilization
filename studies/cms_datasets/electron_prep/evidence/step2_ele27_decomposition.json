@@ -1,0 +1,147 @@
+{
+  "what": "decomposition of the measured Ele27 efficiency into the trigger decision and the matching requirement (barrel only)",
+  "tag": "HLT_IsoMu24 fired AND a selected muon matched (dR < 0.1) to an id-13 bit-2 ('Iso') trigger object with online pT >= 24 GeV",
+  "probe": "every selected electron (production definition) in a tagged event",
+  "region": "barrel, |eta| < 1.4442",
+  "files_used": [
+    {
+      "era": "G",
+      "file_index": 0,
+      "n_read": 2939781,
+      "n_barrel_probes": 1092,
+      "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/0A4230E2-0C75-604D-890F-A4CE5E5C164E.root"
+    },
+    {
+      "era": "G",
+      "file_index": 20,
+      "n_read": 2247927,
+      "n_barrel_probes": 784,
+      "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/70000/247E64DA-FE25-DB4E-ACFE-034455CFD3EB.root"
+    },
+    {
+      "era": "H",
+      "file_index": 0,
+      "n_read": 14113,
+      "n_barrel_probes": 4,
+      "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/61FC1E38-F75C-6B44-AD19-A9894155874E.root"
+    },
+    {
+      "era": "H",
+      "file_index": 20,
+      "n_read": 1930813,
+      "n_barrel_probes": 734,
+      "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/791500CE-B4AB-7C46-91D7-4E689B94F55A.root"
+    }
+  ],
+  "finding": "P(matched | fired) is >= 0.98 above 27 GeV and 1.000 above 35 GeV, so the MATCHING requirement costs essentially nothing there. The slow rise of the combined efficiency is P(Ele27 fired): the trigger's own efficiency relative to our offline Medium electron definition (HLT WPTight is tighter than offline Medium, and the L1 EG seed has its own turn-on). No matched-electron pT threshold can remove that -- it is a property of the trigger, not of the threshold.",
+  "bins": [
+    {
+      "pt_lo": 25.0,
+      "pt_hi": 27.0,
+      "n_probes": 145,
+      "p_ele27_fired": 0.06896551724137931,
+      "p_matched": 0.23448275862068965,
+      "p_fired_and_matched": 0.06206896551724138,
+      "p_matched_given_fired": 0.9
+    },
+    {
+      "pt_lo": 27.0,
+      "pt_hi": 29.0,
+      "n_probes": 154,
+      "p_ele27_fired": 0.2857142857142857,
+      "p_matched": 0.36363636363636365,
+      "p_fired_and_matched": 0.2792207792207792,
+      "p_matched_given_fired": 0.9772727272727273
+    },
+    {
+      "pt_lo": 29.0,
+      "pt_hi": 31.0,
+      "n_probes": 139,
+      "p_ele27_fired": 0.5683453237410072,
+      "p_matched": 0.5611510791366906,
+      "p_fired_and_matched": 0.5611510791366906,
+      "p_matched_given_fired": 0.9873417721518988
+    },
+    {
+      "pt_lo": 31.0,
+      "pt_hi": 33.0,
+      "n_probes": 160,
+      "p_ele27_fired": 0.68125,
+      "p_matched": 0.675,
+      "p_fired_and_matched": 0.675,
+      "p_matched_given_fired": 0.9908256880733946
+    },
+    {
+      "pt_lo": 33.0,
+      "pt_hi": 35.0,
+      "n_probes": 137,
+      "p_ele27_fired": 0.7226277372262774,
+      "p_matched": 0.708029197080292,
+      "p_fired_and_matched": 0.708029197080292,
+      "p_matched_given_fired": 0.9797979797979798
+    },
+    {
+      "pt_lo": 35.0,
+      "pt_hi": 40.0,
+      "n_probes": 238,
+      "p_ele27_fired": 0.6932773109243697,
+      "p_matched": 0.6932773109243697,
+      "p_fired_and_matched": 0.6932773109243697,
+      "p_matched_given_fired": 1.0
+    },
+    {
+      "pt_lo": 40.0,
+      "pt_hi": 45.0,
+      "n_probes": 234,
+      "p_ele27_fired": 0.7264957264957265,
+      "p_matched": 0.7264957264957265,
+      "p_fired_and_matched": 0.7264957264957265,
+      "p_matched_given_fired": 1.0
+    },
+    {
+      "pt_lo": 45.0,
+      "pt_hi": 50.0,
+      "n_probes": 184,
+      "p_ele27_fired": 0.7228260869565217,
+      "p_matched": 0.7228260869565217,
+      "p_fired_and_matched": 0.7228260869565217,
+      "p_matched_given_fired": 1.0
+    },
+    {
+      "pt_lo": 50.0,
+      "pt_hi": 60.0,
+      "n_probes": 306,
+      "p_ele27_fired": 0.7973856209150327,
+      "p_matched": 0.7973856209150327,
+      "p_fired_and_matched": 0.7973856209150327,
+      "p_matched_given_fired": 1.0
+    },
+    {
+      "pt_lo": 60.0,
+      "pt_hi": 80.0,
+      "n_probes": 385,
+      "p_ele27_fired": 0.8493506493506493,
+      "p_matched": 0.8493506493506493,
+      "p_fired_and_matched": 0.8493506493506493,
+      "p_matched_given_fired": 1.0
+    },
+    {
+      "pt_lo": 80.0,
+      "pt_hi": 120.0,
+      "n_probes": 366,
+      "p_ele27_fired": 0.8688524590163934,
+      "p_matched": 0.8661202185792349,
+      "p_fired_and_matched": 0.8661202185792349,
+      "p_matched_given_fired": 0.9968553459119497
+    },
+    {
+      "pt_lo": 120.0,
+      "pt_hi": 200.0,
+      "n_probes": 133,
+      "p_ele27_fired": 0.9323308270676691,
+      "p_matched": 0.9323308270676691,
+      "p_fired_and_matched": 0.9323308270676691,
+      "p_matched_given_fired": 1.0
+    }
+  ]
+}

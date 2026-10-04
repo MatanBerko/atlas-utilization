@@ -4,6 +4,72 @@
     "DoubleEG": {
       "n_files": 16,
       "n_fired_events": 2323788,
+      "bit_census": {
+        "electrons": {
+          "n_objects": 2216890,
+          "n_no_match": 32437,
+          "bits": {
+            "1": {
+              "meaning": "CaloIdL_TrackIdL_IsoVL",
+              "n": 2184383,
+              "fraction": 0.9853366653284557
+            },
+            "2": {
+              "meaning": "1e (WPTight)",
+              "n": 1604896,
+              "fraction": 0.723940294737222
+            },
+            "16": {
+              "meaning": "2e",
+              "n": 2184450,
+              "fraction": 0.9853668878473898
+            },
+            "32": {
+              "meaning": "1e-1mu",
+              "n": 5576,
+              "fraction": 0.002515235307119433
+            },
+            "2048": {
+              "meaning": "1e (CaloIdVT_GsfTrkIdT)",
+              "n": 658785,
+              "fraction": 0.29716630053814125
+            }
+          },
+          "fraction_with_no_matched_trigger_object": 0.014631758905493732
+        },
+        "muons": {
+          "n_objects": 842,
+          "n_no_match": 130,
+          "bits": {
+            "1": {
+              "meaning": "TrkIsoVVL",
+              "n": 131,
+              "fraction": 0.15558194774346792
+            },
+            "2": {
+              "meaning": "Iso",
+              "n": 41,
+              "fraction": 0.048693586698337295
+            },
+            "4": {
+              "meaning": "OverlapFilter PFTau",
+              "n": 34,
+              "fraction": 0.040380047505938245
+            },
+            "8": {
+              "meaning": "IsoTkMu",
+              "n": 590,
+              "fraction": 0.7007125890736342
+            },
+            "1024": {
+              "meaning": "1mu (Mu50)",
+              "n": 330,
+              "fraction": 0.3919239904988123
+            }
+          },
+          "fraction_with_no_matched_trigger_object": 0.1543942992874109
+        }
+      },
       "trigger_paths": [
         "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"
       ],
@@ -560,6 +626,72 @@
     "MuonEG": {
       "n_files": 16,
       "n_fired_events": 3546120,
+      "bit_census": {
+        "electrons": {
+          "n_objects": 266890,
+          "n_no_match": 1099,
+          "bits": {
+            "1": {
+              "meaning": "CaloIdL_TrackIdL_IsoVL",
+              "n": 265568,
+              "fraction": 0.9950466484319382
+            },
+            "2": {
+              "meaning": "1e (WPTight)",
+              "n": 128598,
+              "fraction": 0.481838959871108
+            },
+            "16": {
+              "meaning": "2e",
+              "n": 86862,
+              "fraction": 0.32545992731087714
+            },
+            "32": {
+              "meaning": "1e-1mu",
+              "n": 265726,
+              "fraction": 0.9956386526284237
+            },
+            "2048": {
+              "meaning": "1e (CaloIdVT_GsfTrkIdT)",
+              "n": 86073,
+              "fraction": 0.322503653190453
+            }
+          },
+          "fraction_with_no_matched_trigger_object": 0.004117801341376597
+        },
+        "muons": {
+          "n_objects": 288578,
+          "n_no_match": 42199,
+          "bits": {
+            "1": {
+              "meaning": "TrkIsoVVL",
+              "n": 39331,
+              "fraction": 0.13629244086520803
+            },
+            "2": {
+              "meaning": "Iso",
+              "n": 15114,
+              "fraction": 0.052374054848255934
+            },
+            "4": {
+              "meaning": "OverlapFilter PFTau",
+              "n": 7300,
+              "fraction": 0.025296453645115013
+            },
+            "8": {
+              "meaning": "IsoTkMu",
+              "n": 214654,
+              "fraction": 0.7438335562655504
+            },
+            "1024": {
+              "meaning": "1mu (Mu50)",
+              "n": 92925,
+              "fraction": 0.3220099938318236
+            }
+          },
+          "fraction_with_no_matched_trigger_object": 0.14623082840687787
+        }
+      },
       "trigger_paths": [
         "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ",
         "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ"
@@ -1634,6 +1766,76 @@
           }
         }
       }
+    },
+    "SingleElectron": {
+      "n_files": 16,
+      "bit_census": {
+        "electrons": {
+          "n_objects": 12595811,
+          "n_no_match": 48753,
+          "bits": {
+            "1": {
+              "meaning": "CaloIdL_TrackIdL_IsoVL",
+              "n": 1737074,
+              "fraction": 0.13790886509808697
+            },
+            "2": {
+              "meaning": "1e (WPTight)",
+              "n": 12268259,
+              "fraction": 0.9739951639477601
+            },
+            "16": {
+              "meaning": "2e",
+              "n": 3109746,
+              "fraction": 0.24688731833146751
+            },
+            "32": {
+              "meaning": "1e-1mu",
+              "n": 49927,
+              "fraction": 0.0039637781163912355
+            },
+            "2048": {
+              "meaning": "1e (CaloIdVT_GsfTrkIdT)",
+              "n": 3128125,
+              "fraction": 0.2483464542299023
+            }
+          },
+          "fraction_with_no_matched_trigger_object": 0.00387057252605648
+        },
+        "muons": {
+          "n_objects": 16364,
+          "n_no_match": 1759,
+          "bits": {
+            "1": {
+              "meaning": "TrkIsoVVL",
+              "n": 1840,
+              "fraction": 0.11244194573453924
+            },
+            "2": {
+              "meaning": "Iso",
+              "n": 809,
+              "fraction": 0.0494377902713273
+            },
+            "4": {
+              "meaning": "OverlapFilter PFTau",
+              "n": 569,
+              "fraction": 0.03477144952334393
+            },
+            "8": {
+              "meaning": "IsoTkMu",
+              "n": 13183,
+              "fraction": 0.8056098753361036
+            },
+            "1024": {
+              "meaning": "1mu (Mu50)",
+              "n": 6991,
+              "fraction": 0.4272182840381325
+            }
+          },
+          "fraction_with_no_matched_trigger_object": 0.10749205573209485
+        }
+      },
+      "legs": {}
     }
   }
 }

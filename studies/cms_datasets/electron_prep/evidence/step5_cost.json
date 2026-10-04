@@ -35,9 +35,9 @@
   "matched_vs_generic_cost_ratio_from_DoubleMuon": 0.2743169484480207,
   "note_on_ratio": "DoubleMuon's matched run is CHEAPER per event than its generic run (ratio 0.274 if not None) because the trigger-matching requirement removes events before the expensive combinatorics. So the generic-rate column is an UPPER bound for matched running.",
   "singleelectron_event_estimate": {
-    "n_files_sampled": 2,
-    "mean_events_per_sampled_file": 110480.5,
-    "estimated_total_events": 16682555.5,
+    "n_files_sampled": 16,
+    "mean_events_per_sampled_file": 1872812.0625,
+    "estimated_total_events": 282794621.4375,
     "status": "UNVERIFIED ESTIMATE -- no SingleElectron generic production exists to read; scaled from the files this study sampled"
   },
   "per_dataset": {
@@ -64,19 +64,19 @@
     "SingleElectron": {
       "n_files": 151,
       "n_jobs": 151,
-      "n_events": 16682555,
+      "n_events": 282794621,
       "n_events_is_estimate": true,
       "generic_sec_per_Mevent": 211.13461974617908,
       "generic_rate_source": "mean of DoubleEG and MuonEG generic rates (no SingleElectron generic run exists)",
-      "core_hours_upper_bound_generic_rate": 0.9784069477463968,
-      "core_hours_lower_bound_matched_rate": 0.28984815425203037
+      "core_hours_upper_bound_generic_rate": 16.585481906519785,
+      "core_hours_lower_bound_matched_rate": 4.9133658842652155
     }
   },
   "totals": {
     "n_files": 332,
     "n_jobs": 332,
-    "core_hours_upper_bound": 11.752002997028683,
-    "core_hours_lower_bound": 4.238629877738506,
+    "core_hours_upper_bound": 27.35907795580207,
+    "core_hours_lower_bound": 8.862147607751691,
     "matches_brief_file_count": true
   },
   "brief_expectation": {

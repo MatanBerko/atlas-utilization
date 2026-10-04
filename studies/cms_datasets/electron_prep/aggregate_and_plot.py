@@ -85,8 +85,9 @@ def step2(files, evidence_dir, plots_dir):
     edges = np.asarray(sm[0]["step2_ele27_turnon"]["bin_edges"], dtype=float)
     nb = len(edges) - 1
     regions = ("barrel", "gap", "endcap")
-    agg = {era: {r: {"num": np.zeros(nb), "den": np.zeros(nb)} for r in regions}
-           for era in ("G", "H")}
+    variants = list(sm[0]["step2_ele27_turnon"]["variants"].keys())
+    aggv = {v: {era: {r: {"num": np.zeros(nb), "den": np.zeros(nb)} for r in regions}
+                for era in ("G", "H")} for v in variants}
     n_tag_events = 0
     n_probes = 0
     for d in sm:
@@ -94,10 +95,17 @@ def step2(files, evidence_dir, plots_dir):
         era = d["era"]
         n_tag_events += t["n_tag_events"]
         n_probes += t["n_probes"]
-        for r in regions:
-            agg[era][r]["num"] += np.asarray(t["by_region"][r]["numerator"], dtype=float)
-            agg[era][r]["den"] += np.asarray(t["by_region"][r]["denominator"], dtype=float)
+        for v in variants:
+            for r in regions:
+                br = t["variants"][v]["by_region"][r]
+                aggv[v][era][r]["num"] += np.asarray(br["numerator"], dtype=float)
+                aggv[v][era][r]["den"] += np.asarray(br["denominator"], dtype=float)
 
+    # The recommendation is driven by the prompt-enriched probe, because the
+    # as-specified probe convolves the trigger turn-on with the probe sample
+    # rising prompt purity. Both variants are reported in full.
+    MAIN = "prompt_like" if "prompt_like" in variants else variants[0]
+    agg = aggv[MAIN]
     both = {r: {k: agg["G"][r][k] + agg["H"][r][k] for k in ("num", "den")} for r in regions}
 
     def eff(d):
@@ -120,8 +128,37 @@ def step2(files, evidence_dir, plots_dir):
         "n_probes_total": int(n_probes),
         "bin_edges": [float(x) for x in edges],
         "plateau_definition": f"mean efficiency over {PLATEAU_MIN_GEV:.0f}-{PLATEAU_MAX_GEV:.0f} GeV",
-        "by_region": {}, "by_era": {}, "statistics_check": {},
+        "probe_variants_available": variants,
+        "variant_used_for_recommendation": MAIN,
+        "why_two_variants": (
+            "The as-specified probe (every selected electron) convolves the Ele27 "
+            "trigger efficiency with the prompt purity of the probe sample: in an "
+            "IsoMu24-triggered sample most electrons passing the production "
+            "definition are non-prompt and can never fire a WPTight single-electron "
+            "trigger. The prompt_like variant adds ONLY an isolation requirement on "
+            "the probe (Electron_pfRelIso03_all < 0.10); the delivered electron "
+            "definition is not changed anywhere."),
+        "by_region": {}, "by_era": {}, "by_variant": {}, "statistics_check": {},
     }
+    _c = 0.5 * (edges[:-1] + edges[1:])
+    _pl = (_c >= PLATEAU_MIN_GEV) & (_c <= PLATEAU_MAX_GEV)
+    for v in variants:
+        bv = {r: {k: aggv[v]["G"][r][k] + aggv[v]["H"][r][k] for k in ("num", "den")}
+              for r in regions}
+        res["by_variant"][v] = {}
+        for r in regions:
+            pv, lov, hiv = clopper_pearson(bv[r]["num"], bv[r]["den"])
+            npl = bv[r]["num"][_pl].sum()
+            dpl = bv[r]["den"][_pl].sum()
+            res["by_variant"][v][r] = {
+                "numerator": [int(x) for x in bv[r]["num"]],
+                "denominator": [int(x) for x in bv[r]["den"]],
+                "efficiency": [None if np.isnan(x) else float(x) for x in pv],
+                "cp68_lo": [None if np.isnan(x) else float(x) for x in lov],
+                "cp68_hi": [None if np.isnan(x) else float(x) for x in hiv],
+                "plateau_efficiency": float(npl / dpl) if dpl > 0 else None,
+                "n_probes": int(bv[r]["den"].sum()),
+            }
 
     plateau = {}
     for r in regions:
@@ -219,11 +256,17 @@ def step2(files, evidence_dir, plots_dir):
     fig, axes = plt.subplots(1, 2, figsize=(13.5, 5.2), dpi=200)
     fig.patch.set_facecolor(SURFACE)
     for ax, (r, col) in zip(axes, (("barrel", C_BLUE), ("endcap", C_ORANGE))):
+        if "all" in variants:
+            ba = {k: aggv["all"]["G"][r][k] + aggv["all"]["H"][r][k] for k in ("num", "den")}
+            pa, _la, _ha = eff(ba)
+            ma = ba["den"] > 0
+            ax.plot(centers[ma], pa[ma], "s--", ms=3.5, lw=1.1, color=REF_GREY, zorder=3,
+                    label="probe = every selected electron (as specified)")
         p, lo, hi = eff(both[r])
         m = both[r]["den"] > 0
         ax.errorbar(centers[m], p[m], yerr=[p[m] - lo[m], hi[m] - p[m]],
                     fmt="o", ms=4, lw=1.4, color=col, zorder=4,
-                    label=f"{r} (Clopper-Pearson 68%)")
+                    label=f"{r}, prompt-like probe (CP 68%)")
         ax.axhline(plateau[r], color=REF_GREY, lw=1.4, ls="--", zorder=3,
                    label=f"plateau {plateau[r]:.3f} (50-200 GeV)")
         ax.axhline(0.95 * plateau[r], color=REF_GREY, lw=1.0, ls=":", zorder=3,
@@ -305,7 +348,25 @@ def step3(files, evidence_dir, plots_dir):
                     legs[leg][r]["den"] += np.asarray(v["denominator"], dtype=float)
                 oc = np.asarray(e["matched_online_pt_hist"]["counts"], dtype=float)
                 online[leg] = oc if online[leg] is None else online[leg] + oc
+        census = {}
+        for d in ds:
+            c = d.get("bit_census")
+            if not c:
+                continue
+            for oname, oe in c["objects"].items():
+                tgt = census.setdefault(oname, {"n_objects": 0, "n_no_match": 0, "bits": {}})
+                tgt["n_objects"] += oe["n_objects"]
+                tgt["n_no_match"] += oe["n_with_no_matched_trigger_object"]
+                for bit, be in oe["fraction_with_bit"].items():
+                    b = tgt["bits"].setdefault(bit, {"meaning": be["meaning_from_branch_title"], "n": 0})
+                    b["n"] += be["n"]
+        for oname, tgt in census.items():
+            n = tgt["n_objects"]
+            tgt["fraction_with_no_matched_trigger_object"] = (tgt["n_no_match"] / n) if n else None
+            for bit, b in tgt["bits"].items():
+                b["fraction"] = (b["n"] / n) if n else None
         entry = {"n_files": len(ds), "n_fired_events": int(n_fired),
+                 "bit_census": census,
                  "trigger_paths": ds[0]["step3_leg_matching"]["trigger_paths"],
                  "bin_edges": [float(x) for x in edges], "legs": {}}
         for leg in legs:
@@ -337,6 +398,28 @@ def step3(files, evidence_dir, plots_dir):
             entry["legs"][leg] = le
         out["datasets"][label] = entry
 
+    se = files.get("SingleElectron", [])
+    if se:
+        ds = se
+        census = {}
+        for d in ds:
+            c = d.get("bit_census")
+            if not c:
+                continue
+            for oname, oe in c["objects"].items():
+                tgt = census.setdefault(oname, {"n_objects": 0, "n_no_match": 0, "bits": {}})
+                tgt["n_objects"] += oe["n_objects"]
+                tgt["n_no_match"] += oe["n_with_no_matched_trigger_object"]
+                for bit, be in oe["fraction_with_bit"].items():
+                    b = tgt["bits"].setdefault(bit, {"meaning": be["meaning_from_branch_title"], "n": 0})
+                    b["n"] += be["n"]
+        for oname, tgt in census.items():
+            n = tgt["n_objects"]
+            tgt["fraction_with_no_matched_trigger_object"] = (tgt["n_no_match"] / n) if n else None
+            for bit, b in tgt["bits"].items():
+                b["fraction"] = (b["n"] / n) if n else None
+        out["datasets"]["SingleElectron"] = {"n_files": len(se), "bit_census": census,
+                                             "legs": {}}
     (evidence_dir / "step3_leg_matching.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
 
     if series:
@@ -366,6 +449,12 @@ def step3(files, evidence_dir, plots_dir):
         fig.savefig(plots_dir / "step3_leg_matching.png", facecolor=SURFACE, bbox_inches="tight")
         plt.close(fig)
     for label, e in out["datasets"].items():
+        for oname, c in e.get("bit_census", {}).items():
+            top = sorted(c["bits"].items(), key=lambda kv: -kv[1]["fraction"])[:3]
+            print(f"step3 {label}/{oname}: {c['n_objects']} objects, "
+                  f"{100 * c['fraction_with_no_matched_trigger_object']:.1f}% unmatched; "
+                  + ", ".join(f"bit {k} ({v['meaning']}) {100 * v['fraction']:.1f}%"
+                              for k, v in top))
         for leg, le in e["legs"].items():
             print(f"step3 {label}/{leg}: overall matched fraction "
                   f"{le['overall_efficiency']:.5f} over {le['n_objects']} objects")
