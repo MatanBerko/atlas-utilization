@@ -43,6 +43,7 @@ import numpy as np  # noqa: E402
 from services.calculations import physics_calcs  # noqa: E402
 from services.pipelines.post_processing_pipeline import (  # noqa: E402
     _apply_z_peak_cut,
+    _dilepton_flavor,
     _find_rightmost_highest_peak,
     _split_by_first_empty_bin,
 )
@@ -73,8 +74,10 @@ RESULTS = {}
 
 
 def check(name, condition, detail=""):
+    """Prints `detail` only on failure, so a PASS line can never be misread as
+    carrying a contradictory explanation."""
     status = "PASS" if condition else "FAIL"
-    print(f"[{status}] {name}" + (f" -- {detail}" if detail else ""))
+    print(f"[{status}] {name}" + (f" -- {detail}" if detail and not condition else ""))
     if not condition:
         FAILURES.append(name)
     return bool(condition)
@@ -134,22 +137,51 @@ def chain(raw, im_str, z_cutoff, use_new_split):
     implementation selectable so old and new can be compared on identical
     input. Peak detection is byte-identical in both (upstream 8120fb8 only
     factored its already-aligned grid into a helper), so the same real
-    function is used for both."""
+    function is used for both.
+
+    Returns a dict with the resulting main array AND the three boundaries
+    that produced it, so check (d) can verify that the main array is
+    nothing more than the raw array cut at those boundaries -- i.e. that
+    every old-vs-new difference is a boundary move and nothing else."""
     fake_sig = f"x_FS_x_IM_{im_str}"
-    arr = _apply_z_peak_cut(np.asarray(raw, dtype=np.float64), fake_sig, z_cutoff, LOGGER)
+    raw = np.asarray(raw, dtype=np.float64)
+    dilepton = _dilepton_flavor(fake_sig)
+    arr = _apply_z_peak_cut(raw, fake_sig, z_cutoff, LOGGER)
+    z_floor = z_cutoff if (dilepton and z_cutoff > 0) else None
     arr = arr[arr <= MAX_MASS_CUTOFF]
+    out = {"main": np.array([]), "z_floor": z_floor, "peak": None, "split": None,
+           "dilepton": dilepton}
     if arr.size == 0:
-        return np.array([]), None, None
+        return out
     peak = _find_rightmost_highest_peak(arr, BIN_WIDTH_GEV, LOGGER)
+    out["peak"] = None if peak is None else float(peak)
     filtered = arr if peak is None else arr[arr >= peak]
     if filtered.size == 0:
-        return np.array([]), peak, None
+        return out
     if use_new_split:
         main, outliers = _split_by_first_empty_bin(filtered, BIN_WIDTH_GEV, LOGGER)
     else:
         main, outliers = old_split_by_first_empty_bin(filtered, BIN_WIDTH_GEV)
-    split_mass = float(np.min(outliers)) if len(outliers) else None
-    return main, peak, split_mass
+    out["main"] = main
+    out["split"] = float(np.min(outliers)) if len(outliers) else None
+    return out
+
+
+def reconstruct_from_boundaries(raw, res):
+    """The raw array cut at exactly the boundaries `chain` reported. If this
+    reproduces `chain`'s own main array, then the main array is fully
+    determined by (Z floor, peak mass, split mass) -- so any old-vs-new
+    difference must be a move of one of those three boundaries, and cannot be
+    anything else (no altered values, no lost or duplicated events)."""
+    raw = np.asarray(raw, dtype=np.float64)
+    keep = raw <= MAX_MASS_CUTOFF
+    if res["z_floor"] is not None:
+        keep &= raw >= res["z_floor"]
+    if res["peak"] is not None:
+        keep &= raw >= res["peak"]
+    if res["split"] is not None:
+        keep &= raw < res["split"]
+    return raw[keep]
 
 
 # ==========================================================================
@@ -255,14 +287,38 @@ def check_b():
                     f"folding into it ({len(old_counts)} labels)",
                     not mismatches, f"mismatches: {mismatches[:4]}")
 
-              # <=3 light jets must be completely untouched.
+              # Final states with <=3 light jets must be completely untouched --
+              # same label, same count. The comparison is restricted to labels
+              # the OLD capping rule would have left alone
+              # (limit_particles_in_fs(label, 4) == label): a label whose
+              # NON-jet counts exceeded 4 had a different name under the old
+              # rule, so there is no same-named old entry to compare against.
+              # For the DELIVERED rare4 version this excludes nothing at all,
+              # because Version B rejects any event with electrons+muons+
+              # b-jets > 4, so no non-jet count can exceed 4. It can exclude
+              # labels in the NORMAL version, which keeps every object -- those
+              # are counted and reported separately just below.
+              le3 = [lb for lb in new_counts if jet_count(lb) <= 3]
+              le3_same_name = [lb for lb in le3
+                               if physics_calcs.limit_particles_in_fs(lb, 4) == lb]
+              le3_renamed = [lb for lb in le3 if lb not in set(le3_same_name)]
               le3_bad = [(lb, old_counts.get(lb), new_counts.get(lb))
-                         for lb in new_counts if jet_count(lb) <= 3
-                         and old_counts.get(lb) != new_counts.get(lb)]
-              n_le3 = sum(1 for lb in new_counts if jet_count(lb) <= 3)
-              check(f"{run}/{which}: all {n_le3} final states with <=3 light jets have "
-                    f"identical event counts",
+                         for lb in le3_same_name
+                         if old_counts.get(lb) != new_counts.get(lb)]
+              check(f"{run}/{which}: all {len(le3_same_name)} final states with <=3 "
+                    f"light jets and no non-jet count above 4 have identical "
+                    f"event counts",
                     not le3_bad, f"differing: {le3_bad[:4]}")
+              if version == "rare4":
+                  check(f"{run}/{which}: rare4 has NO <=3-light-jet label with a "
+                        f"non-jet count above 4 (guaranteed by the Version B rule)",
+                        not le3_renamed, f"found: {sorted(le3_renamed)[:4]}")
+              elif le3_renamed:
+                  print(f"       note [{version}]: {len(le3_renamed)} <=3-light-jet "
+                        f"label(s) have a non-jet count above 4, so they were "
+                        f"renamed by the old rule, e.g. "
+                        f"{sorted(le3_renamed)[:3]} -- expected for the normal "
+                        f"version, which is not delivered")
 
               split_labels = {ol: sorted(c) for ol, c in contributors.items() if len(c) > 1}
               if which.endswith("/inclusive"):
@@ -342,97 +398,150 @@ def check_d():
             im_by_sig[(fs, im)] = im
 
     n_same = 0
+    recon_fail = []
     z_only = []
+    peak_moved = []
     split_moved = []
     unexplained = []
 
     for key, vals in pooled.items():
         fs, im = key
         raw = np.asarray(vals, dtype=np.float64)
-        old_main, old_peak, old_split = chain(raw, im, Z_OLD, use_new_split=False)
-        new_main, new_peak, new_split = chain(raw, im, Z_NEW, use_new_split=True)
+        old_res = chain(raw, im, Z_OLD, use_new_split=False)
+        new_res = chain(raw, im, Z_NEW, use_new_split=True)
+        old_main, new_main = old_res["main"], new_res["main"]
+
+        # First, the strong structural statement: each side's histogram is
+        # EXACTLY the raw array cut at its own three boundaries. If this holds
+        # for both, then the only possible cause of any difference is a
+        # boundary move -- nothing in the data itself changed.
+        for tag, res in (("old", old_res), ("new", new_res)):
+            got = Counter(np.round(res["main"], 5))
+            want = Counter(np.round(reconstruct_from_boundaries(raw, res), 5))
+            if got != want:
+                recon_fail.append({"final_state": fs, "combination": im, "side": tag,
+                                   "n_got": int(res["main"].size),
+                                   "n_want": int(len(list(want.elements())))})
 
         if Counter(np.round(old_main, 5)) == Counter(np.round(new_main, 5)):
             n_same += 1
             continue
+
+        z_changed = old_res["z_floor"] != new_res["z_floor"]
+        peak_changed = old_res["peak"] != new_res["peak"]
+        split_changed = old_res["split"] != new_res["split"]
+        new_split_on_grid = (
+            new_res["split"] is None
+            or abs(new_res["split"] / BIN_WIDTH_GEV
+                   - round(new_res["split"] / BIN_WIDTH_GEV)) < 1e-9
+        )
 
         added = Counter(np.round(new_main, 5)) - Counter(np.round(old_main, 5))
         removed = Counter(np.round(old_main, 5)) - Counter(np.round(new_main, 5))
         added_vals = np.array(list(added.elements())) if added else np.array([])
         removed_vals = np.array(list(removed.elements())) if removed else np.array([])
 
-        all_added_in_z_window = (
-            len(added_vals) > 0
-            and bool(np.all((added_vals >= Z_NEW) & (added_vals < Z_OLD)))
-        )
-        boundary_changed = (old_split != new_split)
-        new_split_on_grid = (
-            new_split is None
-            or abs(new_split / BIN_WIDTH_GEV - round(new_split / BIN_WIDTH_GEV)) < 1e-9
-        )
-
         rec = {
             "final_state": fs, "combination": im, "n_raw": int(raw.size),
+            "dilepton": bool(new_res["dilepton"]),
             "n_old_main": int(old_main.size), "n_new_main": int(new_main.size),
             "n_added": int(len(added_vals)), "n_removed": int(len(removed_vals)),
-            "old_split_mass": old_split, "new_split_mass": new_split,
-            "old_peak": old_peak, "new_peak": new_peak,
             "added_min": float(added_vals.min()) if len(added_vals) else None,
             "added_max": float(added_vals.max()) if len(added_vals) else None,
+            "removed_min": float(removed_vals.min()) if len(removed_vals) else None,
+            "removed_max": float(removed_vals.max()) if len(removed_vals) else None,
+            "old_z_floor": old_res["z_floor"], "new_z_floor": new_res["z_floor"],
+            "old_peak": old_res["peak"], "new_peak": new_res["peak"],
+            "old_split": old_res["split"], "new_split": new_res["split"],
+            "new_split_on_10gev_grid": new_split_on_grid,
+            "which_boundaries_moved": [
+                nm for nm, ch in (("z_cut", z_changed), ("peak", peak_changed),
+                                  ("split", split_changed)) if ch],
         }
 
-        if all_added_in_z_window and len(removed_vals) == 0 and not boundary_changed:
-            z_only.append(rec)
-        elif boundary_changed and new_split_on_grid:
-            split_moved.append(rec)
-        else:
+        if not (z_changed or peak_changed or split_changed):
+            # Should be impossible: identical boundaries but different output.
             unexplained.append(rec)
+        elif split_changed and not new_split_on_grid:
+            unexplained.append(rec)
+        elif split_changed:
+            split_moved.append(rec)
+        elif peak_changed:
+            peak_moved.append(rec)
+        else:
+            z_only.append(rec)
 
+    n_changed = len(z_only) + len(peak_moved) + len(split_moved) + len(unexplained)
     print(f"       {len(pooled)} pooled <=3-light-jet (final state, combination) channels")
-    print(f"       unchanged by the post-processing change: {n_same}")
-    print(f"       changed ONLY inside the 110-115 GeV Z window: {len(z_only)}")
-    print(f"       changed because the outlier-split boundary moved: {len(split_moved)}")
-    print(f"       changed for any OTHER reason: {len(unexplained)}")
+    print(f"       unchanged by the post-processing change:       {n_same}")
+    print(f"       changed, Z cut boundary only:                  {len(z_only)}")
+    print(f"       changed, peak boundary moved (Z cut knock-on): {len(peak_moved)}")
+    print(f"       changed, outlier-split boundary moved:         {len(split_moved)}")
+    print(f"       changed for an UNEXPLAINED reason:             {len(unexplained)}")
 
-    check("every post-processing difference is explained by the Z window or a "
-          "moved split boundary (no other cause)",
+    check("each side's histogram is EXACTLY the raw array cut at its own "
+          "(Z floor, peak, split) boundaries, so no difference can come from "
+          "anything but a boundary move",
+          not recon_fail,
+          f"{len(recon_fail)} reconstruction failures, first: {recon_fail[:2]}")
+    check("every post-processing difference is a move of the Z cut, the peak "
+          "boundary or the outlier split -- nothing else",
           not unexplained,
           f"{len(unexplained)} unexplained, first: {unexplained[:2]}")
-    check("at least one concrete Z-window-only example exists", len(z_only) > 0,
-          "none found")
-    check("at least one concrete moved-split example exists", len(split_moved) > 0,
-          "none found")
-    check("every moved split boundary lands on a 10 GeV grid edge",
-          all(r["new_split_mass"] is None
-              or abs(r["new_split_mass"] / BIN_WIDTH_GEV
-                     - round(r["new_split_mass"] / BIN_WIDTH_GEV)) < 1e-9
-              for r in split_moved))
+    check("every moved outlier-split boundary lands on a 10 GeV grid edge",
+          all(r["new_split_on_10gev_grid"] for r in split_moved + peak_moved + z_only))
 
-    if z_only:
-        ex = max(z_only, key=lambda r: r["n_added"])
-        print("\n       EXAMPLE 1 -- Z cut 115 -> 110 only:")
+    # Every channel whose Z floor or peak moved must be a same-flavour
+    # dilepton channel: those are the only ones _apply_z_peak_cut touches.
+    non_dilepton_z = [r for r in z_only + peak_moved if not r["dilepton"]]
+    check("only same-flavour dilepton channels changed via the Z cut or the "
+          "peak boundary (non-dilepton channels are untouched by the Z cut)",
+          not non_dilepton_z, f"found: {non_dilepton_z[:2]}")
+
+    # Everything newly admitted by a Z-cut or peak move must sit at or above
+    # the new Z floor of 110 GeV and below the old boundary it was excluded by.
+    bad_added = [r for r in z_only + peak_moved
+                 if r["added_min"] is not None and r["added_min"] < Z_NEW]
+    check(f"every value newly admitted by the Z cut or peak move sits at or "
+          f"above {Z_NEW:.0f} GeV",
+          not bad_added, f"found: {bad_added[:2]}")
+
+    check("at least one concrete Z-cut example exists",
+          len(z_only) + len(peak_moved) > 0)
+    check("at least one concrete moved-split example exists", len(split_moved) > 0)
+
+    z_examples = z_only + peak_moved
+    if z_examples:
+        ex = max(z_examples, key=lambda r: r["n_added"])
+        print("\n       EXAMPLE 1 -- Z cut 115 -> 110 (same-flavour dilepton):")
         print(f"         final state {ex['final_state']}, combination {ex['combination']}")
-        print(f"         {ex['n_added']} dilepton values in "
-              f"[{ex['added_min']:.2f}, {ex['added_max']:.2f}] GeV are now KEPT")
-        print(f"         histogram entries {ex['n_old_main']} -> {ex['n_new_main']}")
+        print(f"         Z floor {ex['old_z_floor']} -> {ex['new_z_floor']} GeV; "
+              f"peak {ex['old_peak']} -> {ex['new_peak']} GeV")
+        print(f"         {ex['n_added']} values in "
+              f"[{ex['added_min']:.2f}, {ex['added_max']:.2f}] GeV are now KEPT, "
+              f"{ex['n_removed']} removed")
+        print(f"         histogram entries {ex['n_old_main']:,} -> {ex['n_new_main']:,}")
     if split_moved:
         ex = max(split_moved, key=lambda r: abs(r["n_new_main"] - r["n_old_main"]))
         print("\n       EXAMPLE 2 -- outlier split boundary moved onto a 10 GeV edge:")
         print(f"         final state {ex['final_state']}, combination {ex['combination']}")
-        print(f"         old split mass {ex['old_split_mass']} GeV -> "
-              f"new {ex['new_split_mass']} GeV")
-        print(f"         histogram entries {ex['n_old_main']} -> {ex['n_new_main']}")
+        print(f"         split mass {ex['old_split']} -> {ex['new_split']} GeV "
+              f"(None = no split, everything kept)")
+        print(f"         histogram entries {ex['n_old_main']:,} -> {ex['n_new_main']:,}")
 
     RESULTS["check_d"] = {
-        "n_channels": len(pooled), "n_unchanged": n_same,
-        "n_z_window_only": len(z_only), "n_split_moved": len(split_moved),
-        "n_unexplained": len(unexplained),
-        "example_z_window": max(z_only, key=lambda r: r["n_added"]) if z_only else None,
+        "n_channels": len(pooled), "n_unchanged": n_same, "n_changed": n_changed,
+        "n_z_cut_only": len(z_only), "n_peak_moved": len(peak_moved),
+        "n_split_moved": len(split_moved), "n_unexplained": len(unexplained),
+        "n_reconstruction_failures": len(recon_fail),
+        "example_z_cut": (max(z_only + peak_moved, key=lambda r: r["n_added"])
+                          if (z_only + peak_moved) else None),
         "example_split_moved": (max(split_moved,
                                     key=lambda r: abs(r["n_new_main"] - r["n_old_main"]))
                                 if split_moved else None),
-        "all_z_window_examples": z_only[:50],
-        "all_split_moved_examples": split_moved[:50],
+        "all_z_cut_examples": (z_only + peak_moved)[:80],
+        "all_split_moved_examples": split_moved[:80],
+        "all_unexplained": unexplained[:80],
     }
 
 
