@@ -61,7 +61,14 @@ BIN_WIDTH_GEV = 10.0
 FIXED_MASS_MIN_GEV = 0.0
 FIXED_MASS_MAX_GEV = 10000.0
 N_FIXED_BINS = int(round((FIXED_MASS_MAX_GEV - FIXED_MASS_MIN_GEV) / BIN_WIDTH_GEV))
-Z_PEAK_CUTOFF = 115.0  # config.yaml:155
+# Z-peak cut, aligned to the 10 GeV bin edges: 110.0, NOT the old 115.0.
+# Follows upstream commit 8120fb8 ("Align outlier split to bin edges",
+# upstream PR #27), which moved config.yaml's own z_peak_cutoff and
+# domain/config.py's default from 115.0 to 110.0 for exactly this reason:
+# 115 falls in the middle of the 110-120 GeV bin, so the cut boundary did
+# not coincide with a histogram bin edge. This study-local constant mirrors
+# config.yaml:155 (now 110.0) and must be kept in step with it.
+Z_PEAK_CUTOFF = 110.0  # config.yaml:155 (upstream 8120fb8, was 115.0)
 MAX_MASS_CUTOFF = 10000.0  # config.yaml:156
 PRIMARY_MIN_EVENTS_PER_FS = 100  # config.yaml:142
 SENSITIVITY_THRESHOLDS = (50, 200, 1000)
@@ -136,13 +143,24 @@ def load_chunks_by_signature(shard_paths):
     return chunks_by_sig
 
 
-def run_funnel_at_threshold(shard_paths, threshold: int, sig_to_bumpnet: dict):
+def run_funnel_at_threshold(shard_paths, threshold: int, sig_to_bumpnet: dict,
+                            diagnostics: dict | None = None):
     """Run the REAL prune_final_states_below_min_events at `threshold` on
     `shard_paths` (expected to be scratch copies -- this mutates them),
     then the REAL z-peak/max-mass/peak-removal/first-empty-bin-split chain
     on every surviving signature's concatenated raw masses. Returns
     (stage_b_names, stage_c_survivors[name -> main_array],
     stage_d_survivors[name -> (main_array, hist_counts, n_nonempty_bins)]).
+
+    `diagnostics` (exact-jet-labels task, B4) is an OPTIONAL dict. When a
+    caller passes one, per-stage drop counts are written into it so the
+    caller can report exactly how many histograms each step removed --
+    specifically how many were removed by the per-histogram
+    >=`threshold`-main-entries requirement, which the B4 delivery has to
+    report while leaving the rule itself unchanged. Passing nothing (every
+    pre-existing caller) changes nothing at all: no extra work is done
+    beyond incrementing a few local ints, and the return value, the
+    thresholds applied and every array produced are bit-for-bit the same.
     """
     prune_final_states_below_min_events(shard_paths, threshold)
 
@@ -158,6 +176,10 @@ def run_funnel_at_threshold(shard_paths, threshold: int, sig_to_bumpnet: dict):
 
     stage_c_survivors = {}
     im_str_by_name = {}
+    n_empty_after_z_and_max_mass = 0
+    n_empty_after_peak_removal = 0
+    n_below_min_main_entries = 0
+    names_below_min_main_entries = []
     for bumpnet_name, entries in surviving_bumpnet_to_sigs.items():
         chunks = []
         for sig, im_str in entries:
@@ -170,14 +192,19 @@ def run_funnel_at_threshold(shard_paths, threshold: int, sig_to_bumpnet: dict):
         arr = _apply_z_peak_cut(raw_arr, fake_sig, Z_PEAK_CUTOFF, LOGGER)
         arr = arr[arr <= MAX_MASS_CUTOFF] if MAX_MASS_CUTOFF > 0 else arr
         if arr.size == 0:
+            n_empty_after_z_and_max_mass += 1
             continue
         peak_mass = _find_rightmost_highest_peak(arr, BIN_WIDTH_GEV, LOGGER)
         filtered = arr if peak_mass is None else arr[arr >= peak_mass]
         if filtered.size == 0:
+            n_empty_after_peak_removal += 1
             continue
         main_arr, _outliers = _split_by_first_empty_bin(filtered, BIN_WIDTH_GEV, LOGGER)
         if main_arr.size >= threshold:
             stage_c_survivors[bumpnet_name] = main_arr
+        else:
+            n_below_min_main_entries += 1
+            names_below_min_main_entries.append((bumpnet_name, int(main_arr.size)))
 
     stage_d_survivors = {}
     for bumpnet_name, main_arr in stage_c_survivors.items():
@@ -186,6 +213,17 @@ def run_funnel_at_threshold(shard_paths, threshold: int, sig_to_bumpnet: dict):
         n_events_in_hist = int(hist_counts.sum())
         if n_nonempty_bins > MIN_BUMPNET_BINS and n_events_in_hist >= threshold:
             stage_d_survivors[bumpnet_name] = (main_arr, hist_counts, n_nonempty_bins)
+
+    if diagnostics is not None:
+        diagnostics.update({
+            "threshold": int(threshold),
+            "n_stage_b_names": len(stage_b_names),
+            "n_empty_after_z_and_max_mass": n_empty_after_z_and_max_mass,
+            "n_empty_after_peak_removal": n_empty_after_peak_removal,
+            "n_excluded_by_min_main_entries": n_below_min_main_entries,
+            "names_excluded_by_min_main_entries": sorted(names_below_min_main_entries),
+            "n_stage_c_survivors": len(stage_c_survivors),
+        })
 
     return stage_b_names, stage_c_survivors, stage_d_survivors, im_str_by_name
 

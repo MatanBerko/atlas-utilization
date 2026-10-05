@@ -89,14 +89,36 @@ requires their rejected-event totals to match exactly). The ONLY
 difference from nonjet4: for a KEPT (N<=4) event, rare4 keeps EVERY
 selected object, including every selected light jet, completely
 unpadded/untruncated -- i.e. rare4 is simply the NORMAL version's own
-final-state grouping/labelling/combinations (including that version's
-own existing convention of capping each object type's DISPLAYED count at
-4 in the histogram name, e.g. 5 light jets shown as "4j") restricted to
-the N<=4 event rows. The implementation therefore reuses the normal
-version's own obj_record (already built above, byte-for-byte unmodified)
-and nonjet4's own reject mask, rather than re-deriving either. generic,
-v0, and the existing top-4/nonjet4 shards/diagnostics are completely
-unaffected by this addition (Hard Rule 5).
+final-state grouping/labelling/combinations restricted to the N<=4 event
+rows. The implementation therefore reuses the normal version's own
+obj_record (already built above, byte-for-byte unmodified) and nonjet4's
+own reject mask, rather than re-deriving either. generic, v0, and the
+existing top-4/nonjet4 shards/diagnostics are completely unaffected by
+this addition (Hard Rule 5).
+
+Exact final-state labels (exact-jet-labels task, B1; ALL versions): a
+final state's label is now the event's EXACT per-type multiplicity. It
+used to be capped for display at 4 by
+physics_calcs.limit_particles_in_fs, so e.g. an event with 5 light jets
+was filed under "..._4j_..." and its masses were MERGED into the 4j
+histograms. The group has decided each light-jet multiplicity gets its
+own final state, so there are now separate 5j, 6j, 7j, ... (and
+two-digit 10j, 11j, ...) final states. The six-letter name format is
+UNCHANGED -- still e.g. `0e_2m_5j_0g_0t_1b`, only the digits may now
+exceed 4. Nothing about which events are accepted, which objects they
+keep, the Version B reject rule, the 186 combinations, the binning or
+the >=100-events-per-final-state rule changes: this is purely a
+relabelling, and the total event count summed over all labels is
+identical to the old capped grouping. See
+_group_by_final_state_with_mask's own docstring for the full detail and
+for the one shared-code parsing limitation this was checked against.
+
+Because the grouping function is shared by all four versions, the
+NORMAL version (which keeps every selected object) may now also show
+counts above 4 for non-jet types, e.g. a "5m" label. That is accepted:
+only rare4 (Version B) is delivered. top4 and nonjet4 keep at most 4
+objects per event in total, so no count in those two versions can ever
+exceed 4 and their labels are unchanged in practice.
 
 Inclusive/exclusive de-duplication (task's own veto priority order, highest
 first: DoubleMuon > DoubleEG > MuonEG > SingleMuon > SingleElectron > JetHT
@@ -295,17 +317,74 @@ def read_events(file_url: str, required_branches):
 
 
 def _group_by_final_state_with_mask(obj_record: ak.Array):
-    """Identical grouping/capping formula to
-    services.calculations.physics_calcs.group_by_final_state (copied
-    verbatim, not reimplemented differently) -- the ONLY difference is that
-    this also yields each group's own boolean mask into obj_record, which
-    the shared function computes internally but does not expose. Needed
-    here only so the (already-computed) per-combination mass array can
-    later be split into inclusive/exclusive sub-arrays by a cheap,
-    alignment-preserving boolean mask, without a second combinatorics pass.
-    Byte-identical (label, fs_events) pairs to the shared function for the
-    same input, since it is the same deterministic string-building code
-    applied to the same array."""
+    """Group accepted events by their EXACT final state, and yield each
+    group's own boolean mask into obj_record alongside it.
+
+    Grouping formula: same six-letter name format and same deterministic
+    string-building code as
+    services.calculations.physics_calcs.group_by_final_state, with TWO
+    documented differences:
+
+    1. It also yields each group's boolean mask into obj_record, which the
+       shared function computes internally but does not expose. Needed here
+       only so the (already-computed) per-combination mass array can later
+       be split into inclusive/exclusive sub-arrays by a cheap,
+       alignment-preserving boolean mask, without a second combinatorics
+       pass.
+
+    2. exact-jet-labels task, B1: the yielded label is the event's EXACT
+       per-type multiplicity (`raw_fs`), NOT
+       `physics_calcs.limit_particles_in_fs(raw_fs, 4)`. Previously a count
+       above 4 was displayed as "4", so an event with 5 light jets was
+       filed under "..._4j_..." and its masses were MERGED into the 4j
+       histograms. The group has decided each light-jet multiplicity gets
+       its own final state, so 5 light jets now produces "5j", 6 produces
+       "6j", 11 produces "11j", and so on.
+
+    What this does and does not change:
+      - The NAME FORMAT is unchanged: still exactly six underscore-separated
+        `<count><letter>` fields in the order e, m, j, g, t, b (e.g.
+        `0e_2m_5j_0g_0t_1b`). Only the digits can now exceed 4, and can be
+        two digits. The format itself is an open question with Maryna and is
+        deliberately NOT changed here.
+      - No event is added, dropped, reordered or altered. This is purely a
+        relabelling: the total number of events summed over all labels is
+        identical to the old capped grouping on the same input, and every
+        event keeps exactly the objects it had. Events that used to share
+        one "4j" label are now distributed across 4j/5j/6j/... labels
+        according to their true light-jet count. See
+        studies/cms_datasets/tests/test_exact_jet_labels.py for both properties.
+      - Object definitions, trigger matching, de-duplication, the
+        inclusive/exclusive split, the Version B (rare4) reject rule, the
+        186-combination set, the binning and the >=100-events-per-final-
+        state rule are all untouched.
+
+    Which versions this affects: this function is shared by every version
+    the driver writes (normal, top4, nonjet4, rare4), so all four now get
+    exact labels. top4 and nonjet4 keep at most 4 objects in total per
+    event by construction, so no count in those two can ever exceed 4 and
+    their labels are unchanged in practice. The NORMAL version keeps every
+    selected object, so its labels may now show counts above 4 for any type
+    (e.g. "5m", "7j"); that is accepted -- only rare4 (Version B) is
+    delivered. rare4 is where this change is wanted: it keeps ALL selected
+    light jets, so it is the version whose 5+-light-jet events were being
+    merged into 4j.
+
+    Known shared-code limitation, NOT worked around here (reported, with a
+    test, in studies/cms_datasets/tests/test_exact_jet_labels.py): the shared
+    physics_calcs.is_finalstate_contain_combination reads only the FIRST
+    character of each count field, so for a two-digit count (>=10) it fails
+    to map the particle letter and silently SKIPS that type's requirement,
+    i.e. treats it as satisfied. Verified by running: the largest
+    (start + count) requirement over all 186 combinations is 4, for every
+    object type, so a true count of >=10 satisfies every requirement anyway
+    -- skipping the check returns the same answer the correct check would.
+    No delivered result changes, so no study-local replacement is needed.
+
+    Not related to this change: the shared IMCalculator has a separate
+    upstream bug affecting events with 5+ light jets, which the upstream
+    authors are fixing themselves. Nothing in this function or anywhere in
+    this study works around or copies that fix."""
     num_events = len(obj_record)
     zero_array = ak.Array([0] * num_events) if num_events > 0 else ak.Array([])
     particle_counts = ak.num(obj_record)
@@ -324,7 +403,11 @@ def _group_by_final_state_with_mask(obj_record: ak.Array):
     for raw_fs in sorted(set(all_events_fs.tolist())):
         mask = (all_events_fs == raw_fs)
         events_matching_fs = obj_record[mask]
-        label = physics_calcs.limit_particles_in_fs(raw_fs, 4)
+        # exact-jet-labels task, B1: the EXACT multiplicity is the label.
+        # Was: physics_calcs.limit_particles_in_fs(raw_fs, 4), which
+        # displayed any count above 4 as "4" and so merged e.g. 5-light-jet
+        # events into the 4j histograms. See this function's docstring.
+        label = raw_fs
         yield label, events_matching_fs, mask
 
 

@@ -66,6 +66,31 @@ rare4 task, Step 5 addition: a fourth `--version rare4` choice, reading
 thresholds/cropping/manifest code, untouched; `--runs-matched-dir` points
 at `runs_matched_rare4/`, which likewise carries its own copies of the
 two index JSON files.
+
+exact-jet-labels task, B4 addition: an OPTIONAL `--no-filled-bin-cut`
+flag. The group has decided that the ">=25 filled bins" requirement is
+applied by Maryna on the BumpNet side during smoothing, NOT in this
+pipeline, so a delivery built with this flag applies NO filled-bin
+threshold at all and writes ONE histogram set instead of the previous two
+(no more separate ">25"/">30" files):
+
+    python build_muon_combined_delivery.py --version rare4         --no-filled-bin-cut         --runs-matched-dir /storage/.../output/cms_datasets/runs_matched_vB_exactlabels_20261005         --out-dir /storage/.../output/cms_datasets/deliver/muon_combined_vB_exactlabels_20261005         --out-prefix muon_combined_matched_vB_exactlabels
+
+Everything that survives the existing chain is delivered: the
+>=100-events-per-final-state prune, the Z cut, the max-mass cut, peak
+removal, the outlier split, and the existing per-histogram
+>=100-main-entries requirement -- ALL unchanged. Only the bin-count
+classification step is skipped. Output is the same two forms as every
+earlier delivery, `<prefix>_bumpnet.root` (uncropped) and
+`<prefix>_bumpnet_cropped.root`; BumpNet needs the CROPPED one, because
+it requires a non-empty first bin. A README.txt saying exactly that is
+written next to them.
+
+The flag is OFF by default, so every pre-existing invocation -- including
+`--version normal`, `top4` and `nonjet4` -- produces byte-for-byte what it
+produced before: the same two min31bins/min26bins files, the same
+manifests, the same build-summary key names. The flag only ADDS a code
+path; it changes nothing on the old one.
 """
 from __future__ import annotations
 
@@ -145,12 +170,223 @@ def gather_shard_paths(runs_matched_dir: Path, version: str):
     return dm_paths, sm_paths
 
 
+README_TEMPLATE = """BumpNet delivery -- Version B (rare4), EXACT light-jet final states
+===================================================================
+
+WHICH FILE TO USE
+-----------------
+    {cropped}
+
+That is the file for BumpNet. It is the CROPPED one: every histogram has
+been trimmed to its first..last filled bin, so the first bin is never
+empty, which is what BumpNet requires.
+
+    {uncropped}
+
+is the same {n_delivered} histograms UNCROPPED, on the full fixed
+0-10000 GeV grid. It is for cross-checking and plotting only; do not feed
+it to BumpNet.
+
+WHAT IS IN IT
+-------------
+{n_delivered} histograms over {n_final_states} distinct final-state
+categories, on the unchanged fixed grid: 0-10000 GeV in 10 GeV bins.
+
+THREE THINGS ARE DIFFERENT FROM THE 1 OCT DELIVERY
+--------------------------------------------------
+1. EXACT LIGHT-JET FINAL STATES. Each light-jet multiplicity now has its
+   own final state. Previously any count above 4 was written as "4", so
+   events with 5, 6, 7 ... light jets were all filed under "4j" and their
+   masses were merged into the 4j histograms. Now there are separate 5j,
+   6j, 7j ... final states. The name format is unchanged (e.g.
+   0ex_2mx_5jx_0gx_0tx_1bx); only the digits can now exceed 4.
+
+2. Z-PEAK CUT 115 -> 110 GeV, so the cut lands on a 10 GeV bin edge
+   instead of in the middle of a bin. Follows upstream commit 8120fb8
+   (PR #27). It affects same-flavour dilepton channels only. The outlier
+   split (the cut at the first empty bin in the high-mass tail) is
+   likewise now aligned to the same fixed 10 GeV grid starting at 0.
+
+3. NO FILLED-BIN CUT. Earlier deliveries shipped two files, one requiring
+   more than 30 filled bins and one more than 25. This delivery applies NO
+   filled-bin requirement at all, because that cut is applied on the
+   BumpNet side during smoothing. There is therefore ONE histogram set,
+   not two.
+
+   For information only, of the {n_delivered} delivered histograms:
+     - {n_ge25} have 25 or more filled bins (what BumpNet's own cut keeps)
+     - {n_gt25} have more than 25 filled bins (the old min26bins rule)
+     - {n_gt30} have more than 30 filled bins (the old min31bins rule)
+
+WHAT IS UNCHANGED
+-----------------
+Object definitions, trigger matching, de-duplication, the golden-JSON run
+filter, the Version B reject rule (reject an event if electrons + muons +
+b-jets > 4, otherwise keep ALL selected light jets), the 186 combinations,
+the fixed 10 GeV binning, the >=100-events-per-final-state rule, the
+max-mass cut, and peak removal.
+
+STILL OPEN, NOT DECIDED HERE
+----------------------------
+- The per-histogram ">=100 entries" requirement is still applied,
+  unchanged. It excluded {n_excl_post} histogram(s) at the post-processing
+  step (fewer than 100 entries survived the chain) and {n_excl_hist} at the
+  histogram-filling step. Whether it should stay is a question for Maryna.
+- The final-state NAME FORMAT (six fields e/m/j/g/t/b) is unchanged and is
+  also an open question with Maryna.
+
+Combination rule (unchanged): per signature, DoubleMuon INCLUSIVE raw
+masses pooled with SingleMuon EXCLUSIVE raw masses.
+
+Built from {n_dm} DoubleMuon and {n_sm} SingleMuon per-file shards.
+"""
+
+
+def _build_no_bin_cut_delivery(args, out_dir: Path, dm_paths, sm_paths, sig_to_bumpnet,
+                               stage_b_names, stage_c_survivors, stage_d_survivors,
+                               im_str_by_name, all_hists, n_nonempty_by_name,
+                               n_events_by_name, funnel_diagnostics: dict) -> None:
+    """exact-jet-labels task, B4: write ONE histogram set with NO filled-bin
+    threshold, in the same two forms as every earlier delivery (uncropped +
+    cropped).
+
+    What is delivered: every stage-c survivor -- i.e. everything that got
+    through the >=100-events-per-final-state prune, the Z cut, the max-mass
+    cut, peak removal, the outlier split AND the existing per-histogram
+    >=100-main-entries requirement. That last rule is deliberately left
+    EXACTLY as it was (it is an open question for Maryna); this function only
+    COUNTS what it excludes, and reports it.
+
+    The ">=25 filled bins" figure is reported for information only, because
+    that is the cut BumpNet applies on its own side during smoothing. It does
+    NOT filter anything written here.
+
+    Reuses write_root_file / write_cropped_root_file / manifest_entry from
+    build_dataset_delivery unmodified, so these files are built by exactly the
+    same code as every earlier delivery."""
+    delivered = sorted(
+        n for n in stage_c_survivors if n_events_by_name[n] >= MIN_BUMPNET_EVENTS
+    )
+    excluded_by_hist_min_events = sorted(
+        (n, n_events_by_name[n]) for n in stage_c_survivors
+        if n_events_by_name[n] < MIN_BUMPNET_EVENTS
+    )
+
+    # Informational only -- BumpNet applies its own cut; nothing is filtered here.
+    n_ge25_filled = sum(1 for n in delivered if n_nonempty_by_name[n] >= 25)
+    n_gt25_filled = sum(1 for n in delivered if n_nonempty_by_name[n] > BINS_THRESHOLD_B)
+    n_gt30_filled = sum(1 for n in delivered if n_nonempty_by_name[n] > BINS_THRESHOLD_A)
+    n_excl_post = funnel_diagnostics.get("n_excluded_by_min_main_entries")
+
+    print("\n=== B4: no filled-bin cut -- ONE histogram set ===")
+    print(f"delivered histograms (stage-c survivors, no bin cut): {len(delivered)}")
+    print(f"  of which >=25 filled bins (BumpNet own cut, informational): {n_ge25_filled}")
+    print(f"  of which >25  filled bins (old min26bins rule):             {n_gt25_filled}")
+    print(f"  of which >30  filled bins (old min31bins rule):             {n_gt30_filled}")
+    print("excluded by the UNCHANGED per-histogram >=100-entries rule:")
+    print(f"  at the post-processing step (main entries < 100): {n_excl_post}")
+    print(f"  at the histogram step (histogram entries < 100):  "
+          f"{len(excluded_by_hist_min_events)}")
+
+    hists = {name: all_hists[name] for name in delivered}
+    path_main = out_dir / f"{args.out_prefix}_bumpnet.root"
+    path_cropped = out_dir / f"{args.out_prefix}_bumpnet_cropped.root"
+    for path in (path_main, path_cropped):
+        if path.exists():
+            print(f"STOP: refusing to overwrite an existing file: {path}", file=sys.stderr)
+            sys.exit(1)
+
+    print("\n=== Writing ROOT files ===")
+    write_root_file(path_main, hists)
+    write_cropped_root_file(path_cropped, hists)
+    print(f"wrote {path_main} ({len(hists)} histograms, uncropped)")
+    print(f"wrote {path_cropped} ({len(hists)} histograms, cropped <- BumpNet uses this one)")
+
+    print("\n=== Writing manifest ===")
+    manifest = [manifest_entry(n, im_str_by_name[n], *all_hists[n]) for n in delivered]
+    (out_dir / f"manifest_{args.out_prefix}.json").write_text(json.dumps(manifest, indent=2))
+
+    n_final_states = len({
+        n.split("_cat_", 1)[1] for n in delivered if "_cat_" in n
+    })
+    summary = {
+        "version": args.version,
+        "filled_bin_cut": "NONE (B4: applied by Maryna on the BumpNet side during smoothing)",
+        "n_doublemuon_shards": len(dm_paths),
+        "n_singlemuon_shards": len(sm_paths),
+        "n_distinct_raw_signatures": len(sig_to_bumpnet),
+        "funnel": {
+            "b_after_min_events_per_fs_100": len(stage_b_names),
+            "c_after_postprocessing_ge100_main": len(stage_c_survivors),
+            "d_bumpnet_usable_gt30bins_ge100events": len(stage_d_survivors),
+        },
+        "n_delivered_histograms": len(delivered),
+        "n_distinct_final_state_categories_delivered": n_final_states,
+        "informational_bin_counts": {
+            "n_with_ge_25_filled_bins": n_ge25_filled,
+            "n_with_gt_25_filled_bins_old_min26bins_rule": n_gt25_filled,
+            "n_with_gt_30_filled_bins_old_min31bins_rule": n_gt30_filled,
+        },
+        "per_histogram_min_100_entries_rule_UNCHANGED": {
+            "n_excluded_at_postprocessing_main_entries_lt_100": n_excl_post,
+            "n_excluded_at_histogram_entries_lt_100": len(excluded_by_hist_min_events),
+            "names_excluded_at_histogram_step": excluded_by_hist_min_events,
+            "names_excluded_at_postprocessing_step":
+                funnel_diagnostics.get("names_excluded_by_min_main_entries"),
+        },
+        "funnel_diagnostics": {
+            k: v for k, v in funnel_diagnostics.items() if not k.startswith("names_")
+        },
+        "output_files": {
+            path_main.name: str(path_main),
+            path_cropped.name: str(path_cropped),
+        },
+        "file_for_bumpnet": path_cropped.name,
+    }
+    (out_dir / f"build_summary_{args.version}_nobincut.json").write_text(
+        json.dumps(summary, indent=2)
+    )
+
+    readme = README_TEMPLATE.format(
+        cropped=path_cropped.name,
+        uncropped=path_main.name,
+        n_delivered=len(delivered),
+        n_final_states=n_final_states,
+        n_ge25=n_ge25_filled,
+        n_gt25=n_gt25_filled,
+        n_gt30=n_gt30_filled,
+        n_excl_hist=len(excluded_by_hist_min_events),
+        n_excl_post=n_excl_post,
+        n_dm=len(dm_paths),
+        n_sm=len(sm_paths),
+    )
+    (out_dir / "README.txt").write_text(readme)
+    print(f"\nwrote {out_dir / 'README.txt'}")
+    print(json.dumps(
+        {k: v for k, v in summary.items()
+         if k != "per_histogram_min_100_entries_rule_UNCHANGED"},
+        indent=2,
+    ))
+    print("\nAll mandatory build-time checks PASSED (per-histogram TH1F verification "
+          "already run inside write_root_file/write_cropped_root_file via "
+          "verify_written_th1f).")
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--version", required=True, choices=["normal", "top4", "nonjet4", "rare4"])
     p.add_argument("--runs-matched-dir", required=True)
     p.add_argument("--out-dir", required=True)
     p.add_argument("--out-prefix", required=True)
+    p.add_argument(
+        "--no-filled-bin-cut", action="store_true",
+        help="exact-jet-labels task B4: apply NO filled-bin threshold and write ONE "
+             "histogram set (uncropped + cropped) instead of the min31bins/min26bins "
+             "pair. Everything else -- the >=100-events-per-final-state prune, Z cut, "
+             "max-mass cut, peak removal, outlier split and the per-histogram "
+             ">=100-main-entries requirement -- is unchanged. Off by default: without "
+             "this flag the build is exactly what it always was.",
+    )
     args = p.parse_args()
 
     runs_matched_dir = Path(args.runs_matched_dir)
@@ -170,10 +406,12 @@ def main():
     print("\n=== Funnel (real, shared post-processing chain) ===")
     sig_to_bumpnet = build_sig_to_bumpnet(shard_paths)
     print(f"total distinct raw signatures across all {len(shard_paths)} shards: {len(sig_to_bumpnet)}")
+    funnel_diagnostics: dict = {}
     with tempfile.TemporaryDirectory(prefix=f"muon_combined_{args.version}_funnel_") as tmp:
         scratch_shards = copy_shards(shard_paths, Path(tmp))
         stage_b_names, stage_c_survivors, stage_d_survivors, im_str_by_name = run_funnel_at_threshold(
-            scratch_shards, PRIMARY_MIN_EVENTS_PER_FS, sig_to_bumpnet
+            scratch_shards, PRIMARY_MIN_EVENTS_PER_FS, sig_to_bumpnet,
+            diagnostics=funnel_diagnostics,
         )
     print(f"stage_b(>=100 events per final state)={len(stage_b_names)} "
           f"stage_c(post-processed, >=100 main events)={len(stage_c_survivors)} "
@@ -188,6 +426,14 @@ def main():
         all_hists[name] = (values, edges)
         n_nonempty_by_name[name] = int(np.count_nonzero(values))
         n_events_by_name[name] = int(values.sum())
+
+    if args.no_filled_bin_cut:
+        _build_no_bin_cut_delivery(
+            args, out_dir, dm_paths, sm_paths, sig_to_bumpnet, stage_b_names,
+            stage_c_survivors, stage_d_survivors, im_str_by_name, all_hists,
+            n_nonempty_by_name, n_events_by_name, funnel_diagnostics,
+        )
+        return
 
     set_a = {n for n in stage_c_survivors
              if n_nonempty_by_name[n] > BINS_THRESHOLD_A and n_events_by_name[n] >= MIN_BUMPNET_EVENTS}
