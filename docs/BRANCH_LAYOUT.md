@@ -12,7 +12,12 @@ listing all branches and measuring each one** — nothing was carried forward
 from the previous version of this page. Where a number in the previous
 version turned out to be wrong, the correction is called out in bold.
 
-There are **62 branches** in the fork, besides the `master` line itself.
+At the time of this audit the fork held **62 branches in total**, i.e. 61
+besides the `master` line itself. The five tables below account for all 61:
+9 + 5 + 11 + 14 + 22. (A 63rd has since been added:
+`feature/exact-jet-labels-z110-aligned-split`, the exact-light-jet-label
+work, which is deliberately NOT merged into `master` — Matan's technical
+lead verifies it first.)
 
 ## Two words you need for the rest of this page
 
