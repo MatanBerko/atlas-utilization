@@ -42,6 +42,7 @@ import numpy as np  # noqa: E402
 
 from services.calculations import physics_calcs  # noqa: E402
 from services.pipelines.post_processing_pipeline import (  # noqa: E402
+    _aligned_bin_edges,
     _apply_z_peak_cut,
     _dilepton_flavor,
     _find_rightmost_highest_peak,
@@ -111,6 +112,44 @@ def jet_count(label: str) -> int:
     return int(label.split("_")[2][:-1])
 
 
+def _first_empty_split_mass(im_array, edges):
+    """The split BOUNDARY (a bin edge), using the same first-empty-bin rule
+    and the same `<= 1` guard both the old and new implementations apply.
+    Returns None when no split happens."""
+    counts, _ = np.histogram(im_array, bins=edges)
+    if len(counts) == 0:
+        return None
+    first_empty = None
+    for i in range(len(counts)):
+        if counts[i] == 0:
+            first_empty = i
+            break
+    if first_empty is None or first_empty <= 1:
+        return None
+    return float(edges[first_empty])
+
+
+def old_split_mass(im_array, bin_width):
+    """Boundary the PRE-8120fb8 split would have used: a min-to-max linspace
+    grid, whose bins are generally NARROWER than bin_width and whose edges are
+    generally NOT multiples of bin_width."""
+    if len(im_array) == 0:
+        return None
+    lo, hi = float(np.min(im_array)), float(np.max(im_array))
+    nbins = math.ceil((hi - lo) / bin_width)
+    if nbins == 0:
+        return None
+    return _first_empty_split_mass(im_array, np.linspace(lo, hi, nbins + 1))
+
+
+def new_split_mass(im_array, bin_width):
+    """Boundary the POST-8120fb8 split uses: the shared aligned grid
+    (multiples of bin_width from 0), via the real _aligned_bin_edges."""
+    if len(im_array) == 0:
+        return None
+    return _first_empty_split_mass(im_array, _aligned_bin_edges(im_array, bin_width))
+
+
 def old_split_by_first_empty_bin(im_array, bin_width):
     """The pre-8120fb8 split, verbatim, as the reference."""
     if len(im_array) == 0:
@@ -159,11 +198,14 @@ def chain(raw, im_str, z_cutoff, use_new_split):
     if filtered.size == 0:
         return out
     if use_new_split:
-        main, outliers = _split_by_first_empty_bin(filtered, BIN_WIDTH_GEV, LOGGER)
+        main, _outliers = _split_by_first_empty_bin(filtered, BIN_WIDTH_GEV, LOGGER)
+        # The BIN EDGE the real function split at -- not the smallest outlier
+        # VALUE, which is a data point and would never sit on a grid edge.
+        out["split"] = new_split_mass(filtered, BIN_WIDTH_GEV)
     else:
-        main, outliers = old_split_by_first_empty_bin(filtered, BIN_WIDTH_GEV)
+        main, _outliers = old_split_by_first_empty_bin(filtered, BIN_WIDTH_GEV)
+        out["split"] = old_split_mass(filtered, BIN_WIDTH_GEV)
     out["main"] = main
-    out["split"] = float(np.min(outliers)) if len(outliers) else None
     return out
 
 
@@ -299,26 +341,37 @@ def check_b():
               # labels in the NORMAL version, which keeps every object -- those
               # are counted and reported separately just below.
               le3 = [lb for lb in new_counts if jet_count(lb) <= 3]
-              le3_same_name = [lb for lb in le3
-                               if physics_calcs.limit_particles_in_fs(lb, 4) == lb]
-              le3_renamed = [lb for lb in le3 if lb not in set(le3_same_name)]
+              # A label's count can only be unchanged if the OLD rule neither
+              # renamed it NOR merged anything else into it -- i.e. its fold
+              # group is exactly itself. Restricting to <=3 light jets handles
+              # the jet side (nothing folds into 0j..3j), but the OLD rule also
+              # merged 5..9 of a NON-jet type into "4", so a label carrying a 4
+              # for electrons, muons or b-jets can be a merge TARGET too.
+              # For the DELIVERED rare4 version this excludes nothing: Version B
+              # rejects any event with electrons+muons+b-jets > 4, so no non-jet
+              # count can reach 5 and no such merging can occur. Asserted below.
+              le3_pure = [lb for lb in le3
+                          if physics_calcs.limit_particles_in_fs(lb, 4) == lb
+                          and len(contributors.get(lb, [])) == 1]
+              le3_impure = sorted(set(le3) - set(le3_pure))
               le3_bad = [(lb, old_counts.get(lb), new_counts.get(lb))
-                         for lb in le3_same_name
+                         for lb in le3_pure
                          if old_counts.get(lb) != new_counts.get(lb)]
-              check(f"{run}/{which}: all {len(le3_same_name)} final states with <=3 "
-                    f"light jets and no non-jet count above 4 have identical "
-                    f"event counts",
+              check(f"{run}/{which}: all {len(le3_pure)} final states with <=3 light "
+                    f"jets that the OLD rule neither renamed nor merged into have "
+                    f"identical event counts",
                     not le3_bad, f"differing: {le3_bad[:4]}")
               if version == "rare4":
-                  check(f"{run}/{which}: rare4 has NO <=3-light-jet label with a "
-                        f"non-jet count above 4 (guaranteed by the Version B rule)",
-                        not le3_renamed, f"found: {sorted(le3_renamed)[:4]}")
-              elif le3_renamed:
-                  print(f"       note [{version}]: {len(le3_renamed)} <=3-light-jet "
-                        f"label(s) have a non-jet count above 4, so they were "
-                        f"renamed by the old rule, e.g. "
-                        f"{sorted(le3_renamed)[:3]} -- expected for the normal "
-                        f"version, which is not delivered")
+                  check(f"{run}/{which}: EVERY <=3-light-jet rare4 final state is in "
+                        f"that set -- the Version B rule (e+m+b <= 4) makes non-jet "
+                        f"merging impossible, so all {len(le3)} are untouched",
+                        not le3_impure, f"found: {le3_impure[:4]}")
+              elif le3_impure:
+                  print(f"       note [{version}]: {len(le3_impure)} of {len(le3)} "
+                        f"<=3-light-jet label(s) carry a non-jet count of 4 or more, "
+                        f"so the OLD rule renamed them or merged 5-9 of that type "
+                        f"into them, e.g. {le3_impure[:3]} -- expected for the normal "
+                        f"version, which is NOT delivered")
 
               split_labels = {ol: sorted(c) for ol, c in contributors.items() if len(c) > 1}
               if which.endswith("/inclusive"):
