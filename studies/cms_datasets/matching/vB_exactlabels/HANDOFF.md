@@ -1,5 +1,9 @@
 # Handoff note: exact-jet-labels task, full production run
 
+> **STATUS: COMPLETE.** All 209 jobs finished successfully, the full-scale checks
+> passed, the delivery was built and `REPORT.md` is written. This note is kept
+> as the record of how the run was set up and how it would be resumed.
+
 Written immediately before submitting the 209 production jobs, so the work
 can be resumed cleanly in a new session if this one is interrupted. This is
 a snapshot at submission time, not a final result. The final results go in
@@ -70,8 +74,8 @@ re-produced with three changes the group decided:
 
 | Job ID | Dataset | Array indices | Status when this note was written |
 |---|---|---|---|
-| `5184640[].pbs` | DoubleMuon | 0-56 (57 jobs) | SUBMITTED 2026-10-05 ~21:25 local |
-| `5184641[].pbs` | SingleMuon | 0-151 (152 jobs) | SUBMITTED 2026-10-05 ~21:25 local |
+| `5184640[].pbs` | DoubleMuon | 0-56 (57 jobs) | FINISHED, 57/57 succeeded |
+| `5184641[].pbs` | SingleMuon | 0-151 (152 jobs) | FINISHED, 152/152 succeeded |
 
 Both were submitted to queue `N`, which routes to `shortE`. Confirmed
 before submitting that both per-job output directories were still

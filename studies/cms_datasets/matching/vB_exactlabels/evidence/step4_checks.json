@@ -1,0 +1,51 @@
+{
+  "failures": [],
+  "results": {
+    "rare4_rejected_total": 5738,
+    "hidden_cases_total": 0,
+    "n_final_states_1oct": 106,
+    "n_final_states_new": 163,
+    "n_final_states_created": 57,
+    "n_final_states_ge5_lightjets": 71,
+    "n_final_states_ge5_lightjets_with_ge100_events": 23,
+    "n_final_states_ge5_lightjets_dropped_by_100_event_rule": 48,
+    "n_final_states_ge10_lightjets": 14,
+    "final_states_ge10_lightjets": [
+      "0e_1m_10j_0g_0t_0b",
+      "0e_1m_10j_0g_0t_1b",
+      "0e_1m_10j_0g_0t_2b",
+      "0e_1m_10j_0g_0t_3b",
+      "0e_1m_11j_0g_0t_0b",
+      "0e_1m_11j_0g_0t_1b",
+      "0e_1m_11j_0g_0t_2b",
+      "0e_1m_12j_0g_0t_0b",
+      "0e_1m_12j_0g_0t_1b",
+      "0e_1m_12j_0g_0t_2b",
+      "0e_1m_12j_0g_0t_3b",
+      "0e_1m_13j_0g_0t_1b",
+      "0e_1m_13j_0g_0t_2b",
+      "0e_2m_10j_0g_0t_0b"
+    ],
+    "total_delivered_population_events": 163247052,
+    "events_by_light_jet_count": {
+      "0": 123347522,
+      "1": 30432437,
+      "2": 7125112,
+      "3": 1748610,
+      "4": 443155,
+      "5": 113234,
+      "6": 28144,
+      "7": 6758,
+      "8": 1626,
+      "9": 358,
+      "10": 78,
+      "11": 12,
+      "12": 4,
+      "13": 2
+    },
+    "events_with_ge5_lightjets": 150216,
+    "events_with_ge10_lightjets": 96,
+    "pooled_new_final_state_event_counts_SIZE_ONLY": "163 entries; full dump kept on the cluster in step4_checks.json",
+    "pooled_1oct_final_state_event_counts_SIZE_ONLY": "106 entries; full dump kept on the cluster in step4_checks.json"
+  }
+}
