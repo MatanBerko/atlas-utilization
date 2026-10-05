@@ -178,8 +178,8 @@ def plot_2(old, new, out_dir):
     lo, hi = nonempty_range(nv, ne)
     ax.set_xlim(lo - 50, hi + 50)
     finish(fig, ax, f"Plot 2 - a histogram that did not exist before\n"
-                    f"combination {combo}, final state {fs} "
-                    f"({j} light jets, previously merged into 4j)",
+                    f"combination {combo}, final state {fs}\n"
+                    f"({j} light jets -- previously merged into the 4j histograms)",
            out_dir / "plot_2_new_high_jet.png")
     return {"plot": 2, "name": name, "combination": combo, "final_state": fs,
             "light_jets": j, "new_events": int(nv.sum()),
