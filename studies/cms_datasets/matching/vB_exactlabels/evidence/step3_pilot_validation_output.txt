@@ -1,0 +1,186 @@
+==========================================================================
+exact-jet-labels task, Step 3: pilot validation
+  NEW: /storage/agrp/berkom/atlas-utilization/output/cms_datasets/vB_exactlabels_pilot
+  OLD (read-only): /storage/agrp/berkom/atlas-utilization/output/cms_datasets/rare4_pilot
+==========================================================================
+[PASS] DoubleMuon_30522_0_matched: new run was produced by the pinned commit 2666684
+[PASS] DoubleMuon_30555_0_matched: new run was produced by the pinned commit 2666684
+[PASS] SingleMuon_30530_0_matched: new run was produced by the pinned commit 2666684
+[PASS] SingleMuon_30563_0_matched: new run was produced by the pinned commit 2666684
+
+==========================================================================
+(a) Selection unchanged: n_after_gate, n_exclusive, rare4 rejected
+==========================================================================
+[PASS] DoubleMuon_30522_0_matched: n_read / golden / trigger / gate / exclusive / rare4-rejected identical
+       final-state groups (normal): old=49 new=49
+       final-state groups (rare4):  old=38 new=38
+[PASS] DoubleMuon_30555_0_matched: n_read / golden / trigger / gate / exclusive / rare4-rejected identical
+       final-state groups (normal): old=41 new=41
+       final-state groups (rare4):  old=37 new=37
+[PASS] SingleMuon_30530_0_matched: n_read / golden / trigger / gate / exclusive / rare4-rejected identical
+       final-state groups (normal): old=109 new=109
+       final-state groups (rare4):  old=94 new=94
+[PASS] SingleMuon_30563_0_matched: n_read / golden / trigger / gate / exclusive / rare4-rejected identical
+       final-state groups (normal): old=34 new=34
+       final-state groups (rare4):  old=34 new=34
+
+==========================================================================
+(b) Label redistribution only
+==========================================================================
+[PASS] DoubleMuon_30522_0_matched/rare4/inclusive: total events over all labels identical
+[PASS] DoubleMuon_30522_0_matched/rare4/inclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] DoubleMuon_30522_0_matched/rare4/inclusive: every OLD label's count == sum of the NEW labels folding into it (32 labels)
+[PASS] DoubleMuon_30522_0_matched/rare4/inclusive: all 27 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+[PASS] DoubleMuon_30522_0_matched/rare4/inclusive: EVERY <=3-light-jet rare4 final state is in that set -- the Version B rule (e+m+b <= 4) makes non-jet merging impossible, so all 27 are untouched
+       DoubleMuon_30522_0_matched [rare4]: 32 old labels -> 38 new labels; 2 old labels split into several
+         e.g. 0e_2m_4j_0g_0t_0b (469 events) -> 0e_2m_4j_0g_0t_0b:361, 0e_2m_5j_0g_0t_0b:88, 0e_2m_6j_0g_0t_0b:16, 0e_2m_7j_0g_0t_0b:2, 0e_2m_8j_0g_0t_0b:2
+         e.g. 0e_2m_4j_0g_0t_1b (57 events) -> 0e_2m_4j_0g_0t_1b:45, 0e_2m_5j_0g_0t_1b:11, 0e_2m_6j_0g_0t_1b:1
+[PASS] DoubleMuon_30522_0_matched/rare4/exclusive: total events over all labels identical
+[PASS] DoubleMuon_30522_0_matched/rare4/exclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] DoubleMuon_30522_0_matched/rare4/exclusive: every OLD label's count == sum of the NEW labels folding into it (32 labels)
+[PASS] DoubleMuon_30522_0_matched/rare4/exclusive: all 27 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+[PASS] DoubleMuon_30522_0_matched/rare4/exclusive: EVERY <=3-light-jet rare4 final state is in that set -- the Version B rule (e+m+b <= 4) makes non-jet merging impossible, so all 27 are untouched
+[PASS] DoubleMuon_30522_0_matched/normal/inclusive: total events over all labels identical
+[PASS] DoubleMuon_30522_0_matched/normal/inclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] DoubleMuon_30522_0_matched/normal/inclusive: every OLD label's count == sum of the NEW labels folding into it (43 labels)
+[PASS] DoubleMuon_30522_0_matched/normal/inclusive: all 36 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+       DoubleMuon_30522_0_matched [normal]: 43 old labels -> 49 new labels; 2 old labels split into several
+         e.g. 0e_2m_4j_0g_0t_0b (469 events) -> 0e_2m_4j_0g_0t_0b:361, 0e_2m_5j_0g_0t_0b:88, 0e_2m_6j_0g_0t_0b:16, 0e_2m_7j_0g_0t_0b:2, 0e_2m_8j_0g_0t_0b:2
+         e.g. 0e_2m_4j_0g_0t_1b (57 events) -> 0e_2m_4j_0g_0t_1b:45, 0e_2m_5j_0g_0t_1b:11, 0e_2m_6j_0g_0t_1b:1
+[PASS] DoubleMuon_30522_0_matched/normal/exclusive: total events over all labels identical
+[PASS] DoubleMuon_30522_0_matched/normal/exclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] DoubleMuon_30522_0_matched/normal/exclusive: every OLD label's count == sum of the NEW labels folding into it (43 labels)
+[PASS] DoubleMuon_30522_0_matched/normal/exclusive: all 36 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+[PASS] DoubleMuon_30555_0_matched/rare4/inclusive: total events over all labels identical
+[PASS] DoubleMuon_30555_0_matched/rare4/inclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] DoubleMuon_30555_0_matched/rare4/inclusive: every OLD label's count == sum of the NEW labels folding into it (28 labels)
+[PASS] DoubleMuon_30555_0_matched/rare4/inclusive: all 23 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+[PASS] DoubleMuon_30555_0_matched/rare4/inclusive: EVERY <=3-light-jet rare4 final state is in that set -- the Version B rule (e+m+b <= 4) makes non-jet merging impossible, so all 23 are untouched
+       DoubleMuon_30555_0_matched [rare4]: 28 old labels -> 37 new labels; 3 old labels split into several
+         e.g. 0e_2m_4j_0g_0t_0b (427 events) -> 0e_2m_4j_0g_0t_0b:324, 0e_2m_5j_0g_0t_0b:77, 0e_2m_6j_0g_0t_0b:18, 0e_2m_7j_0g_0t_0b:5, 0e_2m_8j_0g_0t_0b:3
+         e.g. 0e_2m_4j_0g_0t_1b (64 events) -> 0e_2m_4j_0g_0t_1b:47, 0e_2m_5j_0g_0t_1b:13, 0e_2m_6j_0g_0t_1b:2, 0e_2m_7j_0g_0t_1b:1, 0e_2m_8j_0g_0t_1b:1
+         e.g. 0e_2m_4j_0g_0t_2b (11 events) -> 0e_2m_4j_0g_0t_2b:8, 0e_2m_5j_0g_0t_2b:3
+[PASS] DoubleMuon_30555_0_matched/rare4/exclusive: total events over all labels identical
+[PASS] DoubleMuon_30555_0_matched/rare4/exclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] DoubleMuon_30555_0_matched/rare4/exclusive: every OLD label's count == sum of the NEW labels folding into it (28 labels)
+[PASS] DoubleMuon_30555_0_matched/rare4/exclusive: all 23 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+[PASS] DoubleMuon_30555_0_matched/rare4/exclusive: EVERY <=3-light-jet rare4 final state is in that set -- the Version B rule (e+m+b <= 4) makes non-jet merging impossible, so all 23 are untouched
+[PASS] DoubleMuon_30555_0_matched/normal/inclusive: total events over all labels identical
+[PASS] DoubleMuon_30555_0_matched/normal/inclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] DoubleMuon_30555_0_matched/normal/inclusive: every OLD label's count == sum of the NEW labels folding into it (32 labels)
+[PASS] DoubleMuon_30555_0_matched/normal/inclusive: all 27 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+       DoubleMuon_30555_0_matched [normal]: 32 old labels -> 41 new labels; 3 old labels split into several
+         e.g. 0e_2m_4j_0g_0t_0b (427 events) -> 0e_2m_4j_0g_0t_0b:324, 0e_2m_5j_0g_0t_0b:77, 0e_2m_6j_0g_0t_0b:18, 0e_2m_7j_0g_0t_0b:5, 0e_2m_8j_0g_0t_0b:3
+         e.g. 0e_2m_4j_0g_0t_1b (64 events) -> 0e_2m_4j_0g_0t_1b:47, 0e_2m_5j_0g_0t_1b:13, 0e_2m_6j_0g_0t_1b:2, 0e_2m_7j_0g_0t_1b:1, 0e_2m_8j_0g_0t_1b:1
+         e.g. 0e_2m_4j_0g_0t_2b (11 events) -> 0e_2m_4j_0g_0t_2b:8, 0e_2m_5j_0g_0t_2b:3
+[PASS] DoubleMuon_30555_0_matched/normal/exclusive: total events over all labels identical
+[PASS] DoubleMuon_30555_0_matched/normal/exclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] DoubleMuon_30555_0_matched/normal/exclusive: every OLD label's count == sum of the NEW labels folding into it (32 labels)
+[PASS] DoubleMuon_30555_0_matched/normal/exclusive: all 27 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+[PASS] SingleMuon_30530_0_matched/rare4/inclusive: total events over all labels identical
+[PASS] SingleMuon_30530_0_matched/rare4/inclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] SingleMuon_30530_0_matched/rare4/inclusive: every OLD label's count == sum of the NEW labels folding into it (69 labels)
+[PASS] SingleMuon_30530_0_matched/rare4/inclusive: all 54 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+[PASS] SingleMuon_30530_0_matched/rare4/inclusive: EVERY <=3-light-jet rare4 final state is in that set -- the Version B rule (e+m+b <= 4) makes non-jet merging impossible, so all 54 are untouched
+       SingleMuon_30530_0_matched [rare4]: 69 old labels -> 94 new labels; 8 old labels split into several
+         e.g. 0e_1m_4j_0g_0t_0b (3690 events) -> 0e_1m_4j_0g_0t_0b:2831, 0e_1m_5j_0g_0t_0b:657, 0e_1m_6j_0g_0t_0b:163, 0e_1m_7j_0g_0t_0b:33, 0e_1m_8j_0g_0t_0b:5, 0e_1m_9j_0g_0t_0b:1
+         e.g. 0e_1m_4j_0g_0t_1b (1113 events) -> 0e_1m_4j_0g_0t_1b:765, 0e_1m_5j_0g_0t_1b:252, 0e_1m_6j_0g_0t_1b:73, 0e_1m_7j_0g_0t_1b:16, 0e_1m_8j_0g_0t_1b:7
+         e.g. 0e_1m_4j_0g_0t_2b (347 events) -> 0e_1m_4j_0g_0t_2b:244, 0e_1m_5j_0g_0t_2b:73, 0e_1m_6j_0g_0t_2b:25, 0e_1m_7j_0g_0t_2b:2, 0e_1m_8j_0g_0t_2b:3
+[PASS] SingleMuon_30530_0_matched/rare4/exclusive: total events over all labels identical
+[PASS] SingleMuon_30530_0_matched/rare4/exclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] SingleMuon_30530_0_matched/rare4/exclusive: every OLD label's count == sum of the NEW labels folding into it (69 labels)
+[PASS] SingleMuon_30530_0_matched/rare4/exclusive: all 54 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+[PASS] SingleMuon_30530_0_matched/rare4/exclusive: EVERY <=3-light-jet rare4 final state is in that set -- the Version B rule (e+m+b <= 4) makes non-jet merging impossible, so all 54 are untouched
+[PASS] SingleMuon_30530_0_matched/normal/inclusive: total events over all labels identical
+[PASS] SingleMuon_30530_0_matched/normal/inclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] SingleMuon_30530_0_matched/normal/inclusive: every OLD label's count == sum of the NEW labels folding into it (82 labels)
+[PASS] SingleMuon_30530_0_matched/normal/inclusive: all 65 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+       note [normal]: 2 of 67 <=3-light-jet label(s) carry a non-jet count of 4 or more, so the OLD rule renamed them or merged 5-9 of that type into them, e.g. ['0e_1m_1j_0g_0t_4b', '0e_1m_1j_0g_0t_5b'] -- expected for the normal version, which is NOT delivered
+       SingleMuon_30530_0_matched [normal]: 82 old labels -> 109 new labels; 10 old labels split into several
+         e.g. 0e_1m_1j_0g_0t_4b (6 events) -> 0e_1m_1j_0g_0t_4b:5, 0e_1m_1j_0g_0t_5b:1
+         e.g. 0e_1m_4j_0g_0t_0b (3690 events) -> 0e_1m_4j_0g_0t_0b:2831, 0e_1m_5j_0g_0t_0b:657, 0e_1m_6j_0g_0t_0b:163, 0e_1m_7j_0g_0t_0b:33, 0e_1m_8j_0g_0t_0b:5, 0e_1m_9j_0g_0t_0b:1
+         e.g. 0e_1m_4j_0g_0t_1b (1113 events) -> 0e_1m_4j_0g_0t_1b:765, 0e_1m_5j_0g_0t_1b:252, 0e_1m_6j_0g_0t_1b:73, 0e_1m_7j_0g_0t_1b:16, 0e_1m_8j_0g_0t_1b:7
+[PASS] SingleMuon_30530_0_matched/normal/exclusive: total events over all labels identical
+[PASS] SingleMuon_30530_0_matched/normal/exclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] SingleMuon_30530_0_matched/normal/exclusive: every OLD label's count == sum of the NEW labels folding into it (82 labels)
+[PASS] SingleMuon_30530_0_matched/normal/exclusive: all 65 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+       note [normal]: 2 of 67 <=3-light-jet label(s) carry a non-jet count of 4 or more, so the OLD rule renamed them or merged 5-9 of that type into them, e.g. ['0e_1m_1j_0g_0t_4b', '0e_1m_1j_0g_0t_5b'] -- expected for the normal version, which is NOT delivered
+[PASS] SingleMuon_30563_0_matched/rare4/inclusive: total events over all labels identical
+[PASS] SingleMuon_30563_0_matched/rare4/inclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] SingleMuon_30563_0_matched/rare4/inclusive: every OLD label's count == sum of the NEW labels folding into it (28 labels)
+[PASS] SingleMuon_30563_0_matched/rare4/inclusive: all 24 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+[PASS] SingleMuon_30563_0_matched/rare4/inclusive: EVERY <=3-light-jet rare4 final state is in that set -- the Version B rule (e+m+b <= 4) makes non-jet merging impossible, so all 24 are untouched
+       SingleMuon_30563_0_matched [rare4]: 28 old labels -> 34 new labels; 4 old labels split into several
+         e.g. 0e_1m_4j_0g_0t_0b (18 events) -> 0e_1m_4j_0g_0t_0b:7, 0e_1m_5j_0g_0t_0b:8, 0e_1m_6j_0g_0t_0b:2, 0e_1m_8j_0g_0t_0b:1
+         e.g. 0e_1m_4j_0g_0t_1b (3 events) -> 0e_1m_4j_0g_0t_1b:1, 0e_1m_5j_0g_0t_1b:2
+         e.g. 0e_1m_4j_0g_0t_2b (6 events) -> 0e_1m_4j_0g_0t_2b:5, 0e_1m_6j_0g_0t_2b:1
+[PASS] SingleMuon_30563_0_matched/rare4/exclusive: total events over all labels identical
+[PASS] SingleMuon_30563_0_matched/rare4/exclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] SingleMuon_30563_0_matched/rare4/exclusive: every OLD label's count == sum of the NEW labels folding into it (28 labels)
+[PASS] SingleMuon_30563_0_matched/rare4/exclusive: all 24 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+[PASS] SingleMuon_30563_0_matched/rare4/exclusive: EVERY <=3-light-jet rare4 final state is in that set -- the Version B rule (e+m+b <= 4) makes non-jet merging impossible, so all 24 are untouched
+[PASS] SingleMuon_30563_0_matched/normal/inclusive: total events over all labels identical
+[PASS] SingleMuon_30563_0_matched/normal/inclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] SingleMuon_30563_0_matched/normal/inclusive: every OLD label's count == sum of the NEW labels folding into it (28 labels)
+[PASS] SingleMuon_30563_0_matched/normal/inclusive: all 24 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+       SingleMuon_30563_0_matched [normal]: 28 old labels -> 34 new labels; 4 old labels split into several
+         e.g. 0e_1m_4j_0g_0t_0b (18 events) -> 0e_1m_4j_0g_0t_0b:7, 0e_1m_5j_0g_0t_0b:8, 0e_1m_6j_0g_0t_0b:2, 0e_1m_8j_0g_0t_0b:1
+         e.g. 0e_1m_4j_0g_0t_1b (3 events) -> 0e_1m_4j_0g_0t_1b:1, 0e_1m_5j_0g_0t_1b:2
+         e.g. 0e_1m_4j_0g_0t_2b (6 events) -> 0e_1m_4j_0g_0t_2b:5, 0e_1m_6j_0g_0t_2b:1
+[PASS] SingleMuon_30563_0_matched/normal/exclusive: total events over all labels identical
+[PASS] SingleMuon_30563_0_matched/normal/exclusive: folded NEW labels reproduce the OLD label set exactly
+[PASS] SingleMuon_30563_0_matched/normal/exclusive: every OLD label's count == sum of the NEW labels folding into it (28 labels)
+[PASS] SingleMuon_30563_0_matched/normal/exclusive: all 24 final states with <=3 light jets that the OLD rule neither renamed nor merged into have identical event counts
+
+==========================================================================
+(c) RAW mass arrays identical for final states with <=3 light jets
+==========================================================================
+[PASS] DoubleMuon_30522_0_matched/inclusive: same <=3-light-jet signature set (516 signatures)
+[PASS] DoubleMuon_30522_0_matched/inclusive: all 516 <=3-light-jet raw arrays identical
+[PASS] DoubleMuon_30522_0_matched/exclusive: same <=3-light-jet signature set (516 signatures)
+[PASS] DoubleMuon_30522_0_matched/exclusive: all 516 <=3-light-jet raw arrays identical
+[PASS] DoubleMuon_30555_0_matched/inclusive: same <=3-light-jet signature set (402 signatures)
+[PASS] DoubleMuon_30555_0_matched/inclusive: all 402 <=3-light-jet raw arrays identical
+[PASS] DoubleMuon_30555_0_matched/exclusive: same <=3-light-jet signature set (402 signatures)
+[PASS] DoubleMuon_30555_0_matched/exclusive: all 402 <=3-light-jet raw arrays identical
+[PASS] SingleMuon_30530_0_matched/inclusive: same <=3-light-jet signature set (870 signatures)
+[PASS] SingleMuon_30530_0_matched/inclusive: all 870 <=3-light-jet raw arrays identical
+[PASS] SingleMuon_30530_0_matched/exclusive: same <=3-light-jet signature set (697 signatures)
+[PASS] SingleMuon_30530_0_matched/exclusive: all 697 <=3-light-jet raw arrays identical
+[PASS] SingleMuon_30563_0_matched/inclusive: same <=3-light-jet signature set (225 signatures)
+[PASS] SingleMuon_30563_0_matched/inclusive: all 225 <=3-light-jet raw arrays identical
+[PASS] SingleMuon_30563_0_matched/exclusive: same <=3-light-jet signature set (209 signatures)
+[PASS] SingleMuon_30563_0_matched/exclusive: all 209 <=3-light-jet raw arrays identical
+
+==========================================================================
+(d) Post-processing differences only where expected
+==========================================================================
+       1031 pooled <=3-light-jet (final state, combination) channels
+       unchanged by the post-processing change:       826
+       changed, Z cut boundary only:                  0
+       changed, peak boundary moved (Z cut knock-on): 2
+       changed, outlier-split boundary moved:         203
+       changed for an UNEXPLAINED reason:             0
+[PASS] each side's histogram is EXACTLY the raw array cut at its own (Z floor, peak, split) boundaries, so no difference can come from anything but a boundary move
+[PASS] every post-processing difference is a move of the Z cut, the peak boundary or the outlier split -- nothing else
+[PASS] every moved outlier-split boundary lands on a 10 GeV grid edge
+[PASS] only same-flavour dilepton channels changed via the Z cut or the peak boundary (non-dilepton channels are untouched by the Z cut)
+[PASS] every value newly admitted by the Z cut or peak move sits at or above 110 GeV
+[PASS] at least one concrete Z-cut example exists
+[PASS] at least one concrete moved-split example exists
+
+       EXAMPLE 1 -- Z cut 115 -> 110 (same-flavour dilepton):
+         final state 1e_2m_2j_0g_0t_1b, combination m0m1b0
+         Z floor 115.0 -> 110.0 GeV; peak None -> 110.0 GeV
+         1 values in [112.52, 112.52] GeV are now KEPT, 0 removed
+         histogram entries 0 -> 1
+
+       EXAMPLE 2 -- outlier split boundary moved onto a 10 GeV edge:
+         final state 0e_2m_0j_0g_0t_0b, combination m0m1
+         split mass 548.5631829660836 -> 550.0 GeV (None = no split, everything kept)
+         histogram entries 6,132 -> 9,575
+
+wrote /storage/agrp/berkom/atlas-utilization/output/cms_datasets/vB_exactlabels_pilot/step3_validation.json
+
+==========================================================================
+ALL STEP 3 CHECKS PASSED -- production may be submitted
