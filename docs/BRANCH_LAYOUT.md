@@ -29,7 +29,12 @@ lead verifies it first.)
 
 ## `master` — the main line, and where new work should start
 
-`master` now points at **`da140cc`** (1 Oct 2026), the finished combined
+`master` was moved twice on 5 Oct 2026. The two moves are described in order
+below; after the second one it points at the merge commit `49bcb2f`.
+
+### First move on 5 Oct 2026: the combined muon delivery
+
+This first took `master` to **`da140cc`** (1 Oct 2026), the finished combined
 DoubleMuon + SingleMuon delivery for BumpNet.
 
 On 2026-10-05 the delivery line of work (`deliver/all-datasets-bumpnet`)
@@ -41,7 +46,27 @@ hand. An undo point was saved first as
 `backup/master-pre-deliver-ff-2026-10-05` (pointing at `4f50b99`, what
 `master` was beforehand).
 
-**New CMS data work should start from `master`.**
+### Second merge on 5 Oct 2026: the exact light-jet labels
+
+Later the same day, `feature/exact-jet-labels-z110-aligned-split` was also
+merged into `master`. That branch carries four agreed changes: each
+light-jet count now gets its own final state (5j, 6j, 7j … instead of
+everything above 4 being filed under 4j); the Z-peak cut moves from 115 GeV
+to 110 GeV so it lands on a bin edge; the high-mass outlier split is aligned
+to the same fixed 10 GeV grid; and the delivery no longer applies a
+filled-bin cut, because that one is applied on the BumpNet side during
+smoothing. It was validated on the full 209-file production before merging —
+the evidence is in
+[`studies/cms_datasets/matching/vB_exactlabels/REPORT.md`](../studies/cms_datasets/matching/vB_exactlabels/REPORT.md).
+This was a real merge rather than a fast-forward, with an undo point saved
+first as `backup/master-pre-exactlabels-merge-2026-10-05` (pointing at
+`75e4f37`, what `master` was beforehand).
+
+**All new CMS production should start from `master`, including the electron
+datasets** (DoubleEG, MuonEG, SingleElectron). The preparation for those
+still sits unmerged on `prep/electron-datasets`, listed in section (c)
+below; it should be brought in together with the electron production run
+itself, on top of this `master`.
 
 ### How far `master` now sits from the original upstream project
 
