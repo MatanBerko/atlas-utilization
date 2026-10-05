@@ -1,0 +1,70 @@
+{
+  "old_root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/muon_combined_rare4/muon_combined_matched_rare4_bumpnet_min26bins.root",
+  "new_root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/muon_combined_vB_exactlabels_20261005/muon_combined_matched_vB_exactlabels_bumpnet.root",
+  "n_old_histograms": 960,
+  "n_new_histograms": 1329,
+  "n_shared": 952,
+  "n_only_old": 8,
+  "n_only_new": 377,
+  "plot_1": {
+    "plot": 1,
+    "name": "ROI_mass_m0j0j1_cat_0ex_1mx_4jx_0gx_0tx_0bx_width_10",
+    "combination": "m0j0j1",
+    "final_state": "0ex_1mx_4jx_0gx_0tx_0bx",
+    "old_events": 326431,
+    "new_events": 243097,
+    "events_moved_out_to_higher_jet_labels": 83334
+  },
+  "plot_2": {
+    "plot": 2,
+    "name": "ROI_mass_j0j1j2j3_cat_0ex_1mx_5jx_0gx_0tx_0bx_width_10",
+    "combination": "j0j1j2j3",
+    "final_state": "0ex_1mx_5jx_0gx_0tx_0bx",
+    "light_jets": 5,
+    "new_events": 58532,
+    "n_new_high_jet_histograms": 330
+  },
+  "plot_3": {
+    "plot": 3,
+    "name": "ROI_mass_m0m1_cat_0ex_2mx_1jx_0gx_0tx_0bx_width_10",
+    "combination": "m0m1",
+    "final_state": "0ex_2mx_1jx_0gx_0tx_0bx",
+    "old_events": 31759,
+    "new_events": 45686,
+    "events_recovered_in_110_115_window": 13927
+  },
+  "plot_4": {
+    "plot": 4,
+    "name": "ROI_mass_j0b0_cat_0ex_1mx_1jx_0gx_0tx_1bx_width_10",
+    "combination": "j0b0",
+    "final_state": "0ex_1mx_1jx_0gx_0tx_1bx",
+    "old_last_bin_high_edge_gev": 2000.0,
+    "new_last_bin_high_edge_gev": 1600.0,
+    "old_events": 739188,
+    "new_events": 739022,
+    "n_candidates_found": 288
+  },
+  "plot_5": {
+    "plot": 5,
+    "n_jobs": 209,
+    "total_events": 163247052,
+    "events_by_light_jet_count": {
+      "0": 123347522,
+      "1": 30432437,
+      "2": 7125112,
+      "3": 1748610,
+      "4": 443155,
+      "5": 113234,
+      "6": 28144,
+      "7": 6758,
+      "8": 1626,
+      "9": 358,
+      "10": 78,
+      "11": 12,
+      "12": 4,
+      "13": 2
+    },
+    "events_with_ge5_light_jets": 150216,
+    "events_with_ge10_light_jets": 96
+  }
+}
