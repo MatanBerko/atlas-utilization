@@ -70,8 +70,12 @@ re-produced with three changes the group decided:
 
 | Job ID | Dataset | Array indices | Status when this note was written |
 |---|---|---|---|
-| _(pending -- filled in right after submission)_ | DoubleMuon | 0-56 | NOT YET SUBMITTED |
-| _(pending -- filled in right after submission)_ | SingleMuon | 0-151 | NOT YET SUBMITTED |
+| `5184640[].pbs` | DoubleMuon | 0-56 (57 jobs) | SUBMITTED 2026-10-05 ~21:25 local |
+| `5184641[].pbs` | SingleMuon | 0-151 (152 jobs) | SUBMITTED 2026-10-05 ~21:25 local |
+
+Both were submitted to queue `N`, which routes to `shortE`. Confirmed
+before submitting that both per-job output directories were still
+completely empty.
 
 The exact submission commands used (run from `wipp-home`, which lands on
 `wipp-an1`):
@@ -98,7 +102,7 @@ file, well inside that walltime; the 1 Oct run of the same files took
 ## How to check job status (read-only, safe any time)
 
 ```
-ssh wipp-home '/opt/pbs/bin/qstat -t "5184787[]" "5184788[]"'
+ssh wipp-home '/opt/pbs/bin/qstat -t "5184640[]" "5184641[]"'
 ```
 Note the `[]` — without it PBS reports "Unknown Job Id" for an array job.
 A status of `R` is running, `Q` queued, `X` finished (exited). When no
