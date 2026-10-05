@@ -70,8 +70,8 @@ re-produced with three changes the group decided:
 
 | Job ID | Dataset | Array indices | Status when this note was written |
 |---|---|---|---|
-| _(pending — filled in right after submission)_ | DoubleMuon | 0-56 | NOT YET SUBMITTED |
-| _(pending — filled in right after submission)_ | SingleMuon | 0-151 | NOT YET SUBMITTED |
+| _(pending -- filled in right after submission)_ | DoubleMuon | 0-56 | NOT YET SUBMITTED |
+| _(pending -- filled in right after submission)_ | SingleMuon | 0-151 | NOT YET SUBMITTED |
 
 The exact submission commands used (run from `wipp-home`, which lands on
 `wipp-an1`):
