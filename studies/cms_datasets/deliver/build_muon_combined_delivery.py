@@ -184,14 +184,13 @@ empty, which is what BumpNet requires.
     {uncropped}
 
 is the same {n_delivered} histograms UNCROPPED, on the full fixed
-0-10000 GeV grid. It is provided for cross-checking and plotting only.
-Do not feed it to BumpNet.
+0-10000 GeV grid. It is for cross-checking and plotting only; do not feed
+it to BumpNet.
 
 WHAT IS IN IT
 -------------
-{n_delivered} histograms, over {n_final_states} distinct final-state
-categories. Binning is the unchanged fixed grid: 0-10000 GeV in 10 GeV
-bins.
+{n_delivered} histograms over {n_final_states} distinct final-state
+categories, on the unchanged fixed grid: 0-10000 GeV in 10 GeV bins.
 
 THREE THINGS ARE DIFFERENT FROM THE 1 OCT DELIVERY
 --------------------------------------------------
@@ -215,7 +214,7 @@ THREE THINGS ARE DIFFERENT FROM THE 1 OCT DELIVERY
    not two.
 
    For information only, of the {n_delivered} delivered histograms:
-     - {n_ge25} have 25 or more filled bins (what BumpNet own cut keeps)
+     - {n_ge25} have 25 or more filled bins (what BumpNet's own cut keeps)
      - {n_gt25} have more than 25 filled bins (the old min26bins rule)
      - {n_gt30} have more than 30 filled bins (the old min31bins rule)
 
@@ -230,9 +229,9 @@ max-mass cut, and peak removal.
 STILL OPEN, NOT DECIDED HERE
 ----------------------------
 - The per-histogram ">=100 entries" requirement is still applied,
-  unchanged. It excluded {n_excl_hist} histogram(s) at the histogram step
-  and {n_excl_post} at the post-processing step. Whether it should stay is
-  a question for Maryna.
+  unchanged. It excluded {n_excl_post} histogram(s) at the post-processing
+  step (fewer than 100 entries survived the chain) and {n_excl_hist} at the
+  histogram-filling step. Whether it should stay is a question for Maryna.
 - The final-state NAME FORMAT (six fields e/m/j/g/t/b) is unchanged and is
   also an open question with Maryna.
 
