@@ -216,58 +216,68 @@ def check_b():
     summary = []
     for run in RUNS:
         o, n = meta(OLD_BASE, run), meta(NEW_BASE, run)
-        for which in ("inclusive", "exclusive"):
-            key = f"final_state_label_event_counts_{which}"
-            old_counts = o[key]
-            new_counts = n[key]
+        # BOTH the delivered Version B (rare4) label counts AND the normal
+        # version's, since _group_by_final_state_with_mask is shared by every
+        # version the driver writes. rare4 is the one that gets delivered;
+        # normal is checked too so nothing silently changed there either.
+        sources = [
+            ("rare4", lambda md, w: md["rare4_diagnostics"][
+                f"final_state_label_event_counts_{w}"]),
+            ("normal", lambda md, w: md[f"final_state_label_event_counts_{w}"]),
+        ]
+        for version, get in sources:
+            for which_raw in ("inclusive", "exclusive"):
+              old_counts = get(o, which_raw)
+              new_counts = get(n, which_raw)
+              which = f"{version}/{which_raw}"
 
-            check(f"{run}/{which}: total events over all labels identical",
-                  sum(old_counts.values()) == sum(new_counts.values()),
-                  f"old={sum(old_counts.values())} new={sum(new_counts.values())}")
+              check(f"{run}/{which}: total events over all labels identical",
+                    sum(old_counts.values()) == sum(new_counts.values()),
+                    f"old={sum(old_counts.values())} new={sum(new_counts.values())}")
 
-            # Fold each NEW label through the OLD capping rule: that is, by
-            # construction, the OLD label it used to be filed under.
-            folded = defaultdict(int)
-            contributors = defaultdict(list)
-            for label, cnt in new_counts.items():
-                old_label = physics_calcs.limit_particles_in_fs(label, 4)
-                folded[old_label] += cnt
-                contributors[old_label].append(label)
+              # Fold each NEW label through the OLD capping rule: that is, by
+              # construction, the OLD label it used to be filed under.
+              folded = defaultdict(int)
+              contributors = defaultdict(list)
+              for label, cnt in new_counts.items():
+                  old_label = physics_calcs.limit_particles_in_fs(label, 4)
+                  folded[old_label] += cnt
+                  contributors[old_label].append(label)
 
-            check(f"{run}/{which}: folded NEW labels reproduce the OLD label set exactly",
-                  set(folded) == set(old_counts),
-                  f"only_folded={sorted(set(folded)-set(old_counts))[:4]} "
-                  f"only_old={sorted(set(old_counts)-set(folded))[:4]}")
+              check(f"{run}/{which}: folded NEW labels reproduce the OLD label set exactly",
+                    set(folded) == set(old_counts),
+                    f"only_folded={sorted(set(folded)-set(old_counts))[:4]} "
+                    f"only_old={sorted(set(old_counts)-set(folded))[:4]}")
 
-            mismatches = [(lb, old_counts[lb], folded.get(lb, 0))
-                          for lb in old_counts if old_counts[lb] != folded.get(lb, 0)]
-            check(f"{run}/{which}: every OLD label's count == sum of the NEW labels "
-                  f"folding into it ({len(old_counts)} labels)",
-                  not mismatches, f"mismatches: {mismatches[:4]}")
+              mismatches = [(lb, old_counts[lb], folded.get(lb, 0))
+                            for lb in old_counts if old_counts[lb] != folded.get(lb, 0)]
+              check(f"{run}/{which}: every OLD label's count == sum of the NEW labels "
+                    f"folding into it ({len(old_counts)} labels)",
+                    not mismatches, f"mismatches: {mismatches[:4]}")
 
-            # <=3 light jets must be completely untouched.
-            le3_bad = [(lb, old_counts.get(lb), new_counts.get(lb))
-                       for lb in new_counts if jet_count(lb) <= 3
-                       and old_counts.get(lb) != new_counts.get(lb)]
-            n_le3 = sum(1 for lb in new_counts if jet_count(lb) <= 3)
-            check(f"{run}/{which}: all {n_le3} final states with <=3 light jets have "
-                  f"identical event counts",
-                  not le3_bad, f"differing: {le3_bad[:4]}")
+              # <=3 light jets must be completely untouched.
+              le3_bad = [(lb, old_counts.get(lb), new_counts.get(lb))
+                         for lb in new_counts if jet_count(lb) <= 3
+                         and old_counts.get(lb) != new_counts.get(lb)]
+              n_le3 = sum(1 for lb in new_counts if jet_count(lb) <= 3)
+              check(f"{run}/{which}: all {n_le3} final states with <=3 light jets have "
+                    f"identical event counts",
+                    not le3_bad, f"differing: {le3_bad[:4]}")
 
-            split_labels = {ol: sorted(c) for ol, c in contributors.items() if len(c) > 1}
-            if which == "inclusive":
-                print(f"       {run}: {len(old_counts)} old labels -> "
-                      f"{len(new_counts)} new labels; "
-                      f"{len(split_labels)} old labels split into several")
-                for ol, cs in sorted(split_labels.items())[:3]:
-                    print(f"         e.g. {ol} ({old_counts[ol]} events) -> "
-                          + ", ".join(f"{c}:{new_counts[c]}" for c in cs))
-            summary.append({
-                "run": run, "which": which,
-                "n_old_labels": len(old_counts), "n_new_labels": len(new_counts),
-                "n_old_labels_that_split": len(split_labels),
-                "total_events": sum(new_counts.values()),
-            })
+              split_labels = {ol: sorted(c) for ol, c in contributors.items() if len(c) > 1}
+              if which.endswith("/inclusive"):
+                  print(f"       {run} [{version}]: {len(old_counts)} old labels -> "
+                        f"{len(new_counts)} new labels; "
+                        f"{len(split_labels)} old labels split into several")
+                  for ol, cs in sorted(split_labels.items())[:3]:
+                      print(f"         e.g. {ol} ({old_counts[ol]} events) -> "
+                            + ", ".join(f"{c}:{new_counts[c]}" for c in cs))
+              summary.append({
+                  "run": run, "version": version, "which": which,
+                  "n_old_labels": len(old_counts), "n_new_labels": len(new_counts),
+                  "n_old_labels_that_split": len(split_labels),
+                  "total_events": sum(new_counts.values()),
+              })
     RESULTS["check_b"] = summary
 
 
