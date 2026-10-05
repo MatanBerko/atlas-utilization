@@ -1,24 +1,38 @@
 # HANDOFF - ttbar_count_vs_atlas
 
-**Status: Steps 1-10 complete. Step 8 is BLOCKED on a file permission.** The
-headline result is in `REPORT.md`; the per-variant tables are in
-`STEP6_RESULTS.md`. The one thing still outstanding is Step 8's actual
-comparison, which needs Maryna's ATLAS ROOT file - the tool is written and
-self-tested (section 8), but as of 2026-10-04 that file is still **not
-readable** - re-checked twice that day, see section 8c for the exact diagnosis
-and the exact fix needed.
+**Status (2026-10-05): still BLOCKED on a file permission, and the blocker got
+worse.** The CMS side is complete and measured: the headline result is in
+`REPORT.md`, the per-variant tables in `STEP6_RESULTS.md`, and the four-level
+final-state/histogram table for our three variants is in
+`COMPARISON_WITH_ATLAS.md` section 6.3. The one thing still outstanding is the
+ATLAS comparison itself, which needs Maryna's ATLAS ROOT file. The tool is
+written and self-tested (section 8).
 
-A second, separate question *was* answered without the ROOT file: **why Maryna's
-and Ariel's own ATLAS runs disagree** (135 / 132 / 129 final states). Her run
-logs and configs are world-readable even though the histogram files are not. The
-answer is in `COMPARISON_WITH_ATLAS.md` section 4; the headline is that the
-trigger is a ~1% effect, overlap removal is a ~15% effect, and there is a third,
-previously unnoticed difference (photons and taus are uncapped in the 3 October
-runs and forced to zero in all others) that makes the 135-vs-129 comparison
-confounded.
+**The permission blocker moved up on 4 October at 22:10.** It used to be one
+deep directory (`histograms/`, section 8c). It is now the **top-level**
+directory `/storage/agrp/marybo`, which is `drwx------`, so we have also lost
+the run logs and configs we could read on 4 October. Current diagnosis and the
+one-command fix: **section 8e below, and `COMPARISON_WITH_ATLAS.md` section 6.**
+
+**Only the ATLAS file Maryna explicitly selected may be used** (her request, so
+that outdated or wrong runs are not picked up). That is the
+`atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612` run, no-lepton-trigger,
+135 final states. Her other runs must not be browsed, read or inferred from -
+which is why the old run survey is now marked superseded (next paragraph).
+
+**SUPERSEDED - do not quote.** A second question was answered on 4 October
+without the ROOT file: why Maryna's and Ariel's own ATLAS runs disagree (135 /
+132 / 129 final states), in `COMPARISON_WITH_ATLAS.md` sections 3 and 4. That
+work identified her runs **from their directory names**, which Maryna has asked
+us not to do. Sections 3 and 4 are therefore marked
+*"superseded: based on runs not selected by Maryna; not to be quoted"* in that
+document, and **no number from them may be carried into any new result.** They
+are kept for history only. (Her logs are in any case no longer readable - see
+section 8e.)
 
 Result at ATLAS's own threshold (>= 25 filled bins, >= 100 events), all
-VERIFIED BY RUNNING except the ATLAS row:
+VERIFIED BY RUNNING except the ATLAS row, which is Maryna's reported number and
+is UNVERIFIED (we have never been able to open the file):
 
 | | categories | histograms |
 |---|---:|---:|
@@ -419,3 +433,106 @@ her checkout finds no sum-based rule anywhere.
 See `COMPARISON_WITH_ATLAS.md` for the full ATLAS-run survey and the
 "Why the ATLAS runs differ" analysis.
 
+## 8e. BLOCKED 2026-10-05: the blocker moved to the top-level directory
+
+Re-checked 2026-10-05 for the **one file Maryna selected** and nothing else
+(rule: only runs she selects may be used). All of the following was **RAN** as
+`berkom`, groups `watlas`.
+
+The selected file:
+
+```
+/storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization/data/atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612/histograms/atlas_opendata_bumpnet.root
+```
+
+### Result: not readable, and the reason changed
+
+| check | result |
+|---|---|
+| `test -r <file>` | **NOT READABLE** (3 attempts in a row, all failed) |
+| `stat <file>` | `Permission denied` |
+| `test -x <parent dir>` | **NOT ENTERABLE** |
+| blocking component | **`/storage/agrp/marybo`** |
+| its mode | **`drwx------`** (`marybo:watlas`) |
+| `getfacl` on it | `user::rwx`, `group::---`, `other::---`, no ACL entries - plain mode bits |
+| its `ctime` | **2026-10-04 22:10:49** - when the bits were last changed |
+| its `mtime` | 2026-06-08 - contents unchanged, only permissions |
+
+On 4 October this directory was `drwxr-xr-x` (section 8c records that), and only
+the deep `histograms/` directory was closed. Now the top level is closed, so
+**everything** below it is unreachable and the six intermediate directories
+cannot even be stat-ed. Consequence confirmed by running: the run log
+`.../logs/pipeline.out`, read successfully on 4 October, is now **not readable**
+either.
+
+The `chmod` block in section 8c is therefore **no longer sufficient on its own**
+- it needs `chmod g+x /storage/agrp/marybo` in front of it.
+
+### Our copies from 4 October are intact and are now the only source
+
+`atlas_input/other_runs/atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612/`
+still holds `logs_config.yaml`, `logs_pipeline.out` and `logs_submit_mc.sh` for
+**the selected run**. From the config (sha256
+`b44f0abee5e012102bd0bb6a9f01db04eed6998280e904eb9b808dbf72ec45bc`), VERIFIED BY
+READING: `bin_width_gev: 10.0`, `max_mass_cutoff: 10000.0` GeV, masses in GeV -
+**identical binning to ours**; `z_peak_cutoff: 110.0` (ours 115),
+`min_events_per_fs: 10` (ours 100), `trigger_config.enabled: false`, and four
+independent `max: 4` caps on electrons/muons/jets/bjets with no rule on the sum.
+
+### The drop directory, so Maryna needs no permission change
+
+Created 2026-10-05 (ours, not hers):
+
+```
+/storage/agrp/berkom/atlas-utilization/work/ttbar_count_vs_atlas/atlas_input/selected/          # final home of the verified copy
+/storage/agrp/berkom/atlas-utilization/work/ttbar_count_vs_atlas/atlas_input/selected/incoming/ # drwxrwsr-x berkom:watlas - Maryna can write here
+```
+
+`incoming/` is group-writable and setgid, and `marybo` is in `watlas`, so the
+whole ask is one command **for her**, with nothing in her area modified:
+
+```bash
+F=/storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization/data/atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612/histograms/atlas_opendata_bumpnet.root
+cp "$F" /storage/agrp/berkom/atlas-utilization/work/ttbar_count_vs_atlas/atlas_input/selected/incoming/ && sha256sum "$F"
+```
+
+We then `sha256sum` our copy, compare it with the line she sends, record both in
+`atlas_input/selected/CHECKSUMS.tsv`, and move the file into `selected/`.
+
+The permission alternative, if she prefers it, is in
+`COMPARISON_WITH_ATLAS.md` section 6.5 (three `chmod` lines, starting with
+`chmod g+x /storage/agrp/marybo`).
+
+### Where the CMS side stands (nothing is waiting on us)
+
+`COMPARISON_WITH_ATLAS.md` section 6.3 has the four-level table. CMS numbers,
+all VERIFIED BY RUNNING from
+`output/cms_datasets/studies/ttbar_count_vs_atlas/<variant>/build_summary_<variant>.json`:
+
+| level | rare4 | pr31 | pr31_noOR |
+|---|---|---|---|
+| (i) all histograms | 207 FS / 3,987 | 159 FS / 2,960 | 145 FS / 2,843 |
+| (ii) FS >= 100 events, no bin cut | 134 FS / 2,325 | 132 FS / 2,315 | 124 FS / 2,459 |
+| (iii) (ii) + >= 25 filled bins | not yet measured | not yet measured | not yet measured |
+| (iv) (iii) + >= 100 entries | 127 FS / 2,038 | 127 FS / 2,038 | 119 FS / 2,220 |
+
+Level (iii) is the only gap: our build applies the >= 100-entries-per-histogram
+cut **before** the bin cut, so a ">= 25 bins without the entry cut" stage was
+never emitted. Level (iv) is unaffected. Filling (iii) is one short 3-element
+PBS array that emits one extra counting stage - no definition, binning or
+threshold changes. Deliberately not run yet: the row is only meaningful next to
+the ATLAS column.
+
+### Resume checklist (unchanged except for the copy step)
+
+1. Confirm the file is in `atlas_input/selected/incoming/`; checksum it against
+   Maryna's line; move it to `atlas_input/selected/`.
+2. Step 2 - reproduce 2,684 / 2,161 / 2,146 and 135 FS. Stop and report if any
+   differs.
+3. Step 3 - fill the ATLAS column; run the level-(iii) rebuild.
+4. Step 4 - `compare_with_atlas.py` vs `pr31_noOR` (main) and `rare4`, grouping
+   ATLAS-only and CMS-only final states into: photons/taus present, our
+   `e + mu + b <= 4` rule, no CMS events, fails our statistics cuts, other.
+5. Step 5 - the four PNG plots, committed.
+
+Nothing else in the study needs re-running.

@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-05",
+  "what": "Step 1 access check on the single ATLAS file selected by Maryna",
+  "selected_file": "/storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization/data/atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612/histograms/atlas_opendata_bumpnet.root",
+  "run_as": {
+    "uid": 51000097,
+    "whoami": "berkom",
+    "groups": "watlas"
+  },
+  "method": "test -r / os.access / os.stat / getfacl on each path component",
+  "components": [
+    {
+      "path": "/storage",
+      "mode": "drwxr-xr-x",
+      "uid": 0,
+      "gid": 0,
+      "ctime": "2026-05-26T13:41:03",
+      "mtime": "2026-05-26T13:40:33",
+      "is_dir": true,
+      "enterable": true,
+      "getfacl_rc": 0,
+      "getfacl": "# file: /storage\n# owner: root\n# group: root\nuser::rwx\ngroup::r-x\nother::r-x"
+    },
+    {
+      "path": "/storage/agrp",
+      "mode": "drwxr-xr-x",
+      "uid": 0,
+      "gid": 0,
+      "ctime": "2026-09-07T14:07:02",
+      "mtime": "2026-09-07T14:07:02",
+      "is_dir": true,
+      "enterable": true,
+      "getfacl_rc": 0,
+      "getfacl": "# file: /storage/agrp\n# owner: root\n# group: root\nuser::rwx\ngroup::r-x\nother::r-x"
+    },
+    {
+      "path": "/storage/agrp/marybo",
+      "mode": "drwx------",
+      "uid": 51000045,
+      "gid": 9006,
+      "ctime": "2026-10-04T22:10:49",
+      "mtime": "2026-06-08T11:34:09",
+      "is_dir": true,
+      "enterable": false,
+      "getfacl_rc": 0,
+      "getfacl": "# file: /storage/agrp/marybo\n# owner: marybo\n# group: watlas\nuser::rwx\ngroup::---\nother::---"
+    },
+    {
+      "path": "/storage/agrp/marybo/DDP",
+      "stat_error": "PermissionError: Permission denied",
+      "getfacl_rc": 1,
+      "getfacl": "getfacl: /storage/agrp/marybo/DDP: Permission denied"
+    },
+    {
+      "path": "/storage/agrp/marybo/DDP/BumpNet4AtlasOpenData",
+      "stat_error": "PermissionError: Permission denied",
+      "getfacl_rc": 1,
+      "getfacl": "getfacl: /storage/agrp/marybo/DDP/BumpNet4AtlasOpenData: Permission denied"
+    },
+    {
+      "path": "/storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization",
+      "stat_error": "PermissionError: Permission denied",
+      "getfacl_rc": 1,
+      "getfacl": "getfacl: /storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization: Permission denied"
+    },
+    {
+      "path": "/storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization/data",
+      "stat_error": "PermissionError: Permission denied",
+      "getfacl_rc": 1,
+      "getfacl": "getfacl: /storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization/data: Permission denied"
+    },
+    {
+      "path": "/storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization/data/atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612",
+      "stat_error": "PermissionError: Permission denied",
+      "getfacl_rc": 1,
+      "getfacl": "getfacl: /storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization/data/atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612: Permission denied"
+    },
+    {
+      "path": "/storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization/data/atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612/histograms",
+      "stat_error": "PermissionError: Permission denied",
+      "getfacl_rc": 1,
+      "getfacl": "getfacl: /storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization/data/atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612/histograms: Permission denied"
+    },
+    {
+      "path": "/storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization/data/atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612/histograms/atlas_opendata_bumpnet.root",
+      "stat_error": "PermissionError: Permission denied",
+      "getfacl_rc": 1,
+      "getfacl": "getfacl: /storage/agrp/marybo/DDP/BumpNet4AtlasOpenData/Test_master_atlas-utilization/data/atlas_mc_UnlimetedJets_test_ttbar_mc_20261003_210612/histograms/atlas_opendata_bumpnet.root: Permission denied"
+    }
+  ],
+  "file_readable": false,
+  "read_attempts": [
+    {
+      "attempt": 1,
+      "test_r_rc": 1,
+      "readable": false
+    },
+    {
+      "attempt": 2,
+      "test_r_rc": 1,
+      "readable": false
+    },
+    {
+      "attempt": 3,
+      "test_r_rc": 1,
+      "readable": false
+    }
+  ],
+  "parent_enterable": false,
+  "blocking_component": "/storage/agrp/marybo",
+  "conclusion": "BLOCKED. The file is not readable and its parent directory is not enterable. The blocking component is /storage/agrp/marybo. Steps 2-5 of the request cannot start."
+}
