@@ -1,0 +1,717 @@
+{
+  "what": "E2/E4 pilot summary, folded from the per-job metadata",
+  "root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_pilot_on_20261006",
+  "n_jobs": 16,
+  "doubleeg_threshold_mode": [
+    "leading_only"
+  ],
+  "emu_overlap_removal_enabled": [
+    "True"
+  ],
+  "E4_trigger_guard_violations_total": 0,
+  "n_distinct_final_states_version_b": 158,
+  "per_dataset": {
+    "DoubleMuon": {
+      "n_jobs": 4,
+      "cutflow": {
+        "n_read": 7664327,
+        "n_after_golden_json": 7546921,
+        "n_after_trigger": 2542655,
+        "n_after_gate": 773922,
+        "n_exclusive": 773922
+      },
+      "acceptance_counts": {
+        "DoubleMuon": 773922,
+        "SingleMuon": 1157546,
+        "DoubleEG": 19,
+        "MuonEG": 673
+      },
+      "fired_counts": {
+        "DoubleMuon": 2542655,
+        "SingleMuon": 1235780,
+        "DoubleEG": 77,
+        "MuonEG": 11111
+      },
+      "cutflow_per_dataset": {
+        "DoubleMuon": {
+          "n_events_considered": 2542655,
+          "n_fired": 2542655,
+          "n_matched": 773922,
+          "n_accepted": 773922
+        },
+        "SingleMuon": {
+          "n_events_considered": 2542655,
+          "n_fired": 1235780,
+          "n_matched": 1162792,
+          "n_accepted": 1157546
+        },
+        "DoubleEG": {
+          "n_events_considered": 2542655,
+          "n_fired": 77,
+          "n_fired_and_ge1_matched": 39,
+          "n_fired_and_ge2_matched": 19,
+          "n_fired_ge2_matched_online23": 19,
+          "n_accepted": 19,
+          "n_lost_to_offline_cut": 0,
+          "offline_pt_min_gev": 120.0
+        },
+        "MuonEG": {
+          "n_events_considered": 2542655,
+          "n_fired": 11111,
+          "n_fired_mu23_ele12": 9430,
+          "n_fired_mu8_ele23": 7089,
+          "n_fired_both_paths": 5408,
+          "n_fired_and_ge1_selected_muon": 6937,
+          "n_fired_muon_and_ge1_matched_electron": 673,
+          "n_accepted": 673,
+          "n_accepted_via_mu23_ele12_leg": 652,
+          "n_accepted_via_mu8_ele23_leg": 666,
+          "n_matched_electron_fails_fired_path_leg_threshold": 0
+        }
+      },
+      "interpretation": {
+        "n_events_in_base": 19,
+        "n_selected_electron_collections_not_pt_descending": 0,
+        "n_leading_matched_differs_from_leading_selected": 0,
+        "n_leading_matched_differs_from_leading_selected_by_index0": 0,
+        "n_events_two_electrons_share_one_trigobj": 0
+      },
+      "bookkeeping": {
+        "doubleeg_electrons_bit16": {
+          "n_offline_objects": 1381,
+          "n_matched": 510,
+          "matched_trigobj_id_counts": {
+            "11": 510
+          },
+          "matched_dr_max": 0.08839913457632065
+        },
+        "muoneg_electrons_bit32": {
+          "n_offline_objects": 1381,
+          "n_matched": 1197,
+          "matched_trigobj_id_counts": {
+            "11": 1197
+          },
+          "matched_dr_max": 0.09510405361652374
+        },
+        "doublemuon_muons_bit1": {
+          "n_offline_objects": 2024841,
+          "n_matched": 2024532,
+          "matched_trigobj_id_counts": {
+            "13": 2024532
+          },
+          "matched_dr_max": 0.09999160468578339
+        },
+        "singlemuon_muons_bit2": {
+          "n_offline_objects": 2024841,
+          "n_matched": 1815831,
+          "matched_trigobj_id_counts": {
+            "13": 1815831
+          },
+          "matched_dr_max": 0.09997677803039551
+        }
+      },
+      "overlap_removal": {
+        "n_electrons_removed_total": 13,
+        "n_events_with_an_electron_removed": 13,
+        "n_events_jet_cleaning_order_would_matter": 0
+      },
+      "version_b": {
+        "n_accepted_events_before_rare4_rule": 773922,
+        "n_rejected_gt4_lepton_bjet": 90,
+        "n_kept_le4_lepton_bjet": 773832,
+        "n_hidden_cases": 0
+      },
+      "light_jet_multiplicity": {
+        "0": 625476,
+        "1": 113686,
+        "2": 26858,
+        "3": 6099,
+        "4": 1381,
+        "5": 335,
+        "6": 66,
+        "7": 15,
+        "8": 6
+      },
+      "guard_violations": {
+        "muons_vs_id13_bit_trkisovvl": 0,
+        "muons_vs_id13_bit_iso": 0,
+        "electrons_vs_id11_bit_2e": 0,
+        "electrons_vs_id11_bit_1e1mu": 0,
+        "total": 0
+      },
+      "jobs": [
+        {
+          "job": "job_0",
+          "record_id": 30522,
+          "file_index": 0,
+          "n_read": 2315223,
+          "n_after_trigger": 729741,
+          "n_after_gate": 223393,
+          "n_exclusive": 223393,
+          "n_rejected_version_b": 18,
+          "elapsed_sec": 143.0493402481079
+        },
+        {
+          "job": "job_1",
+          "record_id": 30522,
+          "file_index": 14,
+          "n_read": 794124,
+          "n_after_trigger": 254182,
+          "n_after_gate": 78138,
+          "n_exclusive": 78138,
+          "n_rejected_version_b": 13,
+          "elapsed_sec": 89.80441927909851
+        },
+        {
+          "job": "job_2",
+          "record_id": 30555,
+          "file_index": 0,
+          "n_read": 2147195,
+          "n_after_trigger": 723967,
+          "n_after_gate": 218886,
+          "n_exclusive": 218886,
+          "n_rejected_version_b": 27,
+          "elapsed_sec": 136.3337242603302
+        },
+        {
+          "job": "job_3",
+          "record_id": 30555,
+          "file_index": 14,
+          "n_read": 2407785,
+          "n_after_trigger": 834765,
+          "n_after_gate": 253505,
+          "n_exclusive": 253505,
+          "n_rejected_version_b": 32,
+          "elapsed_sec": 151.11367225646973
+        }
+      ]
+    },
+    "SingleMuon": {
+      "n_jobs": 4,
+      "cutflow": {
+        "n_read": 8603039,
+        "n_after_golden_json": 8584688,
+        "n_after_trigger": 5457454,
+        "n_after_gate": 4393889,
+        "n_exclusive": 4142582
+      },
+      "acceptance_counts": {
+        "DoubleMuon": 251342,
+        "SingleMuon": 4393889,
+        "DoubleEG": 22,
+        "MuonEG": 4002
+      },
+      "fired_counts": {
+        "DoubleMuon": 405189,
+        "SingleMuon": 5457454,
+        "DoubleEG": 158,
+        "MuonEG": 22382
+      },
+      "cutflow_per_dataset": {
+        "DoubleMuon": {
+          "n_events_considered": 5457454,
+          "n_fired": 405189,
+          "n_matched": 257298,
+          "n_accepted": 251342
+        },
+        "SingleMuon": {
+          "n_events_considered": 5457454,
+          "n_fired": 5457454,
+          "n_matched": 4393889,
+          "n_accepted": 4393889
+        },
+        "DoubleEG": {
+          "n_events_considered": 5457454,
+          "n_fired": 158,
+          "n_fired_and_ge1_matched": 95,
+          "n_fired_and_ge2_matched": 22,
+          "n_fired_ge2_matched_online23": 22,
+          "n_accepted": 22,
+          "n_lost_to_offline_cut": 0,
+          "offline_pt_min_gev": 120.0
+        },
+        "MuonEG": {
+          "n_events_considered": 5457454,
+          "n_fired": 22382,
+          "n_fired_mu23_ele12": 22362,
+          "n_fired_mu8_ele23": 13413,
+          "n_fired_both_paths": 13393,
+          "n_fired_and_ge1_selected_muon": 17141,
+          "n_fired_muon_and_ge1_matched_electron": 4002,
+          "n_accepted": 4002,
+          "n_accepted_via_mu23_ele12_leg": 4001,
+          "n_accepted_via_mu8_ele23_leg": 3957,
+          "n_matched_electron_fails_fired_path_leg_threshold": 0
+        }
+      },
+      "interpretation": {
+        "n_events_in_base": 22,
+        "n_selected_electron_collections_not_pt_descending": 0,
+        "n_leading_matched_differs_from_leading_selected": 0,
+        "n_leading_matched_differs_from_leading_selected_by_index0": 0,
+        "n_events_two_electrons_share_one_trigobj": 0
+      },
+      "bookkeeping": {
+        "doubleeg_electrons_bit16": {
+          "n_offline_objects": 4996,
+          "n_matched": 1769,
+          "matched_trigobj_id_counts": {
+            "11": 1769
+          },
+          "matched_dr_max": 0.09625768661499023
+        },
+        "muoneg_electrons_bit32": {
+          "n_offline_objects": 4996,
+          "n_matched": 4779,
+          "matched_trigobj_id_counts": {
+            "11": 4779
+          },
+          "matched_dr_max": 0.09625768661499023
+        },
+        "doublemuon_muons_bit1": {
+          "n_offline_objects": 4681872,
+          "n_matched": 754829,
+          "matched_trigobj_id_counts": {
+            "13": 754829
+          },
+          "matched_dr_max": 0.09997826814651489
+        },
+        "singlemuon_muons_bit2": {
+          "n_offline_objects": 4681872,
+          "n_matched": 4612379,
+          "matched_trigobj_id_counts": {
+            "13": 4612379
+          },
+          "matched_dr_max": 0.0999978631734848
+        }
+      },
+      "overlap_removal": {
+        "n_electrons_removed_total": 9,
+        "n_events_with_an_electron_removed": 9,
+        "n_events_jet_cleaning_order_would_matter": 0
+      },
+      "version_b": {
+        "n_accepted_events_before_rare4_rule": 4393889,
+        "n_rejected_gt4_lepton_bjet": 110,
+        "n_kept_le4_lepton_bjet": 4393779,
+        "n_hidden_cases": 0
+      },
+      "light_jet_multiplicity": {
+        "0": 3323365,
+        "1": 817487,
+        "2": 190719,
+        "3": 46418,
+        "4": 11854,
+        "5": 3013,
+        "6": 785,
+        "7": 187,
+        "8": 45,
+        "9": 11,
+        "10": 4,
+        "11": 1
+      },
+      "guard_violations": {
+        "muons_vs_id13_bit_trkisovvl": 0,
+        "muons_vs_id13_bit_iso": 0,
+        "electrons_vs_id11_bit_2e": 0,
+        "electrons_vs_id11_bit_1e1mu": 0,
+        "total": 0
+      },
+      "jobs": [
+        {
+          "job": "job_0",
+          "record_id": 30530,
+          "file_index": 0,
+          "n_read": 2939781,
+          "n_after_trigger": 1878767,
+          "n_after_gate": 1511878,
+          "n_exclusive": 1425358,
+          "n_rejected_version_b": 40,
+          "elapsed_sec": 411.5968208312988
+        },
+        {
+          "job": "job_1",
+          "record_id": 30530,
+          "file_index": 35,
+          "n_read": 3253442,
+          "n_after_trigger": 2032025,
+          "n_after_gate": 1647610,
+          "n_exclusive": 1553199,
+          "n_rejected_version_b": 39,
+          "elapsed_sec": 428.3989644050598
+        },
+        {
+          "job": "job_2",
+          "record_id": 30563,
+          "file_index": 0,
+          "n_read": 14113,
+          "n_after_trigger": 8462,
+          "n_after_gate": 6919,
+          "n_exclusive": 6529,
+          "n_rejected_version_b": 0,
+          "elapsed_sec": 35.97494673728943
+        },
+        {
+          "job": "job_3",
+          "record_id": 30563,
+          "file_index": 41,
+          "n_read": 2395703,
+          "n_after_trigger": 1538200,
+          "n_after_gate": 1227482,
+          "n_exclusive": 1157496,
+          "n_rejected_version_b": 31,
+          "elapsed_sec": 359.02680921554565
+        }
+      ]
+    },
+    "DoubleEG": {
+      "n_jobs": 4,
+      "cutflow": {
+        "n_read": 4935316,
+        "n_after_golden_json": 4801837,
+        "n_after_trigger": 539689,
+        "n_after_gate": 178284,
+        "n_exclusive": 178258
+      },
+      "acceptance_counts": {
+        "DoubleMuon": 6,
+        "SingleMuon": 136,
+        "DoubleEG": 178284,
+        "MuonEG": 98
+      },
+      "fired_counts": {
+        "DoubleMuon": 28,
+        "SingleMuon": 178,
+        "DoubleEG": 539689,
+        "MuonEG": 1348
+      },
+      "cutflow_per_dataset": {
+        "DoubleMuon": {
+          "n_events_considered": 539689,
+          "n_fired": 28,
+          "n_matched": 6,
+          "n_accepted": 6
+        },
+        "SingleMuon": {
+          "n_events_considered": 539689,
+          "n_fired": 178,
+          "n_matched": 138,
+          "n_accepted": 136
+        },
+        "DoubleEG": {
+          "n_events_considered": 539689,
+          "n_fired": 539689,
+          "n_fired_and_ge1_matched": 324670,
+          "n_fired_and_ge2_matched": 181659,
+          "n_fired_ge2_matched_online23": 181659,
+          "n_accepted": 178284,
+          "n_lost_to_offline_cut": 3375,
+          "offline_pt_min_gev": 120.0
+        },
+        "MuonEG": {
+          "n_events_considered": 539689,
+          "n_fired": 1348,
+          "n_fired_mu23_ele12": 391,
+          "n_fired_mu8_ele23": 1345,
+          "n_fired_both_paths": 388,
+          "n_fired_and_ge1_selected_muon": 164,
+          "n_fired_muon_and_ge1_matched_electron": 98,
+          "n_accepted": 98,
+          "n_accepted_via_mu23_ele12_leg": 93,
+          "n_accepted_via_mu8_ele23_leg": 98,
+          "n_matched_electron_fails_fired_path_leg_threshold": 0
+        }
+      },
+      "interpretation": {
+        "n_events_in_base": 181659,
+        "n_selected_electron_collections_not_pt_descending": 2536,
+        "n_leading_matched_differs_from_leading_selected": 0,
+        "n_leading_matched_differs_from_leading_selected_by_index0": 0,
+        "n_events_two_electrons_share_one_trigobj": 1
+      },
+      "bookkeeping": {
+        "doubleeg_electrons_bit16": {
+          "n_offline_objects": 513382,
+          "n_matched": 506368,
+          "matched_trigobj_id_counts": {
+            "11": 506368
+          },
+          "matched_dr_max": 0.09954076260328293
+        },
+        "muoneg_electrons_bit32": {
+          "n_offline_objects": 513382,
+          "n_matched": 1268,
+          "matched_trigobj_id_counts": {
+            "11": 1268
+          },
+          "matched_dr_max": 0.07764364778995514
+        },
+        "doublemuon_muons_bit1": {
+          "n_offline_objects": 205,
+          "n_matched": 118,
+          "matched_trigobj_id_counts": {
+            "13": 118
+          },
+          "matched_dr_max": 0.02767525427043438
+        },
+        "singlemuon_muons_bit2": {
+          "n_offline_objects": 205,
+          "n_matched": 144,
+          "matched_trigobj_id_counts": {
+            "13": 144
+          },
+          "matched_dr_max": 0.07096727192401886
+        }
+      },
+      "overlap_removal": {
+        "n_electrons_removed_total": 1,
+        "n_events_with_an_electron_removed": 1,
+        "n_events_jet_cleaning_order_would_matter": 0
+      },
+      "version_b": {
+        "n_accepted_events_before_rare4_rule": 178284,
+        "n_rejected_gt4_lepton_bjet": 23,
+        "n_kept_le4_lepton_bjet": 178261,
+        "n_hidden_cases": 0
+      },
+      "light_jet_multiplicity": {
+        "0": 144062,
+        "1": 25958,
+        "2": 6327,
+        "3": 1512,
+        "4": 330,
+        "5": 72,
+        "6": 15,
+        "7": 8
+      },
+      "guard_violations": {
+        "muons_vs_id13_bit_trkisovvl": 0,
+        "muons_vs_id13_bit_iso": 0,
+        "electrons_vs_id11_bit_2e": 0,
+        "electrons_vs_id11_bit_1e1mu": 0,
+        "total": 0
+      },
+      "jobs": [
+        {
+          "job": "job_0",
+          "record_id": 30521,
+          "file_index": 0,
+          "n_read": 2014154,
+          "n_after_trigger": 219416,
+          "n_after_gate": 69694,
+          "n_exclusive": 69678,
+          "n_rejected_version_b": 8,
+          "elapsed_sec": 86.88984036445618
+        },
+        {
+          "job": "job_1",
+          "record_id": 30521,
+          "file_index": 23,
+          "n_read": 1294969,
+          "n_after_trigger": 149302,
+          "n_after_gate": 48016,
+          "n_exclusive": 48013,
+          "n_rejected_version_b": 4,
+          "elapsed_sec": 69.15958404541016
+        },
+        {
+          "job": "job_2",
+          "record_id": 30554,
+          "file_index": 0,
+          "n_read": 843234,
+          "n_after_trigger": 86793,
+          "n_after_gate": 30554,
+          "n_exclusive": 30552,
+          "n_rejected_version_b": 8,
+          "elapsed_sec": 65.146413564682
+        },
+        {
+          "job": "job_3",
+          "record_id": 30554,
+          "file_index": 43,
+          "n_read": 782959,
+          "n_after_trigger": 84178,
+          "n_after_gate": 30020,
+          "n_exclusive": 30015,
+          "n_rejected_version_b": 3,
+          "elapsed_sec": 93.98636078834534
+        }
+      ]
+    },
+    "MuonEG": {
+      "n_jobs": 4,
+      "cutflow": {
+        "n_read": 6306031,
+        "n_after_golden_json": 6201208,
+        "n_after_trigger": 1030325,
+        "n_after_gate": 15628,
+        "n_exclusive": 1404
+      },
+      "acceptance_counts": {
+        "DoubleMuon": 2469,
+        "SingleMuon": 62152,
+        "DoubleEG": 801,
+        "MuonEG": 15628
+      },
+      "fired_counts": {
+        "DoubleMuon": 13626,
+        "SingleMuon": 82282,
+        "DoubleEG": 4738,
+        "MuonEG": 1030325
+      },
+      "cutflow_per_dataset": {
+        "DoubleMuon": {
+          "n_events_considered": 1030325,
+          "n_fired": 13626,
+          "n_matched": 2580,
+          "n_accepted": 2469
+        },
+        "SingleMuon": {
+          "n_events_considered": 1030325,
+          "n_fired": 82282,
+          "n_matched": 62742,
+          "n_accepted": 62152
+        },
+        "DoubleEG": {
+          "n_events_considered": 1030325,
+          "n_fired": 4738,
+          "n_fired_and_ge1_matched": 2156,
+          "n_fired_and_ge2_matched": 805,
+          "n_fired_ge2_matched_online23": 805,
+          "n_accepted": 801,
+          "n_lost_to_offline_cut": 4,
+          "offline_pt_min_gev": 120.0
+        },
+        "MuonEG": {
+          "n_events_considered": 1030325,
+          "n_fired": 1030325,
+          "n_fired_mu23_ele12": 266708,
+          "n_fired_mu8_ele23": 919108,
+          "n_fired_both_paths": 155491,
+          "n_fired_and_ge1_selected_muon": 80339,
+          "n_fired_muon_and_ge1_matched_electron": 15628,
+          "n_accepted": 15628,
+          "n_accepted_via_mu23_ele12_leg": 15215,
+          "n_accepted_via_mu8_ele23_leg": 15466,
+          "n_matched_electron_fails_fired_path_leg_threshold": 0
+        }
+      },
+      "interpretation": {
+        "n_events_in_base": 805,
+        "n_selected_electron_collections_not_pt_descending": 8,
+        "n_leading_matched_differs_from_leading_selected": 0,
+        "n_leading_matched_differs_from_leading_selected_by_index0": 0,
+        "n_events_two_electrons_share_one_trigobj": 0
+      },
+      "bookkeeping": {
+        "doubleeg_electrons_bit16": {
+          "n_offline_objects": 76740,
+          "n_matched": 25253,
+          "matched_trigobj_id_counts": {
+            "11": 25253
+          },
+          "matched_dr_max": 0.09990580379962921
+        },
+        "muoneg_electrons_bit32": {
+          "n_offline_objects": 76740,
+          "n_matched": 76403,
+          "matched_trigobj_id_counts": {
+            "11": 76403
+          },
+          "matched_dr_max": 0.09990580379962921
+        },
+        "doublemuon_muons_bit1": {
+          "n_offline_objects": 83151,
+          "n_matched": 31222,
+          "matched_trigobj_id_counts": {
+            "13": 31222
+          },
+          "matched_dr_max": 0.09860863536596298
+        },
+        "singlemuon_muons_bit2": {
+          "n_offline_objects": 83151,
+          "n_matched": 64768,
+          "matched_trigobj_id_counts": {
+            "13": 64768
+          },
+          "matched_dr_max": 0.09925787895917892
+        }
+      },
+      "overlap_removal": {
+        "n_electrons_removed_total": 99,
+        "n_events_with_an_electron_removed": 99,
+        "n_events_jet_cleaning_order_would_matter": 0
+      },
+      "version_b": {
+        "n_accepted_events_before_rare4_rule": 15628,
+        "n_rejected_gt4_lepton_bjet": 128,
+        "n_kept_le4_lepton_bjet": 15500,
+        "n_hidden_cases": 0
+      },
+      "light_jet_multiplicity": {
+        "0": 7025,
+        "1": 5000,
+        "2": 2392,
+        "3": 831,
+        "4": 280,
+        "5": 75,
+        "6": 20,
+        "7": 2,
+        "8": 3
+      },
+      "guard_violations": {
+        "muons_vs_id13_bit_trkisovvl": 0,
+        "muons_vs_id13_bit_iso": 0,
+        "electrons_vs_id11_bit_2e": 0,
+        "electrons_vs_id11_bit_1e1mu": 0,
+        "total": 0
+      },
+      "jobs": [
+        {
+          "job": "job_0",
+          "record_id": 30528,
+          "file_index": 0,
+          "n_read": 2238235,
+          "n_after_trigger": 279559,
+          "n_after_gate": 4524,
+          "n_exclusive": 406,
+          "n_rejected_version_b": 38,
+          "elapsed_sec": 172.19680738449097
+        },
+        {
+          "job": "job_1",
+          "record_id": 30528,
+          "file_index": 14,
+          "n_read": 572016,
+          "n_after_trigger": 73452,
+          "n_after_gate": 1240,
+          "n_exclusive": 105,
+          "n_rejected_version_b": 3,
+          "elapsed_sec": 96.99814653396606
+        },
+        {
+          "job": "job_2",
+          "record_id": 30561,
+          "file_index": 0,
+          "n_read": 1480020,
+          "n_after_trigger": 304677,
+          "n_after_gate": 4384,
+          "n_exclusive": 392,
+          "n_rejected_version_b": 40,
+          "elapsed_sec": 180.56872153282166
+        },
+        {
+          "job": "job_3",
+          "record_id": 30561,
+          "file_index": 9,
+          "n_read": 2015760,
+          "n_after_trigger": 372637,
+          "n_after_gate": 5480,
+          "n_exclusive": 501,
+          "n_rejected_version_b": 47,
+          "elapsed_sec": 138.8735055923462
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,547 @@
+{
+  "what": "E3 closure test on one run, all four datasets, both DoubleEG modes",
+  "target_run": 281707,
+  "priority_order": [
+    "DoubleMuon",
+    "SingleMuon",
+    "DoubleEG",
+    "MuonEG"
+  ],
+  "n_parts": 68,
+  "n_accepted_rows_read": 2477973,
+  "n_distinct_keys_with_any_acceptance_row": 2234698,
+  "emu_overlap_removal_enabled": true,
+  "n_electrons_removed_total": 85,
+  "per_dataset_file_coverage": {
+    "DoubleMuon": {
+      "n_files": 9,
+      "n_events_in_run": 1142326,
+      "n_distinct_keys": 1142326,
+      "n_duplicate_keys_within_dataset": 0,
+      "n_extra_rows_from_duplicates": 0
+    },
+    "SingleMuon": {
+      "n_files": 20,
+      "n_events_in_run": 4131389,
+      "n_distinct_keys": 4131389,
+      "n_duplicate_keys_within_dataset": 0,
+      "n_extra_rows_from_duplicates": 0
+    },
+    "DoubleEG": {
+      "n_files": 33,
+      "n_events_in_run": 2041536,
+      "n_distinct_keys": 2041536,
+      "n_duplicate_keys_within_dataset": 0,
+      "n_extra_rows_from_duplicates": 0
+    },
+    "MuonEG": {
+      "n_files": 6,
+      "n_events_in_run": 652078,
+      "n_distinct_keys": 652078,
+      "n_duplicate_keys_within_dataset": 0,
+      "n_extra_rows_from_duplicates": 0
+    }
+  },
+  "check4_within_dataset_duplicate_keys": {
+    "DoubleMuon": 0,
+    "SingleMuon": 0,
+    "DoubleEG": 0,
+    "MuonEG": 0
+  },
+  "trigger_guard_violations_total_across_parts": 0,
+  "results_by_mode": {
+    "leading_only": {
+      "n_distinct_accepted_keys": 2234698,
+      "inclusive_accepted_per_dataset": {
+        "DoubleMuon": 123786,
+        "SingleMuon": 2158084,
+        "DoubleEG": 74923,
+        "MuonEG": 2115
+      },
+      "exclusive_per_dataset": {
+        "DoubleMuon": 123786,
+        "SingleMuon": 2035804,
+        "DoubleEG": 74909,
+        "MuonEG": 199
+      },
+      "vetoed_by_each_higher_dataset": {
+        "DoubleMuon": {},
+        "SingleMuon": {
+          "DoubleMuon": 122280
+        },
+        "DoubleEG": {
+          "DoubleMuon": 1,
+          "SingleMuon": 14
+        },
+        "MuonEG": {
+          "DoubleMuon": 19,
+          "SingleMuon": 1912,
+          "DoubleEG": 17
+        }
+      },
+      "check1_rows_with_flags_differing_from_another_file": 20,
+      "check1_mismatch_examples": [
+        {
+          "key": [
+            281707,
+            478,
+            663374369
+          ]
+        },
+        {
+          "key": [
+            281707,
+            779,
+            1224638576
+          ]
+        },
+        {
+          "key": [
+            281707,
+            845,
+            1342720714
+          ]
+        },
+        {
+          "key": [
+            281707,
+            866,
+            1379164538
+          ]
+        },
+        {
+          "key": [
+            281707,
+            921,
+            1492162041
+          ]
+        },
+        {
+          "key": [
+            281707,
+            248,
+            256982642
+          ]
+        },
+        {
+          "key": [
+            281707,
+            365,
+            463063825
+          ]
+        },
+        {
+          "key": [
+            281707,
+            722,
+            1117616248
+          ]
+        },
+        {
+          "key": [
+            281707,
+            780,
+            1226922265
+          ]
+        },
+        {
+          "key": [
+            281707,
+            203,
+            172499887
+          ]
+        }
+      ],
+      "check1_accepted_but_silent_in_another_dataset_holding_the_event": 15,
+      "check1_silent_examples": [
+        {
+          "key": [
+            281707,
+            104,
+            29222538
+          ],
+          "silent_in": [
+            "DoubleMuon"
+          ],
+          "reported_by": [
+            "SingleMuon"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            107,
+            34431333
+          ],
+          "silent_in": [
+            "MuonEG"
+          ],
+          "reported_by": [
+            "SingleMuon"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            108,
+            35185703
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "MuonEG"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            109,
+            37084737
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "DoubleMuon"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            110,
+            38849716
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "MuonEG"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            197,
+            161834282
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "DoubleMuon"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            302,
+            351600860
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "DoubleMuon"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            355,
+            447483928
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "DoubleMuon"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            593,
+            884672045
+          ],
+          "silent_in": [
+            "MuonEG"
+          ],
+          "reported_by": [
+            "SingleMuon",
+            "DoubleEG"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            595,
+            887416117
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "DoubleMuon"
+          ]
+        }
+      ],
+      "check2_events_in_two_exclusive_sets": 0,
+      "check2_accepted_events_in_no_exclusive_set": 0,
+      "check3_accepted_but_not_read_from_own_files": {
+        "DoubleMuon": 0,
+        "SingleMuon": 0,
+        "DoubleEG": 0,
+        "MuonEG": 0
+      },
+      "check3_examples": []
+    },
+    "both": {
+      "n_distinct_accepted_keys": 2225027,
+      "inclusive_accepted_per_dataset": {
+        "DoubleMuon": 123786,
+        "SingleMuon": 2158084,
+        "DoubleEG": 65245,
+        "MuonEG": 2115
+      },
+      "exclusive_per_dataset": {
+        "DoubleMuon": 123786,
+        "SingleMuon": 2035804,
+        "DoubleEG": 65236,
+        "MuonEG": 201
+      },
+      "vetoed_by_each_higher_dataset": {
+        "DoubleMuon": {},
+        "SingleMuon": {
+          "DoubleMuon": 122280
+        },
+        "DoubleEG": {
+          "DoubleMuon": 1,
+          "SingleMuon": 9
+        },
+        "MuonEG": {
+          "DoubleMuon": 19,
+          "SingleMuon": 1912,
+          "DoubleEG": 10
+        }
+      },
+      "check1_rows_with_flags_differing_from_another_file": 20,
+      "check1_mismatch_examples": [
+        {
+          "key": [
+            281707,
+            478,
+            663374369
+          ]
+        },
+        {
+          "key": [
+            281707,
+            779,
+            1224638576
+          ]
+        },
+        {
+          "key": [
+            281707,
+            845,
+            1342720714
+          ]
+        },
+        {
+          "key": [
+            281707,
+            866,
+            1379164538
+          ]
+        },
+        {
+          "key": [
+            281707,
+            921,
+            1492162041
+          ]
+        },
+        {
+          "key": [
+            281707,
+            248,
+            256982642
+          ]
+        },
+        {
+          "key": [
+            281707,
+            365,
+            463063825
+          ]
+        },
+        {
+          "key": [
+            281707,
+            722,
+            1117616248
+          ]
+        },
+        {
+          "key": [
+            281707,
+            780,
+            1226922265
+          ]
+        },
+        {
+          "key": [
+            281707,
+            203,
+            172499887
+          ]
+        }
+      ],
+      "check1_accepted_but_silent_in_another_dataset_holding_the_event": 15,
+      "check1_silent_examples": [
+        {
+          "key": [
+            281707,
+            104,
+            29222538
+          ],
+          "silent_in": [
+            "DoubleMuon"
+          ],
+          "reported_by": [
+            "SingleMuon"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            107,
+            34431333
+          ],
+          "silent_in": [
+            "MuonEG"
+          ],
+          "reported_by": [
+            "SingleMuon"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            108,
+            35185703
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "MuonEG"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            109,
+            37084737
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "DoubleMuon"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            110,
+            38849716
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "MuonEG"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            197,
+            161834282
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "DoubleMuon"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            302,
+            351600860
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "DoubleMuon"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            355,
+            447483928
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "DoubleMuon"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            593,
+            884672045
+          ],
+          "silent_in": [
+            "MuonEG"
+          ],
+          "reported_by": [
+            "SingleMuon",
+            "DoubleEG"
+          ]
+        },
+        {
+          "key": [
+            281707,
+            595,
+            887416117
+          ],
+          "silent_in": [
+            "SingleMuon"
+          ],
+          "reported_by": [
+            "DoubleMuon"
+          ]
+        }
+      ],
+      "check2_events_in_two_exclusive_sets": 0,
+      "check2_accepted_events_in_no_exclusive_set": 0,
+      "check3_accepted_but_not_read_from_own_files": {
+        "DoubleMuon": 0,
+        "SingleMuon": 0,
+        "DoubleEG": 0,
+        "MuonEG": 0
+      },
+      "check3_examples": []
+    }
+  },
+  "all_checks_pass": false
+}

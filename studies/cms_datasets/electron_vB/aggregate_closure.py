@@ -198,6 +198,35 @@ def main():
                 h: int((key_flags[:, i] & key_flags[:, j]).sum())
                 for j, h in enumerate(DELIVERY_VETO_ORDER_4[:i])}
 
+        # ---- what the PRODUCTION pipeline would actually count -----------
+        # Production decides per file: dataset s includes the event iff s's
+        # OWN copy says s accepts it and no higher-priority dataset accepts
+        # it -- using the flags from s's own copy, which is the whole point.
+        # When two copies of one collision disagree (see
+        # check1_*), that can make a collision counted twice or not at all.
+        # This is the number that matters for the delivery, so it is measured
+        # rather than argued about.
+        prefix_or = np.zeros_like(fl)
+        running = np.zeros(fl.shape[0], dtype=bool)
+        for i in range(N_DS):
+            prefix_or[:, i] = running
+            running = running | fl[:, i]
+        rows = np.arange(fl.shape[0])
+        own_flag = fl[rows, src]
+        higher_any = prefix_or[rows, src]
+        included = own_flag & ~higher_any
+        times_counted = np.bincount(inverse[included], minlength=n_uniq)
+        accepted_somewhere = np.zeros(n_uniq, dtype=bool)
+        np.logical_or.at(accepted_somewhere, inverse, fl.any(axis=1))
+        n_lost = int(((times_counted == 0) & accepted_somewhere).sum())
+        n_once = int((times_counted == 1).sum())
+        n_multi = int((times_counted > 1).sum())
+        lost_examples = [[int(k["run"]), int(k["lumi"]), int(k["event"])]
+                         for k in uniq_keys[(times_counted == 0) & accepted_somewhere]
+                         [:args.max_examples]]
+        multi_examples = [[int(k["run"]), int(k["lumi"]), int(k["event"])]
+                          for k in uniq_keys[times_counted > 1][:args.max_examples]]
+
         ex_mismatch = [{"key": [int(k["run"]), int(k["lumi"]), int(k["event"])]}
                        for k in keys[mismatch_row][:args.max_examples]]
         ex_silent = []
@@ -223,6 +252,21 @@ def main():
             "check2_accepted_events_in_no_exclusive_set": n_accepted_no_set,
             "check3_accepted_but_not_read_from_own_files": not_from_own,
             "check3_examples": examples_not_own,
+            "delivery_counting": {
+                "what": ("how many times each collision the production pipeline "
+                         "would actually deliver gets counted, with each dataset "
+                         "deciding from ITS OWN copy -- the consequence of the "
+                         "copy-to-copy differences that check (1) exposes"),
+                "n_counted_exactly_once": n_once,
+                "n_counted_more_than_once": n_multi,
+                "n_accepted_somewhere_but_counted_zero_times": n_lost,
+                "n_counted_more_than_once_per_million_delivered": (
+                    round(1e6 * n_multi / n_once, 2) if n_once else None),
+                "n_lost_per_million_delivered": (
+                    round(1e6 * n_lost / n_once, 2) if n_once else None),
+                "examples_counted_twice": multi_examples,
+                "examples_lost": lost_examples,
+            },
         }
         print(f"\n  mode={mode}", flush=True)
         print(f"    accepted keys {int(accepted_any.sum())}")
@@ -231,6 +275,8 @@ def main():
         print(f"    check1 flag mismatches {n_mismatch}, silent-elsewhere {n_silent}")
         print(f"    check2 two-sets {n_two_sets}, no-set {n_accepted_no_set}")
         print(f"    check3 not-from-own-files {not_from_own}")
+        print(f"    delivery counting: once {n_once}, twice-or-more {n_multi}, "
+              f"lost {n_lost}")
 
     guard_total = sum(int(s.get("trigger_guard_violations", {}).get("total", 0))
                       for s in summaries)

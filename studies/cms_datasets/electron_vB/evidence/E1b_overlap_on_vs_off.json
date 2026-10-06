@@ -1,0 +1,757 @@
+{
+  "what": "E1(b): overlap removal ON vs OFF, event by event",
+  "on_root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_pilot_on_20261006",
+  "off_root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_pilot_off_20261006",
+  "jobs": [
+    "DoubleMuon:0",
+    "DoubleMuon:1",
+    "DoubleMuon:2",
+    "DoubleMuon:3",
+    "SingleMuon:0",
+    "SingleMuon:1",
+    "SingleMuon:2",
+    "SingleMuon:3",
+    "DoubleEG:0",
+    "DoubleEG:1",
+    "DoubleEG:2",
+    "DoubleEG:3",
+    "MuonEG:0",
+    "MuonEG:1",
+    "MuonEG:2",
+    "MuonEG:3"
+  ],
+  "totals": {
+    "n_accepted_on": 5361723,
+    "n_accepted_off": 5361823,
+    "n_only_on": 0,
+    "n_only_off": 100,
+    "n_final_state_changed": 13,
+    "n_flags_changed": 10,
+    "n_differences_without_a_removed_electron": 0,
+    "n_events_with_an_electron_removed": 13,
+    "n_electrons_removed": 13
+  },
+  "every_difference_traces_to_a_removed_electron": true,
+  "per_job": {
+    "DoubleMuon:0": {
+      "status": "ok",
+      "n_accepted_on": 223393,
+      "n_accepted_off": 223393,
+      "n_only_on": 0,
+      "n_only_off": 0,
+      "only_on_examples": [],
+      "only_off_examples": [],
+      "n_final_state_changed": 3,
+      "n_flags_changed": 2,
+      "n_events_with_an_electron_removed": 3,
+      "n_electrons_removed": 3,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "DoubleMuon:1": {
+      "status": "ok",
+      "n_accepted_on": 78138,
+      "n_accepted_off": 78138,
+      "n_only_on": 0,
+      "n_only_off": 0,
+      "only_on_examples": [],
+      "only_off_examples": [],
+      "n_final_state_changed": 0,
+      "n_flags_changed": 0,
+      "n_events_with_an_electron_removed": 0,
+      "n_electrons_removed": 0,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "DoubleMuon:2": {
+      "status": "ok",
+      "n_accepted_on": 218886,
+      "n_accepted_off": 218886,
+      "n_only_on": 0,
+      "n_only_off": 0,
+      "only_on_examples": [],
+      "only_off_examples": [],
+      "n_final_state_changed": 0,
+      "n_flags_changed": 0,
+      "n_events_with_an_electron_removed": 0,
+      "n_electrons_removed": 0,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "DoubleMuon:3": {
+      "status": "ok",
+      "n_accepted_on": 253505,
+      "n_accepted_off": 253505,
+      "n_only_on": 0,
+      "n_only_off": 0,
+      "only_on_examples": [],
+      "only_off_examples": [],
+      "n_final_state_changed": 1,
+      "n_flags_changed": 1,
+      "n_events_with_an_electron_removed": 1,
+      "n_electrons_removed": 1,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "SingleMuon:0": {
+      "status": "ok",
+      "n_accepted_on": 1511878,
+      "n_accepted_off": 1511878,
+      "n_only_on": 0,
+      "n_only_off": 0,
+      "only_on_examples": [],
+      "only_off_examples": [],
+      "n_final_state_changed": 2,
+      "n_flags_changed": 2,
+      "n_events_with_an_electron_removed": 2,
+      "n_electrons_removed": 2,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "SingleMuon:1": {
+      "status": "ok",
+      "n_accepted_on": 1647610,
+      "n_accepted_off": 1647610,
+      "n_only_on": 0,
+      "n_only_off": 0,
+      "only_on_examples": [],
+      "only_off_examples": [],
+      "n_final_state_changed": 2,
+      "n_flags_changed": 2,
+      "n_events_with_an_electron_removed": 2,
+      "n_electrons_removed": 2,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "SingleMuon:2": {
+      "status": "ok",
+      "n_accepted_on": 6919,
+      "n_accepted_off": 6919,
+      "n_only_on": 0,
+      "n_only_off": 0,
+      "only_on_examples": [],
+      "only_off_examples": [],
+      "n_final_state_changed": 0,
+      "n_flags_changed": 0,
+      "n_events_with_an_electron_removed": 0,
+      "n_electrons_removed": 0,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "SingleMuon:3": {
+      "status": "ok",
+      "n_accepted_on": 1227482,
+      "n_accepted_off": 1227482,
+      "n_only_on": 0,
+      "n_only_off": 0,
+      "only_on_examples": [],
+      "only_off_examples": [],
+      "n_final_state_changed": 5,
+      "n_flags_changed": 3,
+      "n_events_with_an_electron_removed": 5,
+      "n_electrons_removed": 5,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "DoubleEG:0": {
+      "status": "ok",
+      "n_accepted_on": 69694,
+      "n_accepted_off": 69694,
+      "n_only_on": 0,
+      "n_only_off": 0,
+      "only_on_examples": [],
+      "only_off_examples": [],
+      "n_final_state_changed": 0,
+      "n_flags_changed": 0,
+      "n_events_with_an_electron_removed": 0,
+      "n_electrons_removed": 0,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "DoubleEG:1": {
+      "status": "ok",
+      "n_accepted_on": 48016,
+      "n_accepted_off": 48016,
+      "n_only_on": 0,
+      "n_only_off": 0,
+      "only_on_examples": [],
+      "only_off_examples": [],
+      "n_final_state_changed": 0,
+      "n_flags_changed": 0,
+      "n_events_with_an_electron_removed": 0,
+      "n_electrons_removed": 0,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "DoubleEG:2": {
+      "status": "ok",
+      "n_accepted_on": 30554,
+      "n_accepted_off": 30554,
+      "n_only_on": 0,
+      "n_only_off": 0,
+      "only_on_examples": [],
+      "only_off_examples": [],
+      "n_final_state_changed": 0,
+      "n_flags_changed": 0,
+      "n_events_with_an_electron_removed": 0,
+      "n_electrons_removed": 0,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "DoubleEG:3": {
+      "status": "ok",
+      "n_accepted_on": 30020,
+      "n_accepted_off": 30021,
+      "n_only_on": 0,
+      "n_only_off": 1,
+      "only_on_examples": [],
+      "only_off_examples": [
+        [
+          281693,
+          1272,
+          2398388371
+        ]
+      ],
+      "n_final_state_changed": 0,
+      "n_flags_changed": 0,
+      "n_events_with_an_electron_removed": 0,
+      "n_electrons_removed": 0,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "MuonEG:0": {
+      "status": "ok",
+      "n_accepted_on": 4524,
+      "n_accepted_off": 4543,
+      "n_only_on": 0,
+      "n_only_off": 19,
+      "only_on_examples": [],
+      "only_off_examples": [
+        [
+          278874,
+          108,
+          219672810
+        ],
+        [
+          278874,
+          214,
+          417574134
+        ],
+        [
+          278874,
+          255,
+          498598706
+        ],
+        [
+          278875,
+          401,
+          722760853
+        ],
+        [
+          278875,
+          569,
+          1012605868
+        ],
+        [
+          278875,
+          725,
+          1326537386
+        ],
+        [
+          279588,
+          103,
+          76321801
+        ],
+        [
+          279588,
+          177,
+          203320138
+        ],
+        [
+          279887,
+          145,
+          135094927
+        ],
+        [
+          279887,
+          238,
+          284822577
+        ],
+        [
+          279887,
+          241,
+          289517924
+        ],
+        [
+          279887,
+          251,
+          305596787
+        ],
+        [
+          279931,
+          163,
+          179037635
+        ],
+        [
+          279931,
+          326,
+          464613424
+        ],
+        [
+          280385,
+          901,
+          1692237520
+        ],
+        [
+          280385,
+          1027,
+          1921727313
+        ],
+        [
+          280385,
+          1097,
+          2061001435
+        ],
+        [
+          280385,
+          1182,
+          2224548259
+        ],
+        [
+          280385,
+          1253,
+          2356922612
+        ]
+      ],
+      "n_final_state_changed": 0,
+      "n_flags_changed": 0,
+      "n_events_with_an_electron_removed": 0,
+      "n_electrons_removed": 0,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "MuonEG:1": {
+      "status": "ok",
+      "n_accepted_on": 1240,
+      "n_accepted_off": 1246,
+      "n_only_on": 0,
+      "n_only_off": 6,
+      "only_on_examples": [],
+      "only_off_examples": [
+        [
+          279694,
+          82,
+          148455061
+        ],
+        [
+          279694,
+          167,
+          299660949
+        ],
+        [
+          279694,
+          222,
+          396145312
+        ],
+        [
+          279694,
+          1436,
+          2659274009
+        ],
+        [
+          279694,
+          1461,
+          2702260491
+        ],
+        [
+          279694,
+          1624,
+          2969299282
+        ]
+      ],
+      "n_final_state_changed": 0,
+      "n_flags_changed": 0,
+      "n_events_with_an_electron_removed": 0,
+      "n_electrons_removed": 0,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "MuonEG:2": {
+      "status": "ok",
+      "n_accepted_on": 4384,
+      "n_accepted_off": 4412,
+      "n_only_on": 0,
+      "n_only_off": 28,
+      "only_on_examples": [],
+      "only_off_examples": [
+        [
+          281641,
+          68,
+          112047915
+        ],
+        [
+          281975,
+          50,
+          75498869
+        ],
+        [
+          281975,
+          79,
+          129910133
+        ],
+        [
+          281975,
+          153,
+          258949668
+        ],
+        [
+          281975,
+          172,
+          292931386
+        ],
+        [
+          282092,
+          1445,
+          2382367496
+        ],
+        [
+          282092,
+          1828,
+          2951626130
+        ],
+        [
+          282092,
+          1960,
+          3204960356
+        ],
+        [
+          282735,
+          1111,
+          2031537027
+        ],
+        [
+          282735,
+          1185,
+          2173814086
+        ],
+        [
+          282814,
+          141,
+          271518304
+        ],
+        [
+          283059,
+          175,
+          326175491
+        ],
+        [
+          283059,
+          198,
+          370476437
+        ],
+        [
+          283059,
+          199,
+          372578287
+        ],
+        [
+          283059,
+          217,
+          405815808
+        ],
+        [
+          283059,
+          339,
+          635639232
+        ],
+        [
+          283270,
+          88,
+          57595916
+        ],
+        [
+          283358,
+          283,
+          515253967
+        ],
+        [
+          283358,
+          356,
+          657235191
+        ],
+        [
+          283358,
+          708,
+          1300045003
+        ]
+      ],
+      "n_final_state_changed": 0,
+      "n_flags_changed": 0,
+      "n_events_with_an_electron_removed": 0,
+      "n_electrons_removed": 0,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    },
+    "MuonEG:3": {
+      "status": "ok",
+      "n_accepted_on": 5480,
+      "n_accepted_off": 5526,
+      "n_only_on": 0,
+      "n_only_off": 46,
+      "only_on_examples": [],
+      "only_off_examples": [
+        [
+          281613,
+          426,
+          249633332
+        ],
+        [
+          281693,
+          812,
+          1546950849
+        ],
+        [
+          281693,
+          950,
+          1805619017
+        ],
+        [
+          281707,
+          191,
+          151128132
+        ],
+        [
+          281707,
+          452,
+          618791349
+        ],
+        [
+          281707,
+          579,
+          857869737
+        ],
+        [
+          281707,
+          782,
+          1230538205
+        ],
+        [
+          281707,
+          783,
+          1232421728
+        ],
+        [
+          281707,
+          792,
+          1248107846
+        ],
+        [
+          281707,
+          822,
+          1301019675
+        ],
+        [
+          281707,
+          1013,
+          1671778991
+        ],
+        [
+          281727,
+          114,
+          192906182
+        ],
+        [
+          281797,
+          386,
+          459828546
+        ],
+        [
+          281797,
+          388,
+          464433542
+        ],
+        [
+          281797,
+          610,
+          878051448
+        ],
+        [
+          281797,
+          1315,
+          2202093778
+        ],
+        [
+          281797,
+          1880,
+          3165273311
+        ],
+        [
+          281797,
+          2067,
+          3435131943
+        ],
+        [
+          281797,
+          2161,
+          3566508238
+        ],
+        [
+          282037,
+          183,
+          345258431
+        ]
+      ],
+      "n_final_state_changed": 0,
+      "n_flags_changed": 0,
+      "n_events_with_an_electron_removed": 0,
+      "n_electrons_removed": 0,
+      "n_differences_without_a_removed_electron": 0,
+      "differences_without_a_removed_electron": []
+    }
+  },
+  "changed_events": [
+    {
+      "job": "DoubleMuon:0",
+      "key": [
+        278875,
+        565,
+        1004889717
+      ],
+      "old_fs": "1e_2m_1j_0b",
+      "new_fs": "0e_2m_1j_0b",
+      "electrons_removed": 1
+    },
+    {
+      "job": "DoubleMuon:0",
+      "key": [
+        279116,
+        260,
+        459097121
+      ],
+      "old_fs": "1e_2m_1j_0b",
+      "new_fs": "0e_2m_1j_0b",
+      "electrons_removed": 1
+    },
+    {
+      "job": "DoubleMuon:0",
+      "key": [
+        279716,
+        385,
+        720832339
+      ],
+      "old_fs": "1e_2m_3j_0b",
+      "new_fs": "0e_2m_3j_0b",
+      "electrons_removed": 1
+    },
+    {
+      "job": "DoubleMuon:3",
+      "key": [
+        283270,
+        271,
+        375548610
+      ],
+      "old_fs": "1e_2m_1j_0b",
+      "new_fs": "0e_2m_1j_0b",
+      "electrons_removed": 1
+    },
+    {
+      "job": "SingleMuon:0",
+      "key": [
+        278820,
+        55,
+        90655726
+      ],
+      "old_fs": "1e_1m_1j_0b",
+      "new_fs": "0e_1m_1j_0b",
+      "electrons_removed": 1
+    },
+    {
+      "job": "SingleMuon:0",
+      "key": [
+        278822,
+        100,
+        148015261
+      ],
+      "old_fs": "1e_1m_0j_0b",
+      "new_fs": "0e_1m_0j_0b",
+      "electrons_removed": 1
+    },
+    {
+      "job": "SingleMuon:1",
+      "key": [
+        278969,
+        159,
+        181637005
+      ],
+      "old_fs": "1e_1m_3j_0b",
+      "new_fs": "0e_1m_3j_0b",
+      "electrons_removed": 1
+    },
+    {
+      "job": "SingleMuon:1",
+      "key": [
+        279694,
+        288,
+        520141244
+      ],
+      "old_fs": "1e_1m_1j_0b",
+      "new_fs": "0e_1m_1j_0b",
+      "electrons_removed": 1
+    },
+    {
+      "job": "SingleMuon:3",
+      "key": [
+        281707,
+        384,
+        497683674
+      ],
+      "old_fs": "1e_1m_1j_0b",
+      "new_fs": "0e_1m_1j_0b",
+      "electrons_removed": 1
+    },
+    {
+      "job": "SingleMuon:3",
+      "key": [
+        281707,
+        695,
+        1065719337
+      ],
+      "old_fs": "1e_2m_1j_0b",
+      "new_fs": "0e_2m_1j_0b",
+      "electrons_removed": 1
+    },
+    {
+      "job": "SingleMuon:3",
+      "key": [
+        281976,
+        158,
+        281710797
+      ],
+      "old_fs": "1e_1m_3j_0b",
+      "new_fs": "0e_1m_3j_0b",
+      "electrons_removed": 1
+    },
+    {
+      "job": "SingleMuon:3",
+      "key": [
+        281976,
+        235,
+        410315063
+      ],
+      "old_fs": "1e_1m_2j_0b",
+      "new_fs": "0e_1m_2j_0b",
+      "electrons_removed": 1
+    },
+    {
+      "job": "SingleMuon:3",
+      "key": [
+        281976,
+        1156,
+        2055710845
+      ],
+      "old_fs": "1e_1m_0j_1b",
+      "new_fs": "0e_1m_0j_1b",
+      "electrons_removed": 1
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "what": "E5 pilot plot inputs",
+  "on_root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_pilot_onboth_20261006",
+  "off_root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_pilot_off_20261006",
+  "plots": {
+    "muoneg_emu_mass": {
+      "file": "E5_muoneg_emu_mass_on_vs_off.png",
+      "n_pairs_off": 344,
+      "n_pairs_on": 246,
+      "n_pairs_below_1gev_off": 59,
+      "n_pairs_below_1gev_on": 0,
+      "n_overflow_above_20gev_off": 15680,
+      "n_overflow_above_20gev_on": 15676
+    },
+    "doubleeg_ee_mass": {
+      "file": "E5_doubleeg_ee_mass_zpeak.png",
+      "n_pairs": {
+        "barrel_barrel": 86067,
+        "other": 63572
+      },
+      "peak_bin_gev": {
+        "barrel_barrel": 90.75,
+        "other": 90.75
+      }
+    },
+    "light_jet_multiplicity": {
+      "file": "E5_light_jet_multiplicity.png",
+      "counts": {
+        "DoubleMuon": {
+          "0": 625476,
+          "1": 113686,
+          "2": 26858,
+          "3": 6099,
+          "4": 1381,
+          "5": 335,
+          "6": 66,
+          "7": 15,
+          "8": 6
+        },
+        "SingleMuon": {
+          "0": 3323365,
+          "1": 817487,
+          "2": 190719,
+          "3": 46418,
+          "4": 11854,
+          "5": 3013,
+          "6": 785,
+          "7": 187,
+          "8": 45,
+          "9": 11,
+          "10": 4,
+          "11": 1
+        },
+        "DoubleEG": {
+          "0": 126879,
+          "1": 20542,
+          "2": 5114,
+          "3": 1269,
+          "4": 266,
+          "5": 62,
+          "6": 11,
+          "7": 8
+        },
+        "MuonEG": {
+          "0": 7025,
+          "1": 5000,
+          "2": 2392,
+          "3": 831,
+          "4": 280,
+          "5": 75,
+          "6": 20,
+          "7": 2,
+          "8": 3
+        }
+      }
+    },
+    "delivery_examples": {
+      "file": "E5_delivery_examples_with_electrons.png",
+      "root_file": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/four_dataset_pilot_20261006/four_dataset_matched_vB_pilot_bumpnet.root",
+      "n_histograms_in_file": 876,
+      "n_with_electrons": 306,
+      "examples": [
+        {
+          "name": "ROI_mass_e0e1j0_cat_2ex_0mx_1jx_0bx_width_10.0",
+          "n_entries": 15756,
+          "n_filled_bins": 79
+        },
+        {
+          "name": "ROI_mass_e0j0_cat_2ex_0mx_1jx_0bx_width_10.0",
+          "n_entries": 14752,
+          "n_filled_bins": 66
+        },
+        {
+          "name": "ROI_mass_e1j0_cat_2ex_0mx_1jx_0bx_width_10.0",
+          "n_entries": 13201,
+          "n_filled_bins": 55
+        },
+        {
+          "name": "ROI_mass_e0e1j0_cat_2ex_0mx_2jx_0bx_width_10.0",
+          "n_entries": 4061,
+          "n_filled_bins": 67
+        }
+      ]
+    }
+  }
+}

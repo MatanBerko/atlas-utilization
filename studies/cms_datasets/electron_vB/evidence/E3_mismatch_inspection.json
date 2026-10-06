@@ -1,0 +1,434 @@
+{
+  "what": "why a handful of closure events get different flags in different datasets' copies of the same collision",
+  "n_keys_inspected": 3,
+  "keys": [
+    {
+      "key": [
+        281707,
+        478,
+        663374369
+      ],
+      "held_by": [
+        [
+          "DoubleMuon",
+          "H",
+          3
+        ],
+        [
+          "MuonEG",
+          "H",
+          11
+        ],
+        [
+          "SingleMuon",
+          "H",
+          30
+        ]
+      ],
+      "copies": [
+        {
+          "dataset": "DoubleMuon",
+          "era": "H",
+          "file_index": 3,
+          "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/2510000/7F53D1DE-439E-AD48-871E-D3458DABA798.root",
+          "n_copies_in_file": 1,
+          "hlt": {
+            "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": false,
+            "HLT_IsoMu24": true,
+            "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+            "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+            "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": false,
+            "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": false
+          },
+          "n_raw": {
+            "Muon": 2,
+            "Electron": 1,
+            "Jet": 7,
+            "TrigObj": 7
+          },
+          "n_selected": {
+            "muons": 1,
+            "electrons_pre_removal": 0,
+            "electrons": 0
+          },
+          "n_electrons_removed": 0,
+          "selected_muon_pt": [
+            44.8911
+          ],
+          "selected_electron_pt": [],
+          "raw_muon_pt": [
+            44.8911,
+            26.5962
+          ],
+          "raw_electron_pt": [
+            11.2253
+          ],
+          "acceptance_leading_only": {
+            "DoubleMuon": false,
+            "SingleMuon": true,
+            "DoubleEG": false,
+            "MuonEG": false
+          },
+          "acceptance_both": {
+            "DoubleMuon": false,
+            "SingleMuon": true,
+            "DoubleEG": false,
+            "MuonEG": false
+          }
+        },
+        {
+          "dataset": "MuonEG",
+          "era": "H",
+          "file_index": 11,
+          "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/MuonEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/280000/A822CD17-993E-F644-9A6D-69E68C0C2B83.root",
+          "n_copies_in_file": 1,
+          "hlt": {
+            "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": false,
+            "HLT_IsoMu24": true,
+            "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+            "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+            "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": false,
+            "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": false
+          },
+          "n_raw": {
+            "Muon": 2,
+            "Electron": 1,
+            "Jet": 7,
+            "TrigObj": 7
+          },
+          "n_selected": {
+            "muons": 2,
+            "electrons_pre_removal": 0,
+            "electrons": 0
+          },
+          "n_electrons_removed": 0,
+          "selected_muon_pt": [
+            44.8911,
+            26.5962
+          ],
+          "selected_electron_pt": [],
+          "raw_muon_pt": [
+            44.8911,
+            26.5962
+          ],
+          "raw_electron_pt": [
+            11.1976
+          ],
+          "acceptance_leading_only": {
+            "DoubleMuon": true,
+            "SingleMuon": true,
+            "DoubleEG": false,
+            "MuonEG": false
+          },
+          "acceptance_both": {
+            "DoubleMuon": true,
+            "SingleMuon": true,
+            "DoubleEG": false,
+            "MuonEG": false
+          }
+        },
+        {
+          "dataset": "SingleMuon",
+          "era": "H",
+          "file_index": 30,
+          "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/E6C5C5AA-946B-A34C-ABB5-4B14AA0E9ED7.root",
+          "n_copies_in_file": 1,
+          "hlt": {
+            "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": false,
+            "HLT_IsoMu24": true,
+            "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+            "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+            "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": false,
+            "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": false
+          },
+          "n_raw": {
+            "Muon": 2,
+            "Electron": 1,
+            "Jet": 7,
+            "TrigObj": 7
+          },
+          "n_selected": {
+            "muons": 1,
+            "electrons_pre_removal": 0,
+            "electrons": 0
+          },
+          "n_electrons_removed": 0,
+          "selected_muon_pt": [
+            44.8911
+          ],
+          "selected_electron_pt": [],
+          "raw_muon_pt": [
+            44.8911,
+            26.5962
+          ],
+          "raw_electron_pt": [
+            11.2253
+          ],
+          "acceptance_leading_only": {
+            "DoubleMuon": false,
+            "SingleMuon": true,
+            "DoubleEG": false,
+            "MuonEG": false
+          },
+          "acceptance_both": {
+            "DoubleMuon": false,
+            "SingleMuon": true,
+            "DoubleEG": false,
+            "MuonEG": false
+          }
+        }
+      ],
+      "hlt_identical_across_copies": true,
+      "selected_objects_identical_across_copies": false,
+      "acceptance_identical_across_copies": false,
+      "differing_hlt_paths": []
+    },
+    {
+      "key": [
+        281707,
+        104,
+        29222538
+      ],
+      "held_by": [
+        [
+          "DoubleMuon",
+          "H",
+          2
+        ],
+        [
+          "SingleMuon",
+          "H",
+          19
+        ]
+      ],
+      "copies": [
+        {
+          "dataset": "DoubleMuon",
+          "era": "H",
+          "file_index": 2,
+          "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/2510000/790F8A75-8256-3B46-8209-850DE0BE3C77.root",
+          "n_copies_in_file": 1,
+          "hlt": {
+            "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": false,
+            "HLT_IsoMu24": true,
+            "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+            "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+            "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": false,
+            "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": false
+          },
+          "n_raw": {
+            "Muon": 3,
+            "Electron": 0,
+            "Jet": 5,
+            "TrigObj": 7
+          },
+          "n_selected": {
+            "muons": 1,
+            "electrons_pre_removal": 0,
+            "electrons": 0
+          },
+          "n_electrons_removed": 0,
+          "selected_muon_pt": [
+            26.9242
+          ],
+          "selected_electron_pt": [],
+          "raw_muon_pt": [
+            28.5928,
+            26.9242,
+            3.8274
+          ],
+          "raw_electron_pt": [],
+          "acceptance_leading_only": {
+            "DoubleMuon": false,
+            "SingleMuon": false,
+            "DoubleEG": false,
+            "MuonEG": false
+          },
+          "acceptance_both": {
+            "DoubleMuon": false,
+            "SingleMuon": false,
+            "DoubleEG": false,
+            "MuonEG": false
+          }
+        },
+        {
+          "dataset": "SingleMuon",
+          "era": "H",
+          "file_index": 19,
+          "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/788CA5CB-13E0-544A-8427-33E4591CF20B.root",
+          "n_copies_in_file": 1,
+          "hlt": {
+            "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": false,
+            "HLT_IsoMu24": true,
+            "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+            "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+            "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": false,
+            "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": false
+          },
+          "n_raw": {
+            "Muon": 3,
+            "Electron": 0,
+            "Jet": 5,
+            "TrigObj": 7
+          },
+          "n_selected": {
+            "muons": 2,
+            "electrons_pre_removal": 0,
+            "electrons": 0
+          },
+          "n_electrons_removed": 0,
+          "selected_muon_pt": [
+            28.5929,
+            26.9241
+          ],
+          "selected_electron_pt": [],
+          "raw_muon_pt": [
+            28.5929,
+            26.9241,
+            3.8274
+          ],
+          "raw_electron_pt": [],
+          "acceptance_leading_only": {
+            "DoubleMuon": true,
+            "SingleMuon": true,
+            "DoubleEG": false,
+            "MuonEG": false
+          },
+          "acceptance_both": {
+            "DoubleMuon": true,
+            "SingleMuon": true,
+            "DoubleEG": false,
+            "MuonEG": false
+          }
+        }
+      ],
+      "hlt_identical_across_copies": true,
+      "selected_objects_identical_across_copies": false,
+      "acceptance_identical_across_copies": false,
+      "differing_hlt_paths": []
+    },
+    {
+      "key": [
+        281707,
+        108,
+        35185703
+      ],
+      "held_by": [
+        [
+          "MuonEG",
+          "H",
+          11
+        ],
+        [
+          "SingleMuon",
+          "H",
+          59
+        ]
+      ],
+      "copies": [
+        {
+          "dataset": "MuonEG",
+          "era": "H",
+          "file_index": 11,
+          "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/MuonEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/280000/A822CD17-993E-F644-9A6D-69E68C0C2B83.root",
+          "n_copies_in_file": 1,
+          "hlt": {
+            "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": false,
+            "HLT_IsoMu24": true,
+            "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": false,
+            "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": false,
+            "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+            "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true
+          },
+          "n_raw": {
+            "Muon": 1,
+            "Electron": 2,
+            "Jet": 6,
+            "TrigObj": 11
+          },
+          "n_selected": {
+            "muons": 1,
+            "electrons_pre_removal": 0,
+            "electrons": 0
+          },
+          "n_electrons_removed": 0,
+          "selected_muon_pt": [
+            36.7483
+          ],
+          "selected_electron_pt": [],
+          "raw_muon_pt": [
+            36.7483
+          ],
+          "raw_electron_pt": [
+            157.7096,
+            140.5188
+          ],
+          "acceptance_leading_only": {
+            "DoubleMuon": false,
+            "SingleMuon": true,
+            "DoubleEG": false,
+            "MuonEG": false
+          },
+          "acceptance_both": {
+            "DoubleMuon": false,
+            "SingleMuon": true,
+            "DoubleEG": false,
+            "MuonEG": false
+          }
+        },
+        {
+          "dataset": "SingleMuon",
+          "era": "H",
+          "file_index": 59,
+          "file_url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/70000/874B6634-10CD-4541-97E6-7A97BA44F4C6.root",
+          "n_copies_in_file": 1,
+          "hlt": {
+            "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": false,
+            "HLT_IsoMu24": true,
+            "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": false,
+            "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": false,
+            "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+            "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true
+          },
+          "n_raw": {
+            "Muon": 1,
+            "Electron": 2,
+            "Jet": 6,
+            "TrigObj": 11
+          },
+          "n_selected": {
+            "muons": 0,
+            "electrons_pre_removal": 0,
+            "electrons": 0
+          },
+          "n_electrons_removed": 0,
+          "selected_muon_pt": [],
+          "selected_electron_pt": [],
+          "raw_muon_pt": [
+            36.7483
+          ],
+          "raw_electron_pt": [
+            158.1318,
+            140.4051
+          ],
+          "acceptance_leading_only": {
+            "DoubleMuon": false,
+            "SingleMuon": false,
+            "DoubleEG": false,
+            "MuonEG": false
+          },
+          "acceptance_both": {
+            "DoubleMuon": false,
+            "SingleMuon": false,
+            "DoubleEG": false,
+            "MuonEG": false
+          }
+        }
+      ],
+      "hlt_identical_across_copies": true,
+      "selected_objects_identical_across_copies": false,
+      "acceptance_identical_across_copies": false,
+      "differing_hlt_paths": []
+    }
+  ]
+}
