@@ -142,6 +142,7 @@ from studies.m0m1j0_cms.histograms import (  # noqa: E402
 )
 from studies.cms_datasets.deliver.build_dataset_delivery import (  # noqa: E402
     build_sig_to_bumpnet,
+    width_suffix,
     write_root_file,
     write_cropped_root_file,
     manifest_entry,
@@ -282,6 +283,9 @@ WHAT IS IN IT
 {n_delivered} histograms over {n_final_states} distinct final-state
 categories, on the unchanged fixed grid: 0-10000 GeV in 10 GeV bins.
 
+Every histogram is named ROI_mass_<combination>_cat_<final state>{width_suffix},
+e.g. ROI_mass_m0m1_cat_0ex_2mx_5jx_1bx{width_suffix}.
+
 THREE THINGS ARE DIFFERENT FROM THE 1 OCT DELIVERY
 --------------------------------------------------
 1. EXACT LIGHT-JET FINAL STATES. Each light-jet multiplicity has its own
@@ -400,13 +404,16 @@ def _build_no_bin_cut_delivery(args, out_dir: Path, dm_paths, sm_paths, sig_to_b
             sys.exit(1)
 
     print("\n=== Writing ROOT files ===")
-    write_root_file(path_main, hists)
-    write_cropped_root_file(path_cropped, hists)
+    upstream_suffix = getattr(args, "upstream_width_suffix", False)
+    write_root_file(path_main, hists, upstream_width_suffix=upstream_suffix)
+    write_cropped_root_file(path_cropped, hists, upstream_width_suffix=upstream_suffix)
     print(f"wrote {path_main} ({len(hists)} histograms, uncropped)")
     print(f"wrote {path_cropped} ({len(hists)} histograms, cropped <- BumpNet uses this one)")
 
     print("\n=== Writing manifest ===")
-    manifest = [manifest_entry(n, im_str_by_name[n], *all_hists[n]) for n in delivered]
+    manifest = [manifest_entry(n, im_str_by_name[n], *all_hists[n],
+                               upstream_width_suffix=upstream_suffix)
+                for n in delivered]
     (out_dir / f"manifest_{args.out_prefix}.json").write_text(json.dumps(manifest, indent=2))
 
     n_final_states = len({
@@ -434,6 +441,8 @@ def _build_no_bin_cut_delivery(args, out_dir: Path, dm_paths, sm_paths, sig_to_b
                         "0ex_2mx_5jx_1bx)" if args.legacy_gt_labels
                         else "as written in the shards"),
         "legacy_gt_label_conversion_applied": bool(args.legacy_gt_labels),
+        "width_suffix": width_suffix(upstream=upstream_suffix),
+        "width_suffix_matches_upstream": bool(upstream_suffix),
         "per_histogram_min_entries": min_entries,
         "per_histogram_min_entries_source": (
             "upstream: no minimum, a histogram is written whenever it has >=1 entry"
@@ -476,6 +485,7 @@ def _build_no_bin_cut_delivery(args, out_dir: Path, dm_paths, sm_paths, sig_to_b
         ).format(min_entries, n_excl_post, len(excluded_by_hist_min_events))
 
     readme = README_TEMPLATE.format(
+        width_suffix=width_suffix(upstream=upstream_suffix),
         min_entries_note=min_entries_note,
         cropped=path_cropped.name,
         uncropped=path_main.name,
@@ -520,6 +530,13 @@ def main():
              "(0e_2m_5j_0g_0t_1b). Convert them to the upstream form "
              "(0e_2m_5j_1b) as they are read. Aborts on any non-zero photon or "
              "tau count and checks no two names collapse onto one. Off by default.",
+    )
+    p.add_argument(
+        "--upstream-width-suffix", action="store_true",
+        help="width-suffix task: end every histogram name with the suffix UPSTREAM "
+             "writes, built from the configured bin width the way upstream holds it "
+             "(a float), i.e. _width_10.0 rather than _width_10. Off by default, so "
+             "every pre-existing invocation keeps producing exactly what it did.",
     )
     p.add_argument(
         "--no-hist-min-entries", action="store_true",
@@ -614,18 +631,23 @@ def main():
     path_a_cropped = out_dir / f"{args.out_prefix}_bumpnet_min31bins_cropped.root"
     path_b_cropped = out_dir / f"{args.out_prefix}_bumpnet_min26bins_cropped.root"
 
-    write_root_file(path_a, hists_a)
-    write_root_file(path_b, hists_b)
-    write_cropped_root_file(path_a_cropped, hists_a)
-    write_cropped_root_file(path_b_cropped, hists_b)
+    upstream_suffix = args.upstream_width_suffix
+    write_root_file(path_a, hists_a, upstream_width_suffix=upstream_suffix)
+    write_root_file(path_b, hists_b, upstream_width_suffix=upstream_suffix)
+    write_cropped_root_file(path_a_cropped, hists_a, upstream_width_suffix=upstream_suffix)
+    write_cropped_root_file(path_b_cropped, hists_b, upstream_width_suffix=upstream_suffix)
     print(f"wrote {path_a} ({len(hists_a)} histograms)")
     print(f"wrote {path_b} ({len(hists_b)} histograms)")
     print(f"wrote {path_a_cropped} ({len(hists_a)} histograms, cropped)")
     print(f"wrote {path_b_cropped} ({len(hists_b)} histograms, cropped)")
 
     print("\n=== Writing manifests ===")
-    manifest_a = [manifest_entry(n, im_str_by_name[n], *all_hists[n]) for n in sorted(set_a)]
-    manifest_b = [manifest_entry(n, im_str_by_name[n], *all_hists[n]) for n in sorted(set_b)]
+    manifest_a = [manifest_entry(n, im_str_by_name[n], *all_hists[n],
+                                 upstream_width_suffix=upstream_suffix)
+                  for n in sorted(set_a)]
+    manifest_b = [manifest_entry(n, im_str_by_name[n], *all_hists[n],
+                                 upstream_width_suffix=upstream_suffix)
+                  for n in sorted(set_b)]
     (out_dir / f"manifest_{args.out_prefix}_min31bins.json").write_text(json.dumps(manifest_a, indent=2))
     (out_dir / f"manifest_{args.out_prefix}_min26bins.json").write_text(json.dumps(manifest_b, indent=2))
 

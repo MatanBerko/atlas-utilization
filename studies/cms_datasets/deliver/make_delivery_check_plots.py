@@ -94,6 +94,18 @@ def is_emu_category(final_state_category: str) -> bool:
     return n_e >= 1 and n_m >= 1
 
 
+def _resolve_root_key(root_path, name):
+    """Find the key for `name` in a delivery file, whichever width suffix it
+    was written with. Raises if neither form is present."""
+    with uproot.open(str(root_path)) as f:
+        present = {k.split(";")[0] for k in f.keys()}
+    for suffix in ("_width_10.0", "_width_10"):
+        candidate = f"ROI_{name}{suffix}"
+        if candidate in present:
+            return candidate
+    raise KeyError(f"no ROI_{name}_width_* key in {root_path}")
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--manifest-min31", required=True)
@@ -195,7 +207,12 @@ def main():
             print("NOTE: no zero-selected-lepton histograms found in the >25-bin manifest.")
 
     # Crop comparison: same histogram, uncropped vs cropped.
-    key = f"ROI_{largest['name']}_width_10"
+    # The width suffix depends on which rule the delivery was built with
+    # (_width_10 for the pre-width-suffix-task deliveries, _width_10.0 for the
+    # upstream rule), so take the key from the manifest when it is recorded
+    # there and otherwise find whichever form the file actually contains --
+    # never hard-code one.
+    key = largest.get("root_key") or _resolve_root_key(root_a, largest["name"])
     f_un = uproot.open(str(root_a))
     f_cr = uproot.open(str(args.root_min31_cropped))
     h_un, h_cr = f_un[key], f_cr[key]
