@@ -307,7 +307,14 @@ DOUBLEEG_THRESHOLD_MODES = ("leading_only", "both")
 # criterion (Delta_region = eff_sub(>30) - eff_sub(25-30) <= 2.0 pp in
 # BOTH barrel and endcap => "leading_only", else "both"). Matan has the
 # final say; see studies/cms_datasets/electron_vB/REPORT.md.
-DOUBLEEG_THRESHOLD_MODE_DEFAULT = "leading_only"
+#
+# MEASURED (VERIFIED BY RUNNING, 133 DoubleEG files, 6,156,955 population
+# events, studies/cms_datasets/electron_vB/evidence/stepD_doubleeg_efficiency.json):
+#   barrel Delta = 3.40 pp, 68% interval [3.38, 3.42]
+#   endcap Delta = 18.11 pp, 68% interval [18.04, 18.19]
+# Both are above 2.0 pp and 2.0 pp lies outside both 68% intervals, so the
+# criterion selects "both" and the result is NOT borderline.
+DOUBLEEG_THRESHOLD_MODE_DEFAULT = "both"
 
 # D5: MuonEG acceptance. The muon leg cannot be trigger-matched in 2016
 # NanoAOD (ELECTRON_MATCHING_SPEC.md section 4) -- it is taken from the
