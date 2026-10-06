@@ -263,7 +263,42 @@ scratch copies. The 209 per-file production jobs were not re-run.
 
 ---
 
-## 6. Noted in passing, not changed
+## 6. One thing I checked carefully, because it looked wrong at first
+
+A final audit showed that the 209 job **directories** under the 5 Oct
+production, and the 4 pilot run directories, had a modification timestamp
+from today. Since those outputs are supposed to be strictly read-only, I
+chased it down rather than assume it was harmless.
+
+**No data was changed.** What happened: reading a SQLite shard through the
+shared helper opens it in read-write mode, and SQLite then creates two small
+temporary journal files next to it and deletes them again when it closes.
+Creating and deleting a file inside a directory updates that *directory's*
+timestamp, but touches nothing inside the shard. Evidence, all **VERIFIED BY
+RUNNING**:
+
+- **Not one `.sqlite` file was written today.** The newest shard timestamp
+  anywhere in either tree is 5 Oct 22:10.
+- **No leftover journal files** remain (zero `-wal`/`-shm` files).
+- **The contents are provably identical**: this delivery re-read those exact
+  shards and reproduced all 1,329 of the 5 Oct histograms with byte-identical
+  bin contents. That could not happen if the data had been altered.
+
+Two things worth the group's attention, neither changed here:
+
+- The helper that lists a shard's contents opens the file read-write even
+  though it only reads. That is shared code, which this task may not modify,
+  so it is reported rather than fixed. It is a latent risk: a crash at the
+  wrong moment could in principle leave a stray journal file beside a
+  supposedly read-only shard. Everything this task did for actual data
+  reading used a strict read-only connection (`mode=ro&immutable=1`).
+- Separately, each job's recorded `*_shard_size_mb` is about 5% smaller than
+  the file on disk, consistently and for every shard — including ones nothing
+  has opened since 5 Oct. That is a 5 Oct bookkeeping artefact (the size was
+  recorded before the database was finally flushed), not a sign of any later
+  change. Worth knowing so nobody mistakes it for one, as I briefly did.
+
+## 7. Noted in passing, not changed
 
 - The validation scripts from the 5 Oct task
   (`studies/cms_datasets/matching/vB_exactlabels/scripts/`) still expect the
