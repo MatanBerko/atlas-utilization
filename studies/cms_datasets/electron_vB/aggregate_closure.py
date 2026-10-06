@@ -5,7 +5,10 @@ E3 aggregation: the four closure checks, over all per-file closure parts.
 Checks, exactly as E3 specifies them:
   (1) For every (run, lumi, event) seen in MORE THAN ONE dataset's files,
       the four acceptance flags are identical whichever file it was read
-      from. Mismatches expected 0.
+      from. Mismatches expected 0. Two ways of being wrong are counted
+      separately: two files reporting DIFFERENT flags for the same event,
+      and one file reporting an event accepted while another dataset that
+      HOLDS the same event is silent about it.
   (2) Every event accepted by >= 1 dataset is in exactly ONE exclusive
       set, namely the highest-priority accepting dataset's. Zero events in
       two sets, zero accepted events in no set.
@@ -14,6 +17,9 @@ Checks, exactly as E3 specifies them:
 
 Both DoubleEG threshold modes are checked.
 
+Fully vectorised: at the scale this runs at (millions of accepted rows over
+tens of millions of events) a per-event Python dict does not finish.
+
 Usage:
     python aggregate_closure.py --parts-dir /storage/.../closure/parts \
         --out studies/cms_datasets/electron_vB/evidence/E3_closure.json
@@ -21,10 +27,8 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import csv
 import json
 import sys
-from collections import defaultdict
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -36,13 +40,53 @@ from studies.cms_datasets.cluster.run_dataset_on_file import DELIVERY_VETO_ORDER
 
 MODES = ("leading_only", "both")
 KEY_DTYPE = np.dtype([("run", "u4"), ("lumi", "u4"), ("event", "u8")])
+N_DS = len(DELIVERY_VETO_ORDER_4)
 
 
-def attributed_from_flags(flags: dict) -> str:
-    for label in DELIVERY_VETO_ORDER_4:
-        if flags[label]:
-            return label
-    return ""
+def _as_keys(run, lumi, event) -> np.ndarray:
+    out = np.zeros(len(run), dtype=KEY_DTYPE)
+    out["run"] = run
+    out["lumi"] = lumi
+    out["event"] = event
+    return out
+
+
+def load_accepted(parts: Path):
+    """Concatenated accepted rows: keys, per-mode flag matrices, source index.
+
+    The source dataset is taken from the FILE NAME, not from the csv column:
+    one file is one (dataset, era, file index), so every row in it has the
+    same source. Only the numeric columns are parsed.
+    """
+    keys_parts, flag_parts, src_parts = [], {m: [] for m in MODES}, []
+    n_rows = 0
+    files = sorted(parts.glob("accepted_*.csv"))
+    for f in files:
+        dataset = f.stem[len("accepted_"):].split("_")[0]
+        src = DELIVERY_VETO_ORDER_4.index(dataset)
+        # columns: run,lumi,event,source_dataset,<4 flags mode0>,<4 flags mode1>,
+        #          <attributed mode0>,<attributed mode1>
+        cols = (0, 1, 2) + tuple(range(4, 4 + N_DS * len(MODES)))
+        try:
+            arr = np.loadtxt(f, delimiter=",", skiprows=1, usecols=cols, dtype=np.int64,
+                             ndmin=2)
+        except (StopIteration, ValueError):
+            arr = np.zeros((0, len(cols)), dtype=np.int64)
+        if arr.size == 0:
+            continue
+        keys_parts.append(_as_keys(arr[:, 0], arr[:, 1], arr[:, 2]))
+        for i, mode in enumerate(MODES):
+            lo = 3 + i * N_DS
+            flag_parts[mode].append(arr[:, lo:lo + N_DS].astype(bool))
+        src_parts.append(np.full(arr.shape[0], src, dtype=np.int8))
+        n_rows += arr.shape[0]
+    if not keys_parts:
+        return (np.zeros(0, dtype=KEY_DTYPE),
+                {m: np.zeros((0, N_DS), dtype=bool) for m in MODES},
+                np.zeros(0, dtype=np.int8), 0, len(files))
+    return (np.concatenate(keys_parts),
+            {m: np.concatenate(flag_parts[m]) for m in MODES},
+            np.concatenate(src_parts), n_rows, len(files))
 
 
 def main():
@@ -57,185 +101,164 @@ def main():
                  for f in sorted(parts.glob("summary_*.json"))]
     if not summaries:
         raise SystemExit(f"no closure parts under {parts}")
-    print(f"{len(summaries)} per-file closure parts")
+    print(f"{len(summaries)} per-file closure parts", flush=True)
 
-    # ---- keys per dataset, and within-dataset duplicates (check 4) -----
-    keys_by_dataset = defaultdict(list)
-    files_per_dataset = defaultdict(int)
-    for f in sorted(parts.glob("keys_*.npz")):
-        stem = f.stem[len("keys_"):]
-        dataset = stem.split("_")[0]
-        with np.load(f) as z:
-            keys_by_dataset[dataset].append(z["keys"])
-        files_per_dataset[dataset] += 1
-
+    # ---- every event of the run, per dataset: checks (3) and (4) --------
     per_dataset = {}
     unique_by_dataset = {}
-    for dataset, arrays in keys_by_dataset.items():
+    for label in DELIVERY_VETO_ORDER_4:
+        arrays = []
+        n_files = 0
+        for f in sorted(parts.glob(f"keys_{label}_*.npz")):
+            with np.load(f) as z:
+                arrays.append(z["keys"])
+            n_files += 1
         allk = np.concatenate(arrays) if arrays else np.zeros(0, dtype=KEY_DTYPE)
         uniq, counts = np.unique(allk, return_counts=True)
-        dup = int((counts > 1).sum())
-        per_dataset[dataset] = {
-            "n_files": files_per_dataset[dataset],
+        per_dataset[label] = {
+            "n_files": n_files,
             "n_events_in_run": int(allk.size),
             "n_distinct_keys": int(uniq.size),
-            "n_duplicate_keys_within_dataset": dup,
+            "n_duplicate_keys_within_dataset": int((counts > 1).sum()),
             "n_extra_rows_from_duplicates": int(allk.size - uniq.size),
         }
-        unique_by_dataset[dataset] = np.sort(uniq)
-        print(f"  {dataset:12s} {allk.size:9d} events, {uniq.size:9d} distinct, "
-              f"{dup} duplicated keys")
+        unique_by_dataset[label] = uniq          # np.unique returns it sorted
+        print(f"  {label:12s} {allk.size:9d} events, {uniq.size:9d} distinct, "
+              f"{int((counts > 1).sum())} duplicated", flush=True)
 
-    # ---- accepted rows, flags per (key, source dataset) ----------------
-    # flags_by_key[mode][key] = {label: bool}; sources_by_key[key] = {dataset}
-    flags_by_key = {m: {} for m in MODES}
-    reported_by = defaultdict(set)
-    mismatch_examples = {m: [] for m in MODES}
-    n_mismatch_between_files = {m: 0 for m in MODES}
-    n_accepted_rows = 0
+    def contains(label: str, keys: np.ndarray) -> np.ndarray:
+        uniq = unique_by_dataset[label]
+        if uniq.size == 0 or keys.size == 0:
+            return np.zeros(keys.size, dtype=bool)
+        pos = np.clip(np.searchsorted(uniq, keys), 0, uniq.size - 1)
+        return uniq[pos] == keys
 
-    for f in sorted(parts.glob("accepted_*.csv")):
-        with open(f, newline="", encoding="utf-8") as fh:
-            for row in csv.DictReader(fh):
-                n_accepted_rows += 1
-                key = (int(row["run"]), int(row["lumi"]), int(row["event"]))
-                reported_by[key].add(row["source_dataset"])
-                for mode in MODES:
-                    flags = {l: row[f"{mode}_{l}"] == "1" for l in DELIVERY_VETO_ORDER_4}
-                    prev = flags_by_key[mode].get(key)
-                    if prev is None:
-                        flags_by_key[mode][key] = flags
-                    elif prev != flags:
-                        n_mismatch_between_files[mode] += 1
-                        if len(mismatch_examples[mode]) < args.max_examples:
-                            mismatch_examples[mode].append(
-                                {"key": key, "first": prev, "second": flags,
-                                 "second_source": row["source_dataset"]})
+    # ---- the accepted rows ---------------------------------------------
+    keys, flags_by_mode, src, n_rows, n_csv = load_accepted(parts)
+    print(f"  {n_rows} accepted rows from {n_csv} csv files", flush=True)
 
-    print(f"  {n_accepted_rows} accepted rows, "
-          f"{len(flags_by_key[MODES[0]])} distinct accepted keys")
+    uniq_keys, inverse = np.unique(keys, return_inverse=True)
+    n_uniq = uniq_keys.size
+    print(f"  {n_uniq} distinct accepted keys", flush=True)
 
-    def contains(dataset: str, keys_list) -> np.ndarray:
-        """Boolean: is each key present in `dataset`'s own files?"""
-        arr = np.array(keys_list, dtype=KEY_DTYPE)
-        uniq = unique_by_dataset.get(dataset, np.zeros(0, dtype=KEY_DTYPE))
-        if uniq.size == 0:
-            return np.zeros(arr.size, dtype=bool)
-        pos = np.searchsorted(uniq, arr)
-        pos = np.clip(pos, 0, uniq.size - 1)
-        return uniq[pos] == arr
+    # which datasets REPORTED each distinct key (i.e. read it and found it
+    # accepted in at least one mode)
+    reported = np.zeros((n_uniq, N_DS), dtype=bool)
+    reported[inverse, src] = True
 
     results = {}
     for mode in MODES:
-        accepted_keys = sorted(flags_by_key[mode])
-        accepted_keys = [k for k in accepted_keys
-                         if any(flags_by_key[mode][k].values())]
-        keys_arr = accepted_keys
+        fl = flags_by_mode[mode]
 
-        # check 1: an event accepted in one file must be reported, with the
-        # same flags, by every file that CONTAINS it.
-        n_missing_from_other_file = 0
-        missing_examples = []
-        if keys_arr:
-            silent_any = np.zeros(len(keys_arr), dtype=bool)
-            silent_where = [None] * len(keys_arr)
-            for dataset in unique_by_dataset:
-                present = contains(dataset, keys_arr)
-                reported = np.array([dataset in reported_by[k] for k in keys_arr])
-                silent = present & ~reported
-                for i in np.flatnonzero(silent & ~silent_any):
-                    silent_where[i] = dataset
-                silent_any |= silent
-            n_missing_from_other_file = int(silent_any.sum())
-            for i in np.flatnonzero(silent_any)[:args.max_examples]:
-                missing_examples.append({"key": keys_arr[i], "silent_in": silent_where[i],
-                                         "reported_by": sorted(reported_by[keys_arr[i]])})
+        # check (1a): two rows for the same event must carry the same flags.
+        # Compare every row against the first row of its own key group.
+        order = np.argsort(inverse, kind="stable")
+        inv_sorted = inverse[order]
+        first_of_group = np.zeros(n_uniq, dtype=np.int64)
+        starts = np.flatnonzero(np.r_[True, inv_sorted[1:] != inv_sorted[:-1]])
+        first_of_group[inv_sorted[starts]] = order[starts]
+        mismatch_row = np.any(fl != fl[first_of_group[inverse]], axis=1)
+        n_mismatch = int(mismatch_row.sum())
 
-        # check 2: exactly one exclusive set
-        n_in_two_sets = 0
-        n_accepted_in_no_set = 0
-        attributed_counts = {l: 0 for l in DELIVERY_VETO_ORDER_4}
-        for key in keys_arr:
-            label = attributed_from_flags(flags_by_key[mode][key])
-            if label:
-                attributed_counts[label] += 1
-            else:
-                n_accepted_in_no_set += 1
-        # "in two sets" is structurally impossible given one attribution per
-        # key, so it is verified rather than assumed: the sum of the
-        # per-dataset exclusive counts must equal the number of accepted keys.
-        if sum(attributed_counts.values()) != len(keys_arr) - n_accepted_in_no_set:
-            n_in_two_sets = abs(sum(attributed_counts.values())
-                                - (len(keys_arr) - n_accepted_in_no_set))
+        # per-key flags (the group's first row; identical to all of them
+        # unless n_mismatch > 0, which is reported)
+        key_flags = fl[first_of_group]
+        accepted_any = key_flags.any(axis=1)
 
-        # check 3: accepted by D => read from D's own files
-        n_not_from_own_files = {l: 0 for l in DELIVERY_VETO_ORDER_4}
-        not_own_examples = []
-        for label in DELIVERY_VETO_ORDER_4:
-            ks = [k for k in keys_arr if flags_by_key[mode][k][label]]
-            if not ks:
-                continue
-            present = contains(label, ks)
-            n_not_from_own_files[label] = int((~present).sum())
-            for k, ok in zip(ks, present):
-                if not ok and len(not_own_examples) < args.max_examples:
-                    not_own_examples.append({"key": k, "accepted_by": label,
-                                             "reported_by": sorted(reported_by[k])})
+        # check (1b): a dataset that HOLDS the event but never reported it
+        holds = np.column_stack([contains(l, uniq_keys) for l in DELIVERY_VETO_ORDER_4])
+        silent = holds & ~reported & accepted_any[:, None]
+        n_silent = int(silent.any(axis=1).sum())
 
-        inclusive_counts = {l: sum(1 for k in keys_arr if flags_by_key[mode][k][l])
-                            for l in DELIVERY_VETO_ORDER_4}
+        # check (2): attribution to the highest-priority accepting dataset
+        attributed = np.where(accepted_any, np.argmax(key_flags, axis=1), -1)
+        exclusive_counts = {l: int((attributed == i).sum())
+                            for i, l in enumerate(DELIVERY_VETO_ORDER_4)}
+        n_accepted_no_set = int((accepted_any & (attributed < 0)).sum())
+        n_two_sets = int(sum(exclusive_counts.values())
+                         - int(accepted_any.sum()) + n_accepted_no_set)
+
+        # check (3): accepted by D => read from D's own files
+        not_from_own = {}
+        examples_not_own = []
+        for i, label in enumerate(DELIVERY_VETO_ORDER_4):
+            sel = key_flags[:, i]
+            bad = sel & ~holds[:, i]
+            not_from_own[label] = int(bad.sum())
+            for k in uniq_keys[bad][:args.max_examples]:
+                examples_not_own.append({"accepted_by": label,
+                                         "key": [int(k["run"]), int(k["lumi"]),
+                                                 int(k["event"])]})
+
+        inclusive_counts = {l: int(key_flags[:, i].sum())
+                            for i, l in enumerate(DELIVERY_VETO_ORDER_4)}
         vetoed_by_higher = {}
         for i, label in enumerate(DELIVERY_VETO_ORDER_4):
-            higher = DELIVERY_VETO_ORDER_4[:i]
             vetoed_by_higher[label] = {
-                h: sum(1 for k in keys_arr
-                       if flags_by_key[mode][k][label] and flags_by_key[mode][k][h])
-                for h in higher}
+                h: int((key_flags[:, i] & key_flags[:, j]).sum())
+                for j, h in enumerate(DELIVERY_VETO_ORDER_4[:i])}
+
+        ex_mismatch = [{"key": [int(k["run"]), int(k["lumi"]), int(k["event"])]}
+                       for k in keys[mismatch_row][:args.max_examples]]
+        ex_silent = []
+        for idx in np.flatnonzero(silent.any(axis=1))[:args.max_examples]:
+            k = uniq_keys[idx]
+            ex_silent.append({
+                "key": [int(k["run"]), int(k["lumi"]), int(k["event"])],
+                "silent_in": [DELIVERY_VETO_ORDER_4[j]
+                              for j in np.flatnonzero(silent[idx])],
+                "reported_by": [DELIVERY_VETO_ORDER_4[j]
+                                for j in np.flatnonzero(reported[idx])]})
 
         results[mode] = {
-            "n_distinct_accepted_keys": len(keys_arr),
+            "n_distinct_accepted_keys": int(accepted_any.sum()),
             "inclusive_accepted_per_dataset": inclusive_counts,
-            "exclusive_per_dataset": attributed_counts,
+            "exclusive_per_dataset": exclusive_counts,
             "vetoed_by_each_higher_dataset": vetoed_by_higher,
-            "check1_flag_mismatch_between_files": n_mismatch_between_files[mode],
-            "check1_mismatch_examples": mismatch_examples[mode],
-            "check1_accepted_but_silent_in_another_dataset_holding_the_event":
-                n_missing_from_other_file,
-            "check1_silent_examples": missing_examples,
-            "check2_events_in_two_exclusive_sets": n_in_two_sets,
-            "check2_accepted_events_in_no_exclusive_set": n_accepted_in_no_set,
-            "check3_accepted_but_not_read_from_own_files": n_not_from_own_files,
-            "check3_examples": not_own_examples,
+            "check1_rows_with_flags_differing_from_another_file": n_mismatch,
+            "check1_mismatch_examples": ex_mismatch,
+            "check1_accepted_but_silent_in_another_dataset_holding_the_event": n_silent,
+            "check1_silent_examples": ex_silent,
+            "check2_events_in_two_exclusive_sets": n_two_sets,
+            "check2_accepted_events_in_no_exclusive_set": n_accepted_no_set,
+            "check3_accepted_but_not_read_from_own_files": not_from_own,
+            "check3_examples": examples_not_own,
         }
-        print(f"\n  mode={mode}")
-        print(f"    accepted keys {len(keys_arr)}; exclusive {attributed_counts}")
-        print(f"    check1 flag mismatches {n_mismatch_between_files[mode]}, "
-              f"silent-in-another-dataset {n_missing_from_other_file}")
-        print(f"    check2 two-sets {n_in_two_sets}, no-set {n_accepted_in_no_set}")
-        print(f"    check3 not-from-own-files {n_not_from_own_files}")
+        print(f"\n  mode={mode}", flush=True)
+        print(f"    accepted keys {int(accepted_any.sum())}")
+        print(f"    inclusive {inclusive_counts}")
+        print(f"    exclusive {exclusive_counts}")
+        print(f"    check1 flag mismatches {n_mismatch}, silent-elsewhere {n_silent}")
+        print(f"    check2 two-sets {n_two_sets}, no-set {n_accepted_no_set}")
+        print(f"    check3 not-from-own-files {not_from_own}")
 
-    guard_total = sum(
-        int(s.get("trigger_guard_violations", {}).get("total", 0)) for s in summaries)
+    guard_total = sum(int(s.get("trigger_guard_violations", {}).get("total", 0))
+                      for s in summaries)
+    n_removed = sum(int(s.get("n_electrons_removed", 0)) for s in summaries)
     out = {
         "what": "E3 closure test on one run, all four datasets, both DoubleEG modes",
         "target_run": summaries[0]["target_run"],
         "priority_order": list(DELIVERY_VETO_ORDER_4),
         "n_parts": len(summaries),
+        "n_accepted_rows_read": n_rows,
+        "n_distinct_keys_with_any_acceptance_row": int(n_uniq),
+        "emu_overlap_removal_enabled": summaries[0].get("emu_overlap_removal_enabled"),
+        "n_electrons_removed_total": n_removed,
         "per_dataset_file_coverage": per_dataset,
         "check4_within_dataset_duplicate_keys": {
             d: v["n_duplicate_keys_within_dataset"] for d, v in per_dataset.items()},
         "trigger_guard_violations_total_across_parts": guard_total,
         "results_by_mode": results,
-        "all_checks_pass": bool(
-            all(r["check1_flag_mismatch_between_files"] == 0
-                and r["check1_accepted_but_silent_in_another_dataset_holding_the_event"] == 0
-                and r["check2_events_in_two_exclusive_sets"] == 0
-                and r["check2_accepted_events_in_no_exclusive_set"] == 0
-                and all(v == 0 for v in r["check3_accepted_but_not_read_from_own_files"].values())
-                for r in results.values())
-            and all(v["n_duplicate_keys_within_dataset"] == 0 for v in per_dataset.values())
-            and guard_total == 0),
     }
+    out["all_checks_pass"] = bool(
+        all(r["check1_rows_with_flags_differing_from_another_file"] == 0
+            and r["check1_accepted_but_silent_in_another_dataset_holding_the_event"] == 0
+            and r["check2_events_in_two_exclusive_sets"] == 0
+            and r["check2_accepted_events_in_no_exclusive_set"] == 0
+            and all(v == 0 for v in r["check3_accepted_but_not_read_from_own_files"].values())
+            for r in results.values())
+        and all(v["n_duplicate_keys_within_dataset"] == 0 for v in per_dataset.values())
+        and guard_total == 0)
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     Path(args.out).write_text(json.dumps(out, indent=2), encoding="utf-8")
     print(f"\nall_checks_pass = {out['all_checks_pass']}")
