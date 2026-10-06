@@ -103,9 +103,8 @@ physics_calcs.limit_particles_in_fs, so e.g. an event with 5 light jets
 was filed under "..._4j_..." and its masses were MERGED into the 4j
 histograms. The group has decided each light-jet multiplicity gets its
 own final state, so there are now separate 5j, 6j, 7j, ... (and
-two-digit 10j, 11j, ...) final states. The six-letter name format is
-UNCHANGED -- still e.g. `0e_2m_5j_0g_0t_1b`, only the digits may now
-exceed 4. Nothing about which events are accepted, which objects they
+two-digit 10j, 11j, ...) final states. Nothing about which events are
+accepted, which objects they
 keep, the Version B reject rule, the 186 combinations, the binning or
 the >=100-events-per-final-state rule changes: this is purely a
 relabelling, and the total event count summed over all labels is
@@ -119,6 +118,24 @@ counts above 4 for non-jet types, e.g. a "5m" label. That is accepted:
 only rare4 (Version B) is delivered. top4 and nonjet4 keep at most 4
 objects per event in total, so no count in those two versions can ever
 exceed 4 and their labels are unchanged in practice.
+
+Final-state name format (upstream-names task, (1); ALL versions): a
+label now lists ONLY the configured object types, in upstream's own fixed
+order e, m, j, g, t, b, skipping any type the object record does not
+carry -- e.g. `0e_2m_5j_1b` rather than the previous
+`0e_2m_5j_0g_0t_1b`. This is Maryna's decision: final-state and histogram
+names must contain only the configured object types, exactly as the main
+(upstream) pipeline produces them. The construction here is upstream's
+own, copied from services/calculations/im_calculator.py and
+services/calculations/physics_calcs.py at upstream commit 88d7a4b (see
+FINAL_STATE_OBJECTS above and _group_by_final_state_with_mask below).
+Exact light-jet multiplicities (5j, 6j, ...) are KEPT, which is also what
+the upstream authors' own pending fix does. Verified before making the
+change: none of the 186 combinations uses photons or taus, and the
+Version B reject rule is computed from object COUNTS
+(ak.num(electrons)+ak.num(muons)+ak.num(bjets) <= 4), never from a label
+string -- so dropping the always-zero g/t tokens cannot affect any
+selection, mass, or rejection decision.
 
 Inclusive/exclusive de-duplication (task's own veto priority order, highest
 first: DoubleMuon > DoubleEG > MuonEG > SingleMuon > SingleElectron > JetHT
@@ -187,6 +204,14 @@ BASE_OBJECT_BRANCHES = (
 )
 
 OBJECT_TYPES = ["Electrons", "Muons", "Jets", "BJets"]
+# Copied verbatim from upstream services/calculations/im_calculator.py's
+# IMCalculator.FINAL_STATE_OBJECTS at commit 88d7a4b (same tuple, same order).
+# Only the types actually present in the object record end up in a label, so
+# with OBJECT_TYPES as above a label reads e.g. "0e_2m_5j_1b".
+FINAL_STATE_OBJECTS = (
+    ("Electrons", "e"), ("Muons", "m"), ("Jets", "j"),
+    ("Photons", "g"), ("Taus", "t"), ("BJets", "b"),
+)
 MIN_PARTICLES_IN_COMBINATION = 1
 MAX_PARTICLES_IN_COMBINATION = 4
 MIN_COUNT_PARTICLE_IN_COMBINATION = 1
@@ -320,8 +345,7 @@ def _group_by_final_state_with_mask(obj_record: ak.Array):
     """Group accepted events by their EXACT final state, and yield each
     group's own boolean mask into obj_record alongside it.
 
-    Grouping formula: same six-letter name format and same deterministic
-    string-building code as
+    Grouping formula: same deterministic string-building code as
     services.calculations.physics_calcs.group_by_final_state, with TWO
     documented differences:
 
@@ -342,11 +366,12 @@ def _group_by_final_state_with_mask(obj_record: ak.Array):
        "6j", 11 produces "11j", and so on.
 
     What this does and does not change:
-      - The NAME FORMAT is unchanged: still exactly six underscore-separated
-        `<count><letter>` fields in the order e, m, j, g, t, b (e.g.
-        `0e_2m_5j_0g_0t_1b`). Only the digits can now exceed 4, and can be
-        two digits. The format itself is an open question with Maryna and is
-        deliberately NOT changed here.
+      - The NAME FORMAT is upstream's (upstream-names task, (1)): one
+        `<count><letter>` field per CONFIGURED object type, in upstream's
+        fixed order e, m, j, g, t, b, types the object record does not
+        carry omitted entirely, joined by "_". With this study's
+        OBJECT_TYPES that is four fields, e.g. `0e_2m_5j_1b`. Counts can
+        exceed 4 and can be two digits.
       - No event is added, dropped, reordered or altered. This is purely a
         relabelling: the total number of events summed over all labels is
         identical to the old capped grouping on the same input, and every
@@ -389,16 +414,27 @@ def _group_by_final_state_with_mask(obj_record: ak.Array):
     zero_array = ak.Array([0] * num_events) if num_events > 0 else ak.Array([])
     particle_counts = ak.num(obj_record)
 
-    e = getattr(particle_counts, "Electrons", zero_array)
-    m = getattr(particle_counts, "Muons", zero_array)
-    j = getattr(particle_counts, "Jets", zero_array)
-    g = getattr(particle_counts, "Photons", zero_array)
-    t = getattr(particle_counts, "Taus", zero_array)
-    b = getattr(particle_counts, "BJets", zero_array)
+    # upstream-names task, (1): build the label from the CONFIGURED object
+    # types only, in upstream's own fixed order, exactly as upstream's
+    # services/calculations/im_calculator.py:_get_all_events_fs and
+    # services/calculations/physics_calcs.py:group_by_final_state do at
+    # upstream commit 88d7a4b -- same tuple, same order, same "present in
+    # events.fields" filter, same "_" separator, same f"{count}{letter}".
+    # Our obj_record (studies.m0m1j0_cms.selection.build_object_record)
+    # carries exactly Electrons/Muons/Jets/BJets, so this yields e.g.
+    # "0e_2m_5j_1b" -- no photon or tau field, hence no "0g"/"0t" token.
+    present_types = [
+        (name, letter, ak.to_numpy(getattr(particle_counts, name, zero_array)))
+        for name, letter in FINAL_STATE_OBJECTS
+        if name in obj_record.fields
+    ]
 
     all_events_fs = np.array([
-        f"{ee}e_{mm}m_{jj}j_{gg}g_{tt}t_{bb}b"
-        for ee, mm, jj, gg, tt, bb in zip(e, m, j, g, t, b)
+        "_".join(
+            f"{count}{letter}"
+            for (_name, letter, _values), count in zip(present_types, counts)
+        )
+        for counts in zip(*[values for _name, _letter, values in present_types])
     ])
     for raw_fs in sorted(set(all_events_fs.tolist())):
         mask = (all_events_fs == raw_fs)

@@ -178,7 +178,15 @@ def _check_capped_metadata(shard_path: str) -> tuple:
     return len(rows), [{"key": k, "value": v} for k, v in rows]
 
 
-def build_sig_to_bumpnet(shard_paths):
+def build_sig_to_bumpnet(shard_paths, fs_converter=None):
+    """Map each raw shard signature to (bumpnet_name, fs_str, im_str).
+
+    `fs_converter` (upstream-names task, (1)) is an OPTIONAL callable applied
+    to the final-state string before the BumpNet name is built. It exists so
+    shards written BEFORE the name-format change -- whose labels still carry
+    the always-zero `_0g`/`_0t` tokens -- can be read into the new upstream
+    name format without re-running the per-file jobs. Passing nothing (every
+    pre-existing caller) leaves behaviour bit-for-bit unchanged."""
     sig_to_bumpnet = {}
     for shard_path in shard_paths:
         for sig in list_signatures(shard_path):
@@ -186,6 +194,8 @@ def build_sig_to_bumpnet(shard_paths):
             if not m:
                 continue
             fs_str, im_str = m.groups()
+            if fs_converter is not None:
+                fs_str = fs_converter(fs_str)
             bumpnet_name = _convert_to_bumpnet_name(fs_str, im_str)
             sig_to_bumpnet[sig] = (bumpnet_name, fs_str, im_str)
     return sig_to_bumpnet

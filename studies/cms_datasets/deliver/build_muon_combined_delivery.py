@@ -91,6 +91,27 @@ The flag is OFF by default, so every pre-existing invocation -- including
 produced before: the same two min31bins/min26bins files, the same
 manifests, the same build-summary key names. The flag only ADDS a code
 path; it changes nothing on the old one.
+
+upstream-names task additions -- two further OPTIONAL flags, both OFF by
+default, so every pre-existing invocation is again unaffected:
+
+  --legacy-gt-labels   The shards written before the name-format change
+      carry labels in the old six-field form `0e_2m_5j_0g_0t_1b`. With this
+      flag their final-state strings are converted to the upstream form
+      `0e_2m_5j_1b` as they are read, so the full muon delivery can be
+      rebuilt in the new naming WITHOUT re-running the 209 per-file jobs.
+      The conversion is strict: it drops `0g`/`0t` tokens only, ABORTS if
+      any label carries a non-zero photon or tau count (which cannot
+      happen -- no selected photons or taus exist in this study and none of
+      the 186 combinations uses them), and afterwards asserts that no two
+      distinct names collapsed onto one. See convert_legacy_fs_label.
+
+  --no-hist-min-entries   Drops this delivery's extra requirement of >=100
+      main entries per individual histogram (Maryna's decision (2):
+      BumpNet re-checks it during smoothing). What replaces it is exactly
+      what upstream's own histogram stage does -- NO minimum at all, with a
+      signature skipped only when it has no data whatsoever. See
+      run_funnel_at_threshold's `min_main_entries` and _deliver_min_entries.
 """
 from __future__ import annotations
 
@@ -127,6 +148,75 @@ from studies.cms_datasets.deliver.build_dataset_delivery import (  # noqa: E402
     BINS_THRESHOLD_A,
     BINS_THRESHOLD_B,
 )
+
+# upstream-names task, (2): what upstream's histogram stage does for
+# histograms with very few or zero entries. Read from upstream
+# services/pipelines/histograms_pipeline.py at commit 88d7a4b:
+# `_iter_signature_chunks` yields only chunks with `len(arr) > 0`, and both
+# `_create_histograms_for_signature` and
+# `_create_merged_histograms_from_sqlite_signatures` end with
+# `if not has_data: return []`. So upstream applies NO minimum entry count
+# whatsoever -- it writes a histogram whenever at least one value exists and
+# writes nothing when none does. One entry is therefore the matching floor.
+UPSTREAM_MIN_ENTRIES_PER_HISTOGRAM = 1
+
+LEGACY_DROPPED_LETTERS = ("g", "t")
+
+
+def convert_legacy_fs_label(fs_str: str) -> str:
+    """Convert a pre-change six-field final-state label to the upstream form.
+
+    `0e_2m_5j_0g_0t_1b` -> `0e_2m_5j_1b`: the photon and tau fields are
+    dropped, every other field is left exactly as it is (including two-digit
+    counts such as `11j`). Field order is preserved, so the result is
+    identical to what the driver now writes natively.
+
+    STRICT by design. It raises rather than guess if a label is not of the
+    expected shape, and in particular it ABORTS on a non-zero photon or tau
+    count. That must never happen: this study selects no photons and no
+    taus, so those counts are structurally always zero -- but silently
+    dropping a non-zero count would merge genuinely different final states,
+    so it is made loud instead of silent."""
+    tokens = fs_str.split("_")
+    kept = []
+    for token in tokens:
+        if len(token) < 2 or not token[:-1].isdigit():
+            raise ValueError(
+                f"legacy final-state label {fs_str!r} has an unparsable field "
+                f"{token!r}; expected <count><letter> fields joined by '_'"
+            )
+        count, letter = int(token[:-1]), token[-1]
+        if letter in LEGACY_DROPPED_LETTERS:
+            if count != 0:
+                raise ValueError(
+                    f"REFUSING to convert legacy final-state label {fs_str!r}: it "
+                    f"carries a NON-ZERO '{letter}' count ({count}). This study "
+                    f"selects no photons and no taus, so this must never happen. "
+                    f"Dropping the field would merge distinct final states."
+                )
+            continue
+        kept.append(token)
+    if not kept:
+        raise ValueError(f"legacy final-state label {fs_str!r} converted to nothing")
+    return "_".join(kept)
+
+
+def assert_no_name_collisions(sig_to_bumpnet_legacy: dict, sig_to_bumpnet_new: dict):
+    """After legacy conversion, two distinct old histogram names must never
+    have collapsed onto one new name."""
+    old_names = {v[0] for v in sig_to_bumpnet_legacy.values()}
+    new_names = {v[0] for v in sig_to_bumpnet_new.values()}
+    if len(new_names) != len(old_names):
+        pairs = {}
+        for sig, (new_name, _fs, _im) in sig_to_bumpnet_new.items():
+            pairs.setdefault(new_name, set()).add(sig_to_bumpnet_legacy[sig][0])
+        clashes = {n: sorted(o) for n, o in pairs.items() if len(o) > 1}
+        raise AssertionError(
+            f"legacy name conversion collapsed {len(old_names)} distinct names onto "
+            f"{len(new_names)}; colliding examples: {list(clashes.items())[:3]}"
+        )
+    return len(new_names)
+
 
 SHARD_NAMES_BY_VERSION = {
     "normal": {
@@ -194,12 +284,18 @@ categories, on the unchanged fixed grid: 0-10000 GeV in 10 GeV bins.
 
 THREE THINGS ARE DIFFERENT FROM THE 1 OCT DELIVERY
 --------------------------------------------------
-1. EXACT LIGHT-JET FINAL STATES. Each light-jet multiplicity now has its
-   own final state. Previously any count above 4 was written as "4", so
+1. EXACT LIGHT-JET FINAL STATES. Each light-jet multiplicity has its own
+   final state. Before 5 Oct any count above 4 was written as "4", so
    events with 5, 6, 7 ... light jets were all filed under "4j" and their
-   masses were merged into the 4j histograms. Now there are separate 5j,
-   6j, 7j ... final states. The name format is unchanged (e.g.
-   0ex_2mx_5jx_0gx_0tx_1bx); only the digits can now exceed 4.
+   masses were merged into the 4j histograms. There are now separate 5j,
+   6j, 7j ... final states.
+
+1b. NAME FORMAT: names now contain ONLY the configured object types --
+   electrons, muons, light jets and b-jets -- in the upstream pipeline's
+   own order, e.g. 0ex_2mx_5jx_1bx. The always-zero photon and tau fields
+   (0gx, 0tx) are gone. This matches exactly what the main upstream
+   pipeline produces for this configuration. Old name -> new name:
+   mass_m0m1_cat_0ex_2mx_5jx_0gx_0tx_1bx -> mass_m0m1_cat_0ex_2mx_5jx_1bx.
 
 2. Z-PEAK CUT 115 -> 110 GeV, so the cut lands on a 10 GeV bin edge
    instead of in the middle of a bin. Follows upstream commit 8120fb8
@@ -226,20 +322,26 @@ b-jets > 4, otherwise keep ALL selected light jets), the 186 combinations,
 the fixed 10 GeV binning, the >=100-events-per-final-state rule, the
 max-mass cut, and peak removal.
 
-STILL OPEN, NOT DECIDED HERE
-----------------------------
-- The per-histogram ">=100 entries" requirement is still applied,
-  unchanged. It excluded {n_excl_post} histogram(s) at the post-processing
-  step (fewer than 100 entries survived the chain) and {n_excl_hist} at the
-  histogram-filling step. Whether it should stay is a question for Maryna.
-- The final-state NAME FORMAT (six fields e/m/j/g/t/b) is unchanged and is
-  also an open question with Maryna.
+PER-HISTOGRAM MINIMUM
+---------------------
+{min_entries_note}
 
 Combination rule (unchanged): per signature, DoubleMuon INCLUSIVE raw
 masses pooled with SingleMuon EXCLUSIVE raw masses.
 
 Built from {n_dm} DoubleMuon and {n_sm} SingleMuon per-file shards.
 """
+
+
+def _deliver_min_entries(args) -> int:
+    """How many entries a histogram needs to be delivered.
+
+    Default (unchanged): MIN_BUMPNET_EVENTS, i.e. 100. With
+    --no-hist-min-entries: UPSTREAM_MIN_ENTRIES_PER_HISTOGRAM, i.e. 1 --
+    matching upstream, which applies no minimum and only skips a signature
+    that has no data at all."""
+    return (UPSTREAM_MIN_ENTRIES_PER_HISTOGRAM
+            if getattr(args, "no_hist_min_entries", False) else MIN_BUMPNET_EVENTS)
 
 
 def _build_no_bin_cut_delivery(args, out_dir: Path, dm_paths, sm_paths, sig_to_bumpnet,
@@ -264,12 +366,13 @@ def _build_no_bin_cut_delivery(args, out_dir: Path, dm_paths, sm_paths, sig_to_b
     Reuses write_root_file / write_cropped_root_file / manifest_entry from
     build_dataset_delivery unmodified, so these files are built by exactly the
     same code as every earlier delivery."""
+    min_entries = _deliver_min_entries(args)
     delivered = sorted(
-        n for n in stage_c_survivors if n_events_by_name[n] >= MIN_BUMPNET_EVENTS
+        n for n in stage_c_survivors if n_events_by_name[n] >= min_entries
     )
     excluded_by_hist_min_events = sorted(
         (n, n_events_by_name[n]) for n in stage_c_survivors
-        if n_events_by_name[n] < MIN_BUMPNET_EVENTS
+        if n_events_by_name[n] < min_entries
     )
 
     # Informational only -- BumpNet applies its own cut; nothing is filtered here.
@@ -283,9 +386,9 @@ def _build_no_bin_cut_delivery(args, out_dir: Path, dm_paths, sm_paths, sig_to_b
     print(f"  of which >=25 filled bins (BumpNet own cut, informational): {n_ge25_filled}")
     print(f"  of which >25  filled bins (old min26bins rule):             {n_gt25_filled}")
     print(f"  of which >30  filled bins (old min31bins rule):             {n_gt30_filled}")
-    print("excluded by the UNCHANGED per-histogram >=100-entries rule:")
-    print(f"  at the post-processing step (main entries < 100): {n_excl_post}")
-    print(f"  at the histogram step (histogram entries < 100):  "
+    print(f"per-histogram minimum entries applied: {min_entries}")
+    print(f"  excluded at the post-processing step: {n_excl_post}")
+    print(f"  excluded at the histogram step:       "
           f"{len(excluded_by_hist_min_events)}")
 
     hists = {name: all_hists[name] for name in delivered}
@@ -327,9 +430,18 @@ def _build_no_bin_cut_delivery(args, out_dir: Path, dm_paths, sm_paths, sig_to_b
             "n_with_gt_25_filled_bins_old_min26bins_rule": n_gt25_filled,
             "n_with_gt_30_filled_bins_old_min31bins_rule": n_gt30_filled,
         },
-        "per_histogram_min_100_entries_rule_UNCHANGED": {
-            "n_excluded_at_postprocessing_main_entries_lt_100": n_excl_post,
-            "n_excluded_at_histogram_entries_lt_100": len(excluded_by_hist_min_events),
+        "name_format": ("upstream (configured object types only, e.g. "
+                        "0ex_2mx_5jx_1bx)" if args.legacy_gt_labels
+                        else "as written in the shards"),
+        "legacy_gt_label_conversion_applied": bool(args.legacy_gt_labels),
+        "per_histogram_min_entries": min_entries,
+        "per_histogram_min_entries_source": (
+            "upstream: no minimum, a histogram is written whenever it has >=1 entry"
+            if min_entries <= UPSTREAM_MIN_ENTRIES_PER_HISTOGRAM
+            else "this delivery's own >=100-entries rule"),
+        "per_histogram_min_entries_detail": {
+            "n_excluded_at_postprocessing": n_excl_post,
+            "n_excluded_at_histogram_step": len(excluded_by_hist_min_events),
             "names_excluded_at_histogram_step": excluded_by_hist_min_events,
             "names_excluded_at_postprocessing_step":
                 funnel_diagnostics.get("names_excluded_by_min_main_entries"),
@@ -347,7 +459,24 @@ def _build_no_bin_cut_delivery(args, out_dir: Path, dm_paths, sm_paths, sig_to_b
         json.dumps(summary, indent=2)
     )
 
+    if min_entries <= UPSTREAM_MIN_ENTRIES_PER_HISTOGRAM:
+        min_entries_note = (
+            "This delivery applies NO per-histogram minimum entry count. That\n"
+            "matches what the main upstream pipeline's own histogram stage does:\n"
+            "it writes a histogram whenever at least one value exists and writes\n"
+            "nothing when none does. BumpNet re-checks this during smoothing.\n"
+            "{} histogram(s) had no entries left after the processing chain and\n"
+            "so were not written, exactly as upstream would also not write them."
+        ).format(n_excl_post)
+    else:
+        min_entries_note = (
+            "A histogram is only delivered if it has at least {} entries. That\n"
+            "excluded {} histogram(s) at the post-processing step and {} at the\n"
+            "histogram-filling step."
+        ).format(min_entries, n_excl_post, len(excluded_by_hist_min_events))
+
     readme = README_TEMPLATE.format(
+        min_entries_note=min_entries_note,
         cropped=path_cropped.name,
         uncropped=path_main.name,
         n_delivered=len(delivered),
@@ -355,16 +484,13 @@ def _build_no_bin_cut_delivery(args, out_dir: Path, dm_paths, sm_paths, sig_to_b
         n_ge25=n_ge25_filled,
         n_gt25=n_gt25_filled,
         n_gt30=n_gt30_filled,
-        n_excl_hist=len(excluded_by_hist_min_events),
-        n_excl_post=n_excl_post,
         n_dm=len(dm_paths),
         n_sm=len(sm_paths),
     )
     (out_dir / "README.txt").write_text(readme)
     print(f"\nwrote {out_dir / 'README.txt'}")
     print(json.dumps(
-        {k: v for k, v in summary.items()
-         if k != "per_histogram_min_100_entries_rule_UNCHANGED"},
+        {k: v for k, v in summary.items() if k != "per_histogram_min_entries_detail"},
         indent=2,
     ))
     print("\nAll mandatory build-time checks PASSED (per-histogram TH1F verification "
@@ -387,6 +513,21 @@ def main():
              ">=100-main-entries requirement -- is unchanged. Off by default: without "
              "this flag the build is exactly what it always was.",
     )
+    p.add_argument(
+        "--legacy-gt-labels", action="store_true",
+        help="upstream-names task: the shards being read were written BEFORE the "
+             "name-format change and carry the old six-field labels "
+             "(0e_2m_5j_0g_0t_1b). Convert them to the upstream form "
+             "(0e_2m_5j_1b) as they are read. Aborts on any non-zero photon or "
+             "tau count and checks no two names collapse onto one. Off by default.",
+    )
+    p.add_argument(
+        "--no-hist-min-entries", action="store_true",
+        help="upstream-names task (2): drop this delivery's extra >=100-main-"
+             "entries-per-histogram requirement and instead do what upstream's "
+             "histogram stage does -- no minimum at all, skipping a signature only "
+             "when it has no data. Off by default.",
+    )
     args = p.parse_args()
 
     runs_matched_dir = Path(args.runs_matched_dir)
@@ -404,14 +545,33 @@ def main():
     shard_paths = dm_paths + sm_paths
 
     print("\n=== Funnel (real, shared post-processing chain) ===")
-    sig_to_bumpnet = build_sig_to_bumpnet(shard_paths)
+    if args.legacy_gt_labels:
+        print("legacy label conversion ON: dropping always-zero 0g/0t fields "
+              "from pre-change shard labels")
+        sig_to_bumpnet_legacy = build_sig_to_bumpnet(shard_paths)
+        sig_to_bumpnet = build_sig_to_bumpnet(
+            shard_paths, fs_converter=convert_legacy_fs_label)
+        n_names = assert_no_name_collisions(sig_to_bumpnet_legacy, sig_to_bumpnet)
+        print(f"  converted {len(sig_to_bumpnet)} signatures onto {n_names} distinct "
+              f"names; no collisions")
+    else:
+        sig_to_bumpnet = build_sig_to_bumpnet(shard_paths)
     print(f"total distinct raw signatures across all {len(shard_paths)} shards: {len(sig_to_bumpnet)}")
+
+    min_main_entries = (UPSTREAM_MIN_ENTRIES_PER_HISTOGRAM
+                        if args.no_hist_min_entries else None)
+    if args.no_hist_min_entries:
+        print(f"per-histogram minimum: UPSTREAM behaviour -- no minimum, a histogram "
+              f"is written whenever it has at least "
+              f"{UPSTREAM_MIN_ENTRIES_PER_HISTOGRAM} entry")
     funnel_diagnostics: dict = {}
+    # copy_shards makes scratch COPIES: prune_final_states_below_min_events
+    # deletes rows in place, so it must never touch the originals.
     with tempfile.TemporaryDirectory(prefix=f"muon_combined_{args.version}_funnel_") as tmp:
         scratch_shards = copy_shards(shard_paths, Path(tmp))
         stage_b_names, stage_c_survivors, stage_d_survivors, im_str_by_name = run_funnel_at_threshold(
             scratch_shards, PRIMARY_MIN_EVENTS_PER_FS, sig_to_bumpnet,
-            diagnostics=funnel_diagnostics,
+            diagnostics=funnel_diagnostics, min_main_entries=min_main_entries,
         )
     print(f"stage_b(>=100 events per final state)={len(stage_b_names)} "
           f"stage_c(post-processed, >=100 main events)={len(stage_c_survivors)} "

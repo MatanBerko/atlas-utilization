@@ -4,6 +4,9 @@ CMS delivery path.
 
 Covers, with real (not mocked) code:
   1. B1  -- exact light-jet labels: 3/4/5/6/11 light jets give 3j/4j/5j/6j/11j.
+            Labels are in the upstream format (configured object types only),
+            so e.g. 0e_2m_5j_1b -- see also
+            studies/cms_datasets/tests/test_upstream_names.py.
   2. B1  -- event conservation: the total number of events summed over all
             labels is identical to the OLD capped grouping on the same input,
             and every event keeps exactly the objects it had.
@@ -46,6 +49,7 @@ from services.pipelines.post_processing_pipeline import (  # noqa: E402
 from studies.cms_coverage.cluster.merge_and_count import Z_PEAK_CUTOFF  # noqa: E402
 from studies.cms_datasets.cluster.run_dataset_on_file import (  # noqa: E402
     _group_by_final_state_with_mask,
+    FINAL_STATE_OBJECTS,
     MAX_COUNT_PARTICLE_IN_COMBINATION,
     MAX_PARTICLES_IN_COMBINATION,
     MAX_SUBLEADING_INDEX,
@@ -103,15 +107,17 @@ def old_capped_grouping(obj_record):
     num_events = len(obj_record)
     zero_array = ak.Array([0] * num_events) if num_events > 0 else ak.Array([])
     particle_counts = ak.num(obj_record)
-    e = getattr(particle_counts, "Electrons", zero_array)
-    m = getattr(particle_counts, "Muons", zero_array)
-    j = getattr(particle_counts, "Jets", zero_array)
-    g = getattr(particle_counts, "Photons", zero_array)
-    t = getattr(particle_counts, "Taus", zero_array)
-    b = getattr(particle_counts, "BJets", zero_array)
+    present_types = [
+        (name, letter, ak.to_numpy(getattr(particle_counts, name, zero_array)))
+        for name, letter in FINAL_STATE_OBJECTS
+        if name in obj_record.fields
+    ]
     all_events_fs = np.array([
-        f"{ee}e_{mm}m_{jj}j_{gg}g_{tt}t_{bb}b"
-        for ee, mm, jj, gg, tt, bb in zip(e, m, j, g, t, b)
+        "_".join(
+            f"{count}{letter}"
+            for (_name, letter, _values), count in zip(present_types, counts)
+        )
+        for counts in zip(*[values for _name, _letter, values in present_types])
     ])
     out = {}
     for raw_fs in sorted(set(all_events_fs.tolist())):
@@ -180,7 +186,7 @@ def test_exact_light_jet_labels():
 
     labels = [label for label, _ev, _mask in _group_by_final_state_with_mask(obj_record)]
     for n in jet_counts:
-        expected = f"0e_2m_{n}j_0g_0t_1b"
+        expected = f"0e_2m_{n}j_1b"
         check(f"{n} light jets -> label {expected}", expected in labels,
               f"got labels {sorted(labels)}")
 
@@ -193,9 +199,9 @@ def test_exact_light_jet_labels():
     # consequence. So the old grouping gives 3 labels here, not 2.
     old = old_capped_grouping(obj_record)
     check("old grouping merged 5j and 6j into 4j (3 events under one 4j label)",
-          old.get("0e_2m_4j_0g_0t_1b") == 3, f"old grouping = {old}")
+          old.get("0e_2m_4j_1b") == 3, f"old grouping = {old}")
     check("old grouping left 11j as its own label (the two-digit quirk)",
-          old.get("0e_2m_11j_0g_0t_1b") == 1, f"old grouping = {old}")
+          old.get("0e_2m_11j_1b") == 1, f"old grouping = {old}")
     check("old grouping produced 3 labels where the new one produces 5",
           len(old) == 3, f"old labels = {sorted(old)}")
 
@@ -203,15 +209,15 @@ def test_exact_light_jet_labels():
     for label in labels:
         tokens = label.split("_")
         ok_format = (
-            len(tokens) == 6
-            and [tk[-1] for tk in tokens] == ["e", "m", "j", "g", "t", "b"]
+            len(tokens) == 4
+            and [tk[-1] for tk in tokens] == ["e", "m", "j", "b"]
             and all(tk[:-1].isdigit() for tk in tokens)
         )
-        check(f"name format unchanged (six <count><letter> fields, e m j g t b): {label}",
+        check(f"upstream name format (configured types only, e m j b): {label}",
               ok_format)
 
     check("two-digit counts render as two digits (11j, not 1j or 4j)",
-          "0e_2m_11j_0g_0t_1b" in labels, f"got {sorted(labels)}")
+          "0e_2m_11j_1b" in labels, f"got {sorted(labels)}")
 
 
 # --------------------------------------------------------------------------
@@ -322,17 +328,17 @@ def test_old_capping_was_inconsistent():
 
     for n in (5, 6, 7, 8, 9):
         check(f"OLD: {n} light jets WAS capped to 4j",
-              cap(f"0e_2m_{n}j_0g_0t_1b", 4) == "0e_2m_4j_0g_0t_1b")
+              cap(f"0e_2m_{n}j_1b", 4) == "0e_2m_4j_1b")
     for n in (10, 11, 12, 13, 14, 20, 24, 40, 44):
-        label = f"0e_2m_{n}j_0g_0t_1b"
+        label = f"0e_2m_{n}j_1b"
         check(f"OLD: {n} light jets was NOT capped (kept its own label)",
               cap(label, 4) == label, f"got {cap(label, 4)}")
     check("OLD: 99 light jets was MANGLED to 49j",
-          cap("0e_2m_99j_0g_0t_1b", 4) == "0e_2m_49j_0g_0t_1b",
-          f"got {cap('0e_2m_99j_0g_0t_1b', 4)}")
+          cap("0e_2m_99j_1b", 4) == "0e_2m_49j_1b",
+          f"got {cap('0e_2m_99j_1b', 4)}")
     check("OLD: 50 light jets was MANGLED to 40j",
-          cap("0e_2m_50j_0g_0t_1b", 4) == "0e_2m_40j_0g_0t_1b",
-          f"got {cap('0e_2m_50j_0g_0t_1b', 4)}")
+          cap("0e_2m_50j_1b", 4) == "0e_2m_40j_1b",
+          f"got {cap('0e_2m_50j_1b', 4)}")
 
     # The new grouping has none of these problems: the label IS the count.
     jet_counts = [5, 9, 10, 14, 20, 50, 99]
@@ -341,7 +347,7 @@ def test_old_capping_was_inconsistent():
               _group_by_final_state_with_mask(make_obj_record(events))]
     for n in jet_counts:
         check(f"NEW: {n} light jets -> exact label {n}j, no capping, no mangling",
-              f"0e_2m_{n}j_0g_0t_1b" in labels, f"got {sorted(labels)}")
+              f"0e_2m_{n}j_1b" in labels, f"got {sorted(labels)}")
 
 
 # --------------------------------------------------------------------------
@@ -373,7 +379,7 @@ def test_multidigit_label_parsing():
     # count it fails to map the letter and skips that type's requirement.
     # This is the documented shared-code limitation, demonstrated, not fixed.
     single_digit_blind = physics_calcs.is_finalstate_contain_combination(
-        "0e_0m_11j_0g_0t_0b", {"Jets": (4, 0)}
+        "0e_0m_11j_0b", {"Jets": (4, 0)}
     )
     check("shared parser returns True for 11 jets vs a 4-jet requirement "
           "(correct answer, reached by skipping the check)",
@@ -388,7 +394,7 @@ def test_multidigit_label_parsing():
         for m in range(0, 6):
             for j in list(range(0, 13)) + [20, 99]:
                 for b in range(0, 5):
-                    label = f"{e}e_{m}m_{j}j_0g_0t_{b}b"
+                    label = f"{e}e_{m}m_{j}j_{b}b"
                     labels_tested += 1
                     for combo in combos:
                         got = physics_calcs.is_finalstate_contain_combination(label, combo)
@@ -427,7 +433,7 @@ def test_z_cut_110():
           abs(115.0 / BIN_WIDTH_GEV - round(115.0 / BIN_WIDTH_GEV)) > 1e-12)
 
     # A same-flavour dimuon signature: the IM part has two 'm' entries.
-    dimuon_sig = "job_FS_0e_2m_1j_0g_0t_0b_IM_m0m1"
+    dimuon_sig = "job_FS_0e_2m_1j_0b_IM_m0m1"
     values = np.array([80.0, 105.0, 109.999, 110.0, 112.5, 114.999, 115.0, 200.0])
 
     kept_110 = _apply_z_peak_cut(values, dimuon_sig, 110.0, LOGGER)
@@ -446,10 +452,10 @@ def test_z_cut_110():
 
     # Non-dilepton signatures must be untouched -- exactly as before.
     for sig, why in [
-        ("job_FS_0e_1m_1j_0g_0t_0b_IM_m0j0", "one muon + one jet (no same-flavour pair)"),
-        ("job_FS_1e_1m_0j_0g_0t_0b_IM_e0m0", "one electron + one muon (different flavours)"),
-        ("job_FS_0e_0m_2j_0g_0t_0b_IM_j0j1", "two light jets (no leptons at all)"),
-        ("job_FS_0e_0m_0j_0g_0t_2b_IM_b0b1", "two b-jets"),
+        ("job_FS_0e_1m_1j_0b_IM_m0j0", "one muon + one jet (no same-flavour pair)"),
+        ("job_FS_1e_1m_0j_0b_IM_e0m0", "one electron + one muon (different flavours)"),
+        ("job_FS_0e_0m_2j_0b_IM_j0j1", "two light jets (no leptons at all)"),
+        ("job_FS_0e_0m_0j_2b_IM_b0b1", "two b-jets"),
     ]:
         out110 = _apply_z_peak_cut(values, sig, 110.0, LOGGER)
         out115 = _apply_z_peak_cut(values, sig, 115.0, LOGGER)
@@ -458,7 +464,7 @@ def test_z_cut_110():
               f"110 -> {out110.tolist()}, 115 -> {out115.tolist()}")
 
     # Same-flavour dielectron must behave like dimuon.
-    ee_sig = "job_FS_2e_0m_1j_0g_0t_0b_IM_e0e1"
+    ee_sig = "job_FS_2e_0m_1j_0b_IM_e0e1"
     ee110 = _apply_z_peak_cut(values, ee_sig, 110.0, LOGGER)
     check("same-flavour dielectron is cut too, at 110",
           float(ee110.min()) >= 110.0 and len(ee110) == 5,
@@ -466,7 +472,7 @@ def test_z_cut_110():
 
     # Multi-digit FS part must not confuse the dilepton test (it reads the
     # IM part only) -- relevant now that labels can carry 11j.
-    big_j_sig = "job_FS_0e_2m_11j_0g_0t_1b_IM_m0m1"
+    big_j_sig = "job_FS_0e_2m_11j_1b_IM_m0m1"
     big = _apply_z_peak_cut(values, big_j_sig, 110.0, LOGGER)
     check("dilepton detection still works with a two-digit jet count in the label",
           np.array_equal(big, _apply_z_peak_cut(values, dimuon_sig, 110.0, LOGGER)))
