@@ -144,13 +144,26 @@ def load_chunks_by_signature(shard_paths):
 
 
 def run_funnel_at_threshold(shard_paths, threshold: int, sig_to_bumpnet: dict,
-                            diagnostics: dict | None = None):
+                            diagnostics: dict | None = None,
+                            min_main_entries: int | None = None):
     """Run the REAL prune_final_states_below_min_events at `threshold` on
     `shard_paths` (expected to be scratch copies -- this mutates them),
     then the REAL z-peak/max-mass/peak-removal/first-empty-bin-split chain
     on every surviving signature's concatenated raw masses. Returns
     (stage_b_names, stage_c_survivors[name -> main_array],
     stage_d_survivors[name -> (main_array, hist_counts, n_nonempty_bins)]).
+
+    `min_main_entries` (upstream-names task, (2)) is the minimum number of
+    post-processed "main" entries a histogram must have to survive. It
+    defaults to None, which means `threshold` -- i.e. exactly the previous
+    behaviour, where the per-final-state threshold doubled as a
+    per-histogram minimum. Passing 1 reproduces what upstream's own
+    histogram stage does: upstream applies NO minimum entry count at all and
+    only skips a signature when it has no data whatsoever (see
+    services/pipelines/histograms_pipeline.py at 88d7a4b --
+    `_iter_signature_chunks` yields only chunks with `len(arr) > 0`, and
+    `_create_histograms_for_signature` / `_create_merged_histograms_from_
+    sqlite_signatures` end with `if not has_data: return []`).
 
     `diagnostics` (exact-jet-labels task, B4) is an OPTIONAL dict. When a
     caller passes one, per-stage drop counts are written into it so the
@@ -162,7 +175,17 @@ def run_funnel_at_threshold(shard_paths, threshold: int, sig_to_bumpnet: dict,
     beyond incrementing a few local ints, and the return value, the
     thresholds applied and every array produced are bit-for-bit the same.
     """
+    # NOTE (upstream-names task, (3)): `threshold` is the
+    # >=100-events-per-final-state rule and is applied HERE, once, to the
+    # COMBINED shards of every file at once -- prune_final_states_below_min_events
+    # sums each final state's population across ALL shard_paths before
+    # deciding what to delete. The per-file jobs themselves run with
+    # min_events_per_fs=1, so no final state is ever pruned per file or per
+    # batch. This matters: a per-batch threshold would wrongly remove final
+    # states that are only large enough once all files are pooled.
+    # It mutates its inputs, so callers must pass scratch COPIES.
     prune_final_states_below_min_events(shard_paths, threshold)
+    min_main = threshold if min_main_entries is None else min_main_entries
 
     chunks_by_sig = load_chunks_by_signature(shard_paths)
 
@@ -200,7 +223,7 @@ def run_funnel_at_threshold(shard_paths, threshold: int, sig_to_bumpnet: dict,
             n_empty_after_peak_removal += 1
             continue
         main_arr, _outliers = _split_by_first_empty_bin(filtered, BIN_WIDTH_GEV, LOGGER)
-        if main_arr.size >= threshold:
+        if main_arr.size >= min_main:
             stage_c_survivors[bumpnet_name] = main_arr
         else:
             n_below_min_main_entries += 1
@@ -217,6 +240,7 @@ def run_funnel_at_threshold(shard_paths, threshold: int, sig_to_bumpnet: dict,
     if diagnostics is not None:
         diagnostics.update({
             "threshold": int(threshold),
+            "min_main_entries": int(min_main),
             "n_stage_b_names": len(stage_b_names),
             "n_empty_after_z_and_max_mass": n_empty_after_z_and_max_mass,
             "n_empty_after_peak_removal": n_empty_after_peak_removal,

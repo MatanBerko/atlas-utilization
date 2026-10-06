@@ -178,7 +178,15 @@ def _check_capped_metadata(shard_path: str) -> tuple:
     return len(rows), [{"key": k, "value": v} for k, v in rows]
 
 
-def build_sig_to_bumpnet(shard_paths):
+def build_sig_to_bumpnet(shard_paths, fs_converter=None):
+    """Map each raw shard signature to (bumpnet_name, fs_str, im_str).
+
+    `fs_converter` (upstream-names task, (1)) is an OPTIONAL callable applied
+    to the final-state string before the BumpNet name is built. It exists so
+    shards written BEFORE the name-format change -- whose labels still carry
+    the always-zero `_0g`/`_0t` tokens -- can be read into the new upstream
+    name format without re-running the per-file jobs. Passing nothing (every
+    pre-existing caller) leaves behaviour bit-for-bit unchanged."""
     sig_to_bumpnet = {}
     for shard_path in shard_paths:
         for sig in list_signatures(shard_path):
@@ -186,23 +194,60 @@ def build_sig_to_bumpnet(shard_paths):
             if not m:
                 continue
             fs_str, im_str = m.groups()
+            if fs_converter is not None:
+                fs_str = fs_converter(fs_str)
             bumpnet_name = _convert_to_bumpnet_name(fs_str, im_str)
             sig_to_bumpnet[sig] = (bumpnet_name, fs_str, im_str)
     return sig_to_bumpnet
 
 
-def write_root_file(path: Path, histograms: dict):
+def width_suffix(bin_width: float = BIN_WIDTH_GEV, upstream: bool = False) -> str:
+    """The `_width_<...>` part of a histogram name.
+
+    `upstream=True` reproduces upstream's own rule EXACTLY. Upstream builds
+    the whole name as
+
+        hist_name = f"ROI_{hist_name_base}_width_{bin_width}"
+
+    (services/pipelines/histograms_pipeline.py at upstream commit 88d7a4b,
+    lines 343/380/520/650 -- the same f-string in all four places), where
+    `bin_width` comes straight from the configuration and is NOT converted:
+    `bin_widths_gev = [histograms_config["bin_width_gev"]]`. In the
+    configuration that value is a FLOAT -- config.yaml has
+    `bin_width_gev: 10.0`, which YAML parses as a Python float, and
+    domain/config.py declares `bin_width_gev: float = 10.0` with the same
+    float default. So upstream's suffix for the default configuration is
+    `_width_10.0`, and this function formats the configured bin width the
+    same way rather than hard-coding any string.
+
+    `upstream=False` (the default) keeps the suffix this study wrote before
+    the width-suffix task -- `f"_width_{int(bin_width)}"`, i.e. `_width_10` --
+    so every pre-existing invocation keeps producing byte-for-byte what it
+    produced before. Only the delivery built with the upstream rule switched
+    on uses the upstream form."""
+    return f"_width_{bin_width}" if upstream else f"_width_{int(bin_width)}"
+
+
+def roi_key(name: str, bin_width: float = BIN_WIDTH_GEV,
+            upstream_width_suffix: bool = False) -> str:
+    """The full ROOT key: upstream's `ROI_` prefix, the BumpNet name, and the
+    width suffix. Built from the configured bin width, never hard-coded."""
+    return f"ROI_{name}" + width_suffix(bin_width, upstream_width_suffix)
+
+
+def write_root_file(path: Path, histograms: dict, upstream_width_suffix: bool = False):
     written = {}
     with uproot.recreate(str(path)) as fout:
         for name, (values, edges) in sorted(histograms.items()):
-            key = f"ROI_{name}_width_{int(BIN_WIDTH_GEV)}"
+            key = roi_key(name, upstream_width_suffix=upstream_width_suffix)
             fout[key] = to_writable_th1f(values, edges, key)
             written[key] = values
     verify_written_th1f(str(path), written)
     return written
 
 
-def write_cropped_root_file(path: Path, histograms: dict):
+def write_cropped_root_file(path: Path, histograms: dict,
+                            upstream_width_suffix: bool = False):
     """Crops every histogram to its first..last filled bin (crop_arrays,
     imported from crop_bumpnet_root.py unmodified) before writing --
     exactly the same operation the earlier delivery's own
@@ -219,14 +264,14 @@ def write_cropped_root_file(path: Path, histograms: dict):
             widths = np.diff(cropped_edges)
             if not np.allclose(widths, BIN_WIDTH_GEV, atol=1e-9):
                 raise AssertionError(f"{name}: cropped bin widths are not exactly {BIN_WIDTH_GEV} GeV")
-            key = f"ROI_{name}_width_{int(BIN_WIDTH_GEV)}"
+            key = roi_key(name, upstream_width_suffix=upstream_width_suffix)
             fout[key] = to_writable_th1f(cropped_values, cropped_edges, key)
             written[key] = cropped_values
     verify_written_th1f(str(path), written)
     return written
 
 
-def manifest_entry(name, im_str, values, edges):
+def manifest_entry(name, im_str, values, edges, upstream_width_suffix: bool = False):
     nonzero_idx = np.nonzero(values > 0)[0]
     n_bins = int(len(nonzero_idx))
     n_events = int(values.sum())
@@ -234,7 +279,7 @@ def manifest_entry(name, im_str, values, edges):
     last_edge = float(edges[nonzero_idx[-1] + 1]) if n_bins > 0 else None
     return {
         "name": name,
-        "root_key": f"ROI_{name}_width_{int(BIN_WIDTH_GEV)}",
+        "root_key": roi_key(name, upstream_width_suffix=upstream_width_suffix),
         "combination": im_str,
         "final_state_category": name.split("_cat_", 1)[1] if "_cat_" in name else None,
         "object_count": object_count(im_str),

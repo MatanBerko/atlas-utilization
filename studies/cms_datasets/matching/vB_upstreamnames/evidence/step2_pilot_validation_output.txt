@@ -1,0 +1,154 @@
+==========================================================================
+upstream-names task, Step 2: pilot validation
+  NEW: /storage/agrp/berkom/atlas-utilization/output/cms_datasets/vB_upstreamnames_pilot
+  5 Oct (read-only): /storage/agrp/berkom/atlas-utilization/output/cms_datasets/vB_exactlabels_pilot
+==========================================================================
+
+==========================================================================
+(a) Selection and per-file counts unchanged
+==========================================================================
+[PASS] DoubleMuon_30522_0_matched: produced by the pinned commit 06922a9
+[PASS] DoubleMuon_30522_0_matched: all 5 per-stage counts and all 5 Version B reject diagnostics identical to 5 Oct
+[PASS] DoubleMuon_30522_0_matched: number of rare4 final-state groups unchanged (38)
+[PASS] DoubleMuon_30555_0_matched: produced by the pinned commit 06922a9
+[PASS] DoubleMuon_30555_0_matched: all 5 per-stage counts and all 5 Version B reject diagnostics identical to 5 Oct
+[PASS] DoubleMuon_30555_0_matched: number of rare4 final-state groups unchanged (37)
+[PASS] SingleMuon_30530_0_matched: produced by the pinned commit 06922a9
+[PASS] SingleMuon_30530_0_matched: all 5 per-stage counts and all 5 Version B reject diagnostics identical to 5 Oct
+[PASS] SingleMuon_30530_0_matched: number of rare4 final-state groups unchanged (94)
+[PASS] SingleMuon_30563_0_matched: produced by the pinned commit 06922a9
+[PASS] SingleMuon_30563_0_matched: all 5 per-stage counts and all 5 Version B reject diagnostics identical to 5 Oct
+[PASS] SingleMuon_30563_0_matched: number of rare4 final-state groups unchanged (34)
+
+==========================================================================
+(b) Signature correspondence 1:1, and (c) mass arrays identical
+==========================================================================
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_rare4_inclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_rare4_inclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_rare4_inclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_rare4_inclusive.sqlite: every one of the 811 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_rare4_inclusive.sqlite: all 811 corresponding mass arrays are identical
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_rare4_exclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_rare4_exclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_rare4_exclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_rare4_exclusive.sqlite: every one of the 811 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_rare4_exclusive.sqlite: all 811 corresponding mass arrays are identical
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_inclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_inclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_inclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_inclusive.sqlite: every one of the 1266 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_inclusive.sqlite: all 1266 corresponding mass arrays are identical
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_exclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_exclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_exclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_exclusive.sqlite: every one of the 1266 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] DoubleMuon_30522_0_matched/dataset_shard_exclusive.sqlite: all 1266 corresponding mass arrays are identical
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_rare4_inclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_rare4_inclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_rare4_inclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_rare4_inclusive.sqlite: every one of the 813 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_rare4_inclusive.sqlite: all 813 corresponding mass arrays are identical
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_rare4_exclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_rare4_exclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_rare4_exclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_rare4_exclusive.sqlite: every one of the 813 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_rare4_exclusive.sqlite: all 813 corresponding mass arrays are identical
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_inclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_inclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_inclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_inclusive.sqlite: every one of the 961 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_inclusive.sqlite: all 961 corresponding mass arrays are identical
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_exclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_exclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_exclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_exclusive.sqlite: every one of the 961 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] DoubleMuon_30555_0_matched/dataset_shard_exclusive.sqlite: all 961 corresponding mass arrays are identical
+[PASS] SingleMuon_30530_0_matched/dataset_shard_rare4_inclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] SingleMuon_30530_0_matched/dataset_shard_rare4_inclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] SingleMuon_30530_0_matched/dataset_shard_rare4_inclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] SingleMuon_30530_0_matched/dataset_shard_rare4_inclusive.sqlite: every one of the 1827 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] SingleMuon_30530_0_matched/dataset_shard_rare4_inclusive.sqlite: all 1827 corresponding mass arrays are identical
+[PASS] SingleMuon_30530_0_matched/dataset_shard_rare4_exclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] SingleMuon_30530_0_matched/dataset_shard_rare4_exclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] SingleMuon_30530_0_matched/dataset_shard_rare4_exclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] SingleMuon_30530_0_matched/dataset_shard_rare4_exclusive.sqlite: every one of the 1568 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] SingleMuon_30530_0_matched/dataset_shard_rare4_exclusive.sqlite: all 1568 corresponding mass arrays are identical
+[PASS] SingleMuon_30530_0_matched/dataset_shard_inclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] SingleMuon_30530_0_matched/dataset_shard_inclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] SingleMuon_30530_0_matched/dataset_shard_inclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] SingleMuon_30530_0_matched/dataset_shard_inclusive.sqlite: every one of the 2283 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] SingleMuon_30530_0_matched/dataset_shard_inclusive.sqlite: all 2283 corresponding mass arrays are identical
+[PASS] SingleMuon_30530_0_matched/dataset_shard_exclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] SingleMuon_30530_0_matched/dataset_shard_exclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] SingleMuon_30530_0_matched/dataset_shard_exclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] SingleMuon_30530_0_matched/dataset_shard_exclusive.sqlite: every one of the 1940 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] SingleMuon_30530_0_matched/dataset_shard_exclusive.sqlite: all 1940 corresponding mass arrays are identical
+[PASS] SingleMuon_30563_0_matched/dataset_shard_rare4_inclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] SingleMuon_30563_0_matched/dataset_shard_rare4_inclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] SingleMuon_30563_0_matched/dataset_shard_rare4_inclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] SingleMuon_30563_0_matched/dataset_shard_rare4_inclusive.sqlite: every one of the 373 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] SingleMuon_30563_0_matched/dataset_shard_rare4_inclusive.sqlite: all 373 corresponding mass arrays are identical
+[PASS] SingleMuon_30563_0_matched/dataset_shard_rare4_exclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] SingleMuon_30563_0_matched/dataset_shard_rare4_exclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] SingleMuon_30563_0_matched/dataset_shard_rare4_exclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] SingleMuon_30563_0_matched/dataset_shard_rare4_exclusive.sqlite: every one of the 327 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] SingleMuon_30563_0_matched/dataset_shard_rare4_exclusive.sqlite: all 327 corresponding mass arrays are identical
+[PASS] SingleMuon_30563_0_matched/dataset_shard_inclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] SingleMuon_30563_0_matched/dataset_shard_inclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] SingleMuon_30563_0_matched/dataset_shard_inclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] SingleMuon_30563_0_matched/dataset_shard_inclusive.sqlite: every one of the 373 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] SingleMuon_30563_0_matched/dataset_shard_inclusive.sqlite: all 373 corresponding mass arrays are identical
+[PASS] SingleMuon_30563_0_matched/dataset_shard_exclusive.sqlite: the 5 Oct shard really is in the legacy format
+[PASS] SingleMuon_30563_0_matched/dataset_shard_exclusive.sqlite: the NEW shard carries no photon/tau field at all
+[PASS] SingleMuon_30563_0_matched/dataset_shard_exclusive.sqlite: no two old signatures convert onto the same new one
+[PASS] SingleMuon_30563_0_matched/dataset_shard_exclusive.sqlite: every one of the 327 new signatures corresponds 1:1 to a 5 Oct signature
+[PASS] SingleMuon_30563_0_matched/dataset_shard_exclusive.sqlite: all 327 corresponding mass arrays are identical
+
+==========================================================================
+(d) Per-final-state event counts identical after conversion
+==========================================================================
+[PASS] DoubleMuon_30522_0_matched [rare4/inclusive]: converted 5 Oct label counts equal the new ones exactly (38 final states)
+[PASS] DoubleMuon_30522_0_matched [rare4/inclusive]: total events unchanged
+[PASS] DoubleMuon_30522_0_matched [rare4/exclusive]: converted 5 Oct label counts equal the new ones exactly (38 final states)
+[PASS] DoubleMuon_30522_0_matched [rare4/exclusive]: total events unchanged
+[PASS] DoubleMuon_30522_0_matched [normal/inclusive]: converted 5 Oct label counts equal the new ones exactly (49 final states)
+[PASS] DoubleMuon_30522_0_matched [normal/inclusive]: total events unchanged
+[PASS] DoubleMuon_30522_0_matched [normal/exclusive]: converted 5 Oct label counts equal the new ones exactly (49 final states)
+[PASS] DoubleMuon_30522_0_matched [normal/exclusive]: total events unchanged
+[PASS] DoubleMuon_30555_0_matched [rare4/inclusive]: converted 5 Oct label counts equal the new ones exactly (37 final states)
+[PASS] DoubleMuon_30555_0_matched [rare4/inclusive]: total events unchanged
+[PASS] DoubleMuon_30555_0_matched [rare4/exclusive]: converted 5 Oct label counts equal the new ones exactly (37 final states)
+[PASS] DoubleMuon_30555_0_matched [rare4/exclusive]: total events unchanged
+[PASS] DoubleMuon_30555_0_matched [normal/inclusive]: converted 5 Oct label counts equal the new ones exactly (41 final states)
+[PASS] DoubleMuon_30555_0_matched [normal/inclusive]: total events unchanged
+[PASS] DoubleMuon_30555_0_matched [normal/exclusive]: converted 5 Oct label counts equal the new ones exactly (41 final states)
+[PASS] DoubleMuon_30555_0_matched [normal/exclusive]: total events unchanged
+[PASS] SingleMuon_30530_0_matched [rare4/inclusive]: converted 5 Oct label counts equal the new ones exactly (94 final states)
+[PASS] SingleMuon_30530_0_matched [rare4/inclusive]: total events unchanged
+[PASS] SingleMuon_30530_0_matched [rare4/exclusive]: converted 5 Oct label counts equal the new ones exactly (94 final states)
+[PASS] SingleMuon_30530_0_matched [rare4/exclusive]: total events unchanged
+[PASS] SingleMuon_30530_0_matched [normal/inclusive]: converted 5 Oct label counts equal the new ones exactly (109 final states)
+[PASS] SingleMuon_30530_0_matched [normal/inclusive]: total events unchanged
+[PASS] SingleMuon_30530_0_matched [normal/exclusive]: converted 5 Oct label counts equal the new ones exactly (109 final states)
+[PASS] SingleMuon_30530_0_matched [normal/exclusive]: total events unchanged
+[PASS] SingleMuon_30563_0_matched [rare4/inclusive]: converted 5 Oct label counts equal the new ones exactly (34 final states)
+[PASS] SingleMuon_30563_0_matched [rare4/inclusive]: total events unchanged
+[PASS] SingleMuon_30563_0_matched [rare4/exclusive]: converted 5 Oct label counts equal the new ones exactly (34 final states)
+[PASS] SingleMuon_30563_0_matched [rare4/exclusive]: total events unchanged
+[PASS] SingleMuon_30563_0_matched [normal/inclusive]: converted 5 Oct label counts equal the new ones exactly (34 final states)
+[PASS] SingleMuon_30563_0_matched [normal/inclusive]: total events unchanged
+[PASS] SingleMuon_30563_0_matched [normal/exclusive]: converted 5 Oct label counts equal the new ones exactly (34 final states)
+[PASS] SingleMuon_30563_0_matched [normal/exclusive]: total events unchanged
+
+       example new labels from DoubleMuon_30522_0_matched:
+         0e_2m_0j_0b
+         0e_2m_0j_1b
+         0e_2m_0j_2b
+         0e_2m_1j_0b
+         0e_2m_1j_1b
+         0e_2m_1j_2b
+
+wrote /storage/agrp/berkom/atlas-utilization/output/cms_datasets/vB_upstreamnames_pilot/step2_validation.json
+
+==========================================================================
+ALL STEP 2 CHECKS PASSED

@@ -1,0 +1,45 @@
+{
+  "version": "rare4",
+  "filled_bin_cut": "NONE (B4: applied by Maryna on the BumpNet side during smoothing)",
+  "n_doublemuon_shards": 57,
+  "n_singlemuon_shards": 152,
+  "n_distinct_raw_signatures": 247833,
+  "funnel": {
+    "b_after_min_events_per_fs_100": 1496,
+    "c_after_postprocessing_ge100_main": 1496,
+    "d_bumpnet_usable_gt30bins_ge100events": 1177
+  },
+  "n_delivered_histograms": 1496,
+  "n_distinct_final_state_categories_delivered": 81,
+  "informational_bin_counts": {
+    "n_with_ge_25_filled_bins": 1258,
+    "n_with_gt_25_filled_bins_old_min26bins_rule": 1247,
+    "n_with_gt_30_filled_bins_old_min31bins_rule": 1188
+  },
+  "name_format": "upstream (configured object types only, e.g. 0ex_2mx_5jx_1bx)",
+  "legacy_gt_label_conversion_applied": true,
+  "width_suffix": "_width_10.0",
+  "width_suffix_matches_upstream": true,
+  "per_histogram_min_entries": 1,
+  "per_histogram_min_entries_source": "upstream: no minimum, a histogram is written whenever it has >=1 entry",
+  "per_histogram_min_entries_detail": {
+    "n_excluded_at_postprocessing": 0,
+    "n_excluded_at_histogram_step": 0,
+    "names_excluded_at_histogram_step": [],
+    "names_excluded_at_postprocessing_step": []
+  },
+  "funnel_diagnostics": {
+    "threshold": 100,
+    "min_main_entries": 1,
+    "n_stage_b_names": 1496,
+    "n_empty_after_z_and_max_mass": 0,
+    "n_empty_after_peak_removal": 0,
+    "n_excluded_by_min_main_entries": 0,
+    "n_stage_c_survivors": 1496
+  },
+  "output_files": {
+    "muon_combined_matched_vB_upstreamnames_w10p0_bumpnet.root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/muon_combined_vB_upstreamnames_w10p0_20261006/muon_combined_matched_vB_upstreamnames_w10p0_bumpnet.root",
+    "muon_combined_matched_vB_upstreamnames_w10p0_bumpnet_cropped.root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/muon_combined_vB_upstreamnames_w10p0_20261006/muon_combined_matched_vB_upstreamnames_w10p0_bumpnet_cropped.root"
+  },
+  "file_for_bumpnet": "muon_combined_matched_vB_upstreamnames_w10p0_bumpnet_cropped.root"
+}
