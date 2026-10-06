@@ -139,13 +139,12 @@ def main():
     print(f"       5 Oct excluded {len(excluded)} histograms by that rule: "
           f"{len(excl_nonzero)} had >=1 entry, {len(excl_zero)} had none")
 
-    expected_extra = set()
-    for name in excl_nonzero:
-        fs = name.split("_cat_", 1)[1]
-        combo = name[len("mass_"):].split("_cat_")[0]
-        expected_extra.add(
-            "ROI_" + _convert_to_bumpnet_name(convert_legacy_fs_label(fs), combo)
-            + "_width_10")
+    # The names in the 5 Oct exclusion list are BumpNet names whose category
+    # fields already carry the "x" suffix, so they go through the same
+    # convert_root_key path as the histogram keys do.
+    expected_extra = {
+        convert_root_key(f"ROI_{name}_width_10") for name in excl_nonzero
+    }
 
     extra = set(new) - set(converted)
     check(f"the new file has exactly {len(expected_extra)} additional histograms",
@@ -159,14 +158,9 @@ def main():
           not still_missing,
           f"{len(still_missing)} still absent, first: {still_missing[:3]}")
 
-    zero_back = []
-    for name in excl_zero:
-        fs = name.split("_cat_", 1)[1]
-        combo = name[len("mass_"):].split("_cat_")[0]
-        k = ("ROI_" + _convert_to_bumpnet_name(convert_legacy_fs_label(fs), combo)
-             + "_width_10")
-        if k in new:
-            zero_back.append(k)
+    zero_back = [k for k in
+                 (convert_root_key(f"ROI_{name}_width_10") for name in excl_zero)
+                 if k in new]
     check("histograms that had NO entries stay out, as upstream would also not "
           "write them", not zero_back, f"{len(zero_back)} came back: {zero_back[:3]}")
 
