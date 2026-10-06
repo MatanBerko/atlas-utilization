@@ -163,6 +163,7 @@ import logging
 import subprocess
 import sys
 import time
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -250,6 +251,92 @@ SINGLEMUON_MATCHED_PT_MIN_GEV = 24.0
 MATCHED_EFF_PT_BIN_EDGES = np.arange(20.0, 200.01, 1.0)
 MATCHED_EFF_ETA_BIN_EDGES = np.arange(0.0, 2.501, 0.1)
 
+# --- --population matched4 (electron-datasets task: the FOUR-dataset
+# DoubleMuon + SingleMuon + DoubleEG + MuonEG delivery path). NEW mode
+# only -- --population generic, v0 and matched are byte-for-byte
+# unchanged, so every pre-existing invocation (including the delivered
+# muon production) keeps its old behaviour exactly. See
+# studies/cms_datasets/electron_prep/ELECTRON_MATCHING_SPEC.md for the
+# derivation of every bit/threshold below and
+# studies/cms_datasets/electron_vB/REPORT.md for this round's decisions. ---
+
+# D2: the de-duplication priority order for THIS delivery path, highest
+# first. It is deliberately NOT datasets_records.VETO_ORDER, which is
+# DoubleMuon > DoubleEG > MuonEG > SingleMuon > SingleElectron > JetHT >
+# MET: the group's order for this delivery keeps the two muon datasets on
+# top so that the already-delivered muon file's attribution does not
+# change, and SingleElectron is postponed entirely (no code, no runs).
+# VETO_ORDER itself and every older mode that uses it are untouched.
+DELIVERY_VETO_ORDER_4 = ["DoubleMuon", "SingleMuon", "DoubleEG", "MuonEG"]
+
+# In matched4, as in matched, SingleMuon's own trigger set is HLT_IsoMu24
+# alone (SINGLEMUON_MATCHED_TRIGGER_PATHS above). The other three datasets
+# use their own sets from datasets_records.py unchanged.
+MATCHED4_TRIGGER_PATHS = {
+    "DoubleMuon": tuple(TRIGGER_PATHS_BY_DATASET["DoubleMuon"]),
+    "SingleMuon": SINGLEMUON_MATCHED_TRIGGER_PATHS,
+    "DoubleEG": tuple(TRIGGER_PATHS_BY_DATASET["DoubleEG"]),
+    "MuonEG": tuple(TRIGGER_PATHS_BY_DATASET["MuonEG"]),
+}
+
+TRIGOBJ_ELECTRON_ID = 11
+# Electron filterBits, read from the TrigObj_filterBits branch TITLE in the
+# real UL2016 NanoAODv9 files (never from memory) -- see
+# electron_prep/evidence/trigobj_titles_electron_datasets.json. The titles
+# are re-read and asserted at runtime by assert_trigobj_bit_meanings (D6).
+TRIGOBJ_BIT_E_2E = 16          # "16 = 2e"       -- DoubleEG dielectron filter
+TRIGOBJ_BIT_E_1E1MU = 32       # "32 = 1e-1mu"   -- MuonEG electron leg
+
+# D6: the bit meanings this code depends on, as substrings of the branch
+# titles. A mismatch means the files are not the ones this acceptance was
+# derived from, so the job stops rather than silently matching the wrong
+# filter.
+EXPECTED_TRIGOBJ_ID_TITLE_SUBSTRINGS = ("11 = Electron", "13 = Muon")
+EXPECTED_TRIGOBJ_FILTERBITS_TITLE_SUBSTRINGS = (
+    "16 = 2e",          # electron bit 16, required by DoubleEG
+    "32 = 1e-1mu",      # electron bit 32, required by MuonEG
+    "1 = TrkIsoVVL",    # muon bit 1, already used by matched mode (DoubleMuon)
+    "2 = Iso",          # muon bit 2, already used by matched mode (SingleMuon)
+)
+
+# D4: DoubleEG acceptance.
+DOUBLEEG_MATCHED_MIN_ELECTRONS = 2
+DOUBLEEG_TRIGOBJ_LEADING_PT_MIN_GEV = 23.0   # online, the 23 GeV leg
+DOUBLEEG_OFFLINE_PT_MIN_GEV = 30.0           # the NEW acceptance-level offline cut
+DOUBLEEG_THRESHOLD_MODES = ("leading_only", "both")
+# PROVISIONAL -- set by the Step D measurement's own fixed decision
+# criterion (Delta_region = eff_sub(>30) - eff_sub(25-30) <= 2.0 pp in
+# BOTH barrel and endcap => "leading_only", else "both"). Matan has the
+# final say; see studies/cms_datasets/electron_vB/REPORT.md.
+DOUBLEEG_THRESHOLD_MODE_DEFAULT = "leading_only"
+
+# D5: MuonEG acceptance. The muon leg cannot be trigger-matched in 2016
+# NanoAOD (ELECTRON_MATCHING_SPEC.md section 4) -- it is taken from the
+# path decision plus >=1 SELECTED offline muon.
+MUONEG_PATH_MU23_ELE12 = "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"
+MUONEG_PATH_MU8_ELE23 = "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ"
+MUONEG_ELECTRON_LEG_PT_MIN_GEV_BY_PATH = {
+    MUONEG_PATH_MU23_ELE12: 12.0,
+    MUONEG_PATH_MU8_ELE23: 23.0,
+}
+MUONEG_MIN_SELECTED_MUONS = 1
+
+# D3: electron-muon overlap removal, applied in ALL FOUR datasets.
+EMU_OVERLAP_DR_MAX = 0.05
+
+# E5 diagnostic: m(e, mu) over every selected electron-muon pair, 0-20 GeV
+# in 0.1 GeV bins. Diagnostics only -- the delivery binning (fixed 10 GeV,
+# 0-10000 GeV) is untouched.
+DIAGNOSTIC_EMU_MASS_FINE_BIN_EDGES = np.arange(0.0, 20.0001, 0.1)
+# E5 diagnostic: m(e,e), 60-120 GeV in 0.5 GeV bins, split barrel-barrel
+# vs other, using the same eta regions as the Step D measurement.
+DIAGNOSTIC_EE_MASS_Z_BIN_EDGES = np.arange(60.0, 120.0001, 0.5)
+# ECAL barrel/endcap boundaries -- the SAME values the electron_prep
+# measurement uses (studies/cms_datasets/electron_prep/common.py), on the
+# SAME eta variable the electron selection cuts on (Electron_eta).
+ECAL_BARREL_ABS_ETA_MAX = 1.4442
+ECAL_ENDCAP_ABS_ETA_MIN = 1.566
+
 READ_RETRY_ATTEMPTS = 4
 READ_RETRY_BACKOFF_SEC = 15
 READ_CHUNK_SIZE = 300_000
@@ -321,7 +408,11 @@ def _read_chunk_with_retry(tree, branches, entry_start, entry_stop, file_url):
     ) from last_exc
 
 
-def read_events(file_url: str, required_branches):
+def read_events(file_url: str, required_branches, return_titles: bool = False):
+    """`return_titles` (electron-datasets task, D6) additionally returns a
+    {branch: title} dict for the requested branches, so the TrigObj
+    filter-bit meanings can be asserted at runtime against the file's own
+    branch titles. Default False -- every pre-existing caller is unchanged."""
     tree = uproot.open(file_url)["Events"]
     available = set(tree.keys())
     missing = [b for b in required_branches if b not in available]
@@ -338,7 +429,16 @@ def read_events(file_url: str, required_branches):
     for start in range(0, n_entries, READ_CHUNK_SIZE):
         stop = min(start + READ_CHUNK_SIZE, n_entries)
         chunks.append(_read_chunk_with_retry(tree, branches, start, stop, file_url))
-    return ak.concatenate(chunks) if len(chunks) > 1 else chunks[0]
+    events = ak.concatenate(chunks) if len(chunks) > 1 else chunks[0]
+    if not return_titles:
+        return events
+    titles = {}
+    for b in branches:
+        try:
+            titles[b] = tree[b].title
+        except Exception as e:  # noqa: BLE001 -- a missing title must not kill the job
+            titles[b] = f"UNAVAILABLE ({type(e).__name__}: {e})"
+    return events, titles
 
 
 def _group_by_final_state_with_mask(obj_record: ak.Array):
@@ -410,10 +510,6 @@ def _group_by_final_state_with_mask(obj_record: ak.Array):
     upstream bug affecting events with 5+ light jets, which the upstream
     authors are fixing themselves. Nothing in this function or anywhere in
     this study works around or copies that fix."""
-    num_events = len(obj_record)
-    zero_array = ak.Array([0] * num_events) if num_events > 0 else ak.Array([])
-    particle_counts = ak.num(obj_record)
-
     # upstream-names task, (1): build the label from the CONFIGURED object
     # types only, in upstream's own fixed order, exactly as upstream's
     # services/calculations/im_calculator.py:_get_all_events_fs and
@@ -423,19 +519,10 @@ def _group_by_final_state_with_mask(obj_record: ak.Array):
     # Our obj_record (studies.m0m1j0_cms.selection.build_object_record)
     # carries exactly Electrons/Muons/Jets/BJets, so this yields e.g.
     # "0e_2m_5j_1b" -- no photon or tau field, hence no "0g"/"0t" token.
-    present_types = [
-        (name, letter, ak.to_numpy(getattr(particle_counts, name, zero_array)))
-        for name, letter in FINAL_STATE_OBJECTS
-        if name in obj_record.fields
-    ]
-
-    all_events_fs = np.array([
-        "_".join(
-            f"{count}{letter}"
-            for (_name, letter, _values), count in zip(present_types, counts)
-        )
-        for counts in zip(*[values for _name, _letter, values in present_types])
-    ])
+    # The construction itself now lives in exact_final_state_labels (same
+    # code, moved unchanged) so the matched4 per-event debug dump can use
+    # the identical labels without a second spelling of the rule.
+    all_events_fs = exact_final_state_labels(obj_record)
     for raw_fs in sorted(set(all_events_fs.tolist())):
         mask = (all_events_fs == raw_fs)
         events_matching_fs = obj_record[mask]
@@ -513,17 +600,16 @@ def trigobj_best_match_pt(sel_muons: ak.Array, trigobj: ak.Array, required_bit: 
     within dR < dr_max -- or -inf if no such match exists for that muon.
     See TRIGGER_MATCHING_SPEC.md for why this bit + dR + pT combination is
     the matching/acceptance rule for these 2016-era files. Pure read of
-    `trigobj`/`sel_muons` -- never writes to or filters either input."""
-    trig_muon_mask = (trigobj.id == TRIGOBJ_MUON_ID) & ((trigobj.filterBits & required_bit) != 0)
-    trig_muons = trigobj[trig_muon_mask]
-    mu_p4 = _p4_no_mass_needed(sel_muons)
-    trig_p4 = _p4_no_mass_needed(trig_muons)
-    pairs_mu, pairs_trig = ak.unzip(ak.cartesian([mu_p4, trig_p4], nested=True))
-    dr = pairs_mu.deltaR(pairs_trig)
-    within = dr < dr_max
-    candidate_pt = ak.where(within, pairs_trig.pt, -np.inf)
-    best_pt = ak.max(candidate_pt, axis=-1)
-    return ak.fill_none(best_pt, -np.inf)
+    `trigobj`/`sel_muons` -- never writes to or filters either input.
+
+    electron-datasets task: the body now delegates to
+    trigobj_best_match(..., TRIGOBJ_MUON_ID, ...), which is the same
+    formula with the object id as a parameter, so the muon and electron
+    matchers can never drift apart. Behaviour, inputs and output are
+    identical to before -- test_electron_datasets.py checks that directly,
+    and so does electron_prep/common.assert_matcher_agrees_with_production.
+    """
+    return trigobj_best_match(sel_muons, trigobj, TRIGOBJ_MUON_ID, required_bit, dr_max)["best_pt"]
 
 
 def matched_acceptance_mask(sel_muons: ak.Array, trigobj: ak.Array, required_bit: int,
@@ -542,6 +628,554 @@ def matched_acceptance_mask(sel_muons: ak.Array, trigobj: ak.Array, required_bit
     n_matched = ak.to_numpy(ak.num(matched_pts, axis=1))
     leading_matched_pt = ak.to_numpy(ak.fill_none(ak.max(matched_pts, axis=1), -np.inf))
     return (n_matched >= min_matched) & (leading_matched_pt >= leading_pt_min_gev)
+
+
+# ---------------------------------------------------------------------------
+# --population matched4 helpers (electron-datasets task, D2-D6). Every
+# function below is NEW; nothing above it is modified except
+# trigobj_best_match_pt, which now delegates to the id-parameterised
+# matcher so the two can never drift apart (its behaviour, inputs and
+# outputs are identical -- asserted by
+# studies/cms_datasets/tests/test_electron_datasets.py and by
+# electron_prep/common.assert_matcher_agrees_with_production).
+# ---------------------------------------------------------------------------
+
+def delta_r_wrapped(obj_a: ak.Array, obj_b: ak.Array) -> ak.Array:
+    """Pairwise dR between two per-event collections, nested so the result
+    is [event][a][b].
+
+    dR = sqrt(dEta^2 + dPhi^2) with dPhi wrapped into [-pi, pi], written
+    out explicitly because D3 specifies the overlap-removal metric that
+    way. test_electron_datasets.py asserts it agrees with vector's own
+    deltaR (which the trigger matching uses), so this is a second
+    spelling of the same quantity, not a second definition."""
+    a_eta, b_eta = ak.unzip(ak.cartesian([obj_a.eta, obj_b.eta], nested=True))
+    a_phi, b_phi = ak.unzip(ak.cartesian([obj_a.phi, obj_b.phi], nested=True))
+    d_eta = a_eta - b_eta
+    d_phi = (a_phi - b_phi + np.pi) % (2.0 * np.pi) - np.pi
+    return np.sqrt(d_eta ** 2 + d_phi ** 2)
+
+
+def electrons_overlapping_muons_mask(electrons: ak.Array, muons: ak.Array,
+                                     dr_max: float = EMU_OVERLAP_DR_MAX) -> ak.Array:
+    """Per selected electron: is it within dR < dr_max of ANY selected
+    muon? The one place the D3 overlap condition is evaluated."""
+    dr = delta_r_wrapped(electrons, muons)                 # [event][ele][mu]
+    return ak.fill_none(ak.any(dr < dr_max, axis=-1), False)
+
+
+def remove_electrons_overlapping_muons(electrons: ak.Array, muons: ak.Array,
+                                       dr_max: float = EMU_OVERLAP_DR_MAX,
+                                       enabled: bool = True):
+    """D3: drop every selected electron within dR < dr_max of ANY selected
+    muon. Muons are never removed.
+
+    Returns (electrons_kept, n_removed_per_event, removed_mask). With enabled=False
+    nothing is removed and the input array is returned unchanged -- that
+    switch exists for validation only (E1(b)); the default is ON.
+
+    WHERE THIS SITS IN THE ORDER. It is applied after object selection
+    (muons, electrons AND jets) and before trigger matching, before the
+    Version B count and before final-state assignment, exactly as D3
+    requires. Jets are therefore still lepton-cleaned against the electron
+    list master cleans them against, so the jet collections are
+    bit-for-bit what master produces and every difference this option
+    makes traces to a removed electron. The alternative (clean jets
+    against the post-removal electron list) would additionally change the
+    jet collections, which this task's own out-of-scope list forbids
+    ("object definitions ... do not change"). How many events the two
+    orderings could possibly differ on is counted and reported --
+    n_events_jet_cleaning_order_would_matter in the matched4
+    diagnostics."""
+    n_events = len(electrons)
+    if not enabled:
+        none_removed = ak.zeros_like(electrons.pt, dtype=bool)
+        return electrons, np.zeros(n_events, dtype=np.int64), none_removed
+    is_close = electrons_overlapping_muons_mask(electrons, muons, dr_max)
+    n_removed = ak.to_numpy(ak.sum(is_close, axis=1)).astype(np.int64)
+    return electrons[~is_close], n_removed, is_close
+
+
+def count_events_where_jet_cleaning_order_would_matter(
+        removed_electrons: ak.Array, muons: ak.Array, light_jets: ak.Array,
+        bjets: ak.Array) -> int:
+    """How many events the documented ordering choice in
+    remove_electrons_overlapping_muons could possibly affect: events with a
+    REMOVED electron that has a selected jet within the lepton-cleaning
+    cone (selection.JET_LEPTON_CLEAN_DR) which is NOT within that cone of
+    any selected muon. Only in such an event could cleaning jets against
+    the post-removal electron list give a different jet collection.
+    Diagnostic only -- changes nothing."""
+    if len(removed_electrons) == 0:
+        return 0
+    jets_all = ak.concatenate([light_jets, bjets], axis=1)
+    dr_ej = delta_r_wrapped(removed_electrons, jets_all)        # [ev][rem_e][jet]
+    near_removed_e = dr_ej < selection.JET_LEPTON_CLEAN_DR
+    dr_mj = delta_r_wrapped(muons, jets_all)                    # [ev][mu][jet]
+    near_any_mu = ak.fill_none(ak.any(dr_mj < selection.JET_LEPTON_CLEAN_DR, axis=1), False)
+    # near_any_mu is [ev][jet]; it broadcasts against [ev][rem_e][jet].
+    would_matter = ak.any(ak.any(near_removed_e & ~near_any_mu, axis=-1), axis=-1)
+    return int(ak.sum(ak.fill_none(would_matter, False)))
+
+
+def trigobj_best_match(objs: ak.Array, trigobj: ak.Array, obj_id: int, required_bit: int,
+                       dr_max: float = MATCH_DR_MAX) -> dict:
+    """The id-parameterised trigger matcher, with per-object bookkeeping
+    (D6). For each offline object (per event, jagged) it finds the TrigObj
+    with the highest online pT among those with `id == obj_id`,
+    `filterBits & required_bit != 0` and dR < dr_max.
+
+    THE TRIGGER-OBJECT GUARD IS THIS id FILTER (D6): offline electrons can
+    only ever match id==11 objects and offline muons only id==13 ones,
+    because objects of any other id are removed before a single dR is
+    computed. count_trigger_guard_violations re-checks that independently,
+    from the recorded indices.
+
+    Returns a dict of jagged arrays, all aligned to `objs`:
+      best_pt           highest matched TrigObj_pt, -inf if unmatched
+      best_dr           dR to that object, NaN if unmatched
+      best_index        its index in the ORIGINAL TrigObj collection, -1 if unmatched
+      best_id           its TrigObj_id, -1 if unmatched
+      best_filterBits   its TrigObj_filterBits, 0 if unmatched
+      is_matched        boolean
+    `best_pt` is computed by exactly the formula trigobj_best_match_pt has
+    always used, which is why that function now delegates here."""
+    trig_index = ak.local_index(trigobj, axis=1)
+    trig_mask = (trigobj.id == obj_id) & ((trigobj.filterBits & required_bit) != 0)
+    trig_sel = trigobj[trig_mask]
+    sel_index = trig_index[trig_mask]
+
+    obj_p4 = _p4_no_mass_needed(objs)
+    trig_p4 = _p4_no_mass_needed(trig_sel)
+    pairs_obj, pairs_trig = ak.unzip(ak.cartesian([obj_p4, trig_p4], nested=True))
+    dr = pairs_obj.deltaR(pairs_trig)
+    within = dr < dr_max
+    candidate_pt = ak.where(within, pairs_trig.pt, -np.inf)
+    best_pt = ak.fill_none(ak.max(candidate_pt, axis=-1), -np.inf)
+    is_matched = best_pt > -np.inf
+
+    # Which pair won, and what it was: index into the ORIGINAL TrigObj list.
+    _, pairs_idx = ak.unzip(ak.cartesian([objs.pt, sel_index], nested=True))
+    _, pairs_bits = ak.unzip(ak.cartesian([objs.pt, trig_sel.filterBits], nested=True))
+    _, pairs_id = ak.unzip(ak.cartesian([objs.pt, trig_sel.id], nested=True))
+    best_slot = ak.argmax(candidate_pt, axis=-1, keepdims=True)
+    best_index = ak.fill_none(ak.firsts(pairs_idx[best_slot], axis=-1), -1)
+    best_bits = ak.fill_none(ak.firsts(pairs_bits[best_slot], axis=-1), 0)
+    best_id = ak.fill_none(ak.firsts(pairs_id[best_slot], axis=-1), -1)
+    best_dr = ak.fill_none(ak.firsts(dr[best_slot], axis=-1), np.nan)
+
+    return {
+        "best_pt": best_pt,
+        "best_dr": ak.where(is_matched, best_dr, np.nan),
+        "best_index": ak.where(is_matched, best_index, -1),
+        "best_id": ak.where(is_matched, best_id, -1),
+        "best_filterBits": ak.where(is_matched, best_bits, 0),
+        "is_matched": is_matched,
+    }
+
+
+def count_trigger_guard_violations(bookkeeping: dict, trigobj: ak.Array, expected_id: int) -> int:
+    """D6: count offline objects RECORDED as matched to a TrigObj whose id
+    is not `expected_id`. Independent of trigobj_best_match's own id
+    filter: it takes the recorded index, looks the id up again in the
+    ORIGINAL TrigObj collection, and compares. Expected 0; a non-zero
+    count means the bookkeeping and the matcher disagree."""
+    is_matched = bookkeeping["is_matched"]
+    idx = bookkeeping["best_index"]
+    safe_idx = ak.where(is_matched, idx, 0)
+    # pad_none guarantees a non-empty inner list so index 0 is always legal,
+    # even in events with no TrigObj at all (where is_matched is all False).
+    ids_padded = ak.fill_none(ak.pad_none(trigobj.id, 1, axis=1), -999)
+    looked_up = ids_padded[safe_idx]
+    violations = is_matched & (looked_up != expected_id)
+    return int(ak.sum(violations))
+
+
+def assert_trigobj_bit_meanings(branch_titles: dict) -> dict:
+    """D6: read the TrigObj branch titles at RUNTIME and assert the bit
+    meanings this acceptance depends on are the ones documented in
+    ELECTRON_MATCHING_SPEC.md. Stops the job with a clear error on any
+    mismatch, rather than silently matching the wrong HLT filter."""
+    id_title = " ".join(str(branch_titles.get("TrigObj_id", "")).split())
+    bits_title = " ".join(str(branch_titles.get("TrigObj_filterBits", "")).split())
+    missing = []
+    for needle in EXPECTED_TRIGOBJ_ID_TITLE_SUBSTRINGS:
+        if needle not in id_title:
+            missing.append(("TrigObj_id", needle))
+    for needle in EXPECTED_TRIGOBJ_FILTERBITS_TITLE_SUBSTRINGS:
+        if needle not in bits_title:
+            missing.append(("TrigObj_filterBits", needle))
+    if missing:
+        raise RuntimeError(
+            "STOP: TrigObj branch titles in this file do not carry the bit "
+            "meanings this acceptance was derived from. Missing: "
+            f"{missing}. TrigObj_id title={id_title!r}; "
+            f"TrigObj_filterBits title={bits_title!r}. Refusing to match "
+            "against filter bits whose meaning is not confirmed."
+        )
+    return {"trigobj_id_title": id_title,
+            "trigobj_filterbits_title": bits_title,
+            "checked_substrings": {
+                "TrigObj_id": list(EXPECTED_TRIGOBJ_ID_TITLE_SUBSTRINGS),
+                "TrigObj_filterBits": list(EXPECTED_TRIGOBJ_FILTERBITS_TITLE_SUBSTRINGS)},
+            "all_present": True}
+
+
+def fired_mask(events: ak.Array, paths) -> np.ndarray:
+    """Event-level OR over a set of HLT path branches."""
+    m = np.zeros(len(events), dtype=bool)
+    for path in paths:
+        m |= ak.to_numpy(events[path]).astype(bool)
+    return m
+
+
+def _max_over_matched(values: ak.Array, is_matched: ak.Array) -> np.ndarray:
+    picked = values[is_matched]
+    return ak.to_numpy(ak.fill_none(ak.max(picked, axis=1), -np.inf))
+
+
+def doublemuon_acceptance(events: ak.Array, muons: ak.Array, trigobj: ak.Array) -> dict:
+    """DoubleMuon acceptance: own paths fired AND the settled muon-side
+    matching rule (matched_acceptance_mask, unchanged)."""
+    fired = fired_mask(events, MATCHED4_TRIGGER_PATHS["DoubleMuon"])
+    matched = matched_acceptance_mask(
+        muons, trigobj, TRIGOBJ_BIT_TRKISOVVL,
+        DOUBLEMUON_MATCHED_MIN_MUONS, DOUBLEMUON_MATCHED_LEADING_PT_MIN_GEV)
+    return {"fired": fired, "matched": matched, "accepted": fired & matched,
+            "cutflow": {"n_events_considered": int(len(fired)),
+                        "n_fired": int(fired.sum()),
+                        "n_matched": int(matched.sum()),
+                        "n_accepted": int((fired & matched).sum())}}
+
+
+def singlemuon_acceptance(events: ak.Array, muons: ak.Array, trigobj: ak.Array) -> dict:
+    """SingleMuon acceptance: HLT_IsoMu24 fired AND the settled muon-side
+    matching rule (matched_acceptance_mask, unchanged)."""
+    fired = fired_mask(events, MATCHED4_TRIGGER_PATHS["SingleMuon"])
+    matched = matched_acceptance_mask(
+        muons, trigobj, TRIGOBJ_BIT_ISO,
+        SINGLEMUON_MATCHED_MIN_MUONS, SINGLEMUON_MATCHED_PT_MIN_GEV)
+    return {"fired": fired, "matched": matched, "accepted": fired & matched,
+            "cutflow": {"n_events_considered": int(len(fired)),
+                        "n_fired": int(fired.sum()),
+                        "n_matched": int(matched.sum()),
+                        "n_accepted": int((fired & matched).sum())}}
+
+
+def doubleeg_acceptance(events: ak.Array, electrons: ak.Array, trigobj: ak.Array,
+                        threshold_mode: str) -> dict:
+    """D4: DoubleEG acceptance.
+
+    (1) HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ fired, AND
+    (2) >= 2 distinct selected electrons each matched (dR<0.1) to a
+        TrigObj with id==11 and bit 16 ("2e") set, AND
+    (3) the higher-pT matched trigger object has TrigObj_pt >= 23 GeV, AND
+    (4) the NEW offline-pT requirement, per `threshold_mode`:
+          "leading_only": the highest-OFFLINE-pT matched electron has
+                          pT > 30 GeV (the other matched electron needs
+                          only the normal >= 25 GeV object threshold);
+          "both":         at least two matched electrons have offline
+                          pT > 30 GeV.
+
+    Two offline electrons MAY share one trigger object -- this mirrors the
+    DoubleMuon code exactly (matched_acceptance_mask counts matched
+    offline objects, never distinct trigger objects); how often that
+    actually happens is counted and reported rather than assumed away.
+    Unmatched electrons stay in the event with the normal object
+    definition; nothing here changes any object definition."""
+    if threshold_mode not in DOUBLEEG_THRESHOLD_MODES:
+        raise ValueError(f"unknown doubleeg_threshold_mode {threshold_mode!r}; "
+                         f"expected one of {DOUBLEEG_THRESHOLD_MODES}")
+    fired = fired_mask(events, MATCHED4_TRIGGER_PATHS["DoubleEG"])
+    bk = trigobj_best_match(electrons, trigobj, TRIGOBJ_ELECTRON_ID, TRIGOBJ_BIT_E_2E)
+    is_matched = bk["is_matched"]
+    n_matched = ak.to_numpy(ak.sum(is_matched, axis=1)).astype(np.int64)
+    leading_online_pt = _max_over_matched(bk["best_pt"], is_matched)
+    offline_pt_matched = electrons.pt[is_matched]
+    leading_offline_pt = ak.to_numpy(
+        ak.fill_none(ak.max(offline_pt_matched, axis=1), -np.inf))
+    n_matched_above_offline_cut = ak.to_numpy(
+        ak.sum(offline_pt_matched > DOUBLEEG_OFFLINE_PT_MIN_GEV, axis=1)).astype(np.int64)
+
+    if threshold_mode == "leading_only":
+        offline_ok = leading_offline_pt > DOUBLEEG_OFFLINE_PT_MIN_GEV
+    else:
+        offline_ok = n_matched_above_offline_cut >= DOUBLEEG_MATCHED_MIN_ELECTRONS
+
+    enough_matched = n_matched >= DOUBLEEG_MATCHED_MIN_ELECTRONS
+    online_ok = leading_online_pt >= DOUBLEEG_TRIGOBJ_LEADING_PT_MIN_GEV
+    accepted = fired & enough_matched & online_ok & offline_ok
+
+    return {
+        "fired": fired,
+        "matched": enough_matched & online_ok & offline_ok,
+        "accepted": accepted,
+        "bookkeeping": bk,
+        "n_matched": n_matched,
+        "leading_online_pt": leading_online_pt,
+        "leading_offline_matched_pt": leading_offline_pt,
+        "n_matched_above_offline_cut": n_matched_above_offline_cut,
+        "pre_offline_cut_mask": fired & enough_matched & online_ok,
+        "cutflow": {
+            "n_events_considered": int(len(fired)),
+            "n_fired": int(fired.sum()),
+            "n_fired_and_ge1_matched": int((fired & (n_matched >= 1)).sum()),
+            "n_fired_and_ge2_matched": int((fired & enough_matched).sum()),
+            "n_fired_ge2_matched_online23": int((fired & enough_matched & online_ok).sum()),
+            "n_accepted": int(accepted.sum()),
+            "n_lost_to_offline_cut": int(((fired & enough_matched & online_ok) & ~offline_ok).sum()),
+            "threshold_mode": threshold_mode,
+            "offline_pt_min_gev": DOUBLEEG_OFFLINE_PT_MIN_GEV,
+        },
+    }
+
+
+def doubleeg_interpretation_diagnostics(electrons: ak.Array, bk: dict,
+                                        base_mask: np.ndarray) -> dict:
+    """D4's two required counts, over the events selected by `base_mask`
+    (the events that pass everything except the new offline-pT rule, so
+    the counts do not depend on which mode is in force):
+
+    (a) the interpretation check -- events where the LEADING MATCHED
+        electron is not the LEADING SELECTED electron of the event.
+        Counted two independent ways, which must agree: (i) the offline-pT
+        argmax among matched electrons is not index 0, and (ii) electron 0
+        is not matched. They agree only if the selected-electron
+        collection is pT-descending, which is also checked and reported.
+
+    (b) the shared-trigger-object count -- events with >= 2 matched
+        electrons whose recorded best TrigObj indices are not all
+        distinct, i.e. two offline electrons matched to the SAME trigger
+        object."""
+    is_matched = bk["is_matched"]
+    pt = electrons.pt
+    n_matched = ak.to_numpy(ak.sum(is_matched, axis=1))
+
+    # Is the selected-electron collection pT-descending in every event?
+    non_increasing = ak.all(ak.fill_none(pt[:, :-1] >= pt[:, 1:], True), axis=1)
+    n_not_pt_ordered = int(len(pt) - int(ak.sum(ak.fill_none(non_increasing, True))))
+
+    matched_pt = ak.where(is_matched, pt, -np.inf)
+    argmax_matched = ak.to_numpy(ak.fill_none(ak.argmax(matched_pt, axis=1), -1))
+    first_is_matched = ak.to_numpy(ak.fill_none(ak.firsts(is_matched), False))
+
+    has_any = n_matched >= 1
+    differs_argmax = base_mask & has_any & (argmax_matched != 0)
+    differs_first = base_mask & has_any & (~first_is_matched)
+
+    # Shared trigger object: fewer distinct recorded indices than matches.
+    idx_lists = ak.to_list(bk["best_index"][is_matched])
+    n_distinct = np.array([len(set(x)) for x in idx_lists], dtype=np.int64) \
+        if idx_lists else np.zeros(0, dtype=np.int64)
+    shared = base_mask & (n_matched >= 2) & (n_distinct < n_matched)
+
+    return {
+        "n_events_in_base": int(base_mask.sum()),
+        "n_selected_electron_collections_not_pt_descending": n_not_pt_ordered,
+        "n_leading_matched_differs_from_leading_selected": int(differs_argmax.sum()),
+        "n_leading_matched_differs_crosscheck_first_not_matched": int(differs_first.sum()),
+        "two_counts_agree": bool(int(differs_argmax.sum()) == int(differs_first.sum())),
+        "n_events_two_electrons_share_one_trigobj": int(shared.sum()),
+    }
+
+
+def muoneg_acceptance(events: ak.Array, muons: ak.Array, electrons: ak.Array,
+                      trigobj: ak.Array) -> dict:
+    """D5: MuonEG acceptance.
+
+    (1) HLT_Mu23_TrkIsoVVL_Ele12_..._DZ OR HLT_Mu8_TrkIsoVVL_Ele23_..._DZ
+        fired, AND
+    (2) >= 1 SELECTED offline muon (the muon leg cannot be trigger-matched
+        in 2016 NanoAOD -- ELECTRON_MATCHING_SPEC.md section 4), AND
+    (3) >= 1 selected electron matched (dR<0.1) to a TrigObj with id==11
+        and bit 32 ("1e-1mu") whose matched TrigObj_pt clears the
+        electron-leg threshold of a path that ACTUALLY FIRED: >= 12 GeV
+        for Mu23_Ele12, >= 23 GeV for Mu8_Ele23. Either fired path's
+        condition suffices, so swapped legs are accepted."""
+    fired_a = fired_mask(events, [MUONEG_PATH_MU23_ELE12])
+    fired_b = fired_mask(events, [MUONEG_PATH_MU8_ELE23])
+    fired = fired_a | fired_b
+    bk = trigobj_best_match(electrons, trigobj, TRIGOBJ_ELECTRON_ID, TRIGOBJ_BIT_E_1E1MU)
+    is_matched = bk["is_matched"]
+    n_matched = ak.to_numpy(ak.sum(is_matched, axis=1)).astype(np.int64)
+    best_online_pt = _max_over_matched(bk["best_pt"], is_matched)
+    has_muon = ak.to_numpy(ak.num(muons, axis=1) >= MUONEG_MIN_SELECTED_MUONS)
+
+    leg_a_ok = fired_a & (best_online_pt
+                          >= MUONEG_ELECTRON_LEG_PT_MIN_GEV_BY_PATH[MUONEG_PATH_MU23_ELE12])
+    leg_b_ok = fired_b & (best_online_pt
+                          >= MUONEG_ELECTRON_LEG_PT_MIN_GEV_BY_PATH[MUONEG_PATH_MU8_ELE23])
+    electron_leg_ok = leg_a_ok | leg_b_ok
+    accepted = fired & has_muon & electron_leg_ok
+
+    return {
+        "fired": fired,
+        "matched": has_muon & electron_leg_ok,
+        "accepted": accepted,
+        "bookkeeping": bk,
+        "n_matched": n_matched,
+        "best_online_pt": best_online_pt,
+        "cutflow": {
+            "n_events_considered": int(len(fired)),
+            "n_fired": int(fired.sum()),
+            "n_fired_mu23_ele12": int(fired_a.sum()),
+            "n_fired_mu8_ele23": int(fired_b.sum()),
+            "n_fired_both_paths": int((fired_a & fired_b).sum()),
+            "n_fired_and_ge1_selected_muon": int((fired & has_muon).sum()),
+            "n_fired_muon_and_ge1_matched_electron": int(
+                (fired & has_muon & (n_matched >= 1)).sum()),
+            "n_accepted": int(accepted.sum()),
+            "n_accepted_via_mu23_ele12_leg": int((fired & has_muon & leg_a_ok).sum()),
+            "n_accepted_via_mu8_ele23_leg": int((fired & has_muon & leg_b_ok).sum()),
+            "n_matched_electron_fails_fired_path_leg_threshold": int(
+                (fired & has_muon & (n_matched >= 1) & ~electron_leg_ok).sum()),
+        },
+    }
+
+
+def evaluate_four_acceptances(events: ak.Array, muons: ak.Array, electrons: ak.Array,
+                              trigobj: ak.Array, doubleeg_threshold_mode: str) -> dict:
+    """D2: the acceptance of each of the four datasets, evaluated on the
+    SAME events with the SAME functions and the SAME post-overlap-removal
+    objects. `electrons` must already have had the D3 overlap removal
+    applied (or deliberately not, for validation).
+
+    An event belongs to dataset D's EXCLUSIVE set iff it passes D's
+    acceptance and fails the acceptance of every dataset above it in
+    DELIVERY_VETO_ORDER_4."""
+    out = {
+        "DoubleMuon": doublemuon_acceptance(events, muons, trigobj),
+        "SingleMuon": singlemuon_acceptance(events, muons, trigobj),
+        "DoubleEG": doubleeg_acceptance(events, electrons, trigobj, doubleeg_threshold_mode),
+        "MuonEG": muoneg_acceptance(events, muons, electrons, trigobj),
+    }
+    assert list(out.keys()) == DELIVERY_VETO_ORDER_4, (
+        "acceptance dict order must be DELIVERY_VETO_ORDER_4")
+    return out
+
+
+def exclusive_mask_from_acceptances(acceptances: dict, dataset_label: str):
+    """The exclusive mask for `dataset_label`: NOT accepted by any
+    higher-priority dataset in DELIVERY_VETO_ORDER_4. Returned aligned to
+    the event array the acceptances were computed on, together with the
+    per-higher-dataset overlap counts."""
+    higher = DELIVERY_VETO_ORDER_4[:DELIVERY_VETO_ORDER_4.index(dataset_label)]
+    own = acceptances[dataset_label]["accepted"]
+    vetoed_any = np.zeros(own.shape, dtype=bool)
+    per_higher = {}
+    for h in higher:
+        h_acc = acceptances[h]["accepted"]
+        per_higher[h] = int((own & h_acc).sum())
+        vetoed_any |= h_acc
+    return ~vetoed_any, per_higher, higher
+
+
+def attribute_to_exclusive_dataset(acceptances: dict) -> np.ndarray:
+    """For each event, the label of the HIGHEST-priority dataset whose
+    acceptance it passes, or "" if none does. The single source of truth
+    for the closure test's "exactly one exclusive set" check."""
+    n = len(acceptances[DELIVERY_VETO_ORDER_4[0]]["accepted"])
+    out = np.full(n, "", dtype=object)
+    for label in reversed(DELIVERY_VETO_ORDER_4):
+        out = np.where(acceptances[label]["accepted"], label, out)
+    return out
+
+
+def emu_pair_mass_values(electrons: ak.Array, muons: ak.Array) -> np.ndarray:
+    """Invariant mass of every selected (electron, muon) pair, flattened.
+    Diagnostic only (E5's overlap-removal plot)."""
+    if len(electrons) == 0:
+        return np.zeros(0, dtype=np.float64)
+    import vector
+    vector.register_awkward()
+    e_p4 = vector.zip({"pt": electrons.pt, "eta": electrons.eta,
+                       "phi": electrons.phi, "mass": electrons.mass})
+    m_p4 = vector.zip({"pt": muons.pt, "eta": muons.eta,
+                       "phi": muons.phi, "mass": muons.mass})
+    pe, pm = ak.unzip(ak.cartesian([e_p4, m_p4]))
+    flat = ak.flatten((pe + pm).mass, axis=None)
+    if len(flat) == 0:
+        return np.zeros(0, dtype=np.float64)
+    return ak.to_numpy(flat).astype(np.float64)
+
+
+def ee_pair_mass_by_region(electrons: ak.Array) -> dict:
+    """m(e,e) for every selected electron pair, split barrel-barrel vs
+    other, using ECAL_BARREL_ABS_ETA_MAX on the SAME eta variable the
+    electron selection cuts on. Diagnostic only (E5's Z-peak plot)."""
+    empty = {"barrel_barrel": np.zeros(0), "other": np.zeros(0)}
+    if len(electrons) == 0:
+        return empty
+    import vector
+    vector.register_awkward()
+    p4 = vector.zip({"pt": electrons.pt, "eta": electrons.eta,
+                     "phi": electrons.phi, "mass": electrons.mass})
+    is_barrel = abs(electrons.eta) < ECAL_BARREL_ABS_ETA_MAX
+    a, b = ak.unzip(ak.combinations(p4, 2))
+    ba, bb = ak.unzip(ak.combinations(is_barrel, 2))
+    flat = ak.flatten((a + b).mass, axis=None)
+    if len(flat) == 0:
+        return empty
+    mass = ak.to_numpy(flat).astype(np.float64)
+    both_barrel = ak.to_numpy(ak.flatten(ba & bb, axis=None)).astype(bool)
+    return {"barrel_barrel": mass[both_barrel], "other": mass[~both_barrel]}
+
+
+def matching_bookkeeping_summary(bk: dict, label: str) -> dict:
+    """D6: per-object match bookkeeping, summarised. Keeps the full
+    per-object record out of the metadata (it would be enormous) while
+    reporting everything the task asks to see: how many offline objects
+    were matched, the distribution of matched TrigObj ids and filterBits,
+    and the dR distribution of the accepted matches."""
+    from collections import Counter as _C
+    is_matched = bk["is_matched"]
+    n_objs = int(ak.sum(ak.num(is_matched, axis=1)))
+    n_matched = int(ak.sum(is_matched))
+    if n_matched:
+        dr = ak.to_numpy(ak.flatten(bk["best_dr"][is_matched], axis=None)).astype(float)
+        ids = ak.to_numpy(ak.flatten(bk["best_id"][is_matched], axis=None))
+        bits = ak.to_numpy(ak.flatten(bk["best_filterBits"][is_matched], axis=None))
+    else:
+        dr = np.zeros(0)
+        ids = np.zeros(0, dtype=np.int64)
+        bits = np.zeros(0, dtype=np.int64)
+    return {
+        "which": label,
+        "n_offline_objects": n_objs,
+        "n_matched": n_matched,
+        "matched_trigobj_id_counts": {str(k): int(v) for k, v in sorted(_C(ids.tolist()).items())},
+        "matched_trigobj_filterbits_counts": {
+            str(k): int(v) for k, v in sorted(_C(bits.tolist()).items())},
+        "matched_dr_histogram": (_histogram_with_overflow(dr, DIAGNOSTIC_DR_EMU_BIN_EDGES)
+                                 if dr.size else None),
+        "matched_dr_max": float(dr.max()) if dr.size else None,
+    }
+
+
+def exact_final_state_labels(obj_record: ak.Array) -> np.ndarray:
+    """One EXACT final-state label per event, in upstream's name format.
+
+    Extracted verbatim from _group_by_final_state_with_mask (which now
+    calls it) so the per-event label used by the matched4 debug dump can
+    never drift from the label the shards are grouped by. See that
+    function's docstring for the full rationale; the construction is
+    upstream's own, from services/calculations/im_calculator.py and
+    services/calculations/physics_calcs.py at upstream commit 88d7a4b."""
+    num_events = len(obj_record)
+    zero_array = ak.Array([0] * num_events) if num_events > 0 else ak.Array([])
+    particle_counts = ak.num(obj_record)
+    present_types = [
+        (name, letter, ak.to_numpy(getattr(particle_counts, name, zero_array)))
+        for name, letter in FINAL_STATE_OBJECTS
+        if name in obj_record.fields
+    ]
+    return np.array([
+        "_".join(
+            f"{count}{letter}"
+            for (_name, letter, _values), count in zip(present_types, counts)
+        )
+        for counts in zip(*[values for _name, _letter, values in present_types])
+    ])
 
 
 def compute_matching_diagnostics(muons: ak.Array, trigobj: ak.Array, required_bit: int,
@@ -897,15 +1531,50 @@ def main():
     p.add_argument("--record-id", type=int, required=True)
     p.add_argument("--file-index", type=int, required=True)
     p.add_argument("--output-dir", required=True)
-    p.add_argument("--population", choices=["generic", "v0", "matched"], default="generic")
+    p.add_argument("--population", choices=["generic", "v0", "matched", "matched4"],
+                   default="generic")
     p.add_argument("--validated-runs-json", default=DEFAULT_VALIDATED_RUNS_JSON)
+    # --- electron-datasets task: options for --population matched4 ONLY.
+    # They are ignored by generic/v0/matched, so no pre-existing invocation
+    # changes behaviour.
+    p.add_argument(
+        "--no-emu-overlap-removal", action="store_true",
+        help="matched4 only: switch OFF the D3 electron-muon overlap removal "
+             "(remove every selected electron within dR<0.05 of a selected muon). "
+             "FOR VALIDATION ONLY -- the production default is ON.",
+    )
+    p.add_argument(
+        "--doubleeg-threshold-mode", choices=list(DOUBLEEG_THRESHOLD_MODES),
+        default=DOUBLEEG_THRESHOLD_MODE_DEFAULT,
+        help="matched4 only: D4's offline-pT rule on the matched DoubleEG "
+             "electrons. 'leading_only' = the highest-offline-pT matched electron "
+             "above 30 GeV; 'both' = at least two matched electrons above 30 GeV. "
+             f"Default {DOUBLEEG_THRESHOLD_MODE_DEFAULT!r} (PROVISIONAL, from the "
+             "Step D measurement's own fixed criterion).",
+    )
+    p.add_argument(
+        "--debug-event-dump", action="store_true",
+        help="matched4 only: also write debug_events.csv with one row per "
+             "ACCEPTED event (run, lumi, event, dataset, the four acceptance "
+             "flags, exclusive yes/no, final-state label, electrons removed by "
+             "overlap removal). OFF by default -- not written in production.",
+    )
     args = p.parse_args()
 
     logging.basicConfig(level=logging.WARNING, format="%(asctime)s %(levelname)s %(message)s")
     logger = logging.getLogger("run_dataset_on_file")
 
     dataset_label = args.dataset_label
-    if dataset_label == "SingleMuon" and args.population == "matched":
+    if args.population == "matched4":
+        # electron-datasets task, D1/D2: this path's own trigger sets
+        # (SingleMuon = HLT_IsoMu24 only, as on master) and its own
+        # priority order DELIVERY_VETO_ORDER_4 -- never VETO_ORDER.
+        if dataset_label not in DELIVERY_VETO_ORDER_4:
+            raise ValueError(
+                f"--population matched4 is implemented for {DELIVERY_VETO_ORDER_4} "
+                f"only (SingleElectron is postponed) -- got {dataset_label!r}")
+        own_paths = MATCHED4_TRIGGER_PATHS[dataset_label]
+    elif dataset_label == "SingleMuon" and args.population == "matched":
         # Matched mode's SingleMuon trigger set is HLT_IsoMu24 ONLY (Maryna's
         # explicit instruction, TRIGGER_MATCHING_SPEC.md Section 4) --
         # generic/v0's SingleMuon trigger set (both IsoMu24 and IsoTkMu24,
@@ -914,14 +1583,26 @@ def main():
         own_paths = SINGLEMUON_MATCHED_TRIGGER_PATHS
     else:
         own_paths = TRIGGER_PATHS_BY_DATASET[dataset_label]
-    higher_priority = VETO_ORDER[:VETO_ORDER.index(dataset_label)]
-    veto_paths_by_label = {h: TRIGGER_PATHS_BY_DATASET[h] for h in higher_priority}
+    if args.population == "matched4":
+        higher_priority = DELIVERY_VETO_ORDER_4[:DELIVERY_VETO_ORDER_4.index(dataset_label)]
+        veto_paths_by_label = {h: list(MATCHED4_TRIGGER_PATHS[h]) for h in higher_priority}
+    else:
+        higher_priority = VETO_ORDER[:VETO_ORDER.index(dataset_label)]
+        veto_paths_by_label = {h: TRIGGER_PATHS_BY_DATASET[h] for h in higher_priority}
 
     all_trigger_branches = list(own_paths)
     for paths in veto_paths_by_label.values():
         all_trigger_branches.extend(paths)
+    if args.population == "matched4":
+        # D2: every HLT branch needed to evaluate ALL FOUR acceptances must
+        # be present in this file, whichever dataset it comes from. They are
+        # listed as REQUIRED branches, so read_events stops the job with a
+        # clear error if any one is missing rather than silently treating it
+        # as "did not fire".
+        for paths in MATCHED4_TRIGGER_PATHS.values():
+            all_trigger_branches.extend(paths)
     required_branches = list(BASE_OBJECT_BRANCHES) + sorted(set(all_trigger_branches))
-    if args.population == "matched":
+    if args.population in ("matched", "matched4"):
         required_branches = list(required_branches) + list(MATCHED_MODE_EXTRA_BRANCHES)
 
     t0 = time.time()
@@ -931,7 +1612,11 @@ def main():
     file_url = resolve_file_url(args.record_id, args.file_index)
     print(f"[{dataset_label}] resolved record {args.record_id} file index {args.file_index} -> {file_url}", flush=True)
 
-    events = read_events(file_url, required_branches)
+    branch_titles = {}
+    if args.population == "matched4":
+        events, branch_titles = read_events(file_url, required_branches, return_titles=True)
+    else:
+        events = read_events(file_url, required_branches)
     n_read = len(events)
     print(f"[{dataset_label}] read {n_read} events", flush=True)
 
@@ -993,6 +1678,7 @@ def main():
 
     v0_result = None
     matching_diagnostics = None
+    matched4_diagnostics = None
     if args.population == "generic":
         total_objects = ak.num(muons) + ak.num(electrons) + ak.num(jets["Jets"]) + ak.num(jets["BJets"])
         keep = ak.to_numpy(total_objects >= MIN_TOTAL_SELECTED_OBJECTS)
@@ -1049,6 +1735,133 @@ def main():
                 DOUBLEMUON_MATCHED_MIN_MUONS, DOUBLEMUON_MATCHED_LEADING_PT_MIN_GEV,
             )
             is_exclusive_pretrigger = ~(doublemuon_fired & doublemuon_accepted)
+    elif args.population == "matched4":
+        # Electron-datasets task (D2-D6): the FOUR-dataset delivery path.
+        # DoubleMuon + SingleMuon + DoubleEG + MuonEG, acceptance-based
+        # de-duplication in DELIVERY_VETO_ORDER_4, electron-muon overlap
+        # removal ON by default. --population matched (the delivered muon
+        # production) is untouched by everything in this branch.
+        if dataset_label not in DELIVERY_VETO_ORDER_4:
+            raise ValueError(
+                f"--population matched4 is implemented for "
+                f"{DELIVERY_VETO_ORDER_4} only (SingleElectron is postponed) -- "
+                f"got dataset_label={dataset_label!r}"
+            )
+        trigobj = ak.zip({
+            "pt": events_triggered.TrigObj_pt,
+            "eta": events_triggered.TrigObj_eta,
+            "phi": events_triggered.TrigObj_phi,
+            "id": events_triggered.TrigObj_id,
+            "filterBits": events_triggered.TrigObj_filterBits,
+        })
+        # D6: the bit meanings are re-read from the file's own branch titles
+        # and asserted BEFORE a single match is computed.
+        trigobj_title_check = assert_trigobj_bit_meanings(branch_titles)
+
+        # D3: electron-muon overlap removal, right after object selection.
+        overlap_removal_enabled = not args.no_emu_overlap_removal
+        electrons_pre_removal = electrons
+        electrons, n_electrons_removed, removed_mask = remove_electrons_overlapping_muons(
+            electrons_pre_removal, muons, dr_max=EMU_OVERLAP_DR_MAX,
+            enabled=overlap_removal_enabled,
+        )
+        # From here on `electrons` IS the post-removal collection, so every
+        # later step -- trigger matching, the Version B count, the
+        # final-state labels, top4/nonjet4/rare4 -- uses it automatically.
+        n_events_removal_changed = int((n_electrons_removed > 0).sum())
+        n_jet_order_would_matter = count_events_where_jet_cleaning_order_would_matter(
+            electrons_pre_removal[removed_mask], muons, jets["Jets"], jets["BJets"])
+
+        doubleeg_threshold_mode = args.doubleeg_threshold_mode
+        acceptances = evaluate_four_acceptances(
+            events_triggered, muons, electrons, trigobj, doubleeg_threshold_mode)
+        keep = acceptances[dataset_label]["accepted"]
+        is_exclusive_pretrigger, acceptance_overlap_with_higher, higher4 = (
+            exclusive_mask_from_acceptances(acceptances, dataset_label))
+        attributed = attribute_to_exclusive_dataset(acceptances)
+
+        # D6: guard-violation counters, one per matcher actually used. The
+        # two muon matchers are the ones matched mode already uses
+        # (DoubleMuon's bit 1 and SingleMuon's bit 2); the two electron
+        # matchers are DoubleEG's bit 16 and MuonEG's bit 32, whose
+        # bookkeeping the acceptance functions already produced.
+        muon_bk_bit1 = trigobj_best_match(muons, trigobj, TRIGOBJ_MUON_ID, TRIGOBJ_BIT_TRKISOVVL)
+        muon_bk_bit2 = trigobj_best_match(muons, trigobj, TRIGOBJ_MUON_ID, TRIGOBJ_BIT_ISO)
+        guard_violations = {
+            "muons_vs_id13_bit_trkisovvl": count_trigger_guard_violations(
+                muon_bk_bit1, trigobj, TRIGOBJ_MUON_ID),
+            "muons_vs_id13_bit_iso": count_trigger_guard_violations(
+                muon_bk_bit2, trigobj, TRIGOBJ_MUON_ID),
+            "electrons_vs_id11_bit_2e": count_trigger_guard_violations(
+                acceptances["DoubleEG"]["bookkeeping"], trigobj, TRIGOBJ_ELECTRON_ID),
+            "electrons_vs_id11_bit_1e1mu": count_trigger_guard_violations(
+                acceptances["MuonEG"]["bookkeeping"], trigobj, TRIGOBJ_ELECTRON_ID),
+        }
+        guard_violations["total"] = int(sum(guard_violations.values()))
+
+        obj_record = selection.build_object_record(
+            muons[keep], electrons[keep], {"Jets": jets["Jets"][keep], "BJets": jets["BJets"][keep]}
+        )
+
+        n_removed_total = int(n_electrons_removed.sum())
+        matched4_diagnostics = {
+            "delivery_veto_order": list(DELIVERY_VETO_ORDER_4),
+            "own_dataset": dataset_label,
+            "higher_priority_datasets_this_path": higher4,
+            "doubleeg_threshold_mode": doubleeg_threshold_mode,
+            "emu_overlap_removal_enabled": overlap_removal_enabled,
+            "emu_overlap_removal_dr_max": EMU_OVERLAP_DR_MAX,
+            "n_electrons_removed_total": n_removed_total,
+            "n_events_with_an_electron_removed": n_events_removal_changed,
+            "n_events_jet_cleaning_order_would_matter": n_jet_order_would_matter,
+            "trigobj_title_check": trigobj_title_check,
+            "trigger_guard_violations": guard_violations,
+            "acceptance_counts": {
+                label: int(acceptances[label]["accepted"].sum())
+                for label in DELIVERY_VETO_ORDER_4
+            },
+            "fired_counts": {
+                label: int(acceptances[label]["fired"].sum())
+                for label in DELIVERY_VETO_ORDER_4
+            },
+            "cutflow_per_dataset": {
+                label: acceptances[label]["cutflow"] for label in DELIVERY_VETO_ORDER_4
+            },
+            "n_own_accepted": int(keep.sum()),
+            "n_own_exclusive": int((keep & is_exclusive_pretrigger).sum()),
+            "n_own_accepted_also_accepted_by_higher": acceptance_overlap_with_higher,
+            "n_attributed_per_dataset": {
+                label: int((attributed == label).sum()) for label in DELIVERY_VETO_ORDER_4
+            },
+            "n_accepted_by_none": int((attributed == "").sum()),
+            "bookkeeping_summary": {
+                "doubleeg_electrons_bit16": matching_bookkeeping_summary(
+                    acceptances["DoubleEG"]["bookkeeping"], "electrons vs id11 bit16 (2e)"),
+                "muoneg_electrons_bit32": matching_bookkeeping_summary(
+                    acceptances["MuonEG"]["bookkeeping"], "electrons vs id11 bit32 (1e-1mu)"),
+                "doublemuon_muons_bit1": matching_bookkeeping_summary(
+                    muon_bk_bit1, "muons vs id13 bit1 (TrkIsoVVL)"),
+                "singlemuon_muons_bit2": matching_bookkeeping_summary(
+                    muon_bk_bit2, "muons vs id13 bit2 (Iso)"),
+            },
+            "doubleeg_interpretation_checks": doubleeg_interpretation_diagnostics(
+                electrons, acceptances["DoubleEG"]["bookkeeping"],
+                acceptances["DoubleEG"]["pre_offline_cut_mask"]),
+            "emu_pair_mass_fine_histogram_accepted_events": _histogram_with_overflow(
+                emu_pair_mass_values(electrons[keep], muons[keep]),
+                DIAGNOSTIC_EMU_MASS_FINE_BIN_EDGES),
+            "emu_pair_mass_fine_histogram_accepted_events_pre_removal": _histogram_with_overflow(
+                emu_pair_mass_values(electrons_pre_removal[keep], muons[keep]),
+                DIAGNOSTIC_EMU_MASS_FINE_BIN_EDGES),
+            "ee_pair_mass_z_histograms_accepted_events": {
+                region: _histogram_1gev(values, DIAGNOSTIC_EE_MASS_Z_BIN_EDGES)
+                for region, values in ee_pair_mass_by_region(electrons[keep]).items()
+            },
+            "light_jet_multiplicity_accepted_events": {
+                str(k): int(v) for k, v in sorted(Counter(
+                    ak.to_numpy(ak.num(jets["Jets"][keep], axis=1)).tolist()).items())
+            },
+        }
     else:  # v0 -- regression-check mode only, see module docstring.
         keep = ak.to_numpy((ak.num(muons) >= 2) & (ak.num(jets["Jets"]) >= 1))
         v0_result = selection.select_event_selection_cutflow(events_triggered)
@@ -1140,7 +1953,7 @@ def main():
     top4_diagnostics = None
     nonjet4_diagnostics = None
     rare4_diagnostics = None
-    if args.population == "matched":
+    if args.population in ("matched", "matched4"):
         top4_muons, top4_electrons, top4_light_jets, top4_bjets, n_original_objects = build_top4_object_record(
             muons[keep], electrons[keep], jets["Jets"][keep], jets["BJets"][keep]
         )
@@ -1336,6 +2149,30 @@ def main():
         capped_b_rej = np.minimum(n_b_rej, 4)
         n_hidden_cases = int(((capped_e_rej + capped_m_rej + capped_b_rej) <= 4).sum())
 
+        if args.population == "matched4" and args.debug_event_dump:
+            # B2: one row per ACCEPTED event, so the pilot can be checked at
+            # event level. Off by default (not written in production).
+            rare4_labels_full = np.full(n_after_gate, "VERSION_B_REJECTED", dtype=object)
+            rare4_labels_full[rare4_keep_mask] = exact_final_state_labels(obj_record_rare4)
+            dump_path = output_dir / "debug_events.csv"
+            with open(dump_path, "w", encoding="utf-8", newline="") as fh:
+                fh.write("run,luminosityBlock,event,dataset,"
+                         + ",".join(f"acc_{l}" for l in DELIVERY_VETO_ORDER_4)
+                         + ",exclusive,final_state,n_electrons_removed\n")
+                runs = ak.to_numpy(events_triggered.run[keep]).tolist()
+                lumis = ak.to_numpy(events_triggered.luminosityBlock[keep]).tolist()
+                evts = ak.to_numpy(events_triggered.event[keep]).tolist()
+                accs = [acceptances[l]["accepted"][keep].tolist() for l in DELIVERY_VETO_ORDER_4]
+                excl = is_exclusive_selected.tolist()
+                nrem = n_electrons_removed[keep].tolist()
+                for i in range(n_after_gate):
+                    fh.write(f"{runs[i]},{lumis[i]},{evts[i]},{dataset_label},"
+                             + ",".join("1" if accs[j][i] else "0"
+                                        for j in range(len(DELIVERY_VETO_ORDER_4)))
+                             + f",{1 if excl[i] else 0},{rare4_labels_full[i]},{nrem[i]}\n")
+            print(f"[{dataset_label}] wrote per-event debug dump: {dump_path} "
+                  f"({n_after_gate} rows)", flush=True)
+
         rare4_diagnostics = {
             "n_accepted_events_before_rare4_rule": n_after_gate,
             "n_rejected_gt4_lepton_bjet": n_rejected_rare4,
@@ -1392,6 +2229,7 @@ def main():
         "elapsed_sec": elapsed,
         "diagnostics": diagnostics,
         "matching_diagnostics": matching_diagnostics,
+        "matched4_diagnostics": matched4_diagnostics,
         "top4_diagnostics": top4_diagnostics,
         "nonjet4_diagnostics": nonjet4_diagnostics,
         "rare4_diagnostics": rare4_diagnostics,
