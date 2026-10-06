@@ -29,8 +29,9 @@ lead verifies it first.)
 
 ## `master` — the main line, and where new work should start
 
-`master` was moved twice on 5 Oct 2026. The two moves are described in order
-below; after the second one it points at the merge commit `49bcb2f`.
+`master` has been moved three times: twice on 5 Oct 2026 and once on
+6 Oct 2026. The three moves are described in order below; after the last one
+it points at the merge commit `58746ce`.
 
 ### First move on 5 Oct 2026: the combined muon delivery
 
@@ -67,6 +68,41 @@ datasets** (DoubleEG, MuonEG, SingleElectron). The preparation for those
 still sits unmerged on `prep/electron-datasets`, listed in section (c)
 below; it should be brought in together with the electron production run
 itself, on top of this `master`.
+
+### Third merge, 6 Oct 2026: histogram names that match upstream exactly
+
+On 2026-10-06 `feature/upstream-names-no-hist-min` was merged into `master`
+(merge commit `58746ce`; undo point saved first as
+`backup/master-pre-upstreamnames-merge-2026-10-06`, pointing at `f5d372b`).
+It carries two decisions from Maryna:
+
+- **Histogram names now match the main upstream pipeline exactly.** A name
+  lists only the object types we actually configure — electrons, muons,
+  light jets, b-jets — and ends with the bin width written the way upstream
+  writes it. A full name now reads
+  `ROI_mass_m0m1_cat_0ex_2mx_5jx_1bx_width_10.0`. The always-zero photon and
+  tau fields are gone, and the ending is `_width_10.0`, not `_width_10`.
+- **The per-histogram ">=100 entries" rule is dropped.** BumpNet re-checks
+  that itself during smoothing, so this pipeline no longer removes a
+  histogram for being small.
+
+**The ">=100 events per final state" rule stays**, unchanged at 100. It is
+applied **once, after all the files are combined** — never per file and never
+per batch, which would wrongly delete final states that are only large enough
+once everything is pooled.
+
+**Important for whoever runs the next production:** both of these behaviours
+are **build-time options that are switched off by default**, so that older
+ways of running the delivery keep producing exactly what they always did.
+**New production — the electron datasets included — must switch them on**,
+otherwise it will silently produce the old-style names and re-apply the
+dropped minimum. The written-up detail is in
+[`studies/cms_datasets/matching/vB_upstreamnames/REPORT.md`](../studies/cms_datasets/matching/vB_upstreamnames/REPORT.md)
+and
+[`REPORT_width_suffix.md`](../studies/cms_datasets/matching/vB_upstreamnames/REPORT_width_suffix.md).
+
+The current muon delivery for BumpNet is
+`muon_combined_vB_upstreamnames_w10p0_20261006`.
 
 ### How far `master` now sits from the original upstream project
 
