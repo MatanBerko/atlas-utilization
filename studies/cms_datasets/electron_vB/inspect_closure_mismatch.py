@@ -92,8 +92,24 @@ def describe(dataset: str, era: str, file_index: int, key: tuple) -> dict:
         "n_electrons_removed": int(n_removed[0]),
         "selected_muon_pt": [round(float(x), 4) for x in ak.to_list(muons.pt[0])],
         "selected_electron_pt": [round(float(x), 4) for x in ak.to_list(electrons.pt[0])],
-        "raw_muon_pt": [round(float(x), 4) for x in ak.to_list(ev.Muon_pt[0])],
-        "raw_electron_pt": [round(float(x), 4) for x in ak.to_list(ev.Electron_pt[0])],
+        "raw_muon_pt": [round(float(x), 6) for x in ak.to_list(ev.Muon_pt[0])],
+        "raw_electron_pt": [round(float(x), 6) for x in ak.to_list(ev.Electron_pt[0])],
+        # The per-muon and per-electron values the selection actually cuts
+        # on, so a difference can be traced to the exact variable and cut.
+        "raw_muon_eta": [round(float(x), 6) for x in ak.to_list(ev.Muon_eta[0])],
+        "raw_muon_mediumId": [bool(x) for x in ak.to_list(ev.Muon_mediumId[0])],
+        "raw_muon_pfRelIso04_all": [round(float(x), 6)
+                                    for x in ak.to_list(ev.Muon_pfRelIso04_all[0])],
+        "raw_electron_eta": [round(float(x), 6) for x in ak.to_list(ev.Electron_eta[0])],
+        "raw_electron_cutBased": [int(x) for x in ak.to_list(ev.Electron_cutBased[0])],
+        "selection_cuts": {
+            "muon_pt_min": selection.MUON_PT_MIN_GEV,
+            "muon_abs_eta_max": selection.MUON_ETA_MAX,
+            "muon_iso_max": selection.MUON_ISO_MAX,
+            "electron_pt_min": selection.ELECTRON_PT_MIN_GEV,
+            "electron_abs_eta_max": selection.ELECTRON_ETA_MAX,
+            "electron_cutbased_min": selection.ELECTRON_CUTBASED_MIN,
+        },
     }
     for mode in ("leading_only", "both"):
         acc = drv.evaluate_four_acceptances(ev, muons, electrons, trigobj, mode)
@@ -135,6 +151,15 @@ def main():
             len(objs) > 1 and all(o == objs[0] for o in objs))
         entry["acceptance_identical_across_copies"] = bool(
             len(accs) > 1 and all(a == accs[0] for a in accs))
+        # Which cut variable differs between the copies?
+        varied = []
+        for field in ("raw_muon_pt", "raw_muon_eta", "raw_muon_mediumId",
+                      "raw_muon_pfRelIso04_all", "raw_electron_pt",
+                      "raw_electron_eta", "raw_electron_cutBased"):
+            vals = [tuple(c[field]) for c in entry["copies"] if field in c]
+            if len(vals) > 1 and len(set(vals)) > 1:
+                varied.append(field)
+        entry["cut_variables_differing_between_copies"] = varied
         entry["differing_hlt_paths"] = sorted(
             p for p in (hlts[0] if hlts else {})
             if len({h[p] for h in hlts}) > 1) if len(hlts) > 1 else []
