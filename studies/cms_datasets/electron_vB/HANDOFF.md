@@ -10,15 +10,18 @@ was merged into master, and no full production was run.
 | branch | `feature/electron-datasets-vB` (fork `github.com/MatanBerko/atlas-utilization`) |
 | branched from | `origin/master` = `4bbe972` (verified before branching) |
 | merged in | `origin/prep/electron-datasets` = `f30eb01`, normal merge commit, conflict-free |
-| **pinned commit every cluster job ran from** | `5d0d71d2de182267f7ecff694015b1f72cf9fc3c` |
+| **pinned commit the measurement/pilot/closure jobs ran from** | `5d0d71d2de182267f7ecff694015b1f72cf9fc3c` |
+| **pinned commit the mode=`both` pilot re-run ran from** | `3930b43ea9f4390f47c4c77c62e47c8a3f901ff9` (same code plus the Step D default flip) |
 | final commit on the branch | see `git log origin/feature/electron-datasets-vB -1` (the report/evidence commit) |
 
 Cluster checkouts, each a detached checkout pinned to one commit:
 
 | commit | path | used for |
 |---|---|---|
-| `5d0d71d` | `/storage/agrp/berkom/atlas-utilization/checkouts/5d0d71d/repo` | every matched4 / Step D / closure job |
-| `4bbe972` | `/storage/agrp/berkom/atlas-utilization/checkouts/4bbe972/repo` | the master re-run for E1(a) (master's own `--population matched`) |
+| `5d0d71d` | `/storage/agrp/berkom/atlas-utilization/checkouts/5d0d71d/repo` | the Step D measurement, the ON/OFF pilots, the run scan and the closure |
+| `3930b43` | `.../checkouts/3930b43/repo` | the mode=`both` pilot re-run, after Step D selected `both` |
+| `4bbe972` | `.../checkouts/4bbe972/repo` | the master re-run for E1(a) (master's own `--population matched`) |
+| `26a7982`, `ac6f343` | `.../checkouts/<hash>/repo` | the aggregation / plotting / delivery-build steps, run interactively on the analysis node with `nice` |
 
 Earlier commits `6e78433`, `7895359` also have checkouts; they were superseded
 by `5d0d71d` after two smoke-test fixes and produced no result reported here.
@@ -37,13 +40,17 @@ All OpenPBS job arrays, queue `N`, `#PBS -m n`, logs under
 | `5190703[]` | 0-7 | master `4bbe972` re-run, `--population matched`, 8 muon pilot files | `cluster/pbs_matched4.sh` (launcher only; the driver is master's) |
 | `5190704[]` | 0-132 | Step D, all 133 DoubleEG files | `cluster/pbs_doubleeg_eff.sh` |
 | `5190705[]` | 0-67 | E3 closure on run 281707, the 68 files that contain it | `cluster/pbs_closure.sh` |
+| `5190810[]` | 0-15 | pilot re-run, removal ON, `--doubleeg-threshold-mode both` (the provisional default Step D selected) | `cluster/pbs_matched4.sh` |
+
+All seven arrays finished with every subjob at exit 0 and no tracebacks.
 
 ## 3. Output directories (all NEW, date-suffixed; nothing existing was touched)
 
 ```
 /storage/agrp/berkom/atlas-utilization/output/cms_datasets/
-  runs_matched4_pilot_on_20261006/      pilot, overlap removal ON   (+ *_index.json, pilot_files.json)
-  runs_matched4_pilot_off_20261006/     pilot, overlap removal OFF
+  runs_matched4_pilot_on_20261006/      pilot, overlap removal ON, mode leading_only (+ *_index.json, pilot_files.json)
+  runs_matched4_pilot_off_20261006/     pilot, overlap removal OFF, mode leading_only
+  runs_matched4_pilot_onboth_20261006/  pilot, overlap removal ON, mode both  <-- the one the report quotes
   runs_master_matched_pilot_20261006/   master 4bbe972 re-run, matched mode
   electron_vB_20261006/
     mappings/            PBS array mapping files (pilot_all16, pilot_muon8, closure, doubleeg_eff_*)
@@ -51,6 +58,8 @@ All OpenPBS job arrays, queue `N`, `#PBS -m n`, logs under
     doubleeg_eff_all/    Step D, all 133 files
     closure/             runscan_<dataset>_<era>.json  (all 390 files)
     closure/parts/       per-file closure parts (keys_*.npz, accepted_*.csv, summary_*.json)
+    results/evidence/    the aggregated evidence JSONs (copied into the repo)
+    results/plots/       the plots (copied into the repo)
   deliver/four_dataset_pilot_20261006/  the B3 builder exercised on the PILOT shards only
 ```
 
@@ -139,8 +148,12 @@ nice -n 10 $PY studies/cms_datasets/electron_vB/make_pilot_plots.py --on-root ..
 
 ## 7. What Prompt 2 (full production) needs
 
-1. Matan's decision on `doubleeg_threshold_mode` (the code default is
-   PROVISIONAL, set from Step D's fixed criterion — see `REPORT.md`).
+1. Matan's decision on `doubleeg_threshold_mode`. The code default is now
+   **`both`**, PROVISIONAL, set by Step D's fixed criterion (barrel Δ = 3.40 pp,
+   endcap Δ = 18.11 pp, both above the 2.0 pp threshold and not borderline).
+   If he picks `leading_only` instead, pass
+   `--doubleeg-threshold-mode leading_only` to every matched4 job; nothing
+   else changes.
 2. A new dated output directory, `--population matched4` on all 390 files
    (57 + 152 + 133 + 48), one array per dataset, and the per-dataset
    `<Dataset>_index.json` written next to it (`gen_full_mapping` style; the

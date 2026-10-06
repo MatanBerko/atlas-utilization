@@ -36,8 +36,16 @@ CUTFLOW_KEYS = ("n_read", "n_after_golden_json", "n_after_trigger", "n_after_gat
                 "n_exclusive")
 
 
+# Fields that are CONSTANTS, not counts: summing them across jobs would be
+# meaningless (e.g. four jobs would report a 30 GeV threshold as 120).
+NON_ADDITIVE = ("offline_pt_min_gev", "threshold_mode", "emu_overlap_removal_dr_max")
+
+
 def _add(dst: dict, src: dict):
     for k, v in (src or {}).items():
+        if k in NON_ADDITIVE:
+            dst[k] = v
+            continue
         if isinstance(v, bool):
             dst[k] = bool(dst.get(k, True) and v)
         elif isinstance(v, (int, float)):

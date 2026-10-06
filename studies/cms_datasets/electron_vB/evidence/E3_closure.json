@@ -294,7 +294,109 @@
         "DoubleEG": 0,
         "MuonEG": 0
       },
-      "check3_examples": []
+      "check3_examples": [],
+      "delivery_counting": {
+        "what": "how many times each collision the production pipeline would actually deliver gets counted, with each dataset deciding from ITS OWN copy -- the consequence of the copy-to-copy differences that check (1) exposes",
+        "n_counted_exactly_once": 2234670,
+        "n_counted_more_than_once": 8,
+        "n_accepted_somewhere_but_counted_zero_times": 20,
+        "n_counted_more_than_once_per_million_delivered": 3.58,
+        "n_lost_per_million_delivered": 8.95,
+        "examples_counted_twice": [
+          [
+            281707,
+            108,
+            35820349
+          ],
+          [
+            281707,
+            109,
+            37027896
+          ],
+          [
+            281707,
+            109,
+            37168065
+          ],
+          [
+            281707,
+            248,
+            256982642
+          ],
+          [
+            281707,
+            325,
+            389615093
+          ],
+          [
+            281707,
+            382,
+            495589246
+          ],
+          [
+            281707,
+            596,
+            891016969
+          ],
+          [
+            281707,
+            921,
+            1492162041
+          ]
+        ],
+        "examples_lost": [
+          [
+            281707,
+            104,
+            29222538
+          ],
+          [
+            281707,
+            108,
+            35185703
+          ],
+          [
+            281707,
+            109,
+            37084737
+          ],
+          [
+            281707,
+            110,
+            38849716
+          ],
+          [
+            281707,
+            197,
+            161834282
+          ],
+          [
+            281707,
+            203,
+            172499887
+          ],
+          [
+            281707,
+            237,
+            236148473
+          ],
+          [
+            281707,
+            302,
+            351600860
+          ],
+          [
+            281707,
+            317,
+            375560075
+          ],
+          [
+            281707,
+            355,
+            447483928
+          ]
+        ]
+      }
     },
     "both": {
       "n_distinct_accepted_keys": 2225027,
@@ -540,7 +642,109 @@
         "DoubleEG": 0,
         "MuonEG": 0
       },
-      "check3_examples": []
+      "check3_examples": [],
+      "delivery_counting": {
+        "what": "how many times each collision the production pipeline would actually deliver gets counted, with each dataset deciding from ITS OWN copy -- the consequence of the copy-to-copy differences that check (1) exposes",
+        "n_counted_exactly_once": 2224999,
+        "n_counted_more_than_once": 8,
+        "n_accepted_somewhere_but_counted_zero_times": 20,
+        "n_counted_more_than_once_per_million_delivered": 3.6,
+        "n_lost_per_million_delivered": 8.99,
+        "examples_counted_twice": [
+          [
+            281707,
+            108,
+            35820349
+          ],
+          [
+            281707,
+            109,
+            37027896
+          ],
+          [
+            281707,
+            109,
+            37168065
+          ],
+          [
+            281707,
+            248,
+            256982642
+          ],
+          [
+            281707,
+            325,
+            389615093
+          ],
+          [
+            281707,
+            382,
+            495589246
+          ],
+          [
+            281707,
+            596,
+            891016969
+          ],
+          [
+            281707,
+            921,
+            1492162041
+          ]
+        ],
+        "examples_lost": [
+          [
+            281707,
+            104,
+            29222538
+          ],
+          [
+            281707,
+            108,
+            35185703
+          ],
+          [
+            281707,
+            109,
+            37084737
+          ],
+          [
+            281707,
+            110,
+            38849716
+          ],
+          [
+            281707,
+            197,
+            161834282
+          ],
+          [
+            281707,
+            203,
+            172499887
+          ],
+          [
+            281707,
+            237,
+            236148473
+          ],
+          [
+            281707,
+            302,
+            351600860
+          ],
+          [
+            281707,
+            317,
+            375560075
+          ],
+          [
+            281707,
+            355,
+            447483928
+          ]
+        ]
+      }
     }
   },
   "all_checks_pass": false

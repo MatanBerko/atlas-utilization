@@ -57,12 +57,38 @@
           ],
           "selected_electron_pt": [],
           "raw_muon_pt": [
-            44.8911,
-            26.5962
+            44.891102,
+            26.596231
           ],
           "raw_electron_pt": [
-            11.2253
+            11.225297
           ],
+          "raw_muon_eta": [
+            0.756592,
+            -0.947021
+          ],
+          "raw_muon_mediumId": [
+            true,
+            true
+          ],
+          "raw_muon_pfRelIso04_all": [
+            0.024402,
+            0.158596
+          ],
+          "raw_electron_eta": [
+            2.044434
+          ],
+          "raw_electron_cutBased": [
+            0
+          ],
+          "selection_cuts": {
+            "muon_pt_min": 25.0,
+            "muon_abs_eta_max": 2.4,
+            "muon_iso_max": 0.15,
+            "electron_pt_min": 25.0,
+            "electron_abs_eta_max": 2.5,
+            "electron_cutbased_min": 3
+          },
           "acceptance_leading_only": {
             "DoubleMuon": false,
             "SingleMuon": true,
@@ -108,12 +134,38 @@
           ],
           "selected_electron_pt": [],
           "raw_muon_pt": [
-            44.8911,
-            26.5962
+            44.891102,
+            26.596231
           ],
           "raw_electron_pt": [
-            11.1976
+            11.197612
           ],
+          "raw_muon_eta": [
+            0.756592,
+            -0.947021
+          ],
+          "raw_muon_mediumId": [
+            true,
+            true
+          ],
+          "raw_muon_pfRelIso04_all": [
+            0.024402,
+            0.139728
+          ],
+          "raw_electron_eta": [
+            2.044434
+          ],
+          "raw_electron_cutBased": [
+            0
+          ],
+          "selection_cuts": {
+            "muon_pt_min": 25.0,
+            "muon_abs_eta_max": 2.4,
+            "muon_iso_max": 0.15,
+            "electron_pt_min": 25.0,
+            "electron_abs_eta_max": 2.5,
+            "electron_cutbased_min": 3
+          },
           "acceptance_leading_only": {
             "DoubleMuon": true,
             "SingleMuon": true,
@@ -158,12 +210,38 @@
           ],
           "selected_electron_pt": [],
           "raw_muon_pt": [
-            44.8911,
-            26.5962
+            44.891102,
+            26.596231
           ],
           "raw_electron_pt": [
-            11.2253
+            11.225297
           ],
+          "raw_muon_eta": [
+            0.756592,
+            -0.947021
+          ],
+          "raw_muon_mediumId": [
+            true,
+            true
+          ],
+          "raw_muon_pfRelIso04_all": [
+            0.024402,
+            0.158596
+          ],
+          "raw_electron_eta": [
+            2.044434
+          ],
+          "raw_electron_cutBased": [
+            0
+          ],
+          "selection_cuts": {
+            "muon_pt_min": 25.0,
+            "muon_abs_eta_max": 2.4,
+            "muon_iso_max": 0.15,
+            "electron_pt_min": 25.0,
+            "electron_abs_eta_max": 2.5,
+            "electron_cutbased_min": 3
+          },
           "acceptance_leading_only": {
             "DoubleMuon": false,
             "SingleMuon": true,
@@ -181,6 +259,10 @@
       "hlt_identical_across_copies": true,
       "selected_objects_identical_across_copies": false,
       "acceptance_identical_across_copies": false,
+      "cut_variables_differing_between_copies": [
+        "raw_muon_pfRelIso04_all",
+        "raw_electron_pt"
+      ],
       "differing_hlt_paths": []
     },
     {
@@ -233,11 +315,36 @@
           ],
           "selected_electron_pt": [],
           "raw_muon_pt": [
-            28.5928,
-            26.9242,
-            3.8274
+            28.592833,
+            26.924234,
+            3.827378
           ],
           "raw_electron_pt": [],
+          "raw_muon_eta": [
+            -0.995361,
+            -1.021484,
+            1.009033
+          ],
+          "raw_muon_mediumId": [
+            true,
+            true,
+            false
+          ],
+          "raw_muon_pfRelIso04_all": [
+            0.151511,
+            0.137768,
+            0.0
+          ],
+          "raw_electron_eta": [],
+          "raw_electron_cutBased": [],
+          "selection_cuts": {
+            "muon_pt_min": 25.0,
+            "muon_abs_eta_max": 2.4,
+            "muon_iso_max": 0.15,
+            "electron_pt_min": 25.0,
+            "electron_abs_eta_max": 2.5,
+            "electron_cutbased_min": 3
+          },
           "acceptance_leading_only": {
             "DoubleMuon": false,
             "SingleMuon": false,
@@ -283,11 +390,36 @@
           ],
           "selected_electron_pt": [],
           "raw_muon_pt": [
-            28.5929,
-            26.9241,
-            3.8274
+            28.592859,
+            26.924114,
+            3.827375
           ],
           "raw_electron_pt": [],
+          "raw_muon_eta": [
+            -0.995361,
+            -1.021484,
+            1.009033
+          ],
+          "raw_muon_mediumId": [
+            true,
+            true,
+            false
+          ],
+          "raw_muon_pfRelIso04_all": [
+            0.141795,
+            0.127963,
+            0.0
+          ],
+          "raw_electron_eta": [],
+          "raw_electron_cutBased": [],
+          "selection_cuts": {
+            "muon_pt_min": 25.0,
+            "muon_abs_eta_max": 2.4,
+            "muon_iso_max": 0.15,
+            "electron_pt_min": 25.0,
+            "electron_abs_eta_max": 2.5,
+            "electron_cutbased_min": 3
+          },
           "acceptance_leading_only": {
             "DoubleMuon": true,
             "SingleMuon": true,
@@ -305,6 +437,10 @@
       "hlt_identical_across_copies": true,
       "selected_objects_identical_across_copies": false,
       "acceptance_identical_across_copies": false,
+      "cut_variables_differing_between_copies": [
+        "raw_muon_pt",
+        "raw_muon_pfRelIso04_all"
+      ],
       "differing_hlt_paths": []
     },
     {
@@ -357,12 +493,37 @@
           ],
           "selected_electron_pt": [],
           "raw_muon_pt": [
-            36.7483
+            36.748329
           ],
           "raw_electron_pt": [
-            157.7096,
-            140.5188
+            157.709625,
+            140.518845
           ],
+          "raw_muon_eta": [
+            -2.090332
+          ],
+          "raw_muon_mediumId": [
+            true
+          ],
+          "raw_muon_pfRelIso04_all": [
+            0.139057
+          ],
+          "raw_electron_eta": [
+            -0.91748,
+            1.361084
+          ],
+          "raw_electron_cutBased": [
+            0,
+            0
+          ],
+          "selection_cuts": {
+            "muon_pt_min": 25.0,
+            "muon_abs_eta_max": 2.4,
+            "muon_iso_max": 0.15,
+            "electron_pt_min": 25.0,
+            "electron_abs_eta_max": 2.5,
+            "electron_cutbased_min": 3
+          },
           "acceptance_leading_only": {
             "DoubleMuon": false,
             "SingleMuon": true,
@@ -405,12 +566,37 @@
           "selected_muon_pt": [],
           "selected_electron_pt": [],
           "raw_muon_pt": [
-            36.7483
+            36.748329
           ],
           "raw_electron_pt": [
-            158.1318,
-            140.4051
+            158.13179,
+            140.40506
           ],
+          "raw_muon_eta": [
+            -2.090332
+          ],
+          "raw_muon_mediumId": [
+            true
+          ],
+          "raw_muon_pfRelIso04_all": [
+            0.153111
+          ],
+          "raw_electron_eta": [
+            -0.91748,
+            1.361084
+          ],
+          "raw_electron_cutBased": [
+            0,
+            0
+          ],
+          "selection_cuts": {
+            "muon_pt_min": 25.0,
+            "muon_abs_eta_max": 2.4,
+            "muon_iso_max": 0.15,
+            "electron_pt_min": 25.0,
+            "electron_abs_eta_max": 2.5,
+            "electron_cutbased_min": 3
+          },
           "acceptance_leading_only": {
             "DoubleMuon": false,
             "SingleMuon": false,
@@ -428,6 +614,10 @@
       "hlt_identical_across_copies": true,
       "selected_objects_identical_across_copies": false,
       "acceptance_identical_across_copies": false,
+      "cut_variables_differing_between_copies": [
+        "raw_muon_pfRelIso04_all",
+        "raw_electron_pt"
+      ],
       "differing_hlt_paths": []
     }
   ]
