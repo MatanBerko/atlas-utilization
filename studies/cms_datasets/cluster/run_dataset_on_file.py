@@ -939,10 +939,17 @@ def doubleeg_interpretation_diagnostics(electrons: ak.Array, bk: dict,
 
     (a) the interpretation check -- events where the LEADING MATCHED
         electron is not the LEADING SELECTED electron of the event.
-        Counted two independent ways, which must agree: (i) the offline-pT
-        argmax among matched electrons is not index 0, and (ii) electron 0
-        is not matched. They agree only if the selected-electron
-        collection is pT-descending, which is also checked and reported.
+        "Leading" means highest OFFLINE pT, found by an explicit argmax,
+        NOT "index 0": VERIFIED BY RUNNING, the NanoAOD Electron
+        collection is not always pT-descending (a small fraction of
+        events; the count is reported below). The index-0 reading is
+        reported alongside as `..._by_index0` so the two can be compared,
+        and the number of events where the two readings could differ at
+        all is the non-pT-descending count. Nothing in the acceptance
+        depends on the collection order -- D4's own offline rule is a max
+        / a count over the matched electrons -- and neither does the
+        delivery, because the shared slice_events_by_field sorts each
+        type by pT descending itself before slicing e0/e1.
 
     (b) the shared-trigger-object count -- events with >= 2 matched
         electrons whose recorded best TrigObj indices are not all
@@ -952,17 +959,18 @@ def doubleeg_interpretation_diagnostics(electrons: ak.Array, bk: dict,
     pt = electrons.pt
     n_matched = ak.to_numpy(ak.sum(is_matched, axis=1))
 
-    # Is the selected-electron collection pT-descending in every event?
+    # How often is the selected-electron collection not pT-descending?
     non_increasing = ak.all(ak.fill_none(pt[:, :-1] >= pt[:, 1:], True), axis=1)
     n_not_pt_ordered = int(len(pt) - int(ak.sum(ak.fill_none(non_increasing, True))))
 
+    argmax_all = ak.to_numpy(ak.fill_none(ak.argmax(pt, axis=1), -1))
     matched_pt = ak.where(is_matched, pt, -np.inf)
     argmax_matched = ak.to_numpy(ak.fill_none(ak.argmax(matched_pt, axis=1), -1))
     first_is_matched = ak.to_numpy(ak.fill_none(ak.firsts(is_matched), False))
 
     has_any = n_matched >= 1
-    differs_argmax = base_mask & has_any & (argmax_matched != 0)
-    differs_first = base_mask & has_any & (~first_is_matched)
+    differs = base_mask & has_any & (argmax_matched != argmax_all)
+    differs_by_index0 = base_mask & has_any & (~first_is_matched)
 
     # Shared trigger object: two matched electrons recorded against the
     # same TrigObj index. Found by sorting each event's matched indices
@@ -975,9 +983,12 @@ def doubleeg_interpretation_diagnostics(electrons: ak.Array, bk: dict,
     return {
         "n_events_in_base": int(base_mask.sum()),
         "n_selected_electron_collections_not_pt_descending": n_not_pt_ordered,
-        "n_leading_matched_differs_from_leading_selected": int(differs_argmax.sum()),
-        "n_leading_matched_differs_crosscheck_first_not_matched": int(differs_first.sum()),
-        "two_counts_agree": bool(int(differs_argmax.sum()) == int(differs_first.sum())),
+        "n_leading_matched_differs_from_leading_selected": int(differs.sum()),
+        "n_leading_matched_differs_from_leading_selected_by_index0": int(
+            differs_by_index0.sum()),
+        "leading_definition": ("highest offline pT (explicit argmax); the "
+                               "_by_index0 variant instead reads 'leading' as "
+                               "collection index 0"),
         "n_events_two_electrons_share_one_trigobj": int(shared.sum()),
     }
 

@@ -18,8 +18,12 @@ Population (exactly production's own, nothing new):
 
 Definitions:
   leading / subleading = 1st / 2nd selected electron by OFFLINE pT, after
-      overlap removal (the collection is pT-descending; this is asserted
-      per file and the violation count reported).
+      overlap removal, with the collection SORTED by pT here. That sort is
+      not cosmetic: VERIFIED BY RUNNING on a real UL2016 NanoAODv9 file,
+      the Electron collection is not always pT-descending (~1.3% of events
+      raw, 0.0006% after our selection), so index 0/1 is not reliably the
+      leading/subleading electron. The pre-sort violation count is
+      reported per file.
   matched = there exists a TrigObj with id == 11 and filterBits & 16
       ("2e") within dR < 0.1 -- the production matcher
       run_dataset_on_file.trigobj_best_match, not a copy.
@@ -142,6 +146,17 @@ def main():
     has_two = ak.to_numpy(ak.num(electrons, axis=1) >= 2)
     electrons = electrons[has_two]
     n_population = len(electrons)
+    # VERIFIED BY RUNNING on a real UL2016 NanoAODv9 file: the Electron
+    # collection is NOT always pT-descending (about 1.3% of events in the
+    # raw collection, 0.0006% after our selection). "Leading / subleading
+    # by offline pT" therefore has to be an explicit sort, never index 0/1.
+    # The count before sorting is recorded and reported.
+    n_not_sorted = 0
+    if n_population:
+        _nonincr = ak.all(ak.fill_none(
+            electrons.pt[:, :-1] >= electrons.pt[:, 1:], True), axis=1)
+        n_not_sorted = int(n_population - int(ak.sum(ak.fill_none(_nonincr, True))))
+        electrons = electrons[ak.argsort(electrons.pt, axis=1, ascending=False)]
     print(f"  fired {n_fired}, >=2 selected electrons after overlap removal {n_population}",
           flush=True)
 
@@ -154,10 +169,6 @@ def main():
     counts: dict = {}
     if n_population:
         pt = electrons.pt
-        # pT-descending check (the leading/subleading definition relies on it).
-        non_increasing = ak.all(ak.fill_none(pt[:, :-1] >= pt[:, 1:], True), axis=1)
-        n_not_sorted = int(n_population - int(ak.sum(ak.fill_none(non_increasing, True))))
-
         lead_pt = ak.to_numpy(pt[:, 0]).astype(float)
         sub_pt = ak.to_numpy(pt[:, 1]).astype(float)
         lead_eta = np.abs(ak.to_numpy(electrons.eta[:, 0]).astype(float))
@@ -181,7 +192,6 @@ def main():
             "subleading": {r: int((sub_reg == r).sum()) for r in REGIONS + ("outside",)},
         }
     else:
-        n_not_sorted = 0
         region_counts = {}
 
     out = {
