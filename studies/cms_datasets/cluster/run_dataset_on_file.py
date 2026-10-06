@@ -163,7 +163,6 @@ import logging
 import subprocess
 import sys
 import time
-from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -965,11 +964,13 @@ def doubleeg_interpretation_diagnostics(electrons: ak.Array, bk: dict,
     differs_argmax = base_mask & has_any & (argmax_matched != 0)
     differs_first = base_mask & has_any & (~first_is_matched)
 
-    # Shared trigger object: fewer distinct recorded indices than matches.
-    idx_lists = ak.to_list(bk["best_index"][is_matched])
-    n_distinct = np.array([len(set(x)) for x in idx_lists], dtype=np.int64) \
-        if idx_lists else np.zeros(0, dtype=np.int64)
-    shared = base_mask & (n_matched >= 2) & (n_distinct < n_matched)
+    # Shared trigger object: two matched electrons recorded against the
+    # same TrigObj index. Found by sorting each event's matched indices
+    # and looking for an adjacent duplicate (no per-event Python objects).
+    idx_sorted = ak.sort(bk["best_index"][is_matched], axis=1)
+    has_duplicate = ak.to_numpy(ak.fill_none(
+        ak.any(idx_sorted[:, :-1] == idx_sorted[:, 1:], axis=1), False)).astype(bool)
+    shared = base_mask & (n_matched >= 2) & has_duplicate
 
     return {
         "n_events_in_base": int(base_mask.sum()),
@@ -1121,6 +1122,13 @@ def ee_pair_mass_by_region(electrons: ak.Array) -> dict:
     mass = ak.to_numpy(flat).astype(np.float64)
     both_barrel = ak.to_numpy(ak.flatten(ba & bb, axis=None)).astype(bool)
     return {"barrel_barrel": mass[both_barrel], "other": mass[~both_barrel]}
+
+
+def _light_jet_multiplicity(light_jets: ak.Array) -> dict:
+    """{multiplicity: n_events} for the accepted events (E5 plot input)."""
+    from collections import Counter as _C
+    counts = ak.to_numpy(ak.num(light_jets, axis=1)).tolist()
+    return {str(k): int(v) for k, v in sorted(_C(counts).items())}
 
 
 def matching_bookkeeping_summary(bk: dict, label: str) -> dict:
@@ -1859,10 +1867,8 @@ def main():
                 region: _histogram_1gev(values, DIAGNOSTIC_EE_MASS_Z_BIN_EDGES)
                 for region, values in ee_pair_mass_by_region(electrons[keep]).items()
             },
-            "light_jet_multiplicity_accepted_events": {
-                str(k): int(v) for k, v in sorted(Counter(
-                    ak.to_numpy(ak.num(jets["Jets"][keep], axis=1)).tolist()).items())
-            },
+            "light_jet_multiplicity_accepted_events": _light_jet_multiplicity(
+                jets["Jets"][keep]),
         }
     else:  # v0 -- regression-check mode only, see module docstring.
         keep = ak.to_numpy((ak.num(muons) >= 2) & (ak.num(jets["Jets"]) >= 1))
