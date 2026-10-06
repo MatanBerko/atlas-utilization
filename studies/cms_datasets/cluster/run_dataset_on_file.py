@@ -709,12 +709,14 @@ def count_events_where_jet_cleaning_order_would_matter(
     if len(removed_electrons) == 0:
         return 0
     jets_all = ak.concatenate([light_jets, bjets], axis=1)
-    dr_ej = delta_r_wrapped(removed_electrons, jets_all)        # [ev][rem_e][jet]
-    near_removed_e = dr_ej < selection.JET_LEPTON_CLEAN_DR
     dr_mj = delta_r_wrapped(muons, jets_all)                    # [ev][mu][jet]
     near_any_mu = ak.fill_none(ak.any(dr_mj < selection.JET_LEPTON_CLEAN_DR, axis=1), False)
-    # near_any_mu is [ev][jet]; it broadcasts against [ev][rem_e][jet].
-    would_matter = ak.any(ak.any(near_removed_e & ~near_any_mu, axis=-1), axis=-1)
+    # Drop the jets that are already inside a muon's cleaning cone FIRST, so
+    # the remaining question is a plain [ev][rem_e][jet] reduction (awkward
+    # cannot broadcast an [ev][jet] mask against an [ev][rem_e][jet] array).
+    jets_far_from_muons = jets_all[~near_any_mu]
+    dr_ej = delta_r_wrapped(removed_electrons, jets_far_from_muons)
+    would_matter = ak.any(ak.any(dr_ej < selection.JET_LEPTON_CLEAN_DR, axis=-1), axis=-1)
     return int(ak.sum(ak.fill_none(would_matter, False)))
 
 
