@@ -58,6 +58,11 @@ from studies.cms_datasets.electron_prep.common import eta_region, record_for  # 
 from studies.m0m1j0_cms import selection  # noqa: E402
 
 ELE27 = "HLT_Ele27_WPTight_Gsf"
+# All 14 documented electron filter bits ORed together. Used ONLY to ask
+# "is there any electron trigger object near this electron at all", which
+# separates 'no HLT electron object' from 'object there but not WPTight'
+# from 'WPTight object below 27 GeV'. It is never used as an acceptance.
+TRIGOBJ_ANY_ELECTRON_BIT = (1 << 14) - 1
 TRIGOBJ_BIT_WPTIGHT = 2          # "2 = 1e (WPTight)", read from the branch title at run time
 ONLINE_PT_MIN = 27.0
 TAG_OFFLINE_PT_MIN = 30.0
@@ -247,6 +252,13 @@ def main():
                                       TRIGOBJ_BIT_WPTIGHT, dr_max=0.2)
     qualifies_loose = bk_loose["is_matched"] & (bk_loose["best_pt"] >= ONLINE_PT_MIN)
 
+    # Decomposition of the inefficiency: is there an HLT electron object at
+    # all near the probe, is it a WPTight one, and is it above 27 GeV?
+    bk_any = drv.trigobj_best_match(electrons, trigobj, drv.TRIGOBJ_ELECTRON_ID,
+                                    TRIGOBJ_ANY_ELECTRON_BIT)
+    has_any_eg = bk_any["is_matched"]
+    has_bit2_anypt = is_matched
+
     # ---- STEP B: build tag-probe pairs ---------------------------------
     import vector
     vector.register_awkward()
@@ -279,6 +291,8 @@ def main():
     p_pt = take(electrons.pt, pi)
     p_abseta = take(abs_eta, pi)
     p_qual = take(qualifies, pi)
+    p_any_eg = take(has_any_eg, pi)
+    p_bit2_anypt = take(has_bit2_anypt, pi)
     p_qual_loose = take(qualifies_loose, pi)
     p_idx = take(best_idx, pi)
     t_idx = take(best_idx, ti)
@@ -296,6 +310,8 @@ def main():
     f_pass = flat(p_pass)
     f_qual = flat(p_qual)
     f_qual_loose = flat(p_qual_loose)
+    f_any_eg = flat(p_any_eg)
+    f_bit2_anypt = flat(p_bit2_anypt)
     f_sameobj = flat(pair_ok & opposite & in_window & p_qual & ~different_object)
     f_mass = flat(mass)
     f_os_all = flat(pair_ok & opposite)
@@ -314,7 +330,15 @@ def main():
                 m = in_reg & (bins == b)
                 den[b] = int(m.sum())
                 num[b] = int((m & f_pass).sum())
-            block[reg] = {"numerator": num.tolist(), "denominator": den.tolist()}
+            n_any = np.zeros(len(PROBE_PT_EDGES) - 1, dtype=np.int64)
+            n_b2 = np.zeros(len(PROBE_PT_EDGES) - 1, dtype=np.int64)
+            for b in range(len(PROBE_PT_EDGES) - 1):
+                m = in_reg & (bins == b)
+                n_any[b] = int((m & f_any_eg).sum())
+                n_b2[b] = int((m & f_bit2_anypt).sum())
+            block[reg] = {"numerator": num.tolist(), "denominator": den.tolist(),
+                          "n_matched_any_electron_trigobj": n_any.tolist(),
+                          "n_matched_wptight_any_pt": n_b2.tolist()}
         tnp[sign] = block
     out["tagandprobe"] = {
         "pt_bin_edges": PROBE_PT_EDGES,
