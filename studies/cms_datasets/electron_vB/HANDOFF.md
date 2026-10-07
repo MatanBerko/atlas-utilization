@@ -25,8 +25,16 @@ was merged into master.
 | `5195565[]` | 0-132 | **Step C** full production, DoubleEG | `.../runs_matched4_full_20261007/DoubleEG/` |
 | `5195566[]` | 0-47 | **Step C** full production, MuonEG | `.../runs_matched4_full_20261007/MuonEG/` |
 
+| `5195749` | — | **Step D1** delivery build from the full production | `output/cms_datasets/deliver/four_dataset_vB_upstreamnames_w10p0_dr012_20261007/` |
+
 Logs: `/storage/agrp/berkom/atlas-utilization/logs/electron_vB/pilot_dr012/`,
-`.../bandcheck/`, `.../full/<Dataset>/`.
+`.../bandcheck/`, `.../full/<Dataset>/`, `.../delivery/`.
+
+**Step C finished: 390/390 files complete, 0 failures, 0 guard violations**
+(`electron_vB_20261007/evidence/C3_production.json`). Every job has its
+metadata and all eight shard files, and every job reports the intended
+settings (mode `both`, dR 0.12, removal on). Events read 645,377,261;
+accepted 177,907,487; exclusive 168,418,730.
 
 **Step B gates both PASSED** (`electron_vB_20261007/evidence/B_gates.json`):
 Gate 1, e-mu pairs below 5 GeV in accepted MuonEG events: 145 with the
