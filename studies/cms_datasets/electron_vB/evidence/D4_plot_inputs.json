@@ -1,0 +1,209 @@
+{
+  "what": "D4 delivery plot inputs",
+  "runs_root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_full_20261007",
+  "delivery_dir": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/four_dataset_vB_upstreamnames_w10p0_dr012_20261007",
+  "plots": {
+    "a_emu_mass": {
+      "file": "D4a_emu_mass.png",
+      "datasets": [
+        "MuonEG",
+        "DoubleMuon",
+        "SingleMuon"
+      ],
+      "n_pairs_0_20gev": 4265,
+      "n_pairs_below_1gev": 0,
+      "n_pairs_1p5_to_5gev": 64,
+      "n_pairs_below_5gev": 64,
+      "n_pairs_above_20gev_overflow": 326238
+    },
+    "b_ee_mass": {
+      "file": "D4b_ee_mass_zpeak.png",
+      "n_pairs": {
+        "barrel_barrel": 2887749,
+        "other": 2118638
+      },
+      "peak_bin_centre_gev": {
+        "barrel_barrel": 90.75,
+        "other": 90.75
+      }
+    },
+    "c_mumu_mass": {
+      "file": "D4c_mumu_mass_zpeak.png",
+      "peak_bin_centre_gev": {
+        "DoubleMuon": 90.5,
+        "SingleMuon": 90.5
+      },
+      "population": "each dataset's triggered events (driver diagnostic)"
+    },
+    "d_light_jet_multiplicity": {
+      "file": "D4d_light_jet_multiplicity.png",
+      "counts": {
+        "DoubleMuon": {
+          "0": 7642826,
+          "1": 1384718,
+          "2": 324797,
+          "3": 74792,
+          "4": 16856,
+          "5": 3934,
+          "6": 855,
+          "7": 184,
+          "8": 53,
+          "9": 8,
+          "10": 1
+        },
+        "SingleMuon": {
+          "0": 123282621,
+          "1": 30406382,
+          "2": 7117413,
+          "3": 1746742,
+          "4": 442788,
+          "5": 113151,
+          "6": 28157,
+          "7": 6760,
+          "8": 1624,
+          "9": 357,
+          "10": 78,
+          "11": 12,
+          "12": 4,
+          "13": 2
+        },
+        "DoubleEG": {
+          "0": 4240495,
+          "1": 690574,
+          "2": 171008,
+          "3": 39957,
+          "4": 9329,
+          "5": 2144,
+          "6": 499,
+          "7": 126,
+          "8": 20,
+          "9": 4,
+          "10": 1
+        },
+        "MuonEG": {
+          "0": 70621,
+          "1": 50887,
+          "2": 24279,
+          "3": 8704,
+          "4": 2729,
+          "5": 743,
+          "6": 199,
+          "7": 45,
+          "8": 8
+        }
+      }
+    },
+    "e_histograms_per_final_state": {
+      "file": "D4e_histograms_per_final_state.png",
+      "n_final_states": 103,
+      "n_final_states_with_electrons": 45,
+      "max_histograms_in_one_final_state": 56,
+      "top_10": [
+        {
+          "final_state": "0e_2m_4j_2b",
+          "n_histograms": 56,
+          "entries": 9911
+        },
+        {
+          "final_state": "1e_1m_4j_2b",
+          "n_histograms": 56,
+          "entries": 11558
+        },
+        {
+          "final_state": "1e_1m_5j_2b",
+          "n_histograms": 56,
+          "entries": 1607
+        },
+        {
+          "final_state": "2e_0m_4j_2b",
+          "n_histograms": 56,
+          "entries": 3769
+        },
+        {
+          "final_state": "0e_2m_3j_2b",
+          "n_histograms": 55,
+          "entries": 42332
+        },
+        {
+          "final_state": "1e_1m_3j_2b",
+          "n_histograms": 55,
+          "entries": 50259
+        },
+        {
+          "final_state": "2e_0m_3j_2b",
+          "n_histograms": 55,
+          "entries": 22144
+        },
+        {
+          "final_state": "0e_2m_2j_2b",
+          "n_histograms": 50,
+          "entries": 121293
+        },
+        {
+          "final_state": "1e_1m_2j_2b",
+          "n_histograms": 50,
+          "entries": 145773
+        },
+        {
+          "final_state": "2e_0m_2j_2b",
+          "n_histograms": 50,
+          "entries": 59970
+        }
+      ]
+    },
+    "f_examples": {
+      "file": "D4f_delivery_examples.png",
+      "root_file": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/four_dataset_vB_upstreamnames_w10p0_dr012_20261007/four_dataset_matched_vB_upstreamnames_w10p0_dr012_bumpnet.root",
+      "examples": [
+        {
+          "name": "ROI_mass_e0m0_cat_1ex_1mx_0jx_0bx_width_10.0",
+          "final_state": "1e_1m_0j_0b",
+          "has_electrons": true,
+          "has_muons": true,
+          "n_entries": 33752,
+          "n_filled_bins": 52
+        },
+        {
+          "name": "ROI_mass_j0b0_cat_1ex_1mx_1jx_1bx_width_10.0",
+          "final_state": "1e_1m_1j_1b",
+          "has_electrons": true,
+          "has_muons": true,
+          "n_entries": 17638,
+          "n_filled_bins": 85
+        },
+        {
+          "name": "ROI_mass_e0e1j0_cat_2ex_0mx_1jx_0bx_width_10.0",
+          "final_state": "2e_0m_1j_0b",
+          "has_electrons": true,
+          "has_muons": false,
+          "n_entries": 533207,
+          "n_filled_bins": 132
+        },
+        {
+          "name": "ROI_mass_e0j0_cat_2ex_0mx_1jx_0bx_width_10.0",
+          "final_state": "2e_0m_1j_0b",
+          "has_electrons": true,
+          "has_muons": false,
+          "n_entries": 498616,
+          "n_filled_bins": 112
+        },
+        {
+          "name": "ROI_mass_e1j0_cat_2ex_0mx_1jx_0bx_width_10.0",
+          "final_state": "2e_0m_1j_0b",
+          "has_electrons": true,
+          "has_muons": false,
+          "n_entries": 443269,
+          "n_filled_bins": 78
+        },
+        {
+          "name": "ROI_mass_m0j0_cat_0ex_1mx_1jx_0bx_width_10.0",
+          "final_state": "0e_1m_1j_0b",
+          "has_electrons": false,
+          "has_muons": true,
+          "n_entries": 22635018,
+          "n_filled_bins": 183
+        }
+      ]
+    }
+  }
+}

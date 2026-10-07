@@ -30,6 +30,12 @@ was merged into master.
 Logs: `/storage/agrp/berkom/atlas-utilization/logs/electron_vB/pilot_dr012/`,
 `.../bandcheck/`, `.../full/<Dataset>/`, `.../delivery/`.
 
+**Step D finished.** The delivery is
+`output/cms_datasets/deliver/four_dataset_vB_upstreamnames_w10p0_dr012_20261007/four_dataset_matched_vB_upstreamnames_w10p0_dr012_bumpnet_cropped.root`
+— 1,975 histograms, 103 final states, 82,956,880 entries. Every D2 read-back
+check passes, including all 1,975 names against upstream's own naming code.
+See `REPORT_production.md` and `DELIVERY_NOTES.md`.
+
 **Step C finished: 390/390 files complete, 0 failures, 0 guard violations**
 (`electron_vB_20261007/evidence/C3_production.json`). Every job has its
 metadata and all eight shard files, and every job reports the intended

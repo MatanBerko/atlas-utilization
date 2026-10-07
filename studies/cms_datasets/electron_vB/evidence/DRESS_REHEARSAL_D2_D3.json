@@ -1,0 +1,883 @@
+{
+  "what": "D2 delivery read-back checks and D3 counts vs the muon-only delivery",
+  "uncropped": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/four_dataset_pilot_dr012_20261007/four_dataset_pilot_dr012_bumpnet.root",
+  "cropped": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/four_dataset_pilot_dr012_20261007/four_dataset_pilot_dr012_bumpnet_cropped.root",
+  "reference": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/muon_combined_vB_upstreamnames_w10p0_20261006/muon_combined_matched_vB_upstreamnames_w10p0_bumpnet_cropped.root",
+  "checks": {
+    "every histogram name matches the upstream ROI_mass_<combo>_cat_<fs>_width_<w> shape": {
+      "pass": true,
+      "detail": "0 unparsed, e.g. []"
+    },
+    "every name ends with _width_10.0": {
+      "pass": true,
+      "detail": "0 do not"
+    },
+    "no duplicate histogram names (uncropped)": {
+      "pass": true,
+      "detail": "876 keys, 876 distinct"
+    },
+    "no duplicate histogram names (cropped)": {
+      "pass": true,
+      "detail": "876 keys, 876 distinct"
+    },
+    "the cropped file holds exactly the same names as the uncropped one": {
+      "pass": true,
+      "detail": "only-uncropped 0, only-cropped 0"
+    },
+    "no histogram is empty (uncropped)": {
+      "pass": true,
+      "detail": "0 empty, e.g. []"
+    },
+    "no histogram is empty (cropped)": {
+      "pass": true,
+      "detail": "0 empty"
+    },
+    "uncropped bin edges are exactly 10.0 GeV over 0.0-10000.0 GeV": {
+      "pass": true,
+      "detail": "0 wrong, e.g. []"
+    },
+    "cropped histograms keep the 10.0 GeV pitch": {
+      "pass": true,
+      "detail": "0 wrong, e.g. []"
+    },
+    "every final state has >= 100 entries summed over its histograms": {
+      "pass": true,
+      "detail": "0 below, e.g. []"
+    },
+    "every delivered name equals what UPSTREAM's own naming code produces (upstream master 88d7a4b, 876 names)": {
+      "pass": true,
+      "detail": "0 mismatch, e.g. []"
+    }
+  },
+  "failures": [],
+  "n_histograms_uncropped": 876,
+  "n_histograms_cropped": 876,
+  "n_final_states": 59,
+  "upstream_commit": "88d7a4b6b9ce4459baa5567d29a95453e68a77b4",
+  "upstream_roi_fstring": "f\"ROI_{hist_name_base}_width_{bin_width}\"",
+  "n_names_checked_against_upstream": 876,
+  "d3": {
+    "n_histograms": {
+      "new_uncropped": 876,
+      "new_cropped": 876,
+      "muon_only": 1496
+    },
+    "n_final_states": {
+      "new": 59,
+      "muon_only": 81
+    },
+    "n_entries": {
+      "new_uncropped": 2615536,
+      "new_cropped": 2615536,
+      "muon_only": 78754866
+    },
+    "electron_content": {
+      "n_final_states_with_electrons": 21,
+      "n_final_states_without_electrons": 38,
+      "n_histograms_with_electrons": 306,
+      "n_histograms_without_electrons": 570,
+      "entries_in_final_states_with_electrons": 146720,
+      "entries_in_final_states_without_electrons": 2468816
+    },
+    "n_final_states_common": 49,
+    "n_final_states_only_new": 10,
+    "n_final_states_only_muon_only": 32,
+    "final_states_only_muon_only": [
+      "0e_1m_4j_3b",
+      "0e_1m_5j_3b",
+      "0e_1m_6j_2b",
+      "0e_1m_6j_3b",
+      "0e_1m_7j_1b",
+      "0e_1m_7j_2b",
+      "0e_1m_8j_0b",
+      "0e_1m_8j_1b",
+      "0e_1m_8j_2b",
+      "0e_1m_9j_0b",
+      "0e_1m_9j_1b",
+      "0e_2m_3j_2b",
+      "0e_2m_4j_2b",
+      "0e_2m_5j_1b",
+      "0e_2m_6j_0b",
+      "0e_2m_6j_1b",
+      "0e_2m_7j_0b",
+      "0e_3m_0j_0b",
+      "0e_3m_1j_0b",
+      "0e_3m_2j_0b",
+      "1e_1m_3j_2b",
+      "1e_1m_4j_0b",
+      "1e_1m_4j_1b",
+      "1e_1m_4j_2b",
+      "1e_1m_5j_0b",
+      "1e_1m_5j_1b",
+      "1e_2m_0j_0b",
+      "1e_2m_0j_1b",
+      "1e_2m_1j_0b",
+      "1e_2m_2j_0b",
+      "2e_1m_0j_0b",
+      "2e_1m_1j_0b"
+    ],
+    "comparison_sorted_by_relative_change": [
+      {
+        "final_state": "0e_1m_7j_0b",
+        "entries_new": 148,
+        "entries_muon_only": 18693,
+        "difference": -18545,
+        "relative_change_pct": -99.2083,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_6j_1b",
+        "entries_new": 1099,
+        "entries_muon_only": 82311,
+        "difference": -81212,
+        "relative_change_pct": -98.6648,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_3j_3b",
+        "entries_new": 1905,
+        "entries_muon_only": 121832,
+        "difference": -119927,
+        "relative_change_pct": -98.4364,
+        "has_electrons": false
+      },
+      {
+        "final_state": "1e_1m_3j_1b",
+        "entries_new": 1244,
+        "entries_muon_only": 72061,
+        "difference": -70817,
+        "relative_change_pct": -98.2737,
+        "has_electrons": true
+      },
+      {
+        "final_state": "1e_1m_3j_0b",
+        "entries_new": 693,
+        "entries_muon_only": 39344,
+        "difference": -38651,
+        "relative_change_pct": -98.2386,
+        "has_electrons": true
+      },
+      {
+        "final_state": "0e_1m_2j_3b",
+        "entries_new": 4360,
+        "entries_muon_only": 223017,
+        "difference": -218657,
+        "relative_change_pct": -98.045,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_6j_0b",
+        "entries_new": 1776,
+        "entries_muon_only": 88315,
+        "difference": -86539,
+        "relative_change_pct": -97.989,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_5j_1b",
+        "entries_new": 6232,
+        "entries_muon_only": 295704,
+        "difference": -289472,
+        "relative_change_pct": -97.8925,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_5j_0b",
+        "entries_new": 8270,
+        "entries_muon_only": 391123,
+        "difference": -382853,
+        "relative_change_pct": -97.8856,
+        "has_electrons": false
+      },
+      {
+        "final_state": "1e_1m_2j_2b",
+        "entries_new": 2988,
+        "entries_muon_only": 137257,
+        "difference": -134269,
+        "relative_change_pct": -97.8231,
+        "has_electrons": true
+      },
+      {
+        "final_state": "0e_1m_5j_2b",
+        "entries_new": 4097,
+        "entries_muon_only": 179876,
+        "difference": -175779,
+        "relative_change_pct": -97.7223,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_4j_1b",
+        "entries_new": 22370,
+        "entries_muon_only": 942567,
+        "difference": -920197,
+        "relative_change_pct": -97.6267,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_1j_3b",
+        "entries_new": 3909,
+        "entries_muon_only": 157752,
+        "difference": -153843,
+        "relative_change_pct": -97.5221,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_4j_2b",
+        "entries_new": 14851,
+        "entries_muon_only": 594382,
+        "difference": -579531,
+        "relative_change_pct": -97.5014,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_0j_3b",
+        "entries_new": 1014,
+        "entries_muon_only": 40105,
+        "difference": -39091,
+        "relative_change_pct": -97.4716,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_3j_2b",
+        "entries_new": 40370,
+        "entries_muon_only": 1568313,
+        "difference": -1527943,
+        "relative_change_pct": -97.4259,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_2j_2b",
+        "entries_new": 72926,
+        "entries_muon_only": 2806658,
+        "difference": -2733732,
+        "relative_change_pct": -97.4017,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_2j_0b",
+        "entries_new": 462351,
+        "entries_muon_only": 17695727,
+        "difference": -17233376,
+        "relative_change_pct": -97.3872,
+        "has_electrons": false
+      },
+      {
+        "final_state": "1e_1m_1j_2b",
+        "entries_new": 4630,
+        "entries_muon_only": 176692,
+        "difference": -172062,
+        "relative_change_pct": -97.3796,
+        "has_electrons": true
+      },
+      {
+        "final_state": "0e_1m_4j_0b",
+        "entries_new": 43329,
+        "entries_muon_only": 1636996,
+        "difference": -1593667,
+        "relative_change_pct": -97.3531,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_2j_1b",
+        "entries_new": 105929,
+        "entries_muon_only": 3984830,
+        "difference": -3878901,
+        "relative_change_pct": -97.3417,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_3j_1b",
+        "entries_new": 63086,
+        "entries_muon_only": 2360244,
+        "difference": -2297158,
+        "relative_change_pct": -97.3271,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_0j_2b",
+        "entries_new": 8790,
+        "entries_muon_only": 328399,
+        "difference": -319609,
+        "relative_change_pct": -97.3234,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_0j_1b",
+        "entries_new": 46813,
+        "entries_muon_only": 1747335,
+        "difference": -1700522,
+        "relative_change_pct": -97.3209,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_1j_1b",
+        "entries_new": 81359,
+        "entries_muon_only": 3024820,
+        "difference": -2943461,
+        "relative_change_pct": -97.3103,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_1j_0b",
+        "entries_new": 609581,
+        "entries_muon_only": 22634856,
+        "difference": -22025275,
+        "relative_change_pct": -97.3069,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_1j_2b",
+        "entries_new": 38265,
+        "entries_muon_only": 1410188,
+        "difference": -1371923,
+        "relative_change_pct": -97.2865,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_3j_0b",
+        "entries_new": 169335,
+        "entries_muon_only": 6117926,
+        "difference": -5948591,
+        "relative_change_pct": -97.2322,
+        "has_electrons": false
+      },
+      {
+        "final_state": "1e_1m_2j_1b",
+        "entries_new": 5435,
+        "entries_muon_only": 185485,
+        "difference": -180050,
+        "relative_change_pct": -97.0698,
+        "has_electrons": true
+      },
+      {
+        "final_state": "1e_1m_0j_2b",
+        "entries_new": 3570,
+        "entries_muon_only": 119027,
+        "difference": -115457,
+        "relative_change_pct": -97.0007,
+        "has_electrons": true
+      },
+      {
+        "final_state": "1e_1m_1j_1b",
+        "entries_new": 5443,
+        "entries_muon_only": 164500,
+        "difference": -159057,
+        "relative_change_pct": -96.6912,
+        "has_electrons": true
+      },
+      {
+        "final_state": "1e_1m_2j_0b",
+        "entries_new": 2668,
+        "entries_muon_only": 77570,
+        "difference": -74902,
+        "relative_change_pct": -96.5605,
+        "has_electrons": true
+      },
+      {
+        "final_state": "1e_1m_0j_1b",
+        "entries_new": 1760,
+        "entries_muon_only": 49382,
+        "difference": -47622,
+        "relative_change_pct": -96.4359,
+        "has_electrons": true
+      },
+      {
+        "final_state": "1e_1m_0j_0b",
+        "entries_new": 1151,
+        "entries_muon_only": 30140,
+        "difference": -28989,
+        "relative_change_pct": -96.1812,
+        "has_electrons": true
+      },
+      {
+        "final_state": "1e_1m_1j_0b",
+        "entries_new": 2151,
+        "entries_muon_only": 55405,
+        "difference": -53254,
+        "relative_change_pct": -96.1177,
+        "has_electrons": true
+      },
+      {
+        "final_state": "0e_2m_4j_1b",
+        "entries_new": 1705,
+        "entries_muon_only": 36746,
+        "difference": -35041,
+        "relative_change_pct": -95.36,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_5j_0b",
+        "entries_new": 1891,
+        "entries_muon_only": 39547,
+        "difference": -37656,
+        "relative_change_pct": -95.2183,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_2j_2b",
+        "entries_new": 7869,
+        "entries_muon_only": 121247,
+        "difference": -113378,
+        "relative_change_pct": -93.5099,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_3j_1b",
+        "entries_new": 9302,
+        "entries_muon_only": 138684,
+        "difference": -129382,
+        "relative_change_pct": -93.2927,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_4j_0b",
+        "entries_new": 12431,
+        "entries_muon_only": 177164,
+        "difference": -164733,
+        "relative_change_pct": -92.9833,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_2j_1b",
+        "entries_new": 26172,
+        "entries_muon_only": 370088,
+        "difference": -343916,
+        "relative_change_pct": -92.9282,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_3j_0b",
+        "entries_new": 52979,
+        "entries_muon_only": 744300,
+        "difference": -691321,
+        "relative_change_pct": -92.882,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_1j_1b",
+        "entries_new": 33441,
+        "entries_muon_only": 459556,
+        "difference": -426115,
+        "relative_change_pct": -92.7232,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_1j_2b",
+        "entries_new": 11630,
+        "entries_muon_only": 158173,
+        "difference": -146543,
+        "relative_change_pct": -92.6473,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_2j_0b",
+        "entries_new": 192949,
+        "entries_muon_only": 2614885,
+        "difference": -2421936,
+        "relative_change_pct": -92.6211,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_1j_0b",
+        "entries_new": 261042,
+        "entries_muon_only": 3433942,
+        "difference": -3172900,
+        "relative_change_pct": -92.3982,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_0j_0b",
+        "entries_new": 14283,
+        "entries_muon_only": 187463,
+        "difference": -173180,
+        "relative_change_pct": -92.3809,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_0j_2b",
+        "entries_new": 8822,
+        "entries_muon_only": 113449,
+        "difference": -104627,
+        "relative_change_pct": -92.2238,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_0j_1b",
+        "entries_new": 22135,
+        "entries_muon_only": 265678,
+        "difference": -243543,
+        "relative_change_pct": -91.6685,
+        "has_electrons": false
+      }
+    ],
+    "zero_electron_final_states_changing_more_than_1pct": [
+      {
+        "final_state": "0e_1m_0j_1b",
+        "entries_new": 46813,
+        "entries_muon_only": 1747335,
+        "difference": -1700522,
+        "relative_change_pct": -97.3209,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_0j_2b",
+        "entries_new": 8790,
+        "entries_muon_only": 328399,
+        "difference": -319609,
+        "relative_change_pct": -97.3234,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_0j_3b",
+        "entries_new": 1014,
+        "entries_muon_only": 40105,
+        "difference": -39091,
+        "relative_change_pct": -97.4716,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_1j_0b",
+        "entries_new": 609581,
+        "entries_muon_only": 22634856,
+        "difference": -22025275,
+        "relative_change_pct": -97.3069,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_1j_1b",
+        "entries_new": 81359,
+        "entries_muon_only": 3024820,
+        "difference": -2943461,
+        "relative_change_pct": -97.3103,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_1j_2b",
+        "entries_new": 38265,
+        "entries_muon_only": 1410188,
+        "difference": -1371923,
+        "relative_change_pct": -97.2865,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_1j_3b",
+        "entries_new": 3909,
+        "entries_muon_only": 157752,
+        "difference": -153843,
+        "relative_change_pct": -97.5221,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_2j_0b",
+        "entries_new": 462351,
+        "entries_muon_only": 17695727,
+        "difference": -17233376,
+        "relative_change_pct": -97.3872,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_2j_1b",
+        "entries_new": 105929,
+        "entries_muon_only": 3984830,
+        "difference": -3878901,
+        "relative_change_pct": -97.3417,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_2j_2b",
+        "entries_new": 72926,
+        "entries_muon_only": 2806658,
+        "difference": -2733732,
+        "relative_change_pct": -97.4017,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_2j_3b",
+        "entries_new": 4360,
+        "entries_muon_only": 223017,
+        "difference": -218657,
+        "relative_change_pct": -98.045,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_3j_0b",
+        "entries_new": 169335,
+        "entries_muon_only": 6117926,
+        "difference": -5948591,
+        "relative_change_pct": -97.2322,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_3j_1b",
+        "entries_new": 63086,
+        "entries_muon_only": 2360244,
+        "difference": -2297158,
+        "relative_change_pct": -97.3271,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_3j_2b",
+        "entries_new": 40370,
+        "entries_muon_only": 1568313,
+        "difference": -1527943,
+        "relative_change_pct": -97.4259,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_3j_3b",
+        "entries_new": 1905,
+        "entries_muon_only": 121832,
+        "difference": -119927,
+        "relative_change_pct": -98.4364,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_4j_0b",
+        "entries_new": 43329,
+        "entries_muon_only": 1636996,
+        "difference": -1593667,
+        "relative_change_pct": -97.3531,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_4j_1b",
+        "entries_new": 22370,
+        "entries_muon_only": 942567,
+        "difference": -920197,
+        "relative_change_pct": -97.6267,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_4j_2b",
+        "entries_new": 14851,
+        "entries_muon_only": 594382,
+        "difference": -579531,
+        "relative_change_pct": -97.5014,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_5j_0b",
+        "entries_new": 8270,
+        "entries_muon_only": 391123,
+        "difference": -382853,
+        "relative_change_pct": -97.8856,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_5j_1b",
+        "entries_new": 6232,
+        "entries_muon_only": 295704,
+        "difference": -289472,
+        "relative_change_pct": -97.8925,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_5j_2b",
+        "entries_new": 4097,
+        "entries_muon_only": 179876,
+        "difference": -175779,
+        "relative_change_pct": -97.7223,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_6j_0b",
+        "entries_new": 1776,
+        "entries_muon_only": 88315,
+        "difference": -86539,
+        "relative_change_pct": -97.989,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_6j_1b",
+        "entries_new": 1099,
+        "entries_muon_only": 82311,
+        "difference": -81212,
+        "relative_change_pct": -98.6648,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_1m_7j_0b",
+        "entries_new": 148,
+        "entries_muon_only": 18693,
+        "difference": -18545,
+        "relative_change_pct": -99.2083,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_0j_0b",
+        "entries_new": 14283,
+        "entries_muon_only": 187463,
+        "difference": -173180,
+        "relative_change_pct": -92.3809,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_0j_1b",
+        "entries_new": 22135,
+        "entries_muon_only": 265678,
+        "difference": -243543,
+        "relative_change_pct": -91.6685,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_0j_2b",
+        "entries_new": 8822,
+        "entries_muon_only": 113449,
+        "difference": -104627,
+        "relative_change_pct": -92.2238,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_1j_0b",
+        "entries_new": 261042,
+        "entries_muon_only": 3433942,
+        "difference": -3172900,
+        "relative_change_pct": -92.3982,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_1j_1b",
+        "entries_new": 33441,
+        "entries_muon_only": 459556,
+        "difference": -426115,
+        "relative_change_pct": -92.7232,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_1j_2b",
+        "entries_new": 11630,
+        "entries_muon_only": 158173,
+        "difference": -146543,
+        "relative_change_pct": -92.6473,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_2j_0b",
+        "entries_new": 192949,
+        "entries_muon_only": 2614885,
+        "difference": -2421936,
+        "relative_change_pct": -92.6211,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_2j_1b",
+        "entries_new": 26172,
+        "entries_muon_only": 370088,
+        "difference": -343916,
+        "relative_change_pct": -92.9282,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_2j_2b",
+        "entries_new": 7869,
+        "entries_muon_only": 121247,
+        "difference": -113378,
+        "relative_change_pct": -93.5099,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_3j_0b",
+        "entries_new": 52979,
+        "entries_muon_only": 744300,
+        "difference": -691321,
+        "relative_change_pct": -92.882,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_3j_1b",
+        "entries_new": 9302,
+        "entries_muon_only": 138684,
+        "difference": -129382,
+        "relative_change_pct": -93.2927,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_4j_0b",
+        "entries_new": 12431,
+        "entries_muon_only": 177164,
+        "difference": -164733,
+        "relative_change_pct": -92.9833,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_4j_1b",
+        "entries_new": 1705,
+        "entries_muon_only": 36746,
+        "difference": -35041,
+        "relative_change_pct": -95.36,
+        "has_electrons": false
+      },
+      {
+        "final_state": "0e_2m_5j_0b",
+        "entries_new": 1891,
+        "entries_muon_only": 39547,
+        "difference": -37656,
+        "relative_change_pct": -95.2183,
+        "has_electrons": false
+      }
+    ],
+    "n_zero_electron_final_states_flagged": 38
+  },
+  "per_final_state_entries_new": {
+    "0e_1m_0j_1b": 46813,
+    "0e_1m_0j_2b": 8790,
+    "0e_1m_0j_3b": 1014,
+    "0e_1m_1j_0b": 609581,
+    "0e_1m_1j_1b": 81359,
+    "0e_1m_1j_2b": 38265,
+    "0e_1m_1j_3b": 3909,
+    "0e_1m_2j_0b": 462351,
+    "0e_1m_2j_1b": 105929,
+    "0e_1m_2j_2b": 72926,
+    "0e_1m_2j_3b": 4360,
+    "0e_1m_3j_0b": 169335,
+    "0e_1m_3j_1b": 63086,
+    "0e_1m_3j_2b": 40370,
+    "0e_1m_3j_3b": 1905,
+    "0e_1m_4j_0b": 43329,
+    "0e_1m_4j_1b": 22370,
+    "0e_1m_4j_2b": 14851,
+    "0e_1m_5j_0b": 8270,
+    "0e_1m_5j_1b": 6232,
+    "0e_1m_5j_2b": 4097,
+    "0e_1m_6j_0b": 1776,
+    "0e_1m_6j_1b": 1099,
+    "0e_1m_7j_0b": 148,
+    "0e_2m_0j_0b": 14283,
+    "0e_2m_0j_1b": 22135,
+    "0e_2m_0j_2b": 8822,
+    "0e_2m_1j_0b": 261042,
+    "0e_2m_1j_1b": 33441,
+    "0e_2m_1j_2b": 11630,
+    "0e_2m_2j_0b": 192949,
+    "0e_2m_2j_1b": 26172,
+    "0e_2m_2j_2b": 7869,
+    "0e_2m_3j_0b": 52979,
+    "0e_2m_3j_1b": 9302,
+    "0e_2m_4j_0b": 12431,
+    "0e_2m_4j_1b": 1705,
+    "0e_2m_5j_0b": 1891,
+    "1e_1m_0j_0b": 1151,
+    "1e_1m_0j_1b": 1760,
+    "1e_1m_0j_2b": 3570,
+    "1e_1m_1j_0b": 2151,
+    "1e_1m_1j_1b": 5443,
+    "1e_1m_1j_2b": 4630,
+    "1e_1m_2j_0b": 2668,
+    "1e_1m_2j_1b": 5435,
+    "1e_1m_2j_2b": 2988,
+    "1e_1m_3j_0b": 693,
+    "1e_1m_3j_1b": 1244,
+    "2e_0m_0j_0b": 3432,
+    "2e_0m_0j_1b": 3587,
+    "2e_0m_0j_2b": 1367,
+    "2e_0m_1j_0b": 44500,
+    "2e_0m_1j_1b": 5998,
+    "2e_0m_1j_2b": 1942,
+    "2e_0m_2j_0b": 37104,
+    "2e_0m_2j_1b": 4326,
+    "2e_0m_3j_0b": 11091,
+    "2e_0m_4j_0b": 1640
+  },
+  "all_d2_checks_pass": true
+}
