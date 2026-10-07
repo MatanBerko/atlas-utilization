@@ -19,8 +19,28 @@ was merged into master.
 | job ID | array | what | output |
 |---|---|---|---|
 | `5195526[]` | 0-15 | **Step B** pilot re-check, 16 files, mode `both`, dR **0.12**, debug dump ON | `output/cms_datasets/runs_matched4_pilot_dr012_20261007/` |
+| `5195547[]` | 0-3 | Step B Gate 2 band check (re-reads the 4 MuonEG pilot files) | `electron_vB_20261007/bandcheck/` |
+| `5195563[]` | 0-56 | **Step C** full production, DoubleMuon | `output/cms_datasets/runs_matched4_full_20261007/DoubleMuon/` |
+| `5195564[]` | 0-151 | **Step C** full production, SingleMuon | `.../runs_matched4_full_20261007/SingleMuon/` |
+| `5195565[]` | 0-132 | **Step C** full production, DoubleEG | `.../runs_matched4_full_20261007/DoubleEG/` |
+| `5195566[]` | 0-47 | **Step C** full production, MuonEG | `.../runs_matched4_full_20261007/MuonEG/` |
 
-Logs: `/storage/agrp/berkom/atlas-utilization/logs/electron_vB/pilot_dr012/`.
+Logs: `/storage/agrp/berkom/atlas-utilization/logs/electron_vB/pilot_dr012/`,
+`.../bandcheck/`, `.../full/<Dataset>/`.
+
+**Step B gates both PASSED** (`electron_vB_20261007/evidence/B_gates.json`):
+Gate 1, e-mu pairs below 5 GeV in accepted MuonEG events: 145 with the
+removal off, 47 at dR 0.05, **5** at dR 0.12 (pass needs <= 10). Gate 2,
+unexplained differences: **0** — the 42 MuonEG events dropped by the wider
+radius were each confirmed against the original files to contain a selected
+electron in the 0.05-0.12 band.
+
+Step C production: `--population matched4`, mode `both`, dR 0.12, debug dump
+OFF, one array per dataset (array index == job index), `walltime=03:00:00`,
+`mem=8gb`, `io=25`. Per-dataset mappings and index JSONs are in the output
+directory itself (`<Dataset>_mapping.txt`, `<Dataset>_index.json`,
+`full_files.json`), written by `gen_full_mapping.py`, which verified 390
+files against the agreed record counts (57 + 152 + 133 + 48).
 
 The Step B comparison is against the existing, READ-ONLY 20261006 runs:
 `runs_matched4_pilot_onboth_20261006` (dR 0.05, mode `both`) and
