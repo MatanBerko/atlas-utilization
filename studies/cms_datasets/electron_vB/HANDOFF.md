@@ -1,7 +1,51 @@
-# HANDOFF — electron datasets, Prompt 1 (BUILD + MEASURE + PILOT)
+# HANDOFF — electron datasets
 
 Everything needed to pick this up without re-deriving anything. Nothing here
-was merged into master, and no full production was run.
+was merged into master.
+
+---
+
+# PROMPT 2 (7 Oct 2026) — production run
+
+| what | value |
+|---|---|
+| **pinned commit for every Prompt 2 job** | `06778c9b21ae9243ec49e1455ed055edfe608291` |
+| checkout | `/storage/agrp/berkom/atlas-utilization/checkouts/06778c9/repo` |
+| approved changes in it | DEC-1 (`both` is final, comment/help only) and DEC-2 (`EMU_OVERLAP_DR_MAX` 0.05 → **0.12**) |
+| self-checks | 109 pass, 0 fail |
+
+### Prompt 2 jobs
+
+| job ID | array | what | output |
+|---|---|---|---|
+| `5195526[]` | 0-15 | **Step B** pilot re-check, 16 files, mode `both`, dR **0.12**, debug dump ON | `output/cms_datasets/runs_matched4_pilot_dr012_20261007/` |
+
+Logs: `/storage/agrp/berkom/atlas-utilization/logs/electron_vB/pilot_dr012/`.
+
+The Step B comparison is against the existing, READ-ONLY 20261006 runs:
+`runs_matched4_pilot_onboth_20261006` (dR 0.05, mode `both`) and
+`runs_matched4_pilot_off_20261006` (removal off).
+
+### Measured per-file cost of the 20261006 pilot (used to size the full run)
+
+| dataset | elapsed min/max | events read min/max |
+|---|---|---|
+| DoubleEG | 98 / 127 s | 782,959 / 2,014,154 |
+| DoubleMuon | 123 / 185 s | 794,124 / 2,407,785 |
+| MuonEG | 98 / 187 s | 572,016 / 2,238,235 |
+| SingleMuon | 85 / 920 s | 14,113 / 3,253,442 |
+
+Peak memory in the pilot was about 1 GB against an 8 gb request, so the full
+production keeps `mem=8gb` and raises walltime to 3 h for headroom.
+
+### How to resume Prompt 2
+
+Same recipe as Prompt 1 §6 below, with `C=06778c9b21ae9243ec49e1455ed055edfe608291`.
+`qsub` lives at `/opt/pbs/bin/qsub` and is NOT on `$PATH`.
+
+---
+
+# PROMPT 1 (6 Oct 2026) — build, measure, pilot
 
 ## 1. Code
 
