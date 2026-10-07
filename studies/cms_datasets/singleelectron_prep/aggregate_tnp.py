@@ -188,6 +188,20 @@ def main():
             "opposite_sign": None if mass["opposite_sign"] is None else mass["opposite_sign"].tolist(),
             "same_sign": None if mass["same_sign"] is None else mass["same_sign"].tolist(),
         },
+        "old_measurement_variants_are_identical": {
+            "note": "the old study's 'all' and 'prompt_like' probe variants are "
+                    "numerically identical in the barrel and differ by at most "
+                    "0.0004 in the endcap -- its isolation cut removed almost no "
+                    "probes, because the offline Medium cutBased ID already "
+                    "contains an isolation requirement. The old study therefore "
+                    "could not actually test the non-prompt hypothesis.",
+            "max_abs_difference_by_region": {
+                reg: (max(abs(x - y) for x, y in zip(
+                    old["by_variant"]["all"][reg]["efficiency"],
+                    old["by_variant"]["prompt_like"][reg]["efficiency"]))
+                    if old.get("by_variant", {}).get("prompt_like", {}).get(reg) else None)
+                for reg in REGIONS if old.get("by_variant", {}).get("all", {}).get(reg)},
+        },
         "old_measurement_reference": {
             "file": str(args.old_json),
             "what": old.get("what"), "pass": old.get("pass"),
@@ -234,15 +248,25 @@ def make_plots(out, old, out_dir: Path):
             ax.errorbar(xs, ys, yerr=[lo, hi], xerr=xe, fmt="o", ms=3.5, lw=1.1,
                         capsize=0, color="C0",
                         label="new: Z$\\to$ee tag and probe")
-        for variant, colour, style in (("all", "darkorange", "--"),
-                                       ("prompt_like", "seagreen", ":")):
-            blk = old.get("by_variant", {}).get(variant, {}).get(r)
-            if not blk:
-                continue
-            e = blk["efficiency"]
+        # The old study's two probe variants are numerically identical in the
+        # barrel and differ by at most 0.0004 in the endcap -- its
+        # "prompt_like" isolation cut removed almost no probes, because the
+        # offline Medium cutBased ID already contains an isolation
+        # requirement. They are therefore drawn as ONE curve, labelled as
+        # such, rather than as two that misleadingly coincide.
+        blk_all = old.get("by_variant", {}).get("all", {}).get(r)
+        blk_pl = old.get("by_variant", {}).get("prompt_like", {}).get(r)
+        if blk_all:
+            e = blk_all["efficiency"]
             n = min(len(e), len(old_centres))
-            ax.plot(old_centres[:n], e[:n], style, color=colour, lw=1.4,
-                    label=f"old (orthogonal muon tag): {variant}")
+            maxdiff = (max(abs(x - y) for x, y in
+                           zip(blk_all["efficiency"], blk_pl["efficiency"]))
+                       if blk_pl else None)
+            lbl = "old (orthogonal muon tag)"
+            if maxdiff is not None:
+                lbl += " -- its two probe variants coincide"
+            ax.plot(old_centres[:n], e[:n], "--", color="darkorange", lw=1.5,
+                    label=lbl)
         for t in THRESHOLD_LINES:
             ax.axvline(t, color="grey", ls="-", lw=0.7, alpha=0.6)
         ax.set_title(r, fontsize=10)
@@ -250,11 +274,12 @@ def make_plots(out, old, out_dir: Path):
         ax.set_xscale("log")
         ax.set_xticks([25, 30, 35, 40, 50, 70, 100, 200])
         ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+        ax.get_xaxis().set_minor_formatter(matplotlib.ticker.NullFormatter())
         ax.set_ylim(0, 1.05)
         ax.grid(alpha=0.3)
         ax.tick_params(labelsize=8)
     axes[0].set_ylabel("efficiency", fontsize=9)
-    axes[0].legend(fontsize=7.5, loc="lower right")
+    axes[0].legend(fontsize=7, loc="lower right")
     fig.suptitle("HLT_Ele27_WPTight_Gsf efficiency for our offline electrons\n"
                  "new Z$\\to$ee tag and probe vs the old orthogonal-muon-tag "
                  "measurement; grey lines at 27, 30, 32, 35 GeV", fontsize=10)
@@ -303,6 +328,7 @@ def make_plots(out, old, out_dir: Path):
         ax.set_xscale("log")
         ax.set_xticks([25, 30, 35, 40, 50, 70, 100, 200])
         ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+        ax.get_xaxis().set_minor_formatter(matplotlib.ticker.NullFormatter())
         ax.set_title(r, fontsize=10)
         ax.set_xlabel("probe electron offline $p_T$ [GeV]", fontsize=9)
         ax.set_ylim(0, 1.05)
