@@ -35,6 +35,14 @@ unexplained differences: **0** — the 42 MuonEG events dropped by the wider
 radius were each confirmed against the original files to contain a selected
 electron in the 0.05-0.12 band.
 
+**Step D was dress-rehearsed end to end on the dR 0.12 PILOT shards**
+before the full production finished, so the delivery chain is known to work:
+`deliver/four_dataset_pilot_dr012_20261007/` (876 histograms, 59 final
+states), every D2 check passing including the upstream-naming check on all
+876 real names, and all six D4 plots produced
+(`electron_vB_20261007/plots_dress/`). Those pilot artefacts are a rehearsal,
+NOT the delivery.
+
 Step C production: `--population matched4`, mode `both`, dR 0.12, debug dump
 OFF, one array per dataset (array index == job index), `walltime=03:00:00`,
 `mem=8gb`, `io=25`. Per-dataset mappings and index JSONs are in the output
