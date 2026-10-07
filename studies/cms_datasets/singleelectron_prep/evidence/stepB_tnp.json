@@ -1167,6 +1167,14 @@
       154
     ]
   },
+  "old_measurement_variants_are_identical": {
+    "note": "the old study's 'all' and 'prompt_like' probe variants are numerically identical in the barrel and differ by at most 0.0004 in the endcap -- its isolation cut removed almost no probes, because the offline Medium cutBased ID already contains an isolation requirement. The old study therefore could not actually test the non-prompt hypothesis.",
+    "max_abs_difference_by_region": {
+      "barrel": 0.0,
+      "gap": 0.0,
+      "endcap": 0.0003581341212283984
+    }
+  },
   "old_measurement_reference": {
     "file": "studies/cms_datasets/electron_prep/evidence/step2_ele27_turnon.json",
     "what": "HLT_Ele27_WPTight_Gsf turn-on, measured on an orthogonal HLT_IsoMu24 tag in SingleMuon data",

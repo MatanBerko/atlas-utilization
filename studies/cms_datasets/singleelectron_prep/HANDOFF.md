@@ -75,6 +75,24 @@ SingleElectron Run2016G+H: records **30529** (G, **71** files) and **30562**
   dR < 0.1 vs dR < 0.2 cone makes a difference of **2** probes out of
   55,680 — so neither choice drives the result.
 
+## 5b. Results (all jobs finished)
+
+All 151 + 152 jobs completed with no failures. Aggregated with
+`aggregate_tnp.py`, `aggregate_prescale.py` and `aggregate_threshold.py` on
+the analysis node from checkout `be5a4a1`, writing to
+`singleelectron_prep_20261007/results/{evidence,plots}/` and copied into the
+branch. Headlines, all VERIFIED BY RUNNING:
+
+* efficiency over 45-80 GeV: barrel 0.8326, endcap 0.7156 — and **not flat**
+  (5.3 and 9.0 pp spread); still rising at 200 GeV;
+* the inefficiency is the online WPTight identification, not the threshold;
+* vs the old measurement: barrel agrees to 0.8 pp at the plateau, endcap is
+  6.7 pp higher;
+* **no prescale**: Ele27 absent from the prescale table in all 19 HLT
+  configurations covering G+H, and 5 not-fired events in 141,748 qualifying
+  muon-triggered events (3.5e-5), 0 runs flagged of 154;
+* threshold scan at 27/30/32/35 GeV: see `evidence/stepD_thresholds.json`.
+
 ## 6. How to resume
 
 ```bash
