@@ -303,10 +303,11 @@ DOUBLEEG_MATCHED_MIN_ELECTRONS = 2
 DOUBLEEG_TRIGOBJ_LEADING_PT_MIN_GEV = 23.0   # online, the 23 GeV leg
 DOUBLEEG_OFFLINE_PT_MIN_GEV = 30.0           # the NEW acceptance-level offline cut
 DOUBLEEG_THRESHOLD_MODES = ("leading_only", "both")
-# PROVISIONAL -- set by the Step D measurement's own fixed decision
-# criterion (Delta_region = eff_sub(>30) - eff_sub(25-30) <= 2.0 pp in
-# BOTH barrel and endcap => "leading_only", else "both"). Matan has the
-# final say; see studies/cms_datasets/electron_vB/REPORT.md.
+# APPROVED 7 Oct 2026 (Maryna/Matan), from the Step D measurement -- this
+# is final, not provisional. Set by Step D's own fixed decision criterion
+# (Delta_region = eff_sub(>30) - eff_sub(25-30) <= 2.0 pp in BOTH barrel
+# and endcap => "leading_only", else "both"); see
+# studies/cms_datasets/electron_vB/REPORT.md.
 #
 # MEASURED (VERIFIED BY RUNNING, 133 DoubleEG files, 6,156,955 population
 # events, studies/cms_datasets/electron_vB/evidence/stepD_doubleeg_efficiency.json):
@@ -328,7 +329,19 @@ MUONEG_ELECTRON_LEG_PT_MIN_GEV_BY_PATH = {
 MUONEG_MIN_SELECTED_MUONS = 1
 
 # D3: electron-muon overlap removal, applied in ALL FOUR datasets.
-EMU_OVERLAP_DR_MAX = 0.05
+#
+# RADIUS APPROVED 7 Oct 2026 (Maryna), raised from 0.05 to 0.12. Provenance,
+# recorded so the number is never mistaken for an arbitrary choice:
+#   * chosen by Maryna from the MuonEG/SingleElectron per-event min-dR(e,mu)
+#     distribution, in which the collinear population -- electrons that are
+#     really the same object as a nearby muon -- extends to about 0.12;
+#   * ATLAS uses dR < 0.1 for this removal in ttbar MC;
+#   * the CMS ZZ paper arXiv:2009.01186 uses 0.05, which is what this
+#     pipeline used before 7 Oct 2026.
+# The comparison "<" is strict, as before. Nothing else about the removal
+# changes: same place in the order, all four datasets, muons never removed,
+# jet cleaning untouched.
+EMU_OVERLAP_DR_MAX = 0.12
 
 # E5 diagnostic: m(e, mu) over every selected electron-muon pair, 0-20 GeV
 # in 0.1 GeV bins. Diagnostics only -- the delivery binning (fixed 10 GeV,
@@ -1568,8 +1581,8 @@ def main():
     p.add_argument(
         "--no-emu-overlap-removal", action="store_true",
         help="matched4 only: switch OFF the D3 electron-muon overlap removal "
-             "(remove every selected electron within dR<0.05 of a selected muon). "
-             "FOR VALIDATION ONLY -- the production default is ON.",
+             f"(remove every selected electron within dR<{EMU_OVERLAP_DR_MAX} of a "
+             "selected muon). FOR VALIDATION ONLY -- the production default is ON.",
     )
     p.add_argument(
         "--doubleeg-threshold-mode", choices=list(DOUBLEEG_THRESHOLD_MODES),
@@ -1577,8 +1590,8 @@ def main():
         help="matched4 only: D4's offline-pT rule on the matched DoubleEG "
              "electrons. 'leading_only' = the highest-offline-pT matched electron "
              "above 30 GeV; 'both' = at least two matched electrons above 30 GeV. "
-             f"Default {DOUBLEEG_THRESHOLD_MODE_DEFAULT!r} (PROVISIONAL, from the "
-             "Step D measurement's own fixed criterion).",
+             f"Default {DOUBLEEG_THRESHOLD_MODE_DEFAULT!r} -- approved 7 Oct 2026 "
+             "(Maryna/Matan), from the Step D measurement's own fixed criterion.",
     )
     p.add_argument(
         "--debug-event-dump", action="store_true",

@@ -194,14 +194,20 @@ def test_c1_multidigit_labels():
 
 def test_c2_overlap_removal():
     print("\n--- C2. electron-muon overlap removal (D3) ---")
-    # Pure-eta separations so dR == |dEta| exactly.
+    # The radius was raised from 0.05 to 0.12 on 7 Oct 2026 (Maryna); these
+    # boundaries are the new ones, and dR = 0.06 -- which the old radius kept
+    # -- is now removed. Pure-eta separations, so dR == |dEta| exactly.
+    check(f"the approved radius is 0.12 (was 0.05)", drv.EMU_OVERLAP_DR_MAX == 0.12,
+          f"got {drv.EMU_OVERLAP_DR_MAX}")
     electrons = make_objects([
-        [{"eta": 0.04, "phi": 0.0, "pt": 40.0}],   # dR = 0.04 -> removed
-        [{"eta": 0.06, "phi": 0.0, "pt": 40.0}],   # dR = 0.06 -> kept
+        [{"eta": 0.11, "phi": 0.0, "pt": 40.0}],   # dR = 0.11 -> removed
+        [{"eta": 0.13, "phi": 0.0, "pt": 40.0}],   # dR = 0.13 -> kept
         [{"eta": 0.0, "phi": 3.13, "pt": 40.0}],   # phi wrap: dphi = 0.0232 -> removed
         [{"eta": 0.0, "phi": 0.0, "pt": 40.0}],    # no muon at all -> kept
         [{"eta": 0.0, "phi": 0.0, "pt": 40.0},
          {"eta": 1.0, "phi": 0.0, "pt": 30.0}],    # one of two removed
+        [{"eta": 0.06, "phi": 0.0, "pt": 40.0}],   # dR = 0.06 -> removed (was KEPT at 0.05)
+        [{"eta": 0.12, "phi": 0.0, "pt": 40.0}],   # dR exactly 0.12 -> kept, "<" is strict
     ])
     muons = make_objects([
         [{"eta": 0.0, "phi": 0.0, "pt": 50.0}],
@@ -209,13 +215,19 @@ def test_c2_overlap_removal():
         [{"eta": 0.0, "phi": -3.13, "pt": 50.0}],
         [],
         [{"eta": 0.0, "phi": 0.0, "pt": 50.0}],
+        [{"eta": 0.0, "phi": 0.0, "pt": 50.0}],
+        [{"eta": 0.0, "phi": 0.0, "pt": 50.0}],
     ])
     kept, n_removed, removed_mask = drv.remove_electrons_overlapping_muons(electrons, muons)
     counts = ak.to_numpy(ak.num(kept, axis=1)).tolist()
-    check("dR = 0.04 electron is removed", counts[0] == 0 and n_removed[0] == 1,
+    check("dR = 0.11 electron is removed", counts[0] == 0 and n_removed[0] == 1,
           f"kept {counts[0]}, removed {n_removed[0]}")
-    check("dR = 0.06 electron is kept", counts[1] == 1 and n_removed[1] == 0,
+    check("dR = 0.13 electron is kept", counts[1] == 1 and n_removed[1] == 0,
           f"kept {counts[1]}, removed {n_removed[1]}")
+    check("dR = 0.06 electron is NOW REMOVED (the old 0.05 radius kept it)",
+          counts[5] == 0 and n_removed[5] == 1, f"kept {counts[5]}, removed {n_removed[5]}")
+    check("dR exactly 0.12 is kept -- the comparison is strict '<'",
+          counts[6] == 1 and n_removed[6] == 0, f"kept {counts[6]}")
     check("phi wrap-around (+3.13 vs -3.13, dphi = 0.0232) is handled: removed",
           counts[2] == 0 and n_removed[2] == 1, f"kept {counts[2]}")
     check("no muon in the event -> nothing removed", counts[3] == 1 and n_removed[3] == 0)
@@ -235,13 +247,29 @@ def test_c2_overlap_removal():
     # and the one it is given is untouched.
     check("muons are never removed (the function returns no muon collection and "
           "leaves its input untouched)",
-          ak.to_numpy(ak.num(muons, axis=1)).tolist() == [1, 1, 1, 0, 1])
+          ak.to_numpy(ak.num(muons, axis=1)).tolist() == [1, 1, 1, 0, 1, 1, 1])
 
     off_kept, off_n, off_mask = drv.remove_electrons_overlapping_muons(
         electrons, muons, enabled=False)
     check("with the option OFF nothing is removed",
-          ak.to_numpy(ak.num(off_kept, axis=1)).tolist() == [1, 1, 1, 1, 2]
+          ak.to_numpy(ak.num(off_kept, axis=1)).tolist() == [1, 1, 1, 1, 2, 1, 1]
           and int(off_n.sum()) == 0 and int(ak.sum(off_mask)) == 0)
+
+    # The old radius is still available as an explicit argument, which is how
+    # the dR 0.05 vs 0.12 comparison in Step B is made.
+    old_kept, old_n, _ = drv.remove_electrons_overlapping_muons(
+        electrons, muons, dr_max=0.05)
+    # Event 2 is the phi-wrap case at dR 0.0232, removed at either radius;
+    # event 4 still loses its dR = 0 electron. The 0.06 and 0.11 electrons,
+    # which the NEW radius removes, survive the old one -- that difference is
+    # exactly what Step B measures on real data.
+    check("passing the old radius 0.05 explicitly keeps the dR 0.06 and 0.11 "
+          "electrons (only the wrap case and the dR = 0 one are removed)",
+          ak.to_numpy(ak.num(old_kept, axis=1)).tolist() == [1, 1, 0, 1, 1, 1, 1],
+          f"got {ak.to_numpy(ak.num(old_kept, axis=1)).tolist()}")
+    check("the old radius removes strictly fewer electrons than the new one",
+          int(old_n.sum()) < int(n_removed.sum()),
+          f"old {int(old_n.sum())} vs new {int(n_removed.sum())}")
 
     # The explicit formula agrees with vector's own deltaR (used by the
     # trigger matching), so this is one quantity spelled two ways.
@@ -854,8 +882,11 @@ def test_c8_old_invocations():
     check("matched4's own SingleMuon trigger set is the same one",
           drv.MATCHED4_TRIGGER_PATHS["SingleMuon"] == ("HLT_IsoMu24",))
     check("the new options default to: overlap removal ON, debug dump OFF",
-          drv.EMU_OVERLAP_DR_MAX == 0.05
+          drv.EMU_OVERLAP_DR_MAX == 0.12
           and drv.DOUBLEEG_THRESHOLD_MODE_DEFAULT in drv.DOUBLEEG_THRESHOLD_MODES)
+    check("the approved DoubleEG threshold mode default is 'both' (7 Oct 2026)",
+          drv.DOUBLEEG_THRESHOLD_MODE_DEFAULT == "both",
+          f"got {drv.DOUBLEEG_THRESHOLD_MODE_DEFAULT}")
 
 
 def main():
