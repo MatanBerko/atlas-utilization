@@ -1,0 +1,536 @@
+{
+  "what": "Step B gates for the dR 0.05 -> 0.12 overlap-removal radius",
+  "new_root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_pilot_dr012_20261007",
+  "old_root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_pilot_onboth_20261006",
+  "off_root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_pilot_off_20261006",
+  "old_radius": 0.05,
+  "new_radius": 0.12,
+  "gate1": {
+    "definition": "selected e-mu pairs with m(e,mu) < 5.0 GeV in accepted MuonEG pilot events",
+    "pass_if": "<= 10 pairs remain at dR 0.12",
+    "n_pairs_below_5gev_off": 145,
+    "n_pairs_below_1gev_off": 59,
+    "n_pairs_total_0_20gev_off": 344,
+    "n_pairs_below_5gev_old": 47,
+    "n_pairs_below_1gev_old": 0,
+    "n_pairs_total_0_20gev_old": 246,
+    "n_pairs_below_5gev_new": 5,
+    "n_pairs_below_1gev_new": 0,
+    "n_pairs_total_0_20gev_new": 204,
+    "n_remaining": 5,
+    "passed": true
+  },
+  "gate2": {
+    "definition": "every event differing between the two radii must contain at least one selected electron with 0.05 <= dR(e, nearest selected muon) < 0.12 that the new radius removed; equivalently, that event's removed-electron count must be strictly larger at 0.12 than at 0.05 (the removal is monotonic in the radius)",
+    "per_dataset": {
+      "DoubleMuon": {
+        "n_accepted_old": 773922,
+        "n_accepted_new": 773922,
+        "n_only_old": 0,
+        "n_only_new": 0,
+        "n_fs_changed": 2,
+        "n_flags_changed": 0,
+        "n_changed": 2,
+        "n_unexplained": 0,
+        "n_extra_electrons_removed": 2
+      },
+      "SingleMuon": {
+        "n_accepted_old": 4393889,
+        "n_accepted_new": 4393889,
+        "n_only_old": 0,
+        "n_only_new": 0,
+        "n_fs_changed": 4,
+        "n_flags_changed": 0,
+        "n_changed": 4,
+        "n_unexplained": 0,
+        "n_extra_electrons_removed": 4
+      },
+      "DoubleEG": {
+        "n_accepted_old": 154151,
+        "n_accepted_new": 154151,
+        "n_only_old": 0,
+        "n_only_new": 0,
+        "n_fs_changed": 0,
+        "n_flags_changed": 0,
+        "n_changed": 0,
+        "n_unexplained": 0,
+        "n_extra_electrons_removed": 0
+      },
+      "MuonEG": {
+        "n_accepted_old": 15628,
+        "n_accepted_new": 15586,
+        "n_only_old": 42,
+        "n_only_new": 0,
+        "n_fs_changed": 0,
+        "n_flags_changed": 0,
+        "n_changed": 42,
+        "n_unexplained": 0,
+        "n_extra_electrons_removed": 0
+      }
+    },
+    "totals": {
+      "n_changed": 48,
+      "n_only_old": 42,
+      "n_only_new": 0,
+      "n_unexplained": 0,
+      "n_fs_changed": 6,
+      "n_flags_changed": 0,
+      "n_extra_electrons_removed": 6
+    },
+    "events_needing_data_verification": {
+      "MuonEG:job_0": [
+        [
+          280385,
+          1421,
+          2660360426
+        ],
+        [
+          280385,
+          1617,
+          2986141650
+        ],
+        [
+          278875,
+          380,
+          688699917
+        ],
+        [
+          279931,
+          217,
+          261908803
+        ],
+        [
+          280385,
+          991,
+          1853917396
+        ],
+        [
+          280385,
+          1804,
+          3282987334
+        ],
+        [
+          280385,
+          1119,
+          2104046192
+        ],
+        [
+          280385,
+          1085,
+          2037126818
+        ],
+        [
+          279931,
+          185,
+          214658615
+        ],
+        [
+          279588,
+          222,
+          283934033
+        ],
+        [
+          279588,
+          286,
+          394351617
+        ],
+        [
+          279931,
+          119,
+          100021111
+        ]
+      ],
+      "MuonEG:job_1": [
+        [
+          279694,
+          1677,
+          3054281960
+        ],
+        [
+          279694,
+          1340,
+          2492211819
+        ],
+        [
+          279694,
+          1282,
+          2385636562
+        ],
+        [
+          279694,
+          1484,
+          2739889618
+        ],
+        [
+          279694,
+          205,
+          367050402
+        ],
+        [
+          279694,
+          1536,
+          2826023356
+        ],
+        [
+          279694,
+          1288,
+          2397204191
+        ]
+      ],
+      "MuonEG:job_2": [
+        [
+          283270,
+          83,
+          48709742
+        ],
+        [
+          284037,
+          238,
+          442149857
+        ],
+        [
+          282092,
+          1135,
+          1843490029
+        ],
+        [
+          284006,
+          280,
+          374919732
+        ],
+        [
+          284035,
+          48,
+          74531405
+        ],
+        [
+          284035,
+          177,
+          297759303
+        ]
+      ],
+      "MuonEG:job_3": [
+        [
+          282735,
+          53,
+          100658089
+        ],
+        [
+          282735,
+          134,
+          272691474
+        ],
+        [
+          281613,
+          324,
+          153555863
+        ],
+        [
+          282092,
+          968,
+          1538245960
+        ],
+        [
+          281707,
+          345,
+          427032798
+        ],
+        [
+          282712,
+          65,
+          126850408
+        ],
+        [
+          281693,
+          694,
+          1319996207
+        ],
+        [
+          281693,
+          1019,
+          1942044124
+        ],
+        [
+          282037,
+          181,
+          342195466
+        ],
+        [
+          282733,
+          141,
+          263909631
+        ],
+        [
+          281726,
+          257,
+          483111092
+        ],
+        [
+          281797,
+          152,
+          65054520
+        ],
+        [
+          281797,
+          591,
+          839514301
+        ],
+        [
+          282712,
+          32,
+          61591057
+        ],
+        [
+          282092,
+          947,
+          1500156081
+        ],
+        [
+          281797,
+          1324,
+          2217932722
+        ],
+        [
+          282734,
+          117,
+          241213094
+        ]
+      ]
+    },
+    "n_events_needing_data_verification": 42,
+    "unexplained_examples": [],
+    "changed_examples": [
+      {
+        "dataset": "DoubleMuon",
+        "job": "job_2",
+        "key": [
+          283478,
+          836,
+          1298149847
+        ],
+        "n_removed_old": 0,
+        "n_removed_new": 1,
+        "fs_old": "1e_2m_0j_0b",
+        "fs_new": "0e_2m_0j_0b"
+      },
+      {
+        "dataset": "DoubleMuon",
+        "job": "job_3",
+        "key": [
+          283308,
+          150,
+          286778326
+        ],
+        "n_removed_old": 0,
+        "n_removed_new": 1,
+        "fs_old": "1e_2m_0j_0b",
+        "fs_new": "0e_2m_0j_0b"
+      },
+      {
+        "dataset": "SingleMuon",
+        "job": "job_0",
+        "key": [
+          279931,
+          727,
+          1203911188
+        ],
+        "n_removed_old": 0,
+        "n_removed_new": 1,
+        "fs_old": "1e_1m_1j_0b",
+        "fs_new": "0e_1m_1j_0b"
+      },
+      {
+        "dataset": "SingleMuon",
+        "job": "job_1",
+        "key": [
+          279694,
+          215,
+          384101376
+        ],
+        "n_removed_old": 0,
+        "n_removed_new": 1,
+        "fs_old": "1e_1m_1j_0b",
+        "fs_new": "0e_1m_1j_0b"
+      },
+      {
+        "dataset": "SingleMuon",
+        "job": "job_1",
+        "key": [
+          279694,
+          1744,
+          3158447817
+        ],
+        "n_removed_old": 0,
+        "n_removed_new": 1,
+        "fs_old": "1e_2m_0j_0b",
+        "fs_new": "0e_2m_0j_0b"
+      },
+      {
+        "dataset": "SingleMuon",
+        "job": "job_3",
+        "key": [
+          281707,
+          174,
+          125930781
+        ],
+        "n_removed_old": 0,
+        "n_removed_new": 1,
+        "fs_old": "1e_1m_0j_0b",
+        "fs_new": "0e_1m_0j_0b"
+      }
+    ],
+    "passed_for_events_present_in_both": true,
+    "band_check": {
+      "checked": true,
+      "n_result_files": 4,
+      "n_events_requested": 42,
+      "n_events_found": 42,
+      "n_explained": 42,
+      "n_unexplained": 0,
+      "all_requested_events_found": true,
+      "per_file": [
+        {
+          "dataset": "MuonEG",
+          "job": "job_0",
+          "n_keys_requested": 12,
+          "n_keys_found_in_file": 12,
+          "n_explained": 12,
+          "n_unexplained": 0,
+          "n_surviving_lowmass_pairs": 0
+        },
+        {
+          "dataset": "MuonEG",
+          "job": "job_1",
+          "n_keys_requested": 7,
+          "n_keys_found_in_file": 7,
+          "n_explained": 7,
+          "n_unexplained": 0,
+          "n_surviving_lowmass_pairs": 2
+        },
+        {
+          "dataset": "MuonEG",
+          "job": "job_2",
+          "n_keys_requested": 6,
+          "n_keys_found_in_file": 6,
+          "n_explained": 6,
+          "n_unexplained": 0,
+          "n_surviving_lowmass_pairs": 1
+        },
+        {
+          "dataset": "MuonEG",
+          "job": "job_3",
+          "n_keys_requested": 17,
+          "n_keys_found_in_file": 17,
+          "n_explained": 17,
+          "n_unexplained": 0,
+          "n_surviving_lowmass_pairs": 2
+        }
+      ],
+      "surviving_lowmass_pairs_from_data": [
+        {
+          "key": [
+            279694,
+            205,
+            367340161
+          ],
+          "m_emu_gev": 4.2998,
+          "dr": 0.14251,
+          "electron_pt": 33.924,
+          "electron_eta": 0.8641,
+          "muon_pt": 26.791,
+          "muon_eta": 0.9731,
+          "electron_index": 0,
+          "muon_index": 0
+        },
+        {
+          "key": [
+            279694,
+            1682,
+            3062336435
+          ],
+          "m_emu_gev": 4.1917,
+          "dr": 0.14706,
+          "electron_pt": 27.656,
+          "electron_eta": 2.3047,
+          "muon_pt": 29.355,
+          "muon_eta": 2.2803,
+          "electron_index": 0,
+          "muon_index": 0
+        },
+        {
+          "key": [
+            281975,
+            63,
+            99525901
+          ],
+          "m_emu_gev": 4.6523,
+          "dr": 0.16786,
+          "electron_pt": 29.485,
+          "electron_eta": 1.3257,
+          "muon_pt": 25.995,
+          "muon_eta": 1.4736,
+          "electron_index": 0,
+          "muon_index": 1
+        },
+        {
+          "key": [
+            281797,
+            1120,
+            1834550432
+          ],
+          "m_emu_gev": 3.7393,
+          "dr": 0.12621,
+          "electron_pt": 27.617,
+          "electron_eta": -1.7947,
+          "muon_pt": 31.699,
+          "muon_eta": -1.6787,
+          "electron_index": 0,
+          "muon_index": 0
+        },
+        {
+          "key": [
+            281797,
+            1583,
+            2690380509
+          ],
+          "m_emu_gev": 3.5466,
+          "dr": 0.12297,
+          "electron_pt": 26.014,
+          "electron_eta": -1.8518,
+          "muon_pt": 31.93,
+          "muon_eta": -1.9438,
+          "electron_index": 0,
+          "muon_index": 0
+        }
+      ],
+      "n_surviving_lowmass_pairs_from_data": 5
+    },
+    "passed": true,
+    "verdict": "PASS"
+  },
+  "b3": {
+    "trigger_guard_violations_total": 0,
+    "accepted_event_sets_identical_to_dr005": {
+      "DoubleMuon": true,
+      "SingleMuon": true
+    },
+    "muon_datasets_vs_master": {
+      "DoubleMuon": {
+        "n_accepted": 773922,
+        "n_final_state_changed_vs_master": 6
+      },
+      "SingleMuon": {
+        "n_accepted": 4393889,
+        "n_final_state_changed_vs_master": 13
+      }
+    }
+  },
+  "min_dr_before_removal": {
+    "found": true,
+    "n_events_min_dr_below_005": 122,
+    "n_events_min_dr_in_band_005_012": 55,
+    "n_events_min_dr_below_012": 177,
+    "n_events_total_in_histogram": 21189
+  },
+  "both_gates_passed": true
+}
