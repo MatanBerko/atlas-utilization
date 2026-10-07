@@ -133,6 +133,10 @@ def main():
     p.add_argument("--out-json", required=True)
     p.add_argument("--out-plots", required=True)
     p.add_argument("--max-examples", type=int, default=25)
+    p.add_argument("--band-check-dir", default=None,
+                   help="directory of verify_radius_band.py outputs; with it, the "
+                        "events that are absent from the dR 0.12 dump are settled "
+                        "against the data and GATE 2 gets its final verdict")
     args = p.parse_args()
 
     new_root, old_root, off_root = map(Path, (args.new_root, args.old_root, args.off_root))
@@ -248,10 +252,49 @@ def main():
     gate2["unexplained_examples"] = unexplained_examples
     gate2["changed_examples"] = changed_examples
     gate2["passed_for_events_present_in_both"] = bool(totals["n_unexplained"] == 0)
-    gate2["passed"] = None if to_verify else bool(totals["n_unexplained"] == 0)
+
+    # Settle the events that have no row in the dR 0.12 dump, using
+    # verify_radius_band.py's read-back of the original files.
+    band = {"checked": False}
+    if args.band_check_dir:
+        bd = Path(args.band_check_dir)
+        files = sorted(bd.glob("*.json"))
+        n_req = n_found = n_expl = n_unexpl = 0
+        lowmass = []
+        per_file = []
+        for f in files:
+            d = json.loads(f.read_text(encoding="utf-8"))
+            n_req += int(d.get("n_keys_requested", 0))
+            n_found += int(d.get("n_keys_found_in_file", 0))
+            n_expl += int(d.get("n_explained", 0))
+            n_unexpl += int(d.get("n_unexplained", 0))
+            lowmass.extend(d.get("surviving_lowmass_pairs", []))
+            per_file.append({k: d.get(k) for k in
+                             ("dataset", "job", "n_keys_requested",
+                              "n_keys_found_in_file", "n_explained", "n_unexplained",
+                              "n_surviving_lowmass_pairs")})
+        band = {"checked": True, "n_result_files": len(files),
+                "n_events_requested": n_req, "n_events_found": n_found,
+                "n_explained": n_expl, "n_unexplained": n_unexpl,
+                "all_requested_events_found": bool(n_found == n_req),
+                "per_file": per_file,
+                "surviving_lowmass_pairs_from_data": lowmass[:50],
+                "n_surviving_lowmass_pairs_from_data": len(lowmass)}
+        print(f"  band check: {n_found}/{n_req} events found, "
+              f"explained {n_expl}, unexplained {n_unexpl}")
+    gate2["band_check"] = band
+
+    if to_verify and not band.get("checked"):
+        gate2["passed"] = None
+        verdict = "PENDING the data check on events absent from the 0.12 dump"
+    else:
+        ok = totals["n_unexplained"] == 0 and band.get("n_unexplained", 0) == 0             and (not to_verify or band.get("all_requested_events_found", False))
+        gate2["passed"] = bool(ok)
+        verdict = "PASS" if ok else "FAIL"
+    gate2["verdict"] = verdict
     report["gate2"] = gate2
     print(f"GATE 2: unexplained differences {totals['n_unexplained']} "
-          f"=> {'PASS' if gate2['passed'] else 'FAIL'}")
+          f"(events present at both radii) => {verdict}")
 
     # ---------------- B3 --------------------------------------------------
     b3 = {}
@@ -369,9 +412,7 @@ def main():
     print(f"wrote {keys_path} "
           f"({gate2['n_events_needing_data_verification']} events to verify)")
 
-    report["both_gates_passed"] = bool(
-        gate1["passed"] and gate2["passed_for_events_present_in_both"]
-        and not to_verify)
+    report["both_gates_passed"] = bool(gate1["passed"] and gate2["passed"] is True)
     Path(args.out_json).parent.mkdir(parents=True, exist_ok=True)
     Path(args.out_json).write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(f"\nBOTH GATES PASSED = {report['both_gates_passed']}")
