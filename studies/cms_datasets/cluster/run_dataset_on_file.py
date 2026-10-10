@@ -2839,9 +2839,11 @@ def main():
         "top4_diagnostics": top4_diagnostics,
         "nonjet4_diagnostics": nonjet4_diagnostics,
         "rare4_diagnostics": rare4_diagnostics,
-        "mc_diagnostics": mc_diagnostics,
     }
     if args.is_mc:
+        # Added ONLY under --is-mc, so job_metadata.json on the data path is
+        # key-for-key what it was before this round -- which Part B proves.
+        metadata["mc_diagnostics"] = mc_diagnostics
         metadata["is_mc"] = True
         metadata["mc_runs_tree"] = mc_runs
         metadata["mc_file_sum_genweight_all_events"] = file_sum_genweight
