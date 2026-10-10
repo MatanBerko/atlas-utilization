@@ -13,8 +13,13 @@ Reads the per-sample ROOT file the MC builder wrote and produces:
       everything below the rightmost highest peak -- which for a ggH->ZZ->4l
       sample IS the 125 GeV bin -- so the delivered histogram of a sparse
       category shows the resonance's position but not its shape.
-  (2) `smoke_dilepton_mass.png` -- one dilepton histogram from the same file,
-      for scale.
+  (2) `smoke_dilepton_mass.png` -- the same-flavour dilepton mass, with the
+      110 GeV Z cut drawn on it, plus one two-object mass that does survive
+      into the delivery. Both are needed: in a ggH->ZZ->4l sample the
+      same-flavour pairs sit at or below the Z mass, so the Z cut removes them
+      and NO m0m1 / e0e1 histogram reaches the delivery -- which is the Z cut
+      working correctly on MC, and is worth showing rather than hiding behind
+      a combination that happens to survive.
 
 and a closure check: because
 
@@ -70,6 +75,8 @@ FOUR_LEPTON_IM = {
     "4e": "e0e1e2e3",
     "2e2mu": "e0e1m0m1",
 }
+# Same-flavour dilepton combinations, which the 110 GeV Z cut acts on.
+DILEPTON_IM = {"mumu": "m0m1", "ee": "e0e1"}
 VIEW_MAX_GEV = 300.0
 
 
@@ -192,43 +199,95 @@ def plot_four_lepton(by_im: dict, spectra: dict, out_path: pathlib.Path) -> dict
     return summary
 
 
-def plot_one_dilepton(by_im: dict, out_path: pathlib.Path) -> dict:
-    preferred = ["m0m1", "e0e1"]
-    pick = next((im for im in preferred if im in by_im), None)
-    if pick is None:
-        if not by_im:
-            raise SystemExit("no TH1D histograms in the file at all")
-        pick = max(by_im, key=lambda im: max(np.sum(t[1]) for t in by_im[im]))
-    key, values, errors, edges = max(by_im[pick], key=lambda t: np.sum(t[1]))
-    centres = 0.5 * (edges[:-1] + edges[1:])
-    view = centres <= VIEW_MAX_GEV
+def plot_one_dilepton(by_im: dict, spectra: dict, out_path: pathlib.Path) -> dict:
+    """One same-flavour dilepton panel, plus one that survives into the
+    delivery.
 
-    fig, ax = plt.subplots(figsize=(6.6, 4.5))
-    ax.errorbar(centres[view], values[view], yerr=errors[view],
-                fmt="o", ms=3.5, lw=1, capsize=1.5, color="#2f855a")
-    if pick in ("m0m1", "e0e1"):
-        ax.axvline(110.0, color="#718096", ls=":", lw=1,
-                   label="Z-peak cut at 110 GeV")
-        ax.legend(fontsize=8)
-    ax.set_title(key, fontsize=8.5)
-    ax.set_xlabel("dilepton invariant mass [GeV]")
-    ax.set_ylabel("weighted events / 10 GeV")
-    ax.set_xlim(0, VIEW_MAX_GEV)
-    ax.grid(alpha=0.25, lw=0.5)
-    fig.suptitle("MC smoke test -- one dilepton histogram from the same file. "
-                 "Error bars are sqrt(sum w^2).", fontsize=9)
-    fig.tight_layout(rect=(0, 0, 1, 0.93))
+    In a ggH->ZZ->4l sample the same-flavour dilepton pairs sit at or below the
+    Z mass, so the 110 GeV Z cut removes them and NO m0m1 / e0e1 histogram
+    reaches the delivery at all. Showing only a surviving combination would
+    hide that; showing the pre-cut spectrum with the cut drawn on it shows the
+    Z cut doing its job on MC, which is the point of a dilepton plot here."""
+    summary = {}
+    same_flavour = [(label, im) for label, im in sorted(DILEPTON_IM.items())
+                    if im in spectra]
+    other = [im for im in by_im if im not in DILEPTON_IM]
+    n_panels = len(same_flavour) + (1 if other else 0)
+    if n_panels == 0:
+        raise SystemExit("no dilepton histogram and no dilepton spectrum")
+    fig, axes = plt.subplots(1, n_panels, figsize=(5.6 * n_panels, 4.5),
+                             squeeze=False)
+    axes = list(axes[0])
+
+    for (label, im) in same_flavour:
+        ax = axes.pop(0)
+        sum_w, sum_w2, edges, n_raw = spectra[im]
+        centres = 0.5 * (edges[:-1] + edges[1:])
+        view = centres <= VIEW_MAX_GEV
+        ax.errorbar(centres[view], sum_w[view], yerr=np.sqrt(sum_w2[view]),
+                    fmt="o", ms=3.5, lw=1, capsize=1.5, color="#2f855a",
+                    label="before post-processing")
+        ax.axvline(110.0, color="#c05621", ls=":", lw=1.3,
+                   label="Z cut at 110 GeV (keeps the right side)")
+        delivered = [k for k in by_im.get(im, [])]
+        if delivered:
+            key, values, errors, edges2 = max(delivered, key=lambda t: np.sum(t[1]))
+            c2 = 0.5 * (edges2[:-1] + edges2[1:])
+            filled = errors > 0
+            ax.plot(c2[filled], values[filled], "s", ms=7, mfc="none",
+                    mec="#2b6cb0", mew=1.6, label="delivered")
+        ax.set_title(f"{label}   ({im})", fontsize=10)
+        ax.set_xlabel("dilepton invariant mass [GeV]")
+        ax.set_ylabel("weighted events / 10 GeV")
+        ax.set_xlim(0, VIEW_MAX_GEV)
+        ax.legend(fontsize=7.5)
+        ax.grid(alpha=0.25, lw=0.5)
+        nz = np.nonzero(sum_w2 > 0)[0]
+        summary[label] = {
+            "im": im,
+            "n_raw_entries_before_postprocessing": n_raw,
+            "integral_weighted_before_postprocessing": float(sum_w.sum()),
+            "n_filled_bins_before_postprocessing": int(nz.size),
+            "first_filled_bin_centre_gev": float(centres[nz[0]]) if nz.size else None,
+            "peak_bin_centre_gev": float(centres[int(np.argmax(sum_w))]),
+            "n_delivered_histograms_for_this_im": len(delivered),
+            "note": ("removed entirely by the 110 GeV Z cut" if not delivered
+                     else "survives into the delivery"),
+        }
+
+    if other:
+        ax = axes.pop(0)
+        pick = max(other, key=lambda im: max(np.sum(t[1]) for t in by_im[im]))
+        key, values, errors, edges = max(by_im[pick], key=lambda t: np.sum(t[1]))
+        centres = 0.5 * (edges[:-1] + edges[1:])
+        view = centres <= VIEW_MAX_GEV
+        ax.errorbar(centres[view], values[view], yerr=errors[view],
+                    fmt="o", ms=3.5, lw=1, capsize=1.5, color="#2b6cb0")
+        ax.set_title(key, fontsize=8.5)
+        ax.set_xlabel("two-object invariant mass [GeV]")
+        ax.set_ylabel("weighted events / 10 GeV")
+        ax.set_xlim(0, VIEW_MAX_GEV)
+        ax.grid(alpha=0.25, lw=0.5)
+        nzb = np.nonzero(errors > 0)[0]
+        summary["delivered_two_object"] = {
+            "im": pick, "histogram": key,
+            "integral_weighted": float(values.sum()),
+            "n_filled_bins": int(nzb.size),
+            "first_filled_bin_centre_gev": (float(centres[nzb[0]])
+                                            if nzb.size else None),
+        }
+
+    fig.suptitle(
+        "MC smoke test -- dilepton mass from the same file. Error bars are "
+        "sqrt(sum w^2).\n"
+        "In a ggH->ZZ->4l sample the same-flavour pairs sit at or below the Z "
+        "mass, so the 110 GeV Z cut removes them and none reaches the "
+        "delivery.", fontsize=8.5)
+    fig.tight_layout(rect=(0, 0, 1, 0.89))
     fig.savefig(out_path, dpi=140)
     plt.close(fig)
     print(f"wrote {out_path}")
-    first_filled = np.nonzero(errors > 0)[0]
-    return {
-        "im": pick, "histogram": key,
-        "integral_weighted": float(values.sum()),
-        "n_filled_bins": int(first_filled.size),
-        "first_filled_bin_centre_gev": (float(centres[first_filled[0]])
-                                        if first_filled.size else None),
-    }
+    return summary
 
 
 def closure_check(report: dict, record_id: str, by_im: dict) -> dict:
@@ -303,8 +362,9 @@ def main() -> int:
     print(f"{sum(len(v) for v in by_im.values())} TH1D histogram(s) across "
           f"{len(by_im)} IM combination(s)")
     spectra = ({} if not args.scratch_dir else
-               spectra_from_shards(pathlib.Path(args.scratch_dir),
-                                   FOUR_LEPTON_IM.values()))
+               spectra_from_shards(
+                   pathlib.Path(args.scratch_dir),
+                   list(FOUR_LEPTON_IM.values()) + list(DILEPTON_IM.values())))
     if spectra:
         print("pre-post-processing spectra pooled for: " + ", ".join(sorted(spectra)))
 
@@ -317,7 +377,8 @@ def main() -> int:
         "im_combinations": sorted(by_im),
         "four_lepton": plot_four_lepton(
             by_im, spectra, out_dir / "smoke_4lepton_mass.png"),
-        "dilepton": plot_one_dilepton(by_im, out_dir / "smoke_dilepton_mass.png"),
+        "dilepton": plot_one_dilepton(
+            by_im, spectra, out_dir / "smoke_dilepton_mass.png"),
         "closure": closure_check(report, args.record_id, by_im),
     }
     out = out_dir / "smoke_test_summary.json"
