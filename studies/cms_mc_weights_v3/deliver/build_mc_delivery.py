@@ -56,6 +56,7 @@ import json
 import pathlib
 import re
 import shutil
+import sqlite3
 import sys
 import tempfile
 from collections import defaultdict
@@ -72,6 +73,7 @@ from services.pipelines.post_processing_pipeline import (  # noqa: E402
 )
 from services.storage.sqlite_shards import (  # noqa: E402
     SqliteArrayShardWriter,
+    _deserialize_array,
     iter_arrays_for_signature,
     list_signatures,
     prune_final_states_below_min_events,
@@ -269,6 +271,37 @@ def read_cap_scales(shard_path: str) -> dict:
 # weights
 # --------------------------------------------------------------------------
 
+def read_shard_arrays(shard_path: str) -> dict:
+    """{signature: [chunk, ...]} for a whole shard, from ONE sqlite connection.
+
+    The shared `iter_arrays_for_signature` / `list_signatures` open a NEW
+    connection per call and close it only when the garbage collector gets
+    round to it (`with sqlite3.connect(...)` commits but does not close). At
+    pilot scale that is fatal: a ttbar shard holds 28,788 signatures, and
+    calling them per signature pushes the process past `ulimit -n` (1024 on
+    the analysis node) between collections, which surfaces as
+    `sqlite3.OperationalError: unable to open database file`.
+
+    Reading each shard in a single pass through a single read-only connection
+    fixes that and is far faster. The shared functions are deliberately NOT
+    modified: they are on the delivered data path, and this round may not
+    change it.
+    """
+    conn = sqlite3.connect(
+        f"file:{pathlib.Path(shard_path).as_posix()}?mode=ro", uri=True)
+    try:
+        rows = conn.execute(
+            "SELECT signature, payload FROM array_chunks ORDER BY id").fetchall()
+    finally:
+        conn.close()
+    out = defaultdict(list)
+    for signature, payload in rows:
+        arr = _deserialize_array(payload)
+        if len(arr):
+            out[signature].append(arr)
+    return dict(out)
+
+
 def normalisation_factor(record: dict, sigma_w: float) -> float:
     """sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w, with k = eps = 1."""
     k = float(record["k_factor"])
@@ -290,17 +323,18 @@ def write_mcw_siblings(shard_path: str, norm: float, cap_scales: dict) -> dict:
     writes them together), so the pairing is 1:1. Any length mismatch is a
     HARD ERROR -- there is no unweighted fallback anywhere in this builder.
     """
+    chunks = read_shard_arrays(shard_path)
     writer = SqliteArrayShardWriter(shard_path)
     n_written = 0
     n_entries = 0
     n_capped_applied = 0
     try:
-        for sig in list_signatures(shard_path):
+        for sig in sorted(chunks):
             if not SIG_PATTERN.search(sig):
                 continue  # a sibling, or not a mass signature
-            masses = list(iter_arrays_for_signature(shard_path, sig))
-            genw = list(iter_arrays_for_signature(shard_path, sig + MC_SIBLING_GENWEIGHT))
-            l1pf = list(iter_arrays_for_signature(shard_path, sig + MC_SIBLING_L1PREFIRE))
+            masses = chunks.get(sig, [])
+            genw = chunks.get(sig + MC_SIBLING_GENWEIGHT, [])
+            l1pf = chunks.get(sig + MC_SIBLING_L1PREFIRE, [])
             n_mass = sum(len(a) for a in masses)
             if n_mass == 0:
                 continue
@@ -452,7 +486,7 @@ def collect_signature_arrays(shard_paths: list, suffix: str = "") -> dict:
     (suffix="") or one sibling family."""
     out = defaultdict(list)
     for path in shard_paths:
-        for sig in list_signatures(path):
+        for sig, sig_chunks in read_shard_arrays(path).items():
             if suffix:
                 if not sig.endswith(suffix):
                     continue
@@ -464,9 +498,7 @@ def collect_signature_arrays(shard_paths: list, suffix: str = "") -> dict:
                 if not SIG_PATTERN.search(sig):
                     continue
                 key = sig
-            for chunk in iter_arrays_for_signature(path, sig):
-                if len(chunk):
-                    out[key].append(chunk)
+            out[key].extend(sig_chunks)
     return dict(out)
 
 

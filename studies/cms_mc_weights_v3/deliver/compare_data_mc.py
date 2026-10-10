@@ -50,14 +50,11 @@ import numpy as np  # noqa: E402
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO_ROOT))
 
-from services.storage.sqlite_shards import (  # noqa: E402
-    iter_arrays_for_signature, list_signatures,
-)
 from studies.cms_datasets.cluster.run_dataset_on_file import (  # noqa: E402
     DELIVERY_VETO_ORDER_4, MC_SIBLING_ACCEPTANCE, MC_WEIGHT_SUFFIX,
 )
 from studies.cms_mc_weights_v3.deliver.build_mc_delivery import (  # noqa: E402
-    SIG_PATTERN, event_union_mask,
+    SIG_PATTERN, event_union_mask, read_shard_arrays,
 )
 
 DATA_SHARD_INCL = "dataset_shard_rare4_inclusive.sqlite"
@@ -100,7 +97,7 @@ def read_data(runs_dir: pathlib.Path, want_im: set, fs_filter) -> dict:
             if not shard.exists():
                 raise SystemExit(f"missing delivered shard: {shard}")
             n_shards += 1
-            for sig in list_signatures(str(shard)):
+            for sig, chunks in read_shard_arrays(str(shard)).items():
                 m = SIG_PATTERN.search(sig)
                 if not m:
                     continue
@@ -110,12 +107,11 @@ def read_data(runs_dir: pathlib.Path, want_im: set, fs_filter) -> dict:
                 counts = fs_counts(fs_str)
                 if not fs_filter(im_str, counts):
                     continue
-                for chunk in iter_arrays_for_signature(str(shard), sig):
-                    if len(chunk):
-                        out[im_str][0].append(np.asarray(chunk, dtype=np.float64))
-                        out[im_str][1].append(
-                            np.repeat(np.array([[counts["j"], counts["b"]]]),
-                                      len(chunk), axis=0))
+                for chunk in chunks:
+                    out[im_str][0].append(np.asarray(chunk, dtype=np.float64))
+                    out[im_str][1].append(
+                        np.repeat(np.array([[counts["j"], counts["b"]]]),
+                                  len(chunk), axis=0))
     res = {}
     for im, (ms, cs) in out.items():
         if ms:
@@ -136,8 +132,8 @@ def read_mc(scratch_dir: pathlib.Path, want_im: set, fs_filter) -> dict:
     for shard in sorted(scratch_dir.rglob("*.sqlite")):
         rid = shard.parent.name.replace("record_", "")
         n_shards += 1
-        sigs = set(list_signatures(str(shard)))
-        for sig in sorted(sigs):
+        chunks = read_shard_arrays(str(shard))
+        for sig in sorted(chunks):
             m = SIG_PATTERN.search(sig)
             if not m:
                 continue
@@ -147,9 +143,9 @@ def read_mc(scratch_dir: pathlib.Path, want_im: set, fs_filter) -> dict:
             counts = fs_counts(fs_str)
             if not fs_filter(im_str, counts):
                 continue
-            masses = list(iter_arrays_for_signature(str(shard), sig))
-            weights = list(iter_arrays_for_signature(str(shard), sig + MC_WEIGHT_SUFFIX))
-            accs = list(iter_arrays_for_signature(str(shard), sig + MC_SIBLING_ACCEPTANCE))
+            masses = chunks.get(sig, [])
+            weights = chunks.get(sig + MC_WEIGHT_SUFFIX, [])
+            accs = chunks.get(sig + MC_SIBLING_ACCEPTANCE, [])
             if not masses:
                 continue
             if not weights:
