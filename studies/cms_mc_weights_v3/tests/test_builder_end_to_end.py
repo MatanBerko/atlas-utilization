@@ -144,6 +144,21 @@ class Args:
         self.smoke_test = kw.get("smoke_test", True)
 
 
+def _evidence_path(filename: str) -> pathlib.Path:
+    """Where to write this run's evidence JSON.
+
+    Defaults to the study's own evidence/ directory. Set
+    MCV3_EVIDENCE_DIR to send it elsewhere -- which is what a run on a
+    pinned cluster checkout should do, so the checkout stays clean and
+    the next `git checkout <commit>` cannot be blocked by test output."""
+    import os
+    base = os.environ.get("MCV3_EVIDENCE_DIR")
+    out = (pathlib.Path(base) if base
+           else pathlib.Path(__file__).resolve().parents[1] / "evidence")
+    out.mkdir(parents=True, exist_ok=True)
+    return out / filename
+
+
 def main() -> int:
     print("=" * 74)
     print("build_mc_delivery.py -- end-to-end on a synthetic MC job")
@@ -321,7 +336,7 @@ def main() -> int:
                 print(f"  - {name}: {detail}")
     print("=" * 74)
 
-    out_json = pathlib.Path(__file__).resolve().parents[1] / "evidence" / "builder_end_to_end.json"
+    out_json = _evidence_path("builder_end_to_end.json")
     out_json.write_text(json.dumps({
         "n_pass": n_pass, "n_fail": n_fail, "n_total": len(RESULTS),
         "checks": [{"name": n, "pass": ok, "detail": d} for n, ok, d in RESULTS],
