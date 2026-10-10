@@ -2,8 +2,11 @@
 # Part B: re-run the DATA path (no --is-mc) from the pinned v3 commit, so its
 # output can be compared against the delivered four-dataset production.
 #
-# One PBS array subjob per data file. MAPPING_FILE has 4 columns:
-#   "<array_index> <dataset_label> <record_id> <file_index>"
+# One PBS array subjob per data file. MAPPING_FILE has 5 columns:
+#   "<array_index> <dataset_label> <record_id> <file_index> <job_dir_index>"
+# job_dir_index is the DELIVERED production's own job_<n> directory name for
+# this file, so the re-run output lands at the same relative path and the
+# comparison lines up one-to-one.
 # Always --population matched4 and NEVER --is-mc: this job exists to prove the
 # data path is unchanged.
 #PBS -N mcv3_datareg
@@ -38,7 +41,7 @@ if [[ -z "$LINE" ]]; then
     echo "No mapping-file line for index $JOB_INDEX in $MAPPING_FILE" >&2
     exit 1
 fi
-read -r MAP_INDEX DATASET_LABEL RECORD_ID FILE_INDEX <<< "$LINE"
+read -r MAP_INDEX DATASET_LABEL RECORD_ID FILE_INDEX JOB_DIR_INDEX <<< "$LINE"
 if [[ "$MAP_INDEX" != "$JOB_INDEX" ]]; then
     echo "Mapping-file line $JOB_INDEX has index field '$MAP_INDEX', expected '$JOB_INDEX'" >&2
     exit 1
@@ -48,12 +51,12 @@ source "$CONDA_PROFILE"
 conda activate "$CONDA_ENV"
 cd "$REPO_DIR"
 
-JOB_OUTPUT_DIR="${OUTPUT_BASE}/${DATASET_LABEL}/job_${FILE_INDEX}"
+JOB_OUTPUT_DIR="${OUTPUT_BASE}/${DATASET_LABEL}/job_${JOB_DIR_INDEX}"
 mkdir -p "$JOB_OUTPUT_DIR"
 
 echo "Job $PBS_JOBID (array index $JOB_INDEX) on $(hostname) at $(date)"
 echo "commit=$(git rev-parse HEAD)"
-echo "dataset=$DATASET_LABEL record=$RECORD_ID file_index=$FILE_INDEX out=$JOB_OUTPUT_DIR"
+echo "dataset=$DATASET_LABEL record=$RECORD_ID file_index=$FILE_INDEX job_dir=job_${JOB_DIR_INDEX} out=$JOB_OUTPUT_DIR"
 echo "NOTE: --is-mc is deliberately NOT passed; this is the data-path regression."
 
 /usr/bin/time -v python -u studies/cms_datasets/cluster/run_dataset_on_file.py \

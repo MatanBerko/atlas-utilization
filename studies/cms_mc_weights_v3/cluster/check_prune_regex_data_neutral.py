@@ -98,7 +98,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs-dir", required=True)
     ap.add_argument("--mapping", required=True,
-                    help="the Part B mapping file: '<idx> <dataset> <record> <file_index>'")
+                    help="the Part B mapping file: "
+                         "'<idx> <dataset> <record> <file_index> <job_dir_index>'")
     ap.add_argument("--scratch", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--min-events", type=int, default=PRIMARY_MIN_EVENTS_PER_FS)
@@ -113,11 +114,11 @@ def main() -> int:
     for line in pathlib.Path(args.mapping).read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
-        _idx, dataset, _record, file_index = line.split()
-        src = runs_dir / dataset / f"job_{file_index}" / SHARD_NAME
+        _idx, dataset, _record, _file_index, job_dir_index = line.split()
+        src = runs_dir / dataset / f"job_{job_dir_index}" / SHARD_NAME
         if not src.exists():
             raise SystemExit(f"missing delivered shard: {src}")
-        sources.append((f"{dataset}_job{file_index}", src))
+        sources.append((f"{dataset}_job{job_dir_index}", src))
 
     new_paths, old_paths = [], []
     for tag, src in sources:
