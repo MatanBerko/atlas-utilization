@@ -15,7 +15,8 @@ was changed. No MC was produced. No batch job was submitted.**
 | `74e5fe7` | The Part C probe script (`probe/probe_mc_records.py`). |
 | `964bc5a` | Probe extended to record `run` / L1-prefiring / pileup **values**, not only presence. |
 | `8e997e8` | The three local verification checks (A9, D3, D7), the dataset-identity probe, and the Part C evidence. |
-| *(final)* | `DESIGN.md`, this `HANDOFF.md`, and the remaining evidence JSONs. |
+| `2f9cb89` | `DESIGN.md`, this `HANDOFF.md`, and the remaining evidence JSONs. |
+| *(this commit)* | Fills in the commit hash above and the final branch state. |
 
 Layout:
 
