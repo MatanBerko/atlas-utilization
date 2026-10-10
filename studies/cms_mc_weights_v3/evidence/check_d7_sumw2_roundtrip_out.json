@@ -1,0 +1,62 @@
+{
+  "root_path": "C:\\Users\\matan\\AppData\\Local\\Temp\\d7_sumw2_check_l8qb5_0c\\sumw2_roundtrip.root",
+  "uproot_version": "5.6.2",
+  "classname_on_disk": "TH1D",
+  "classname_is_TH1D": true,
+  "expected_values": [
+    1.0,
+    3.0,
+    1.5,
+    0.0,
+    0.0,
+    4.0
+  ],
+  "readback_values": [
+    1.0,
+    3.0,
+    1.5,
+    0.0,
+    0.0,
+    4.0
+  ],
+  "values_match": true,
+  "expected_sum_w2": [
+    5.0,
+    9.0,
+    0.75,
+    0.0,
+    0.0,
+    16.0
+  ],
+  "readback_variances": [
+    5.0,
+    9.0,
+    0.75,
+    0.0,
+    0.0,
+    16.0
+  ],
+  "variances_match_sum_w2": true,
+  "readback_errors": [
+    2.23606797749979,
+    3.0,
+    0.8660254037844386,
+    0.0,
+    0.0,
+    4.0
+  ],
+  "expected_sqrt_sum_w2": [
+    2.23606797749979,
+    3.0,
+    0.8660254037844386,
+    0.0,
+    0.0,
+    4.0
+  ],
+  "errors_equal_sqrt_sum_w2": true,
+  "fSumw2_length_on_disk": 8,
+  "fSumw2_length_expected_n_bins_plus_2": 8,
+  "negative_weight_bin_index": 0,
+  "negative_weight_bin_content": 1.0,
+  "negative_weight_bin_error": 2.23606797749979
+}

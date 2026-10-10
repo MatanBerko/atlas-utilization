@@ -1,0 +1,1965 @@
+{
+  "what": "Read-only probe of CMS MC NanoAOD records for the cms-mc-weights-v3 design round (Part C). One file per record, portal file index 0.",
+  "generated_utc": "2026-10-10T14:23:42.552163+00:00",
+  "repo_root": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_design_20261010/repo",
+  "git_commit": "964bc5a85f65e271434f004c39f6000a547073fa",
+  "max_events_probe_window": 10000,
+  "records_requested": [
+    42407,
+    67801,
+    35671,
+    64895,
+    64839,
+    72676,
+    72752,
+    75589,
+    68187,
+    68073,
+    67993,
+    35669,
+    37728
+  ],
+  "v2_registry_records": [
+    42407,
+    67801,
+    35671,
+    64895,
+    64839,
+    72676,
+    72752,
+    75589,
+    68187,
+    68073,
+    67993,
+    35669
+  ],
+  "extra_records": [
+    37728
+  ],
+  "hlt_paths_probed": [
+    "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ",
+    "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ",
+    "HLT_IsoMu24",
+    "HLT_IsoTkMu24",
+    "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ",
+    "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ",
+    "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
+    "HLT_Ele27_WPTight_Gsf"
+  ],
+  "data_reference_filterBits_title": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+  "data_reference_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+  "data_reference_source": "studies/cms_datasets/electron_prep/evidence/trigobj_titles_electron_datasets.json",
+  "records": {
+    "42407": {
+      "record_id": 42407,
+      "portal_title": "/LQToBMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "campaign": {
+        "campaign_verdict": "UL16_postVFP_NanoAODv9",
+        "is_postVFP_UL16_NanoAODv9": true,
+        "title_contains_APV": false,
+        "title_contains_preVFP": false,
+        "title_contains_RunIISummer20UL16NanoAODv9": true,
+        "title_contains_asymptotic_v17": true
+      },
+      "portal_number_events": 50000,
+      "portal_number_files": 12,
+      "n_files_in_portal_list": 12,
+      "probed_file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/LQToBMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2560000/07A70F06-D5D2-FB47-B297-DE7C5B32C22C.root",
+      "probed_file_index": 0,
+      "n_events_in_file": 5676,
+      "branches_present": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+        "HLT_IsoMu24": true,
+        "HLT_IsoTkMu24": true,
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Ele27_WPTight_Gsf": true,
+        "nTrigObj": true,
+        "TrigObj_pt": true,
+        "TrigObj_eta": true,
+        "TrigObj_phi": true,
+        "TrigObj_id": true,
+        "TrigObj_filterBits": true,
+        "genWeight": true,
+        "L1PreFiringWeight_Nom": true,
+        "L1PreFiringWeight_Up": true,
+        "L1PreFiringWeight_Dn": true,
+        "Pileup_nTrueInt": true,
+        "run": true,
+        "luminosityBlock": true,
+        "event": true
+      },
+      "branches_missing": [],
+      "runs_tree_present": true,
+      "runs_branches_present": {
+        "genEventSumw": true,
+        "genEventCount": true
+      },
+      "runs_genEventSumw_entries": [
+        26850.914527200002
+      ],
+      "runs_genEventSumw_total": 26850.914527200002,
+      "runs_genEventCount_entries": [
+        5676
+      ],
+      "runs_genEventCount_total": 5676,
+      "trigobj_branch_titles": {
+        "TrigObj_filterBits": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+        "TrigObj_id": "ID of the object: 11 = Electron (PixelMatched e/gamma), 22 = Photon (PixelMatch-vetoed e/gamma), 13 = Muon, 15 = Tau, 1 = Jet, 6 = FatJet, 2 = MET, 3 = HT, 4 = MHT"
+      },
+      "trigobj_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+      "n_events_probed": 5676,
+      "hlt_fired_in_probe_window": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+          "n_fired": 4440,
+          "fraction": 0.7822410147991543
+        },
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+          "n_fired": 4776,
+          "fraction": 0.8414376321353065
+        },
+        "HLT_IsoMu24": {
+          "n_fired": 5504,
+          "fraction": 0.9696969696969697
+        },
+        "HLT_IsoTkMu24": {
+          "n_fired": 5494,
+          "fraction": 0.9679351656095843
+        },
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 2,
+          "fraction": 0.00035236081747709656
+        },
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 264,
+          "fraction": 0.046511627906976744
+        },
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 241,
+          "fraction": 0.042459478505990134
+        },
+        "HLT_Ele27_WPTight_Gsf": {
+          "n_fired": 58,
+          "fraction": 0.0102184637068358
+        }
+      },
+      "probe_window_genWeight": {
+        "n": 5676,
+        "n_negative": 0,
+        "negative_fraction": 0.0,
+        "min": 4.6698198318481445,
+        "max": 4.800829887390137,
+        "mean": 4.730605102576699,
+        "n_distinct_abs_values_capped_at_6": 6
+      },
+      "probe_window_scalars": {
+        "run": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "n_distinct_capped_at_6": 1
+        },
+        "L1PreFiringWeight_Nom": {
+          "min": 0.27367451786994934,
+          "max": 1.0,
+          "mean": 0.9594694125381383,
+          "n_distinct_capped_at_6": 6
+        },
+        "Pileup_nTrueInt": {
+          "min": 2.0,
+          "max": 48.0,
+          "mean": 21.823114869626497,
+          "n_distinct_capped_at_6": 6
+        }
+      },
+      "run_is_always_1_in_probe_window": true,
+      "file_genWeight_sum": 26850.91456222534,
+      "file_genWeight_n_events": 5676,
+      "file_genWeight_n_negative": 0,
+      "file_negative_genWeight_fraction": 0.0,
+      "file_genWeight_read_seconds": 0.18481911718845367,
+      "C5_sum_genWeight_vs_runs_genEventSumw": {
+        "sum_genWeight_all_events": 26850.91456222534,
+        "runs_genEventSumw_total": 26850.914527200002,
+        "absolute_difference": 3.502533945720643e-05,
+        "relative_difference": 1.3044374865416866e-09,
+        "agree_within_1e-6_relative": true
+      },
+      "C5_event_count_vs_runs_genEventCount": {
+        "n_events_in_file": 5676,
+        "runs_genEventCount_total": 5676,
+        "equal": true
+      },
+      "probe_seconds": 3.568962858989835,
+      "C3_filterBits_title_matches_data": true
+    },
+    "67801": {
+      "record_id": 67801,
+      "portal_title": "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "campaign": {
+        "campaign_verdict": "UL16_postVFP_NanoAODv9",
+        "is_postVFP_UL16_NanoAODv9": true,
+        "title_contains_APV": false,
+        "title_contains_preVFP": false,
+        "title_contains_RunIISummer20UL16NanoAODv9": true,
+        "title_contains_asymptotic_v17": true
+      },
+      "portal_number_events": 43546000,
+      "portal_number_files": 49,
+      "n_files_in_portal_list": 49,
+      "probed_file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/089E6E3A-DFD1-7148-BD6F-F611D22A1B62.root",
+      "probed_file_index": 0,
+      "n_events_in_file": 136000,
+      "branches_present": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+        "HLT_IsoMu24": true,
+        "HLT_IsoTkMu24": true,
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Ele27_WPTight_Gsf": true,
+        "nTrigObj": true,
+        "TrigObj_pt": true,
+        "TrigObj_eta": true,
+        "TrigObj_phi": true,
+        "TrigObj_id": true,
+        "TrigObj_filterBits": true,
+        "genWeight": true,
+        "L1PreFiringWeight_Nom": true,
+        "L1PreFiringWeight_Up": true,
+        "L1PreFiringWeight_Dn": true,
+        "Pileup_nTrueInt": true,
+        "run": true,
+        "luminosityBlock": true,
+        "event": true
+      },
+      "branches_missing": [],
+      "runs_tree_present": true,
+      "runs_branches_present": {
+        "genEventSumw": true,
+        "genEventCount": true
+      },
+      "runs_genEventSumw_entries": [
+        9807582.2564
+      ],
+      "runs_genEventSumw_total": 9807582.2564,
+      "runs_genEventCount_entries": [
+        136000
+      ],
+      "runs_genEventCount_total": 136000,
+      "trigobj_branch_titles": {
+        "TrigObj_filterBits": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+        "TrigObj_id": "ID of the object: 11 = Electron (PixelMatched e/gamma), 22 = Photon (PixelMatch-vetoed e/gamma), 13 = Muon, 15 = Tau, 1 = Jet, 6 = FatJet, 2 = MET, 3 = HT, 4 = MHT"
+      },
+      "trigobj_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+      "n_events_probed": 10000,
+      "hlt_fired_in_probe_window": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+          "n_fired": 1031,
+          "fraction": 0.1031
+        },
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+          "n_fired": 1115,
+          "fraction": 0.1115
+        },
+        "HLT_IsoMu24": {
+          "n_fired": 3879,
+          "fraction": 0.3879
+        },
+        "HLT_IsoTkMu24": {
+          "n_fired": 3839,
+          "fraction": 0.3839
+        },
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 807,
+          "fraction": 0.0807
+        },
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 1471,
+          "fraction": 0.1471
+        },
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 1608,
+          "fraction": 0.1608
+        },
+        "HLT_Ele27_WPTight_Gsf": {
+          "n_fired": 3049,
+          "fraction": 0.3049
+        }
+      },
+      "probe_window_genWeight": {
+        "n": 10000,
+        "n_negative": 33,
+        "negative_fraction": 0.0033,
+        "min": -72.69830322265625,
+        "max": 72.69830322265625,
+        "mean": 72.21849442138672,
+        "n_distinct_abs_values_capped_at_6": 1
+      },
+      "probe_window_scalars": {
+        "run": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "n_distinct_capped_at_6": 1
+        },
+        "L1PreFiringWeight_Nom": {
+          "min": 0.19125054776668549,
+          "max": 1.0,
+          "mean": 0.9720741227671504,
+          "n_distinct_capped_at_6": 6
+        },
+        "Pileup_nTrueInt": {
+          "min": 2.0,
+          "max": 48.0,
+          "mean": 21.8847,
+          "n_distinct_capped_at_6": 6
+        }
+      },
+      "run_is_always_1_in_probe_window": true,
+      "file_genWeight_sum": 9807582.69116211,
+      "file_genWeight_n_events": 136000,
+      "file_genWeight_n_negative": 546,
+      "file_negative_genWeight_fraction": 0.004014705882352941,
+      "file_genWeight_read_seconds": 0.4916478404775262,
+      "C5_sum_genWeight_vs_runs_genEventSumw": {
+        "sum_genWeight_all_events": 9807582.69116211,
+        "runs_genEventSumw_total": 9807582.2564,
+        "absolute_difference": 0.4347621090710163,
+        "relative_difference": 4.432918304481306e-08,
+        "agree_within_1e-6_relative": true
+      },
+      "C5_event_count_vs_runs_genEventCount": {
+        "n_events_in_file": 136000,
+        "runs_genEventCount_total": 136000,
+        "equal": true
+      },
+      "probe_seconds": 3.7921859733760357,
+      "C3_filterBits_title_matches_data": true
+    },
+    "35671": {
+      "record_id": 35671,
+      "portal_title": "/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "campaign": {
+        "campaign_verdict": "UL16_postVFP_NanoAODv9",
+        "is_postVFP_UL16_NanoAODv9": true,
+        "title_contains_APV": false,
+        "title_contains_preVFP": false,
+        "title_contains_RunIISummer20UL16NanoAODv9": true,
+        "title_contains_asymptotic_v17": true
+      },
+      "portal_number_events": 82448537,
+      "portal_number_files": 61,
+      "n_files_in_portal_list": 61,
+      "probed_file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/14B6A8AE-C9FE-D744-80A4-DDE5D008C1CD.root",
+      "probed_file_index": 0,
+      "n_events_in_file": 1434319,
+      "branches_present": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+        "HLT_IsoMu24": true,
+        "HLT_IsoTkMu24": true,
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Ele27_WPTight_Gsf": true,
+        "nTrigObj": true,
+        "TrigObj_pt": true,
+        "TrigObj_eta": true,
+        "TrigObj_phi": true,
+        "TrigObj_id": true,
+        "TrigObj_filterBits": true,
+        "genWeight": true,
+        "L1PreFiringWeight_Nom": true,
+        "L1PreFiringWeight_Up": true,
+        "L1PreFiringWeight_Dn": true,
+        "Pileup_nTrueInt": true,
+        "run": true,
+        "luminosityBlock": true,
+        "event": true
+      },
+      "branches_missing": [],
+      "runs_tree_present": true,
+      "runs_branches_present": {
+        "genEventSumw": true,
+        "genEventCount": true
+      },
+      "runs_genEventSumw_entries": [
+        1434319.0
+      ],
+      "runs_genEventSumw_total": 1434319.0,
+      "runs_genEventCount_entries": [
+        1434319
+      ],
+      "runs_genEventCount_total": 1434319,
+      "trigobj_branch_titles": {
+        "TrigObj_filterBits": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+        "TrigObj_id": "ID of the object: 11 = Electron (PixelMatched e/gamma), 22 = Photon (PixelMatch-vetoed e/gamma), 13 = Muon, 15 = Tau, 1 = Jet, 6 = FatJet, 2 = MET, 3 = HT, 4 = MHT"
+      },
+      "trigobj_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+      "n_events_probed": 10000,
+      "hlt_fired_in_probe_window": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+          "n_fired": 1494,
+          "fraction": 0.1494
+        },
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+          "n_fired": 1563,
+          "fraction": 0.1563
+        },
+        "HLT_IsoMu24": {
+          "n_fired": 2249,
+          "fraction": 0.2249
+        },
+        "HLT_IsoTkMu24": {
+          "n_fired": 2238,
+          "fraction": 0.2238
+        },
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 1243,
+          "fraction": 0.1243
+        },
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 23,
+          "fraction": 0.0023
+        },
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 24,
+          "fraction": 0.0024
+        },
+        "HLT_Ele27_WPTight_Gsf": {
+          "n_fired": 1647,
+          "fraction": 0.1647
+        }
+      },
+      "probe_window_genWeight": {
+        "n": 10000,
+        "n_negative": 0,
+        "negative_fraction": 0.0,
+        "min": 1.0,
+        "max": 1.0,
+        "mean": 1.0,
+        "n_distinct_abs_values_capped_at_6": 1
+      },
+      "probe_window_scalars": {
+        "run": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "n_distinct_capped_at_6": 1
+        },
+        "L1PreFiringWeight_Nom": {
+          "min": 0.36319559812545776,
+          "max": 1.0,
+          "mean": 0.9814127882301807,
+          "n_distinct_capped_at_6": 6
+        },
+        "Pileup_nTrueInt": {
+          "min": 1.0,
+          "max": 50.0,
+          "mean": 21.7514,
+          "n_distinct_capped_at_6": 6
+        }
+      },
+      "run_is_always_1_in_probe_window": true,
+      "file_genWeight_sum": 1434319.0,
+      "file_genWeight_n_events": 1434319,
+      "file_genWeight_n_negative": 0,
+      "file_negative_genWeight_fraction": 0.0,
+      "file_genWeight_read_seconds": 1.656306411139667,
+      "C5_sum_genWeight_vs_runs_genEventSumw": {
+        "sum_genWeight_all_events": 1434319.0,
+        "runs_genEventSumw_total": 1434319.0,
+        "absolute_difference": 0.0,
+        "relative_difference": 0.0,
+        "agree_within_1e-6_relative": true
+      },
+      "C5_event_count_vs_runs_genEventCount": {
+        "n_events_in_file": 1434319,
+        "runs_genEventCount_total": 1434319,
+        "equal": true
+      },
+      "probe_seconds": 4.723790883086622,
+      "C3_filterBits_title_matches_data": true
+    },
+    "64895": {
+      "record_id": 64895,
+      "portal_title": "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "campaign": {
+        "campaign_verdict": "UL16_postVFP_NanoAODv9",
+        "is_postVFP_UL16_NanoAODv9": true,
+        "title_contains_APV": false,
+        "title_contains_preVFP": false,
+        "title_contains_RunIISummer20UL16NanoAODv9": true,
+        "title_contains_asymptotic_v17": true
+      },
+      "portal_number_events": 3368375,
+      "portal_number_files": 11,
+      "n_files_in_portal_list": 11,
+      "probed_file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2520000/0B1F127E-5402-5541-95C5-14A8E7EB0E76.root",
+      "probed_file_index": 0,
+      "n_events_in_file": 651757,
+      "branches_present": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+        "HLT_IsoMu24": true,
+        "HLT_IsoTkMu24": true,
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Ele27_WPTight_Gsf": true,
+        "nTrigObj": true,
+        "TrigObj_pt": true,
+        "TrigObj_eta": true,
+        "TrigObj_phi": true,
+        "TrigObj_id": true,
+        "TrigObj_filterBits": true,
+        "genWeight": true,
+        "L1PreFiringWeight_Nom": true,
+        "L1PreFiringWeight_Up": true,
+        "L1PreFiringWeight_Dn": true,
+        "Pileup_nTrueInt": true,
+        "run": true,
+        "luminosityBlock": true,
+        "event": true
+      },
+      "branches_missing": [],
+      "runs_tree_present": true,
+      "runs_branches_present": {
+        "genEventSumw": true,
+        "genEventCount": true
+      },
+      "runs_genEventSumw_entries": [
+        21146846.381700005
+      ],
+      "runs_genEventSumw_total": 21146846.381700005,
+      "runs_genEventCount_entries": [
+        651757
+      ],
+      "runs_genEventCount_total": 651757,
+      "trigobj_branch_titles": {
+        "TrigObj_filterBits": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+        "TrigObj_id": "ID of the object: 11 = Electron (PixelMatched e/gamma), 22 = Photon (PixelMatch-vetoed e/gamma), 13 = Muon, 15 = Tau, 1 = Jet, 6 = FatJet, 2 = MET, 3 = HT, 4 = MHT"
+      },
+      "trigobj_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+      "n_events_probed": 10000,
+      "hlt_fired_in_probe_window": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+          "n_fired": 304,
+          "fraction": 0.0304
+        },
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+          "n_fired": 333,
+          "fraction": 0.0333
+        },
+        "HLT_IsoMu24": {
+          "n_fired": 2637,
+          "fraction": 0.2637
+        },
+        "HLT_IsoTkMu24": {
+          "n_fired": 2627,
+          "fraction": 0.2627
+        },
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 204,
+          "fraction": 0.0204
+        },
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 345,
+          "fraction": 0.0345
+        },
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 400,
+          "fraction": 0.04
+        },
+        "HLT_Ele27_WPTight_Gsf": {
+          "n_fired": 1894,
+          "fraction": 0.1894
+        }
+      },
+      "probe_window_genWeight": {
+        "n": 10000,
+        "n_negative": 0,
+        "negative_fraction": 0.0,
+        "min": 32.44729995727539,
+        "max": 32.44729995727539,
+        "mean": 32.44729995727539,
+        "n_distinct_abs_values_capped_at_6": 1
+      },
+      "probe_window_scalars": {
+        "run": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "n_distinct_capped_at_6": 1
+        },
+        "L1PreFiringWeight_Nom": {
+          "min": 0.30604514479637146,
+          "max": 1.0,
+          "mean": 0.9795047315984965,
+          "n_distinct_capped_at_6": 6
+        },
+        "Pileup_nTrueInt": {
+          "min": 2.0,
+          "max": 48.0,
+          "mean": 21.7346,
+          "n_distinct_capped_at_6": 6
+        }
+      },
+      "run_is_always_1_in_probe_window": true,
+      "file_genWeight_sum": 21146846.353855133,
+      "file_genWeight_n_events": 651757,
+      "file_genWeight_n_negative": 14,
+      "file_negative_genWeight_fraction": 2.14803983693309e-05,
+      "file_genWeight_read_seconds": 0.9363502664491534,
+      "C5_sum_genWeight_vs_runs_genEventSumw": {
+        "sum_genWeight_all_events": 21146846.353855133,
+        "runs_genEventSumw_total": 21146846.381700005,
+        "absolute_difference": -0.027844872325658798,
+        "relative_difference": 1.3167387620385378e-09,
+        "agree_within_1e-6_relative": true
+      },
+      "C5_event_count_vs_runs_genEventCount": {
+        "n_events_in_file": 651757,
+        "runs_genEventCount_total": 651757,
+        "equal": true
+      },
+      "probe_seconds": 3.406910282559693,
+      "C3_filterBits_title_matches_data": true
+    },
+    "64839": {
+      "record_id": 64839,
+      "portal_title": "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "campaign": {
+        "campaign_verdict": "UL16_postVFP_NanoAODv9",
+        "is_postVFP_UL16_NanoAODv9": true,
+        "title_contains_APV": false,
+        "title_contains_preVFP": false,
+        "title_contains_RunIISummer20UL16NanoAODv9": true,
+        "title_contains_asymptotic_v17": true
+      },
+      "portal_number_events": 3654510,
+      "portal_number_files": 10,
+      "n_files_in_portal_list": 10,
+      "probed_file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/270000/09D7D088-C170-9A45-97F4-66EBDD4F9361.root",
+      "probed_file_index": 0,
+      "n_events_in_file": 45342,
+      "branches_present": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+        "HLT_IsoMu24": true,
+        "HLT_IsoTkMu24": true,
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Ele27_WPTight_Gsf": true,
+        "nTrigObj": true,
+        "TrigObj_pt": true,
+        "TrigObj_eta": true,
+        "TrigObj_phi": true,
+        "TrigObj_id": true,
+        "TrigObj_filterBits": true,
+        "genWeight": true,
+        "L1PreFiringWeight_Nom": true,
+        "L1PreFiringWeight_Up": true,
+        "L1PreFiringWeight_Dn": true,
+        "Pileup_nTrueInt": true,
+        "run": true,
+        "luminosityBlock": true,
+        "event": true
+      },
+      "branches_missing": [],
+      "runs_tree_present": true,
+      "runs_branches_present": {
+        "genEventSumw": true,
+        "genEventCount": true
+      },
+      "runs_genEventSumw_entries": [
+        1474032.1464000002
+      ],
+      "runs_genEventSumw_total": 1474032.1464000002,
+      "runs_genEventCount_entries": [
+        45342
+      ],
+      "runs_genEventCount_total": 45342,
+      "trigobj_branch_titles": {
+        "TrigObj_filterBits": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+        "TrigObj_id": "ID of the object: 11 = Electron (PixelMatched e/gamma), 22 = Photon (PixelMatch-vetoed e/gamma), 13 = Muon, 15 = Tau, 1 = Jet, 6 = FatJet, 2 = MET, 3 = HT, 4 = MHT"
+      },
+      "trigobj_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+      "n_events_probed": 10000,
+      "hlt_fired_in_probe_window": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+          "n_fired": 267,
+          "fraction": 0.0267
+        },
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+          "n_fired": 289,
+          "fraction": 0.0289
+        },
+        "HLT_IsoMu24": {
+          "n_fired": 2669,
+          "fraction": 0.2669
+        },
+        "HLT_IsoTkMu24": {
+          "n_fired": 2619,
+          "fraction": 0.2619
+        },
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 227,
+          "fraction": 0.0227
+        },
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 358,
+          "fraction": 0.0358
+        },
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 400,
+          "fraction": 0.04
+        },
+        "HLT_Ele27_WPTight_Gsf": {
+          "n_fired": 1936,
+          "fraction": 0.1936
+        }
+      },
+      "probe_window_genWeight": {
+        "n": 10000,
+        "n_negative": 0,
+        "negative_fraction": 0.0,
+        "min": 32.50920104980469,
+        "max": 32.50920104980469,
+        "mean": 32.50920104980469,
+        "n_distinct_abs_values_capped_at_6": 1
+      },
+      "probe_window_scalars": {
+        "run": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "n_distinct_capped_at_6": 1
+        },
+        "L1PreFiringWeight_Nom": {
+          "min": 0.18970195949077606,
+          "max": 1.0,
+          "mean": 0.9793566206872463,
+          "n_distinct_capped_at_6": 6
+        },
+        "Pileup_nTrueInt": {
+          "min": 2.0,
+          "max": 49.0,
+          "mean": 21.8727,
+          "n_distinct_capped_at_6": 6
+        }
+      },
+      "run_is_always_1_in_probe_window": true,
+      "file_genWeight_sum": 1474032.1940002441,
+      "file_genWeight_n_events": 45342,
+      "file_genWeight_n_negative": 0,
+      "file_negative_genWeight_fraction": 0.0,
+      "file_genWeight_read_seconds": 0.22646591998636723,
+      "C5_sum_genWeight_vs_runs_genEventSumw": {
+        "sum_genWeight_all_events": 1474032.1940002441,
+        "runs_genEventSumw_total": 1474032.1464000002,
+        "absolute_difference": 0.047600243939086795,
+        "relative_difference": 3.229254128231866e-08,
+        "agree_within_1e-6_relative": true
+      },
+      "C5_event_count_vs_runs_genEventCount": {
+        "n_events_in_file": 45342,
+        "runs_genEventCount_total": 45342,
+        "equal": true
+      },
+      "probe_seconds": 2.634551257826388,
+      "C3_filterBits_title_matches_data": true
+    },
+    "72676": {
+      "record_id": 72676,
+      "portal_title": "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "campaign": {
+        "campaign_verdict": "UL16_postVFP_NanoAODv9",
+        "is_postVFP_UL16_NanoAODv9": true,
+        "title_contains_APV": false,
+        "title_contains_preVFP": false,
+        "title_contains_RunIISummer20UL16NanoAODv9": true,
+        "title_contains_asymptotic_v17": true
+      },
+      "portal_number_events": 2900000,
+      "portal_number_files": 7,
+      "n_files_in_portal_list": 7,
+      "probed_file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/4CCF3F20-6939-8D4B-A7C0-ECE9A15D879A.root",
+      "probed_file_index": 0,
+      "n_events_in_file": 15000,
+      "branches_present": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+        "HLT_IsoMu24": true,
+        "HLT_IsoTkMu24": true,
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Ele27_WPTight_Gsf": true,
+        "nTrigObj": true,
+        "TrigObj_pt": true,
+        "TrigObj_eta": true,
+        "TrigObj_phi": true,
+        "TrigObj_id": true,
+        "TrigObj_filterBits": true,
+        "genWeight": true,
+        "L1PreFiringWeight_Nom": true,
+        "L1PreFiringWeight_Up": true,
+        "L1PreFiringWeight_Dn": true,
+        "Pileup_nTrueInt": true,
+        "run": true,
+        "luminosityBlock": true,
+        "event": true
+      },
+      "branches_missing": [],
+      "runs_tree_present": true,
+      "runs_branches_present": {
+        "genEventSumw": true,
+        "genEventCount": true
+      },
+      "runs_genEventSumw_entries": [
+        166292.34880000004
+      ],
+      "runs_genEventSumw_total": 166292.34880000004,
+      "runs_genEventCount_entries": [
+        15000
+      ],
+      "runs_genEventCount_total": 15000,
+      "trigobj_branch_titles": {
+        "TrigObj_filterBits": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+        "TrigObj_id": "ID of the object: 11 = Electron (PixelMatched e/gamma), 22 = Photon (PixelMatch-vetoed e/gamma), 13 = Muon, 15 = Tau, 1 = Jet, 6 = FatJet, 2 = MET, 3 = HT, 4 = MHT"
+      },
+      "trigobj_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+      "n_events_probed": 10000,
+      "hlt_fired_in_probe_window": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+          "n_fired": 694,
+          "fraction": 0.0694
+        },
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+          "n_fired": 714,
+          "fraction": 0.0714
+        },
+        "HLT_IsoMu24": {
+          "n_fired": 3259,
+          "fraction": 0.3259
+        },
+        "HLT_IsoTkMu24": {
+          "n_fired": 3225,
+          "fraction": 0.3225
+        },
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 581,
+          "fraction": 0.0581
+        },
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 1005,
+          "fraction": 0.1005
+        },
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 1073,
+          "fraction": 0.1073
+        },
+        "HLT_Ele27_WPTight_Gsf": {
+          "n_fired": 2496,
+          "fraction": 0.2496
+        }
+      },
+      "probe_window_genWeight": {
+        "n": 10000,
+        "n_negative": 16,
+        "negative_fraction": 0.0016,
+        "min": -11.127699851989746,
+        "max": 11.127699851989746,
+        "mean": 11.092091212463378,
+        "n_distinct_abs_values_capped_at_6": 1
+      },
+      "probe_window_scalars": {
+        "run": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "n_distinct_capped_at_6": 1
+        },
+        "L1PreFiringWeight_Nom": {
+          "min": 0.18469087779521942,
+          "max": 1.0,
+          "mean": 0.977001078684628,
+          "n_distinct_capped_at_6": 6
+        },
+        "Pileup_nTrueInt": {
+          "min": 3.0,
+          "max": 46.0,
+          "mean": 21.7088,
+          "n_distinct_capped_at_6": 6
+        }
+      },
+      "run_is_always_1_in_probe_window": true,
+      "file_genWeight_sum": 166292.34658813477,
+      "file_genWeight_n_events": 15000,
+      "file_genWeight_n_negative": 28,
+      "file_negative_genWeight_fraction": 0.0018666666666666666,
+      "file_genWeight_read_seconds": 0.18544989824295044,
+      "C5_sum_genWeight_vs_runs_genEventSumw": {
+        "sum_genWeight_all_events": 166292.34658813477,
+        "runs_genEventSumw_total": 166292.34880000004,
+        "absolute_difference": -0.002211865270510316,
+        "relative_difference": 1.3301064579769262e-08,
+        "agree_within_1e-6_relative": true
+      },
+      "C5_event_count_vs_runs_genEventCount": {
+        "n_events_in_file": 15000,
+        "runs_genEventCount_total": 15000,
+        "equal": true
+      },
+      "probe_seconds": 2.527277521789074,
+      "C3_filterBits_title_matches_data": true
+    },
+    "72752": {
+      "record_id": 72752,
+      "portal_title": "/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "campaign": {
+        "campaign_verdict": "UL16_postVFP_NanoAODv9",
+        "is_postVFP_UL16_NanoAODv9": true,
+        "title_contains_APV": false,
+        "title_contains_preVFP": false,
+        "title_contains_RunIISummer20UL16NanoAODv9": true,
+        "title_contains_asymptotic_v17": true
+      },
+      "portal_number_events": 10441724,
+      "portal_number_files": 31,
+      "n_files_in_portal_list": 31,
+      "probed_file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/E1169FF2-EA6C-EA45-81C7-7C27A8E53F8D.root",
+      "probed_file_index": 0,
+      "n_events_in_file": 457263,
+      "branches_present": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+        "HLT_IsoMu24": true,
+        "HLT_IsoTkMu24": true,
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Ele27_WPTight_Gsf": true,
+        "nTrigObj": true,
+        "TrigObj_pt": true,
+        "TrigObj_eta": true,
+        "TrigObj_phi": true,
+        "TrigObj_id": true,
+        "TrigObj_filterBits": true,
+        "genWeight": true,
+        "L1PreFiringWeight_Nom": true,
+        "L1PreFiringWeight_Up": true,
+        "L1PreFiringWeight_Dn": true,
+        "Pileup_nTrueInt": true,
+        "run": true,
+        "luminosityBlock": true,
+        "event": true
+      },
+      "branches_missing": [],
+      "runs_tree_present": true,
+      "runs_branches_present": {
+        "genEventSumw": true,
+        "genEventCount": true
+      },
+      "runs_genEventSumw_entries": [
+        3875805.9364140006
+      ],
+      "runs_genEventSumw_total": 3875805.9364140006,
+      "runs_genEventCount_entries": [
+        457263
+      ],
+      "runs_genEventCount_total": 457263,
+      "trigobj_branch_titles": {
+        "TrigObj_filterBits": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+        "TrigObj_id": "ID of the object: 11 = Electron (PixelMatched e/gamma), 22 = Photon (PixelMatch-vetoed e/gamma), 13 = Muon, 15 = Tau, 1 = Jet, 6 = FatJet, 2 = MET, 3 = HT, 4 = MHT"
+      },
+      "trigobj_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+      "n_events_probed": 10000,
+      "hlt_fired_in_probe_window": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+          "n_fired": 1117,
+          "fraction": 0.1117
+        },
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+          "n_fired": 1160,
+          "fraction": 0.116
+        },
+        "HLT_IsoMu24": {
+          "n_fired": 2317,
+          "fraction": 0.2317
+        },
+        "HLT_IsoTkMu24": {
+          "n_fired": 2304,
+          "fraction": 0.2304
+        },
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 913,
+          "fraction": 0.0913
+        },
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 653,
+          "fraction": 0.0653
+        },
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 708,
+          "fraction": 0.0708
+        },
+        "HLT_Ele27_WPTight_Gsf": {
+          "n_fired": 1812,
+          "fraction": 0.1812
+        }
+      },
+      "probe_window_genWeight": {
+        "n": 10000,
+        "n_negative": 1742,
+        "negative_fraction": 0.1742,
+        "min": -12.825597763061523,
+        "max": 12.825597763061523,
+        "mean": 8.35715950241089,
+        "n_distinct_abs_values_capped_at_6": 1
+      },
+      "probe_window_scalars": {
+        "run": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "n_distinct_capped_at_6": 1
+        },
+        "L1PreFiringWeight_Nom": {
+          "min": 0.20907987654209137,
+          "max": 1.0,
+          "mean": 0.9786262209102511,
+          "n_distinct_capped_at_6": 6
+        },
+        "Pileup_nTrueInt": {
+          "min": 1.0,
+          "max": 46.0,
+          "mean": 21.9664,
+          "n_distinct_capped_at_6": 6
+        }
+      },
+      "run_is_always_1_in_probe_window": true,
+      "file_genWeight_sum": 3875805.864812851,
+      "file_genWeight_n_events": 457263,
+      "file_genWeight_n_negative": 77535,
+      "file_negative_genWeight_fraction": 0.1695632491585805,
+      "file_genWeight_read_seconds": 0.6990042803809047,
+      "C5_sum_genWeight_vs_runs_genEventSumw": {
+        "sum_genWeight_all_events": 3875805.864812851,
+        "runs_genEventSumw_total": 3875805.9364140006,
+        "absolute_difference": -0.07160114962607622,
+        "relative_difference": 1.8473873769934807e-08,
+        "agree_within_1e-6_relative": true
+      },
+      "C5_event_count_vs_runs_genEventCount": {
+        "n_events_in_file": 457263,
+        "runs_genEventCount_total": 457263,
+        "equal": true
+      },
+      "probe_seconds": 3.0918442755937576,
+      "C3_filterBits_title_matches_data": true
+    },
+    "75589": {
+      "record_id": 75589,
+      "portal_title": "/ZZTo4L_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "campaign": {
+        "campaign_verdict": "UL16_postVFP_NanoAODv9",
+        "is_postVFP_UL16_NanoAODv9": true,
+        "title_contains_APV": false,
+        "title_contains_preVFP": false,
+        "title_contains_RunIISummer20UL16NanoAODv9": true,
+        "title_contains_asymptotic_v17": true
+      },
+      "portal_number_events": 52104000,
+      "portal_number_files": 99,
+      "n_files_in_portal_list": 99,
+      "probed_file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/ZZTo4L_TuneCP5_13TeV_powheg_pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2430000/051E9D22-4F30-8E49-8477-644E65768282.root",
+      "probed_file_index": 0,
+      "n_events_in_file": 168000,
+      "branches_present": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+        "HLT_IsoMu24": true,
+        "HLT_IsoTkMu24": true,
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Ele27_WPTight_Gsf": true,
+        "nTrigObj": true,
+        "TrigObj_pt": true,
+        "TrigObj_eta": true,
+        "TrigObj_phi": true,
+        "TrigObj_id": true,
+        "TrigObj_filterBits": true,
+        "genWeight": true,
+        "L1PreFiringWeight_Nom": true,
+        "L1PreFiringWeight_Up": true,
+        "L1PreFiringWeight_Dn": true,
+        "Pileup_nTrueInt": true,
+        "run": true,
+        "luminosityBlock": true,
+        "event": true
+      },
+      "branches_missing": [],
+      "runs_tree_present": true,
+      "runs_branches_present": {
+        "genEventSumw": true,
+        "genEventCount": true
+      },
+      "runs_genEventSumw_entries": [
+        222533.0912
+      ],
+      "runs_genEventSumw_total": 222533.0912,
+      "runs_genEventCount_entries": [
+        168000
+      ],
+      "runs_genEventCount_total": 168000,
+      "trigobj_branch_titles": {
+        "TrigObj_filterBits": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+        "TrigObj_id": "ID of the object: 11 = Electron (PixelMatched e/gamma), 22 = Photon (PixelMatch-vetoed e/gamma), 13 = Muon, 15 = Tau, 1 = Jet, 6 = FatJet, 2 = MET, 3 = HT, 4 = MHT"
+      },
+      "trigobj_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+      "n_events_probed": 10000,
+      "hlt_fired_in_probe_window": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+          "n_fired": 1413,
+          "fraction": 0.1413
+        },
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+          "n_fired": 1484,
+          "fraction": 0.1484
+        },
+        "HLT_IsoMu24": {
+          "n_fired": 1863,
+          "fraction": 0.1863
+        },
+        "HLT_IsoTkMu24": {
+          "n_fired": 1847,
+          "fraction": 0.1847
+        },
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 1023,
+          "fraction": 0.1023
+        },
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 409,
+          "fraction": 0.0409
+        },
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 500,
+          "fraction": 0.05
+        },
+        "HLT_Ele27_WPTight_Gsf": {
+          "n_fired": 1300,
+          "fraction": 0.13
+        }
+      },
+      "probe_window_genWeight": {
+        "n": 10000,
+        "n_negative": 52,
+        "negative_fraction": 0.0052,
+        "min": -1.3384000062942505,
+        "max": 1.3384000062942505,
+        "mean": 1.3244806462287904,
+        "n_distinct_abs_values_capped_at_6": 1
+      },
+      "probe_window_scalars": {
+        "run": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "n_distinct_capped_at_6": 1
+        },
+        "L1PreFiringWeight_Nom": {
+          "min": 0.18080644309520721,
+          "max": 1.0,
+          "mean": 0.9841500403568149,
+          "n_distinct_capped_at_6": 6
+        },
+        "Pileup_nTrueInt": {
+          "min": 1.0,
+          "max": 49.0,
+          "mean": 21.9344,
+          "n_distinct_capped_at_6": 6
+        }
+      },
+      "run_is_always_1_in_probe_window": true,
+      "file_genWeight_sum": 222533.09224653244,
+      "file_genWeight_n_events": 168000,
+      "file_genWeight_n_negative": 866,
+      "file_negative_genWeight_fraction": 0.005154761904761905,
+      "file_genWeight_read_seconds": 0.39919548481702805,
+      "C5_sum_genWeight_vs_runs_genEventSumw": {
+        "sum_genWeight_all_events": 222533.09224653244,
+        "runs_genEventSumw_total": 222533.0912,
+        "absolute_difference": 0.0010465324448887259,
+        "relative_difference": 4.702817182133881e-09,
+        "agree_within_1e-6_relative": true
+      },
+      "C5_event_count_vs_runs_genEventCount": {
+        "n_events_in_file": 168000,
+        "runs_genEventCount_total": 168000,
+        "equal": true
+      },
+      "probe_seconds": 3.0500175645574927,
+      "C3_filterBits_title_matches_data": true
+    },
+    "68187": {
+      "record_id": 68187,
+      "portal_title": "/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "campaign": {
+        "campaign_verdict": "UL16_postVFP_NanoAODv9",
+        "is_postVFP_UL16_NanoAODv9": true,
+        "title_contains_APV": false,
+        "title_contains_preVFP": false,
+        "title_contains_RunIISummer20UL16NanoAODv9": true,
+        "title_contains_asymptotic_v17": true
+      },
+      "portal_number_events": 6017000,
+      "portal_number_files": 42,
+      "n_files_in_portal_list": 42,
+      "probed_file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/2FB4728A-5619-7B4D-9009-A07F8B99BA42.root",
+      "probed_file_index": 0,
+      "n_events_in_file": 25000,
+      "branches_present": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+        "HLT_IsoMu24": true,
+        "HLT_IsoTkMu24": true,
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Ele27_WPTight_Gsf": true,
+        "nTrigObj": true,
+        "TrigObj_pt": true,
+        "TrigObj_eta": true,
+        "TrigObj_phi": true,
+        "TrigObj_id": true,
+        "TrigObj_filterBits": true,
+        "genWeight": true,
+        "L1PreFiringWeight_Nom": true,
+        "L1PreFiringWeight_Up": true,
+        "L1PreFiringWeight_Dn": true,
+        "Pileup_nTrueInt": true,
+        "run": true,
+        "luminosityBlock": true,
+        "event": true
+      },
+      "branches_missing": [],
+      "runs_tree_present": true,
+      "runs_branches_present": {
+        "genEventSumw": true,
+        "genEventCount": true
+      },
+      "runs_genEventSumw_entries": [
+        6253.8362044000005
+      ],
+      "runs_genEventSumw_total": 6253.8362044000005,
+      "runs_genEventCount_entries": [
+        25000
+      ],
+      "runs_genEventCount_total": 25000,
+      "trigobj_branch_titles": {
+        "TrigObj_filterBits": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+        "TrigObj_id": "ID of the object: 11 = Electron (PixelMatched e/gamma), 22 = Photon (PixelMatch-vetoed e/gamma), 13 = Muon, 15 = Tau, 1 = Jet, 6 = FatJet, 2 = MET, 3 = HT, 4 = MHT"
+      },
+      "trigobj_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+      "n_events_probed": 10000,
+      "hlt_fired_in_probe_window": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+          "n_fired": 1143,
+          "fraction": 0.1143
+        },
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+          "n_fired": 1218,
+          "fraction": 0.1218
+        },
+        "HLT_IsoMu24": {
+          "n_fired": 2376,
+          "fraction": 0.2376
+        },
+        "HLT_IsoTkMu24": {
+          "n_fired": 2358,
+          "fraction": 0.2358
+        },
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 933,
+          "fraction": 0.0933
+        },
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 652,
+          "fraction": 0.0652
+        },
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 749,
+          "fraction": 0.0749
+        },
+        "HLT_Ele27_WPTight_Gsf": {
+          "n_fired": 2009,
+          "fraction": 0.2009
+        }
+      },
+      "probe_window_genWeight": {
+        "n": 10000,
+        "n_negative": 2483,
+        "negative_fraction": 0.2483,
+        "min": -0.49554961919784546,
+        "max": 0.49554961919784546,
+        "mean": 0.2494596783041954,
+        "n_distinct_abs_values_capped_at_6": 1
+      },
+      "probe_window_scalars": {
+        "run": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "n_distinct_capped_at_6": 1
+        },
+        "L1PreFiringWeight_Nom": {
+          "min": 0.13687676191329956,
+          "max": 1.0,
+          "mean": 0.9664007334068417,
+          "n_distinct_capped_at_6": 6
+        },
+        "Pileup_nTrueInt": {
+          "min": 1.0,
+          "max": 50.0,
+          "mean": 21.8676,
+          "n_distinct_capped_at_6": 6
+        }
+      },
+      "run_is_always_1_in_probe_window": true,
+      "file_genWeight_sum": 6253.83619427681,
+      "file_genWeight_n_events": 25000,
+      "file_genWeight_n_negative": 6190,
+      "file_negative_genWeight_fraction": 0.2476,
+      "file_genWeight_read_seconds": 0.20145720057189465,
+      "C5_sum_genWeight_vs_runs_genEventSumw": {
+        "sum_genWeight_all_events": 6253.83619427681,
+        "runs_genEventSumw_total": 6253.8362044000005,
+        "absolute_difference": -1.0123190804733895e-05,
+        "relative_difference": 1.618716972090113e-09,
+        "agree_within_1e-6_relative": true
+      },
+      "C5_event_count_vs_runs_genEventCount": {
+        "n_events_in_file": 25000,
+        "runs_genEventCount_total": 25000,
+        "equal": true
+      },
+      "probe_seconds": 2.286486430093646,
+      "C3_filterBits_title_matches_data": true
+    },
+    "68073": {
+      "record_id": 68073,
+      "portal_title": "/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "campaign": {
+        "campaign_verdict": "UL16_postVFP_NanoAODv9",
+        "is_postVFP_UL16_NanoAODv9": true,
+        "title_contains_APV": false,
+        "title_contains_preVFP": false,
+        "title_contains_RunIISummer20UL16NanoAODv9": true,
+        "title_contains_asymptotic_v17": true
+      },
+      "portal_number_events": 3322643,
+      "portal_number_files": 12,
+      "n_files_in_portal_list": 12,
+      "probed_file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/3804F011-2434-6B40-A8FD-48D9F9865092.root",
+      "probed_file_index": 0,
+      "n_events_in_file": 9451,
+      "branches_present": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+        "HLT_IsoMu24": true,
+        "HLT_IsoTkMu24": true,
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Ele27_WPTight_Gsf": true,
+        "nTrigObj": true,
+        "TrigObj_pt": true,
+        "TrigObj_eta": true,
+        "TrigObj_phi": true,
+        "TrigObj_id": true,
+        "TrigObj_filterBits": true,
+        "genWeight": true,
+        "L1PreFiringWeight_Nom": true,
+        "L1PreFiringWeight_Up": true,
+        "L1PreFiringWeight_Dn": true,
+        "Pileup_nTrueInt": true,
+        "run": true,
+        "luminosityBlock": true,
+        "event": true
+      },
+      "branches_missing": [],
+      "runs_tree_present": true,
+      "runs_branches_present": {
+        "genEventSumw": true,
+        "genEventCount": true
+      },
+      "runs_genEventSumw_entries": [
+        3280.4386239600003
+      ],
+      "runs_genEventSumw_total": 3280.4386239600003,
+      "runs_genEventCount_entries": [
+        9451
+      ],
+      "runs_genEventCount_total": 9451,
+      "trigobj_branch_titles": {
+        "TrigObj_filterBits": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+        "TrigObj_id": "ID of the object: 11 = Electron (PixelMatched e/gamma), 22 = Photon (PixelMatch-vetoed e/gamma), 13 = Muon, 15 = Tau, 1 = Jet, 6 = FatJet, 2 = MET, 3 = HT, 4 = MHT"
+      },
+      "trigobj_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+      "n_events_probed": 9451,
+      "hlt_fired_in_probe_window": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+          "n_fired": 719,
+          "fraction": 0.07607660565019575
+        },
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+          "n_fired": 781,
+          "fraction": 0.08263675801502486
+        },
+        "HLT_IsoMu24": {
+          "n_fired": 2886,
+          "fraction": 0.30536451169188444
+        },
+        "HLT_IsoTkMu24": {
+          "n_fired": 2834,
+          "fraction": 0.2998624484181568
+        },
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 584,
+          "fraction": 0.06179240292032589
+        },
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 907,
+          "fraction": 0.09596868056290339
+        },
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 1018,
+          "fraction": 0.10771346947412973
+        },
+        "HLT_Ele27_WPTight_Gsf": {
+          "n_fired": 2362,
+          "fraction": 0.24992064331816738
+        }
+      },
+      "probe_window_genWeight": {
+        "n": 9451,
+        "n_negative": 2072,
+        "negative_fraction": 0.21923605967622473,
+        "min": -0.6181342601776123,
+        "max": 0.6181342601776123,
+        "mean": 0.3470996210731762,
+        "n_distinct_abs_values_capped_at_6": 1
+      },
+      "probe_window_scalars": {
+        "run": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "n_distinct_capped_at_6": 1
+        },
+        "L1PreFiringWeight_Nom": {
+          "min": 0.1983422487974167,
+          "max": 1.0,
+          "mean": 0.9569761624882781,
+          "n_distinct_capped_at_6": 6
+        },
+        "Pileup_nTrueInt": {
+          "min": 0.0,
+          "max": 51.0,
+          "mean": 21.822135223785843,
+          "n_distinct_capped_at_6": 6
+        }
+      },
+      "run_is_always_1_in_probe_window": true,
+      "file_genWeight_sum": 3280.4385187625885,
+      "file_genWeight_n_events": 9451,
+      "file_genWeight_n_negative": 2072,
+      "file_negative_genWeight_fraction": 0.21923605967622473,
+      "file_genWeight_read_seconds": 0.1831661518663168,
+      "C5_sum_genWeight_vs_runs_genEventSumw": {
+        "sum_genWeight_all_events": 3280.4385187625885,
+        "runs_genEventSumw_total": 3280.4386239600003,
+        "absolute_difference": -0.00010519741181269637,
+        "relative_difference": 3.206809328616754e-08,
+        "agree_within_1e-6_relative": true
+      },
+      "C5_event_count_vs_runs_genEventCount": {
+        "n_events_in_file": 9451,
+        "runs_genEventCount_total": 9451,
+        "equal": true
+      },
+      "probe_seconds": 2.6297820890322328,
+      "C3_filterBits_title_matches_data": true
+    },
+    "67993": {
+      "record_id": 67993,
+      "portal_title": "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "campaign": {
+        "campaign_verdict": "UL16_postVFP_NanoAODv9",
+        "is_postVFP_UL16_NanoAODv9": true,
+        "title_contains_APV": false,
+        "title_contains_preVFP": false,
+        "title_contains_RunIISummer20UL16NanoAODv9": true,
+        "title_contains_asymptotic_v17": true
+      },
+      "portal_number_events": 144722000,
+      "portal_number_files": 138,
+      "n_files_in_portal_list": 138,
+      "probed_file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/08FCB2ED-176B-064B-85AB-37B898773B98.root",
+      "probed_file_index": 0,
+      "n_events_in_file": 1233000,
+      "branches_present": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+        "HLT_IsoMu24": true,
+        "HLT_IsoTkMu24": true,
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Ele27_WPTight_Gsf": true,
+        "nTrigObj": true,
+        "TrigObj_pt": true,
+        "TrigObj_eta": true,
+        "TrigObj_phi": true,
+        "TrigObj_id": true,
+        "TrigObj_filterBits": true,
+        "genWeight": true,
+        "L1PreFiringWeight_Nom": true,
+        "L1PreFiringWeight_Up": true,
+        "L1PreFiringWeight_Dn": true,
+        "Pileup_nTrueInt": true,
+        "run": true,
+        "luminosityBlock": true,
+        "event": true
+      },
+      "branches_missing": [],
+      "runs_tree_present": true,
+      "runs_branches_present": {
+        "genEventSumw": true,
+        "genEventCount": true
+      },
+      "runs_genEventSumw_entries": [
+        371086920.5120002
+      ],
+      "runs_genEventSumw_total": 371086920.5120002,
+      "runs_genEventCount_entries": [
+        1233000
+      ],
+      "runs_genEventCount_total": 1233000,
+      "trigobj_branch_titles": {
+        "TrigObj_filterBits": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+        "TrigObj_id": "ID of the object: 11 = Electron (PixelMatched e/gamma), 22 = Photon (PixelMatch-vetoed e/gamma), 13 = Muon, 15 = Tau, 1 = Jet, 6 = FatJet, 2 = MET, 3 = HT, 4 = MHT"
+      },
+      "trigobj_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+      "n_events_probed": 10000,
+      "hlt_fired_in_probe_window": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+          "n_fired": 133,
+          "fraction": 0.0133
+        },
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+          "n_fired": 159,
+          "fraction": 0.0159
+        },
+        "HLT_IsoMu24": {
+          "n_fired": 2172,
+          "fraction": 0.2172
+        },
+        "HLT_IsoTkMu24": {
+          "n_fired": 2154,
+          "fraction": 0.2154
+        },
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 70,
+          "fraction": 0.007
+        },
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 131,
+          "fraction": 0.0131
+        },
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 182,
+          "fraction": 0.0182
+        },
+        "HLT_Ele27_WPTight_Gsf": {
+          "n_fired": 1659,
+          "fraction": 0.1659
+        }
+      },
+      "probe_window_genWeight": {
+        "n": 10000,
+        "n_negative": 39,
+        "negative_fraction": 0.0039,
+        "min": -303.3580017089844,
+        "max": 303.3580017089844,
+        "mean": 300.9918092956543,
+        "n_distinct_abs_values_capped_at_6": 1
+      },
+      "probe_window_scalars": {
+        "run": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "n_distinct_capped_at_6": 1
+        },
+        "L1PreFiringWeight_Nom": {
+          "min": 0.250142902135849,
+          "max": 1.0,
+          "mean": 0.973993092149496,
+          "n_distinct_capped_at_6": 6
+        },
+        "Pileup_nTrueInt": {
+          "min": 2.0,
+          "max": 49.0,
+          "mean": 21.8387,
+          "n_distinct_capped_at_6": 6
+        }
+      },
+      "run_is_always_1_in_probe_window": true,
+      "file_genWeight_sum": 371086922.60253906,
+      "file_genWeight_n_events": 1233000,
+      "file_genWeight_n_negative": 4868,
+      "file_negative_genWeight_fraction": 0.003948094079480941,
+      "file_genWeight_read_seconds": 2.496723024174571,
+      "C5_sum_genWeight_vs_runs_genEventSumw": {
+        "sum_genWeight_all_events": 371086922.60253906,
+        "runs_genEventSumw_total": 371086920.5120002,
+        "absolute_difference": 2.0905388593673706,
+        "relative_difference": 5.633555762307625e-09,
+        "agree_within_1e-6_relative": true
+      },
+      "C5_event_count_vs_runs_genEventCount": {
+        "n_events_in_file": 1233000,
+        "runs_genEventCount_total": 1233000,
+        "equal": true
+      },
+      "probe_seconds": 9.874387288466096,
+      "C3_filterBits_title_matches_data": true
+    },
+    "35669": {
+      "record_id": 35669,
+      "portal_title": "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "campaign": {
+        "campaign_verdict": "UL16_postVFP_NanoAODv9",
+        "is_postVFP_UL16_NanoAODv9": true,
+        "title_contains_APV": false,
+        "title_contains_preVFP": false,
+        "title_contains_RunIISummer20UL16NanoAODv9": true,
+        "title_contains_asymptotic_v17": true
+      },
+      "portal_number_events": 71839442,
+      "portal_number_files": 41,
+      "n_files_in_portal_list": 41,
+      "probed_file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/30000/0082C29D-E74C-024A-BE9B-97B29EE7A4A2.root",
+      "probed_file_index": 0,
+      "n_events_in_file": 1933726,
+      "branches_present": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+        "HLT_IsoMu24": true,
+        "HLT_IsoTkMu24": true,
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Ele27_WPTight_Gsf": true,
+        "nTrigObj": true,
+        "TrigObj_pt": true,
+        "TrigObj_eta": true,
+        "TrigObj_phi": true,
+        "TrigObj_id": true,
+        "TrigObj_filterBits": true,
+        "genWeight": true,
+        "L1PreFiringWeight_Nom": true,
+        "L1PreFiringWeight_Up": true,
+        "L1PreFiringWeight_Dn": true,
+        "Pileup_nTrueInt": true,
+        "run": true,
+        "luminosityBlock": true,
+        "event": true
+      },
+      "branches_missing": [],
+      "runs_tree_present": true,
+      "runs_branches_present": {
+        "genEventSumw": true,
+        "genEventCount": true
+      },
+      "runs_genEventSumw_entries": [
+        32886984122.343998
+      ],
+      "runs_genEventSumw_total": 32886984122.343998,
+      "runs_genEventCount_entries": [
+        1933726
+      ],
+      "runs_genEventCount_total": 1933726,
+      "trigobj_branch_titles": {
+        "TrigObj_filterBits": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+        "TrigObj_id": "ID of the object: 11 = Electron (PixelMatched e/gamma), 22 = Photon (PixelMatch-vetoed e/gamma), 13 = Muon, 15 = Tau, 1 = Jet, 6 = FatJet, 2 = MET, 3 = HT, 4 = MHT"
+      },
+      "trigobj_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+      "n_events_probed": 10000,
+      "hlt_fired_in_probe_window": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+          "n_fired": 1379,
+          "fraction": 0.1379
+        },
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+          "n_fired": 1426,
+          "fraction": 0.1426
+        },
+        "HLT_IsoMu24": {
+          "n_fired": 2087,
+          "fraction": 0.2087
+        },
+        "HLT_IsoTkMu24": {
+          "n_fired": 2071,
+          "fraction": 0.2071
+        },
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 1174,
+          "fraction": 0.1174
+        },
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 29,
+          "fraction": 0.0029
+        },
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 26,
+          "fraction": 0.0026
+        },
+        "HLT_Ele27_WPTight_Gsf": {
+          "n_fired": 1608,
+          "fraction": 0.1608
+        }
+      },
+      "probe_window_genWeight": {
+        "n": 10000,
+        "n_negative": 1577,
+        "negative_fraction": 0.1577,
+        "min": -25259.673828125,
+        "max": 25259.673828125,
+        "mean": 17292.772702734375,
+        "n_distinct_abs_values_capped_at_6": 1
+      },
+      "probe_window_scalars": {
+        "run": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "n_distinct_capped_at_6": 1
+        },
+        "L1PreFiringWeight_Nom": {
+          "min": 0.23137064278125763,
+          "max": 1.0,
+          "mean": 0.9797578364744782,
+          "n_distinct_capped_at_6": 6
+        },
+        "Pileup_nTrueInt": {
+          "min": 0.0,
+          "max": 46.0,
+          "mean": 21.7394,
+          "n_distinct_capped_at_6": 6
+        }
+      },
+      "run_is_always_1_in_probe_window": true,
+      "file_genWeight_sum": 32886983898.570312,
+      "file_genWeight_n_events": 1933726,
+      "file_genWeight_n_negative": 315885,
+      "file_negative_genWeight_fraction": 0.16335561501474355,
+      "file_genWeight_read_seconds": 2.485694441013038,
+      "C5_sum_genWeight_vs_runs_genEventSumw": {
+        "sum_genWeight_all_events": 32886983898.570312,
+        "runs_genEventSumw_total": 32886984122.343998,
+        "absolute_difference": -223.77368545532227,
+        "relative_difference": 6.804323699091838e-09,
+        "agree_within_1e-6_relative": true
+      },
+      "C5_event_count_vs_runs_genEventCount": {
+        "n_events_in_file": 1933726,
+        "runs_genEventCount_total": 1933726,
+        "equal": true
+      },
+      "probe_seconds": 5.325224154628813,
+      "C3_filterBits_title_matches_data": true
+    },
+    "37728": {
+      "record_id": 37728,
+      "portal_title": "/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "campaign": {
+        "campaign_verdict": "UL16_postVFP_NanoAODv9",
+        "is_postVFP_UL16_NanoAODv9": true,
+        "title_contains_APV": false,
+        "title_contains_preVFP": false,
+        "title_contains_RunIISummer20UL16NanoAODv9": true,
+        "title_contains_asymptotic_v17": true
+      },
+      "portal_number_events": 1000000,
+      "portal_number_files": 8,
+      "n_files_in_portal_list": 8,
+      "probed_file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/34976A9F-8C57-044D-BB81-41704D8B017F.root",
+      "probed_file_index": 0,
+      "n_events_in_file": 4000,
+      "branches_present": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": true,
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": true,
+        "HLT_IsoMu24": true,
+        "HLT_IsoTkMu24": true,
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": true,
+        "HLT_Ele27_WPTight_Gsf": true,
+        "nTrigObj": true,
+        "TrigObj_pt": true,
+        "TrigObj_eta": true,
+        "TrigObj_phi": true,
+        "TrigObj_id": true,
+        "TrigObj_filterBits": true,
+        "genWeight": true,
+        "L1PreFiringWeight_Nom": true,
+        "L1PreFiringWeight_Up": true,
+        "L1PreFiringWeight_Dn": true,
+        "Pileup_nTrueInt": true,
+        "run": true,
+        "luminosityBlock": true,
+        "event": true
+      },
+      "branches_missing": [],
+      "runs_tree_present": true,
+      "runs_branches_present": {
+        "genEventSumw": true,
+        "genEventCount": true
+      },
+      "runs_genEventSumw_entries": [
+        115813.23700000002
+      ],
+      "runs_genEventSumw_total": 115813.23700000002,
+      "runs_genEventCount_entries": [
+        4000
+      ],
+      "runs_genEventCount_total": 4000,
+      "trigobj_branch_titles": {
+        "TrigObj_filterBits": "extra bits of associated information: 1 = CaloIdL_TrackIdL_IsoVL, 2 = 1e (WPTight), 4 = 1e (WPLoose), 8 = OverlapFilter PFTau, 16 = 2e, 32 = 1e-1mu, 64 = 1e-1tau, 128 = 3e, 256 = 2e-1mu, 512 = 1e-2mu, 1024 = 1e (32_L1DoubleEG_AND_L1SingleEGOr), 2048 = 1e (CaloIdVT_GsfTrkIdT), 4096 = 1e (PFJet), 8192 = 1e (Photon175_OR_Photon200) for Electron (PixelMatched e/gamma); 1 = TrkIsoVVL, 2 = Iso, 4 = OverlapFilter PFTau, 8 = IsoTkMu, 1024 = 1mu (Mu50) for Muon; 1 = LooseIso, 2 = Medium(Comb)Iso, 4 = VLooseIso, 8 = None, 16 = L2p5 pixel iso, 32 = OverlapFilter IsoMu, 64 = OverlapFilter IsoEle, 128 = L1-HLT matched, 256 = Dz for Tau; Jet bits: bit 0 for VBF cross-cleaned from loose iso PFTau, bit 1 for hltBTagCaloCSVp087Triple, bit 2 for hltDoubleCentralJet90, bit 3 for hltDoublePFCentralJetLooseID90, bit 4 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 5 for hltQuadCentralJet30, bit 6 for hltQuadPFCentralJetLooseID30, bit 7 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 8 for hltQuadCentralJet45, bit 9 for hltQuadPFCentralJetLooseID45, bit 10 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet bit 11 for hltBTagCaloCSVp05Double or hltBTagCaloDeepCSVp17Double, bit 12 for hltPFCentralJetLooseIDQuad30, bit 13 for hlt1PFCentralJetLooseID75, bit 14 for hlt2PFCentralJetLooseID60, bit 15 for hlt3PFCentralJetLooseID45, bit 16 for hlt4PFCentralJetLooseID40, bit 17 for hltBTagPFCSVp070Triple or hltBTagPFDeepCSVp24Triple or hltBTagPFDeepCSV4p5Triple for Jet; HT bits: bit 0 for hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet, bit 1 for hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF or hltL1sQuadJetCIorTripleJetVBFIorHTT, bit 2 for hltL1sQuadJetC60IorHTT380IorHTT280QuadJetIorHTT300QuadJet or hltL1sQuadJetC50to60IorHTT280to500IorHTT250to340QuadJet, bit 3 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 4 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for HT; MHT bits: bit 0 for hltCaloQuadJet30HT300 or hltCaloQuadJet30HT320, bit 1 for hltPFCentralJetsLooseIDQuad30HT300 or hltPFCentralJetsLooseIDQuad30HT330 for MHT;",
+        "TrigObj_id": "ID of the object: 11 = Electron (PixelMatched e/gamma), 22 = Photon (PixelMatch-vetoed e/gamma), 13 = Muon, 15 = Tau, 1 = Jet, 6 = FatJet, 2 = MET, 3 = HT, 4 = MHT"
+      },
+      "trigobj_filterBits_title_sha256": "0c79d6aa35c2be4ea2703de094367aaacd1f62c9209a67e4ee103d03687aab96",
+      "n_events_probed": 4000,
+      "hlt_fired_in_probe_window": {
+        "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ": {
+          "n_fired": 1196,
+          "fraction": 0.299
+        },
+        "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ": {
+          "n_fired": 1230,
+          "fraction": 0.3075
+        },
+        "HLT_IsoMu24": {
+          "n_fired": 1311,
+          "fraction": 0.32775
+        },
+        "HLT_IsoTkMu24": {
+          "n_fired": 1292,
+          "fraction": 0.323
+        },
+        "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 850,
+          "fraction": 0.2125
+        },
+        "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 374,
+          "fraction": 0.0935
+        },
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ": {
+          "n_fired": 439,
+          "fraction": 0.10975
+        },
+        "HLT_Ele27_WPTight_Gsf": {
+          "n_fired": 959,
+          "fraction": 0.23975
+        }
+      },
+      "probe_window_genWeight": {
+        "n": 4000,
+        "n_negative": 15,
+        "negative_fraction": 0.00375,
+        "min": -29.172100067138672,
+        "max": 29.172100067138672,
+        "mean": 28.95330931663513,
+        "n_distinct_abs_values_capped_at_6": 1
+      },
+      "probe_window_scalars": {
+        "run": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "n_distinct_capped_at_6": 1
+        },
+        "L1PreFiringWeight_Nom": {
+          "min": 0.2580517828464508,
+          "max": 1.0,
+          "mean": 0.9785120251476764,
+          "n_distinct_capped_at_6": 6
+        },
+        "Pileup_nTrueInt": {
+          "min": 4.0,
+          "max": 49.0,
+          "mean": 21.918,
+          "n_distinct_capped_at_6": 6
+        }
+      },
+      "run_is_always_1_in_probe_window": true,
+      "file_genWeight_sum": 115813.23726654053,
+      "file_genWeight_n_events": 4000,
+      "file_genWeight_n_negative": 15,
+      "file_negative_genWeight_fraction": 0.00375,
+      "file_genWeight_read_seconds": 0.18248029053211212,
+      "C5_sum_genWeight_vs_runs_genEventSumw": {
+        "sum_genWeight_all_events": 115813.23726654053,
+        "runs_genEventSumw_total": 115813.23700000002,
+        "absolute_difference": 0.0002665405045263469,
+        "relative_difference": 2.3014683936892884e-09,
+        "agree_within_1e-6_relative": true
+      },
+      "C5_event_count_vs_runs_genEventCount": {
+        "n_events_in_file": 4000,
+        "runs_genEventCount_total": 4000,
+        "equal": true
+      },
+      "probe_seconds": 2.329554763622582,
+      "C3_filterBits_title_matches_data": true
+    }
+  },
+  "errors": {},
+  "summary": {
+    "n_records_probed": 13,
+    "n_records_failed": 0,
+    "records_not_postVFP": [],
+    "records_with_missing_branches": {},
+    "records_without_runs_genEventSumw": [],
+    "records_filterBits_title_differs_from_data": [],
+    "records_C5_disagreeing": [],
+    "negative_genWeight_fraction_whole_file_by_record": {
+      "42407": 0.0,
+      "67801": 0.004014705882352941,
+      "35671": 0.0,
+      "64895": 2.14803983693309e-05,
+      "64839": 0.0,
+      "72676": 0.0018666666666666666,
+      "72752": 0.1695632491585805,
+      "75589": 0.005154761904761905,
+      "68187": 0.2476,
+      "68073": 0.21923605967622473,
+      "67993": 0.003948094079480941,
+      "35669": 0.16335561501474355,
+      "37728": 0.00375
+    },
+    "records_where_run_is_not_always_1": []
+  }
+}
