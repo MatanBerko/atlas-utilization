@@ -176,7 +176,9 @@ import uproot  # noqa: E402
 from services.calculations import physics_calcs  # noqa: E402
 from services.calculations.combinatorics import get_all_combinations, get_count, get_start  # noqa: E402
 from services.calculations.im_calculator import IMCalculator  # noqa: E402
-from services.parsing.validated_runs import ValidatedRunsFilter, apply_validated_runs_filter  # noqa: E402
+from services.parsing.validated_runs import (  # noqa: E402
+    ValidatedRunsFilter, apply_validated_runs_filter, is_simulation,
+)
 from services.parsing.trigger_requirements import apply_trigger_requirement  # noqa: E402
 from services.pipelines.im_pipeline import (  # noqa: E402
     _calculate_combination_invariant_mass,
@@ -297,6 +299,89 @@ EXPECTED_TRIGOBJ_FILTERBITS_TITLE_SUBSTRINGS = (
     "1 = TrkIsoVVL",    # muon bit 1, already used by matched mode (DoubleMuon)
     "2 = Iso",          # muon bit 2, already used by matched mode (SingleMuon)
 )
+
+# ---------------------------------------------------------------------------
+# --is-mc mode (cms-mc-weights-v3, DESIGN.md Part D). Everything from here to
+# the end of this block is NEW and reached ONLY when --is-mc is passed; the
+# data path never evaluates any of it.
+#
+# Design references are to studies/cms_mc_weights_v3/DESIGN.md.
+# ---------------------------------------------------------------------------
+
+# D2: the SingleElectron candidate condition. Stored, never delivered -- its
+# offline threshold (27/30/35 GeV) is undecided and out of scope, which is
+# exactly why the OFFLINE pT of the matched electron is stored per entry
+# instead of a boolean: the threshold becomes a re-read of the shards rather
+# than a re-production.
+ELE27_PATH = "HLT_Ele27_WPTight_Gsf"
+TRIGOBJ_BIT_E_1E_WPTIGHT = 2        # "2 = 1e (WPTight)" -- the Ele27_WPTight_Gsf leg
+ELE27_TRIGOBJ_PT_MIN_GEV = 27.0     # online, the 27 GeV leg
+ELE27_MIN_MATCHED_ELECTRONS = 1
+ELE27_NO_MATCH_SENTINEL = -1.0      # stored offline pT when nothing matched
+
+# The electron bit-2 meaning is asserted at runtime from the file's own branch
+# title, exactly as the four data acceptances assert theirs. Kept in a
+# SEPARATE tuple from EXPECTED_TRIGOBJ_FILTERBITS_TITLE_SUBSTRINGS so the data
+# path's own assertion is byte-for-byte the one it runs today (Hard Rule 8).
+EXPECTED_TRIGOBJ_FILTERBITS_TITLE_SUBSTRINGS_MC = (
+    "2 = 1e (WPTight)",   # electron bit 2, required by the Ele27 candidate
+)
+
+# D3: per-event MC information, mirroring PR #35's field names exactly so a
+# later port is mechanical. See DESIGN.md D3 for why _mcChannelNumber carries
+# the CERN Open Data RECORD ID (CMS NanoAOD has no per-event dataset
+# identifier at all -- verified, 1504 branches scanned) and why _mcRunNumber
+# is informationally empty in CMS (run == 1 on every probed record).
+MC_EVENT_INFO_FIELD = "_mcEventInfo"
+MC_EVENT_WEIGHT_FIELD = "_mcEventWeight"
+MC_CHANNEL_NUMBER_FIELD = "_mcChannelNumber"
+MC_RUN_NUMBER_FIELD = "_mcRunNumber"
+
+# D3: raw per-entry sibling arrays written next to each mass signature in the
+# same flush. "_mcw" is RESERVED for the FINAL normalised weight and is
+# produced only by the build-time builder -- the driver never writes it.
+MC_WEIGHT_SUFFIX = "_mcw"                    # reserved; not written here
+MC_RAW_SIBLING_PREFIX = "_mcraw_"
+MC_SIBLING_GENWEIGHT = "_mcraw_genw"         # genWeight                 float64
+MC_SIBLING_L1PREFIRE = "_mcraw_l1pf"         # L1PreFiringWeight_Nom     float32
+MC_SIBLING_PILEUP = "_mcraw_puntrue"         # Pileup_nTrueInt           float32
+MC_SIBLING_ACCEPTANCE = "_mcraw_acc"         # acceptance bitmask        uint8
+MC_SIBLING_ELE27_PT = "_mcraw_ele27pt"       # offline pT, -1 if none    float32
+MC_SIBLING_SUFFIXES = (
+    MC_SIBLING_GENWEIGHT, MC_SIBLING_L1PREFIRE, MC_SIBLING_PILEUP,
+    MC_SIBLING_ACCEPTANCE, MC_SIBLING_ELE27_PT,
+)
+
+# D3: one bit per stored condition, in DELIVERY_VETO_ORDER_4 order followed by
+# the SingleElectron candidate. DESIGN.md left "should the bare Ele27 fire
+# decision be separable from the match" as a one-line choice for this round:
+# it IS separable, via bit 5, because an un-matched fire is otherwise
+# indistinguishable from no fire at all and the Ele27 efficiency cannot be
+# measured without it.
+MC_ACC_BIT_BY_LABEL = {
+    "DoubleMuon": 1 << 0,     # 1
+    "SingleMuon": 1 << 1,     # 2
+    "DoubleEG":   1 << 2,     # 4
+    "MuonEG":     1 << 3,     # 8
+}
+MC_ACC_BIT_ELE27_CANDIDATE = 1 << 4   # 16 -- fired AND a matched electron >= 27 GeV online
+MC_ACC_BIT_ELE27_FIRED = 1 << 5       # 32 -- the path fired, match or not
+MC_ACC_BITMASK_DTYPE = np.uint8       # 6 bits used of 8
+
+# D4: the branches --is-mc additionally requires. A missing one is a hard
+# error (read_events already raises on any missing required branch) -- never
+# defaulted to 1, because a silent w_gen = 1 mis-normalises every sample that
+# is not unit-weight.
+MC_REQUIRED_BRANCHES = (
+    "genWeight",
+    "L1PreFiringWeight_Nom",
+    "Pileup_nTrueInt",
+)
+
+# --dataset-label value that means "this is simulation, there is no data
+# stream". Valid only together with --is-mc; it only names the job and the
+# signature prefix, and carries no selection meaning whatsoever.
+MC_DATASET_LABEL = "MC"
 
 # D4: DoubleEG acceptance.
 DOUBLEEG_MATCHED_MIN_ELECTRONS = 2
@@ -1088,6 +1173,223 @@ def evaluate_four_acceptances(events: ak.Array, muons: ak.Array, electrons: ak.A
     return out
 
 
+def ele27_candidate_acceptance(events: ak.Array, electrons: ak.Array,
+                               trigobj: ak.Array) -> dict:
+    """D2: the SingleElectron CANDIDATE condition, for --is-mc only.
+
+    (1) HLT_Ele27_WPTight_Gsf fired, AND
+    (2) >= 1 selected electron -- AFTER the dR < 0.12 overlap removal, i.e.
+        the same `electrons` the four data acceptances are evaluated on --
+        matched (dR < 0.1) to a TrigObj with id == 11 and bit 2
+        ("1e (WPTight)") set, AND
+    (3) that matched trigger object has TrigObj_pt >= 27 GeV (online).
+
+    NO offline pT requirement is applied: the offline threshold (27/30/35) is
+    undecided and explicitly out of scope. Instead the leading matched
+    electron's OFFLINE pT is returned per event (-1 when nothing matched), so
+    whichever threshold is chosen later is a re-read of the shards rather than
+    a new MC production.
+
+    Built with exactly the same matcher (`trigobj_best_match`) and the same id
+    guard the four delivered acceptances use, so the candidate can never drift
+    from them. Nothing here is used to accept an event for the current
+    delivery -- the builder uses the four data flags only."""
+    fired = fired_mask(events, (ELE27_PATH,))
+    bk = trigobj_best_match(electrons, trigobj, TRIGOBJ_ELECTRON_ID,
+                            TRIGOBJ_BIT_E_1E_WPTIGHT)
+    is_matched = bk["is_matched"]
+    n_matched = ak.to_numpy(ak.sum(is_matched, axis=1)).astype(np.int64)
+    leading_online_pt = _max_over_matched(bk["best_pt"], is_matched)
+
+    # Leading OFFLINE pT over the matched electrons; the sentinel keeps the
+    # array float and unambiguous (a real electron always has pt > 0).
+    offline_pt_matched = electrons.pt[is_matched]
+    leading_offline_pt = ak.to_numpy(
+        ak.fill_none(ak.max(offline_pt_matched, axis=1), ELE27_NO_MATCH_SENTINEL)
+    ).astype(np.float64)
+    leading_offline_pt = np.where(
+        n_matched > 0, leading_offline_pt, ELE27_NO_MATCH_SENTINEL)
+
+    enough_matched = n_matched >= ELE27_MIN_MATCHED_ELECTRONS
+    online_ok = leading_online_pt >= ELE27_TRIGOBJ_PT_MIN_GEV
+    accepted = fired & enough_matched & online_ok
+
+    return {
+        "fired": fired,
+        "matched": enough_matched & online_ok,
+        "accepted": accepted,
+        "bookkeeping": bk,
+        "n_matched": n_matched,
+        "leading_online_pt": leading_online_pt,
+        "leading_offline_matched_pt": leading_offline_pt,
+        "cutflow": {
+            "n_events_considered": int(len(fired)),
+            "n_fired": int(fired.sum()),
+            "n_fired_and_ge1_matched": int((fired & enough_matched).sum()),
+            "n_accepted": int(accepted.sum()),
+            "trigobj_pt_min_gev": ELE27_TRIGOBJ_PT_MIN_GEV,
+            "offline_pt_cut_applied": False,
+            "path": ELE27_PATH,
+        },
+    }
+
+
+def assert_trigobj_bit_meanings_mc(branch_titles: dict) -> dict:
+    """--is-mc only: additionally assert the electron bit-2 meaning the Ele27
+    candidate depends on, from the file's own TrigObj_filterBits title.
+
+    Separate from assert_trigobj_bit_meanings so the data path's own
+    assertion is untouched. Verified by running (DESIGN.md C3): the
+    filterBits title is byte-identical in MC and in all eight data files, so
+    this check is expected to pass -- it exists to stop the job if a future
+    sample's title differs."""
+    bits_title = " ".join(str(branch_titles.get("TrigObj_filterBits", "")).split())
+    missing = [n for n in EXPECTED_TRIGOBJ_FILTERBITS_TITLE_SUBSTRINGS_MC
+               if n not in bits_title]
+    if missing:
+        raise RuntimeError(
+            "STOP: TrigObj_filterBits title in this MC file does not carry the "
+            f"bit meaning(s) the Ele27 candidate needs: {missing}. "
+            f"title={bits_title!r}. Refusing to match against a filter bit "
+            "whose meaning is not confirmed."
+        )
+    return {"checked_substrings_mc": list(EXPECTED_TRIGOBJ_FILTERBITS_TITLE_SUBSTRINGS_MC),
+            "all_present": True}
+
+
+def read_runs_tree_totals(file_url: str) -> dict:
+    """D4: this file's own Runs-tree totals -- `genEventSumw` (the sum of
+    `genWeight` over every generated event of the file) and `genEventCount`.
+
+    The MC normalisation denominator is the sum of genEventSumw over exactly
+    the files that processed successfully, so every job records its own
+    contribution here rather than leaving the builder to re-open the file.
+    Verified by running (DESIGN.md C5): on all 13 probed records the Runs
+    total equals sum(genWeight) to <= 4.4e-8 relative, i.e. no pre-skim."""
+    with uproot.open(file_url) as f:
+        if "Runs" not in {k.split(";")[0] for k in f.keys()}:
+            raise RuntimeError(
+                f"STOP: {file_url} has no Runs tree, so its sum of generator "
+                "weights cannot be established. Refusing to write a shard that "
+                "cannot be normalised.")
+        runs = f["Runs"]
+        keys = set(runs.keys())
+        for needed in ("genEventSumw", "genEventCount"):
+            if needed not in keys:
+                raise RuntimeError(
+                    f"STOP: {file_url}'s Runs tree has no {needed!r} branch.")
+        sumw = np.asarray(runs["genEventSumw"].array(library="np"), dtype=np.float64)
+        count = np.asarray(runs["genEventCount"].array(library="np"))
+    return {
+        "gen_event_sumw": float(sumw.sum()),
+        "gen_event_count": int(count.sum()),
+        "n_runs_entries": int(sumw.size),
+    }
+
+
+def mc_sigma_w_self_check(file_sum_genweight: float, runs_gen_event_sumw: float,
+                          n_events_read: int, runs_gen_event_count: int,
+                          tolerance: float = 1e-6) -> dict:
+    """D4: the pre-skim detector, evaluated per file.
+
+    A skimmed file has fewer events than its Runs `genEventCount` and a
+    smaller weight sum than its `genEventSumw`, so normalising with that
+    `genEventSumw` would inflate the denominator and under-normalise the whole
+    sample. Reported here and re-checked by the builder, which EXCLUDES a
+    failing file together with its Sigma-w."""
+    rel = (abs(file_sum_genweight - runs_gen_event_sumw) / abs(runs_gen_event_sumw)
+           if runs_gen_event_sumw else None)
+    return {
+        "file_sum_genweight": file_sum_genweight,
+        "runs_gen_event_sumw": runs_gen_event_sumw,
+        "relative_difference": rel,
+        "tolerance": tolerance,
+        "passes": bool(rel is not None and rel <= tolerance),
+        "n_events_read": int(n_events_read),
+        "runs_gen_event_count": int(runs_gen_event_count),
+        "event_count_matches": bool(int(n_events_read) == int(runs_gen_event_count)),
+    }
+
+
+def build_mc_event_info(events: ak.Array, record_id: int) -> ak.Array:
+    """D3: the per-event `_mcEventInfo` record, mirroring PR #35's shape.
+
+    `_mcEventWeight` = genWeight; `_mcChannelNumber` = the CERN Open Data
+    RECORD ID handed to this job via --record-id (never parsed from a file
+    name -- and CMS NanoAOD carries no per-event dataset identifier at all,
+    verified in DESIGN.md D3); `_mcRunNumber` = the file's own `run`, which is
+    1 in every CMS MC sample and therefore carries no campaign information.
+
+    This record is the canonical in-memory form and is what a port to PR #35
+    would hand to its own weight code. The driver additionally derives the
+    aligned flat arrays written as shard siblings (mc_sibling_arrays below)
+    from the SAME source branches, so the two can never disagree."""
+    n = len(events)
+    return ak.zip({
+        MC_EVENT_WEIGHT_FIELD: ak.values_astype(events.genWeight, np.float64),
+        MC_CHANNEL_NUMBER_FIELD: ak.Array(np.full(n, int(record_id), dtype=np.int64)),
+        MC_RUN_NUMBER_FIELD: ak.values_astype(events.run, np.int64),
+    })
+
+
+def mc_acceptance_bitmask(acceptances: dict, ele27: dict) -> np.ndarray:
+    """D3: one integer per event, one bit per stored condition.
+
+    Bits 0-3 are the four delivered data acceptances in DELIVERY_VETO_ORDER_4
+    order; bit 4 is the SingleElectron candidate (fired AND matched online);
+    bit 5 is the bare Ele27 fire decision, so an un-matched fire is
+    distinguishable from no fire at all."""
+    n = len(ele27["fired"])
+    mask = np.zeros(n, dtype=MC_ACC_BITMASK_DTYPE)
+    for label in DELIVERY_VETO_ORDER_4:
+        mask |= np.where(acceptances[label]["accepted"],
+                         MC_ACC_BIT_BY_LABEL[label], 0).astype(MC_ACC_BITMASK_DTYPE)
+    mask |= np.where(ele27["accepted"],
+                     MC_ACC_BIT_ELE27_CANDIDATE, 0).astype(MC_ACC_BITMASK_DTYPE)
+    mask |= np.where(ele27["fired"],
+                     MC_ACC_BIT_ELE27_FIRED, 0).astype(MC_ACC_BITMASK_DTYPE)
+    return mask
+
+
+def mc_store_mask(acceptances: dict, ele27: dict) -> np.ndarray:
+    """D2: an MC event is STORED if ANY of the four data acceptances passes OR
+    the SingleElectron candidate condition does. No de-duplication: a
+    simulated event exists once, so there is nothing to de-duplicate, and the
+    four-stream veto order has no meaning here."""
+    keep = np.zeros(len(ele27["accepted"]), dtype=bool)
+    for label in DELIVERY_VETO_ORDER_4:
+        keep |= acceptances[label]["accepted"]
+    keep |= ele27["accepted"]
+    return keep
+
+
+def mc_sibling_arrays(events: ak.Array, mc_event_info: ak.Array,
+                      acceptances: dict, ele27: dict) -> dict:
+    """D3: the per-event sibling arrays, as {suffix: numpy array}.
+
+    One entry per event of `events`, in `events`' own row order, so the caller
+    can push them through the identical masks the masses go through. Read from
+    the file's own branches; `genWeight` comes via `mc_event_info` so the
+    shard siblings and the PR #35-shaped record are the same numbers."""
+    return {
+        MC_SIBLING_GENWEIGHT: np.asarray(
+            ak.to_numpy(mc_event_info[MC_EVENT_WEIGHT_FIELD]), dtype=np.float64),
+        MC_SIBLING_L1PREFIRE: np.asarray(
+            ak.to_numpy(events.L1PreFiringWeight_Nom), dtype=np.float32),
+        MC_SIBLING_PILEUP: np.asarray(
+            ak.to_numpy(events.Pileup_nTrueInt), dtype=np.float32),
+        MC_SIBLING_ACCEPTANCE: mc_acceptance_bitmask(acceptances, ele27),
+        MC_SIBLING_ELE27_PT: np.asarray(
+            ele27["leading_offline_matched_pt"], dtype=np.float32),
+    }
+
+
+def mask_mc_siblings(siblings: dict, mask) -> dict:
+    """Apply one mask (or index array) to every sibling at once, so no caller
+    can mask some siblings and forget another."""
+    return {suffix: arr[mask] for suffix, arr in siblings.items()}
+
+
 def exclusive_mask_from_acceptances(acceptances: dict, dataset_label: str):
     """The exclusive mask for `dataset_label`: NOT accepted by any
     higher-priority dataset in DELIVERY_VETO_ORDER_4. Returned aligned to
@@ -1408,14 +1710,31 @@ def compute_diagnostics(muons: ak.Array, electrons: ak.Array, bjets: ak.Array) -
 
 def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarray, job_tag: str,
                              all_combinations: list, im_config: dict, logger,
-                             writer_incl: SqliteArrayShardWriter, writer_excl: SqliteArrayShardWriter) -> dict:
+                             writer_incl: SqliteArrayShardWriter, writer_excl: SqliteArrayShardWriter,
+                             mc_siblings: dict | None = None) -> dict:
     """The exact combination/shard-writing funnel that used to be main()'s
     own inline for-loop, extracted verbatim (top-4 task, Step 1) so it can
     be called a SECOND time on a top-4-truncated obj_record without
     duplicating ~90 lines of code. Called with the UNCHANGED obj_record
     (generic/v0/matched-normal), this produces byte-for-byte the same
     shards and stats as before the refactor (Hard Rule 5) -- nothing about
-    the logic below differs from the pre-refactor inline version."""
+    the logic below differs from the pre-refactor inline version.
+
+    `mc_siblings` (cms-mc-weights-v3, DESIGN.md D3) is None for every data
+    call -- which is every pre-existing caller -- and then every statement
+    guarded by it is skipped and the data output is exactly what it was. Under
+    --is-mc it is {suffix: per-event numpy array}, aligned to `obj_record`'s
+    OWN row order, and each array is pushed through the IDENTICAL masks the
+    masses go through, in the same order
+    (group_mask -> combo_row_mask -> nan_mask -> coverage-cap pick) and
+    written in the same flush.
+
+    This funnel is deliberately SHARED with the data path rather than
+    duplicated for MC: DESIGN.md D1 requires MC to use the identical
+    selection code path, and a second copy of these ~90 lines could drift
+    from the delivered one, which would be a physics bug. The guard is
+    therefore `mc_siblings is not None` -- the same condition as `args.is_mc`
+    one call-frame up -- and Part B proves the data output is unchanged."""
     calculator = IMCalculator(
         events=obj_record, min_events_per_fs=1,
         min_k=MIN_COUNT_PARTICLE_IN_COMBINATION, max_k=MAX_COUNT_PARTICLE_IN_COMBINATION,
@@ -1432,6 +1751,18 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
     label_event_counts_incl: dict[str, int] = {}
     label_event_counts_excl: dict[str, int] = {}
     skip_reason_totals: dict[str, int] = {}
+    if mc_siblings is not None:
+        # D8: the cap's own bookkeeping, per (signature) -- true_size and the
+        # weight scale factor the builder must apply before merging files.
+        cap_records: dict[str, dict] = {}
+        n_sibling_writes = 0
+        for suffix, sib in mc_siblings.items():
+            if len(sib) != len(obj_record):
+                raise RuntimeError(
+                    f"MC sibling {suffix!r} has {len(sib)} entries for "
+                    f"{len(obj_record)} events -- it must be aligned to "
+                    "obj_record's own row order before the funnel is entered."
+                )
 
     for label, fs_events, group_mask in _group_by_final_state_with_mask(obj_record):
         n_fs_groups += 1
@@ -1443,6 +1774,10 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
         n_excl_this_group = int(fs_is_exclusive.sum())
         label_event_counts_excl[label] = label_event_counts_excl.get(label, 0) + n_excl_this_group
         writer_excl.record_final_state_count(label, n_excl_this_group)
+        if mc_siblings is not None:
+            # Mask 1 of 4: the final-state group mask, the same one applied to
+            # obj_record to get fs_events.
+            fs_siblings = mask_mc_siblings(mc_siblings, group_mask)
 
         for combination in all_combinations:
             if not physics_calcs.is_finalstate_contain_combination(label, combination):
@@ -1469,6 +1804,11 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
             combo_is_exclusive = combo_is_exclusive[nan_mask]
             if arr.size == 0:
                 continue
+            if mc_siblings is not None:
+                # Masks 2 and 3 of 4: the exact-count row mask, then the NaN
+                # mask -- applied in the same order, to the same rows.
+                combo_siblings = mask_mc_siblings(fs_siblings, combo_row_mask)
+                combo_siblings = mask_mc_siblings(combo_siblings, nan_mask)
 
             signature = prepare_im_combination_name(job_tag, label, combination)
             if arr.size > max_signature_size:
@@ -1481,10 +1821,40 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
                 arr = arr[pick]
                 combo_is_exclusive = combo_is_exclusive[pick]
                 writer_incl.set_metadata(f"CAPPED::{signature}", f"true_size={true_size}")
+                if mc_siblings is not None:
+                    # Mask 4 of 4: the SAME random pick indices, so a kept
+                    # mass keeps its own weight and not another entry's.
+                    combo_siblings = mask_mc_siblings(combo_siblings, pick)
+                    scale = true_size / float(COVERAGE_CAP_PER_SIGNATURE)
+                    cap_records[signature] = {
+                        "true_size": true_size,
+                        "kept": int(COVERAGE_CAP_PER_SIGNATURE),
+                        "weight_scale": scale,
+                    }
+                    # D8: the builder must multiply this signature's weights by
+                    # `weight_scale` BEFORE merging files, so the expected yield
+                    # survives the subsample. Recorded in the shard metadata,
+                    # not applied here (the raw siblings stay raw).
+                    writer_incl.set_metadata(
+                        f"CAPPED::{signature}",
+                        f"true_size={true_size} kept={COVERAGE_CAP_PER_SIGNATURE} "
+                        f"weight_scale={scale!r}",
+                    )
 
             writer_incl.append_array(signature, arr)
             n_signature_writes_incl += 1
             n_values_written_incl += int(arr.size)
+            if mc_siblings is not None:
+                # Same flush as the masses: one transaction, committed by the
+                # caller, so a crash can never leave masses without siblings.
+                for suffix, sib in combo_siblings.items():
+                    if len(sib) != arr.size:
+                        raise RuntimeError(
+                            f"{signature}: sibling {suffix!r} has {len(sib)} "
+                            f"entries for {arr.size} masses -- alignment lost."
+                        )
+                    writer_incl.append_array(signature + suffix, sib)
+                    n_sibling_writes += 1
 
             excl_arr = arr[combo_is_exclusive]
             if excl_arr.size > 0:
@@ -1492,7 +1862,7 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
                 n_signature_writes_excl += 1
                 n_values_written_excl += int(excl_arr.size)
 
-    return {
+    result = {
         "n_fs_groups": n_fs_groups,
         "n_signature_writes_incl": n_signature_writes_incl,
         "n_signature_writes_excl": n_signature_writes_excl,
@@ -1504,6 +1874,11 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
         "label_event_counts_excl": label_event_counts_excl,
         "skip_reason_totals": skip_reason_totals,
     }
+    if mc_siblings is not None:
+        result["n_mc_sibling_writes"] = n_sibling_writes
+        result["mc_sibling_suffixes"] = list(mc_siblings.keys())
+        result["capped_signatures"] = cap_records
+    return result
 
 
 def build_top4_object_record(muons: ak.Array, electrons: ak.Array, light_jets: ak.Array, bjets: ak.Array):
@@ -1568,7 +1943,11 @@ def build_top4_object_record(muons: ak.Array, electrons: ak.Array, light_jets: a
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--dataset-label", required=True, choices=list(TRIGGER_PATHS_BY_DATASET.keys()))
+    p.add_argument("--dataset-label", required=True,
+                   choices=list(TRIGGER_PATHS_BY_DATASET.keys()) + [MC_DATASET_LABEL],
+                   help=f"the data stream this job reads; {MC_DATASET_LABEL!r} is "
+                        "valid only together with --is-mc, where there is no "
+                        "stream and the label only names the job.")
     p.add_argument("--record-id", type=int, required=True)
     p.add_argument("--file-index", type=int, required=True)
     p.add_argument("--output-dir", required=True)
@@ -1600,13 +1979,51 @@ def main():
              "flags, exclusive yes/no, final-state label, electrons removed by "
              "overlap removal). OFF by default -- not written in production.",
     )
+    p.add_argument(
+        "--is-mc", action="store_true",
+        help="process a simulated (MC) NanoAOD file instead of real data. "
+             "Requires --population matched4 and --dataset-label "
+             f"{MC_DATASET_LABEL}. Skips the golden-JSON run filter (asserting "
+             "the file IS simulation instead), requires the OR of all four "
+             f"datasets' trigger paths plus {ELE27_PATH}, stores an event if "
+             "any of the four data acceptances OR the SingleElectron candidate "
+             "passes, applies NO de-duplication, and writes the per-entry MC "
+             "weight siblings next to every mass signature. See "
+             "studies/cms_mc_weights_v3/DESIGN.md Part D. WITHOUT this flag "
+             "nothing below changes and the data output is unaffected.",
+    )
     args = p.parse_args()
+
+    # --is-mc preconditions, checked before anything is read.
+    if args.is_mc:
+        if args.population != "matched4":
+            raise ValueError(
+                "--is-mc is implemented for --population matched4 only (the "
+                f"delivered selection) -- got {args.population!r}")
+        if args.dataset_label != MC_DATASET_LABEL:
+            raise ValueError(
+                f"--is-mc requires --dataset-label {MC_DATASET_LABEL} (simulation has "
+                f"no data stream) -- got {args.dataset_label!r}")
+    elif args.dataset_label == MC_DATASET_LABEL:
+        raise ValueError(
+            f"--dataset-label {MC_DATASET_LABEL} is only valid together with --is-mc")
 
     logging.basicConfig(level=logging.WARNING, format="%(asctime)s %(levelname)s %(message)s")
     logger = logging.getLogger("run_dataset_on_file")
 
     dataset_label = args.dataset_label
-    if args.population == "matched4":
+    if args.is_mc:
+        # D2: no stream, no de-duplication. The trigger gate is the OR over
+        # every path any of the five stored conditions can need, so an event
+        # that only the SingleElectron candidate would accept still survives
+        # to be evaluated.
+        own_paths = tuple(sorted(
+            {p for paths in MATCHED4_TRIGGER_PATHS.values() for p in paths}
+            | {ELE27_PATH}
+        ))
+        higher_priority = []
+        veto_paths_by_label = {}
+    elif args.population == "matched4":
         # electron-datasets task, D1/D2: this path's own trigger sets
         # (SingleMuon = HLT_IsoMu24 only, as on master) and its own
         # priority order DELIVERY_VETO_ORDER_4 -- never VETO_ORDER.
@@ -1624,7 +2041,9 @@ def main():
         own_paths = SINGLEMUON_MATCHED_TRIGGER_PATHS
     else:
         own_paths = TRIGGER_PATHS_BY_DATASET[dataset_label]
-    if args.population == "matched4":
+    if args.is_mc:
+        pass  # own_paths / higher_priority / veto_paths_by_label set above
+    elif args.population == "matched4":
         higher_priority = DELIVERY_VETO_ORDER_4[:DELIVERY_VETO_ORDER_4.index(dataset_label)]
         veto_paths_by_label = {h: list(MATCHED4_TRIGGER_PATHS[h]) for h in higher_priority}
     else:
@@ -1645,6 +2064,11 @@ def main():
     required_branches = list(BASE_OBJECT_BRANCHES) + sorted(set(all_trigger_branches))
     if args.population in ("matched", "matched4"):
         required_branches = list(required_branches) + list(MATCHED_MODE_EXTRA_BRANCHES)
+    if args.is_mc:
+        # A missing weight branch is a hard error (read_events raises on any
+        # missing required branch). Never defaulted to 1: a silent w_gen = 1
+        # mis-normalises every sample that is not unit-weight.
+        required_branches = list(required_branches) + list(MC_REQUIRED_BRANCHES)
 
     t0 = time.time()
     output_dir = Path(args.output_dir)
@@ -1661,10 +2085,30 @@ def main():
     n_read = len(events)
     print(f"[{dataset_label}] read {n_read} events", flush=True)
 
-    validated_runs = ValidatedRunsFilter(args.validated_runs_json)
-    events_golden, golden_stats = apply_validated_runs_filter(events, validated_runs)
-    n_after_golden_json = golden_stats["n_after"]
-    print(f"[{dataset_label}] golden-JSON filter: {golden_stats['n_before']} -> {n_after_golden_json}", flush=True)
+    if args.is_mc:
+        # D2 / data-MC difference 2: simulation has no certified-run concept
+        # (run == 1 throughout), so the golden-JSON filter is SKIPPED -- and
+        # not silently: the file is asserted to BE simulation first, so a data
+        # file handed to --is-mc stops the job instead of quietly losing the
+        # run filter.
+        if not is_simulation(events):
+            raise RuntimeError(
+                "STOP: --is-mc was given but this file does not look like "
+                "simulation (no genWeight field and run != 1 for every event). "
+                "Refusing to skip the golden-JSON run filter on what may be "
+                f"real data: {file_url}"
+            )
+        events_golden = events
+        golden_stats = {"n_before": n_read, "n_after": n_read,
+                        "skipped_reason": "simulation: no golden JSON applies"}
+        n_after_golden_json = n_read
+        print(f"[{dataset_label}] simulation confirmed; golden-JSON filter SKIPPED "
+              f"({n_read} events kept)", flush=True)
+    else:
+        validated_runs = ValidatedRunsFilter(args.validated_runs_json)
+        events_golden, golden_stats = apply_validated_runs_filter(events, validated_runs)
+        n_after_golden_json = golden_stats["n_after"]
+        print(f"[{dataset_label}] golden-JSON filter: {golden_stats['n_before']} -> {n_after_golden_json}", flush=True)
 
     events_triggered, trigger_stats = apply_trigger_requirement(
         events_golden, {"mode": "any", "paths": own_paths}
@@ -1690,6 +2134,12 @@ def main():
     for m in veto_masks.values():
         vetoed_by_any |= m
     is_exclusive_pretrigger = ~vetoed_by_any  # aligned to events_triggered
+    # For MC veto_paths_by_label is empty, so the loops above are no-ops and
+    # is_exclusive_pretrigger is already all-True -- which is D2's "no
+    # de-duplication" expressed through the existing machinery rather than
+    # around it. The exclusive shard an MC job writes therefore holds the same
+    # masses as the inclusive one (without siblings) and is ignored by the MC
+    # builder, which reads the inclusive shards only.
 
     # Object selection (unchanged, imported). `charge` is passed as a pure
     # passthrough extra field (selection.select_muons's own documented
@@ -1720,6 +2170,7 @@ def main():
     v0_result = None
     matching_diagnostics = None
     matched4_diagnostics = None
+    mc_diagnostics = None
     if args.population == "generic":
         total_objects = ak.num(muons) + ak.num(electrons) + ak.num(jets["Jets"]) + ak.num(jets["BJets"])
         keep = ak.to_numpy(total_objects >= MIN_TOTAL_SELECTED_OBJECTS)
@@ -1782,7 +2233,7 @@ def main():
         # de-duplication in DELIVERY_VETO_ORDER_4, electron-muon overlap
         # removal ON by default. --population matched (the delivered muon
         # production) is untouched by everything in this branch.
-        if dataset_label not in DELIVERY_VETO_ORDER_4:
+        if not args.is_mc and dataset_label not in DELIVERY_VETO_ORDER_4:
             raise ValueError(
                 f"--population matched4 is implemented for "
                 f"{DELIVERY_VETO_ORDER_4} only (SingleElectron is postponed) -- "
@@ -1816,9 +2267,28 @@ def main():
         doubleeg_threshold_mode = args.doubleeg_threshold_mode
         acceptances = evaluate_four_acceptances(
             events_triggered, muons, electrons, trigobj, doubleeg_threshold_mode)
-        keep = acceptances[dataset_label]["accepted"]
-        is_exclusive_pretrigger, acceptance_overlap_with_higher, higher4 = (
-            exclusive_mask_from_acceptances(acceptances, dataset_label))
+        if args.is_mc:
+            # D2: the four acceptances are computed by the IDENTICAL functions
+            # on the IDENTICAL post-overlap-removal objects -- the call above is
+            # the data path's own. The only MC additions are the fifth
+            # (candidate) condition and the store rule.
+            mc_title_check = assert_trigobj_bit_meanings_mc(branch_titles)
+            ele27 = ele27_candidate_acceptance(events_triggered, electrons, trigobj)
+            keep = mc_store_mask(acceptances, ele27)
+            # No de-duplication (D2): every stored MC event is "exclusive" in
+            # the only sense the shared funnel uses the flag for.
+            is_exclusive_pretrigger = np.ones(n_events_triggered, dtype=bool)
+            acceptance_overlap_with_higher = {}
+            higher4 = []
+            mc_event_info = build_mc_event_info(events_triggered, args.record_id)
+            # D3: aligned to events_triggered here; masked down to obj_record's
+            # rows by `keep` immediately below, then through every later mask.
+            mc_siblings_triggered = mc_sibling_arrays(
+                events_triggered, mc_event_info, acceptances, ele27)
+        else:
+            keep = acceptances[dataset_label]["accepted"]
+            is_exclusive_pretrigger, acceptance_overlap_with_higher, higher4 = (
+                exclusive_mask_from_acceptances(acceptances, dataset_label))
         attributed = attribute_to_exclusive_dataset(acceptances)
 
         # D6: guard-violation counters, one per matcher actually used. The
@@ -1843,6 +2313,20 @@ def main():
         obj_record = selection.build_object_record(
             muons[keep], electrons[keep], {"Jets": jets["Jets"][keep], "BJets": jets["BJets"][keep]}
         )
+        if args.is_mc:
+            # D3: the _mcEventInfo record is carried through the acceptance
+            # mask exactly like the object collections above, and the flat
+            # siblings with it. Asserted rather than assumed, because every
+            # later alignment claim rests on this one.
+            mc_event_info_kept = mc_event_info[keep]
+            mc_siblings_base = mask_mc_siblings(mc_siblings_triggered, keep)
+            assert len(mc_event_info_kept) == len(obj_record), (
+                f"_mcEventInfo lost alignment at the acceptance mask: "
+                f"{len(mc_event_info_kept)} != {len(obj_record)}")
+            for _suffix, _sib in mc_siblings_base.items():
+                assert len(_sib) == len(obj_record), (
+                    f"MC sibling {_suffix!r} lost alignment at the acceptance "
+                    f"mask: {len(_sib)} != {len(obj_record)}")
 
         n_removed_total = int(n_electrons_removed.sum())
         matched4_diagnostics = {
@@ -1901,6 +2385,58 @@ def main():
             "light_jet_multiplicity_accepted_events": _light_jet_multiplicity(
                 jets["Jets"][keep]),
         }
+        if args.is_mc:
+            acc_mask_kept = mc_siblings_base[MC_SIBLING_ACCEPTANCE]
+            genw_kept = mc_siblings_base[MC_SIBLING_GENWEIGHT]
+            ele27pt_kept = mc_siblings_base[MC_SIBLING_ELE27_PT]
+            four_bits = sum(MC_ACC_BIT_BY_LABEL.values())
+            only_ele27_mask = (
+                ((acc_mask_kept & MC_ACC_BIT_ELE27_CANDIDATE) != 0)
+                & ((acc_mask_kept & four_bits) == 0)
+            )
+            n_only_ele27 = int(only_ele27_mask.sum())
+            mc_diagnostics = {
+                "record_id": args.record_id,
+                "mc_channel_number_source": "--record-id argument (CMS NanoAOD "
+                                            "carries no per-event dataset identifier)",
+                "trigger_gate_paths": list(own_paths),
+                "golden_json_applied": False,
+                "deduplication_applied": False,
+                "trigobj_title_check_mc": mc_title_check,
+                "n_events_triggered": int(n_events_triggered),
+                "n_stored": int(len(obj_record)),
+                "n_accepted_per_dataset": {
+                    label: int(acceptances[label]["accepted"].sum())
+                    for label in DELIVERY_VETO_ORDER_4
+                },
+                "ele27_candidate_cutflow": ele27["cutflow"],
+                "n_ele27_candidate_accepted": int(ele27["accepted"].sum()),
+                "n_stored_by_acceptance_bit": {
+                    label: int(((acc_mask_kept & bit) != 0).sum())
+                    for label, bit in MC_ACC_BIT_BY_LABEL.items()
+                },
+                "n_stored_ele27_candidate": int(
+                    ((acc_mask_kept & MC_ACC_BIT_ELE27_CANDIDATE) != 0).sum()),
+                "n_stored_ele27_fired": int(
+                    ((acc_mask_kept & MC_ACC_BIT_ELE27_FIRED) != 0).sum()),
+                "n_stored_only_ele27_candidate": n_only_ele27,
+                "n_stored_with_ele27_match": int((ele27pt_kept >= 0).sum()),
+                "genweight_stored_events": {
+                    "sum": float(genw_kept.sum()),
+                    "n_negative": int((genw_kept < 0).sum()),
+                    "min": float(genw_kept.min()) if genw_kept.size else None,
+                    "max": float(genw_kept.max()) if genw_kept.size else None,
+                },
+                "mc_run_number_distinct_values": sorted(
+                    int(v) for v in np.unique(
+                        ak.to_numpy(mc_event_info_kept[MC_RUN_NUMBER_FIELD]))
+                ) if len(mc_event_info_kept) else [],
+                "sibling_suffixes": list(MC_SIBLING_SUFFIXES),
+                "acceptance_bit_map": dict(
+                    list(MC_ACC_BIT_BY_LABEL.items())
+                    + [("Ele27Candidate", MC_ACC_BIT_ELE27_CANDIDATE),
+                       ("Ele27Fired", MC_ACC_BIT_ELE27_FIRED)]),
+            }
     else:  # v0 -- regression-check mode only, see module docstring.
         keep = ak.to_numpy((ak.num(muons) >= 2) & (ak.num(jets["Jets"]) >= 1))
         v0_result = selection.select_event_selection_cutflow(events_triggered)
@@ -1950,6 +2486,7 @@ def main():
 
     funnel_result = run_combination_funnel(
         obj_record, is_exclusive_selected, job_tag, all_combinations, im_config, logger, writer_incl, writer_excl,
+        mc_siblings=(mc_siblings_base if args.is_mc else None),
     )
     n_fs_groups = funnel_result["n_fs_groups"]
     n_signature_writes_incl = funnel_result["n_signature_writes_incl"]
@@ -1976,6 +2513,27 @@ def main():
         "own_trigger_paths": ",".join(own_paths),
         "higher_priority_datasets": ",".join(higher_priority),
     }
+    if args.is_mc:
+        # D4: the builder reads these from the shard itself, so a shard always
+        # carries the numbers needed to normalise it -- it never has to trust a
+        # separate bookkeeping file. runs_gen_event_sumw is this FILE's own
+        # Runs-tree total and file_sum_genweight is the sum over every event of
+        # the file BEFORE any selection; the builder's per-file Sigma-w check
+        # compares exactly these two.
+        mc_runs = read_runs_tree_totals(file_url)
+        file_sum_genweight = float(np.asarray(
+            ak.to_numpy(events.genWeight), dtype=np.float64).sum())
+        common_metadata.update({
+            "is_mc": 1,
+            "mc_record_id": args.record_id,
+            "mc_channel_number": args.record_id,
+            "mc_sibling_suffixes": ",".join(MC_SIBLING_SUFFIXES),
+            "mc_weight_suffix_reserved": MC_WEIGHT_SUFFIX,
+            "runs_gen_event_sumw": repr(mc_runs["gen_event_sumw"]),
+            "runs_gen_event_count": repr(mc_runs["gen_event_count"]),
+            "file_sum_genweight_all_events": repr(file_sum_genweight),
+            "file_n_events_all": n_read,
+        })
     for writer in (writer_incl, writer_excl):
         for k, v in common_metadata.items():
             writer.set_metadata(k, v)
@@ -2015,6 +2573,9 @@ def main():
         top4_funnel_result = run_combination_funnel(
             obj_record_top4, is_exclusive_selected, job_tag, all_combinations, im_config, logger,
             writer_top4_incl, writer_top4_excl,
+            # top-4 truncation keeps every accepted event (asserted above), so
+            # the siblings are the same rows in the same order.
+            mc_siblings=(mc_siblings_base if args.is_mc else None),
         )
 
         top4_common_metadata = dict(common_metadata)
@@ -2084,6 +2645,8 @@ def main():
         nonjet4_funnel_result = run_combination_funnel(
             obj_record_nonjet4, is_exclusive_selected_nonjet4, job_tag, all_combinations, im_config, logger,
             writer_nonjet4_incl, writer_nonjet4_excl,
+            mc_siblings=(mask_mc_siblings(mc_siblings_base, nonjet4_keep_mask)
+                         if args.is_mc else None),
         )
 
         nonjet4_common_metadata = dict(common_metadata)
@@ -2164,6 +2727,10 @@ def main():
         rare4_funnel_result = run_combination_funnel(
             obj_record_rare4, is_exclusive_selected_rare4, job_tag, all_combinations, im_config, logger,
             writer_rare4_incl, writer_rare4_excl,
+            # rare4 is the DELIVERED version: obj_record restricted to the
+            # Version B (e+mu+b <= 4) rows, so the siblings take the same mask.
+            mc_siblings=(mask_mc_siblings(mc_siblings_base, rare4_keep_mask)
+                         if args.is_mc else None),
         )
 
         rare4_common_metadata = dict(common_metadata)
@@ -2272,7 +2839,21 @@ def main():
         "top4_diagnostics": top4_diagnostics,
         "nonjet4_diagnostics": nonjet4_diagnostics,
         "rare4_diagnostics": rare4_diagnostics,
+        "mc_diagnostics": mc_diagnostics,
     }
+    if args.is_mc:
+        metadata["is_mc"] = True
+        metadata["mc_runs_tree"] = mc_runs
+        metadata["mc_file_sum_genweight_all_events"] = file_sum_genweight
+        metadata["mc_sigma_w_self_check"] = mc_sigma_w_self_check(
+            file_sum_genweight, mc_runs["gen_event_sumw"], n_read,
+            mc_runs["gen_event_count"])
+        metadata["mc_capped_signatures_rare4"] = (
+            rare4_funnel_result.get("capped_signatures", {})
+            if rare4_diagnostics is not None else {})
+        metadata["mc_n_sibling_writes_rare4"] = (
+            rare4_funnel_result.get("n_mc_sibling_writes", 0)
+            if rare4_diagnostics is not None else 0)
     (output_dir / "job_metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
 
     print(json.dumps({

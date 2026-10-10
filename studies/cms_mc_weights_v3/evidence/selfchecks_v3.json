@@ -1,0 +1,237 @@
+{
+  "n_pass": 46,
+  "n_fail": 0,
+  "n_total": 46,
+  "checks": [
+    {
+      "name": "alignment property: 200 random mask chains preserve pairing",
+      "pass": true,
+      "detail": "0 broken; stages exercised={'group': 200, 'combo': 200, 'nan': 200, 'cap': 199, 'z': 200, 'peak': 200, 'split': 200}"
+    },
+    {
+      "name": "length mismatch is a hard error (no unweighted fallback)",
+      "pass": true,
+      "detail": "IM m0m1: 2 masses but 1 weights -- alignment lost. This builder never "
+    },
+    {
+      "name": "event union excludes an Ele27-only event",
+      "pass": true,
+      "detail": "bitmask=48, four-bit mask=15"
+    },
+    {
+      "name": "event union includes a DoubleMuon event",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "event union includes an event accepted by both",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "prune removes the below-threshold final state",
+      "pass": true,
+      "detail": "removed=['_FS_0e_2m_5j_1b']"
+    },
+    {
+      "name": "prune leaves ZERO orphan sibling rows",
+      "pass": true,
+      "detail": "orphans=[]"
+    },
+    {
+      "name": "prune keeps every row of the surviving final state",
+      "pass": true,
+      "detail": "7 of 14 signatures kept"
+    },
+    {
+      "name": "prune fix is data-neutral: same final state removed",
+      "pass": true,
+      "detail": "removed=['_FS_0e_2m_5j_1b']"
+    },
+    {
+      "name": "prune fix is data-neutral: every data signature was classified by the old regex too",
+      "pass": true,
+      "detail": "2 of 2"
+    },
+    {
+      "name": "prune fix is data-neutral: survivors are exactly the big final state's signatures",
+      "pass": true,
+      "detail": "after=['job_FS_0e_2m_1j_0b_IM_m0m1']"
+    },
+    {
+      "name": "v3 builder's mass-signature regex matches a plain data signature",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "v3 builder's mass-signature regex REJECTS every sibling",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Sumw2 read-back: classname is TH1D",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Sumw2 read-back: len(fSumw2) == n_bins + 2",
+      "pass": true,
+      "detail": "1002 vs 1002"
+    },
+    {
+      "name": "Sumw2 read-back: sum of contents equals sum of weights",
+      "pass": true,
+      "detail": "9.0 vs 9.0"
+    },
+    {
+      "name": "Sumw2 read-back: sum of w^2 matches",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "a negative weight lowers its bin's content",
+      "pass": true,
+      "detail": "bin 11 content=-1.0"
+    },
+    {
+      "name": "a negative weight still RAISES its bin's error",
+      "pass": true,
+      "detail": "bin 11 error=1.0"
+    },
+    {
+      "name": "a TH1D without Sumw2 FAILS the read-back assertion",
+      "pass": true,
+      "detail": "C:\\Users\\matan\\AppData\\Local\\Temp\\tmppx59y109\\bad.root: ROI_bad fSumw2"
+    },
+    {
+      "name": "negative-bin inventory separates a FILLED cancelling bin from the never-filled gap",
+      "pass": true,
+      "detail": "n_filled_bins_eq_zero=1, n_filled_bins_le_zero=1"
+    },
+    {
+      "name": "negative-bin inventory spans first..last FILLED bin",
+      "pass": true,
+      "detail": "12..30"
+    },
+    {
+      "name": "negative-bin inventory counts every bin <= 0 in the filled range",
+      "pass": true,
+      "detail": "17 of 19 bins (2 populated)"
+    },
+    {
+      "name": "negative-bin inventory counts the never-filled gap bins",
+      "pass": true,
+      "detail": "got 16"
+    },
+    {
+      "name": "negative-bin inventory: no bin is strictly negative here",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "registry has the 12 v2 records plus 37728",
+      "pass": true,
+      "detail": "13 records"
+    },
+    {
+      "name": "registry pins k_factor and gen_filt_eff to 1.0 everywhere",
+      "pass": true,
+      "detail": "offenders=[]"
+    },
+    {
+      "name": "registry leaves sum_of_weights null everywhere (measured at build)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "registry carries a portal dataset title for every record",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "registry header forbids setting k from provenance",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "registry target luminosity is 16.393 fb^-1",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "37728 sigma_eff == reference sigma x BR(H->4l incl. tau)",
+      "pass": true,
+      "detail": "0.013447 vs 48.58 x 0.0002768 = 0.013446944"
+    },
+    {
+      "name": "37728 carries its k-factor in provenance only, marked DO NOT APPLY",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "normalisation_factor closes: sigma_eff*1000*k*eps*L/Sigma-w",
+      "pass": true,
+      "detail": "1.903380621e-03 vs 1.903380621e-03"
+    },
+    {
+      "name": "a registry record with k_factor != 1.0 is refused",
+      "pass": true,
+      "detail": "record 37728: k_factor=1.683 gen_filt_eff=1.0. Both must be "
+    },
+    {
+      "name": "committed registry matches build_registry.py output",
+      "pass": true,
+      "detail": "OK: C:\\Users\\matan\\Desktop\\Weizmann_Project\\atlas-utilization\\studies\\cms_mc_weights_v3\\cm"
+    },
+    {
+      "name": "campaign guard ACCEPTS a UL16 postVFP title",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign guard REJECTS an APV/preVFP title",
+      "pass": true,
+      "detail": "STOP: record 67801 is an APV/preVFP sample (['APV', 'preVFP'] in its p"
+    },
+    {
+      "name": "campaign guard REJECTS a non-UL16-NanoAODv9 title",
+      "pass": true,
+      "detail": "STOP: record 99999's portal title does not identify it as Ru"
+    },
+    {
+      "name": "every committed registry record passes the campaign guard",
+      "pass": true,
+      "detail": "failures=[]"
+    },
+    {
+      "name": "weighted fill with unit weights == the data-side fixed-grid fill",
+      "pass": true,
+      "detail": "max diff 0"
+    },
+    {
+      "name": "with unit weights, sum w^2 == the counts",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "find_peak_mass(weights=None) == the shared _find_rightmost_highest_peak",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "main_split_mask reproduces the shared _split_by_first_empty_bin",
+      "pass": true,
+      "detail": "400 main / 0 outliers vs 400 / 0"
+    },
+    {
+      "name": "z_peak_keep_mask reproduces the shared _apply_z_peak_cut (dilepton)",
+      "pass": true,
+      "detail": "397 kept vs 397"
+    },
+    {
+      "name": "z_peak_keep_mask keeps everything for a non-dilepton channel",
+      "pass": true,
+      "detail": "400 of 400"
+    }
+  ]
+}

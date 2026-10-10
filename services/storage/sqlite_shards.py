@@ -173,7 +173,22 @@ def prune_final_states_below_min_events(
     if min_events <= 1 or not db_paths:
         return []
 
-    pattern = re.compile(r"(_FS_[0-9a-z_]+)_IM_([0-9a-z]+)$")
+    # cms-mc-weights-v3, DESIGN.md D3: a mass signature can carry MC sibling
+    # arrays -- "_mcw" (the final normalised weight, PR #35's reserved
+    # convention) and the raw "_mcraw_<field>" family. They are NOT events:
+    # they must never contribute to a final state's population, but they MUST
+    # be deleted along with their final state, or a pruned final state leaves
+    # orphan rows behind (verified by running, before this change:
+    # studies/cms_mc_weights_v3/probe/check_d3_sibling_pruning.py left four
+    # orphans). The optional third group makes the pattern match a sibling so
+    # it reaches signatures_by_db_and_fs below; `is_sibling` then keeps it out
+    # of the event count.
+    #
+    # Data-neutral: no data signature can end in "_mcw" or "_mcraw_<field>",
+    # so for a data shard the third group is always None and every decision
+    # below is the one the pre-change code made. Proved on real delivered
+    # shards by the Part B regression.
+    pattern = re.compile(r"(_FS_[0-9a-z_]+)_IM_([0-9a-z]+)(_mcw|_mcraw_[a-z0-9]+)?$")
     legacy_totals_by_channel: dict[tuple[str, str], int] = {}
     explicit_populations: dict[str, int] = {}
     signatures_by_db_and_fs: dict[tuple[str, str], list[str]] = {}
@@ -211,8 +226,8 @@ def prune_final_states_below_min_events(
             match = pattern.search(signature)
             if not match:
                 continue
-            final_state, combination = match.groups()
-            if final_state not in counted_final_states:
+            final_state, combination, is_sibling = match.groups()
+            if final_state not in counted_final_states and not is_sibling:
                 key = (final_state, combination)
                 legacy_totals_by_channel[key] = (
                     legacy_totals_by_channel.get(key, 0) + int(entries)

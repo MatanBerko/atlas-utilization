@@ -1,0 +1,235 @@
+{
+  "n_pass": 20,
+  "n_fail": 0,
+  "n_total": 20,
+  "checks": [
+    {
+      "name": "Sigma-w check includes exactly one file and excludes the skimmed one",
+      "pass": true,
+      "detail": "included=1, excluded=1"
+    },
+    {
+      "name": "sample Sigma-w is the surviving file's Runs total alone",
+      "pass": true,
+      "detail": "1.15813237e+05 vs 1.15813237e+05"
+    },
+    {
+      "name": "the excluded file is reported with a reason mentioning a pre-skim",
+      "pass": true,
+      "detail": "EXCLUDED: sum(genWeight) disagrees with Runs.genEventSumw (p"
+    },
+    {
+      "name": "normalisation factor equals sigma_eff*1000*L/Sigma-w",
+      "pass": true,
+      "detail": "1.903380621e-03 vs 1.903380621e-03"
+    },
+    {
+      "name": "the builder wrote exactly one _mcw sibling per mass signature",
+      "pass": true,
+      "detail": "1 uncapped signature(s)"
+    },
+    {
+      "name": "w_event == genWeight * L1prefire * norm, entry by entry (uncapped)",
+      "pass": true,
+      "detail": "400 entries, max rel diff 0"
+    },
+    {
+      "name": "negative genWeights survive into the weights with their sign",
+      "pass": true,
+      "detail": "44 negative of 400"
+    },
+    {
+      "name": "a capped signature's weights carry the true_size/kept scale factor",
+      "pass": true,
+      "detail": "scale=3.0, 150 entries"
+    },
+    {
+      "name": "the build reports the cap incidence it applied",
+      "pass": true,
+      "detail": "scaled=1"
+    },
+    {
+      "name": "the >=100-entries rule removed the 20-entry final state",
+      "pass": true,
+      "detail": "removed=['_FS_0e_2m_9j_0b']"
+    },
+    {
+      "name": "no orphan sibling rows survived the prune",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "per-sample output written",
+      "pass": true,
+      "detail": "['C:\\\\Users\\\\matan\\\\AppData\\\\Local\\\\Temp\\\\mc_e2e_04jf1d1c\\\\out\\\\smoke_record37728_mc.root']"
+    },
+    {
+      "name": "summed-SM output written",
+      "pass": true,
+      "detail": "['C:\\\\Users\\\\matan\\\\AppData\\\\Local\\\\Temp\\\\mc_e2e_04jf1d1c\\\\out\\\\smoke_summedSM_mc.root']"
+    },
+    {
+      "name": "every read-back assertion passed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "delivered histogram is TH1D",
+      "pass": true,
+      "detail": "TH1D"
+    },
+    {
+      "name": "delivered histogram errors are sqrt(sum w^2) (non-trivial)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "delivered histogram names carry the data-side ROI_/width shape",
+      "pass": true,
+      "detail": "ROI_mass_m0m1_cat_0ex_2mx_1jx_0bx_width_10.0"
+    },
+    {
+      "name": "entries accepted ONLY by the Ele27 candidate are dropped by the event union",
+      "pass": true,
+      "detail": "dropped=400, kept=0"
+    },
+    {
+      "name": "an unknown record is a HARD ERROR",
+      "pass": true,
+      "detail": "STOP: record 99999 is not in cms_mc_normalisation_v3.json. An unknown "
+    },
+    {
+      "name": "a missing genWeight sibling is a HARD ERROR (no unweighted fallback)",
+      "pass": true,
+      "detail": "C:\\Users\\matan\\AppData\\Local\\Temp\\mc_e2e_nosib_6ssn_s65\\scratch\\record"
+    }
+  ],
+  "synthetic_build_report_excerpt": {
+    "samples": {
+      "37728": {
+        "physics_short": "GluGluHToZZTo4L_M125",
+        "cross_section_pb_sigma_eff": 0.013447,
+        "k_factor": 1.0,
+        "gen_filt_eff": 1.0,
+        "campaign_guard": {
+          "portal_dataset_title": "/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+          "campaign_ok": true
+        },
+        "sigma_w_over_surviving_files": 115813.237,
+        "n_files_included": 1,
+        "n_files_excluded": 1,
+        "normalisation_factor": 0.0019033806213360571,
+        "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+        "weight_write_stats": [
+          {
+            "file_index": 0,
+            "capped_signatures": {
+              "MC_record37728_file0_FS_0e_2m_2j_1b_IM_m0m1": {
+                "true_size": 450,
+                "kept": 150,
+                "weight_scale": 3.0
+              }
+            },
+            "n_mcw_signatures_written": 3,
+            "n_entries_weighted": 570,
+            "n_capped_signatures_scaled": 1
+          }
+        ],
+        "n_capped_signatures_total": 1,
+        "histograms": {
+          "n_mass_signatures": 2,
+          "n_bumpnet_names_before_postprocessing": 2,
+          "per_histogram": {
+            "mass_m0m1_cat_0ex_2mx_1jx_0bx": {
+              "n_input": 400,
+              "n_after_z_and_max_mass": 400,
+              "peak_mass": 180.0,
+              "peak_on": "weighted",
+              "n_after_peak_removal": 309,
+              "n_main": 309,
+              "n_outliers": 0,
+              "kept": true,
+              "n_raw_entries": 309,
+              "weighted_yield": 12.936716068130234,
+              "sum_w_in_hist": 12.936716068130234,
+              "sum_w2_in_hist": 0.9075290414741596,
+              "negative_bin_inventory": {
+                "n_filled_bins": 22,
+                "first_filled_bin": 18,
+                "last_filled_bin": 39,
+                "n_bins_in_filled_range": 22,
+                "n_bins_le_zero_in_filled_range": 0,
+                "n_bins_lt_zero_in_filled_range": 0,
+                "n_bins_eq_zero_in_filled_range": 0,
+                "n_bins_never_filled_in_range": 0,
+                "n_filled_bins_le_zero": 0,
+                "n_filled_bins_lt_zero": 0,
+                "n_filled_bins_eq_zero": 0,
+                "most_negative_content": 0.21565825513419423
+              }
+            },
+            "mass_m0m1_cat_0ex_2mx_2jx_1bx": {
+              "n_input": 150,
+              "n_after_z_and_max_mass": 150,
+              "peak_mass": 290.0,
+              "peak_on": "weighted",
+              "n_after_peak_removal": 66,
+              "n_main": 66,
+              "n_outliers": 0,
+              "kept": true,
+              "n_raw_entries": 66,
+              "weighted_yield": 8.462958211804718,
+              "sum_w_in_hist": 8.462958211804718,
+              "sum_w2_in_hist": 1.748157915191556,
+              "negative_bin_inventory": {
+                "n_filled_bins": 11,
+                "first_filled_bin": 29,
+                "last_filled_bin": 39,
+                "n_bins_in_filled_range": 11,
+                "n_bins_le_zero_in_filled_range": 0,
+                "n_bins_lt_zero_in_filled_range": 0,
+                "n_bins_eq_zero_in_filled_range": 0,
+                "n_bins_never_filled_in_range": 0,
+                "n_filled_bins_le_zero": 0,
+                "n_filled_bins_lt_zero": 0,
+                "n_filled_bins_eq_zero": 0,
+                "most_negative_content": 0.16690541161448938
+              }
+            }
+          },
+          "raw_yield_by_final_state": {
+            "0e_2m_1j_0b": 400,
+            "0e_2m_2j_1b": 150
+          },
+          "weighted_yield_by_final_state": {
+            "0e_2m_1j_0b": 16.885963652083227,
+            "0e_2m_2j_1b": 18.555421736081612
+          },
+          "n_dropped_empty": 0,
+          "n_dropped_min_events_weighted": 0,
+          "n_entries_dropped_by_event_union": 0,
+          "n_histograms_kept": 2
+        }
+      }
+    },
+    "prune": {
+      "basis": "raw",
+      "min_events_per_fs": 100,
+      "applied_to_n_shards": 1,
+      "applied": "once, on the combined shards of every surviving file of every sample",
+      "n_final_states_removed": 1,
+      "final_states_removed": [
+        "_FS_0e_2m_9j_0b"
+      ],
+      "n_orphan_rows_after_prune": 0
+    },
+    "outputs": {
+      "C:\\Users\\matan\\AppData\\Local\\Temp\\mc_e2e_04jf1d1c\\out\\smoke_record37728_mc.root": {
+        "n_histograms": 4
+      },
+      "C:\\Users\\matan\\AppData\\Local\\Temp\\mc_e2e_04jf1d1c\\out\\smoke_summedSM_mc.root": {
+        "n_histograms": 4
+      }
+    }
+  }
+}
