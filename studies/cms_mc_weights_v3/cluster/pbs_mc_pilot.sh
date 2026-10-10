@@ -34,7 +34,16 @@ export XDG_CACHE_HOME="${WORK_DIR}/.cache"
 export HOME="${WORK_DIR}/.jobhome"
 mkdir -p "$MPLCONFIGDIR" "$XDG_CACHE_HOME" "$HOME"
 
-JOB_INDEX="${PBS_ARRAY_INDEX:?PBS_ARRAY_INDEX not set -- submit as a job array (-J)}"
+# Normally an array subjob, so the index comes from PBS. OpenPBS refuses a
+# one-element array (-J 1-1 is an "illegal -J value"), so a single-file run --
+# the Part 1b timing job, or a one-file resubmit -- is submitted WITHOUT -J
+# and passes its mapping line through PILOT_ARRAY_INDEX instead.
+JOB_INDEX="${PBS_ARRAY_INDEX:-${PILOT_ARRAY_INDEX:-}}"
+if [[ -z "$JOB_INDEX" ]]; then
+    echo "neither PBS_ARRAY_INDEX nor PILOT_ARRAY_INDEX is set -- submit as a" >&2
+    echo "job array (-J), or pass -v PILOT_ARRAY_INDEX=<n> for a single file" >&2
+    exit 1
+fi
 
 if [[ ! -f "$MAPPING_FILE" ]]; then
     echo "MAPPING_FILE not found: $MAPPING_FILE" >&2
