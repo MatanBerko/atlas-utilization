@@ -1,0 +1,102 @@
+{
+  "what": "CMS MC pilot Part 2: per-file completeness and Sigma-w audit",
+  "generated_utc": "2026-10-10T17:50:07.095286+00:00",
+  "runs_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pilot_20261011/runs",
+  "records": {
+    "67801": {
+      "physics_short": "TTTo2L2Nu",
+      "expected": 49,
+      "succeeded": 49,
+      "failed": 0,
+      "failed_file_indices": [],
+      "resubmit_file_indices_argument": null,
+      "failures": [],
+      "aggregate": {
+        "events_read": 43546000,
+        "events_after_trigger": 28499841,
+        "events_stored": 25165391,
+        "stored_only_via_ele27": 8019016,
+        "stored_ele27_candidate": 11996117,
+        "stored_by_acceptance_flag": {
+          "DoubleMuon": 2074046,
+          "SingleMuon": 15748032,
+          "DoubleEG": 1237668,
+          "MuonEG": 3420456
+        },
+        "cpu_seconds": 54740.102103710175,
+        "sum_runs_gen_event_sumw_over_ok_files": 3140127171.474801,
+        "n_capped_signatures": 0,
+        "max_cap_weight_scale": 0.0,
+        "slowest_file": 30,
+        "slowest_seconds": 3022.293774366379
+      }
+    },
+    "35669": {
+      "physics_short": "DYJetsToLL_M-50_amcatnloFXFX",
+      "expected": 41,
+      "succeeded": 41,
+      "failed": 0,
+      "failed_file_indices": [],
+      "resubmit_file_indices_argument": null,
+      "failures": [],
+      "aggregate": {
+        "events_read": 71839442,
+        "events_after_trigger": 29243880,
+        "events_stored": 25888737,
+        "stored_only_via_ele27": 7169097,
+        "stored_ele27_candidate": 10977513,
+        "stored_by_acceptance_flag": {
+          "DoubleMuon": 6893144,
+          "SingleMuon": 14739945,
+          "DoubleEG": 3939708,
+          "MuonEG": 17825
+        },
+        "cpu_seconds": 15669.284720659256,
+        "sum_runs_gen_event_sumw_over_ok_files": 1220934627963.072,
+        "n_capped_signatures": 0,
+        "max_cap_weight_scale": 0.0,
+        "slowest_file": 10,
+        "slowest_seconds": 600.8294880390167
+      }
+    },
+    "37728": {
+      "physics_short": "GluGluHToZZTo4L_M125",
+      "expected": 8,
+      "succeeded": 8,
+      "failed": 0,
+      "failed_file_indices": [],
+      "resubmit_file_indices_argument": null,
+      "failures": [],
+      "aggregate": {
+        "events_read": 1000000,
+        "events_after_trigger": 639493,
+        "events_stored": 522702,
+        "stored_only_via_ele27": 135042,
+        "stored_ele27_candidate": 227530,
+        "stored_by_acceptance_flag": {
+          "DoubleMuon": 149271,
+          "SingleMuon": 310301,
+          "DoubleEG": 77145,
+          "MuonEG": 32382
+        },
+        "cpu_seconds": 2160.1078095436096,
+        "sum_runs_gen_event_sumw_over_ok_files": 28869643.6672,
+        "n_capped_signatures": 0,
+        "max_cap_weight_scale": 0.0,
+        "slowest_file": 5,
+        "slowest_seconds": 508.1693477630615
+      }
+    }
+  },
+  "grand_total": {
+    "expected": 98,
+    "succeeded": 98,
+    "failed": 0,
+    "read": 116385442,
+    "stored": 51576830,
+    "ele27_only": 15323155,
+    "cpu_seconds": 72569.49463391304,
+    "capped_signatures": 0
+  },
+  "all_files_succeeded": true
+}
