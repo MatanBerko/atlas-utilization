@@ -1,0 +1,76 @@
+{
+  "root_file": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/final/delivery/mcsmoke37728_record37728_mc.root",
+  "build_report": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/final/delivery/mcsmoke37728_build_report.json",
+  "scratch_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/final/delivery_scratch",
+  "n_histograms": 4,
+  "n_im_combinations": 3,
+  "im_combinations": [
+    "m0j0",
+    "m0m1j0",
+    "m1j0"
+  ],
+  "four_lepton": {
+    "2e2mu": {
+      "im": "e0e1m0m1",
+      "pre_postprocessing": null,
+      "delivered": null
+    },
+    "4e": {
+      "im": "e0e1e2e3",
+      "pre_postprocessing": null,
+      "delivered": null
+    },
+    "4mu": {
+      "im": "m0m1m2m3",
+      "pre_postprocessing": null,
+      "delivered": null
+    }
+  },
+  "dilepton": {
+    "ee": {
+      "im": "e0e1",
+      "n_raw_entries_before_postprocessing": 249,
+      "integral_weighted_before_postprocessing": 13.619501834027782,
+      "n_filled_bins_before_postprocessing": 6,
+      "first_filled_bin_centre_gev": 45.0,
+      "peak_bin_centre_gev": 85.0,
+      "n_delivered_histograms_for_this_im": 0,
+      "note": "removed entirely by the 110 GeV Z cut"
+    },
+    "mumu": {
+      "im": "m0m1",
+      "n_raw_entries_before_postprocessing": 466,
+      "integral_weighted_before_postprocessing": 25.23831228525905,
+      "n_filled_bins_before_postprocessing": 11,
+      "first_filled_bin_centre_gev": 5.0,
+      "peak_bin_centre_gev": 95.0,
+      "n_delivered_histograms_for_this_im": 0,
+      "note": "removed entirely by the 110 GeV Z cut"
+    },
+    "delivered_two_object": {
+      "im": "m0j0",
+      "histogram": "ROI_mass_m0j0_cat_0ex_1mx_1jx_0bx_width_10.0",
+      "integral_weighted": 5.618857498131691,
+      "n_filled_bins": 11,
+      "first_filled_bin_centre_gev": 95.0
+    }
+  },
+  "closure": {
+    "record_id": "37728",
+    "normalisation_factor": 0.0019033806213360565,
+    "cross_section_pb_sigma_eff": 0.013447,
+    "sigma_w_over_surviving_files": 115813.23700000002,
+    "target_luminosity_fb": 16.393,
+    "n_histograms_delivered": 4,
+    "n_raw_entries_in_delivered_histograms": 364,
+    "sum_of_histogram_integrals": 19.7724059113188,
+    "sum_of_weighted_yields_from_build_report": 19.7724059113188,
+    "sum_of_sum_w_in_hist_from_build_report": 19.7724059113188,
+    "integrals_match_build_report": true,
+    "implied_sum_genweight_times_prefire": 10388.046242395692,
+    "expected_yield_from_sigma_times_lumi_times_sigmaw_share": 19.772405911318803,
+    "closure_relative_difference": 1.796803937130754e-16,
+    "formula": "expected = sigma_eff[pb] * 1000 * L_fb * (sum(genWeight*L1prefire) over delivered entries / Sigma-w)",
+    "note": "The arithmetic identity the weight definition implies. It verifies the normalisation was applied once and consistently and that nothing was lost between the weight arrays and the histograms. NOT a physics cross-check."
+  }
+}

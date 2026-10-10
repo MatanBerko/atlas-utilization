@@ -1,0 +1,420 @@
+{
+  "what": "CMS MC delivery build (studies/cms_mc_weights_v3)",
+  "generated_utc": "2026-10-10T15:54:16.271760+00:00",
+  "git_commit": "cd67372717d83a28bd31c29a5d5354040d806db6",
+  "runs_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/mc_smoke2",
+  "out_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/final/delivery",
+  "is_smoke_test": true,
+  "options": {
+    "peak_on": "weighted",
+    "min_events_basis": "raw",
+    "output_mode": "both",
+    "min_events_per_fs": 100
+  },
+  "constants": {
+    "target_luminosity_fb": 16.393,
+    "z_peak_cutoff_gev": 110.0,
+    "max_mass_cutoff_gev": 10000.0,
+    "bin_width_gev": 10.0,
+    "n_bins": 1000,
+    "sigma_w_tolerance": 1e-06,
+    "shard_read": "dataset_shard_rare4_inclusive.sqlite",
+    "event_union": "the four data acceptance flags only; the SingleElectron candidate is stored and ignored"
+  },
+  "samples": {
+    "37728": {
+      "physics_short": "GluGluHToZZTo4L_M125",
+      "cross_section_pb_sigma_eff": 0.013447,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "campaign_guard": {
+        "portal_dataset_title": "/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+        "campaign_ok": true
+      },
+      "sigma_w_over_surviving_files": 115813.23700000002,
+      "n_files_included": 1,
+      "n_files_excluded": 0,
+      "per_file_sigma_w": [
+        {
+          "file_index": 0,
+          "shard": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/mc_smoke2/record37728/job_0/dataset_shard_rare4_inclusive.sqlite",
+          "runs_gen_event_sumw": 115813.23700000002,
+          "file_sum_genweight": 115813.23726654053,
+          "relative_difference": 2.3014683936892884e-09,
+          "tolerance": 1e-06,
+          "n_events_read": 4000,
+          "runs_gen_event_count": 4000,
+          "event_count_matches": true,
+          "verdict": "included"
+        }
+      ],
+      "normalisation_factor": 0.0019033806213360565,
+      "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+      "weight_write_stats": [
+        {
+          "file_index": 0,
+          "capped_signatures": {},
+          "n_mcw_signatures_written": 890,
+          "n_entries_weighted": 5743,
+          "n_capped_signatures_scaled": 0
+        }
+      ],
+      "n_capped_signatures_total": 0,
+      "histograms": {
+        "n_mass_signatures": 8,
+        "n_bumpnet_names_before_postprocessing": 8,
+        "per_histogram": {
+          "mass_e0e1_cat_2ex_0mx_0jx_0bx": {
+            "n_input": 191,
+            "n_after_z_and_max_mass": 0,
+            "empty_at": "z_and_max_mass",
+            "kept": false
+          },
+          "mass_m0j0_cat_0ex_1mx_1jx_0bx": {
+            "n_input": 187,
+            "n_after_z_and_max_mass": 187,
+            "peak_mass": 90.0,
+            "peak_on": "weighted",
+            "n_after_peak_removal": 113,
+            "n_main": 103,
+            "n_outliers": 10,
+            "kept": true,
+            "n_raw_entries": 103,
+            "weighted_yield": 5.618857498131692,
+            "sum_w_in_hist": 5.618857498131691,
+            "sum_w2_in_hist": 0.3065763112007196,
+            "negative_bin_inventory": {
+              "n_filled_bins": 11,
+              "first_filled_bin": 9,
+              "last_filled_bin": 19,
+              "n_bins_in_filled_range": 11,
+              "n_bins_le_zero_in_filled_range": 0,
+              "n_bins_lt_zero_in_filled_range": 0,
+              "n_bins_eq_zero_in_filled_range": 0,
+              "n_bins_never_filled_in_range": 0,
+              "n_filled_bins_le_zero": 0,
+              "n_filled_bins_lt_zero": 0,
+              "n_filled_bins_eq_zero": 0,
+              "most_negative_content": 0.0540932582904245
+            }
+          },
+          "mass_m0j0_cat_0ex_2mx_1jx_0bx": {
+            "n_input": 130,
+            "n_after_z_and_max_mass": 130,
+            "peak_mass": 70.0,
+            "peak_on": "weighted",
+            "n_after_peak_removal": 107,
+            "n_main": 91,
+            "n_outliers": 16,
+            "kept": true,
+            "n_raw_entries": 91,
+            "weighted_yield": 4.933532152527906,
+            "sum_w_in_hist": 4.933532152527906,
+            "sum_w2_in_hist": 0.26751384140251855,
+            "negative_bin_inventory": {
+              "n_filled_bins": 15,
+              "first_filled_bin": 7,
+              "last_filled_bin": 21,
+              "n_bins_in_filled_range": 15,
+              "n_bins_le_zero_in_filled_range": 0,
+              "n_bins_lt_zero_in_filled_range": 0,
+              "n_bins_eq_zero_in_filled_range": 0,
+              "n_bins_never_filled_in_range": 0,
+              "n_filled_bins_le_zero": 0,
+              "n_filled_bins_lt_zero": 0,
+              "n_filled_bins_eq_zero": 0,
+              "most_negative_content": 0.10724980163897939
+            }
+          },
+          "mass_m0m1_cat_0ex_2mx_0jx_0bx": {
+            "n_input": 336,
+            "n_after_z_and_max_mass": 0,
+            "empty_at": "z_and_max_mass",
+            "kept": false
+          },
+          "mass_m0m1_cat_0ex_2mx_1jx_0bx": {
+            "n_input": 130,
+            "n_after_z_and_max_mass": 0,
+            "empty_at": "z_and_max_mass",
+            "kept": false
+          },
+          "mass_m0m1j0_cat_0ex_2mx_1jx_0bx": {
+            "n_input": 130,
+            "n_after_z_and_max_mass": 122,
+            "peak_mass": 120.0,
+            "peak_on": "weighted",
+            "n_after_peak_removal": 109,
+            "n_main": 99,
+            "n_outliers": 10,
+            "kept": true,
+            "n_raw_entries": 99,
+            "weighted_yield": 5.37353007396875,
+            "sum_w_in_hist": 5.373530073968752,
+            "sum_w2_in_hist": 0.29170137021954323,
+            "negative_bin_inventory": {
+              "n_filled_bins": 21,
+              "first_filled_bin": 12,
+              "last_filled_bin": 32,
+              "n_bins_in_filled_range": 21,
+              "n_bins_le_zero_in_filled_range": 0,
+              "n_bins_lt_zero_in_filled_range": 0,
+              "n_bins_eq_zero_in_filled_range": 0,
+              "n_bins_never_filled_in_range": 0,
+              "n_filled_bins_le_zero": 0,
+              "n_filled_bins_lt_zero": 0,
+              "n_filled_bins_eq_zero": 0,
+              "most_negative_content": 0.05378935571601683
+            }
+          },
+          "mass_m1j0_cat_0ex_2mx_1jx_0bx": {
+            "n_input": 130,
+            "n_after_z_and_max_mass": 130,
+            "peak_mass": 70.0,
+            "peak_on": "weighted",
+            "n_after_peak_removal": 81,
+            "n_main": 71,
+            "n_outliers": 10,
+            "kept": true,
+            "n_raw_entries": 71,
+            "weighted_yield": 3.846486186690451,
+            "sum_w_in_hist": 3.846486186690451,
+            "sum_w2_in_hist": 0.20840929669604644,
+            "negative_bin_inventory": {
+              "n_filled_bins": 12,
+              "first_filled_bin": 7,
+              "last_filled_bin": 18,
+              "n_bins_in_filled_range": 12,
+              "n_bins_le_zero_in_filled_range": 0,
+              "n_bins_lt_zero_in_filled_range": 0,
+              "n_bins_eq_zero_in_filled_range": 0,
+              "n_bins_never_filled_in_range": 0,
+              "n_filled_bins_le_zero": 0,
+              "n_filled_bins_lt_zero": 0,
+              "n_filled_bins_eq_zero": 0,
+              "most_negative_content": 0.05343878138441562
+            }
+          }
+        },
+        "raw_yield_by_final_state": {
+          "2e_0m_0j_0b": 191,
+          "0e_1m_1j_0b": 187,
+          "0e_2m_1j_0b": 520,
+          "0e_2m_0j_0b": 336
+        },
+        "weighted_yield_by_final_state": {
+          "2e_0m_0j_0b": 10.45645749199248,
+          "0e_1m_1j_0b": 10.211053973868301,
+          "0e_2m_1j_0b": 28.19430665161508,
+          "0e_2m_0j_0b": 18.189735622355272
+        },
+        "n_dropped_empty": 4,
+        "n_dropped_min_events_weighted": 0,
+        "n_entries_dropped_by_event_union": 242,
+        "n_histograms_kept": 4
+      }
+    }
+  },
+  "SMOKE_TEST_WARNING": "THIS IS A SMOKE TEST, NOT A PHYSICS RESULT. Sigma-w comes from the probed file(s) only, so every weight is normalised as if that file were the whole sample. Yields are meaningless as physics; the point is that the chain runs end to end and the arithmetic closes.",
+  "prune": {
+    "basis": "raw",
+    "min_events_per_fs": 100,
+    "applied_to_n_shards": 1,
+    "applied": "once, on the combined shards of every surviving file of every sample",
+    "n_final_states_removed": 63,
+    "final_states_removed": [
+      "_FS_0e_1m_0j_1b",
+      "_FS_0e_1m_1j_1b",
+      "_FS_0e_1m_2j_0b",
+      "_FS_0e_1m_2j_1b",
+      "_FS_0e_1m_3j_0b",
+      "_FS_0e_1m_4j_0b",
+      "_FS_0e_1m_4j_1b",
+      "_FS_0e_1m_4j_2b",
+      "_FS_0e_1m_5j_0b",
+      "_FS_0e_2m_0j_1b",
+      "_FS_0e_2m_1j_1b",
+      "_FS_0e_2m_2j_0b",
+      "_FS_0e_2m_2j_1b",
+      "_FS_0e_2m_3j_0b",
+      "_FS_0e_2m_4j_0b",
+      "_FS_0e_3m_0j_0b",
+      "_FS_0e_3m_0j_1b",
+      "_FS_0e_3m_1j_0b",
+      "_FS_0e_3m_2j_0b",
+      "_FS_0e_3m_2j_1b",
+      "_FS_0e_3m_3j_0b",
+      "_FS_0e_4m_1j_0b",
+      "_FS_0e_4m_2j_0b",
+      "_FS_1e_0m_0j_1b",
+      "_FS_1e_0m_1j_1b",
+      "_FS_1e_0m_2j_0b",
+      "_FS_1e_0m_2j_1b",
+      "_FS_1e_0m_3j_0b",
+      "_FS_1e_0m_4j_0b",
+      "_FS_1e_0m_4j_1b",
+      "_FS_1e_1m_0j_0b",
+      "_FS_1e_1m_1j_0b",
+      "_FS_1e_1m_1j_1b",
+      "_FS_1e_1m_2j_0b",
+      "_FS_1e_1m_2j_1b",
+      "_FS_1e_1m_3j_0b",
+      "_FS_1e_1m_3j_1b",
+      "_FS_1e_1m_4j_0b",
+      "_FS_1e_1m_4j_1b",
+      "_FS_1e_2m_0j_0b",
+      "_FS_1e_2m_1j_0b",
+      "_FS_1e_2m_2j_0b",
+      "_FS_1e_2m_3j_0b",
+      "_FS_2e_0m_0j_1b",
+      "_FS_2e_0m_1j_0b",
+      "_FS_2e_0m_2j_0b",
+      "_FS_2e_0m_2j_1b",
+      "_FS_2e_0m_3j_0b",
+      "_FS_2e_0m_4j_0b",
+      "_FS_2e_1m_0j_0b",
+      "_FS_2e_1m_1j_0b",
+      "_FS_2e_1m_2j_0b",
+      "_FS_2e_1m_4j_0b",
+      "_FS_2e_2m_1j_0b",
+      "_FS_2e_2m_2j_0b",
+      "_FS_2e_2m_3j_0b",
+      "_FS_3e_0m_0j_0b",
+      "_FS_3e_0m_1j_0b",
+      "_FS_3e_0m_2j_0b",
+      "_FS_3e_0m_2j_1b",
+      "_FS_3e_0m_4j_0b",
+      "_FS_4e_0m_1j_0b",
+      "_FS_4e_0m_2j_0b"
+    ],
+    "n_orphan_rows_after_prune": 0
+  },
+  "summed_sm": {
+    "n_histograms": 4,
+    "n_samples_summed": 1,
+    "negative_bin_inventory": {
+      "mass_m0j0_cat_0ex_1mx_1jx_0bx": {
+        "n_filled_bins": 11,
+        "first_filled_bin": 9,
+        "last_filled_bin": 19,
+        "n_bins_in_filled_range": 11,
+        "n_bins_le_zero_in_filled_range": 0,
+        "n_bins_lt_zero_in_filled_range": 0,
+        "n_bins_eq_zero_in_filled_range": 0,
+        "n_bins_never_filled_in_range": 0,
+        "n_filled_bins_le_zero": 0,
+        "n_filled_bins_lt_zero": 0,
+        "n_filled_bins_eq_zero": 0,
+        "most_negative_content": 0.0540932582904245
+      },
+      "mass_m0j0_cat_0ex_2mx_1jx_0bx": {
+        "n_filled_bins": 15,
+        "first_filled_bin": 7,
+        "last_filled_bin": 21,
+        "n_bins_in_filled_range": 15,
+        "n_bins_le_zero_in_filled_range": 0,
+        "n_bins_lt_zero_in_filled_range": 0,
+        "n_bins_eq_zero_in_filled_range": 0,
+        "n_bins_never_filled_in_range": 0,
+        "n_filled_bins_le_zero": 0,
+        "n_filled_bins_lt_zero": 0,
+        "n_filled_bins_eq_zero": 0,
+        "most_negative_content": 0.10724980163897939
+      },
+      "mass_m0m1j0_cat_0ex_2mx_1jx_0bx": {
+        "n_filled_bins": 21,
+        "first_filled_bin": 12,
+        "last_filled_bin": 32,
+        "n_bins_in_filled_range": 21,
+        "n_bins_le_zero_in_filled_range": 0,
+        "n_bins_lt_zero_in_filled_range": 0,
+        "n_bins_eq_zero_in_filled_range": 0,
+        "n_bins_never_filled_in_range": 0,
+        "n_filled_bins_le_zero": 0,
+        "n_filled_bins_lt_zero": 0,
+        "n_filled_bins_eq_zero": 0,
+        "most_negative_content": 0.05378935571601683
+      },
+      "mass_m1j0_cat_0ex_2mx_1jx_0bx": {
+        "n_filled_bins": 12,
+        "first_filled_bin": 7,
+        "last_filled_bin": 18,
+        "n_bins_in_filled_range": 12,
+        "n_bins_le_zero_in_filled_range": 0,
+        "n_bins_lt_zero_in_filled_range": 0,
+        "n_bins_eq_zero_in_filled_range": 0,
+        "n_bins_never_filled_in_range": 0,
+        "n_filled_bins_le_zero": 0,
+        "n_filled_bins_lt_zero": 0,
+        "n_filled_bins_eq_zero": 0,
+        "most_negative_content": 0.05343878138441562
+      }
+    }
+  },
+  "outputs": {
+    "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/final/delivery/mcsmoke37728_record37728_mc.root": {
+      "n_histograms": 4
+    },
+    "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/final/delivery/mcsmoke37728_summedSM_mc.root": {
+      "n_histograms": 4
+    }
+  },
+  "readback_assertions": {
+    "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/final/delivery/mcsmoke37728_record37728_mc.root": {
+      "path": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/final/delivery/mcsmoke37728_record37728_mc.root",
+      "n_histograms": 4,
+      "all_readback_assertions_passed": true,
+      "checked_sample": {
+        "ROI_mass_m0j0_cat_0ex_1mx_1jx_0bx_width_10.0": {
+          "classname": "TH1D",
+          "n_bins": 1000,
+          "len_fSumw2": 1002,
+          "sum_w": 5.618857498131691,
+          "sum_w2": 0.3065763112007196
+        },
+        "ROI_mass_m0j0_cat_0ex_2mx_1jx_0bx_width_10.0": {
+          "classname": "TH1D",
+          "n_bins": 1000,
+          "len_fSumw2": 1002,
+          "sum_w": 4.933532152527906,
+          "sum_w2": 0.26751384140251855
+        },
+        "ROI_mass_m0m1j0_cat_0ex_2mx_1jx_0bx_width_10.0": {
+          "classname": "TH1D",
+          "n_bins": 1000,
+          "len_fSumw2": 1002,
+          "sum_w": 5.373530073968752,
+          "sum_w2": 0.29170137021954323
+        }
+      }
+    },
+    "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/final/delivery/mcsmoke37728_summedSM_mc.root": {
+      "path": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/final/delivery/mcsmoke37728_summedSM_mc.root",
+      "n_histograms": 4,
+      "all_readback_assertions_passed": true,
+      "checked_sample": {
+        "ROI_mass_m0j0_cat_0ex_1mx_1jx_0bx_width_10.0": {
+          "classname": "TH1D",
+          "n_bins": 1000,
+          "len_fSumw2": 1002,
+          "sum_w": 5.618857498131691,
+          "sum_w2": 0.3065763112007196
+        },
+        "ROI_mass_m0j0_cat_0ex_2mx_1jx_0bx_width_10.0": {
+          "classname": "TH1D",
+          "n_bins": 1000,
+          "len_fSumw2": 1002,
+          "sum_w": 4.933532152527906,
+          "sum_w2": 0.26751384140251855
+        },
+        "ROI_mass_m0m1j0_cat_0ex_2mx_1jx_0bx_width_10.0": {
+          "classname": "TH1D",
+          "n_bins": 1000,
+          "len_fSumw2": 1002,
+          "sum_w": 5.373530073968752,
+          "sum_w2": 0.29170137021954323
+        }
+      }
+    }
+  },
+  "scratch_kept": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/final/delivery_scratch"
+}

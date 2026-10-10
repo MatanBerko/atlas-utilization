@@ -1,0 +1,1059 @@
+{
+  "what": "Part B: data-path regression of the v3 implementation against the delivered four-dataset production",
+  "old_runs_dir": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_full_20261007",
+  "new_runs_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/data_regression2",
+  "old_opened": "SQLite mode=ro&immutable=1 -- the delivered shards cannot be written to by this script",
+  "shard_files_compared_per_job": [
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite"
+  ],
+  "metadata_keys_allowed_to_differ": [
+    "created_utc",
+    "git_commit",
+    "elapsed_sec",
+    "inclusive_shard_size_mb",
+    "exclusive_shard_size_mb"
+  ],
+  "jobs": {
+    "DoubleEG/job_0": {
+      "old_job_dir": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_full_20261007/DoubleEG/job_0",
+      "new_job_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/data_regression2/DoubleEG/job_0",
+      "shards": {
+        "dataset_shard_inclusive.sqlite": {
+          "shard": "dataset_shard_inclusive.sqlite",
+          "n_signatures": 593,
+          "n_arrays_compared_equal": 593,
+          "n_total_entries": 122662,
+          "n_final_state_count_rows": 31,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_exclusive.sqlite": {
+          "shard": "dataset_shard_exclusive.sqlite",
+          "n_signatures": 521,
+          "n_arrays_compared_equal": 521,
+          "n_total_entries": 122551,
+          "n_final_state_count_rows": 31,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "shard": "dataset_shard_top4_inclusive.sqlite",
+          "n_signatures": 87,
+          "n_arrays_compared_equal": 87,
+          "n_total_entries": 116022,
+          "n_final_state_count_rows": 12,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "shard": "dataset_shard_top4_exclusive.sqlite",
+          "n_signatures": 76,
+          "n_arrays_compared_equal": 76,
+          "n_total_entries": 115939,
+          "n_final_state_count_rows": 12,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_inclusive.sqlite",
+          "n_signatures": 87,
+          "n_arrays_compared_equal": 87,
+          "n_total_entries": 115945,
+          "n_final_state_count_rows": 12,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_exclusive.sqlite",
+          "n_signatures": 76,
+          "n_arrays_compared_equal": 76,
+          "n_total_entries": 115873,
+          "n_final_state_count_rows": 12,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "shard": "dataset_shard_rare4_inclusive.sqlite",
+          "n_signatures": 525,
+          "n_arrays_compared_equal": 525,
+          "n_total_entries": 122508,
+          "n_final_state_count_rows": 28,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "shard": "dataset_shard_rare4_exclusive.sqlite",
+          "n_signatures": 478,
+          "n_arrays_compared_equal": 478,
+          "n_total_entries": 122422,
+          "n_final_state_count_rows": 28,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        }
+      },
+      "job_metadata": {
+        "n_keys_compared": 31,
+        "keys_excluded": [
+          "created_utc",
+          "git_commit",
+          "elapsed_sec",
+          "inclusive_shard_size_mb",
+          "exclusive_shard_size_mb"
+        ],
+        "excluded_values": {
+          "created_utc": {
+            "old": "2026-10-07T13:00:01.451393+00:00",
+            "new": "2026-10-10T15:32:30.652240+00:00"
+          },
+          "git_commit": {
+            "old": "06778c9b21ae9243ec49e1455ed055edfe608291",
+            "new": "cd67372717d83a28bd31c29a5d5354040d806db6"
+          },
+          "elapsed_sec": {
+            "old": 110.72796893119812,
+            "new": 105.56263041496277
+          },
+          "inclusive_shard_size_mb": {
+            "old": 0.586,
+            "new": 0.586
+          },
+          "exclusive_shard_size_mb": {
+            "old": 0.566,
+            "new": 0.566
+          }
+        },
+        "n_differences": 0,
+        "differences": []
+      }
+    },
+    "DoubleEG/job_132": {
+      "old_job_dir": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_full_20261007/DoubleEG/job_132",
+      "new_job_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/data_regression2/DoubleEG/job_132",
+      "shards": {
+        "dataset_shard_inclusive.sqlite": {
+          "shard": "dataset_shard_inclusive.sqlite",
+          "n_signatures": 215,
+          "n_arrays_compared_equal": 215,
+          "n_total_entries": 8433,
+          "n_final_state_count_rows": 13,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_exclusive.sqlite": {
+          "shard": "dataset_shard_exclusive.sqlite",
+          "n_signatures": 215,
+          "n_arrays_compared_equal": 215,
+          "n_total_entries": 8433,
+          "n_final_state_count_rows": 13,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "shard": "dataset_shard_top4_inclusive.sqlite",
+          "n_signatures": 42,
+          "n_arrays_compared_equal": 42,
+          "n_total_entries": 8064,
+          "n_final_state_count_rows": 6,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "shard": "dataset_shard_top4_exclusive.sqlite",
+          "n_signatures": 42,
+          "n_arrays_compared_equal": 42,
+          "n_total_entries": 8064,
+          "n_final_state_count_rows": 6,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_inclusive.sqlite",
+          "n_signatures": 42,
+          "n_arrays_compared_equal": 42,
+          "n_total_entries": 8064,
+          "n_final_state_count_rows": 6,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_exclusive.sqlite",
+          "n_signatures": 42,
+          "n_arrays_compared_equal": 42,
+          "n_total_entries": 8064,
+          "n_final_state_count_rows": 6,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "shard": "dataset_shard_rare4_inclusive.sqlite",
+          "n_signatures": 215,
+          "n_arrays_compared_equal": 215,
+          "n_total_entries": 8433,
+          "n_final_state_count_rows": 13,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "shard": "dataset_shard_rare4_exclusive.sqlite",
+          "n_signatures": 215,
+          "n_arrays_compared_equal": 215,
+          "n_total_entries": 8433,
+          "n_final_state_count_rows": 13,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        }
+      },
+      "job_metadata": {
+        "n_keys_compared": 31,
+        "keys_excluded": [
+          "created_utc",
+          "git_commit",
+          "elapsed_sec",
+          "inclusive_shard_size_mb",
+          "exclusive_shard_size_mb"
+        ],
+        "excluded_values": {
+          "created_utc": {
+            "old": "2026-10-07T13:18:39.679088+00:00",
+            "new": "2026-10-10T15:31:16.413227+00:00"
+          },
+          "git_commit": {
+            "old": "06778c9b21ae9243ec49e1455ed055edfe608291",
+            "new": "3c473152faaa05092e3ad2c712a4d5e1e87822f5"
+          },
+          "elapsed_sec": {
+            "old": 32.46389603614807,
+            "new": 31.32255506515503
+          },
+          "inclusive_shard_size_mb": {
+            "old": 0.105,
+            "new": 0.105
+          },
+          "exclusive_shard_size_mb": {
+            "old": 0.105,
+            "new": 0.105
+          }
+        },
+        "n_differences": 0,
+        "differences": []
+      }
+    },
+    "DoubleMuon/job_0": {
+      "old_job_dir": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_full_20261007/DoubleMuon/job_0",
+      "new_job_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/data_regression2/DoubleMuon/job_0",
+      "shards": {
+        "dataset_shard_inclusive.sqlite": {
+          "shard": "dataset_shard_inclusive.sqlite",
+          "n_signatures": 1237,
+          "n_arrays_compared_equal": 1237,
+          "n_total_entries": 464388,
+          "n_final_state_count_rows": 48,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_exclusive.sqlite": {
+          "shard": "dataset_shard_exclusive.sqlite",
+          "n_signatures": 1237,
+          "n_arrays_compared_equal": 1237,
+          "n_total_entries": 464388,
+          "n_final_state_count_rows": 48,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "shard": "dataset_shard_top4_inclusive.sqlite",
+          "n_signatures": 102,
+          "n_arrays_compared_equal": 102,
+          "n_total_entries": 440459,
+          "n_final_state_count_rows": 15,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "shard": "dataset_shard_top4_exclusive.sqlite",
+          "n_signatures": 102,
+          "n_arrays_compared_equal": 102,
+          "n_total_entries": 440459,
+          "n_final_state_count_rows": 15,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_inclusive.sqlite",
+          "n_signatures": 96,
+          "n_arrays_compared_equal": 96,
+          "n_total_entries": 440271,
+          "n_final_state_count_rows": 14,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_exclusive.sqlite",
+          "n_signatures": 96,
+          "n_arrays_compared_equal": 96,
+          "n_total_entries": 440271,
+          "n_final_state_count_rows": 14,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "shard": "dataset_shard_rare4_inclusive.sqlite",
+          "n_signatures": 782,
+          "n_arrays_compared_equal": 782,
+          "n_total_entries": 463793,
+          "n_final_state_count_rows": 37,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "shard": "dataset_shard_rare4_exclusive.sqlite",
+          "n_signatures": 782,
+          "n_arrays_compared_equal": 782,
+          "n_total_entries": 463793,
+          "n_final_state_count_rows": 37,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        }
+      },
+      "job_metadata": {
+        "n_keys_compared": 31,
+        "keys_excluded": [
+          "created_utc",
+          "git_commit",
+          "elapsed_sec",
+          "inclusive_shard_size_mb",
+          "exclusive_shard_size_mb"
+        ],
+        "excluded_values": {
+          "created_utc": {
+            "old": "2026-10-07T11:33:56.621882+00:00",
+            "new": "2026-10-10T15:34:04.332707+00:00"
+          },
+          "git_commit": {
+            "old": "06778c9b21ae9243ec49e1455ed055edfe608291",
+            "new": "cd67372717d83a28bd31c29a5d5354040d806db6"
+          },
+          "elapsed_sec": {
+            "old": 256.0137474536896,
+            "new": 202.30617761611938
+          },
+          "inclusive_shard_size_mb": {
+            "old": 1.859,
+            "new": 1.859
+          },
+          "exclusive_shard_size_mb": {
+            "old": 1.859,
+            "new": 1.859
+          }
+        },
+        "n_differences": 0,
+        "differences": []
+      }
+    },
+    "DoubleMuon/job_56": {
+      "old_job_dir": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_full_20261007/DoubleMuon/job_56",
+      "new_job_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/data_regression2/DoubleMuon/job_56",
+      "shards": {
+        "dataset_shard_inclusive.sqlite": {
+          "shard": "dataset_shard_inclusive.sqlite",
+          "n_signatures": 1040,
+          "n_arrays_compared_equal": 1040,
+          "n_total_entries": 265047,
+          "n_final_state_count_rows": 43,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_exclusive.sqlite": {
+          "shard": "dataset_shard_exclusive.sqlite",
+          "n_signatures": 1040,
+          "n_arrays_compared_equal": 1040,
+          "n_total_entries": 265047,
+          "n_final_state_count_rows": 43,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "shard": "dataset_shard_top4_inclusive.sqlite",
+          "n_signatures": 85,
+          "n_arrays_compared_equal": 85,
+          "n_total_entries": 250808,
+          "n_final_state_count_rows": 13,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "shard": "dataset_shard_top4_exclusive.sqlite",
+          "n_signatures": 85,
+          "n_arrays_compared_equal": 85,
+          "n_total_entries": 250808,
+          "n_final_state_count_rows": 13,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_inclusive.sqlite",
+          "n_signatures": 74,
+          "n_arrays_compared_equal": 74,
+          "n_total_entries": 250599,
+          "n_final_state_count_rows": 12,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_exclusive.sqlite",
+          "n_signatures": 74,
+          "n_arrays_compared_equal": 74,
+          "n_total_entries": 250599,
+          "n_final_state_count_rows": 12,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "shard": "dataset_shard_rare4_inclusive.sqlite",
+          "n_signatures": 842,
+          "n_arrays_compared_equal": 842,
+          "n_total_entries": 264494,
+          "n_final_state_count_rows": 37,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "shard": "dataset_shard_rare4_exclusive.sqlite",
+          "n_signatures": 842,
+          "n_arrays_compared_equal": 842,
+          "n_total_entries": 264494,
+          "n_final_state_count_rows": 37,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        }
+      },
+      "job_metadata": {
+        "n_keys_compared": 31,
+        "keys_excluded": [
+          "created_utc",
+          "git_commit",
+          "elapsed_sec",
+          "inclusive_shard_size_mb",
+          "exclusive_shard_size_mb"
+        ],
+        "excluded_values": {
+          "created_utc": {
+            "old": "2026-10-07T11:56:34.241248+00:00",
+            "new": "2026-10-10T15:33:41.305511+00:00"
+          },
+          "git_commit": {
+            "old": "06778c9b21ae9243ec49e1455ed055edfe608291",
+            "new": "cd67372717d83a28bd31c29a5d5354040d806db6"
+          },
+          "elapsed_sec": {
+            "old": 212.03375697135925,
+            "new": 176.80697989463806
+          },
+          "inclusive_shard_size_mb": {
+            "old": 1.164,
+            "new": 1.164
+          },
+          "exclusive_shard_size_mb": {
+            "old": 1.164,
+            "new": 1.164
+          }
+        },
+        "n_differences": 0,
+        "differences": []
+      }
+    },
+    "MuonEG/job_0": {
+      "old_job_dir": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_full_20261007/MuonEG/job_0",
+      "new_job_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/data_regression2/MuonEG/job_0",
+      "shards": {
+        "dataset_shard_inclusive.sqlite": {
+          "shard": "dataset_shard_inclusive.sqlite",
+          "n_signatures": 1164,
+          "n_arrays_compared_equal": 1164,
+          "n_total_entries": 49668,
+          "n_final_state_count_rows": 44,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_exclusive.sqlite": {
+          "shard": "dataset_shard_exclusive.sqlite",
+          "n_signatures": 370,
+          "n_arrays_compared_equal": 370,
+          "n_total_entries": 3214,
+          "n_final_state_count_rows": 44,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "shard": "dataset_shard_top4_inclusive.sqlite",
+          "n_signatures": 111,
+          "n_arrays_compared_equal": 111,
+          "n_total_entries": 31793,
+          "n_final_state_count_rows": 14,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "shard": "dataset_shard_top4_exclusive.sqlite",
+          "n_signatures": 42,
+          "n_arrays_compared_equal": 42,
+          "n_total_entries": 2304,
+          "n_final_state_count_rows": 14,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_inclusive.sqlite",
+          "n_signatures": 105,
+          "n_arrays_compared_equal": 105,
+          "n_total_entries": 31380,
+          "n_final_state_count_rows": 13,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_exclusive.sqlite",
+          "n_signatures": 42,
+          "n_arrays_compared_equal": 42,
+          "n_total_entries": 2293,
+          "n_final_state_count_rows": 13,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "shard": "dataset_shard_rare4_inclusive.sqlite",
+          "n_signatures": 851,
+          "n_arrays_compared_equal": 851,
+          "n_total_entries": 48528,
+          "n_final_state_count_rows": 36,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "shard": "dataset_shard_rare4_exclusive.sqlite",
+          "n_signatures": 356,
+          "n_arrays_compared_equal": 356,
+          "n_total_entries": 3200,
+          "n_final_state_count_rows": 36,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        }
+      },
+      "job_metadata": {
+        "n_keys_compared": 31,
+        "keys_excluded": [
+          "created_utc",
+          "git_commit",
+          "elapsed_sec",
+          "inclusive_shard_size_mb",
+          "exclusive_shard_size_mb"
+        ],
+        "excluded_values": {
+          "created_utc": {
+            "old": "2026-10-07T13:22:50.297513+00:00",
+            "new": "2026-10-10T15:33:16.755531+00:00"
+          },
+          "git_commit": {
+            "old": "06778c9b21ae9243ec49e1455ed055edfe608291",
+            "new": "cd67372717d83a28bd31c29a5d5354040d806db6"
+          },
+          "elapsed_sec": {
+            "old": 280.9771168231964,
+            "new": 151.66557025909424
+          },
+          "inclusive_shard_size_mb": {
+            "old": 0.48,
+            "new": 0.48
+          },
+          "exclusive_shard_size_mb": {
+            "old": 0.113,
+            "new": 0.113
+          }
+        },
+        "n_differences": 0,
+        "differences": []
+      }
+    },
+    "MuonEG/job_47": {
+      "old_job_dir": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_full_20261007/MuonEG/job_47",
+      "new_job_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/data_regression2/MuonEG/job_47",
+      "shards": {
+        "dataset_shard_inclusive.sqlite": {
+          "shard": "dataset_shard_inclusive.sqlite",
+          "n_signatures": 1102,
+          "n_arrays_compared_equal": 1102,
+          "n_total_entries": 48977,
+          "n_final_state_count_rows": 42,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_exclusive.sqlite": {
+          "shard": "dataset_shard_exclusive.sqlite",
+          "n_signatures": 430,
+          "n_arrays_compared_equal": 430,
+          "n_total_entries": 3421,
+          "n_final_state_count_rows": 42,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "shard": "dataset_shard_top4_inclusive.sqlite",
+          "n_signatures": 94,
+          "n_arrays_compared_equal": 94,
+          "n_total_entries": 31125,
+          "n_final_state_count_rows": 12,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "shard": "dataset_shard_top4_exclusive.sqlite",
+          "n_signatures": 46,
+          "n_arrays_compared_equal": 46,
+          "n_total_entries": 2183,
+          "n_final_state_count_rows": 12,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_inclusive.sqlite",
+          "n_signatures": 94,
+          "n_arrays_compared_equal": 94,
+          "n_total_entries": 30685,
+          "n_final_state_count_rows": 12,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_exclusive.sqlite",
+          "n_signatures": 46,
+          "n_arrays_compared_equal": 46,
+          "n_total_entries": 2172,
+          "n_final_state_count_rows": 12,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "shard": "dataset_shard_rare4_inclusive.sqlite",
+          "n_signatures": 813,
+          "n_arrays_compared_equal": 813,
+          "n_total_entries": 47689,
+          "n_final_state_count_rows": 34,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "shard": "dataset_shard_rare4_exclusive.sqlite",
+          "n_signatures": 375,
+          "n_arrays_compared_equal": 375,
+          "n_total_entries": 3366,
+          "n_final_state_count_rows": 34,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        }
+      },
+      "job_metadata": {
+        "n_keys_compared": 31,
+        "keys_excluded": [
+          "created_utc",
+          "git_commit",
+          "elapsed_sec",
+          "inclusive_shard_size_mb",
+          "exclusive_shard_size_mb"
+        ],
+        "excluded_values": {
+          "created_utc": {
+            "old": "2026-10-07T13:27:06.543776+00:00",
+            "new": "2026-10-10T15:32:58.268523+00:00"
+          },
+          "git_commit": {
+            "old": "06778c9b21ae9243ec49e1455ed055edfe608291",
+            "new": "cd67372717d83a28bd31c29a5d5354040d806db6"
+          },
+          "elapsed_sec": {
+            "old": 90.71756720542908,
+            "new": 133.1785705089569
+          },
+          "inclusive_shard_size_mb": {
+            "old": 0.469,
+            "new": 0.469
+          },
+          "exclusive_shard_size_mb": {
+            "old": 0.129,
+            "new": 0.129
+          }
+        },
+        "n_differences": 0,
+        "differences": []
+      }
+    },
+    "SingleMuon/job_0": {
+      "old_job_dir": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_full_20261007/SingleMuon/job_0",
+      "new_job_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/data_regression2/SingleMuon/job_0",
+      "shards": {
+        "dataset_shard_inclusive.sqlite": {
+          "shard": "dataset_shard_inclusive.sqlite",
+          "n_signatures": 2283,
+          "n_arrays_compared_equal": 2283,
+          "n_total_entries": 1051521,
+          "n_final_state_count_rows": 109,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_exclusive.sqlite": {
+          "shard": "dataset_shard_exclusive.sqlite",
+          "n_signatures": 1940,
+          "n_arrays_compared_equal": 1940,
+          "n_total_entries": 870410,
+          "n_final_state_count_rows": 109,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "shard": "dataset_shard_top4_inclusive.sqlite",
+          "n_signatures": 198,
+          "n_arrays_compared_equal": 198,
+          "n_total_entries": 975583,
+          "n_final_state_count_rows": 31,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "shard": "dataset_shard_top4_exclusive.sqlite",
+          "n_signatures": 173,
+          "n_arrays_compared_equal": 173,
+          "n_total_entries": 803700,
+          "n_final_state_count_rows": 31,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_inclusive.sqlite",
+          "n_signatures": 198,
+          "n_arrays_compared_equal": 198,
+          "n_total_entries": 975238,
+          "n_final_state_count_rows": 31,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_exclusive.sqlite",
+          "n_signatures": 173,
+          "n_arrays_compared_equal": 173,
+          "n_total_entries": 803454,
+          "n_final_state_count_rows": 31,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "shard": "dataset_shard_rare4_inclusive.sqlite",
+          "n_signatures": 1827,
+          "n_arrays_compared_equal": 1827,
+          "n_total_entries": 1050442,
+          "n_final_state_count_rows": 94,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "shard": "dataset_shard_rare4_exclusive.sqlite",
+          "n_signatures": 1568,
+          "n_arrays_compared_equal": 1568,
+          "n_total_entries": 869584,
+          "n_final_state_count_rows": 94,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        }
+      },
+      "job_metadata": {
+        "n_keys_compared": 31,
+        "keys_excluded": [
+          "created_utc",
+          "git_commit",
+          "elapsed_sec",
+          "inclusive_shard_size_mb",
+          "exclusive_shard_size_mb"
+        ],
+        "excluded_values": {
+          "created_utc": {
+            "old": "2026-10-07T12:03:47.314767+00:00",
+            "new": "2026-10-10T15:41:38.988719+00:00"
+          },
+          "git_commit": {
+            "old": "06778c9b21ae9243ec49e1455ed055edfe608291",
+            "new": "cd67372717d83a28bd31c29a5d5354040d806db6"
+          },
+          "elapsed_sec": {
+            "old": 626.7824051380157,
+            "new": 654.4912428855896
+          },
+          "inclusive_shard_size_mb": {
+            "old": 4.273,
+            "new": 4.273
+          },
+          "exclusive_shard_size_mb": {
+            "old": 3.547,
+            "new": 3.547
+          }
+        },
+        "n_differences": 0,
+        "differences": []
+      }
+    },
+    "SingleMuon/job_151": {
+      "old_job_dir": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_full_20261007/SingleMuon/job_151",
+      "new_job_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_impl_20261011/data_regression2/SingleMuon/job_151",
+      "shards": {
+        "dataset_shard_inclusive.sqlite": {
+          "shard": "dataset_shard_inclusive.sqlite",
+          "n_signatures": 2219,
+          "n_arrays_compared_equal": 2219,
+          "n_total_entries": 747634,
+          "n_final_state_count_rows": 101,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_exclusive.sqlite": {
+          "shard": "dataset_shard_exclusive.sqlite",
+          "n_signatures": 1710,
+          "n_arrays_compared_equal": 1710,
+          "n_total_entries": 621090,
+          "n_final_state_count_rows": 101,
+          "n_metadata_keys": 12,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "shard": "dataset_shard_top4_inclusive.sqlite",
+          "n_signatures": 176,
+          "n_arrays_compared_equal": 176,
+          "n_total_entries": 694369,
+          "n_final_state_count_rows": 29,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "shard": "dataset_shard_top4_exclusive.sqlite",
+          "n_signatures": 151,
+          "n_arrays_compared_equal": 151,
+          "n_total_entries": 574400,
+          "n_final_state_count_rows": 29,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_inclusive.sqlite",
+          "n_signatures": 176,
+          "n_arrays_compared_equal": 176,
+          "n_total_entries": 694160,
+          "n_final_state_count_rows": 29,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "shard": "dataset_shard_nonjet4_exclusive.sqlite",
+          "n_signatures": 151,
+          "n_arrays_compared_equal": 151,
+          "n_total_entries": 574290,
+          "n_final_state_count_rows": 29,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "shard": "dataset_shard_rare4_inclusive.sqlite",
+          "n_signatures": 1677,
+          "n_arrays_compared_equal": 1677,
+          "n_total_entries": 746914,
+          "n_final_state_count_rows": 85,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "shard": "dataset_shard_rare4_exclusive.sqlite",
+          "n_signatures": 1431,
+          "n_arrays_compared_equal": 1431,
+          "n_total_entries": 620702,
+          "n_final_state_count_rows": 85,
+          "n_metadata_keys": 13,
+          "files_byte_identical": true,
+          "n_differences": 0,
+          "differences": []
+        }
+      },
+      "job_metadata": {
+        "n_keys_compared": 31,
+        "keys_excluded": [
+          "created_utc",
+          "git_commit",
+          "elapsed_sec",
+          "inclusive_shard_size_mb",
+          "exclusive_shard_size_mb"
+        ],
+        "excluded_values": {
+          "created_utc": {
+            "old": "2026-10-07T13:03:57.284565+00:00",
+            "new": "2026-10-10T15:46:46.871743+00:00"
+          },
+          "git_commit": {
+            "old": "06778c9b21ae9243ec49e1455ed055edfe608291",
+            "new": "cd67372717d83a28bd31c29a5d5354040d806db6"
+          },
+          "elapsed_sec": {
+            "old": 354.0680503845215,
+            "new": 962.3745822906494
+          },
+          "inclusive_shard_size_mb": {
+            "old": 3.141,
+            "new": 3.141
+          },
+          "exclusive_shard_size_mb": {
+            "old": 2.59,
+            "new": 2.59
+          }
+        },
+        "n_differences": 0,
+        "differences": []
+      }
+    }
+  },
+  "totals": {
+    "n_shards": 64,
+    "n_signatures": 34079,
+    "n_entries": 19715117,
+    "n_arrays_equal": 34079,
+    "n_byte_identical_files": 64
+  },
+  "n_jobs_compared": 8,
+  "total_differences": 0,
+  "VERDICT": "IDENTICAL -- the data path is unchanged"
+}
