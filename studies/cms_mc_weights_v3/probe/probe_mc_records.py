@@ -267,6 +267,30 @@ def probe_record(record_id: int, max_events: int, logf) -> dict:
                 ),
             }
 
+        # Values (not just presence) of the scalars the design stores:
+        # `run` is expected to be 1 in MC, i.e. it carries NO campaign
+        # information of the kind ATLAS's mcRunNumber does; the L1 prefiring
+        # nominal weight is the one correction D9 applies; Pileup_nTrueInt is
+        # stored but not applied.
+        scalars = {}
+        for b in ("run", "L1PreFiringWeight_Nom", "Pileup_nTrueInt"):
+            if b in available and n_probe > 0:
+                a = np.asarray(
+                    tree[b].array(entry_start=0, entry_stop=n_probe, library="np"),
+                    dtype=np.float64,
+                )
+                scalars[b] = {
+                    "min": float(a.min()),
+                    "max": float(a.max()),
+                    "mean": float(a.mean()),
+                    "n_distinct_capped_at_6": int(min(6, np.unique(a).size)),
+                }
+        out["probe_window_scalars"] = scalars
+        out["run_is_always_1_in_probe_window"] = (
+            bool(scalars["run"]["min"] == 1.0 and scalars["run"]["max"] == 1.0)
+            if "run" in scalars else None
+        )
+
         # ---- C5: whole-file sum(genWeight) vs Runs genEventSumw --------
         if "genWeight" in available:
             t_sum = time.perf_counter()
@@ -401,6 +425,9 @@ def main() -> int:
         "negative_genWeight_fraction_whole_file_by_record": {
             k: v.get("file_negative_genWeight_fraction") for k, v in recs.items()
         },
+        "records_where_run_is_not_always_1": sorted(
+            k for k, v in recs.items() if v.get("run_is_always_1_in_probe_window") is False
+        ),
     }
 
     json_path = out_dir / "probe_mc_records.json"
