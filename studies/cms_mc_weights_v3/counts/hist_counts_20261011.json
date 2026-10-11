@@ -1,0 +1,622 @@
+{
+  "what": "read-only count of MC pilot histograms by light-jet multiplicity and negative-bin status",
+  "generated_utc": "2026-10-11T12:59:36.243006+00:00",
+  "definitions": {
+    "final_state": "the _cat_<...>_width_ part of the histogram name",
+    "light_jets": "the <n> of the _<n>jx_ token; multi-digit allowed",
+    "filled_range": "first..last bin with an entry (error > 0 for TH1D with Sumw2; content != 0 for TH1F)",
+    "negative_bin": "content < 0 inside the filled range",
+    "option_e": "drop >=3-jet final states AND any remaining histogram with a negative bin; survivors are counted one histogram at a time, so a histogram removed by both halves is not subtracted twice"
+  },
+  "files": {
+    "pilot_summedSM_mc.root": {
+      "file": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pilot_20261011/build_default/pilot_summedSM_mc.root",
+      "n_histograms_total": 3289,
+      "classnames": {
+        "TH1D": 3289
+      },
+      "n_histograms_classified_by_jets": 3289,
+      "n_histograms_without_cat_in_name": 0,
+      "n_histograms_without_jet_token": 0,
+      "examples_without_jet_token": [],
+      "n_distinct_final_states": 148,
+      "by_jet_group": {
+        "0": 119,
+        "1": 299,
+        "2": 627,
+        "3": 578,
+        "4": 485,
+        "5+": 1181
+      },
+      "final_states_by_jet_group": {
+        "0": 22,
+        "1": 24,
+        "2": 23,
+        "3": 19,
+        "4": 17,
+        "5+": 43
+      },
+      "n_ge3_light_jets": 2244,
+      "n_ge4_light_jets": 1666,
+      "n_with_negative_bin": 1286,
+      "n_negative_bins_summed": 3123,
+      "negative_by_jet_group": {
+        "0": 56,
+        "1": 117,
+        "2": 250,
+        "3": 246,
+        "4": 182,
+        "5+": 435
+      },
+      "n_with_negative_bin_ge3_jets": 863,
+      "n_with_negative_bin_ge4_jets": 617,
+      "n_with_negative_bin_0to2_jets": 423,
+      "worst_ten_negative": [
+        {
+          "histogram": "ROI_mass_m0j1_cat_0ex_1mx_4jx_0bx_width_10.0",
+          "jet_group": "4",
+          "n_negative_bins": 16,
+          "most_negative": -7.548326624062977
+        },
+        {
+          "histogram": "ROI_mass_m1j0j1j2_cat_0ex_2mx_4jx_0bx_width_10.0",
+          "jet_group": "4",
+          "n_negative_bins": 15,
+          "most_negative": -5.651635851987885
+        },
+        {
+          "histogram": "ROI_mass_e0j0j1j2_cat_2ex_0mx_5jx_0bx_width_10.0",
+          "jet_group": "5+",
+          "n_negative_bins": 14,
+          "most_negative": -5.133961748245909
+        },
+        {
+          "histogram": "ROI_mass_e1j0j1j2_cat_2ex_0mx_3jx_0bx_width_10.0",
+          "jet_group": "3",
+          "n_negative_bins": 14,
+          "most_negative": -7.876420122097124
+        },
+        {
+          "histogram": "ROI_mass_m0j0_cat_0ex_2mx_2jx_0bx_width_10.0",
+          "jet_group": "2",
+          "n_negative_bins": 13,
+          "most_negative": -5.656336915753773
+        },
+        {
+          "histogram": "ROI_mass_m0j0j1b0_cat_0ex_2mx_5jx_1bx_width_10.0",
+          "jet_group": "5+",
+          "n_negative_bins": 13,
+          "most_negative": -2.7051502266254355
+        },
+        {
+          "histogram": "ROI_mass_m0j0j1j2_cat_0ex_1mx_4jx_0bx_width_10.0",
+          "jet_group": "4",
+          "n_negative_bins": 13,
+          "most_negative": -3.6075101837012045
+        },
+        {
+          "histogram": "ROI_mass_m1j0j1_cat_0ex_2mx_4jx_0bx_width_10.0",
+          "jet_group": "4",
+          "n_negative_bins": 13,
+          "most_negative": -7.354176513877663
+        },
+        {
+          "histogram": "ROI_mass_e0j0j1j2_cat_2ex_0mx_3jx_0bx_width_10.0",
+          "jet_group": "3",
+          "n_negative_bins": 12,
+          "most_negative": -4.815369889734869
+        },
+        {
+          "histogram": "ROI_mass_j0j1j2_cat_0ex_1mx_4jx_0bx_width_10.0",
+          "jet_group": "4",
+          "n_negative_bins": 12,
+          "most_negative": -3.8187096478137446
+        }
+      ],
+      "n_histograms_scanned_for_negatives": 3289,
+      "exact_light_jet_counts": {
+        "0": 119,
+        "1": 299,
+        "2": 627,
+        "3": 578,
+        "4": 485,
+        "5": 389,
+        "6": 389,
+        "7": 299,
+        "8": 82,
+        "9": 22
+      },
+      "options": {
+        "a_everything": 3289,
+        "b_drop_ge3_light_jets": 1045,
+        "c_drop_ge4_light_jets": 1623,
+        "d_drop_any_negative_bin": 2003,
+        "e_drop_ge3_light_jets_and_any_negative_bin": 622
+      }
+    },
+    "pilot_record67801_mc.root": {
+      "file": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pilot_20261011/build_default/pilot_record67801_mc.root",
+      "n_histograms_total": 3283,
+      "classnames": {
+        "TH1D": 3283
+      },
+      "n_histograms_classified_by_jets": 3283,
+      "n_histograms_without_cat_in_name": 0,
+      "n_histograms_without_jet_token": 0,
+      "examples_without_jet_token": [],
+      "n_distinct_final_states": 147,
+      "by_jet_group": {
+        "0": 119,
+        "1": 293,
+        "2": 627,
+        "3": 578,
+        "4": 485,
+        "5+": 1181
+      },
+      "final_states_by_jet_group": {
+        "0": 22,
+        "1": 23,
+        "2": 23,
+        "3": 19,
+        "4": 17,
+        "5+": 43
+      },
+      "n_ge3_light_jets": 2244,
+      "n_ge4_light_jets": 1666,
+      "n_with_negative_bin": 199,
+      "n_negative_bins_summed": 213,
+      "negative_by_jet_group": {
+        "0": 18,
+        "1": 22,
+        "2": 32,
+        "3": 38,
+        "4": 27,
+        "5+": 62
+      },
+      "n_with_negative_bin_ge3_jets": 127,
+      "n_with_negative_bin_ge4_jets": 89,
+      "n_with_negative_bin_0to2_jets": 72,
+      "worst_ten_negative": [
+        {
+          "histogram": "ROI_mass_m0m1b1_cat_0ex_2mx_1jx_2bx_width_10.0",
+          "jet_group": "1",
+          "n_negative_bins": 3,
+          "most_negative": -0.033464997963850614
+        },
+        {
+          "histogram": "ROI_mass_b0b1_cat_0ex_1mx_3jx_3bx_width_10.0",
+          "jet_group": "3",
+          "n_negative_bins": 2,
+          "most_negative": -0.000931717566797878
+        },
+        {
+          "histogram": "ROI_mass_e0e1b0b1_cat_2ex_0mx_2jx_2bx_width_10.0",
+          "jet_group": "2",
+          "n_negative_bins": 2,
+          "most_negative": -0.033883608736341046
+        },
+        {
+          "histogram": "ROI_mass_e0m0b0b1_cat_1ex_1mx_4jx_2bx_width_10.0",
+          "jet_group": "4",
+          "n_negative_bins": 2,
+          "most_negative": -0.03127170831822718
+        },
+        {
+          "histogram": "ROI_mass_e0m0b1_cat_1ex_1mx_5jx_2bx_width_10.0",
+          "jet_group": "5+",
+          "n_negative_bins": 2,
+          "most_negative": -0.03382642722218804
+        },
+        {
+          "histogram": "ROI_mass_j0j1j2_cat_0ex_1mx_4jx_0bx_width_10.0",
+          "jet_group": "4",
+          "n_negative_bins": 2,
+          "most_negative": -0.03360792246473642
+        },
+        {
+          "histogram": "ROI_mass_m0b0_cat_0ex_1mx_2jx_2bx_width_10.0",
+          "jet_group": "2",
+          "n_negative_bins": 2,
+          "most_negative": -0.03304928130748285
+        },
+        {
+          "histogram": "ROI_mass_m0b0_cat_0ex_1mx_3jx_3bx_width_10.0",
+          "jet_group": "3",
+          "n_negative_bins": 2,
+          "most_negative": -0.03377333745909193
+        },
+        {
+          "histogram": "ROI_mass_m0b0_cat_1ex_1mx_0jx_2bx_width_10.0",
+          "jet_group": "0",
+          "n_negative_bins": 2,
+          "most_negative": -0.03328943841591227
+        },
+        {
+          "histogram": "ROI_mass_m0b0b1_cat_0ex_1mx_0jx_2bx_width_10.0",
+          "jet_group": "0",
+          "n_negative_bins": 2,
+          "most_negative": -0.033530015605397874
+        }
+      ],
+      "n_histograms_scanned_for_negatives": 3283,
+      "exact_light_jet_counts": {
+        "0": 119,
+        "1": 293,
+        "2": 627,
+        "3": 578,
+        "4": 485,
+        "5": 389,
+        "6": 389,
+        "7": 299,
+        "8": 82,
+        "9": 22
+      },
+      "options": {
+        "a_everything": 3283,
+        "b_drop_ge3_light_jets": 1039,
+        "c_drop_ge4_light_jets": 1617,
+        "d_drop_any_negative_bin": 3084,
+        "e_drop_ge3_light_jets_and_any_negative_bin": 967
+      }
+    },
+    "pilot_record35669_mc.root": {
+      "file": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pilot_20261011/build_default/pilot_record35669_mc.root",
+      "n_histograms_total": 2498,
+      "classnames": {
+        "TH1D": 2498
+      },
+      "n_histograms_classified_by_jets": 2498,
+      "n_histograms_without_cat_in_name": 0,
+      "n_histograms_without_jet_token": 0,
+      "examples_without_jet_token": [],
+      "n_distinct_final_states": 128,
+      "by_jet_group": {
+        "0": 107,
+        "1": 281,
+        "2": 496,
+        "3": 466,
+        "4": 380,
+        "5+": 768
+      },
+      "final_states_by_jet_group": {
+        "0": 21,
+        "1": 23,
+        "2": 20,
+        "3": 17,
+        "4": 14,
+        "5+": 33
+      },
+      "n_ge3_light_jets": 1614,
+      "n_ge4_light_jets": 1148,
+      "n_with_negative_bin": 1764,
+      "n_negative_bins_summed": 6796,
+      "negative_by_jet_group": {
+        "0": 84,
+        "1": 191,
+        "2": 431,
+        "3": 366,
+        "4": 254,
+        "5+": 438
+      },
+      "n_with_negative_bin_ge3_jets": 1058,
+      "n_with_negative_bin_ge4_jets": 692,
+      "n_with_negative_bin_0to2_jets": 706,
+      "worst_ten_negative": [
+        {
+          "histogram": "ROI_mass_m0j0j1b0_cat_0ex_1mx_4jx_1bx_width_10.0",
+          "jet_group": "4",
+          "n_negative_bins": 23,
+          "most_negative": -5.771452722911708
+        },
+        {
+          "histogram": "ROI_mass_e0j0j1j2_cat_2ex_0mx_5jx_0bx_width_10.0",
+          "jet_group": "5+",
+          "n_negative_bins": 21,
+          "most_negative": -5.787102850429235
+        },
+        {
+          "histogram": "ROI_mass_m0j0j1b0_cat_0ex_2mx_5jx_1bx_width_10.0",
+          "jet_group": "5+",
+          "n_negative_bins": 20,
+          "most_negative": -3.8420809564512433
+        },
+        {
+          "histogram": "ROI_mass_m1j0j1j2_cat_0ex_2mx_4jx_0bx_width_10.0",
+          "jet_group": "4",
+          "n_negative_bins": 20,
+          "most_negative": -5.651635851987885
+        },
+        {
+          "histogram": "ROI_mass_m0m1j0b0_cat_0ex_2mx_5jx_1bx_width_10.0",
+          "jet_group": "5+",
+          "n_negative_bins": 18,
+          "most_negative": -5.673228042055987
+        },
+        {
+          "histogram": "ROI_mass_m0j1_cat_0ex_1mx_4jx_0bx_width_10.0",
+          "jet_group": "4",
+          "n_negative_bins": 17,
+          "most_negative": -7.548326624062977
+        },
+        {
+          "histogram": "ROI_mass_e1j0j1b1_cat_2ex_0mx_3jx_2bx_width_10.0",
+          "jet_group": "3",
+          "n_negative_bins": 16,
+          "most_negative": -1.9553441647671943
+        },
+        {
+          "histogram": "ROI_mass_j0j1_cat_2ex_0mx_3jx_1bx_width_10.0",
+          "jet_group": "3",
+          "n_negative_bins": 16,
+          "most_negative": -7.379730039545581
+        },
+        {
+          "histogram": "ROI_mass_j0j1j2_cat_0ex_1mx_7jx_0bx_width_10.0",
+          "jet_group": "5+",
+          "n_negative_bins": 16,
+          "most_negative": -3.743502553646657
+        },
+        {
+          "histogram": "ROI_mass_j0j1j2b0_cat_0ex_2mx_4jx_1bx_width_10.0",
+          "jet_group": "4",
+          "n_negative_bins": 16,
+          "most_negative": -7.41833969350818
+        }
+      ],
+      "n_histograms_scanned_for_negatives": 2498,
+      "exact_light_jet_counts": {
+        "0": 107,
+        "1": 281,
+        "2": 496,
+        "3": 466,
+        "4": 380,
+        "5": 302,
+        "6": 211,
+        "7": 211,
+        "8": 22,
+        "9": 22
+      },
+      "options": {
+        "a_everything": 2498,
+        "b_drop_ge3_light_jets": 884,
+        "c_drop_ge4_light_jets": 1350,
+        "d_drop_any_negative_bin": 734,
+        "e_drop_ge3_light_jets_and_any_negative_bin": 178
+      }
+    },
+    "pilot_record37728_mc.root": {
+      "file": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pilot_20261011/build_default/pilot_record37728_mc.root",
+      "n_histograms_total": 2459,
+      "classnames": {
+        "TH1D": 2459
+      },
+      "n_histograms_classified_by_jets": 2459,
+      "n_histograms_without_cat_in_name": 0,
+      "n_histograms_without_jet_token": 0,
+      "examples_without_jet_token": [],
+      "n_distinct_final_states": 126,
+      "by_jet_group": {
+        "0": 106,
+        "1": 285,
+        "2": 615,
+        "3": 567,
+        "4": 385,
+        "5+": 501
+      },
+      "final_states_by_jet_group": {
+        "0": 22,
+        "1": 24,
+        "2": 23,
+        "3": 19,
+        "4": 15,
+        "5+": 23
+      },
+      "n_ge3_light_jets": 1453,
+      "n_ge4_light_jets": 886,
+      "n_with_negative_bin": 7,
+      "n_negative_bins_summed": 7,
+      "negative_by_jet_group": {
+        "0": 0,
+        "1": 4,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5+": 1
+      },
+      "n_with_negative_bin_ge3_jets": 1,
+      "n_with_negative_bin_ge4_jets": 1,
+      "n_with_negative_bin_0to2_jets": 6,
+      "worst_ten_negative": [
+        {
+          "histogram": "ROI_mass_e0m0m1j0_cat_1ex_2mx_1jx_1bx_width_10.0",
+          "jet_group": "1",
+          "n_negative_bins": 1,
+          "most_negative": -1.2373621056745079e-06
+        },
+        {
+          "histogram": "ROI_mass_e0m1j0b0_cat_1ex_2mx_1jx_1bx_width_10.0",
+          "jet_group": "1",
+          "n_negative_bins": 1,
+          "most_negative": -3.512590587502842e-06
+        },
+        {
+          "histogram": "ROI_mass_j1b0_cat_0ex_1mx_2jx_1bx_width_10.0",
+          "jet_group": "2",
+          "n_negative_bins": 1,
+          "most_negative": -1.5942796949666217e-06
+        },
+        {
+          "histogram": "ROI_mass_m0j0j1_cat_0ex_1mx_5jx_0bx_width_10.0",
+          "jet_group": "5+",
+          "n_negative_bins": 1,
+          "most_negative": -1.221177805509066e-06
+        },
+        {
+          "histogram": "ROI_mass_m0j0j1b0_cat_0ex_1mx_2jx_1bx_width_10.0",
+          "jet_group": "2",
+          "n_negative_bins": 1,
+          "most_negative": -5.425325265051773e-06
+        },
+        {
+          "histogram": "ROI_mass_m0m1j0_cat_1ex_2mx_1jx_1bx_width_10.0",
+          "jet_group": "1",
+          "n_negative_bins": 1,
+          "most_negative": -0.00021626875849840223
+        },
+        {
+          "histogram": "ROI_mass_m0m1j0b0_cat_0ex_2mx_1jx_1bx_width_10.0",
+          "jet_group": "1",
+          "n_negative_bins": 1,
+          "most_negative": -0.00021350186717512517
+        }
+      ],
+      "n_histograms_scanned_for_negatives": 2459,
+      "exact_light_jet_counts": {
+        "0": 106,
+        "1": 285,
+        "2": 615,
+        "3": 567,
+        "4": 385,
+        "5": 261,
+        "6": 153,
+        "7": 80,
+        "8": 7
+      },
+      "options": {
+        "a_everything": 2459,
+        "b_drop_ge3_light_jets": 1006,
+        "c_drop_ge4_light_jets": 1573,
+        "d_drop_any_negative_bin": 2452,
+        "e_drop_ge3_light_jets_and_any_negative_bin": 1000
+      }
+    },
+    "four_dataset_matched_vB_upstreamnames_w10p0_dr012_bumpnet.root": {
+      "file": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/four_dataset_vB_upstreamnames_w10p0_dr012_20261007/four_dataset_matched_vB_upstreamnames_w10p0_dr012_bumpnet.root",
+      "n_histograms_total": 1975,
+      "classnames": {
+        "TH1F": 1975
+      },
+      "n_histograms_classified_by_jets": 1975,
+      "n_histograms_without_cat_in_name": 0,
+      "n_histograms_without_jet_token": 0,
+      "examples_without_jet_token": [],
+      "n_distinct_final_states": 103,
+      "by_jet_group": {
+        "0": 82,
+        "1": 184,
+        "2": 380,
+        "3": 376,
+        "4": 389,
+        "5+": 564
+      },
+      "final_states_by_jet_group": {
+        "0": 17,
+        "1": 17,
+        "2": 16,
+        "3": 13,
+        "4": 13,
+        "5+": 27
+      },
+      "n_ge3_light_jets": 1329,
+      "n_ge4_light_jets": 953,
+      "n_with_negative_bin": 0,
+      "n_negative_bins_summed": 0,
+      "negative_by_jet_group": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5+": 0
+      },
+      "n_with_negative_bin_ge3_jets": 0,
+      "n_with_negative_bin_ge4_jets": 0,
+      "n_with_negative_bin_0to2_jets": 0,
+      "worst_ten_negative": [],
+      "n_histograms_scanned_for_negatives": 1975,
+      "exact_light_jet_counts": {
+        "0": 82,
+        "1": 184,
+        "2": 380,
+        "3": 376,
+        "4": 389,
+        "5": 277,
+        "6": 146,
+        "7": 67,
+        "8": 52,
+        "9": 22
+      },
+      "options": {
+        "a_everything": 1975,
+        "b_drop_ge3_light_jets": 646,
+        "c_drop_ge4_light_jets": 1022,
+        "d_drop_any_negative_bin": 1975,
+        "e_drop_ge3_light_jets_and_any_negative_bin": 646
+      }
+    },
+    "four_dataset_matched_vB_upstreamnames_w10p0_dr012_bumpnet_cropped.root": {
+      "file": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/four_dataset_vB_upstreamnames_w10p0_dr012_20261007/four_dataset_matched_vB_upstreamnames_w10p0_dr012_bumpnet_cropped.root",
+      "n_histograms_total": 1975,
+      "classnames": {
+        "TH1F": 1975
+      },
+      "n_histograms_classified_by_jets": 1975,
+      "n_histograms_without_cat_in_name": 0,
+      "n_histograms_without_jet_token": 0,
+      "examples_without_jet_token": [],
+      "n_distinct_final_states": 103,
+      "by_jet_group": {
+        "0": 82,
+        "1": 184,
+        "2": 380,
+        "3": 376,
+        "4": 389,
+        "5+": 564
+      },
+      "final_states_by_jet_group": {
+        "0": 17,
+        "1": 17,
+        "2": 16,
+        "3": 13,
+        "4": 13,
+        "5+": 27
+      },
+      "n_ge3_light_jets": 1329,
+      "n_ge4_light_jets": 953,
+      "n_with_negative_bin": 0,
+      "n_negative_bins_summed": 0,
+      "negative_by_jet_group": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5+": 0
+      },
+      "n_with_negative_bin_ge3_jets": 0,
+      "n_with_negative_bin_ge4_jets": 0,
+      "n_with_negative_bin_0to2_jets": 0,
+      "worst_ten_negative": [],
+      "n_histograms_scanned_for_negatives": 1975,
+      "exact_light_jet_counts": {
+        "0": 82,
+        "1": 184,
+        "2": 380,
+        "3": 376,
+        "4": 389,
+        "5": 277,
+        "6": 146,
+        "7": 67,
+        "8": 52,
+        "9": 22
+      },
+      "options": {
+        "a_everything": 1975,
+        "b_drop_ge3_light_jets": 646,
+        "c_drop_ge4_light_jets": 1022,
+        "d_drop_any_negative_bin": 1975,
+        "e_drop_ge3_light_jets_and_any_negative_bin": 646
+      }
+    }
+  }
+}
