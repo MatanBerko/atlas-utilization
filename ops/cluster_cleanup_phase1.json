@@ -5,24 +5,40 @@
   "all_numbers": "VERIFIED BY RUNNING",
   "quota": {
     "mount": "/storage",
-    "space_used": "120.8G", "space_soft": "4T", "space_hard": "5T",
-    "inodes_used": 152680, "inodes_soft": 150000, "inodes_hard": 200000,
+    "space_used": "120.8G",
+    "space_soft": "4T",
+    "space_hard": "5T",
+    "inodes_used": 152680,
+    "inodes_soft": 150000,
+    "inodes_hard": 200000,
     "inode_grace_remaining": "6d9h27m",
     "target_below": 135000,
     "must_free_at_least": 17681
   },
   "census": {
-    "files": 128461, "directories": 23040, "symlinks": 1179,
+    "files": 128461,
+    "directories": 23040,
+    "symlinks": 1179,
     "total_inodes": 152680,
     "reconciles_with_quota": true,
     "by_area": {
-      "work": 52600, "checkouts": 44547, "output": 25026,
-      "envs": 23401, "logs": 7104, "top_level_dirs": 2
+      "work": 52600,
+      "checkouts": 44547,
+      "output": 25026,
+      "envs": 23401,
+      "logs": 7104,
+      "top_level_dirs": 2
     }
   },
   "git_clones": {
-    "standalone_checkouts": {"count": 25, "inodes": 44547},
-    "embedded_work_repos": {"count": 25, "inodes": 35024},
+    "standalone_checkouts": {
+      "count": 25,
+      "inodes": 44547
+    },
+    "embedded_work_repos": {
+      "count": 25,
+      "inodes": 35024
+    },
     "total_inodes": 79571,
     "share_of_quota": 0.521,
     "note": "byte-for-byte reproducible from GitHub; commit recorded in folder name and job_metadata.json"
@@ -32,28 +48,120 @@
     "work/acltest_20261008/dir"
   ],
   "proposals": [
-    {"id": "A1", "path": "checkouts/ (12 unreferenced clones)", "inodes": 21687, "rec": "ARCHIVE", "freed": 21675},
-    {"id": "A2", "path": "checkouts/ (13 referenced clones)", "inodes": 22859, "rec": "ARCHIVE", "freed": 22846},
-    {"id": "A3", "path": "logs/", "inodes": 7104, "rec": "ARCHIVE", "freed": 7103},
-    {"id": "A4", "path": "work/cms_mc_v2/", "inodes": 3708, "rec": "ARCHIVE", "freed": 3707},
-    {"id": "A5", "path": "work/cms_mc_phase1/", "inodes": 3012, "rec": "ARCHIVE", "freed": 3011},
-    {"id": "A6", "path": "work/<task>/repo/ x20 (non-protected)", "inodes": 26108, "rec": "ARCHIVE", "freed": 26088},
-    {"id": "S1", "path": "work/cms_mc_v3_pilot_20261011/scratch_default/", "inodes": 298, "rec": "DELETE", "freed": 298},
-    {"id": "S2", "path": "work/cms_mc_v3_pilot_20261011/scratch_unpruned/", "inodes": 298, "rec": "DELETE", "freed": 298},
-    {"id": "S3", "path": "work/cms_mc_v3_impl_20261011/{prune,mc_delivery,mc_delivery_diag}_scratch/", "inodes": 41, "rec": "DELETE", "freed": 41}
+    {
+      "id": "A1",
+      "path": "checkouts/ (12 unreferenced clones)",
+      "inodes": 21687,
+      "rec": "ARCHIVE",
+      "freed": 21675
+    },
+    {
+      "id": "A2",
+      "path": "checkouts/ (13 referenced clones)",
+      "inodes": 22859,
+      "rec": "ARCHIVE",
+      "freed": 22846
+    },
+    {
+      "id": "A3",
+      "path": "logs/",
+      "inodes": 7104,
+      "rec": "ARCHIVE",
+      "freed": 7103
+    },
+    {
+      "id": "A4",
+      "path": "work/cms_mc_v2/",
+      "inodes": 3708,
+      "rec": "ARCHIVE",
+      "freed": 3707
+    },
+    {
+      "id": "A5",
+      "path": "work/cms_mc_phase1/",
+      "inodes": 3012,
+      "rec": "ARCHIVE",
+      "freed": 3011
+    },
+    {
+      "id": "A6",
+      "path": "work/<task>/repo/ x20 (non-protected)",
+      "inodes": 26108,
+      "rec": "ARCHIVE",
+      "freed": 26088
+    },
+    {
+      "id": "S1",
+      "path": "work/cms_mc_v3_pilot_20261011/scratch_default/",
+      "inodes": 298,
+      "rec": "DELETE",
+      "freed": 298
+    },
+    {
+      "id": "S2",
+      "path": "work/cms_mc_v3_pilot_20261011/scratch_unpruned/",
+      "inodes": 298,
+      "rec": "DELETE",
+      "freed": 298
+    },
+    {
+      "id": "S3",
+      "path": "work/cms_mc_v3_impl_20261011/{prune,mc_delivery,mc_delivery_diag}_scratch/",
+      "inodes": 41,
+      "rec": "DELETE",
+      "freed": 41
+    }
   ],
   "protected": [
-    {"id": "P1", "path": "envs/atlas-pipeline/", "inodes": 23400},
-    {"id": "P2", "path": "output/cms_datasets/runs_matched4_full_20261007/", "inodes": 4694},
-    {"id": "P3", "path": "output/cms_datasets/deliver/", "inodes": 264, "marybo_acl": true},
-    {"id": "P4", "path": "work/cms_mc_v3_pilot_20261011/ (minus scratch)", "inodes": 3238},
-    {"id": "P5", "path": "work/cms_mc_v3_impl_20261011/ (minus scratch)", "inodes": 2230},
-    {"id": "P6", "path": "work/cms_mc_v3_design_20261010/", "inodes": 1862},
-    {"id": "P7", "path": "work/acltest_20261008/", "inodes": 3, "marybo_acl": true}
+    {
+      "id": "P1",
+      "path": "envs/atlas-pipeline/",
+      "inodes": 23400
+    },
+    {
+      "id": "P2",
+      "path": "output/cms_datasets/runs_matched4_full_20261007/",
+      "inodes": 4694
+    },
+    {
+      "id": "P3",
+      "path": "output/cms_datasets/deliver/",
+      "inodes": 264,
+      "marybo_acl": true
+    },
+    {
+      "id": "P4",
+      "path": "work/cms_mc_v3_pilot_20261011/ (minus scratch)",
+      "inodes": 3238
+    },
+    {
+      "id": "P5",
+      "path": "work/cms_mc_v3_impl_20261011/ (minus scratch)",
+      "inodes": 2230
+    },
+    {
+      "id": "P6",
+      "path": "work/cms_mc_v3_design_20261010/",
+      "inodes": 1862
+    },
+    {
+      "id": "P7",
+      "path": "work/acltest_20261008/",
+      "inodes": 3,
+      "marybo_acl": true
+    }
   ],
   "keep": [
-    {"id": "K1", "path": "rest of output/", "inodes": 20068},
-    {"id": "K2", "path": "rest of work/ (each dir minus repo/)", "inodes": 11802}
+    {
+      "id": "K1",
+      "path": "rest of output/",
+      "inodes": 20068
+    },
+    {
+      "id": "K2",
+      "path": "rest of work/ (each dir minus repo/)",
+      "inodes": 11802
+    }
   ],
   "projections": {
     "A1_only": 131005,
@@ -61,5 +169,43 @@
     "A1_A2_A3": 101056,
     "all_proposed": 67613
   },
-  "phase2_started": false
+  "phase2_started": true,
+  "phase2": {
+    "approved": [
+      "A1",
+      "A2"
+    ],
+    "not_acted_on": [
+      "A3",
+      "A4",
+      "A5",
+      "A6",
+      "S1",
+      "S2",
+      "S3"
+    ],
+    "checkouts_archived": 25,
+    "failures": 0,
+    "skipped": 0,
+    "entry_count_mismatches": 0,
+    "size_ratio_range": [
+      1.0023,
+      1.003
+    ],
+    "inodes_freed": 44521,
+    "quota_after": {
+      "inodes_used": 108163,
+      "inodes_soft": 150000,
+      "inodes_hard": 200000,
+      "grace": "cleared",
+      "space_used": "137.6G"
+    },
+    "margin_under_soft_quota": 41837,
+    "target_below": 135000,
+    "target_met": true,
+    "protected_verified_present": true,
+    "marybo_acl_intact": "user:marybo:--x on the delivered four-dataset folder",
+    "audit_log": "ops/phase2_archive_log.txt",
+    "restore": "tar -xf <commit>.tar  (or re-clone and git checkout <commit>)"
+  }
 }

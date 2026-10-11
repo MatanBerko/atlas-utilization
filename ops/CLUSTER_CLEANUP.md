@@ -2,8 +2,7 @@
 
 **Branch:** `ops/cluster-cleanup-20261011`, from `origin/master` (`db1bd32`)
 **Date:** 2026-10-11
-**Phase:** 1 — measure and propose. **Read-only. Nothing was deleted, moved,
-archived, or written under `/storage`.**
+**Phase:** 1 (complete) and **2 (complete — A1 + A2 executed)**.
 
 Access note: the first attempt at this session failed because the laptop had
 no route to the cluster. Matan connected the secure Wi-Fi; `wipp-campus` then
@@ -53,7 +52,7 @@ each). `/storage/agrp/marybo/` was never touched.
 **This is 100% of the quota's own figure — nothing is unexplained.**
 (128,461 files + 23,040 directories + 1,179 symlinks = 152,680.)
 
-### The single dominant cause: 45 copies of this repository
+### The single dominant cause: 50 copies of this repository
 
 | | clones | inodes |
 |---|---:|---:|
@@ -157,12 +156,130 @@ Space freed is a side effect, not the goal: A1+A2 ≈ 7.5 G, the scratch rows
 
 ---
 
+---
+
+# PHASE 2 — executed, A1 + A2 only
+
+**Approved: `APPROVE: A1, A2`.** Only those two items were acted on. A3, A4,
+A5, A6, S1, S2 and S3 were **not** touched and remain available.
+
+## Pre-checks before acting (all VERIFIED BY RUNNING)
+
+| check | result |
+|---|---|
+| `qstat -u berkom` | **no jobs running or queued** |
+| quota unchanged since Phase 1 | 152,680 inodes — identical |
+| `getfacl` on all 25 checkouts | **0 carry a `marybo` ACL** |
+| all 25 checkout folders still present | yes, 44,546 inodes (+1 parent = 44,547, matching Phase 1) |
+| stray non-directories already in `checkouts/` | none |
+
+## Method
+
+One checkout (`2666684`, the smallest) was archived first as a trial and its
+numbers checked by hand before anything was removed: 1,676 inodes → 1,676 tar
+entries, size ratio 1.002. Only then was its original removed and the
+remaining 24 processed by `work/cluster_cleanup_20261011/archive_checkouts.sh`.
+
+For every folder the script re-checked the `marybo` ACL, counted inodes, ran
+`nice -n 10 tar -cf checkouts/<name>.tar -C checkouts <name>`, verified that
+`tar -tf` listed **exactly** the same number of entries and that the
+archive/folder size ratio lay in 0.95–1.10, and **only then** removed the
+original. Any failure would have left the original untouched and deleted the
+partial tar. No compression was used, so verification is fast and the bytes
+are stored as-is.
+
+## Result — all 25 archived, 0 failures, 0 skips
+
+| | |
+|---|---:|
+| checkouts archived | **25 of 25** |
+| entry-count mismatches | **0** |
+| implausible size ratios | **0** (range 1.0023 – 1.0030, i.e. tar's 512-byte header per entry) |
+| failures | **0** |
+| skipped | **0** |
+| **inodes freed** | **44,521** |
+
+`checkouts/` now holds **25 `.tar` files and no directories** — 26 inodes in
+total, down from 44,547, and 5.4 G (was 7.5 G; plain tar drops the
+filesystem's per-file block padding). Spot-check: `06778c9.tar` lists cleanly
+and contains `06778c9/repo/...` with its full 1,799 entries.
+
+Per-item detail is in `ops/phase2_archive_log.txt`, one line per checkout.
+
+## Quota — before and after (VERIFIED BY RUNNING)
+
+| | before | after | change |
+|---|---:|---:|---|
+| **files (inodes)** | **152,680** | **108,163** | **−44,517** |
+| soft quota | 150,000 | 150,000 | — |
+| hard limit | 200,000 | 200,000 | — |
+| **grace countdown** | **6 d 9 h remaining** | **cleared — none in force** | resolved |
+| space | 139.8 G | 137.6 G | −2.2 G |
+
+**The account is back under its soft quota with a 41,837-inode margin — 28%
+below the limit, and comfortably past the 135,000 target.** The grace
+countdown has stopped because the account is no longer in breach.
+
+The 4-inode difference from the projected 108,159 is the small working
+directory `work/cluster_cleanup_20261011/` holding the archive script, its
+log and its stdout — kept deliberately as the audit trail.
+
+## Nothing protected was touched (VERIFIED BY RUNNING, after the fact)
+
+| protected item | state |
+|---|---|
+| `envs/atlas-pipeline/` | PRESENT |
+| `output/cms_datasets/runs_matched4_full_20261007/` | PRESENT |
+| `output/cms_datasets/deliver/` | PRESENT |
+| `work/cms_mc_v3_pilot_20261011/` | PRESENT |
+| `work/cms_mc_v3_impl_20261011/` | PRESENT |
+| `work/cms_mc_v3_design_20261010/` | PRESENT |
+| `work/acltest_20261008/` | PRESENT |
+| the `marybo` ACL on the delivered four-dataset folder | intact (`user:marybo:--x`) |
+
+No ACL or permission was changed anywhere. `/storage/agrp/marybo/` was never
+accessed. No job was started.
+
+## How to get a checkout back, if one is ever wanted
+
+```
+cd /storage/agrp/berkom/atlas-utilization/checkouts
+tar -xf <commit>.tar          # restores <commit>/repo exactly as it was
+```
+
+or simply re-clone, since the folder name *is* the commit:
+
+```
+git clone https://github.com/MatanBerko/atlas-utilization.git repo
+cd repo && git checkout <commit>
+```
+
+## One observation worth a glance (not acted on)
+
+Between the Phase 1 census and the Phase 2 pre-check, about 40 minutes apart
+with **no jobs running**, reported space use rose from 120.8 G to 139.8 G
+(+19 G) while the inode count stayed at exactly 152,680. No new files
+appeared, so this is most likely Lustre's quota accounting catching up on the
+MC pilot's writes from 10 October rather than anything new being created.
+**I could not confirm the cause and am not labelling it explained.** Space is
+not a constraint (137.6 G of a 4 T quota), so it needs no action — but if the
+figure keeps climbing with no jobs running, it is worth a look.
+
+---
+
 ## Action log
 
 | When | Action | Result |
 |---|---|---|
 | 2026-10-11 | Attempted `wipp-campus` / `wipp-home` before VPN | No route; Phase 1 blocked (first commit on this branch) |
-| 2026-10-11 | Matan connected secure Wi-Fi; `wipp-campus` reconnected | Access restored |
-| 2026-10-11 | `lfs quota`, `lfs find` inode census, `getfacl` ACL sweep, size sampling | Measurements above. **Nothing written, moved or deleted.** |
+| 2026-10-11 | Secure Wi-Fi connected; `wipp-campus` reconnected | Access restored |
+| 2026-10-11 | `lfs quota`, `lfs find` inode census, `getfacl` ACL sweep, size sampling | Phase 1 measurements. Nothing written, moved or deleted |
+| 2026-10-11 | A1 + A2 approved | — |
+| 2026-10-11 | Phase 2 pre-checks (jobs, quota, ACLs, folder presence) | All clear |
+| 2026-10-11 | Trial-archived `2666684`, verified by hand, removed original | 1,675 inodes freed |
+| 2026-10-11 | Archived the remaining 24 with per-item verification | 42,846 inodes freed, 0 failures |
+| 2026-10-11 | Re-ran `lfs quota`; verified protected items and the `marybo` ACL | **108,163 inodes, grace cleared** |
 
-**Phase 2 has not started. No file has been archived or deleted.**
+**A3, A4, A5, A6, S1, S2 and S3 were not acted on and remain available if
+ever wanted. Nothing beyond the approved A1 + A2 was archived or deleted.**
+
