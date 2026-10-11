@@ -2,132 +2,205 @@
 
 **Branch:** `study/cms-mc-pileup`, from `origin/feature/cms-mc-weights-v3`
 (`68ab281`, verified before branching).
-**Pinned commit for every cluster job so far:** `5398ac4`
 **Work directory:**
 `/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pileup_20261011/`
+**Status: COMPLETE.** Parts A and B both ran. Nothing is still running.
 
 Diagnostic only. No selection, object definition, threshold, builder default,
-registry value or delivered output is changed by anything here.
+registry value or delivered output was changed.
 
 ---
 
-## The question
+## VERDICT
 
-The MC pilot found, in Z events (dilepton mass 76–106 GeV), data/MC ≈ 1.0 at
-0–2 light jets but **1.28 / 1.57 / 2.03** at 3 / 4 / 5+ jets in μμ (ee
-similar: 1.17 / 1.52 / 2.11), while b-jet multiplicity stayed flat. Does
-pileup explain it?
+**Pileup does not explain the ≥3-jet excess.** All five pre-stated criteria
+fail or point away from pileup, and all three signatures of the alternative
+(generator modelling of hard extra radiation) are met. Confidence: **high**.
 
-## Status
+The single most telling pair of numbers: the official pileup weight **fixes
+the vertex distribution** — mean good vertices data/MC goes from 1.138 to
+**1.037** (μμ) — and yet the ≥3-jet excess **barely moves**: 1.279 → 1.263.
+Pileup in this MC really is mismodelled, and correcting it does not touch the
+jet problem.
 
-| Stage | State |
-|---|---|
-| A1 — find an official pileup profile | **done — one was found** |
-| A2 — MC `Pileup_nTrueInt` profile over all generated events | **submitted** (`5210846/7/8`) |
-| A3 — w_PU, mean and range | not started |
-| A4 — redraw P1/P2/P3 with and without w_PU | not started |
-| B — the fingerprint probe (60 files) | **submitted** (`5210849[1-60]`) |
-| B1–B5 plots, verdicts | not started |
+---
 
-## Part A1 — what was found
-
-**An official CMS source exists and is public.**
+## Part A1 — the official pileup profile (found, and used)
 
 | | |
 |---|---|
 | what | CMS LUM POG `correctionlib` pileup weights |
 | correction | `Collisions16_UltraLegacy_goldenJSON`, version 0 |
-| era of the file | **2016 postVFP, Ultra-Legacy** |
+| era of the file | 2016 **postVFP**, Ultra-Legacy |
 | URL | `https://opendata.cern.ch/eos/opendata/cms/corrections/jsonpog-integration-2016post.tar` |
 | member | `POG/LUM/2016postVFP_UL/puWeights.json.gz` |
 | tarball sha256 | `113730e8bd3e72ecb9548cb158c8990579022432d202416317828f4bce3eb28a` |
-| input | `NumTrueInteractions`, real, range [0, 99), `flow: clamp` |
-| variations | `nominal`, `up`, `down` |
-| output | event weight |
-| derivation | the official golden-JSON-based LUM POG weights; taken as published |
+| input | `NumTrueInteractions`, [0, 99), `flow: clamp` |
+| variations | nominal, up, down |
+| derivation | official golden-JSON LUM POG weights, taken as published |
 
-**The approximation, stated plainly:** the file covers the **whole 2016
-postVFP period**. Our data is **Run2016 G+H**, a subset of postVFP
-(16.393 fb⁻¹). Using it is therefore an approximation of the G+H pileup
-profile — the finest granularity published. This is exactly the case the task
-brief permits, and it is labelled as such everywhere it is used.
+**Approximation, stated:** the file covers the **whole 2016 postVFP period**;
+our data is **Run2016 G+H**, a subset of it (16.393 fb⁻¹). It is the finest
+granularity published. Nothing was hand-typed or taken from a forum — the
+file is downloaded on the cluster and read at run time. `correctionlib` is
+not in the shared environment and this study may not modify that environment,
+so `pu_weights.py` reads the JSON directly; it refuses to run if the file's
+node layout is anything other than the category+uniform-binning+clamp it
+implements.
 
-Nothing was hand-typed, invented, or copied from a forum. The file is
-downloaded on the cluster and read at run time.
-`correctionlib` is not installed in the shared conda environment and this
-study may not modify that environment, so `pu_weights.py` reads the JSON
-directly: the only node types in it are a `category` on the variation string
-and a uniform-width `binning` with `flow: clamp`, which `np.searchsorted`
-plus a clip reproduces exactly. The reader refuses to run if the file's
-layout is anything other than that.
+## Part A2/A3 — the weight, checked (all VERIFIED BY RUNNING)
 
-**Shape of the nominal weight (VERIFIED BY RUNNING, read from the file):**
+Denominator built from **all generated events** of each sample (98 files,
+116,385,442 events; only `Pileup_nTrueInt` and `genWeight` read), because the
+selection sculpts pileup.
 
-| nTrueInt | 0 | 5 | 10 | 20 | 30 | 40 | 50 | 70 |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| weight | 0.278 | 0.342 | 0.232 | 0.859 | 1.483 | 2.209 | 1.721 | 0.388 |
+| record | mean w_PU over all generated events | ⟨nTrueInt⟩ before → after | empty-MC-but-weighted bins | events ≥ 99 |
+|---|---:|---|---:|---:|
+| 35669 DY | **0.99988** | 22.354 → 24.891 | 28 | 0 |
+| 67801 ttbar | **0.99993** | 22.355 → 24.891 | 27 | 0 |
+| 37728 ggH | **1.00031** | 22.358 → 24.904 | 40 | 0 |
 
-min 0.00030, max 2.414. The weights are **well above 1 across 30–55
-interactions**, i.e. this MC has **too few high-pileup events** relative to
-data. That is the direction that could produce extra jets in data, so the
-hypothesis is live rather than ruled out at the first step.
+The mean landing on 1.000 confirms these samples follow the standard UL16 MC
+pileup profile the official weights assume. Weight range **0.00030 – 2.414**;
+nothing was capped. The "empty-MC-but-weighted" bins are all at nTrueInt
+above ~60 where the samples have no events at all — they cannot contribute.
+
+Data has about **11% more pileup** than this MC (⟨nTrueInt⟩ 22.4 → 24.9 after
+weighting): a real but modest shift.
+
+## Part A4 — the pilot plots, with and without w_PU (absolute normalisation)
+
+Light-jet multiplicity in Z events, data/MC **before → after** the weight:
+
+| jets | μμ before | μμ after | ee before | ee after |
+|---|---:|---:|---:|---:|
+| 0 | 1.035 | 1.042 | 0.954 | 0.977 |
+| 1 | 1.018 | 1.009 | 0.938 | 0.943 |
+| 2 | 1.032 | 1.022 | 0.944 | 0.945 |
+| **3** | **1.279** | **1.263** | **1.174** | **1.167** |
+| **4** | **1.573** | **1.540** | **1.518** | **1.488** |
+| **5+** | **2.030** | **1.964** | **2.108** | **1.993** |
+
+The weight removes **4–10% of the excess**, leaving 26%, 54% and 96%
+unexplained at 3, 4 and 5+ jets in μμ.
+
+Plots: `plots/A3_pu_weight_and_profile.png`, `plots/A4_P1_zpeak_mumu.png`,
+`plots/A4_P2_zpeak_ee.png`, `plots/A4_P3_jet_multiplicity.png`,
+`plots/A4_P3_bjet_multiplicity.png`.
+
+## Part B — the fingerprint checks
+
+40 data files (10 each of DoubleMuon G/H and DoubleEG G/H) and 20 MC
+(10 × DY, 10 × ttbar), chosen evenly spaced through each list. μμ from
+DoubleMuon (inclusive), ee from DoubleEG (exclusive) — the delivery's own
+de-duplication rule. 2,983,050 μμ and 819,674 ee Z events in the data subset.
+
+Part B is a **shape** study: a data file's integrated luminosity is not
+recoverable from what is stored, so MC — put on an absolute footing with
+σ_eff×1000×L/Σw over the subset actually read — is rescaled by one reported
+factor per channel (μμ 0.3222, ee 0.1328) to match the data subset's
+inclusive Z yield. Every criterion Part B tests is a shape statement. The
+absolute test is Part A4.
+
+### The decisive measurement (B2 vs B2b)
+
+**B2** — data/MC at ≥3 jets vs good vertices — rises steeply:
+μμ 0.85 → 2.84 (45σ), ee 0.875 → 2.20 (21σ).
+
+But the **0–2-jet** ratio rises just as steeply (μμ 0.649 → 2.039), because
+the MC simply has too few high-pileup events. **B2b** divides that out:
+
+> double ratio = [data/MC at ≥3 jets] / [data/MC at 0–2 jets]
+
+| channel | double ratio across the 5 pileup bins | slope | first → last |
+|---|---|---:|---|
+| μμ | 1.311, 1.273, 1.222, 1.238, 1.391 (±0.018) | +0.0037/vertex | +0.080 (2.9σ) |
+| ee | 1.253, 1.240, 1.246, 1.174, 1.284 (±0.031) | +0.0006/vertex | +0.031 (0.7σ) |
+
+**Essentially flat at ≈1.25–1.3 across the whole pileup range**, and sitting
+well above 1 everywhere. The jet excess exists at every pileup level and does
+not grow with pileup. The μμ points are not monotonic (they dip then rise),
+so the small fitted slope is driven by the highest bin; ee shows no slope at
+all. `plots/B2b_double_ratio_vs_npvs.png`.
+
+---
+
+## The five pre-stated criteria
+
+| | criterion | verdict | the numbers |
+|---|---|---|---|
+| **(i)** | after w_PU the ≥3-jet ratios move most of the way to 1 | **NOT SUPPORTED** | only 4–10% of the excess is removed (μμ 5+: 2.030 → 1.964). The weight *is* working: mean vertices data/MC 1.138 → 1.037 |
+| **(ii)** | the B2 ratio rises clearly with PV_npvsGood | **met as literally stated, but it is not jet-specific** | B2 rises 0.85 → 2.84 (45σ) — but so does the 0–2-jet ratio (0.649 → 2.039). The double ratio B2b is flat (+0.080, 2.9σ in μμ; +0.031, 0.7σ in ee) |
+| **(iii)** | the excess shrinks strongly at 40–50 GeV | **NOT SUPPORTED** | μμ 3 jets 1.258 / 1.234 / 1.195 at 30/40/50 GeV; μμ 5+ 2.146 / 2.142 / 1.846; ee 3 jets 1.187 / 1.182 / 1.201 |
+| **(iv)** | the extra jets are soft and/or forward | **NOT SUPPORTED** | 3rd-jet mean pT: μμ data 45.41 vs MC 45.99 GeV (1.3% softer); mean \|η\|: data 1.128 vs MC 1.148 (1.7% more central). ~1–2% differences cannot produce a 30–100% excess |
+| **(v)** | data fails the pileup-jet ID clearly more than MC | **PARTLY — and in the wrong place** | fail fraction data/MC: 1 jet 0.0778/0.0519 (+50%), 2 jets 0.0523/0.0344 (+52%), 3 jets 0.0386/0.0317 (+22%), 4 jets 0.0302/0.0250 (+21%), **5+ jets 0.0219/0.0258 (data 15% LOWER)**. The gap shrinks and reverses exactly where the excess is largest |
+
+`Jet_puId` is present in both data and MC with the identical title *"Pileup ID
+flags with 106X (2016) training"*; "loose" is taken as bit 0. **Diagnostic
+only — the pileup-jet ID was not applied to anything.**
+
+### Generator modelling instead?
+
+The task's stated signature is *"the excess survives at 50 GeV, is flat in
+PV_npvsGood, and persists after w_PU"*. **All three hold**: it survives at
+50 GeV (iii), the jet-specific part is flat in pileup (B2b), and it persists
+after w_PU (i). Hard extra radiation that the Drell-Yan generator
+under-produces at high jet multiplicity fits every observation here.
+
+**Confidence: high** that pileup is not the main cause. Honest caveats:
+* the official profile covers whole postVFP, not G+H specifically;
+* Part B is a 40-data/20-MC file subset and a shape study;
+* Part B's MC is DY + ttbar only;
+* pileup is not *zero*: w_PU removes 4–10% of the excess and μμ's double
+  ratio has a 2.9σ slope, so a small pileup component is present — it is just
+  not the bulk.
+
+## Plots
+
+`studies/cms_mc_weights_v3/pileup/plots/`: `A3_pu_weight_and_profile.png`,
+`A4_P1_zpeak_mumu.png`, `A4_P2_zpeak_ee.png`, `A4_P3_jet_multiplicity.png`,
+`A4_P3_bjet_multiplicity.png`, `B1_npvs.png`, `B2_ratio_vs_npvs.png`,
+**`B2b_double_ratio_vs_npvs.png`**, `B3_ratio_vs_threshold.png`,
+`B4_third_jet.png`, `B5_pujet_id.png`.
 
 ## Jobs
 
-| Job ID | What | Output |
-|---|---|---|
-| `5210846` | A2 MC pileup profile, record 67801 (49 files) | `evidence/mc_pu_profile_67801.json` |
-| `5210847` | A2 MC pileup profile, record 35669 (41 files) | `evidence/mc_pu_profile_35669.json` |
-| `5210848` | A2 MC pileup profile, record 37728 (8 files) | `evidence/mc_pu_profile_37728.json` |
-| `5210849[1-60]` | Part B probe, 60 files | `probe/<kind>_<label>_<record>_<fileindex>.json` |
+| Job ID | What | Commit | Result |
+|---|---|---|---|
+| `5210846/7/8` | A2 MC pileup profile, 98 files | `5398ac4` | 3/3 exit 0 |
+| `5210849[1-60]` | Part B probe, first pass | `5398ac4` | 60/60 exit 0 |
+| `5210857` | A3 + A4 | `e3e019d` | exit 0, 7.1 GB, 4 min |
+| `5210872` | Part B merge, first pass | `e3e019d` | exit 0 |
+| `5210884[1-60]` | Part B probe, re-run with `--pu-json` | `47f386f` | 60/60 exit 0 |
+| `5210906` | Part B merge with the B2b double ratio | `47f386f` | exit 0 |
 
-Requests: profile jobs `mem=4gb, walltime=04:00:00, io=25`; probe array
-`mem=6gb, walltime=04:00:00, io=25`. Queue `N`, `#PBS -m n`, logs into
-`logs/profile/` and `logs/probe/`, **both created before submission**.
-
-## The Part B file subset
-
-40 data + 20 MC files (`mappings/probe_mapping.txt`, with the full list in
-`mappings/probe_mapping_chosen.json`):
-
-| source | files |
-|---|---|
-| DoubleMuon Run2016G / Run2016H | 10 / 10 |
-| DoubleEG Run2016G / Run2016H | 10 / 10 |
-| 35669 DY NLO | 10 of 41 |
-| 67801 ttbar | 10 of 49 |
-
-Chosen evenly spaced through each era's or record's own file list, so the
-subset is reproducible without a stored random seed and is not biased toward
-one part of a sample.
-
-**Data de-duplication for this diagnostic:** μμ events are taken from
-DoubleMuon files and ee events from DoubleEG files only. DoubleMuon is the
-highest-priority dataset so it contributes its **inclusive** acceptance;
-DoubleEG contributes its **exclusive** one — the delivery builder's own rule.
+The probe was re-run once because the first pass was never handed
+`--pu-json`, so its pileup-weighted histograms were empty and B1's weighted
+curve could not be drawn. One `qsub` was rejected for violating queue limits
+and was resubmitted with `-l io=25`.
 
 ## File-count budget
 
-The account is at 108,163 of a 150,000 soft limit; this study must add fewer
-than 3,000 files. Expected: 3 profile JSONs + 60 probe JSONs + ~126 PBS logs
-+ the pinned checkout (~1,850, archived to 1 at the end) + plots and
-evidence ≈ **under 300 once the checkout is archived**. Counted and reported
-at the end.
+| | |
+|---|---:|
+| budget | < 3,000 |
+| **added by this study** | **349** |
+| quota before / after | 108,163 → **108,512** of a 150,000 soft limit |
 
-## Where to resume
+The pinned checkout was archived as required: `repo/` (1,971 inodes,
+164,807,656 bytes) → `repo.tar` (1,971 entries — verified equal — 165,058,560
+bytes), then the original removed. That is the only removal this study made.
 
-1. `git fetch origin && git checkout study/cms-mc-pileup`.
-2. `ssh wipp-campus '/opt/pbs/bin/qstat -u berkom'` — wait for `5210846/7/8`
-   and `5210849[]`.
-3. Then A3/A4 (apply the weights to the pilot shards, redraw P1/P2/P3) and
-   the B1–B5 merge and plots.
-4. Finally: archive the pinned checkout
-   `work/cms_mc_v3_pileup_20261011/repo` into one `.tar` beside it, verify
-   the entry count, then remove the original. That is the **only** removal
-   this study is allowed, and only for the checkout it created.
+## How to resume or re-run
 
-Read-only throughout: the delivered production
-`output/cms_datasets/runs_matched4_full_20261007/`, the pilot
-`work/cms_mc_v3_pilot_20261011/`, and every other `output/` and `work/`
-directory. `/storage/agrp/marybo/` is never accessed. No ACL is changed.
-Jobs write nothing to the real `$HOME`.
+```
+ssh wipp-campus
+W=/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pileup_20261011
+tar -xf $W/repo.tar -C $W        # restore the pinned checkout
+```
+or clone fresh and `git checkout 47f386f`. The official pileup file stays at
+`$W/corrections/POG/LUM/2016postVFP_UL/puWeights.json.gz`.
+
+Read-only throughout: the delivered production, the pilot work dir, every
+other `output/` and `work/` directory. `/storage/agrp/marybo/` never
+accessed. No ACL changed. Jobs wrote nothing to the real `$HOME`.

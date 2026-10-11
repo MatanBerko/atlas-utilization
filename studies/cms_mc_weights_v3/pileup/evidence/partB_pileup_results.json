@@ -1,6 +1,6 @@
 {
   "what": "Part B: pileup fingerprint checks",
-  "generated_utc": "2026-10-11T07:55:43.172701+00:00",
+  "generated_utc": "2026-10-11T08:13:03.808458+00:00",
   "normalisation": "MC absolute via sigma_eff*1000*L/Sigma-w(subset); then ONE factor per channel so the inclusive Z-window yield matches the data subset, because the data subset's luminosity is not recoverable. Part B is a SHAPE study; the absolute test is Part A4.",
   "meta": {
     "data_files": 40,
@@ -32,13 +32,13 @@
       "mumu": {
         "mean_npvs_data": 18.527744757882033,
         "mean_npvs_mc": 16.280821113697716,
-        "mean_npvs_mc_pu": null,
+        "mean_npvs_mc_pu": 17.862473902222423,
         "n_z_events_data": 2983050
       },
       "ee": {
         "mean_npvs_data": 17.944065567530505,
         "mean_npvs_mc": 16.118657883742404,
-        "mean_npvs_mc_pu": null,
+        "mean_npvs_mc_pu": 17.695609983498723,
         "n_z_events_data": 819674
       },
       "png": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pileup_20261011/plots/B1_npvs.png"
@@ -141,6 +141,89 @@
         "first_to_last_sigma": 20.766031545606197
       },
       "png": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pileup_20261011/plots/B2_ratio_vs_npvs.png"
+    },
+    "B2b": {
+      "mumu": {
+        "x": [
+          11.13105055575475,
+          16.053551476456505,
+          19.478232189973614,
+          22.873541666666668,
+          29.115956727518594
+        ],
+        "double_ratio": [
+          1.3113717044856517,
+          1.2731369029626547,
+          1.2218034470884438,
+          1.2384309710737857,
+          1.3909580462541105
+        ],
+        "double_ratio_err": [
+          0.017627306949111132,
+          0.016151538692068236,
+          0.01819301397891037,
+          0.017956318346041104,
+          0.02099071846814723
+        ],
+        "ratio_0to2jets": [
+          0.6485088384191682,
+          0.9163637462055911,
+          1.1516088542950913,
+          1.4338180776388443,
+          2.0385201381636464
+        ],
+        "ratio_ge3jets": [
+          0.8504361408117547,
+          1.1666565018314423,
+          1.4070396678753159,
+          1.7756847142334227,
+          2.835495988629765
+        ],
+        "slope_per_vertex": 0.0036705029267855866,
+        "first_to_last": 0.0795863417684588,
+        "first_to_last_sigma": 2.903504731780038
+      },
+      "ee": {
+        "x": [
+          11.088919667590028,
+          15.539229181004817,
+          18.44665718349929,
+          21.855113636363637,
+          27.803463855421686
+        ],
+        "double_ratio": [
+          1.2529604145679556,
+          1.239510185812935,
+          1.2463992834576945,
+          1.1737866516134925,
+          1.2842011047449762
+        ],
+        "double_ratio_err": [
+          0.029614583971534852,
+          0.032664167518555595,
+          0.0333885033437934,
+          0.031422452177187296,
+          0.03543060323386975
+        ],
+        "ratio_0to2jets": [
+          0.6987176135085563,
+          0.9237975939849334,
+          1.1018248333860374,
+          1.3380361358602655,
+          1.7133577006658034
+        ],
+        "ratio_ge3jets": [
+          0.8754655106876132,
+          1.1450565273738071,
+          1.3733136828282506,
+          1.570568955649277,
+          2.200295852018337
+        ],
+        "slope_per_vertex": 0.0005951892412414035,
+        "first_to_last": 0.03124069017702058,
+        "first_to_last_sigma": 0.6765365266552856
+      },
+      "png": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pileup_20261011/plots/B2b_double_ratio_vs_npvs.png"
     },
     "B3": {
       "mumu": {
