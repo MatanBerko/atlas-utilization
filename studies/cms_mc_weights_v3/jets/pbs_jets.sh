@@ -46,8 +46,11 @@ case "$WHAT" in
     if [[ "$MAP_INDEX" != "$JOB_INDEX" ]]; then
       echo "mapping line $JOB_INDEX carries index '$MAP_INDEX'" >&2; exit 1
     fi
-    OUT="$WORK_DIR/probe/${KIND}_${LABEL}_${RECORD}_${FILE_INDEX}.json"
-    mkdir -p "$WORK_DIR/probe"
+    # PROBE_DIR lets a re-run write somewhere new instead of overwriting the
+    # previous pass, so nothing already on disk is destroyed.
+    OUT_DIR="${PROBE_DIR:-$WORK_DIR/probe}"
+    OUT="$OUT_DIR/${KIND}_${LABEL}_${RECORD}_${FILE_INDEX}.json"
+    mkdir -p "$OUT_DIR"
     echo "kind=$KIND label=$LABEL record=$RECORD file_index=$FILE_INDEX"
     /usr/bin/time -v python -u studies/cms_mc_weights_v3/jets/run_jet_probe_on_file.py \
         --kind "$KIND" --dataset-label "$LABEL" \
@@ -58,7 +61,7 @@ case "$WHAT" in
     ;;
   merge)
     /usr/bin/time -v python -u studies/cms_mc_weights_v3/jets/merge_and_plot_jets.py \
-        --probe-dir "$WORK_DIR/probe" \
+        --probe-dir "${PROBE_DIR:-$WORK_DIR/probe}" \
         --registry studies/cms_mc_weights_v3/cms_mc_normalisation_v3.json \
         --pilot-inputs "${PILOT_INPUTS:?}" \
         --hepdata studies/cms_mc_weights_v3/jets/evidence/hepdata_smp19009.json \
