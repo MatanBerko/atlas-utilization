@@ -113,8 +113,8 @@ class IMCalculator:
         for str_amount_particle in fs_particles:
             if len(str_amount_particle) < 2:
                 continue
-            amount_to_calc = str_amount_particle[0]
-            particle_letter = str_amount_particle[1]
+            amount_to_calc = str_amount_particle[:-1]
+            particle_letter = str_amount_particle[-1]
             if amount_to_calc.isdigit():
                 amount = int(amount_to_calc)
                 if amount > threshold:
@@ -135,8 +135,8 @@ class IMCalculator:
         for str_amount_particle in fs_particles:
             if len(str_amount_particle) < 2:
                 continue
-            amount_to_calc = str_amount_particle[0]
-            particle_letter = str_amount_particle[1]
+            amount_to_calc = str_amount_particle[:-1]
+            particle_letter = str_amount_particle[-1]
 
             if not amount_to_calc.isdigit():
                 continue
