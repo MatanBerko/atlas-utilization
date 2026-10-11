@@ -59,7 +59,7 @@ case "$WHAT" in
     /usr/bin/time -v python -u studies/cms_mc_weights_v3/pileup/run_pileup_probe_on_file.py \
         --kind "$KIND" --dataset-label "$LABEL" \
         --record-id "$RECORD" --file-index "$FILE_INDEX" \
-        --out "$OUT"
+        --out "$OUT" ${PU_JSON:+--pu-json "$PU_JSON"}
     ;;
   partA)
     # A3 + A4: the weight, and the pilot plots with and without it.

@@ -286,6 +286,69 @@ def main() -> int:
     b2["png"] = str(p); report["results"]["B2"] = b2
     print(f"wrote {p}", flush=True)
 
+    # ---- B2b: is the pileup trend SPECIFIC to high jet multiplicity? ----
+    # B2 alone cannot separate two things: (a) the MC under-models pileup, so
+    # data/MC rises with PV_npvsGood at EVERY jet multiplicity, and (b) the
+    # extra jets are genuinely pileup jets. The double ratio
+    #     [data/MC at >=3 jets] / [data/MC at 0-2 jets]
+    # divides out (a) and leaves only (b). It is the decisive plot of Part B.
+    fig, axes = plt.subplots(1, 2, figsize=(12.5, 4.6))
+    b2b = {}
+    for col, ch in enumerate(("mumu", "ee")):
+        ax = axes[col]
+        d2 = np.asarray(data[ch]["npvs_by_njet30"])
+        m2 = mc_sum(mc[ch], "npvs_by_njet30") * shape_factor[ch]
+        d_lo, m_lo = d2[:3, :].sum(axis=0), m2[:3, :].sum(axis=0)
+        d_hi, m_hi = d2[3:, :].sum(axis=0), m2[3:, :].sum(axis=0)
+        cum = np.cumsum(d_hi)
+        if cum[-1] <= 0:
+            continue
+        targets = np.linspace(0, cum[-1], 6)[1:-1]
+        cuts = sorted(set([0] + [int(np.searchsorted(cum, x)) + 1 for x in targets]
+                          + [len(d_hi)]))
+        xs, rr, ee, lo_r, hi_r = [], [], [], [], []
+        for a, bnd in zip(cuts[:-1], cuts[1:]):
+            dl, ml = d_lo[a:bnd].sum(), m_lo[a:bnd].sum()
+            dh, mh = d_hi[a:bnd].sum(), m_hi[a:bnd].sum()
+            if min(dl, ml, dh, mh) <= 0:
+                continue
+            r_lo, r_hi = dl / ml, dh / mh
+            dbl = r_hi / r_lo
+            err = dbl * np.hypot(1.0 / np.sqrt(dh), 1.0 / np.sqrt(dl))
+            xs.append(float((npvs_c[a:bnd] * d_hi[a:bnd]).sum() / dh))
+            rr.append(float(dbl)); ee.append(float(err))
+            lo_r.append(float(r_lo)); hi_r.append(float(r_hi))
+        ax.errorbar(xs, rr, yerr=ee, fmt="o", ms=5, color="#9f7aea", lw=1.2,
+                    capsize=2.5, label="double ratio  (>=3 jets) / (0-2 jets)")
+        ax.axhline(1.0, color="#718096", ls="--", lw=1)
+        if len(xs) >= 2:
+            slope, icept = np.polyfit(xs, rr, 1)
+            xx = np.linspace(min(xs), max(xs), 10)
+            ax.plot(xx, slope * xx + icept, color="#718096", ls=":", lw=1.2,
+                    label="slope %+.4f / vertex" % slope)
+        else:
+            slope = None
+        ax.set_xlabel("PV_npvsGood (mean of the bin)")
+        ax.set_ylabel("double ratio")
+        ax.set_title(ch, fontsize=10)
+        ax.legend(fontsize=7.5)
+        ax.grid(alpha=0.2, lw=0.5)
+        b2b[ch] = {"x": xs, "double_ratio": rr, "double_ratio_err": ee,
+                   "ratio_0to2jets": lo_r, "ratio_ge3jets": hi_r,
+                   "slope_per_vertex": (None if slope is None else float(slope)),
+                   "first_to_last": (None if len(rr) < 2 else float(rr[-1] - rr[0])),
+                   "first_to_last_sigma": (
+                       None if len(rr) < 2 else
+                       float((rr[-1] - rr[0]) / np.hypot(ee[0], ee[-1])))}
+    fig.suptitle("B2b - the DECISIVE test: divide out the overall pileup "
+                 "mismodelling.\nA flat double ratio means the jet excess is "
+                 "NOT pileup; a rising one means it is.", fontsize=9.5)
+    fig.tight_layout(rect=(0, 0, 1, 0.88))
+    p_b2b = out_dir / "B2b_double_ratio_vs_npvs.png"
+    fig.savefig(p_b2b, dpi=140); plt.close(fig)
+    b2b["png"] = str(p_b2b); report["results"]["B2b"] = b2b
+    print("wrote %s" % p_b2b, flush=True)
+
     # ---- B3: data/MC per jet multiplicity at 30 / 40 / 50 GeV -----------
     fig, axes = plt.subplots(1, 2, figsize=(13.0, 4.8))
     b3 = {}
@@ -429,6 +492,14 @@ def main() -> int:
                   f"slope {b2[ch]['slope_per_vertex']}  "
                   f"first->last {b2[ch]['first_to_last']} "
                   f"({b2[ch]['first_to_last_sigma']} sigma)")
+    print("")
+    print("=== B2b: DOUBLE ratio (>=3 jets)/(0-2 jets) vs PV_npvsGood ===")
+    for ch in ("mumu", "ee"):
+        if ch in b2b and isinstance(b2b[ch], dict):
+            print("  %s: %s  slope %+.5f/vertex  first->last %+.3f (%.1f sigma)" % (
+                ch, [round(v, 3) for v in b2b[ch]["double_ratio"]],
+                b2b[ch]["slope_per_vertex"], b2b[ch]["first_to_last"],
+                b2b[ch]["first_to_last_sigma"]))
     print("\n=== B3: data/MC by threshold (3,4,5+ jet bins) ===")
     for ch in ("mumu", "ee"):
         for thr in ("30", "40", "50"):
