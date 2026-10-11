@@ -453,17 +453,31 @@ def main() -> int:
         gen_njet_all, gen_ok_all, gen_flavour_all = gen_particle_level(
             events, extra_present)
         if gen_njet_all is not None:
-            w_all = (ak.to_numpy(events.genWeight).astype(np.float64)
-                     * ak.to_numpy(events.L1PreFiringWeight_Nom).astype(np.float64))
+            gen_weight = ak.to_numpy(events.genWeight).astype(np.float64)
+            prefire = ak.to_numpy(
+                events.L1PreFiringWeight_Nom).astype(np.float64)
+            # A particle-level cross section is a statement about the
+            # generator, so the headline numbers carry genWeight ALONE. The
+            # L1 prefiring weight is a detector effect, and it is jet
+            # dependent, so including it would quietly suppress exactly the
+            # high-multiplicity bins this part is about. It is kept as a
+            # second set of counts so the size of that effect is visible
+            # rather than assumed.
             gen_block = {
-                "sum_genweight_all_events": float(
-                    ak.to_numpy(events.genWeight).astype(np.float64).sum()),
-                "sum_w_all_events": float(w_all.sum()),
+                "weight_note": "the headline counts use genWeight only; the "
+                               "'_prefire' counts add L1PreFiringWeight_Nom "
+                               "so the size of that detector effect can be "
+                               "read off",
+                "sum_genweight_all_events": float(gen_weight.sum()),
+                "sum_w_prefire_all_events": float((gen_weight * prefire).sum()),
                 "n_all_events": int(n_read),
             }
             for channel, pdg in (("mumu", 13), ("ee", 11)):
                 sel = gen_ok_all & (gen_flavour_all == pdg)
-                gen_block[channel] = counts_entry(gen_njet_all[sel], w_all[sel])
+                gen_block[channel] = counts_entry(gen_njet_all[sel],
+                                                  gen_weight[sel])
+                gen_block[channel + "_prefire"] = counts_entry(
+                    gen_njet_all[sel], (gen_weight * prefire)[sel])
                 gen_block[channel + "_n_raw"] = int(sel.sum())
 
     if is_mc:
