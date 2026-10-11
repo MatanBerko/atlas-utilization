@@ -333,7 +333,9 @@ def plot_c1_c2(data, mc_sum, factors, out_dir, results):
         keys = sorted((k for k in mc_sum[channel] if k.startswith("paperlike_jes_")),
                       key=lambda s: float(s.rsplit("_", 1)[1]))
         shifts = [float(k.rsplit("_", 1)[1]) for k in keys]
-        series = {n: [] for n in (2, 3, 4)}
+        # 5 is kept in the scan because Part D scores it, even though
+        # drawing all four curves for both channels would be unreadable
+        series = {n: [] for n in (2, 3, 4, 5)}
         for key in keys:
             ratio, _ = ratio_with_error(data[channel]["paperlike"],
                                         mc_sum[channel][key], factors[channel])
@@ -342,13 +344,14 @@ def plot_c1_c2(data, mc_sum, factors, out_dir, results):
         base, _ = ratio_with_error(data[channel]["paperlike"],
                                    mc_sum[channel]["paperlike"],
                                    factors[channel])
-        for n in series:
+        for n in (3, 4, 5):
             full_x = shifts + [0.0]
             full_y = series[n] + [base[n]]
             order = np.argsort(full_x)
             ax.plot(np.array(full_x)[order] * 100, np.array(full_y)[order],
                     marker="o", ls="-" if channel == "mumu" else "--",
-                    label="{} {} jets".format(CHANNEL_TITLE[channel], n))
+                    label="{} {} jets".format(CHANNEL_TITLE[channel],
+                                              NJET_LABELS[n]))
         curves[channel] = {"shifts": shifts,
                            "ratios": {str(n): series[n] for n in series},
                            "baseline": base.tolist()}
@@ -956,7 +959,7 @@ def main() -> int:
         scan = results["jes_scan"][channel]
         shifts = np.asarray(scan["shifts"] + [0.0], dtype=np.float64)
         order = np.argsort(shifts)
-        for n in (2, 3, 4):
+        for n in (2, 3, 4, 5):
             values = np.asarray(scan["ratios"][str(n)] + [scan["baseline"][n]],
                                 dtype=np.float64)
             sx, sy = shifts[order], values[order]
