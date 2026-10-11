@@ -51,6 +51,18 @@ CAT_PATTERN = re.compile(r"_cat_(.+?)_width_")
 JET_PATTERN = re.compile(r"_(\d+)jx(?:_|$)")
 
 JET_GROUPS = ["0", "1", "2", "3", "4", "5+"]
+LOW = ("0", "1", "2")
+
+
+def keep(records, rule) -> int:
+    """How many histograms survive `rule`, counted one histogram at a time.
+
+    Counting the survivors directly rather than subtracting group totals is
+    what keeps option (e) honest: a >=3-jet histogram that also has a
+    negative bin is removed by both halves of the rule and must not be
+    subtracted twice.
+    """
+    return sum(1 for grp, neg in records if rule(grp, neg))
 
 
 def jet_group(n_jets: int) -> str:
@@ -64,9 +76,11 @@ def analyse(path: pathlib.Path) -> dict:
     final_states = set()
     fs_by_group = defaultdict(set)
     by_group = Counter()
+    by_exact_jets = Counter()
     neg_by_group = Counter()
     neg_names = []
     classnames = Counter()
+    records: list[tuple[str, bool]] = []
     n_bins_negative_total = 0
 
     with uproot.open(str(path)) as f:
@@ -92,6 +106,7 @@ def analyse(path: pathlib.Path) -> dict:
             n_jets = int(jm.group(1))
             grp = jet_group(n_jets)
             by_group[grp] += 1
+            by_exact_jets[n_jets] += 1
             fs_by_group[grp].add(fs)
 
             values = obj.values(flow=False)
@@ -104,10 +119,12 @@ def analyse(path: pathlib.Path) -> dict:
             else:
                 filled = np.nonzero(values != 0)[0]
             if filled.size == 0:
+                records.append((grp, False))
                 continue
             lo, hi = int(filled[0]), int(filled[-1])
             window = values[lo:hi + 1]
             n_neg = int(np.count_nonzero(window < 0))
+            records.append((grp, n_neg > 0))
             if n_neg:
                 neg_by_group[grp] += 1
                 n_bins_negative_total += n_neg
@@ -145,15 +162,17 @@ def analyse(path: pathlib.Path) -> dict:
         "n_with_negative_bin_ge4_jets": neg_ge4,
         "n_with_negative_bin_0to2_jets": neg_le2,
         "worst_ten_negative": neg_names[:10],
+        "n_histograms_scanned_for_negatives": len(records),
+        "exact_light_jet_counts": {str(k): int(v)
+                                   for k, v in sorted(by_exact_jets.items())},
         "options": {
-            "a_everything": classified,
-            "b_drop_ge3_light_jets": classified - ge3,
-            "c_drop_ge4_light_jets": classified - ge4,
-            "d_drop_any_negative_bin": classified - neg_total,
-            # b and d together: a histogram removed by BOTH rules must not be
-            # subtracted twice, hence the explicit 0-2-jet negative count.
+            "a_everything": keep(records, lambda g, neg: True),
+            "b_drop_ge3_light_jets": keep(records, lambda g, neg: g in LOW),
+            "c_drop_ge4_light_jets":
+                keep(records, lambda g, neg: g in LOW or g == "3"),
+            "d_drop_any_negative_bin": keep(records, lambda g, neg: not neg),
             "e_drop_ge3_light_jets_and_any_negative_bin":
-                classified - ge3 - neg_le2,
+                keep(records, lambda g, neg: g in LOW and not neg),
         },
     }
 
@@ -175,8 +194,9 @@ def main() -> int:
                             "TH1D with Sumw2; content != 0 for TH1F)",
             "negative_bin": "content < 0 inside the filled range",
             "option_e": "drop >=3-jet final states AND any remaining "
-                        "histogram with a negative bin; computed without "
-                        "double-subtracting histograms removed by both",
+                        "histogram with a negative bin; survivors are "
+                        "counted one histogram at a time, so a histogram "
+                        "removed by both halves is not subtracted twice",
         },
         "files": {},
     }
@@ -194,6 +214,9 @@ def main() -> int:
               "  ".join(f"{g}={res['by_jet_group'][g]:,}" for g in JET_GROUPS))
         print(f"  >=3 jets {res['n_ge3_light_jets']:,}   "
               f">=4 jets {res['n_ge4_light_jets']:,}")
+        print(f"  exact light jets      : " +
+              "  ".join(f"{k}:{v}" for k, v in
+                        res["exact_light_jet_counts"].items()))
         print(f"  with a negative bin   : {res['n_with_negative_bin']:,} "
               f"({res['n_negative_bins_summed']:,} bins)")
         print(f"     by light jets      : " +
