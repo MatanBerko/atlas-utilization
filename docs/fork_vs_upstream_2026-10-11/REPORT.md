@@ -11,6 +11,24 @@ Every number in this report is marked **VERIFIED BY RUNNING** (with the command 
 
 ---
 
+## Corrections (2026-10-11, second pass)
+
+This report was first written earlier the same day. Five things have been corrected or added since; the original wording is kept wherever it is useful as history, always marked as superseded.
+
+**1. The histogram-naming finding was wrong, and is withdrawn.** The first pass said our delivered histogram names end `_width_10` instead of upstream's `_width_10.0`, and that the delivered category part used an older six-field form. Both statements were drawn from 14 **superseded** manifests under `studies/cms_datasets/deliver/committed/`. The delivery actually sent to Maryna on 7 October 2026 is `four_dataset_matched_vB_upstreamnames_w10p0_dr012_bumpnet_cropped.root`, and its own evidence shows **1,975 names, every one ending `_width_10.0`, every one four-field, and zero mismatches against upstream's own naming code**. Naming is **aligned**. It has been removed from the top-five findings, from the CMS/ATLAS comparability list, from the draft questions for Maryna in section (h), and from the AMBIGUOUS notes in Appendix D. Row D63 is re-stated. Details in section (e), "Histogram naming".
+
+**2. The per-histogram-minimum finding was the same mistake, and is also withdrawn.** The first pass said we keep only histograms with at least 100 entries where upstream keeps any with at least one. The 100 is the build script's **default**, not what the delivery used: `DELIVERY_NOTES.md` records the 7 October delivery as applying the ≥100-events-per-**final-state** rule and **no per-histogram minimum**, which is upstream's own behaviour. Removed from the comparability list and from section (h). Row D65 is re-stated. This one rests on the delivery notes rather than on a programmatic check — see its verification label.
+
+**3. A limitation of the method is now stated explicitly.** The first pass traced imports and calls. It could not see code the delivery **copied** rather than imported, and the delivery does copy several upstream functions. A new subsection, "Limitation of the import trace: copied code", lists every copy and says whether the upstream original has moved since the commit each copy cites.
+
+**4. The count-parsing bug is fixed.** Fork master moved from `db1bd32` to `2734dd3` on 2026-10-11 when upstream's PR #34 count-parsing fix was applied to the shared code (branch `fix/count-parsing-upstream-34`). Rows **D01, D02 and D08** are marked **RESOLVED in 2734dd3**, with their original text kept. Nothing else from #34 was taken, so rows D06 and D07 stand unchanged.
+
+**5. A note on the older `cms_coverage` outputs.** Applying that fix revealed that the superseded `studies/cms_coverage/` outputs carry inconsistent final-state labels. See the note at the end of section (e).
+
+Everything else in this report stands as first written. The headline is unchanged, and in fact stronger: no shared-code difference affects the delivered CMS data.
+
+---
+
 ## (a) Plain-language summary for Matan
 
 **The headline: the two versions have drifted apart in a lot of places, but none of that drift is touching the CMS data we delivered.**
@@ -30,23 +48,23 @@ That one function decides whether an event has enough objects to fill a given pa
 
 **So: adopting every single upstream improvement into the shared code would not change one number in the delivered data.** Of the 17 items I recommend adopting, 16 are in code the delivery never runs at all, and the 17th is the function above, proven equivalent.
 
-Where the two versions stand, by category (66 items in total):
+Where the two versions stand, by category (66 items in total; the counts below are after the second-pass corrections):
 
 | Recommendation | Count | What it means |
 |---|---|---|
 | **PROPOSE TO UPSTREAM** | 20 (+2 pending Maryna) | Things we built that upstream lacks and would probably want |
-| **ADOPT FROM UPSTREAM** | 17 | Upstream fixes we are missing and should take |
-| **NEEDS DISCUSSION** | 11 | Real physics or naming choices; not ours to settle alone |
+| **ADOPT FROM UPSTREAM** | 17 (3 now done) | Upstream fixes we are missing and should take; D01, D02 and D08 were applied on 2026-10-11 in fork master `2734dd3` |
+| **NEEDS DISCUSSION** | 9 | Real physics choices; not ours to settle alone |
 | **KEEP DIFFERENT (CMS-specific)** | 8 | Genuinely ours, no reason to share |
-| **NO ACTION (identical)** | 8 | Listed only to prove the trace covered them |
+| **NO ACTION / ALIGNED** | 10 | 8 identical functions listed to prove the trace covered them, plus 2 items the second pass found already aligned (D63, D65) |
 
 ### The five findings that matter most
 
-1. **Two of the brief's assumptions were backwards, and the correction is good news.** The brief said upstream PR **#34** reads only the first character of a count. In fact #34 is the commit that **fixed** that; it is *our* fork that still has the bug. And the brief described a difference between upstream's final-state rule and our "Version B" rule — but upstream already has Version B. It arrived in PR **#31** on 4 October as `_filter_events_by_non_jet_object_total`, and I checked it against our rule over 4,096 count patterns: **zero disagreements**. Maryna's expectation that ATLAS would adopt Version B is already satisfied in upstream's code.
+1. **Two of the brief's assumptions were backwards, and the correction is good news.** The brief said upstream PR **#34** reads only the first character of a count. In fact #34 is the commit that **fixed** that; it was *our* fork that had the bug. *(Fixed later the same day — fork master `2734dd3`. See the Corrections note above.)* And the brief described a difference between upstream's final-state rule and our "Version B" rule — but upstream already has Version B. It arrived in PR **#31** on 4 October as `_filter_events_by_non_jet_object_total`, and I checked it against our rule over 4,096 count patterns: **zero disagreements**. Maryna's expectation that ATLAS would adopt Version B is already satisfied in upstream's code.
 
 2. **The b-jet bug on upstream is real, and I reproduced it.** Upstream's own `config.short_parse_btag.yaml` turns b-tagging on and sets cuts for light jets but not for b-jets. I ran upstream's own code with upstream's own config: a 15 GeV b-jet at |eta| = 2.9 survived, even though the config appears to demand at least 30 GeV. Our configs add the missing line, so we are fine. This is a configuration omission, not broken code — our code change is only a warning that makes the mistake visible.
 
-3. **Our delivered histogram names do not exactly match upstream's.** Upstream names histograms `..._width_10.0`; all 9,793 names in our 14 delivered manifests end in `_width_10`, without the `.0`. Our code can produce either form — there is a switch for it — but the delivered files used the older default. This is the one thing I found that would stop a CMS and an ATLAS histogram being lined up automatically. It needs a decision, not a code fix.
+3. **A silent flaw in our copy of the shared histogram stage.** *(This slot previously held a histogram-naming finding, now withdrawn — the names are aligned. See the Corrections note at the top. The replacement below is the next most important genuine finding: it is a real defect, it fails silently, and it is the only item left that could lose data without anyone noticing.)* The shared code that turns a signature into a histogram has to recognise the final-state label inside it. Upstream's version accepts any label; ours insists on the old six-field form and **silently skips anything else** — no error, no warning, the histogram simply never appears. Our current CMS labels are four-field, so our version would not match them. The four-dataset delivery never runs this code, so nothing delivered is affected, but it would bite the moment anyone put CMS output through the shared histogram stage. Upstream already generalised the pattern in PR #31; we should take it. (Row D52.)
 
 4. **We are missing upstream's network-robustness work.** Upstream added a 120-second timeout on remote file reads and a three-attempt retry with waits of 30, 60 and 120 seconds. We have neither. It changes no physics, only how a job behaves when CERN's servers stall. Worth taking.
 
@@ -54,7 +72,9 @@ Where the two versions stand, by category (66 items in total):
 
 ### What I did not do
 
-I did not fix anything. The count-reading bug in our copy, the b-jet configuration gap on upstream, and the final-state rule difference are all documented here and left exactly as they are. No merges, no syncs, no Pull Requests, nothing sent to upstream, nothing sent to anybody.
+I did not fix anything *in this exercise*. The count-reading bug in our copy, the b-jet configuration gap on upstream, and the final-state rule difference were all documented here and left exactly as they were. No merges, no syncs, no Pull Requests, nothing sent to upstream, nothing sent to anybody.
+
+*(Later the same day, in a separate task, the count-reading bug was fixed: fork master moved to `2734dd3`. Rows D01, D02 and D08 are marked RESOLVED accordingly. The b-jet gap and the final-state rule remain documented only.)*
 
 ---
 
@@ -106,14 +126,14 @@ The same table is in `differences.csv`, machine-readable, same columns and same 
 
 | ID | Location | What it does (plain language) | Which side has it | CMS delivery | Affects outputs | Recommendation | Risk | Evidence |
 |---|---|---|---|---|---|---|---|---|
-| D01 | services/calculations/physics_calcs.py :: is_finalstate_contain_combination | Decides whether an event has enough objects to supply a given particle combination; the fork reads only the FIRST character of each count, upstream reads the whole number. | BOTH, DIFFERENT | USED (call path: run_dataset_on_file.py:1448 inside run_combination_funnel) | NEITHER - verified identical answers for every label the delivery can produce, against all 186 combinations | ADOPT FROM UPSTREAM | LOW - proven no behaviour change for this delivery | upstream fix f16768e (#34); fork physics_calcs.py:110-111; upstream physics_calcs.py:116-117; 171,774,906 label x combination pairs tested, 0 disagreements |
-| D02 | services/calculations/physics_calcs.py :: limit_particles_in_fs | Caps any object count above 4 when writing a final-state label; the fork's first-character read leaves counts of 10 or more uncapped, upstream caps them to 4. | BOTH, DIFFERENT | IMPORTED BUT NOT CALLED | NEITHER - not on any delivery path; the delivery uses its own exact labels | ADOPT FROM UPSTREAM | LOW | f16768e (#34); fork :91-92; upstream :97-98; the two differ for every label with a count >= 10 (913,521 of 923,521 labels tested) |
+| D01 | services/calculations/physics_calcs.py :: is_finalstate_contain_combination | Decides whether an event has enough objects to supply a given particle combination; the fork reads only the FIRST character of each count, upstream reads the whole number. | BOTH, DIFFERENT | USED (call path: run_dataset_on_file.py:1448 inside run_combination_funnel) | NEITHER - verified identical answers for every label the delivery can produce, against all 186 combinations | ADOPT FROM UPSTREAM (RESOLVED in 2734dd3) | LOW - proven no behaviour change for this delivery | upstream fix f16768e (#34); fork physics_calcs.py:110-111 (pre-fix); upstream physics_calcs.py:116-117; 171,774,906 label x combination pairs tested, 0 disagreements \| RESOLVED 2026-10-11 in fork master 2734dd3, branch fix/count-parsing-upstream-34: the eight parsing lines now match upstream f16768e line for line. Original finding above kept as history. |
+| D02 | services/calculations/physics_calcs.py :: limit_particles_in_fs | Caps any object count above 4 when writing a final-state label; the fork's first-character read leaves counts of 10 or more uncapped, upstream caps them to 4. | BOTH, DIFFERENT | IMPORTED BUT NOT CALLED | NEITHER - not on any delivery path; the delivery uses its own exact labels | ADOPT FROM UPSTREAM (RESOLVED in 2734dd3) | LOW | f16768e (#34); fork :91-92 (pre-fix); upstream :97-98; the two differ for every label with a count >= 10 (913,521 of 923,521 labels tested) \| RESOLVED 2026-10-11 in fork master 2734dd3, branch fix/count-parsing-upstream-34: the eight parsing lines now match upstream f16768e line for line. Original finding above kept as history. |
 | D03 | services/calculations/physics_calcs.py :: group_by_final_state | Builds the final-state label for each event; upstream includes only the object types the data actually carries, the fork always writes all six types. | BOTH, DIFFERENT | NOT REACHED | ATLAS - would change ATLAS label text; the CMS delivery uses its own equivalent copy | ADOPT FROM UPSTREAM | MEDIUM - changes label text for any record that lacks an object type | 88d7a4b (#31); fork :63-76; upstream :63-82; the fork's own study copy already matches upstream's rule (test_upstream_names.py passes) |
 | D04 | services/calculations/physics_calcs.py :: _boolean_field_mask | Turns a yes/no data field into a selection mask, and refuses a field that is not genuinely yes/no instead of guessing. | FORK ONLY | NOT REACHED | NEITHER | PROPOSE TO UPSTREAM | LOW - new opt-in helper with no existing caller | fork physics_calcs.py:231-281 |
 | D05 | services/calculations/physics_calcs.py :: filter_events_by_kinematics (bool_require / bool_any_of / eta_exclude) | Three new optional object cuts: every listed flag must be true, at least one listed flag must be true, and an eta exclusion window. | FORK ONLY | NOT REACHED | NEITHER - no current config sets any of them | PROPOSE TO UPSTREAM | LOW - absent keys are a complete no-op | fork physics_calcs.py:374-403 |
 | D06 | services/calculations/im_calculator.py :: IMCalculator._is_valid_fs | Decides whether an event's object counts form a usable final state; upstream exempts light jets from the cap of 4, the fork caps every type at 4. | BOTH, DIFFERENT | IMPORTED BUT NOT CALLED | ATLAS - the fork's shared copy would drop events with 5 or more light jets; the CMS delivery never calls it | ADOPT FROM UPSTREAM | LOW for CMS / MEDIUM for ATLAS | f16768e (#34); fork :80-87; upstream :87-101; 750 of 14,641 count patterns differ (e/m/b and j each 0..10) |
 | D07 | services/calculations/im_calculator.py :: IMCalculator.group_by_final_state | Lists the final states to process; upstream now keeps the true count in the label, the fork still caps it at 4. | BOTH, DIFFERENT | IMPORTED BUT NOT CALLED | ATLAS - label text only | ADOPT FROM UPSTREAM | LOW - matches the group's exact-light-jet-label decision | f16768e (#34); fork :97 (caps the label); upstream :110 (yields it unchanged) |
-| D08 | services/calculations/im_calculator.py :: _limit_particles_in_fs and does_final_state_contain_combination | The same first-character count-reading problem as D01 and D02, inside the calculator class. | BOTH, DIFFERENT | IMPORTED BUT NOT CALLED | NEITHER | ADOPT FROM UPSTREAM | LOW | f16768e (#34); fork :116-117 and :138-139; upstream :129-130 and :151-152 |
+| D08 | services/calculations/im_calculator.py :: _limit_particles_in_fs and does_final_state_contain_combination | The same first-character count-reading problem as D01 and D02, inside the calculator class. | BOTH, DIFFERENT | IMPORTED BUT NOT CALLED | NEITHER | ADOPT FROM UPSTREAM (RESOLVED in 2734dd3) | LOW | f16768e (#34); fork :116-117 and :138-139 (pre-fix); upstream :129-130 and :151-152 \| RESOLVED 2026-10-11 in fork master 2734dd3, branch fix/count-parsing-upstream-34: the eight parsing lines now match upstream f16768e line for line. Original finding above kept as history. |
 | D09 | services/calculations/im_calculator.py :: IMCalculator.FINAL_STATE_OBJECTS | A class-level list naming the six object types and their letters; upstream keeps it as a constant, the fork writes the same six out by hand. | UPSTREAM ONLY | NOT REACHED | NEITHER | ADOPT FROM UPSTREAM | LOW - pure tidy-up with no behaviour change | 88d7a4b (#31); upstream im_calculator.py:17-20 |
 | D10 | services/calculations/consts.py :: KNOWN_MASSES | Fallback particle masses, used only when the data carries no per-object mass field; the fork stores them in GeV, upstream in MeV. | BOTH, DIFFERENT | USED (call path: run_dataset_on_file.py:1451 -> im_pipeline._calculate_combination_invariant_mass -> IMCalculator.calculate_invariant_mass -> _concat_particles_to_vectors -> _get_particle_mass -> physics_calcs.get_particle_known_mass -> consts.KNOWN_MASSES) - but the dictionary branch is never taken, because all four delivered collections carry a mass field | BOTH if ever read - a factor-1000 mass error; NEITHER for today's delivered inputs | NEEDS DISCUSSION | HIGH - units; a wrong answer here is a 1000x error in every mass | f43cc93 deliberately excluded from the fork; upstream issue #28 open; fork consts.py:4-11; upstream consts.py:4-14; the delivery reads Muon_mass/Electron_mass/Jet_mass at run_dataset_on_file.py:198-203 |
 | D11 | services/parsing/schemas.py :: native_pt_unit tags + get_native_pt_unit + schema_needs_mev_to_gev_conversion | Records, for each data release, whether momenta arrive in MeV or GeV, so the divide-by-1000 is applied only where it belongs. | FORK ONLY | IMPORTED BUT NOT CALLED | NEITHER today - no config on either side selects the one GeV-tagged ATLAS release | PROPOSE TO UPSTREAM | LOW - defaults to converting for anything untagged or unknown | fork schemas.py:117-264 and :622-650; verified by running: None, empty, unknown and unregistered inputs all return True (convert) |
@@ -168,10 +188,62 @@ The same table is in `differences.csv`, machine-readable, same columns and same 
 | D60 | reports/ (33 files) and logs/ (3 files) | Written-up results and job logs from this fork's own test runs. | FORK ONLY | NOT REACHED | NEITHER | KEEP DIFFERENT (CMS-specific) | LOW | full list in REPORT.md Appendix A |
 | D61 | scripts/ (8 files) | Stand-alone checking scripts the fork wrote for its own verification: b-jet cuts, Z peak, de-duplication and report building. | FORK ONLY | NOT REACHED | NEITHER | KEEP DIFFERENT (CMS-specific) | LOW | full list in REPORT.md Appendix A |
 | D62 | submit_mc.sh | One extra progress line echoed into the job log. | UPSTREAM ONLY | NOT REACHED | NEITHER | ADOPT FROM UPSTREAM | LOW - a log line | 3464e1a; 1 line |
-| D63 | studies/cms_datasets/deliver/build_dataset_delivery.py :: width_suffix / roi_key | Builds the _width_ ending of each histogram name; the fork's default writes _width_10 while upstream writes _width_10.0, and the delivered files used the default. | FORK ONLY (study code; upstream has only its own shared-pipeline form) | USED (it names every delivered histogram) | CMS - the delivered names do not match upstream's exactly | NEEDS DISCUSSION | MEDIUM - names must match for CMS and ATLAS outputs to be compared directly | verified by running test_width_suffix.py: --upstream-width-suffix gives _width_10.0, the default gives _width_10; all 9,793 names across the 14 committed manifests end in _width_10; both masters' configs set bin_width_gev: 10.0, a float |
+| D63 | studies/cms_datasets/deliver/build_dataset_delivery.py :: width_suffix / roi_key | Builds the _width_ ending of each histogram name; it can write either the legacy _width_10 or upstream's _width_10.0, and the 7 Oct delivery used upstream's form. | FORK ONLY (study code; upstream has only its own shared-pipeline form) | USED (it names every delivered histogram) | NEITHER - the delivered names match upstream exactly | NO ACTION (aligned - delivered names match upstream) | LOW - the delivery used the upstream-matching mode; the legacy default remains the function default and would not match, which is a latent trap but not a delivered-data issue | CORRECTED 2026-10-11, second pass. The first pass said the delivered names end _width_10; that was read off 14 SUPERSEDED manifests under deliver/committed/. The delivery actually sent is four_dataset_matched_vB_upstreamnames_w10p0_dr012_bumpnet_cropped.root: per DELIVERY_NOTES.md and evidence/D2_D3_delivery_checks.json, 1,975 names, all ending _width_10.0, all four-field, 0 mismatches against upstream's own naming code at 88d7a4b, all_d2_checks_pass true. Upstream's naming file is untouched between 88d7a4b and f16768e. |
 | D64 | studies/cms_datasets/cluster/run_dataset_on_file.py :: EMU_OVERLAP_DR_MAX | Removes an electron that sits within dR 0.12 of a selected muon, in all four datasets; the muon is always kept. | FORK ONLY (study code; no overlap removal exists in shared code on either side) | USED (part of the delivered selection) | CMS - and CMS/ATLAS comparability depends on ATLAS doing the same | NEEDS DISCUSSION | MEDIUM - an object-selection choice that must match on both experiments | fork run_dataset_on_file.py:331-344; radius approved by Maryna on 7 Oct 2026, raised from 0.05; no 0.12 value and no overlap-removal code anywhere in shared code on either master |
-| D65 | studies/cms_datasets/deliver/build_dataset_delivery.py :: per-histogram minimum entries | Keeps only histograms with at least 100 entries by default; upstream's shared stage applies no minimum and keeps any histogram with at least one entry. | FORK ONLY (study code) | USED (it decides which histograms are delivered) | CMS - fewer histograms than upstream's rule would give | NEEDS DISCUSSION | MEDIUM - it changes which final states appear in the delivery | verified by running test_upstream_names.py: the default floor is 100 and --no-hist-min-entries gives upstream's floor of 1 |
+| D65 | studies/cms_datasets/deliver/build_dataset_delivery.py :: per-histogram minimum entries | Can keep only histograms above a minimum entry count; the script default is 100, upstream applies no minimum, and the 7 Oct delivery applied none either. | FORK ONLY (study code) | USED (it decides which histograms are delivered) | NEITHER - the delivery applied no per-histogram minimum, as upstream does not | NO ACTION (aligned - the delivery applied no per-histogram minimum) | LOW - the script default of 100 remains and would not match upstream if used | CORRECTED 2026-10-11, second pass. The 100 is the script DEFAULT, not what the delivery used: DELIVERY_NOTES.md:51-52 records the 7 Oct delivery as applying the >=100-events-per-FINAL-STATE rule and no per-histogram minimum or filled-bin cut, which is upstream behaviour. UNVERIFIED programmatically - documented in the delivery notes; there is no per-histogram-minimum check in the evidence JSON and no recorded build command line. The floor-of-1 switch itself is verified by running test_upstream_names.py. |
 | D66 | pbs_m0m1j0_fullscale.sh and pbs_m0m1j0_smoketest.sh | Two cluster job-submission scripts the fork added for its own muon-plus-jet runs. | FORK ONLY | NOT REACHED | NEITHER | KEEP DIFFERENT (CMS-specific) | LOW - job submission only | fork root directory; both absent from upstream; covered by tests/test_pbs_scripts.py |
+
+### Limitation of the import trace: copied code
+
+*(Added 2026-10-11, second pass.)*
+
+The method behind section (c) and `cms_delivery_call_graph.md` is a static trace of `import` statements and function calls. **It cannot see a function the delivery copied instead of imported**, and the delivery does copy several upstream functions. Where a copy exists, the import trace will correctly say "NOT REACHED" about the upstream original while the delivery is in fact running an identical — or once-identical — piece of logic of its own.
+
+This matters in one direction only: a copy can **drift**. An imported function tracks upstream automatically once the fork syncs; a copied one is frozen at the commit it was taken from and goes stale silently. So each copy is listed below with the upstream commit it cites, and with the answer to the only question that matters: **has the upstream original moved since?**
+
+Comparison is against upstream master `f16768e` throughout (**VERIFIED BY RUNNING**, `python tools/copied_drift.py` — it extracts each named function or constant at both commits with Python's own parser and compares them line for line; the command is in Appendix C).
+
+#### Copies of upstream shared code
+
+| # | copy in the delivery | upstream original | commit cited | has the original moved since? |
+|---|---|---|---|---|
+| 1 | `cluster/run_dataset_on_file.py:211-214` — `FINAL_STATE_OBJECTS` | `IMCalculator.FINAL_STATE_OBJECTS` in `services/calculations/im_calculator.py` | `88d7a4b` | **No — UNCHANGED** (**VERIFIED BY RUNNING**) |
+| 2 | `cluster/run_dataset_on_file.py:1196-1218` — `exact_final_state_labels` | the label construction in `IMCalculator._get_all_events_fs` and `physics_calcs.group_by_final_state` | `88d7a4b` | **The copied part: no.** `physics_calcs.group_by_final_state` is **UNCHANGED**. `IMCalculator._get_all_events_fs` is **CHANGED**, but the only changed line is its call `self._is_valid_fs(counts)` → `self._is_valid_fs(counts, present_types)` — a line the delivery does not copy. The label-building lines themselves are unchanged. (**VERIFIED BY RUNNING**) |
+| 3 | `cluster/run_dataset_on_file.py:463` — `_group_by_final_state_with_mask` | same two originals as #2 | `88d7a4b` | **Same answer as #2.** It also *deliberately* omits upstream's closing `limit_particles_in_fs(fs, 4)` capping call, by the group's decision to keep exact light-jet multiplicities — a documented divergence, not drift. Note that upstream's own PR #34 has since removed that same capping call from `IMCalculator.group_by_final_state`, moving upstream towards this copy. |
+| 4 | `deliver/build_dataset_delivery.py:204-228` — `width_suffix` | the `f"ROI_{hist_name_base}_width_{bin_width}"` f-string in `services/pipelines/histograms_pipeline.py` (four places) | `88d7a4b` | **No — UNCHANGED.** `_create_histograms_for_signature` and `_create_merged_histograms_from_sqlite_signatures` are both unchanged, and the whole file is untouched between `88d7a4b` and `f16768e`. (**VERIFIED BY RUNNING**) |
+| 5 | `deliver/build_muon_combined_delivery.py:155-162` — `UPSTREAM_MIN_ENTRIES_PER_HISTOGRAM = 1` | upstream's no-minimum behaviour, read out of `_iter_signature_chunks`, `_create_histograms_for_signature` and `_create_merged_histograms_from_sqlite_signatures` | `88d7a4b` | **No — all three UNCHANGED** (**VERIFIED BY RUNNING**) |
+| 6 | `matching/vB_upstreamnames/scripts/vB_check_width_suffix.py:55-58` — `upstream_hist_name` (check script) | the same ROI f-string | `88d7a4b` | **No — UNCHANGED** (**VERIFIED BY RUNNING**) |
+| 7 | `tests/test_upstream_names.py:67-93` — `upstream_group_by_final_state_labels` | `physics_calcs.group_by_final_state`, minus its closing capping call | `88d7a4b` | **No — UNCHANGED** (**VERIFIED BY RUNNING**) |
+| 8 | `tests/test_upstream_names.py:97-106` — `upstream_convert_to_bumpnet_name` | `histograms_pipeline._convert_to_bumpnet_name` | `88d7a4b` | **No — byte-identical at both commits** (**VERIFIED BY RUNNING**) |
+| 9 | `tests/test_width_suffix.py:62-70` — `upstream_hist_name` and `upstream_convert_to_bumpnet_name` | the ROI f-string and `_convert_to_bumpnet_name` | `88d7a4b` | **No — UNCHANGED** (**VERIFIED BY RUNNING**) |
+| 10 | `tests/test_exact_jet_labels.py:130-133` — `old_split_by_first_empty_bin`, kept as a reference | `post_processing_pipeline._split_by_first_empty_bin` | `f3d1d9b` | **Yes — CHANGED.** Upstream PR **#27** (`8120fb8`) replaced the floating `np.linspace` edges with `_aligned_bin_edges`. **This drift is intentional**: the copy exists precisely to be the *old* behaviour the test compares against, and the fork already carries #27's new version in its shared code (`post_processing_pipeline.py` is byte-identical to upstream's). Nothing stale is in use. (**VERIFIED BY RUNNING**) |
+| 11 | `matching/vB_exactlabels/scripts/vB_check_step3.py:153-156` — `old_split_by_first_empty_bin`, "the pre-8120fb8 split, verbatim, as the reference" | same as #10 | pre-`8120fb8` | **Same as #10** — intentional, a reference copy of superseded behaviour. |
+
+**Summary: of the 9 copies that are meant to track upstream (#1–#9), none has drifted.** The two that differ from upstream master (#10, #11) are deliberate snapshots of superseded behaviour, used as test references, and the live shared code already matches upstream.
+
+#### Copies of the fork's own code, not upstream's
+
+Listed for completeness; no upstream-drift question arises.
+
+| copy | source | note |
+|---|---|---|
+| `electron_prep/common.py:95-119` — `trigobj_best_match_pt` | `cluster/run_dataset_on_file.py`, same function | fork's own; `tests/test_electron_datasets.py:842` keeps its pre-change body as a regression reference |
+| `electron_prep/common.py:25` — the trigger-bit test | the production path in `run_dataset_on_file.py` | fork's own |
+| `cluster/run_dataset_on_file.py:1409` — `run_combination_funnel` | extracted from `main()`'s own former inline loop | fork's own refactor |
+| `deliver/committed/muon_combined/scripts/build_required_plots.py:4` — plotting | `studies.cms_coverage.deliver.make_check_plots.plot_one` | fork's own, reused verbatim |
+| `tests/test_exact_jet_labels.py:103-106` — `old_capped_grouping`, the grouping this task replaced | the fork's own prior grouping | fork's own, kept as a reference |
+
+#### Copies that are not code
+
+| copy | source |
+|---|---|
+| `cluster/datasets_records.py:5-13` — record IDs, expected file counts, trigger sets and the de-duplication priority order | the task brief, quoted verbatim |
+| `electron_prep/read_trigobj_titles.py:9` — trigger-object bit definitions | quoted from CMSSW, not from upstream this repository tracks |
+
+#### What this means for the rest of the report
+
+The "NOT REACHED" verdicts in section (c) remain correct as statements about *imports and calls*. For the specific functions above, read them as "the delivery does not import this, but it runs its own copy of it". The practical conclusion is unchanged, and now rests on a second check rather than on the trace alone: none of the live copies has fallen behind upstream.
+
 ---
 
 ## (d) ADOPT items and their predicted effect on the delivered data
@@ -215,6 +287,8 @@ Why they agree: for a count below 10 both versions read the same digit. For a co
 
 **Zero rows are `REGRESSION REQUIRED BEFORE SYNC`.**
 
+> **Since applied.** On 2026-10-11 the D01/D02/D08 parsing fix was taken into fork master (`db1bd32` → `2734dd3`). The prediction above was then re-checked against the delivery's own label set rather than the synthetic space: **53,010 label x combination pairs, 0 disagreements** (**VERIFIED BY RUNNING**). The delivered data is unchanged, as predicted. The other 14 ADOPT rows remain unapplied.
+
 One caveat stated plainly: this verdict is about the delivered data, which is already on disk and which this task did not touch. Adopting D03, D06, D07, D32, D33, D38 and D52 *would* change what the shared pipeline does for **ATLAS** — that is the point of them. The ATLAS side is outside this comparison's scope.
 
 ---
@@ -252,12 +326,14 @@ So this is a configuration omission, in one upstream config file. On the fork si
 
 ### Count parsing for counts of 10 or more
 
+> **RESOLVED on 2026-10-11 in fork master `2734dd3`** (branch `fix/count-parsing-upstream-34`). Upstream's PR #34 parsing fix was applied to all four functions; they are now line-for-line identical to upstream `f16768e`. The description below is the state at `db1bd32`, kept because the analysis of *why it changed nothing delivered* is what justified applying it. Rows D01, D02 and D08.
+
 Covered in full in section (d) under D01. Summary:
 
 - Fork master reads **only the first character** of each count field, in four functions: `physics_calcs.limit_particles_in_fs`, `physics_calcs.is_finalstate_contain_combination`, `IMCalculator._limit_particles_in_fs`, `IMCalculator.does_final_state_contain_combination`. **VERIFIED BY RUNNING.**
 - Upstream master reads **the whole number** in all four, fixed by **#34** (`f16768e`, 8 Oct 2026). **VERIFIED BY RUNNING.**
 - Concretely, for a count of 10 or more: our version takes the first digit as the count and the second digit as the particle letter. The letter lookup fails, so `limit_particles_in_fs` leaves the label uncapped (`0e_2m_10j_1b` stays as it is, where upstream rewrites it to `0e_2m_4j_1b`), and `is_finalstate_contain_combination` silently skips that object type's requirement. The threshold at which the two first differ is a count of exactly **10** (**VERIFIED BY RUNNING**).
-- **Can a delivered final state reach 10 of anything?** For light jets, **yes — observed**: labels with 10, 11 and 12 light jets appear in the fork's study evidence. For electrons, muons and b-jets, **not observed** — the Version B rule caps their total at 4, and the committed manifests top out at 3, 3 and 4. In the 14 committed four-dataset manifests the largest light-jet count is 4; counts of 5 through 9 and 12 appear in the broader study outputs. All **VERIFIED BY RUNNING**.
+- **Can a delivered final state reach 10 of anything?** *(Corrected 2026-10-11, second pass: the first pass answered this from the superseded manifests.)* **In the 7 October delivery, no.** Its 103 final states run up to **9** light jets and contain no count of 10 or more; electrons, muons and b-jets are capped at 4 in total by the Version B rule (**VERIFIED BY RUNNING**, read from `evidence/D2_D3_delivery_checks.json`). Two-digit labels do occur elsewhere — 10 and 11 light jets in the DoubleEG pilot evidence, and 10 to 13 in `studies/cms_coverage/` — but not in the delivery. All **VERIFIED BY RUNNING**.
 - **Does it change any delivered number?** No — proven over 171,774,906 cases, as set out under D01.
 
 ### The final-state rule difference
@@ -300,33 +376,79 @@ The fork's own `test_exact_jet_labels.py` demonstrates why the alignment matters
 
 ### Histogram naming
 
-**The fork's delivered names do NOT match upstream's exactly. One mismatch, in the width suffix.**
+**The delivered names match upstream's exactly. No mismatch.**
+
+*(Corrected 2026-10-11, second pass. The first pass reported a mismatch in the width suffix and in the number of category fields. Both were wrong: they were read off 14 superseded manifests under `studies/cms_datasets/deliver/committed/`, not off the delivery that was actually sent. The original wording is kept at the end of this subsection as history.)*
 
 Upstream builds every histogram name as `f"ROI_{hist_name_base}_width_{bin_width}"` — the same f-string in four places. `bin_width` comes straight from the config and is never reformatted. Both masters set `bin_width_gev: 10.0`, which YAML reads as a Python float, and `domain/config.py` declares it `float = 10.0`. So upstream writes **`_width_10.0`**.
 
-Our delivery can produce either form. Run (**VERIFIED BY RUNNING**, `test_width_suffix.py`, all checks pass):
+**The delivery sent to Maryna on 7 October 2026 writes exactly that.** The file is
 
-- with `--upstream-width-suffix`: `ROI_mass_m0m1_cat_0ex_2mx_5jx_1bx_width_10.0` — character-for-character upstream's
-- default: `..._width_10` — upstream's string minus the trailing `.0`
+```
+four_dataset_matched_vB_upstreamnames_w10p0_dr012_bumpnet_cropped.root
+```
 
-**All 9,793 histogram names across the 14 committed delivery manifests end in `_width_10`** (**VERIFIED BY RUNNING**). The delivered files used the default, not the upstream-matching switch.
+documented in `studies/cms_datasets/electron_vB/DELIVERY_NOTES.md`, with its read-back checks in `studies/cms_datasets/electron_vB/evidence/D2_D3_delivery_checks.json`. From that evidence (**VERIFIED BY RUNNING** a read of those two files — the command is in Appendix C):
 
-Everything else about the names does match. `test_upstream_names.py` extracts upstream master into a temporary tree and calls upstream's own `_convert_to_bumpnet_name`, and our names agree string-for-string across every pilot final state and all 7 combination strings, including two-digit counts (`mass_j0j1j2j3_cat_0ex_1mx_11jx_0bx`, `mass_e0m0b0_cat_1ex_1mx_12jx_4bx`). Our per-event labels also equal upstream's own `group_by_final_state` output for all 34 synthetic test events (**VERIFIED BY RUNNING**).
+| check recorded in the delivery's own evidence | result |
+|---|---|
+| histograms in the delivered file (cropped and uncropped) | **1,975** each |
+| final-state categories | **103** |
+| entries | **82,956,880** |
+| every name matches upstream's `ROI_mass_<combo>_cat_<fs>_width_<w>` shape | **pass** — "0 unparsed" |
+| every name ends with `_width_10.0` | **pass** — "0 do not" |
+| every delivered name equals what **upstream's own naming code** produces (upstream `88d7a4b`, 1,975 names checked) | **pass** — "0 mismatch" |
+| no duplicate names, cropped and uncropped | **pass** — 1,975 keys, 1,975 distinct |
+| bin edges exactly 10.0 GeV over 0–10000 GeV | **pass** — "0 wrong" |
+| `all_d2_checks_pass` | **true**, with an empty `failures` list |
 
-One further naming note. The committed manifests use the **six-field** form (`0ex_1mx_0jx_0gx_0tx_2bx`, with photons and taus written as zero), while the current code produces the **four-field** form (`0ex_2mx_5jx_1bx`, omitting types the data does not carry) — which is upstream's current rule. So the delivered names are one naming generation behind the code, in two respects: the six-field form and the `_width_10` suffix.
+The evidence also records the exact upstream artefact it was checked against: `upstream_commit = 88d7a4b6b9ce4459baa5567d29a95453e68a77b4` and `upstream_roi_fstring = f"ROI_{hist_name_base}_width_{bin_width}"`.
+
+**The category part is four-field too.** All 103 delivered final states are four-field (`0e_1m_0j_1b` and the like), and the 11 full histogram names recorded in the evidence all carry a four-field `_cat_` part — for example `ROI_mass_e0e1j0_cat_2ex_0mx_1jx_0bx_width_10.0` (**VERIFIED BY RUNNING**). That is upstream's current rule: only the object types the data actually carries. The six-field form belongs to the superseded manifests, not to the delivery.
+
+**Upstream's later change does not disturb this.** The delivery was checked against upstream `88d7a4b`; upstream master is now `f16768e`. Exactly one commit separates them — PR **#34** — and it touched only `services/calculations/im_calculator.py` and `services/calculations/physics_calcs.py`. `services/pipelines/histograms_pipeline.py`, which holds all the naming code, is **untouched**: the four `ROI_..._width_...` f-strings sit at the same lines with the same text at both commits, and `_convert_to_bumpnet_name` is byte-identical at both (**VERIFIED BY RUNNING**, `git diff --stat 88d7a4b f16768e -- services/pipelines/histograms_pipeline.py` returns nothing). What #34 did change is the *label* fed into the name: `IMCalculator.group_by_final_state` went from `yield self._limit_particles_in_fs(fs, threshold=4)` to `yield fs`, i.e. it **stopped capping light-jet counts**. That moves upstream *towards* our delivery, which keeps exact light-jet multiplicities by the group's own decision. So the name format is unchanged and the label content has converged.
+
+**One remaining detail, not a mismatch.** The study's `width_suffix` helper still *defaults* to the legacy `_width_10` form and produces upstream's `_width_10.0` only when asked (`--upstream-width-suffix`). The delivery asked. Anyone running that script without the flag would get the legacy form, so the default is a latent trap worth tidying — but it is not a question about the delivered data and not a question for Maryna.
+
+**Delivered multiplicities.** The 103 delivered final states run up to **9** light jets and contain **no count of 10 or more** (**VERIFIED BY RUNNING**). The two-digit labels referred to elsewhere in this report (10j, 11j) come from the DoubleEG pilot evidence and from `studies/cms_coverage/`, not from the 7 October delivery.
+
+<details>
+<summary>Superseded first-pass wording, kept for history</summary>
+
+> **The fork's delivered names do NOT match upstream's exactly. One mismatch, in the width suffix.** […] All 9,793 histogram names across the 14 committed delivery manifests end in `_width_10`. The delivered files used the default, not the upstream-matching switch. […] The committed manifests use the six-field form (`0ex_1mx_0jx_0gx_0tx_2bx`), while the current code produces the four-field form — so the delivered names are one naming generation behind the code.
+
+Why it was wrong: the 14 manifests under `studies/cms_datasets/deliver/committed/` are earlier, superseded builds. The `_width_10` count of 9,793 is a true statement *about those files*; they are simply not the delivery. The delivery is the `w10p0` build of 7 October, whose own evidence is tabulated above.
+
+</details>
 
 ### Anything that would make CMS and ATLAS histograms not directly comparable
 
-Four things, in order of how much they matter:
+*(Revised 2026-10-11, second pass. The first pass listed four items. Three are now withdrawn — two on naming, one on the per-histogram minimum — leaving one genuine item.)*
 
-1. **The `_width_10` vs `_width_10.0` suffix** (row D63). An automated comparison keyed on histogram name would simply not find the partner histogram. This is the one concrete, present-today blocker. Our code already has the switch; the delivered files did not use it.
-2. **The six-field vs four-field category form.** Same class of problem: `0ex_1mx_0jx_0gx_0tx_2bx` and `0ex_1mx_0jx_2bx` describe the same event and do not match as strings.
-3. **The electron–muon overlap removal at dR < 0.12** (row D64). We remove an electron within dR 0.12 of a selected muon, in all four datasets; the muon is kept. Radius approved by Maryna on 7 October 2026, raised from 0.05. **There is no overlap-removal code anywhere in shared code on either master** (**VERIFIED BY RUNNING**: no `0.12`, no `overlap_removal`, no `delta_r` in `domain/`, `services/`, `orchestration/` or `pipeline/` on either side, apart from two unrelated plot-label coordinates). Ours lives in study code. If ATLAS does not apply the same removal, the two experiments' lepton selections are not the same selection.
-4. **The per-histogram minimum of 100 entries** (row D65). We keep only histograms with at least 100 entries; upstream's shared stage applies no minimum and keeps any histogram with at least one entry. Our `--no-hist-min-entries` switch reproduces upstream's floor of 1 (**VERIFIED BY RUNNING**). Different sets of final states survive on the two sides, so the two deliveries would not have the same list of histograms even with identical names.
+**One item stands:**
 
-Items 1, 2 and 4 are settings our own code already supports both ways; item 3 is a genuine physics choice.
+1. **The electron–muon overlap removal at dR < 0.12** (row D64). We remove an electron within dR 0.12 of a selected muon, in all four datasets; the muon is kept. The radius was approved by Maryna on 7 October 2026, raised from 0.05. **There is no overlap-removal code anywhere in shared code on either master** (**VERIFIED BY RUNNING**: no `0.12`, no `overlap_removal`, no `delta_r` in `domain/`, `services/`, `orchestration/` or `pipeline/` on either side, apart from two unrelated plot-label coordinates). Ours lives in study code. If ATLAS does not apply the same removal, the two experiments' lepton selections are not the same selection, whatever the histograms are called. This is the one item still needing Maryna.
 
----
+**Three items withdrawn:**
+
+2. ~~The `_width_10` vs `_width_10.0` suffix.~~ **Withdrawn — the names are aligned.** All 1,975 delivered names end `_width_10.0` and match upstream's own naming code with zero mismatches. See "Histogram naming" above.
+
+3. ~~The six-field vs four-field category form.~~ **Withdrawn — the delivered form is four-field,** which is upstream's current rule. All 103 delivered final states and all 11 recorded full names are four-field.
+
+4. ~~The per-histogram minimum of 100 entries.~~ **Withdrawn.** The 100 is the build script's default, not what the delivery used. `DELIVERY_NOTES.md` records the 7 October delivery as applying the ≥100-events-per-**final-state** rule and *"no per-histogram minimum or filled-bin cut"* — which is upstream's own behaviour (upstream writes a histogram whenever at least one value exists). The script's `--no-hist-min-entries` switch is what produces that floor of 1, and the delivery used it. **Verification status:** this rests on the delivery notes' own statement; unlike the naming checks there is no programmatic per-histogram-minimum check in the evidence JSON and no recorded build command line, so it is **UNVERIFIED** programmatically, **documented** in `DELIVERY_NOTES.md:51-52`.
+
+So the naming and binning machinery lines up; what is left is a physics choice about object selection.
+
+### Note: the older `studies/cms_coverage/` outputs carry inconsistent labels
+
+*(Added 2026-10-11, second pass, after the count-parsing fix was applied.)*
+
+Fixing the count-parsing bug exposed something about the **superseded** `studies/cms_coverage/` study. That study calls the *shared* grouping function, which caps any object count above 4 when it writes a label. Because the old code read only the first character of a count, it capped 5 through 9 down to 4 but left 10 and above untouched. Its recorded outputs show exactly that fingerprint: of the 509 labels present, the largest count per label runs **1, 2, 3, 4, 10, 11, 12, 13 — with nothing between 5 and 9** (**VERIFIED BY RUNNING**). Events with 5 to 9 light jets were folded into the `4j` buckets; events with 10 to 13 kept their own.
+
+With the fix in place those 14 two-digit labels would also cap to 4, so a re-run would merge them into the `4j` buckets too. The combination *decision* is unchanged either way — 0 disagreements over 94,674 observed-label pairs and 7,145,376 synthetic pairs (**VERIFIED BY RUNNING**) — only the label differs.
+
+**This affects only that superseded study, not the 7 October delivery.** The delivery uses its own grouping code, keeps exact light-jet multiplicities by the group's decision, and its 103 final states top out at 9 light jets with no count of 10 or more. Nothing was regenerated.
+
 
 ## (f) Corrections to the September 2026 map and to the brief's "known history"
 
@@ -424,10 +546,7 @@ Listed only, as the brief directs. None was merged, test-merged, or analysed in 
 
 **(ii) Questions needing her decision**
 
-- **The histogram width suffix.** Upstream writes `_width_10.0`; all 9,793 names in our delivered manifests say `_width_10`. Our code supports both. Should the delivered files be renamed to upstream's form so CMS and ATLAS histograms line up by name? (D63)
-- **The category field count.** Our delivered names use the six-field form including `0gx_0tx`; our current code and upstream both use the four-field form that omits absent types. Which form is the reference? (section (e))
 - **The electron–muon overlap removal at dR < 0.12.** She approved the radius for CMS on 7 October. Will ATLAS apply the same removal? Nothing in shared code does it on either side, so the two experiments' lepton selections differ until this is settled. (D64)
-- **The per-histogram minimum of 100 entries.** Upstream's shared stage keeps any histogram with at least one entry. Should the delivery match that, or should upstream adopt a minimum? Different final states survive under the two rules. (D65)
 - **The fallback particle-mass table** (`KNOWN_MASSES`, upstream issue #28). It does not affect our delivery, but it is unresolved in shared code. Is the release-tagged mechanism above the agreed fix? (D10)
 - **Upstream's trigger matching (#22/#29).** It is ATLAS-shaped and we have none of it. Do we adopt it, keep our own path-requirement filter, or converge on something that serves both? (D13, D28, D29, D34, D39, D46)
 - **Upstream's removal of its test suite** (`6ff3c31`). We now carry 36 test files upstream does not have. Worth asking why, and whether they would take them back.
@@ -599,6 +718,19 @@ Analysis and verification scripts (all written for this task; none committed to 
 | `tools/content_presence.py` | Per-commit content-presence percentages for all 47 upstream-only commits |
 | `tools/missing_lines.py` | The exact lines missing for the partially-present commits |
 | `tools/make_csv.py` | Generates `differences.csv` |
+| `tools/copied_drift.py` | *(second pass)* For each function the delivery copied from upstream, compares the cited original at its cited commit against upstream master `f16768e` |
+| `tools/checkB.py`, `tools/checkC.py` | *(second pass, from the count-parsing fix task)* Delivered-label and `cms_coverage` old-vs-new comparisons quoted in section (e) |
+
+Second-pass verification of the delivery's own naming evidence:
+
+```
+cat studies/cms_datasets/electron_vB/DELIVERY_NOTES.md
+python   # read studies/cms_datasets/electron_vB/evidence/D2_D3_delivery_checks.json and print
+         # checks, n_histograms_cropped, n_final_states, upstream_commit, all_d2_checks_pass
+git diff --stat 88d7a4b f16768e            # only 2 files, neither is the naming file
+git diff --stat 88d7a4b f16768e -- services/pipelines/histograms_pipeline.py   # no output
+python tools/copied_drift.py
+```
 
 Existing test suites run (fork master only — upstream master has no test suite):
 
@@ -617,8 +749,9 @@ No production was run. No remote data was read over xrootd. The Weizmann cluster
 
 ### Appendix D — what is AMBIGUOUS or UNVERIFIED
 
-- **AMBIGUOUS — which histogram naming generation is the reference.** The committed manifests use the six-field category form with `_width_10`; the current code produces the four-field form and can produce `_width_10.0`. Reading 1: the delivered files are the reference, and upstream should be asked to accept them. Reading 2: upstream's current form is the reference, and the delivery should be renamed. The code supports both and I am not picking one. (D63, section (e))
 - **AMBIGUOUS — whether #34's per-type cap is intended as a standalone rule.** Reading 1: it is a second, independent safety net, in which case upstream's two rules are deliberately belt-and-braces and the 991-pattern difference against Version B is real but unreachable. Reading 2: it is redundant after #31's parsing filter and was simply not revisited. The code supports both readings; only its authors can say which.
+- **SETTLED since the first pass — histogram naming.** The first pass left the naming generation AMBIGUOUS. It is not ambiguous: the delivery's own read-back evidence shows all 1,975 names in upstream's form, four-field and `_width_10.0`, with zero mismatches against upstream's naming code. The ambiguity came from reading superseded manifests.
+- **UNVERIFIED — the 7 October delivery's per-histogram minimum.** `DELIVERY_NOTES.md:51-52` states the delivery applied no per-histogram minimum, which matches upstream. There is no programmatic check of this in the evidence files and no recorded build command line, so it is documented rather than independently verified.
 - **UNVERIFIED — behaviour under real data.** Every equivalence claim here was established on synthetic inputs and on the real code, never by re-running the delivery. The brief rules out production runs and xrootd reads, and I did not do either.
 - **UNVERIFIED — the 7 pytest failures on Linux.** They are Windows file-locking artefacts; I did not confirm they pass on Linux.
 - **UNVERIFIED — the earlier "~270" disagreement figure.** Not reproduced for the range I used. 271 comes out of a much narrower range (e, m, b each 0–4, j only 0–2). My figure is 991, with the range stated.

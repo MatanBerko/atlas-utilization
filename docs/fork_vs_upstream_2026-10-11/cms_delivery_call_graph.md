@@ -7,6 +7,11 @@ commands are in REPORT.md Appendix C.
 
 "Shared code" means `services/`, `domain/`, `orchestration/`, `pipeline/`.
 
+> **Read with section 5.6.** This is a trace of imports and calls. It cannot
+> see code the delivery **copied** instead of importing, and the delivery does
+> copy several upstream functions. See section 5.6 and REPORT.md section (c),
+> "Limitation of the import trace: copied code".
+
 ---
 
 ## 1. Scope of the trace
@@ -350,3 +355,15 @@ correction C6.
   may still be run by the shared pipeline for ATLAS, or by another study.
   "NOT REACHED" in REPORT.md is a statement about the four-dataset CMS
   delivery only.
+- **COPIED code is invisible to this trace** *(added 2026-10-11, second
+  pass)*. The delivery contains its own copies of several upstream
+  functions rather than importing them -- the final-state label
+  construction copied from upstream `88d7a4b`, the `ROI_..._width_...`
+  naming f-string, `FINAL_STATE_OBJECTS`, and upstream's no-minimum-entries
+  behaviour. An import-and-call trace cannot see any of those, so it will
+  say "NOT REACHED" about the upstream original while the delivery runs an
+  identical copy of its own. Every such copy is listed, with whether the
+  upstream original has moved since the commit it cites, in REPORT.md
+  section (c), "Limitation of the import trace: copied code". Of the nine
+  copies meant to track upstream, none has drifted; the two that differ are
+  deliberate snapshots of superseded behaviour kept as test references.
