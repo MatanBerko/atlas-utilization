@@ -442,11 +442,18 @@ files, which the merge skips by name.
 | | |
 |---|---:|
 | budget | < 3,000 |
-| **added by this study** | see the final report |
-| quota before | 108,515 of a 150,000 soft limit |
+| **added by this study, net** | **395** |
+| peak while the checkout existed | 2,421 |
+| quota before / after | 108,515 → **108,910** of a 150,000 soft limit |
 
-The pinned checkout is archived as required (`repo.tar` beside it, entry
-count verified, original removed). That is the only removal this study made.
+The pinned checkout was archived as required: `repo/` (2,027 inodes) →
+`repo.tar` (2,027 entries — verified equal — 168,632,320 bytes), then the
+original removed. That is the only removal this study made.
+
+What remains: `corrections/` (the official tarball and the two extracted
+POG files), `probe/` (62: the 60 first-pass JSONs and 2 smoke tests),
+`probe2/` (60, the pass used), `logs/` (240), `plots/` (8), `evidence/` (1),
+`probe_mapping.txt`, `repo.tar`.
 
 ## How to resume or re-run
 
