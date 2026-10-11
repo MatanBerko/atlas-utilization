@@ -61,6 +61,13 @@ case "$WHAT" in
         --record-id "$RECORD" --file-index "$FILE_INDEX" \
         --out "$OUT"
     ;;
+  partA)
+    # A3 + A4: the weight, and the pilot plots with and without it.
+    /usr/bin/time -v python -u studies/cms_mc_weights_v3/pileup/apply_pu_to_pilot.py         --data-runs-dir "${DATA_RUNS:?}"         --mc-scratch-dir "${MC_SCRATCH:?}"         --pu-json "${PU_JSON:?}"         --mc-profiles "$WORK_DIR/evidence"         --out-dir "$WORK_DIR/plots"
+    ;;
+  partB)
+    /usr/bin/time -v python -u studies/cms_mc_weights_v3/pileup/merge_and_plot_partB.py         --probe-dir "$WORK_DIR/probe"         --registry studies/cms_mc_weights_v3/cms_mc_normalisation_v3.json         --pilot-inputs "${PILOT_INPUTS:?}"         --out-dir "$WORK_DIR/plots"
+    ;;
   *)
     echo "unknown WHAT=$WHAT" >&2; exit 1 ;;
 esac
