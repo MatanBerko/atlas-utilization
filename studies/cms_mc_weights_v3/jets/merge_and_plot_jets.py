@@ -644,6 +644,200 @@ def plot_c6(mc_sum, out_dir, results):
     return path
 
 
+BINS_OF_INTEREST = (3, 4, 5)
+VERDICT_THRESHOLDS = ((0.6, "EXPLAINS"), (0.1, "CONTRIBUTES"),
+                      (-1e9, "RULED OUT"))
+
+
+def verdict_for(fraction, error):
+    """The pre-stated wording, from the fraction of the excess removed."""
+    if fraction is None or not np.isfinite(fraction):
+        return "INCONCLUSIVE"
+    if not np.isfinite(error):
+        error = 0.0
+    # a suspect that could be anything from nothing to everything has not
+    # been measured well enough to judge
+    if error > 0.5:
+        return "INCONCLUSIVE"
+    for threshold, word in VERDICT_THRESHOLDS:
+        if fraction >= threshold:
+            return word
+    return "RULED OUT"
+
+
+def part_d(results, reference, out_dir):
+    """Score every suspect on the same footing: what share of the measured
+    excess it removes at 3, 4 and 5+ jets.
+
+    The excess is taken from the paper-like definition, which is the one
+    closest to the published measurement.
+    """
+    out = {}
+    for channel in CHANNELS:
+        observed = np.asarray(results[channel]["paperlike"]["ratio"])
+        observed_err = np.asarray(results[channel]["paperlike"]["error"])
+        entry = {}
+
+        # C1: official JER smearing
+        jer = results[channel].get("paperlike_jer")
+        if jer is not None:
+            fraction, error = explained_fraction(
+                observed, np.asarray(jer["ratio"]), observed_err)
+            entry["C1_jer"] = {"fraction": fraction.tolist(),
+                               "error": error.tolist()}
+
+        # C2: the jet energy scale, expressed in units of the published
+        # 1-sigma JES, so "how big a shift would be needed" becomes "how
+        # many standard deviations away that is"
+        scan = results["jes_scan"][channel]
+        shifts = np.asarray(scan["shifts"] + [0.0], dtype=np.float64)
+        order = np.argsort(shifts)
+        jes = {}
+        for n in BINS_OF_INTEREST:
+            values = np.asarray(scan["ratios"][str(n)] + [scan["baseline"][n]],
+                                dtype=np.float64)
+            sx, sy = shifts[order], values[order]
+            baseline = scan["baseline"][n]
+            needed = results["jes_shift_needed_to_close"][channel][str(n)]
+            # the shift that reproduces the published 1-sigma JES effect on
+            # this bin's cross section
+            published_pct = reference["exclusive_uncertainty_pct"].get(
+                str(min(n, 8)), {}).get("jes")
+            one_sigma = float("nan")
+            if published_pct:
+                target = baseline / (1.0 + published_pct / 100.0)
+                if sy.min() <= target <= sy.max():
+                    one_sigma = float(np.interp(target, sy[::-1], sx[::-1]))
+            # what a +1 sigma JES shift alone would remove
+            fraction = float("nan")
+            if np.isfinite(one_sigma) and abs(observed[n] - 1.0) > 1e-9:
+                moved = float(np.interp(one_sigma, sx, sy))
+                fraction = (observed[n] - moved) / (observed[n] - 1.0)
+            jes[str(n)] = {
+                "shift_needed_to_close": needed,
+                "published_one_sigma_jes_pct": published_pct,
+                "shift_equivalent_to_one_sigma": one_sigma,
+                "needed_in_sigma": (needed / one_sigma
+                                    if np.isfinite(one_sigma) and one_sigma
+                                    else float("nan")),
+                "fraction_explained_by_one_sigma": fraction,
+            }
+        entry["C2_jes"] = jes
+
+        # C5: our own sample's particle-level deficit against the published
+        # measurement. Correcting the simulation to the measured particle-
+        # level cross section is the single most direct test there is.
+        c5 = results.get("c5", {}).get("channels", {}).get(channel)
+        if c5 is not None:
+            closure = np.asarray(c5["ratio_to_measured"], dtype=np.float64)
+            closure_err = np.asarray(c5["ratio_error"], dtype=np.float64)
+            measured_rel = np.asarray(
+                results["c5"]["measured_unc_pb"], dtype=np.float64) / np.asarray(
+                    results["c5"]["measured_pb"], dtype=np.float64)
+            total_rel = np.sqrt((closure_err / closure) ** 2 + measured_rel ** 2)
+            residual = observed * closure
+            residual_err = residual * np.sqrt(
+                (observed_err / observed) ** 2 + total_rel ** 2)
+            fraction, error = explained_fraction(observed, residual,
+                                                 observed_err)
+            # the generator closure carries its own uncertainty into the
+            # fraction as well, so add it rather than quoting the data-only
+            # piece on its own
+            with np.errstate(divide="ignore", invalid="ignore"):
+                extra = np.where(np.abs(observed - 1.0) > 1e-9,
+                                 observed * total_rel / np.abs(observed - 1.0),
+                                 np.nan)
+            entry["C5_generator"] = {
+                "closure": closure.tolist(),
+                "closure_total_rel_error": total_rel.tolist(),
+                "residual_ratio": residual.tolist(),
+                "residual_error": residual_err.tolist(),
+                "fraction": fraction.tolist(),
+                "error": np.sqrt(error ** 2 + np.nan_to_num(extra) ** 2).tolist(),
+            }
+        out[channel] = entry
+
+    # C3 and C4 are rate statements, not corrections: the most they could
+    # contribute is the data-minus-simulation difference in the fake-like
+    # fraction of the extra jets.
+    c4 = results.get("c4_summary", {})
+    for channel in CHANNELS:
+        if channel not in c4:
+            continue
+        block = c4[channel]
+        ceilings = {}
+        for name in ("xjet_n_fail_tightlepveto", "xjet_n_highEM"):
+            data_f = block.get(name + "_data")
+            mc_f = block.get(name + "_mc")
+            if data_f is None or mc_f is None:
+                continue
+            ceilings[name] = {"data": data_f, "mc": mc_f,
+                              "data_minus_mc": data_f - mc_f}
+        for name in ("xjet_nMuons", "xjet_nElectrons"):
+            data_f = block.get(name + "_ge1_data")
+            mc_f = block.get(name + "_ge1_mc")
+            if data_f is None or mc_f is None:
+                continue
+            ceilings[name + "_ge1"] = {"data": data_f, "mc": mc_f,
+                                       "data_minus_mc": data_f - mc_f}
+        out[channel]["C4_ceiling"] = ceilings
+    out["c3_occupancy"] = results.get("c3_occupancy")
+
+    # ---- print it -----------------------------------------------------
+    rows = []
+    for channel in CHANNELS:
+        entry = out[channel]
+        for n in BINS_OF_INTEREST:
+            label = NJET_LABELS[n]
+            observed = results[channel]["paperlike"]["ratio"][n]
+            row = [CHANNEL_TITLE[channel], label, fmt(observed)]
+            jer = entry.get("C1_jer")
+            row.append("{}%".format(fmt(100 * jer["fraction"][n], 1))
+                       if jer else "-")
+            jes = entry["C2_jes"][str(n)]
+            row.append("{} sigma".format(fmt(jes["needed_in_sigma"], 1)))
+            gen = entry.get("C5_generator")
+            if gen:
+                row.append("{} +- {}%".format(fmt(100 * gen["fraction"][n], 0),
+                                              fmt(100 * gen["error"][n], 0)))
+                row.append(fmt(gen["residual_ratio"][n]))
+            else:
+                row += ["-", "-"]
+            rows.append(row)
+    print(table(rows, ["channel", "jets", "data/MC", "C1 JER removes",
+                       "C2 JES needed", "C5 generator removes",
+                       "residual after C5"]))
+
+    print("\nverdicts")
+    vrows = []
+    for channel in CHANNELS:
+        entry = out[channel]
+        for name, key in (("C1 jet energy resolution", "C1_jer"),
+                          ("C5 generator modelling", "C5_generator")):
+            block = entry.get(key)
+            if not block:
+                continue
+            fractions = [block["fraction"][n] for n in BINS_OF_INTEREST]
+            errors = [block["error"][n] for n in BINS_OF_INTEREST]
+            mean_fraction = float(np.nanmean(fractions))
+            mean_error = float(np.nanmean(errors))
+            word = verdict_for(mean_fraction, mean_error)
+            entry[key]["verdict"] = word
+            entry[key]["mean_fraction_3to5"] = mean_fraction
+            vrows.append([CHANNEL_TITLE[channel], name,
+                          "{}%".format(fmt(100 * mean_fraction, 0)), word])
+        needed = [entry["C2_jes"][str(n)]["needed_in_sigma"]
+                  for n in BINS_OF_INTEREST]
+        finite = [v for v in needed if np.isfinite(v)]
+        word = "RULED OUT" if (finite and min(finite) > 3.0) else "INCONCLUSIVE"
+        entry["C2_jes"]["verdict"] = word
+        vrows.append([CHANNEL_TITLE[channel], "C2 jet energy scale",
+                      "needs {}+ sigma".format(fmt(min(finite), 1))
+                      if finite else "cannot reach 1", word])
+    print(table(vrows, ["channel", "suspect", "size", "verdict"]))
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--probe-dir", required=True)
@@ -744,10 +938,15 @@ def main() -> int:
         fraction, fraction_err = explained_fraction(before, after, err)
         results[channel]["c1_explained_fraction"] = {
             "fraction": fraction.tolist(), "error": fraction_err.tolist()}
-        rows.append([CHANNEL_TITLE[channel]]
-                    + ["{} -> {}  ({}%)".format(fmt(b), fmt(a),
-                                                fmt(100 * f, 1))
-                       for b, a, f in zip(before, after, fraction)])
+        # "what share of the excess it removes" is meaningless where there
+        # is no excess to remove, so the percentage is only printed where
+        # the ratio is more than 5% away from one.
+        cells = []
+        for b, a, f in zip(before, after, fraction):
+            share = ("({}%)".format(fmt(100 * f, 1)) if abs(b - 1.0) > 0.05
+                     else "(no excess)")
+            cells.append("{} -> {}  {}".format(fmt(b), fmt(a), share))
+        rows.append([CHANNEL_TITLE[channel]] + cells)
     print(table(rows, ["channel"] + NJET_LABELS))
 
     print("\n=== C2: the jet energy scale shift that would close the gap ===")
@@ -773,6 +972,10 @@ def main() -> int:
     results["jes_shift_needed_to_close"] = jes_needed
     print(table(rows, ["channel", "jets", "ratio at 0 shift",
                        "shift needed to reach 1"]))
+
+    print("\n=== D: what each suspect explains, at 3, 4 and 5+ jets ===")
+    verdicts = part_d(results, reference, out_dir)
+    results["part_d"] = verdicts
 
     print("\n=== what the simulation is made of, per jet bin "
           "(paper-like definition) ===")
