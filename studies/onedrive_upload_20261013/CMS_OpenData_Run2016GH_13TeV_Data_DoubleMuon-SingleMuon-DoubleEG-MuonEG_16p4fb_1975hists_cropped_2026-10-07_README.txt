@@ -96,18 +96,22 @@ measurement, stated on record 1059 and citing "Precision luminosity
 measurement in proton-proton collisions at sqrt(s) = 13 TeV in 2015 and
 2016 at CMS" (CDS 2759951).
 
-UNVERIFIED -- please read before quoting this luminosity:
-No record in this project states an integrated luminosity for this
-four-dataset delivery. The 16.393 fb^-1 above is the recorded luminosity
-of the certified Run2016G+H lumisections, which is the run range all four
-datasets are taken from; it was established, and its lumisection coverage
-checked, for the DoubleEG dataset only (0.0042% of the luminosity sits in
-lumisections absent from the DoubleEG files, which is why the official
-value was adopted unchanged). The equivalent coverage check has NOT been
-done for the DoubleMuon, SingleMuon or MuonEG files, and no record
-addresses what the effective luminosity of the de-duplicated union of the
-four datasets is. Treat 16.393 fb^-1 here as the Run2016G+H run-range
-value only.
+File coverage was checked for all four datasets on 13 October 2026. Of
+the 90,807 certified Run2016G+H lumisections, each dataset's files
+contain 90,125; the 682 absent from each carry this much luminosity:
+
+  dataset      files   missing lumisections   missing lumi   % of total
+  DoubleMuon      57            682       0.000688522 fb^-1    0.0042%
+  SingleMuon     152            682       0.000688522 fb^-1    0.0042%
+  DoubleEG       133            682       0.000688616 fb^-1    0.0042%
+  MuonEG          48            682       0.000688522 fb^-1    0.0042%
+
+Every dataset is far below the 0.1% threshold agreed for changing the
+quoted value, so 16.393380531 fb^-1 stands. 662 of the 682 missing
+lumisections carry exactly zero recorded luminosity. Since all four
+datasets cover the same run range to within 0.0042%, that figure applies
+to the de-duplicated union delivered here.
+See studies/lumi_coverage_four_datasets/LUMI_COVERAGE_REPORT.md.
 
 BINNING AND CROPPING
 --------------------
@@ -203,6 +207,9 @@ In https://github.com/MatanBerko/atlas-utilization at commit 2734dd3:
   studies/hgg_cms/impl_checks/lumi_coverage/LUMI_DECISION.md
       the 16.393380531 fb^-1 value, its brilcalc / record-1059 source,
       and the +/- 1.2% uncertainty
+  studies/lumi_coverage_four_datasets/LUMI_COVERAGE_REPORT.md
+      the file-coverage check of 13 October 2026: all four datasets,
+      390 files, the per-dataset missing-lumisection table above
 
 CONTACT
 -------

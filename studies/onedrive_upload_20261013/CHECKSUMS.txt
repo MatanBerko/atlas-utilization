@@ -1,10 +1,12 @@
 CHECKSUMS -- OneDrive upload folder prepared 13 October 2026
 ============================================================
+(READMEs revised 13 October 2026 after the four-dataset luminosity-coverage
+check; the two .root files are unchanged and re-verified below.)
 
 Local folder: %USERPROFILE%\Desktop\CMS_OneDrive_upload_2026-10-13\
 The two .root files are byte-identical copies of the sources below,
 renamed only. The .root files themselves are NOT committed to this
-repository.
+repository. The README hashes are those of the files in that folder.
 
 FILE 1 -- DoubleMuon only, the file BumpNet was already run on
 --------------------------------------------------------------
@@ -15,8 +17,8 @@ source  studies/cms_coverage/deliver/committed/doublemuon_bumpnet_min26bins_crop
         (git-tracked; built 27 Sept 2026, commits a37d626 and 30c19a1)
 
 name    CMS_OpenData_Run2016GH_13TeV_Data_DoubleMuon_16p4fb_340hists_cropped_2026-09-27_README.txt
-size    8731 bytes
-sha256  21a5c4c5cf0f27d037d4f098402e534ce54ae1a580de48373c9b6c204661b9f1
+size    9729 bytes
+sha256  41d608567254b8ff5ef7aacb217dc8209aabd0cca5b52b3c4d54ad744eb8c246
 
 FILE 2 -- four-dataset delivery
 -------------------------------
@@ -29,11 +31,31 @@ source  /storage/agrp/berkom/atlas-utilization/output/cms_datasets/deliver/
         (built 7 Oct 2026, commit db1bd32)
 
 name    CMS_OpenData_Run2016GH_13TeV_Data_DoubleMuon-SingleMuon-DoubleEG-MuonEG_16p4fb_1975hists_cropped_2026-10-07_README.txt
-size    10682 bytes
+size    11042 bytes
 sha256  306c4d6d187ba91192dc3a813ee3d064315e204c66c2e8f60ee65b684fd52355
+        -- superseded, see below
 
-HOW THE .ROOT HASHES WERE VERIFIED (all VERIFIED BY RUNNING, 13 Oct 2026)
--------------------------------------------------------------------------
+REVISION 13 OCT 2026 (READMEs only)
+------------------------------------
+The two READMEs were revised after the luminosity-coverage check
+(studies/lumi_coverage_four_datasets/LUMI_COVERAGE_REPORT.md): the
+luminosity sections now state the checked per-dataset coverage instead of
+an UNVERIFIED caveat, file 1's trigger section was corrected to say the
+dimuon DZ trigger IS required (without trigger matching), and file 1's
+BumpNet line now names Maryna Borysova.
+
+Current README hashes:
+
+  file 1 README   9729 bytes  41d608567254b8ff5ef7aacb217dc8209aabd0cca5b52b3c4d54ad744eb8c246
+  file 2 README  11042 bytes  fd24bac5951bd949dda3733dfd103f755719a852bef4d8d116ae48039d7c2b14
+
+Previous README hashes (first version, 13 Oct 2026):
+
+  file 1 README   8731 bytes  21a5c4c5cf0f27d037d4f098402e534ce54ae1a580de48373c9b6c204661b9f1
+  file 2 README  10682 bytes  306c4d6d187ba91192dc3a813ee3d064315e204c66c2e8f60ee65b684fd52355
+
+HOW THE .ROOT HASHES WERE VERIFIED (all VERIFIED BY RUNNING)
+-------------------------------------------------------------
 File 1  sha256 of the renamed local copy == sha256 of the working-tree
         file == sha256 of the blob read straight out of the git object
         database (git cat-file blob origin/master:<path>). All three
@@ -47,3 +69,6 @@ File 1  sha256 of the renamed local copy == sha256 of the working-tree
         are all byte-identical.
 File 2  sha256 computed on the cluster with sha256sum, then again on the
         downloaded local copy. Both deca5da3...
+
+Both .root hashes were re-computed on 13 Oct 2026 after the README
+revision and are unchanged: editing the READMEs touched no ROOT file.

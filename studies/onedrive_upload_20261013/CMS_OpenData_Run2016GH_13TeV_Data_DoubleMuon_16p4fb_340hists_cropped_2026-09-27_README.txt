@@ -34,32 +34,35 @@ measurement, stated on record 1059 and citing "Precision luminosity
 measurement in proton-proton collisions at sqrt(s) = 13 TeV in 2015 and
 2016 at CMS" (CDS 2759951).
 
-UNVERIFIED -- please read before quoting this luminosity:
-16.393 fb^-1 is the recorded luminosity of the certified Run2016G+H
-lumisections. In this project it was established, and its lumisection
-coverage checked, for the DoubleEG dataset only (0.0042% of the
-luminosity sits in lumisections absent from those files, which is why the
-official value was adopted unchanged). The equivalent coverage check has
-NOT been done for the 57 DoubleMuon files used here, and the
-repository's own code comment states in as many words that this value is
-"UNVERIFIED for DoubleMuon specifically -- established for DoubleEG".
-Treat 16.393 fb^-1 for this file as the Run2016G+H run-range value, not
-as a DoubleMuon-specific measured number.
+File coverage was checked, for this dataset and for all four datasets of
+the companion four-dataset delivery (13 October 2026). The 57 DoubleMuon
+files used here contain 90,125 of the 90,807 certified Run2016G+H
+lumisections; the 682 absent ones carry 0.000688522 fb^-1 between them,
+which is 0.0042% of the total and leaves an effective 16.392692 fb^-1.
+SingleMuon, DoubleEG and MuonEG each come to the same 0.0042%. Every
+dataset is far below the 0.1% threshold agreed for changing the quoted
+value, so 16.393380531 fb^-1 stands for both delivery files.
+See studies/lumi_coverage_four_datasets/LUMI_COVERAGE_REPORT.md.
 
 TRIGGER
 -------
-PLEASE NOTE: no HLT trigger requirement was applied in the measurement
-that produced this file. Its delivery record states explicitly: "No HLT
-trigger requirement was applied in this measurement (that is a separate,
-later survey's own addition, not part of this run)."
-
-For completeness: the two dimuon DZ paths that the DoubleMuon selection
-code defines, and that the LATER four-dataset delivery does require
-(either one, OR'd together), are
+Required: either of the two dimuon DZ paths, OR'd together --
   HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ
   HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ
-They were NOT applied to this file. For a trigger-selected DoubleMuon
-sample, use the four-dataset delivery instead.
+An event is kept if either path fired. Of the 92,609,925 events surviving
+the golden JSON, 30,943,565 (33.4%) pass this requirement, and everything
+downstream -- muon, electron and jet selection -- is applied to those.
+
+There is NO trigger matching: the selected offline muons are not required
+to be the objects that fired the path. Trigger matching came later, with
+the four-dataset delivery.
+
+NOTE on a wrong record: the older delivery record
+studies/cms_coverage/deliver/committed/README.txt says at line 71 that no
+HLT trigger requirement was applied in this measurement. That statement is
+incorrect; the code and the cutflow it was written from both show the
+trigger being applied. It has been left as it is (correcting that record
+is a separate job), so if you read it, read this section instead.
 
 EVENT SELECTION
 ---------------
@@ -126,16 +129,16 @@ Repository path  studies/cms_coverage/deliver/committed/
 Size             327,518 bytes
 sha256           4d7880020a6266d1e3fd98c864f83280a4a9b5e2f2ed6b57d3e0dfe62abdc6f6
 
-BumpNet status: this is the file BumpNet was already run on in late
-September 2026, with 339 of the 340 histograms smoothed successfully.
-UNVERIFIED -- that outcome is not recorded anywhere in the repository; it
-comes from project communication only.
+BumpNet status: this is the file Maryna Borysova ran BumpNet on in late
+September 2026.
 
 *** OLDER CONVENTIONS ***
 This file predates trigger matching, the Version B final-state rule and
 upstream-exact histogram names; do not mix it with the four-dataset file
 without accounting for that. Concretely, in this file:
-  - no HLT trigger requirement and no trigger matching at all;
+  - the dimuon DZ trigger is required (as in the four-dataset file), but
+    there is NO trigger matching here, where the four-dataset file matches
+    two muons to the firing trigger objects;
   - final-state labels still carry photon and tau slots (0gx_0tx) and
     names end "_width_10", whereas the four-dataset file's names are
     exactly what the upstream pipeline produces and end "_width_10.0";
@@ -164,21 +167,35 @@ In https://github.com/MatanBerko/atlas-utilization at commit 2734dd3:
 
   studies/cms_coverage/deliver/committed/README.txt
       dataset, records, 57 files, 94,148,416 events, selection,
-      post-processing, thresholds, cropping, the no-trigger statement,
-      the two known artifacts
+      post-processing, thresholds, cropping, the two known artifacts.
+      (Its line 71, saying no HLT trigger was applied, is wrong -- see
+      the TRIGGER section above.)
+  studies/cms_coverage/cluster/run_coverage_on_file.py
+      the file's own production code: it calls
+      studies.m0m1j0_cms.selection.select_event_selection_cutflow with
+      the default trigger branches, i.e. with the trigger applied
+  studies/m0m1j0_cms/selection.py
+      apply_trigger, which ORs the two dimuon DZ paths, and
+      select_event_selection_cutflow, which applies it before selecting
+      muons, electrons and jets
+  studies/m0m1j0_cms/full/FULL_REPORT.md and full/merge_summary.json
+      the full-run cutflow over the same 57 files: 94,148,416 read,
+      92,609,925 after the golden JSON, 30,943,565 after the trigger,
+      1,772,095 final -- the same 1,772,095 the delivery record quotes
   studies/cms_coverage/deliver/committed/build_summary.json
       340 histograms, event and bin statistics, shard identity check
   studies/cms_coverage/deliver/committed/crop_summary.json
       340 of 340 cropped histograms with a non-empty bin 1
   studies/m0m1j0_cms/selection.py
-      object definitions, b-tag working point 0.2598, the two dimuon DZ
-      path names, Z-peak cutoff 115 GeV
+      object definitions, b-tag working point 0.2598, Z-peak cutoff
+      115 GeV
   studies/hgg_cms/impl_checks/lumi_coverage/LUMI_DECISION.md
       the 16.393380531 fb^-1 value, its brilcalc / record-1059 source,
       and the +/- 1.2% uncertainty
-  studies/m0m1j0_cms/cluster/make_variants_plots.py, lines 41-45
-      the statement that this luminosity is UNVERIFIED for DoubleMuon
-      specifically
+  studies/lumi_coverage_four_datasets/LUMI_COVERAGE_REPORT.md
+      the file-coverage check of 13 October 2026: all four datasets,
+      390 files, 682 certified lumisections absent from each, 0.0042%
+      of the luminosity
 
 CONTACT
 -------
