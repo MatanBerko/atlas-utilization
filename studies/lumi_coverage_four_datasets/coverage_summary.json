@@ -1,0 +1,200 @@
+{
+  "what": "luminosity coverage of the four delivered CMS Open Data datasets over certified Run2016G+H lumisections",
+  "ground_truth": {
+    "certified_list": "2016 golden JSON, CERN Open Data record 14220, committed at data/cms/validated_runs/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt",
+    "per_lumisection_luminosity": "pp_2016lumibyls.csv, CERN Open Data record 1059, brilcalc --byls over the certified list with normtag_PHYSICS_pp_2016",
+    "official_total_fb": 16.393380531,
+    "official_per_era_fb": {
+      "Run2016G": 7.653261227,
+      "Run2016H": 8.740119304
+    },
+    "run_ranges": {
+      "Run2016G": [
+        278820,
+        280385
+      ],
+      "Run2016H": [
+        280919,
+        284044
+      ]
+    },
+    "checks": {
+      "Run2016G": {
+        "n_certified_sections": 43014,
+        "n_certified_sections_absent_from_csv": 0,
+        "summed_recorded_lumi_fb": 7.653261218000025,
+        "official_recorded_lumi_fb": 7.653261227,
+        "difference_pct": -1.1759659994014167e-07
+      },
+      "Run2016H": {
+        "n_certified_sections": 47793,
+        "n_certified_sections_absent_from_csv": 0,
+        "summed_recorded_lumi_fb": 8.740119376000026,
+        "official_recorded_lumi_fb": 8.740119304,
+        "difference_pct": 8.237876737481196e-07
+      },
+      "total_certified_sections": 90807,
+      "total_summed_recorded_lumi_fb": 16.39338059400005,
+      "official_total_fb": 16.393380531
+    }
+  },
+  "per_dataset": {
+    "DoubleMuon": {
+      "n_files": 57,
+      "n_certified_sections_gh": 90807,
+      "n_present": 90125,
+      "n_missing": 682,
+      "missing_lumi_fb": 0.000688522,
+      "missing_pct_of_official_total": 0.00420000010795821,
+      "effective_lumi_fb": 16.392692008999997,
+      "by_era": {
+        "Run2016G": {
+          "record_id": 30522,
+          "n_files": 29,
+          "n_certified_sections": 43014,
+          "n_present": 42682,
+          "n_missing": 332,
+          "missing_lumi_fb": 0.000452857,
+          "n_present_pairs_outside_certified": 3106
+        },
+        "Run2016H": {
+          "record_id": 30555,
+          "n_files": 28,
+          "n_certified_sections": 47793,
+          "n_present": 47443,
+          "n_missing": 350,
+          "missing_lumi_fb": 0.000235665,
+          "n_present_pairs_outside_certified": 4300
+        }
+      },
+      "n_missing_sections_with_exactly_zero_lumi": 662,
+      "largest_single_missing_section_lumi_fb": 0.000226273
+    },
+    "SingleMuon": {
+      "n_files": 152,
+      "n_certified_sections_gh": 90807,
+      "n_present": 90125,
+      "n_missing": 682,
+      "missing_lumi_fb": 0.000688522,
+      "missing_pct_of_official_total": 0.00420000010795821,
+      "effective_lumi_fb": 16.392692008999997,
+      "by_era": {
+        "Run2016G": {
+          "record_id": 30530,
+          "n_files": 70,
+          "n_certified_sections": 43014,
+          "n_present": 42682,
+          "n_missing": 332,
+          "missing_lumi_fb": 0.000452857,
+          "n_present_pairs_outside_certified": 3106
+        },
+        "Run2016H": {
+          "record_id": 30563,
+          "n_files": 82,
+          "n_certified_sections": 47793,
+          "n_present": 47443,
+          "n_missing": 350,
+          "missing_lumi_fb": 0.000235665,
+          "n_present_pairs_outside_certified": 4300
+        }
+      },
+      "n_missing_sections_with_exactly_zero_lumi": 662,
+      "largest_single_missing_section_lumi_fb": 0.000226273
+    },
+    "DoubleEG": {
+      "n_files": 133,
+      "n_certified_sections_gh": 90807,
+      "n_present": 90125,
+      "n_missing": 682,
+      "missing_lumi_fb": 0.000688616,
+      "missing_pct_of_official_total": 0.004200573510130032,
+      "effective_lumi_fb": 16.392691914999997,
+      "by_era": {
+        "Run2016G": {
+          "record_id": 30521,
+          "n_files": 47,
+          "n_certified_sections": 43014,
+          "n_present": 42682,
+          "n_missing": 332,
+          "missing_lumi_fb": 0.000452878,
+          "n_present_pairs_outside_certified": 3636
+        },
+        "Run2016H": {
+          "record_id": 30554,
+          "n_files": 86,
+          "n_certified_sections": 47793,
+          "n_present": 47443,
+          "n_missing": 350,
+          "missing_lumi_fb": 0.000235738,
+          "n_present_pairs_outside_certified": 5100
+        }
+      },
+      "n_missing_sections_with_exactly_zero_lumi": 661,
+      "largest_single_missing_section_lumi_fb": 0.000226273
+    },
+    "MuonEG": {
+      "n_files": 48,
+      "n_certified_sections_gh": 90807,
+      "n_present": 90125,
+      "n_missing": 682,
+      "missing_lumi_fb": 0.000688522,
+      "missing_pct_of_official_total": 0.00420000010795821,
+      "effective_lumi_fb": 16.392692008999997,
+      "by_era": {
+        "Run2016G": {
+          "record_id": 30528,
+          "n_files": 29,
+          "n_certified_sections": 43014,
+          "n_present": 42682,
+          "n_missing": 332,
+          "missing_lumi_fb": 0.000452857,
+          "n_present_pairs_outside_certified": 3106
+        },
+        "Run2016H": {
+          "record_id": 30561,
+          "n_files": 19,
+          "n_certified_sections": 47793,
+          "n_present": 47443,
+          "n_missing": 350,
+          "missing_lumi_fb": 0.000235665,
+          "n_present_pairs_outside_certified": 4300
+        }
+      },
+      "n_missing_sections_with_exactly_zero_lumi": 662,
+      "largest_single_missing_section_lumi_fb": 0.000226273
+    }
+  },
+  "doubleeg_rederivation": {
+    "counts": {
+      "n_missing_Run2016G": {
+        "recomputed": 332,
+        "earlier_task": 332
+      },
+      "n_missing_Run2016H": {
+        "recomputed": 350,
+        "earlier_task": 350
+      },
+      "n_missing_total": {
+        "recomputed": 682,
+        "earlier_task": 682
+      }
+    },
+    "counts_match": true,
+    "missing_lumi_fb_recomputed": 0.000688616,
+    "missing_lumi_fb_earlier_task": 0.000688616,
+    "missing_lumi_relative_difference": 0.0,
+    "missing_pct_recomputed": 0.004200573510130032,
+    "missing_pct_earlier_task": 0.0042,
+    "reproduces_0p0042_pct": true,
+    "verdict": "REPRODUCED"
+  },
+  "decision": {
+    "threshold_pct": 0.1,
+    "worst_dataset": "DoubleEG",
+    "worst_missing_pct": 0.004200573510130032,
+    "all_datasets_below_threshold": true,
+    "doubleeg_reproduced": true,
+    "rule": "keep 16.393380531 fb^-1 (+/- 1.2%) unchanged for both delivery files",
+    "passed": true
+  }
+}
