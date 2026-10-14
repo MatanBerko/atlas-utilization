@@ -9,7 +9,8 @@ Covers:
     multiple runs mixed in one batch.
  3. Missing run/luminosityBlock fields -> error.
  4. The simulation guard (both detection paths) -> error.
- 5. Config key absent -> no-op / identical output.
+ 5. (Removed 14 Oct 2026: the ParsingConfig-level tests of the config key,
+    a fork edit to an upstream file kept in archive/master-2026-10-14.)
  6. A real-data cross-check against an independent reference
     implementation (network-marked, skipped offline).
 """
@@ -24,7 +25,6 @@ from pathlib import Path
 import awkward as ak
 import numpy as np
 
-from domain.config import ParsingConfig
 from services.parsing.validated_runs import (
     ValidatedRunsFilter,
     apply_validated_runs_filter,
@@ -226,28 +226,6 @@ class SimulationGuardTests(unittest.TestCase):
         # Not every event has run==1 -- this is not simulation's signature.
         events = _events(runs=[1, 100], lumis=[1, 5])
         self.assertFalse(is_simulation(events))
-
-
-class ConfigDefaultTests(unittest.TestCase):
-    """Test 5: config key absent -> no-op."""
-
-    def test_default_is_none(self):
-        cfg = ParsingConfig(output_path="./o", file_urls_path="./f", jobs_logs_path="./l")
-        self.assertIsNone(cfg.validated_runs_json)
-
-    def test_non_string_value_rejected(self):
-        with self.assertRaises(ValueError):
-            ParsingConfig(
-                output_path="./o", file_urls_path="./f", jobs_logs_path="./l",
-                validated_runs_json=123,
-            )
-
-    def test_string_value_accepted(self):
-        cfg = ParsingConfig(
-            output_path="./o", file_urls_path="./f", jobs_logs_path="./l",
-            validated_runs_json="data/cms/validated_runs/some_file.json",
-        )
-        self.assertEqual(cfg.validated_runs_json, "data/cms/validated_runs/some_file.json")
 
 
 @unittest.skipUnless(

@@ -4,38 +4,33 @@ Implementation task 3 (studies/hgg_cms/DESIGN_SELECTION.md, Section 8 task
 for a required scalar branch missing from an input file.
 
 Covers:
- 1. Config validation (mode, empty list, bad types).
+ 1. Validation of a trigger-requirement dict (validate_trigger_requirements).
  2. Filter logic on synthetic events: any/all with 1 and 2 paths, all-fail,
     all-pass, dtype handling.
- 3. A missing required branch in one of several files -> the specific
-    error, with file and branch listed, and the run stops; a network-style
-    parse error -> today's behaviour unchanged.
- 4. Config key absent -> identical output; duplicate listing in
-    extra_scalar_branches -> no collision error.
  5. Ordering with the validated-runs filter: statistics reflect
     validated-runs first, then trigger.
  6. A real-data cross-check against a direct uproot read of the HLT branch
     (network-marked, skipped offline).
+
+Items 3 and 4 (FileParser / ThreadedFileProcessor loud-failure behaviour,
+and FileParser config-key behaviour) and the ParsingConfig-level part of
+item 1 were removed on 14 Oct 2026: they test fork edits to upstream files
+that are kept in archive/master-2026-10-14 and are not on this master.
 """
 from __future__ import annotations
 
 import os
 import unittest
-from unittest.mock import patch
 
 import awkward as ak
 import numpy as np
 
-from domain.config import ParsingConfig
-from services.parsing.file_parser import FileParser, RequiredScalarBranchMissingError
-from services.parsing.threaded_processor import ThreadedFileProcessor
 from services.parsing.trigger_requirements import (
     apply_trigger_requirement,
     trigger_group_branches,
     validate_trigger_requirements,
 )
 from services.parsing.validated_runs import ValidatedRunsFilter, apply_validated_runs_filter
-import services.parsing.file_parser as file_parser_module
 
 
 def _events(**fields) -> ak.Array:
@@ -43,70 +38,10 @@ def _events(**fields) -> ak.Array:
 
 
 class ConfigValidationTests(unittest.TestCase):
-    """Test 1: config validation (mode, empty list, bad types)."""
-
-    def test_default_is_none(self):
-        cfg = ParsingConfig(output_path="./o", file_urls_path="./f", jobs_logs_path="./l")
-        self.assertIsNone(cfg.trigger_requirements)
-
-    def test_valid_config_accepted(self):
-        cfg = ParsingConfig(
-            output_path="./o", file_urls_path="./f", jobs_logs_path="./l",
-            trigger_requirements={"mode": "any", "paths": ["HLT_X"]},
-        )
-        self.assertEqual(cfg.trigger_requirements["mode"], "any")
-
-    def test_default_mode_omitted_is_fine_at_config_level(self):
-        # mode is optional in the dict itself (defaults to "any" when used);
-        # ParsingConfig only rejects an explicitly *invalid* mode.
-        cfg = ParsingConfig(
-            output_path="./o", file_urls_path="./f", jobs_logs_path="./l",
-            trigger_requirements={"paths": ["HLT_X"]},
-        )
-        self.assertEqual(cfg.trigger_requirements["paths"], ["HLT_X"])
-
-    def test_not_a_dict_rejected(self):
-        with self.assertRaises(ValueError):
-            ParsingConfig(
-                output_path="./o", file_urls_path="./f", jobs_logs_path="./l",
-                trigger_requirements=["HLT_X"],
-            )
-
-    def test_invalid_mode_rejected(self):
-        with self.assertRaises(ValueError) as ctx:
-            ParsingConfig(
-                output_path="./o", file_urls_path="./f", jobs_logs_path="./l",
-                trigger_requirements={"mode": "every", "paths": ["HLT_X"]},
-            )
-        self.assertIn("mode", str(ctx.exception))
-
-    def test_empty_paths_rejected(self):
-        with self.assertRaises(ValueError):
-            ParsingConfig(
-                output_path="./o", file_urls_path="./f", jobs_logs_path="./l",
-                trigger_requirements={"mode": "any", "paths": []},
-            )
-
-    def test_missing_paths_key_rejected(self):
-        with self.assertRaises(ValueError):
-            ParsingConfig(
-                output_path="./o", file_urls_path="./f", jobs_logs_path="./l",
-                trigger_requirements={"mode": "any"},
-            )
-
-    def test_non_string_path_entry_rejected(self):
-        with self.assertRaises(ValueError):
-            ParsingConfig(
-                output_path="./o", file_urls_path="./f", jobs_logs_path="./l",
-                trigger_requirements={"mode": "any", "paths": ["HLT_X", 123]},
-            )
-
-    def test_paths_not_a_list_rejected(self):
-        with self.assertRaises(ValueError):
-            ParsingConfig(
-                output_path="./o", file_urls_path="./f", jobs_logs_path="./l",
-                trigger_requirements={"mode": "any", "paths": "HLT_X"},
-            )
+    """Test 1: validation of a trigger-requirement dict by the module's own
+    helper. (The ParsingConfig-level validation tests were removed on
+    14 Oct 2026: that ParsingConfig field is a fork edit to an upstream
+    file, kept in archive/master-2026-10-14, not on this master.)"""
 
     def test_validate_helper_matches_config_validation(self):
         # Used for the per-record selection_by_record override, which is a
@@ -191,201 +126,6 @@ class FilterLogicTests(unittest.TestCase):
         )
 
 
-class _FakeTree:
-    """Minimal stand-in for an uproot TTree, keyed on branch name."""
-
-    def __init__(self, data: dict, num_entries: int):
-        self._data = data
-        self.num_entries = num_entries
-
-    def keys(self):
-        return list(self._data.keys())
-
-    def arrays(self, branches, entry_start, entry_stop, library):
-        if isinstance(branches, str):
-            branches = [branches]
-        missing = [b for b in branches if b not in self._data]
-        if missing:
-            raise KeyError(f"no such branch(es): {missing}")
-        return ak.Array({b: self._data[b][entry_start:entry_stop] for b in branches})
-
-
-class _FakeRoot(dict):
-    def keys(self):
-        return ["Events;1"]
-
-
-class _CtxRoot:
-    """Wraps a fake root object so it satisfies FileParser.parse_file's
-    ``with open_root_file(file_path) as root_file:`` usage."""
-
-    def __init__(self, root):
-        self._root = root
-
-    def __enter__(self):
-        return self._root
-
-    def __exit__(self, *exc_info):
-        return False
-
-
-def _make_cms_tree(extra_branches=None, n_events=2):
-    data = {
-        "Electron_pt": ak.Array([[25.0], [30.0]][:n_events]),
-        "Electron_eta": ak.Array([[0.1], [0.2]][:n_events]),
-        "Electron_phi": ak.Array([[0.0], [0.1]][:n_events]),
-        "Electron_mass": ak.Array([[0.000511], [0.000511]][:n_events]),
-        "run": np.array([1, 2], dtype=np.uint32)[:n_events],
-        "luminosityBlock": np.array([10, 20], dtype=np.uint32)[:n_events],
-        "event": np.array([100, 200], dtype=np.uint64)[:n_events],
-    }
-    if extra_branches:
-        data.update(extra_branches)
-    return _FakeTree(data, n_events)
-
-
-class MissingBranchLoudFailureTests(unittest.TestCase):
-    """Test 3: missing required branch -> specific error, run stops;
-    other parse failures -> unchanged behaviour."""
-
-    def test_parse_opened_file_raises_specific_type_for_missing_trigger_branch(self):
-        tree = _make_cms_tree()  # no HLT_X branch
-        root = _FakeRoot(Events=tree)
-        with self.assertRaises(RequiredScalarBranchMissingError) as ctx:
-            FileParser._parse_opened_file(
-                root, ["Events"], "cms-nanoaod", 40_000, "bad.root", False, None,
-                extra_scalar_branches={"Trigger": ["HLT_X"]},
-            )
-        self.assertIn("bad.root", str(ctx.exception))
-        self.assertIn("HLT_X", str(ctx.exception))
-        self.assertIn("Trigger", str(ctx.exception))
-        self.assertEqual(ctx.exception.failures, [("bad.root", "Trigger", ["HLT_X"])])
-
-    def test_parse_file_reraises_missing_branch_error_not_swallowed(self):
-        """FileParser.parse_file's own broad except must NOT swallow this,
-        unlike an ordinary parse failure (see the next test)."""
-        tree = _make_cms_tree()
-        root = _FakeRoot(Events=tree)
-        with patch.object(file_parser_module, "open_root_file", return_value=_CtxRoot(root)):
-            with self.assertRaises(RequiredScalarBranchMissingError):
-                FileParser.parse_file(
-                    "bad.root", ["Events"], "cms-nanoaod",
-                    extra_scalar_branches={"Trigger": ["HLT_X"]},
-                )
-
-    def test_parse_file_swallows_generic_exception_as_before(self):
-        """A network-style error keeps today's exact behaviour: logged,
-        parse_file returns None, no exception propagates."""
-        with patch.object(
-            file_parser_module, "open_root_file", side_effect=ConnectionError("timeout")
-        ):
-            result = FileParser.parse_file("bad.root", ["Events"], "cms-nanoaod")
-        self.assertIsNone(result)
-
-    def test_threaded_processor_aborts_the_run_on_one_bad_file(self):
-        """One file among several is missing a required branch -> the whole
-        process_files() run raises (rather than silently yielding batches
-        for only the good files and finishing 'successfully')."""
-
-        class _StubParser:
-            def parse_file(self, file_path, **kwargs):
-                if file_path == "bad.root":
-                    raise RequiredScalarBranchMissingError(
-                        [(file_path, "Trigger", ["HLT_X"])]
-                    )
-                return ak.Array({"run": [1, 2]})
-
-        processor = ThreadedFileProcessor(_StubParser(), 1, show_progress=False)
-        with self.assertRaises(RequiredScalarBranchMissingError) as ctx:
-            list(processor.process_files(
-                ["good.root", "bad.root"], ["Events"], "cms-nanoaod",
-            ))
-        self.assertIn("bad.root", str(ctx.exception))
-        self.assertIn("HLT_X", str(ctx.exception))
-
-    def test_threaded_processor_aggregates_multiple_bad_files_in_one_error(self):
-        class _StubParser:
-            def parse_file(self, file_path, **kwargs):
-                if file_path.startswith("bad"):
-                    return_group = "Trigger"
-                    raise RequiredScalarBranchMissingError(
-                        [(file_path, return_group, ["HLT_X"])]
-                    )
-                return ak.Array({"run": [1]})
-
-        processor = ThreadedFileProcessor(_StubParser(), 1, show_progress=False)
-        with self.assertRaises(RequiredScalarBranchMissingError) as ctx:
-            list(processor.process_files(
-                ["bad1.root", "good.root", "bad2.root"], ["Events"], "cms-nanoaod",
-            ))
-        self.assertEqual(len(ctx.exception.failures), 2)
-        self.assertIn("bad1.root", str(ctx.exception))
-        self.assertIn("bad2.root", str(ctx.exception))
-
-    def test_threaded_processor_keeps_processing_good_files_before_aborting(self):
-        """Behind the scenes, other files' batches were produced -- the
-        method just never lets the generator finish 'clean'. We assert the
-        raise happens only after exhausting the generator (StopIteration
-        would otherwise be silently swallowed by list())."""
-
-        class _StubParser:
-            def parse_file(self, file_path, **kwargs):
-                if file_path == "bad.root":
-                    raise RequiredScalarBranchMissingError(
-                        [(file_path, "Trigger", ["HLT_X"])]
-                    )
-                return ak.Array({"run": [1]})
-
-        processor = ThreadedFileProcessor(_StubParser(), 2, show_progress=False)
-        yielded = []
-        gen = processor.process_files(["good1.root", "bad.root", "good2.root"], ["Events"], "cms-nanoaod")
-        with self.assertRaises(RequiredScalarBranchMissingError):
-            for batch in gen:
-                yielded.append(batch)
-        # Both good files' batches were produced before the aggregate error.
-        self.assertEqual(len(yielded), 2)
-
-    def test_network_style_error_in_threaded_processor_keeps_todays_behaviour(self):
-        class _StubParser:
-            def parse_file(self, file_path, **kwargs):
-                if file_path == "bad.root":
-                    raise ConnectionError("timeout")
-                return ak.Array({"run": [1]})
-
-        processor = ThreadedFileProcessor(_StubParser(), 1, show_progress=False)
-        failures = []
-        batches = list(processor.process_files(
-            ["good.root", "bad.root"], ["Events"], "cms-nanoaod",
-            on_error=lambda url, err: failures.append((url, err)),
-        ))
-        self.assertEqual(len(batches), 1)
-        self.assertEqual(len(failures), 1)
-        self.assertNotIsInstance(failures[0][1], RequiredScalarBranchMissingError)
-
-
-class DefaultBehaviourAndCollisionTests(unittest.TestCase):
-    """Test 4: key absent -> identical output; duplicate listing in
-    extra_scalar_branches -> no collision error."""
-
-    def test_no_trigger_group_when_key_absent(self):
-        tree = _make_cms_tree()
-        result = FileParser._parse_opened_file(
-            _FakeRoot(Events=tree), ["Events"], "cms-nanoaod", 40_000, "fake.root", False, None,
-        )
-        self.assertEqual(set(result.fields), {"Electrons", "run", "luminosityBlock", "event"})
-
-    def test_duplicate_listing_in_extra_scalar_branches_no_collision(self):
-        """The same trigger path requested both via the 'Trigger' group
-        (as parsing_handler.py does automatically) and by the caller's own
-        extra_scalar_branches['Trigger'] entry (e.g. a user who also listed
-        it manually) must not raise -- same group name, so the merge just
-        deduplicates."""
-        tree = _make_cms_tree(extra_branches={"HLT_X": np.array([True, False])})
-        result = FileParser._parse_opened_file(
-            _FakeRoot(Events=tree), ["Events"], "cms-nanoaod", 40_000, "fake.root", False, None,
-            extra_scalar_branches={"Trigger": ["HLT_X", "HLT_X"]},
-        )
-        self.assertEqual(ak.to_list(result["HLT_X"]), [True, False])
 
 
 class OrderingWithValidatedRunsTests(unittest.TestCase):
