@@ -52,7 +52,9 @@ from services.pipelines.post_processing_pipeline import (  # noqa: E402
 from services.storage.sqlite_shards import (  # noqa: E402
     SqliteArrayShardWriter,
     list_signatures,
-    prune_final_states_below_min_events,
+)
+from studies.cms_mc_weights_v3.deliver.cms_shard_pruning import (  # noqa: E402
+    prune_final_states_below_min_events,  # CMS copy with the D3 sibling change
 )
 from studies.cms_coverage.cluster.merge_and_count import Z_PEAK_CUTOFF  # noqa: E402
 from studies.cms_datasets.cluster.run_dataset_on_file import (  # noqa: E402

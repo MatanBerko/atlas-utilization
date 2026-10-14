@@ -6,9 +6,12 @@ regex -- is data-neutral on REAL delivered shards.
 Takes a set of delivered per-file shards, makes two independent SCRATCH COPIES
 of each, and runs the >= 100-events-per-final-state prune twice:
 
-  * once with the CURRENT (committed) `services/storage/sqlite_shards.py`;
+  * once with the CMS-owned copy carrying the D3 change
+    (`studies/cms_mc_weights_v3/deliver/cms_shard_pruning.py`, 14 Oct 2026:
+    upstream's file is no longer edited);
   * once with the PRE-CHANGE version of that module, loaded straight out of
-    git history at `--old-commit` (default: fork master `db1bd32`) and
+    git history at `--old-commit` (default: upstream `e1ce8bb`, whose
+    function is byte-identical to fork master `db1bd32`'s) and
     executed. It is the real old code, not a transcription of it, so the
     comparison cannot be wrong about what the old behaviour was.
 
@@ -42,13 +45,13 @@ import types
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO_ROOT))
 
-from services.storage.sqlite_shards import (  # noqa: E402
+from studies.cms_mc_weights_v3.deliver.cms_shard_pruning import (  # noqa: E402
     prune_final_states_below_min_events as prune_new,
 )
 from studies.cms_coverage.cluster.merge_and_count import PRIMARY_MIN_EVENTS_PER_FS  # noqa: E402
 
 MODULE_PATH = "services/storage/sqlite_shards.py"
-DEFAULT_OLD_COMMIT = "db1bd32"   # fork master, before this round's change
+DEFAULT_OLD_COMMIT = "e1ce8bb"   # upstream master; same bytes as db1bd32's copy
 SHARD_NAME = "dataset_shard_rare4_inclusive.sqlite"
 
 

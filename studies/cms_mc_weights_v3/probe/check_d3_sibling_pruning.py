@@ -3,6 +3,11 @@
 Design item D3: does fork master's prune_final_states_below_min_events leave
 orphan sibling arrays behind?
 
+14 Oct 2026 (port onto the rebuilt master): the prune called below is now the
+CMS-owned copy studies/cms_mc_weights_v3/deliver/cms_shard_pruning.py, which
+carries the D3 change; upstream's services/storage/sqlite_shards.py is
+untouched. Before the change this probe showed four orphans.
+
 Builds a throwaway SQLite shard in a temp directory with two final states --
 one below the >=100-event threshold, one above -- each carrying its physics
 invariant-mass signature plus the sibling arrays the v3 design wants to store
@@ -35,7 +40,10 @@ import numpy as np
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[3]))
 
 from services.storage.sqlite_shards import (  # noqa: E402
-    SqliteArrayShardWriter, list_signatures, prune_final_states_below_min_events,
+    SqliteArrayShardWriter, list_signatures,
+)
+from studies.cms_mc_weights_v3.deliver.cms_shard_pruning import (  # noqa: E402
+    prune_final_states_below_min_events,  # CMS copy with the D3 sibling change
 )
 
 JOB_TAG = "job_tag"

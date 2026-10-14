@@ -1,3 +1,5 @@
+> **Note (14 Oct 2026):** this describes the pre-rebuild branch `feature/cms-mc-weights-v3` (based on the old master `db1bd32`). On the rebuilt master the work was ported to `feature/cms-mc-on-master-20261014`; there, upstream's `services/storage/sqlite_shards.py` is NOT edited: the D3 sibling-aware prune lives in `studies/cms_mc_weights_v3/deliver/cms_shard_pruning.py` and only the MC code calls it. Paths, commits and job IDs below refer to the old branch.
+
 # HANDOFF — cms-mc-weights-v3 design round
 
 **Branch:** `design/cms-mc-weights-v3`, pushed to `origin`

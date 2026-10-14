@@ -76,7 +76,9 @@ from services.storage.sqlite_shards import (  # noqa: E402
     _deserialize_array,
     iter_arrays_for_signature,
     list_signatures,
-    prune_final_states_below_min_events,
+)
+from studies.cms_mc_weights_v3.deliver.cms_shard_pruning import (  # noqa: E402
+    prune_final_states_below_min_events,  # CMS copy with the D3 sibling change
 )
 from studies.cms_coverage.cluster.merge_and_count import (  # noqa: E402
     MAX_MASS_CUTOFF,
@@ -634,8 +636,8 @@ def build(args) -> dict:
     if orphans:
         raise SystemExit(
             f"STOP: {len(orphans)} orphan row(s) survived the prune: "
-            f"{orphans[:10]}. The sqlite_shards sibling regex fix is not in "
-            "effect.")
+            f"{orphans[:10]}. The sibling-aware prune (cms_shard_pruning.py, "
+            "DESIGN.md D3) is not in effect.")
     report["prune"]["n_orphan_rows_after_prune"] = 0
 
     # ---- per-sample histograms ------------------------------------------
