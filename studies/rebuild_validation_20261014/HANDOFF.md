@@ -82,9 +82,10 @@ nice -n 10 $PY $W/inputs/compare.py delivery --a $W/delivery_old --b $W/delivery
 
 | PBS id | array | what | status |
 |---|---|---|---|
-| `5223392[]` | 0-7 | OLD per-file production (`old_ba89791`) | submitted 14 Oct 2026 |
-| `5223393[]` | 0-7 | NEW per-file production (`new_6a055e8`) | submitted 14 Oct 2026 |
-| — | — | mini deliveries `rv_d_old` / `rv_d_new` | submitted after both arrays finish |
+| `5223392[]` | 0-7 | OLD per-file production (`old_ba89791`) | finished, 8/8 `done`, exit 0 |
+| `5223393[]` | 0-7 | NEW per-file production (`new_6a055e8`) | finished, 8/8 `done`, exit 0 |
+| `5223462` | — | OLD mini delivery (`rv_d_old`) | submitted 14 Oct 2026 |
+| `5223463` | — | NEW mini delivery (`rv_d_new`) | submitted 14 Oct 2026 |
 
 Check: `ssh wipp-campus '/opt/pbs/bin/qstat -u berkom -t'`; logs in `$W/logs/{old,new}/f_<i>.out`.
 
