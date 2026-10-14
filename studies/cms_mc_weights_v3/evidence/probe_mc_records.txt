@@ -1,0 +1,46 @@
+CMS MC NanoAOD probe -- cms-mc-weights-v3 design round (Part C)
+commit: 964bc5a85f65e271434f004c39f6000a547073fa
+generated: 2026-10-10T14:23:42.552163+00:00
+probe window: 10000 events per file (C5 reads whole files)
+
+   rec  postVFP      nEvents  negW frac     C5  bits==data  title
+ 42407     True        5,676    0.00000   True        True  /LQToBMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM
+ 67801     True      136,000    0.00401   True        True  /TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM
+ 35671     True    1,434,319    0.00000   True        True  /DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM
+ 64895     True      651,757    0.00002   True        True  /ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM
+ 64839     True       45,342    0.00000   True        True  /ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM
+ 72676     True       15,000    0.00187   True        True  /WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM
+ 72752     True      457,263    0.16956   True        True  /WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM
+ 75589     True      168,000    0.00515   True        True  /ZZTo4L_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM
+ 68187     True       25,000    0.24760   True        True  /TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM
+ 68073     True        9,451    0.21924   True        True  /TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM
+ 67993     True    1,233,000    0.00395   True        True  /TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM
+ 35669     True    1,933,726    0.16336   True        True  /DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM
+ 37728     True        4,000    0.00375   True        True  /GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM
+
+summary:
+{
+  "n_records_probed": 13,
+  "n_records_failed": 0,
+  "records_not_postVFP": [],
+  "records_with_missing_branches": {},
+  "records_without_runs_genEventSumw": [],
+  "records_filterBits_title_differs_from_data": [],
+  "records_C5_disagreeing": [],
+  "negative_genWeight_fraction_whole_file_by_record": {
+    "42407": 0.0,
+    "67801": 0.004014705882352941,
+    "35671": 0.0,
+    "64895": 2.14803983693309e-05,
+    "64839": 0.0,
+    "72676": 0.0018666666666666666,
+    "72752": 0.1695632491585805,
+    "75589": 0.005154761904761905,
+    "68187": 0.2476,
+    "68073": 0.21923605967622473,
+    "67993": 0.003948094079480941,
+    "35669": 0.16335561501474355,
+    "37728": 0.00375
+  },
+  "records_where_run_is_not_always_1": []
+}

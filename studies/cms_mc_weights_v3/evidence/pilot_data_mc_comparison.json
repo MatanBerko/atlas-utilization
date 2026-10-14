@@ -1,0 +1,243 @@
+{
+  "what": "CMS MC pilot: data vs simulation, read from the stored events before the Z cut / peak removal / outlier split",
+  "generated_utc": "2026-10-10T18:52:19.842289+00:00",
+  "data_runs_dir": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_full_20261007",
+  "mc_scratch_dir": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pilot_20261011/scratch_unpruned",
+  "luminosity_fb": 16.393,
+  "normalisation": "absolute; MC is NOT rescaled to data",
+  "data_population": "delivered four-dataset de-duplicated set (DoubleMuon inclusive + the other three exclusive), Version B rare4 shards",
+  "mc_population": "union of the four data acceptance flags; Ele27-only events excluded",
+  "n_mc_entries_dropped_by_event_union": 1480897,
+  "errors": "data sqrt(N), MC sqrt(sum w^2)",
+  "plots": {
+    "P1": {
+      "data_integral": 10020867.0,
+      "mc_integral": 9693847.000471441,
+      "mc_stat_error": 5147.960331670613,
+      "ratio": 1.0337348010044574,
+      "ratio_stat_error": 0.0003265551130536469,
+      "per_sample_integral": {
+        "35669": 9665389.267255357,
+        "37728": 27.261668485954758,
+        "67801": 28430.471547599493
+      },
+      "data_gaussian_core_fit": {
+        "fit": "Gaussian core, least squares on ln(counts)",
+        "window_gev": [
+          85.0,
+          97.0
+        ],
+        "peak_gev": 90.7229078917763,
+        "sigma_gev": 2.944488955412013,
+        "n_points": 7
+      },
+      "mc_gaussian_core_fit": {
+        "fit": "Gaussian core, least squares on ln(counts)",
+        "window_gev": [
+          85.0,
+          97.0
+        ],
+        "peak_gev": 90.77326133696185,
+        "sigma_gev": 2.929228540333328,
+        "n_points": 7
+      },
+      "png": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pilot_20261011/plots/P1_zpeak_mumu.png"
+    },
+    "P2": {
+      "data_integral": 5003572.0,
+      "mc_integral": 5247949.798591541,
+      "mc_stat_error": 3776.092872117749,
+      "ratio": 0.9534336630550224,
+      "ratio_stat_error": 0.00042623627211156015,
+      "per_sample_integral": {
+        "35669": 5233163.988455472,
+        "37728": 13.943019878426705,
+        "67801": 14771.867116190222
+      },
+      "data_gaussian_core_fit": {
+        "fit": "Gaussian core, least squares on ln(counts)",
+        "window_gev": [
+          85.0,
+          97.0
+        ],
+        "peak_gev": 90.49798567076627,
+        "sigma_gev": 3.1438344420608675,
+        "n_points": 7
+      },
+      "mc_gaussian_core_fit": {
+        "fit": "Gaussian core, least squares on ln(counts)",
+        "window_gev": [
+          85.0,
+          97.0
+        ],
+        "peak_gev": 90.53007186062885,
+        "sigma_gev": 3.136651610436362,
+        "n_points": 7
+      },
+      "png": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pilot_20261011/plots/P2_zpeak_ee.png"
+    },
+    "P3": {
+      "mumu_j": {
+        "data_integral": 9573377.0,
+        "mc_integral": 9256952.684082216,
+        "mc_stat_error": 5034.18108915229,
+        "ratio": 1.0341823412862303,
+        "ratio_stat_error": 0.00033424470575115455,
+        "per_sample_integral": {
+          "35669": 9241988.245512538,
+          "37728": 24.696494009985287,
+          "67801": 14939.742075667036
+        },
+        "per_bin_ratio": {
+          "0": 1.0345371842671707,
+          "1": 1.0180262907581228,
+          "2": 1.0317651137001522,
+          "3": 1.279276914473391,
+          "4": 1.5729101792523588,
+          "5+": 2.03039878731326
+        },
+        "per_bin_data": {
+          "0": 7883847.0,
+          "1": 1316783.0,
+          "2": 291351.0,
+          "3": 63551.0,
+          "4": 13875.0,
+          "5+": 3970.0
+        },
+        "per_bin_mc": {
+          "0": 7620651.166429205,
+          "1": 1293466.5950713253,
+          "2": 282381.131258787,
+          "3": 49677.28197155852,
+          "4": 8821.228435685447,
+          "5+": 1955.280915653684
+        }
+      },
+      "mumu_b": {
+        "data_integral": 9573377.0,
+        "mc_integral": 9256952.684082199,
+        "mc_stat_error": 5034.1810891522855,
+        "ratio": 1.0341823412862323,
+        "ratio_stat_error": 0.0003342447057511552,
+        "per_sample_integral": {
+          "35669": 9241988.245512523,
+          "37728": 24.696494009985404,
+          "67801": 14939.742075667049
+        },
+        "per_bin_ratio": {
+          "0": 1.0329940191029088,
+          "1": 1.1116916627415339,
+          "2+": 1.0642518707239348
+        },
+        "per_bin_data": {
+          "0": 9411267.0,
+          "1": 150626.0,
+          "2+": 11484.0
+        },
+        "per_bin_mc": {
+          "0": 9110669.399783265,
+          "1": 135492.6055922219,
+          "2+": 10790.678706712775
+        }
+      },
+      "ee_j": {
+        "data_integral": 4833112.0,
+        "mc_integral": 5069089.72110799,
+        "mc_stat_error": 3711.7648343001665,
+        "ratio": 0.9534477126878689,
+        "ratio_stat_error": 0.0004336940375977217,
+        "per_sample_integral": {
+          "35669": 5061185.422270619,
+          "37728": 13.039645385535229,
+          "67801": 7891.259191985335
+        },
+        "per_bin_ratio": {
+          "0": 0.9538622982811621,
+          "1": 0.9375974285333752,
+          "2": 0.9435925003874917,
+          "3": 1.1736005646665677,
+          "4": 1.5176298320096604,
+          "5+": 2.107516112534682
+        },
+        "per_bin_data": {
+          "0": 4016425.0,
+          "1": 623778.0,
+          "2": 149410.0,
+          "3": 33667.0,
+          "4": 7618.0,
+          "5+": 2214.0
+        },
+        "per_bin_mc": {
+          "0": 4210696.876517192,
+          "1": 665294.0601338218,
+          "2": 158341.65695323344,
+          "3": 28686.932346155736,
+          "4": 5019.669381374883,
+          "5+": 1050.525776212098
+        }
+      },
+      "ee_b": {
+        "data_integral": 4833112.0,
+        "mc_integral": 5069089.7211082205,
+        "mc_stat_error": 3711.7648343001565,
+        "ratio": 0.9534477126878255,
+        "ratio_stat_error": 0.00043369403759770195,
+        "per_sample_integral": {
+          "35669": 5061185.42227085,
+          "37728": 13.039645385534243,
+          "67801": 7891.259191984666
+        },
+        "per_bin_ratio": {
+          "0": 0.9524817635896414,
+          "1": 1.0268265072948288,
+          "2+": 0.9070896750408355
+        },
+        "per_bin_data": {
+          "0": 4755979.0,
+          "1": 71513.0,
+          "2+": 5620.0
+        },
+        "per_bin_mc": {
+          "0": 4993249.40571673,
+          "1": 69644.67657579348,
+          "2+": 6195.638815695921
+        }
+      },
+      "png": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pilot_20261011/plots/P3_jet_multiplicity_zwindow.png"
+    },
+    "P4": {
+      "data_integral": 170555.0,
+      "mc_integral": 137045.73307591068,
+      "mc_stat_error": 272.5739516568108,
+      "ratio": 1.2445115668470195,
+      "ratio_stat_error": 0.0030134688707958517,
+      "per_sample_integral": {
+        "35669": 23453.252109903697,
+        "37728": 4.204245600820318,
+        "67801": 113588.27672040617
+      },
+      "png": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pilot_20261011/plots/P4_emu_mass.png"
+    },
+    "P5": {
+      "4mu": {
+        "data_entries": 12.0,
+        "mc_weighted": 4.077484265272288,
+        "mc_stat_error": 2.6740309590108757,
+        "data_raw_entries_in_shards": 59
+      },
+      "4e": {
+        "data_entries": 6.0,
+        "mc_weighted": 0.05724818348484971,
+        "mc_stat_error": 0.003529773625243555,
+        "data_raw_entries_in_shards": 27
+      },
+      "2e2mu": {
+        "data_entries": 19.0,
+        "mc_weighted": 2.159689079333792,
+        "mc_stat_error": 1.9173779497898256,
+        "data_raw_entries_in_shards": 85
+      },
+      "png": "/storage/agrp/berkom/atlas-utilization/work/cms_mc_v3_pilot_20261011/plots/P5_fourlepton_mass.png"
+    }
+  }
+}

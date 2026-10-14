@@ -1,0 +1,88 @@
+{
+  "temp_db": "C:\\Users\\matan\\AppData\\Local\\Temp\\d3_prune_check_1di4pel1\\shard.sqlite",
+  "min_events": 100,
+  "signatures_before_prune": [
+    "job_tag_FS_0e_2m_1j_0b_IM_m0m1",
+    "job_tag_FS_0e_2m_1j_0b_IM_m0m1_mcraw_acc",
+    "job_tag_FS_0e_2m_1j_0b_IM_m0m1_mcraw_genw",
+    "job_tag_FS_0e_2m_1j_0b_IM_m0m1_mcraw_l1pf",
+    "job_tag_FS_0e_2m_1j_0b_IM_m0m1_mcw",
+    "job_tag_FS_0e_2m_5j_1b_IM_m0m1",
+    "job_tag_FS_0e_2m_5j_1b_IM_m0m1_mcraw_acc",
+    "job_tag_FS_0e_2m_5j_1b_IM_m0m1_mcraw_genw",
+    "job_tag_FS_0e_2m_5j_1b_IM_m0m1_mcraw_l1pf",
+    "job_tag_FS_0e_2m_5j_1b_IM_m0m1_mcw"
+  ],
+  "final_states_removed": [
+    "_FS_0e_2m_5j_1b"
+  ],
+  "signatures_after_prune": [
+    "job_tag_FS_0e_2m_1j_0b_IM_m0m1",
+    "job_tag_FS_0e_2m_1j_0b_IM_m0m1_mcraw_acc",
+    "job_tag_FS_0e_2m_1j_0b_IM_m0m1_mcraw_genw",
+    "job_tag_FS_0e_2m_1j_0b_IM_m0m1_mcraw_l1pf",
+    "job_tag_FS_0e_2m_1j_0b_IM_m0m1_mcw",
+    "job_tag_FS_0e_2m_5j_1b_IM_m0m1_mcraw_acc",
+    "job_tag_FS_0e_2m_5j_1b_IM_m0m1_mcraw_genw",
+    "job_tag_FS_0e_2m_5j_1b_IM_m0m1_mcraw_l1pf",
+    "job_tag_FS_0e_2m_5j_1b_IM_m0m1_mcw"
+  ],
+  "orphaned_siblings_of_the_pruned_final_state": [
+    "job_tag_FS_0e_2m_5j_1b_IM_m0m1_mcraw_acc",
+    "job_tag_FS_0e_2m_5j_1b_IM_m0m1_mcraw_genw",
+    "job_tag_FS_0e_2m_5j_1b_IM_m0m1_mcraw_l1pf",
+    "job_tag_FS_0e_2m_5j_1b_IM_m0m1_mcw"
+  ],
+  "n_orphans": 4,
+  "regex_behaviour_by_suffix": [
+    {
+      "suffix": "(none: the physics signature itself)",
+      "fork_master_prune_regex_matches": true,
+      "pr35_prune_regex_matches": true,
+      "proposed_prune_regex_matches": true,
+      "histogram_grouping_regex_matches": true
+    },
+    {
+      "suffix": "_mcw",
+      "fork_master_prune_regex_matches": false,
+      "pr35_prune_regex_matches": true,
+      "proposed_prune_regex_matches": true,
+      "histogram_grouping_regex_matches": false
+    },
+    {
+      "suffix": "_mcraw_genw",
+      "fork_master_prune_regex_matches": false,
+      "pr35_prune_regex_matches": false,
+      "proposed_prune_regex_matches": true,
+      "histogram_grouping_regex_matches": false
+    },
+    {
+      "suffix": "_mcraw_l1pf",
+      "fork_master_prune_regex_matches": false,
+      "pr35_prune_regex_matches": false,
+      "proposed_prune_regex_matches": true,
+      "histogram_grouping_regex_matches": false
+    },
+    {
+      "suffix": "_mcraw_puntrue",
+      "fork_master_prune_regex_matches": false,
+      "pr35_prune_regex_matches": false,
+      "proposed_prune_regex_matches": true,
+      "histogram_grouping_regex_matches": false
+    },
+    {
+      "suffix": "_mcraw_acc",
+      "fork_master_prune_regex_matches": false,
+      "pr35_prune_regex_matches": false,
+      "proposed_prune_regex_matches": true,
+      "histogram_grouping_regex_matches": false
+    },
+    {
+      "suffix": "_mcraw_ele27pt",
+      "fork_master_prune_regex_matches": false,
+      "pr35_prune_regex_matches": false,
+      "proposed_prune_regex_matches": true,
+      "histogram_grouping_regex_matches": false
+    }
+  ]
+}

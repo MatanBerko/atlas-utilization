@@ -1,0 +1,122 @@
+{
+  "n_combinations": 186,
+  "max_start_plus_count_per_type": {
+    "Electrons": 4,
+    "Muons": 4,
+    "Jets": 4,
+    "BJets": 4
+  },
+  "max_start_plus_count_overall": 4,
+  "name_for_5j": "mass_m0m1_cat_0ex_2mx_5jx_1bx",
+  "name_for_10j": "mass_m0m1_cat_0ex_2mx_10jx_1bx",
+  "grouping_regex_matches_two_digit_count": true,
+  "grouping_regex_groups": [
+    "0e_2m_10j_1b",
+    "m0m1"
+  ],
+  "fork_parse_of_10j_label": [
+    [
+      "0",
+      "e"
+    ],
+    [
+      "2",
+      "m"
+    ],
+    [
+      "1",
+      "0"
+    ],
+    [
+      "1",
+      "b"
+    ]
+  ],
+  "upstream_parse_of_10j_label": [
+    [
+      "0",
+      "e"
+    ],
+    [
+      "2",
+      "m"
+    ],
+    [
+      "10",
+      "j"
+    ],
+    [
+      "1",
+      "b"
+    ]
+  ],
+  "divergence_scan_range": "e,m,b in 0..6 and j in 0..2",
+  "n_divergent_count_patterns": 271,
+  "n_upstream_keeps_fork_rejects": 270,
+  "n_fork_keeps_upstream_rejects": 1,
+  "divergence_examples": [
+    {
+      "label": "0e_0m_0j_0b",
+      "upstream34_keeps": false,
+      "fork_version_b_keeps": true
+    },
+    {
+      "label": "0e_1m_0j_4b",
+      "upstream34_keeps": true,
+      "fork_version_b_keeps": false
+    },
+    {
+      "label": "0e_1m_1j_4b",
+      "upstream34_keeps": true,
+      "fork_version_b_keeps": false
+    },
+    {
+      "label": "0e_1m_2j_4b",
+      "upstream34_keeps": true,
+      "fork_version_b_keeps": false
+    },
+    {
+      "label": "0e_2m_0j_3b",
+      "upstream34_keeps": true,
+      "fork_version_b_keeps": false
+    },
+    {
+      "label": "0e_2m_0j_4b",
+      "upstream34_keeps": true,
+      "fork_version_b_keeps": false
+    },
+    {
+      "label": "0e_2m_1j_3b",
+      "upstream34_keeps": true,
+      "fork_version_b_keeps": false
+    },
+    {
+      "label": "0e_2m_1j_4b",
+      "upstream34_keeps": true,
+      "fork_version_b_keeps": false
+    },
+    {
+      "label": "0e_2m_2j_3b",
+      "upstream34_keeps": true,
+      "fork_version_b_keeps": false
+    },
+    {
+      "label": "0e_2m_2j_4b",
+      "upstream34_keeps": true,
+      "fork_version_b_keeps": false
+    },
+    {
+      "label": "0e_3m_0j_2b",
+      "upstream34_keeps": true,
+      "fork_version_b_keeps": false
+    },
+    {
+      "label": "0e_3m_0j_3b",
+      "upstream34_keeps": true,
+      "fork_version_b_keeps": false
+    }
+  ],
+  "fork_keeps_upstream_rejects_cases": [
+    "0e_0m_0j_0b"
+  ]
+}
