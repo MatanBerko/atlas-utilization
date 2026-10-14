@@ -80,7 +80,22 @@ nice -n 10 $PY $W/inputs/compare.py delivery --a $W/delivery_old --b $W/delivery
 
 ## Jobs
 
-(filled in after submission)
+| PBS id | array | what | status |
+|---|---|---|---|
+| `5223392[]` | 0-7 | OLD per-file production (`old_ba89791`) | submitted 14 Oct 2026 |
+| `5223393[]` | 0-7 | NEW per-file production (`new_6a055e8`) | submitted 14 Oct 2026 |
+| — | — | mini deliveries `rv_d_old` / `rv_d_new` | submitted after both arrays finish |
+
+Check: `ssh wipp-campus '/opt/pbs/bin/qstat -u berkom -t'`; logs in `$W/logs/{old,new}/f_<i>.out`.
+
+### How to resume
+
+1. Wait for both arrays; each subjob ends with `[<i>] done` in its `.out`.
+2. Submit the two mini deliveries (command above).
+3. Run the three comparisons, then plots (`make_plots.py`, this folder).
+4. Archive the two checkouts: `tar czf` each inside
+   `$B/checkouts/rebuild_validation_20261014/`, verify with `tar tzf`,
+   then remove only the two uncompressed checkout directories.
 
 ## File count (`lfs quota -u berkom /storage`)
 
