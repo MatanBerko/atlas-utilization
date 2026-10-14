@@ -1,0 +1,911 @@
+{
+  "a": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_full_20261007",
+  "b": "/storage/agrp/berkom/atlas-utilization/work/rebuild_validation_20261014/new",
+  "jobs": {
+    "DoubleMuon/job_0": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/05DD095C-F6C3-9A4F-9FB3-348A5A6403D5.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/05DD095C-F6C3-9A4F-9FB3-348A5A6403D5.root",
+      "git_commit_a": "06778c9b21ae9243ec49e1455ed055edfe608291",
+      "git_commit_b": "6a055e88dacaf669322926df78f82afa62a91cf6",
+      "cutflow_a": {
+        "n_read": 2315223,
+        "n_after_golden_json": 2298786,
+        "n_after_trigger": 729741,
+        "n_after_gate": 223393,
+        "n_exclusive": 223393,
+        "n_final_state_groups": 48,
+        "n_signature_writes_inclusive": 1237,
+        "n_signature_writes_exclusive": 1237,
+        "n_values_written_inclusive": 464388,
+        "n_values_written_exclusive": 464388
+      },
+      "cutflow_b": {
+        "n_read": 2315223,
+        "n_after_golden_json": 2298786,
+        "n_after_trigger": 729741,
+        "n_after_gate": 223393,
+        "n_exclusive": 223393,
+        "n_final_state_groups": 48,
+        "n_signature_writes_inclusive": 1237,
+        "n_signature_writes_exclusive": 1237,
+        "n_values_written_inclusive": 464388,
+        "n_values_written_exclusive": 464388
+      },
+      "n_labels_inclusive": 48,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "n_metadata_leaves_compared": 12114,
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1237,
+          "n_arrays_compared": 1237,
+          "n_values_compared": 464388,
+          "n_final_state_rows": 48,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1237,
+          "n_arrays_compared": 1237,
+          "n_values_compared": 464388,
+          "n_final_state_rows": 48,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 96,
+          "n_arrays_compared": 96,
+          "n_values_compared": 440271,
+          "n_final_state_rows": 14,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 96,
+          "n_arrays_compared": 96,
+          "n_values_compared": 440271,
+          "n_final_state_rows": 14,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 782,
+          "n_arrays_compared": 782,
+          "n_values_compared": 463793,
+          "n_final_state_rows": 37,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 782,
+          "n_arrays_compared": 782,
+          "n_values_compared": 463793,
+          "n_final_state_rows": 37,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 102,
+          "n_arrays_compared": 102,
+          "n_values_compared": 440459,
+          "n_final_state_rows": 15,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 102,
+          "n_arrays_compared": 102,
+          "n_values_compared": 440459,
+          "n_final_state_rows": 15,
+          "n_metadata_keys": 13,
+          "differences": []
+        }
+      }
+    },
+    "DoubleMuon/job_1": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/209D94D9-B6D5-A34B-A2A3-CBB7E4EA8ADF.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/209D94D9-B6D5-A34B-A2A3-CBB7E4EA8ADF.root",
+      "git_commit_a": "06778c9b21ae9243ec49e1455ed055edfe608291",
+      "git_commit_b": "6a055e88dacaf669322926df78f82afa62a91cf6",
+      "cutflow_a": {
+        "n_read": 2467200,
+        "n_after_golden_json": 2458556,
+        "n_after_trigger": 789513,
+        "n_after_gate": 243417,
+        "n_exclusive": 243417,
+        "n_final_state_groups": 47,
+        "n_signature_writes_inclusive": 1248,
+        "n_signature_writes_exclusive": 1248,
+        "n_values_written_inclusive": 506349,
+        "n_values_written_exclusive": 506349
+      },
+      "cutflow_b": {
+        "n_read": 2467200,
+        "n_after_golden_json": 2458556,
+        "n_after_trigger": 789513,
+        "n_after_gate": 243417,
+        "n_exclusive": 243417,
+        "n_final_state_groups": 47,
+        "n_signature_writes_inclusive": 1248,
+        "n_signature_writes_exclusive": 1248,
+        "n_values_written_inclusive": 506349,
+        "n_values_written_exclusive": 506349
+      },
+      "n_labels_inclusive": 47,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "n_metadata_leaves_compared": 12494,
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1248,
+          "n_arrays_compared": 1248,
+          "n_values_compared": 506349,
+          "n_final_state_rows": 47,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1248,
+          "n_arrays_compared": 1248,
+          "n_values_compared": 506349,
+          "n_final_state_rows": 47,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 93,
+          "n_arrays_compared": 93,
+          "n_values_compared": 480214,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 93,
+          "n_arrays_compared": 93,
+          "n_values_compared": 480214,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 921,
+          "n_arrays_compared": 921,
+          "n_values_compared": 505405,
+          "n_final_state_rows": 40,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 921,
+          "n_arrays_compared": 921,
+          "n_values_compared": 505405,
+          "n_final_state_rows": 40,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 93,
+          "n_arrays_compared": 93,
+          "n_values_compared": 480544,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 93,
+          "n_arrays_compared": 93,
+          "n_values_compared": 480544,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        }
+      }
+    },
+    "SingleMuon/job_0": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/0A4230E2-0C75-604D-890F-A4CE5E5C164E.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/0A4230E2-0C75-604D-890F-A4CE5E5C164E.root",
+      "git_commit_a": "06778c9b21ae9243ec49e1455ed055edfe608291",
+      "git_commit_b": "6a055e88dacaf669322926df78f82afa62a91cf6",
+      "cutflow_a": {
+        "n_read": 2939781,
+        "n_after_golden_json": 2931332,
+        "n_after_trigger": 1878767,
+        "n_after_gate": 1511878,
+        "n_exclusive": 1425358,
+        "n_final_state_groups": 109,
+        "n_signature_writes_inclusive": 2283,
+        "n_signature_writes_exclusive": 1940,
+        "n_values_written_inclusive": 1051521,
+        "n_values_written_exclusive": 870410
+      },
+      "cutflow_b": {
+        "n_read": 2939781,
+        "n_after_golden_json": 2931332,
+        "n_after_trigger": 1878767,
+        "n_after_gate": 1511878,
+        "n_exclusive": 1425358,
+        "n_final_state_groups": 109,
+        "n_signature_writes_inclusive": 2283,
+        "n_signature_writes_exclusive": 1940,
+        "n_values_written_inclusive": 1051521,
+        "n_values_written_exclusive": 870410
+      },
+      "n_labels_inclusive": 109,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "n_metadata_leaves_compared": 10276,
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1940,
+          "n_arrays_compared": 1940,
+          "n_values_compared": 870410,
+          "n_final_state_rows": 109,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 2283,
+          "n_arrays_compared": 2283,
+          "n_values_compared": 1051521,
+          "n_final_state_rows": 109,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 173,
+          "n_arrays_compared": 173,
+          "n_values_compared": 803454,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 198,
+          "n_arrays_compared": 198,
+          "n_values_compared": 975238,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1568,
+          "n_arrays_compared": 1568,
+          "n_values_compared": 869584,
+          "n_final_state_rows": 94,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1827,
+          "n_arrays_compared": 1827,
+          "n_values_compared": 1050442,
+          "n_final_state_rows": 94,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 173,
+          "n_arrays_compared": 173,
+          "n_values_compared": 803700,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 198,
+          "n_arrays_compared": 198,
+          "n_values_compared": 975583,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 13,
+          "differences": []
+        }
+      }
+    },
+    "SingleMuon/job_1": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/143F9660-3FE1-3E4E-A58D-FD56967BA9B8.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/143F9660-3FE1-3E4E-A58D-FD56967BA9B8.root",
+      "git_commit_a": "06778c9b21ae9243ec49e1455ed055edfe608291",
+      "git_commit_b": "6a055e88dacaf669322926df78f82afa62a91cf6",
+      "cutflow_a": {
+        "n_read": 1090938,
+        "n_after_golden_json": 1051902,
+        "n_after_trigger": 668199,
+        "n_after_gate": 537778,
+        "n_exclusive": 506789,
+        "n_final_state_groups": 89,
+        "n_signature_writes_inclusive": 1865,
+        "n_signature_writes_exclusive": 1601,
+        "n_values_written_inclusive": 373919,
+        "n_values_written_exclusive": 309977
+      },
+      "cutflow_b": {
+        "n_read": 1090938,
+        "n_after_golden_json": 1051902,
+        "n_after_trigger": 668199,
+        "n_after_gate": 537778,
+        "n_exclusive": 506789,
+        "n_final_state_groups": 89,
+        "n_signature_writes_inclusive": 1865,
+        "n_signature_writes_exclusive": 1601,
+        "n_values_written_inclusive": 373919,
+        "n_values_written_exclusive": 309977
+      },
+      "n_labels_inclusive": 89,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "n_metadata_leaves_compared": 9259,
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1601,
+          "n_arrays_compared": 1601,
+          "n_values_compared": 309977,
+          "n_final_state_rows": 89,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1865,
+          "n_arrays_compared": 1865,
+          "n_values_compared": 373919,
+          "n_final_state_rows": 89,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 162,
+          "n_arrays_compared": 162,
+          "n_values_compared": 285980,
+          "n_final_state_rows": 28,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 175,
+          "n_arrays_compared": 175,
+          "n_values_compared": 346398,
+          "n_final_state_rows": 28,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1355,
+          "n_arrays_compared": 1355,
+          "n_values_compared": 309710,
+          "n_final_state_rows": 79,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1550,
+          "n_arrays_compared": 1550,
+          "n_values_compared": 373569,
+          "n_final_state_rows": 79,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 162,
+          "n_arrays_compared": 162,
+          "n_values_compared": 286065,
+          "n_final_state_rows": 29,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 181,
+          "n_arrays_compared": 181,
+          "n_values_compared": 346511,
+          "n_final_state_rows": 29,
+          "n_metadata_keys": 13,
+          "differences": []
+        }
+      }
+    },
+    "DoubleEG/job_0": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root",
+      "git_commit_a": "06778c9b21ae9243ec49e1455ed055edfe608291",
+      "git_commit_b": "6a055e88dacaf669322926df78f82afa62a91cf6",
+      "cutflow_a": {
+        "n_read": 2014154,
+        "n_after_golden_json": 1912413,
+        "n_after_trigger": 219416,
+        "n_after_gate": 60201,
+        "n_exclusive": 60189,
+        "n_final_state_groups": 31,
+        "n_signature_writes_inclusive": 593,
+        "n_signature_writes_exclusive": 521,
+        "n_values_written_inclusive": 122662,
+        "n_values_written_exclusive": 122551
+      },
+      "cutflow_b": {
+        "n_read": 2014154,
+        "n_after_golden_json": 1912413,
+        "n_after_trigger": 219416,
+        "n_after_gate": 60201,
+        "n_exclusive": 60189,
+        "n_final_state_groups": 31,
+        "n_signature_writes_inclusive": 593,
+        "n_signature_writes_exclusive": 521,
+        "n_values_written_inclusive": 122662,
+        "n_values_written_exclusive": 122551
+      },
+      "n_labels_inclusive": 31,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "n_metadata_leaves_compared": 8488,
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 521,
+          "n_arrays_compared": 521,
+          "n_values_compared": 122551,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 593,
+          "n_arrays_compared": 593,
+          "n_values_compared": 122662,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 76,
+          "n_arrays_compared": 76,
+          "n_values_compared": 115873,
+          "n_final_state_rows": 12,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 87,
+          "n_arrays_compared": 87,
+          "n_values_compared": 115945,
+          "n_final_state_rows": 12,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 478,
+          "n_arrays_compared": 478,
+          "n_values_compared": 122422,
+          "n_final_state_rows": 28,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 525,
+          "n_arrays_compared": 525,
+          "n_values_compared": 122508,
+          "n_final_state_rows": 28,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 76,
+          "n_arrays_compared": 76,
+          "n_values_compared": 115939,
+          "n_final_state_rows": 12,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 87,
+          "n_arrays_compared": 87,
+          "n_values_compared": 116022,
+          "n_final_state_rows": 12,
+          "n_metadata_keys": 13,
+          "differences": []
+        }
+      }
+    },
+    "DoubleEG/job_1": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/148C0840-3400-844C-A955-0318E69E353C.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/148C0840-3400-844C-A955-0318E69E353C.root",
+      "git_commit_a": "06778c9b21ae9243ec49e1455ed055edfe608291",
+      "git_commit_b": "6a055e88dacaf669322926df78f82afa62a91cf6",
+      "cutflow_a": {
+        "n_read": 1967602,
+        "n_after_golden_json": 1951463,
+        "n_after_trigger": 229111,
+        "n_after_gate": 64044,
+        "n_exclusive": 64037,
+        "n_final_state_groups": 31,
+        "n_signature_writes_inclusive": 638,
+        "n_signature_writes_exclusive": 602,
+        "n_values_written_inclusive": 129073,
+        "n_values_written_exclusive": 128989
+      },
+      "cutflow_b": {
+        "n_read": 1967602,
+        "n_after_golden_json": 1951463,
+        "n_after_trigger": 229111,
+        "n_after_gate": 64044,
+        "n_exclusive": 64037,
+        "n_final_state_groups": 31,
+        "n_signature_writes_inclusive": 638,
+        "n_signature_writes_exclusive": 602,
+        "n_values_written_inclusive": 129073,
+        "n_values_written_exclusive": 128989
+      },
+      "n_labels_inclusive": 31,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "n_metadata_leaves_compared": 8463,
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 602,
+          "n_arrays_compared": 602,
+          "n_values_compared": 128989,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 638,
+          "n_arrays_compared": 638,
+          "n_values_compared": 129073,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 65,
+          "n_arrays_compared": 65,
+          "n_values_compared": 121894,
+          "n_final_state_rows": 11,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 76,
+          "n_arrays_compared": 76,
+          "n_values_compared": 121950,
+          "n_final_state_rows": 11,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 544,
+          "n_arrays_compared": 544,
+          "n_values_compared": 128859,
+          "n_final_state_rows": 28,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 580,
+          "n_arrays_compared": 580,
+          "n_values_compared": 128943,
+          "n_final_state_rows": 28,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 65,
+          "n_arrays_compared": 65,
+          "n_values_compared": 121960,
+          "n_final_state_rows": 11,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 76,
+          "n_arrays_compared": 76,
+          "n_values_compared": 122016,
+          "n_final_state_rows": 11,
+          "n_metadata_keys": 13,
+          "differences": []
+        }
+      }
+    },
+    "MuonEG/job_0": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/MuonEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/2ADBED61-A06A-D64B-BE90-E9B267D15700.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/MuonEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/2ADBED61-A06A-D64B-BE90-E9B267D15700.root",
+      "git_commit_a": "06778c9b21ae9243ec49e1455ed055edfe608291",
+      "git_commit_b": "6a055e88dacaf669322926df78f82afa62a91cf6",
+      "cutflow_a": {
+        "n_read": 2238235,
+        "n_after_golden_json": 2237659,
+        "n_after_trigger": 279559,
+        "n_after_gate": 4512,
+        "n_exclusive": 394,
+        "n_final_state_groups": 44,
+        "n_signature_writes_inclusive": 1164,
+        "n_signature_writes_exclusive": 370,
+        "n_values_written_inclusive": 49668,
+        "n_values_written_exclusive": 3214
+      },
+      "cutflow_b": {
+        "n_read": 2238235,
+        "n_after_golden_json": 2237659,
+        "n_after_trigger": 279559,
+        "n_after_gate": 4512,
+        "n_exclusive": 394,
+        "n_final_state_groups": 44,
+        "n_signature_writes_inclusive": 1164,
+        "n_signature_writes_exclusive": 370,
+        "n_values_written_inclusive": 49668,
+        "n_values_written_exclusive": 3214
+      },
+      "n_labels_inclusive": 44,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "n_metadata_leaves_compared": 8725,
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 370,
+          "n_arrays_compared": 370,
+          "n_values_compared": 3214,
+          "n_final_state_rows": 44,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1164,
+          "n_arrays_compared": 1164,
+          "n_values_compared": 49668,
+          "n_final_state_rows": 44,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 42,
+          "n_arrays_compared": 42,
+          "n_values_compared": 2293,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 105,
+          "n_arrays_compared": 105,
+          "n_values_compared": 31380,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 356,
+          "n_arrays_compared": 356,
+          "n_values_compared": 3200,
+          "n_final_state_rows": 36,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 851,
+          "n_arrays_compared": 851,
+          "n_values_compared": 48528,
+          "n_final_state_rows": 36,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 42,
+          "n_arrays_compared": 42,
+          "n_values_compared": 2304,
+          "n_final_state_rows": 14,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 111,
+          "n_arrays_compared": 111,
+          "n_values_compared": 31793,
+          "n_final_state_rows": 14,
+          "n_metadata_keys": 13,
+          "differences": []
+        }
+      }
+    },
+    "MuonEG/job_1": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/MuonEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/344BFE5B-F86C-AC45-B6A5-1A7FBA3633E2.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/MuonEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/344BFE5B-F86C-AC45-B6A5-1A7FBA3633E2.root",
+      "git_commit_a": "06778c9b21ae9243ec49e1455ed055edfe608291",
+      "git_commit_b": "6a055e88dacaf669322926df78f82afa62a91cf6",
+      "cutflow_a": {
+        "n_read": 2170629,
+        "n_after_golden_json": 2158638,
+        "n_after_trigger": 276331,
+        "n_after_gate": 4586,
+        "n_exclusive": 374,
+        "n_final_state_groups": 44,
+        "n_signature_writes_inclusive": 1194,
+        "n_signature_writes_exclusive": 430,
+        "n_values_written_inclusive": 51276,
+        "n_values_written_exclusive": 2961
+      },
+      "cutflow_b": {
+        "n_read": 2170629,
+        "n_after_golden_json": 2158638,
+        "n_after_trigger": 276331,
+        "n_after_gate": 4586,
+        "n_exclusive": 374,
+        "n_final_state_groups": 44,
+        "n_signature_writes_inclusive": 1194,
+        "n_signature_writes_exclusive": 430,
+        "n_values_written_inclusive": 51276,
+        "n_values_written_exclusive": 2961
+      },
+      "n_labels_inclusive": 44,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "n_metadata_leaves_compared": 8748,
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 430,
+          "n_arrays_compared": 430,
+          "n_values_compared": 2961,
+          "n_final_state_rows": 44,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1194,
+          "n_arrays_compared": 1194,
+          "n_values_compared": 51276,
+          "n_final_state_rows": 44,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 57,
+          "n_arrays_compared": 57,
+          "n_values_compared": 2033,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 105,
+          "n_arrays_compared": 105,
+          "n_values_compared": 32289,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 430,
+          "n_arrays_compared": 430,
+          "n_values_compared": 2961,
+          "n_final_state_rows": 38,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 960,
+          "n_arrays_compared": 960,
+          "n_values_compared": 50386,
+          "n_final_state_rows": 38,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 57,
+          "n_arrays_compared": 57,
+          "n_values_compared": 2033,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 105,
+          "n_arrays_compared": 105,
+          "n_values_compared": 32608,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        }
+      }
+    }
+  },
+  "all_identical": true
+}

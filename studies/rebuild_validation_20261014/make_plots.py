@@ -88,14 +88,15 @@ def summary_table(results_dir: Path, path: Path):
     if d.exists():
         dd = json.loads(d.read_text())
         for suffix, v in dd["root_files"].items():
-            rows.append([f"mini delivery {suffix}", "", "", "", f"{v['n_histograms_a']} hists",
+            rows.append([f"delivery ({'cropped' if 'cropped' in suffix else 'full grid'})", "", "", "", f"{v['n_histograms_a']} hists",
                          "", f"{v['n_bins_compared']:,} bins",
                          "IDENTICAL" if v["identical"] else "DIFFERS", ""])
     cols = ["job / file", "events read", "accepted", "exclusive", "shards", "arrays", "values",
             "OLD vs NEW", "7 Oct vs NEW"]
     fig, ax = plt.subplots(figsize=(13, 0.42 * (len(rows) + 2)))
     ax.axis("off")
-    t = ax.table(cellText=rows, colLabels=cols, loc="center", cellLoc="center")
+    t = ax.table(cellText=rows, colLabels=cols, loc="center", cellLoc="center",
+                 colWidths=[0.16] + [0.105] * (len(cols) - 1))
     t.auto_set_font_size(False)
     t.set_fontsize(8)
     t.scale(1, 1.3)

@@ -1,0 +1,66 @@
+{
+  "what": "combined four-dataset matched BumpNet delivery (electron-datasets task B3)",
+  "version": "rare4",
+  "priority_order_highest_first": [
+    "DoubleMuon",
+    "SingleMuon",
+    "DoubleEG",
+    "MuonEG"
+  ],
+  "pooling": {
+    "DoubleMuon": {
+      "shards": 2,
+      "contribution": "inclusive"
+    },
+    "SingleMuon": {
+      "shards": 2,
+      "contribution": "exclusive"
+    },
+    "DoubleEG": {
+      "shards": 2,
+      "contribution": "exclusive"
+    },
+    "MuonEG": {
+      "shards": 2,
+      "contribution": "exclusive"
+    }
+  },
+  "n_shards_total": 8,
+  "n_distinct_raw_signatures": 6434,
+  "min_events_per_final_state": 100,
+  "min_events_per_final_state_applied": "once, on the combined shards of all files",
+  "per_histogram_min_entries": 1,
+  "per_histogram_min_entries_source": "upstream: no minimum, a histogram is written whenever it has >=1 entry",
+  "filled_bin_cut": "NONE (applied on the BumpNet side during smoothing)",
+  "width_suffix": "_width_10.0",
+  "width_suffix_matches_upstream": true,
+  "legacy_gt_label_conversion_applied": false,
+  "funnel": {
+    "b_after_min_events_per_fs": 698,
+    "c_after_postprocessing": 698,
+    "d_gt30bins_informational": 305
+  },
+  "n_delivered_histograms": 698,
+  "n_distinct_final_state_categories_delivered": 52,
+  "informational_bin_counts": {
+    "n_with_ge_25_filled_bins": 397,
+    "n_with_gt_25_filled_bins": 384,
+    "n_with_gt_30_filled_bins": 308
+  },
+  "n_excluded_at_histogram_step": 0,
+  "n_excluded_at_postprocessing_step": 0,
+  "funnel_diagnostics": {
+    "threshold": 100,
+    "min_main_entries": 1,
+    "n_stage_b_names": 698,
+    "n_empty_after_z_and_max_mass": 0,
+    "n_empty_after_peak_removal": 0,
+    "n_excluded_by_min_main_entries": 0,
+    "n_stage_c_survivors": 698
+  },
+  "output_files": {
+    "rv8_four_dataset_bumpnet.root": "/storage/agrp/berkom/atlas-utilization/work/rebuild_validation_20261014/delivery_new/rv8_four_dataset_bumpnet.root",
+    "rv8_four_dataset_bumpnet_cropped.root": "/storage/agrp/berkom/atlas-utilization/work/rebuild_validation_20261014/delivery_new/rv8_four_dataset_bumpnet_cropped.root"
+  },
+  "file_for_bumpnet": "rv8_four_dataset_bumpnet_cropped.root"
+}

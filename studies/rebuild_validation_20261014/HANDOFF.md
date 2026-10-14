@@ -15,8 +15,8 @@ without re-deriving anything.
 
 ```
 B=/storage/agrp/berkom/atlas-utilization
-$B/checkouts/rebuild_validation_20261014/old_ba89791/   pinned checkout, OLD
-$B/checkouts/rebuild_validation_20261014/new_6a055e8/   pinned checkout, NEW
+$B/checkouts/rebuild_validation_20261014/old_ba89791.tar.gz   pinned checkout, OLD (archived; 1,835 entries)
+$B/checkouts/rebuild_validation_20261014/new_6a055e8.tar.gz   pinned checkout, NEW (archived; 232 entries)
 $B/work/rebuild_validation_20261014/
   inputs/    mapping.txt (8 lines), files.json (URLs), compare.py (copy of this folder's)
   old/       OLD per-file outputs <Dataset>/job_<0|1>/ + <Dataset>_index.json
@@ -84,8 +84,8 @@ nice -n 10 $PY $W/inputs/compare.py delivery --a $W/delivery_old --b $W/delivery
 |---|---|---|---|
 | `5223392[]` | 0-7 | OLD per-file production (`old_ba89791`) | finished, 8/8 `done`, exit 0 |
 | `5223393[]` | 0-7 | NEW per-file production (`new_6a055e8`) | finished, 8/8 `done`, exit 0 |
-| `5223462` | — | OLD mini delivery (`rv_d_old`) | submitted 14 Oct 2026 |
-| `5223463` | — | NEW mini delivery (`rv_d_new`) | submitted 14 Oct 2026 |
+| `5223462` | — | OLD mini delivery (`rv_d_old`) | finished, exit 0, 698 histograms |
+| `5223463` | — | NEW mini delivery (`rv_d_new`) | finished, exit 0, 698 histograms |
 
 Check: `ssh wipp-campus '/opt/pbs/bin/qstat -u berkom -t'`; logs in `$W/logs/{old,new}/f_<i>.out`.
 
@@ -104,3 +104,10 @@ Check: `ssh wipp-campus '/opt/pbs/bin/qstat -u berkom -t'`; logs in `$W/logs/{ol
 |---|---:|
 | before this task | 108,944 |
 | after checkouts + inputs | 110,940 |
+| at the end (checkouts archived; work/ outputs kept, 257 files) | 109,204 |
+
+## Status: COMPLETE
+
+All jobs finished; all comparisons IDENTICAL; see `VALIDATION.md`. To re-run
+anything, unpack a checkout first:
+`tar xzf $B/checkouts/rebuild_validation_20261014/<name>.tar.gz -C <new dir>`.
