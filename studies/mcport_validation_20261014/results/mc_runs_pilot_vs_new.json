@@ -1,0 +1,1003 @@
+{
+  "a": "/storage/agrp/berkom/atlas-utilization/work/mcport_20261014/mc_old/runs",
+  "b": "/storage/agrp/berkom/atlas-utilization/work/mcport_20261014/mc_new/runs",
+  "jobs": {
+    "record67801/job_0": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/089E6E3A-DFD1-7148-BD6F-F611D22A1B62.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/089E6E3A-DFD1-7148-BD6F-F611D22A1B62.root",
+      "git_commit_a": "cbfb83741afb1a14e430afce5c6159c8a7c4389a",
+      "git_commit_b": "5906dcf8591f7b9bd83a4c36e41cc03b59b9f39a",
+      "is_mc": [
+        true,
+        true
+      ],
+      "n_read": 136000,
+      "n_after_gate": 78632,
+      "n_labels_inclusive": 197,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 4568,
+          "n_arrays_compared": 4568,
+          "n_values_compared": 812915,
+          "n_final_state_rows": 197,
+          "n_metadata_keys": 21,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 4568,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 27408,
+          "n_arrays_compared": 27408,
+          "n_values_compared": 4877490,
+          "n_final_state_rows": 197,
+          "n_metadata_keys": 21,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 4568,
+            "n_sibling_arrays": 22840,
+            "n_sibling_values": 4064575,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 4568,
+              "_mcraw_l1pf": 4568,
+              "_mcraw_puntrue": 4568,
+              "_mcraw_acc": 4568,
+              "_mcraw_ele27pt": 4568
+            }
+          }
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 301,
+          "n_arrays_compared": 301,
+          "n_values_compared": 561462,
+          "n_final_state_rows": 49,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 301,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1806,
+          "n_arrays_compared": 1806,
+          "n_values_compared": 3368772,
+          "n_final_state_rows": 49,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 301,
+            "n_sibling_arrays": 1505,
+            "n_sibling_values": 2807310,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 301,
+              "_mcraw_l1pf": 301,
+              "_mcraw_puntrue": 301,
+              "_mcraw_acc": 301,
+              "_mcraw_ele27pt": 301
+            }
+          }
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 3369,
+          "n_arrays_compared": 3369,
+          "n_values_compared": 805819,
+          "n_final_state_rows": 163,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 3369,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 20214,
+          "n_arrays_compared": 20214,
+          "n_values_compared": 4834914,
+          "n_final_state_rows": 163,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 3369,
+            "n_sibling_arrays": 16845,
+            "n_sibling_values": 4029095,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 3369,
+              "_mcraw_l1pf": 3369,
+              "_mcraw_puntrue": 3369,
+              "_mcraw_acc": 3369,
+              "_mcraw_ele27pt": 3369
+            }
+          }
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 301,
+          "n_arrays_compared": 301,
+          "n_values_compared": 564015,
+          "n_final_state_rows": 49,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 301,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1806,
+          "n_arrays_compared": 1806,
+          "n_values_compared": 3384090,
+          "n_final_state_rows": 49,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 301,
+            "n_sibling_arrays": 1505,
+            "n_sibling_values": 2820075,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 301,
+              "_mcraw_l1pf": 301,
+              "_mcraw_puntrue": 301,
+              "_mcraw_acc": 301,
+              "_mcraw_ele27pt": 301
+            }
+          }
+        }
+      }
+    },
+    "record67801/job_1": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/13BF43D6-5798-9D4C-9E4A-B148CC97DD4A.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/13BF43D6-5798-9D4C-9E4A-B148CC97DD4A.root",
+      "git_commit_a": "cbfb83741afb1a14e430afce5c6159c8a7c4389a",
+      "git_commit_b": "5906dcf8591f7b9bd83a4c36e41cc03b59b9f39a",
+      "is_mc": [
+        true,
+        true
+      ],
+      "n_read": 1260000,
+      "n_after_gate": 727390,
+      "n_labels_inclusive": 277,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 7520,
+          "n_arrays_compared": 7520,
+          "n_values_compared": 7490701,
+          "n_final_state_rows": 277,
+          "n_metadata_keys": 21,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 7520,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 45120,
+          "n_arrays_compared": 45120,
+          "n_values_compared": 44944206,
+          "n_final_state_rows": 277,
+          "n_metadata_keys": 21,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 7520,
+            "n_sibling_arrays": 37600,
+            "n_sibling_values": 37453505,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 7520,
+              "_mcraw_l1pf": 7520,
+              "_mcraw_puntrue": 7520,
+              "_mcraw_acc": 7520,
+              "_mcraw_ele27pt": 7520
+            }
+          }
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 311,
+          "n_arrays_compared": 311,
+          "n_values_compared": 5191117,
+          "n_final_state_rows": 52,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 311,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1866,
+          "n_arrays_compared": 1866,
+          "n_values_compared": 31146702,
+          "n_final_state_rows": 52,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 311,
+            "n_sibling_arrays": 1555,
+            "n_sibling_values": 25955585,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 311,
+              "_mcraw_l1pf": 311,
+              "_mcraw_puntrue": 311,
+              "_mcraw_acc": 311,
+              "_mcraw_ele27pt": 311
+            }
+          }
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 4602,
+          "n_arrays_compared": 4602,
+          "n_values_compared": 7415440,
+          "n_final_state_rows": 204,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 4602,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 27612,
+          "n_arrays_compared": 27612,
+          "n_values_compared": 44492640,
+          "n_final_state_rows": 204,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 4602,
+            "n_sibling_arrays": 23010,
+            "n_sibling_values": 37077200,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 4602,
+              "_mcraw_l1pf": 4602,
+              "_mcraw_puntrue": 4602,
+              "_mcraw_acc": 4602,
+              "_mcraw_ele27pt": 4602
+            }
+          }
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 322,
+          "n_arrays_compared": 322,
+          "n_values_compared": 5217101,
+          "n_final_state_rows": 53,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 322,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1932,
+          "n_arrays_compared": 1932,
+          "n_values_compared": 31302606,
+          "n_final_state_rows": 53,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 322,
+            "n_sibling_arrays": 1610,
+            "n_sibling_values": 26085505,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 322,
+              "_mcraw_l1pf": 322,
+              "_mcraw_puntrue": 322,
+              "_mcraw_acc": 322,
+              "_mcraw_ele27pt": 322
+            }
+          }
+        }
+      }
+    },
+    "record35669/job_0": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/30000/0082C29D-E74C-024A-BE9B-97B29EE7A4A2.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/30000/0082C29D-E74C-024A-BE9B-97B29EE7A4A2.root",
+      "git_commit_a": "cbfb83741afb1a14e430afce5c6159c8a7c4389a",
+      "git_commit_b": "5906dcf8591f7b9bd83a4c36e41cc03b59b9f39a",
+      "is_mc": [
+        true,
+        true
+      ],
+      "n_read": 1933726,
+      "n_after_gate": 696604,
+      "n_labels_inclusive": 120,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1934,
+          "n_arrays_compared": 1934,
+          "n_values_compared": 1272979,
+          "n_final_state_rows": 120,
+          "n_metadata_keys": 21,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 1934,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 11604,
+          "n_arrays_compared": 11604,
+          "n_values_compared": 7637874,
+          "n_final_state_rows": 120,
+          "n_metadata_keys": 21,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 1934,
+            "n_sibling_arrays": 9670,
+            "n_sibling_values": 6364895,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 1934,
+              "_mcraw_l1pf": 1934,
+              "_mcraw_puntrue": 1934,
+              "_mcraw_acc": 1934,
+              "_mcraw_ele27pt": 1934
+            }
+          }
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 274,
+          "n_arrays_compared": 274,
+          "n_values_compared": 1241734,
+          "n_final_state_rows": 47,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 274,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1644,
+          "n_arrays_compared": 1644,
+          "n_values_compared": 7450404,
+          "n_final_state_rows": 47,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 274,
+            "n_sibling_arrays": 1370,
+            "n_sibling_values": 6208670,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 274,
+              "_mcraw_l1pf": 274,
+              "_mcraw_puntrue": 274,
+              "_mcraw_acc": 274,
+              "_mcraw_ele27pt": 274
+            }
+          }
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1846,
+          "n_arrays_compared": 1846,
+          "n_values_compared": 1272821,
+          "n_final_state_rows": 117,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 1846,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 11076,
+          "n_arrays_compared": 11076,
+          "n_values_compared": 7636926,
+          "n_final_state_rows": 117,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 1846,
+            "n_sibling_arrays": 9230,
+            "n_sibling_values": 6364105,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 1846,
+              "_mcraw_l1pf": 1846,
+              "_mcraw_puntrue": 1846,
+              "_mcraw_acc": 1846,
+              "_mcraw_ele27pt": 1846
+            }
+          }
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 274,
+          "n_arrays_compared": 274,
+          "n_values_compared": 1241822,
+          "n_final_state_rows": 47,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 274,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1644,
+          "n_arrays_compared": 1644,
+          "n_values_compared": 7450932,
+          "n_final_state_rows": 47,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 274,
+            "n_sibling_arrays": 1370,
+            "n_sibling_values": 6209110,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 274,
+              "_mcraw_l1pf": 274,
+              "_mcraw_puntrue": 274,
+              "_mcraw_acc": 274,
+              "_mcraw_ele27pt": 274
+            }
+          }
+        }
+      }
+    },
+    "record35669/job_1": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/30000/0718C107-8960-6B44-B96A-C60D53D52A95.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/30000/0718C107-8960-6B44-B96A-C60D53D52A95.root",
+      "git_commit_a": "cbfb83741afb1a14e430afce5c6159c8a7c4389a",
+      "git_commit_b": "5906dcf8591f7b9bd83a4c36e41cc03b59b9f39a",
+      "is_mc": [
+        true,
+        true
+      ],
+      "n_read": 1931733,
+      "n_after_gate": 694408,
+      "n_labels_inclusive": 119,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 2033,
+          "n_arrays_compared": 2033,
+          "n_values_compared": 1268216,
+          "n_final_state_rows": 119,
+          "n_metadata_keys": 21,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 2033,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 12198,
+          "n_arrays_compared": 12198,
+          "n_values_compared": 7609296,
+          "n_final_state_rows": 119,
+          "n_metadata_keys": 21,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 2033,
+            "n_sibling_arrays": 10165,
+            "n_sibling_values": 6341080,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 2033,
+              "_mcraw_l1pf": 2033,
+              "_mcraw_puntrue": 2033,
+              "_mcraw_acc": 2033,
+              "_mcraw_ele27pt": 2033
+            }
+          }
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 277,
+          "n_arrays_compared": 277,
+          "n_values_compared": 1237123,
+          "n_final_state_rows": 46,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 277,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1662,
+          "n_arrays_compared": 1662,
+          "n_values_compared": 7422738,
+          "n_final_state_rows": 46,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 277,
+            "n_sibling_arrays": 1385,
+            "n_sibling_values": 6185615,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 277,
+              "_mcraw_l1pf": 277,
+              "_mcraw_puntrue": 277,
+              "_mcraw_acc": 277,
+              "_mcraw_ele27pt": 277
+            }
+          }
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1817,
+          "n_arrays_compared": 1817,
+          "n_values_compared": 1267957,
+          "n_final_state_rows": 112,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 1817,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 10902,
+          "n_arrays_compared": 10902,
+          "n_values_compared": 7607742,
+          "n_final_state_rows": 112,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 1817,
+            "n_sibling_arrays": 9085,
+            "n_sibling_values": 6339785,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 1817,
+              "_mcraw_l1pf": 1817,
+              "_mcraw_puntrue": 1817,
+              "_mcraw_acc": 1817,
+              "_mcraw_ele27pt": 1817
+            }
+          }
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 277,
+          "n_arrays_compared": 277,
+          "n_values_compared": 1237222,
+          "n_final_state_rows": 46,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 277,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1662,
+          "n_arrays_compared": 1662,
+          "n_values_compared": 7423332,
+          "n_final_state_rows": 46,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 277,
+            "n_sibling_arrays": 1385,
+            "n_sibling_values": 6186110,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 277,
+              "_mcraw_l1pf": 277,
+              "_mcraw_puntrue": 277,
+              "_mcraw_acc": 277,
+              "_mcraw_ele27pt": 277
+            }
+          }
+        }
+      }
+    },
+    "record37728/job_0": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/34976A9F-8C57-044D-BB81-41704D8B017F.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/34976A9F-8C57-044D-BB81-41704D8B017F.root",
+      "git_commit_a": "cbfb83741afb1a14e430afce5c6159c8a7c4389a",
+      "git_commit_b": "5906dcf8591f7b9bd83a4c36e41cc03b59b9f39a",
+      "is_mc": [
+        true,
+        true
+      ],
+      "n_read": 4000,
+      "n_after_gate": 2076,
+      "n_labels_inclusive": 73,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1037,
+          "n_arrays_compared": 1037,
+          "n_values_compared": 5890,
+          "n_final_state_rows": 73,
+          "n_metadata_keys": 21,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 1037,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 6222,
+          "n_arrays_compared": 6222,
+          "n_values_compared": 35340,
+          "n_final_state_rows": 73,
+          "n_metadata_keys": 21,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 1037,
+            "n_sibling_arrays": 5185,
+            "n_sibling_values": 29450,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 1037,
+              "_mcraw_l1pf": 1037,
+              "_mcraw_puntrue": 1037,
+              "_mcraw_acc": 1037,
+              "_mcraw_ele27pt": 1037
+            }
+          }
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 229,
+          "n_arrays_compared": 229,
+          "n_values_compared": 4945,
+          "n_final_state_rows": 42,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 229,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1374,
+          "n_arrays_compared": 1374,
+          "n_values_compared": 29670,
+          "n_final_state_rows": 42,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 229,
+            "n_sibling_arrays": 1145,
+            "n_sibling_values": 24725,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 229,
+              "_mcraw_l1pf": 229,
+              "_mcraw_puntrue": 229,
+              "_mcraw_acc": 229,
+              "_mcraw_ele27pt": 229
+            }
+          }
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 890,
+          "n_arrays_compared": 890,
+          "n_values_compared": 5743,
+          "n_final_state_rows": 70,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 890,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 5340,
+          "n_arrays_compared": 5340,
+          "n_values_compared": 34458,
+          "n_final_state_rows": 70,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 890,
+            "n_sibling_arrays": 4450,
+            "n_sibling_values": 28715,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 890,
+              "_mcraw_l1pf": 890,
+              "_mcraw_puntrue": 890,
+              "_mcraw_acc": 890,
+              "_mcraw_ele27pt": 890
+            }
+          }
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 229,
+          "n_arrays_compared": 229,
+          "n_values_compared": 4957,
+          "n_final_state_rows": 42,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 229,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1374,
+          "n_arrays_compared": 1374,
+          "n_values_compared": 29742,
+          "n_final_state_rows": 42,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 229,
+            "n_sibling_arrays": 1145,
+            "n_sibling_values": 24785,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 229,
+              "_mcraw_l1pf": 229,
+              "_mcraw_puntrue": 229,
+              "_mcraw_acc": 229,
+              "_mcraw_ele27pt": 229
+            }
+          }
+        }
+      }
+    },
+    "record37728/job_1": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/46750D61-50A4-2C48-B1F6-91670B9666DD.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/46750D61-50A4-2C48-B1F6-91670B9666DD.root",
+      "git_commit_a": "cbfb83741afb1a14e430afce5c6159c8a7c4389a",
+      "git_commit_b": "5906dcf8591f7b9bd83a4c36e41cc03b59b9f39a",
+      "is_mc": [
+        true,
+        true
+      ],
+      "n_read": 37000,
+      "n_after_gate": 19316,
+      "n_labels_inclusive": 136,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec",
+        "/git_commit"
+      ],
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 2376,
+          "n_arrays_compared": 2376,
+          "n_values_compared": 54787,
+          "n_final_state_rows": 136,
+          "n_metadata_keys": 21,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 2376,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 14256,
+          "n_arrays_compared": 14256,
+          "n_values_compared": 328722,
+          "n_final_state_rows": 136,
+          "n_metadata_keys": 21,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 2376,
+            "n_sibling_arrays": 11880,
+            "n_sibling_values": 273935,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 2376,
+              "_mcraw_l1pf": 2376,
+              "_mcraw_puntrue": 2376,
+              "_mcraw_acc": 2376,
+              "_mcraw_ele27pt": 2376
+            }
+          }
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 302,
+          "n_arrays_compared": 302,
+          "n_values_compared": 48865,
+          "n_final_state_rows": 51,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 302,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1812,
+          "n_arrays_compared": 1812,
+          "n_values_compared": 293190,
+          "n_final_state_rows": 51,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 302,
+            "n_sibling_arrays": 1510,
+            "n_sibling_values": 244325,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 302,
+              "_mcraw_l1pf": 302,
+              "_mcraw_puntrue": 302,
+              "_mcraw_acc": 302,
+              "_mcraw_ele27pt": 302
+            }
+          }
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 2008,
+          "n_arrays_compared": 2008,
+          "n_values_compared": 54419,
+          "n_final_state_rows": 126,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 2008,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 12048,
+          "n_arrays_compared": 12048,
+          "n_values_compared": 326514,
+          "n_final_state_rows": 126,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 2008,
+            "n_sibling_arrays": 10040,
+            "n_sibling_values": 272095,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 2008,
+              "_mcraw_l1pf": 2008,
+              "_mcraw_puntrue": 2008,
+              "_mcraw_acc": 2008,
+              "_mcraw_ele27pt": 2008
+            }
+          }
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 302,
+          "n_arrays_compared": 302,
+          "n_values_compared": 48939,
+          "n_final_state_rows": 51,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 302,
+            "n_sibling_arrays": 0,
+            "n_sibling_values": 0,
+            "sibling_arrays_by_suffix": {}
+          }
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1812,
+          "n_arrays_compared": 1812,
+          "n_values_compared": 293634,
+          "n_final_state_rows": 51,
+          "n_metadata_keys": 22,
+          "differences": [],
+          "siblings_side_a": {
+            "n_mass_arrays": 302,
+            "n_sibling_arrays": 1510,
+            "n_sibling_values": 244695,
+            "sibling_arrays_by_suffix": {
+              "_mcraw_genw": 302,
+              "_mcraw_l1pf": 302,
+              "_mcraw_puntrue": 302,
+              "_mcraw_acc": 302,
+              "_mcraw_ele27pt": 302
+            }
+          }
+        }
+      }
+    }
+  },
+  "all_identical": true
+}

@@ -1,0 +1,57 @@
+{
+  "a": "/storage/agrp/berkom/atlas-utilization/work/mcport_20261014/mc_old/build_default",
+  "b": "/storage/agrp/berkom/atlas-utilization/work/mcport_20261014/mc_new/build_default",
+  "root_files": {
+    "pilot_record35669_mc.root": {
+      "identical": true,
+      "n_histograms_a": 1296,
+      "n_histograms_b": 1296,
+      "n_bins_compared": 1298592,
+      "sum_of_weights_a": 14921911.946796449,
+      "sum_of_weights_b": 14921911.946796449,
+      "variances_present": true,
+      "differences": []
+    },
+    "pilot_record37728_mc.root": {
+      "identical": true,
+      "n_histograms_a": 773,
+      "n_histograms_b": 773,
+      "n_bins_compared": 774546,
+      "sum_of_weights_a": 107.76346621418001,
+      "sum_of_weights_b": 107.76346621418001,
+      "variances_present": true,
+      "differences": []
+    },
+    "pilot_record67801_mc.root": {
+      "identical": true,
+      "n_histograms_a": 1651,
+      "n_histograms_b": 1651,
+      "n_bins_compared": 1654302,
+      "sum_of_weights_a": 4187079.043062273,
+      "sum_of_weights_b": 4187079.043062273,
+      "variances_present": true,
+      "differences": []
+    },
+    "pilot_summedSM_mc.root": {
+      "identical": true,
+      "n_histograms_a": 1651,
+      "n_histograms_b": 1651,
+      "n_bins_compared": 1654302,
+      "sum_of_weights_a": 19109098.75332488,
+      "sum_of_weights_b": 19109098.75332488,
+      "variances_present": true,
+      "differences": []
+    }
+  },
+  "json_files": {
+    "pilot_build_report.json": {
+      "identical_except_paths_and_provenance": true,
+      "provenance_differences": [
+        "/generated_utc",
+        "/git_commit"
+      ],
+      "differences": []
+    }
+  },
+  "all_identical": true
+}

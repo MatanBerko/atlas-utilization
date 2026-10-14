@@ -19,8 +19,8 @@ onto the rebuilt master, with no upstream file modified) changes nothing:
 
 ```
 B=/storage/agrp/berkom/atlas-utilization
-$B/checkouts/mcport_20261014/new_5906dcf/      pinned NEW checkout
-$B/checkouts/mcport_20261014/oldmc_68ab281/    pinned OLD-MC checkout (builder only)
+$B/checkouts/mcport_20261014/new_5906dcf.tar.gz     pinned NEW checkout (archived, 287 entries)
+$B/checkouts/mcport_20261014/oldmc_68ab281.tar.gz   pinned OLD-MC checkout (archived, 1,902 entries)
 $B/work/mcport_20261014/
   inputs/          data_mapping.txt + <Dataset>_index.json (copied from the
                    rebuild validation inputs), mc_mapping.txt, compare.py,
@@ -82,8 +82,8 @@ for S in new:$R old:$RO; do /opt/pbs/bin/qsub -N mp_b_${S%%:*} -l mem=64gb,wallt
 | `5223495[]` | 0-7 | A1 data per-file, NEW checkout | finished, 8/8 exit 0 |
 | `5223496[]` | 1-6 | B1 MC per-file, NEW checkout | finished, 6/6 exit 0 |
 | `5223509` | — | A2 data mini delivery | finished, exit 0 |
-| `5223610` | — | B2 MC build, NEW (`mp_b_new`) | submitted |
-| `5223611` | — | B2 MC build, OLD MC branch (`mp_b_old`) | submitted |
+| `5223610` | — | B2 MC build, NEW (`mp_b_new`) | finished, exit 0, 14 min |
+| `5223611` | — | B2 MC build, OLD MC branch (`mp_b_old`) | finished, exit 0, 14 min |
 
 The first B2 submission (without `-l io=25`) was refused by the queue
 ("Job violates queue and/or server resource limits"); resubmitted with the
@@ -109,3 +109,11 @@ Check: `ssh wipp-campus '/opt/pbs/bin/qstat -u berkom -t'`.
 |---|---:|
 | before this task | 109,202 |
 | after checkouts + inputs + pilot copies | 111,378 |
+| at the end (checkouts archived; work/ kept, 387 files) | 109,592 |
+
+## Status: COMPLETE
+
+All jobs finished; every comparison IDENTICAL; see `VALIDATION.md`. The ssh
+connection dropped twice during the run (Mac off WIS_Secure); no job was
+affected. To re-run, unpack a checkout first:
+`tar xzf $B/checkouts/mcport_20261014/<name>.tar.gz -C <new dir>`.
