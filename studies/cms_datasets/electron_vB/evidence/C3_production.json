@@ -1,0 +1,110 @@
+{
+  "what": "Step C3: full-production completeness and counts",
+  "runs_root": "/storage/agrp/berkom/atlas-utilization/output/cms_datasets/runs_matched4_full_20261007",
+  "per_dataset": {
+    "DoubleMuon": {
+      "files_expected": 57,
+      "files_complete": 57,
+      "files_missing": [],
+      "n_files_missing": 0,
+      "files_incomplete": [],
+      "n_files_incomplete": 0,
+      "complete": true,
+      "elapsed_sec_min": 42.3,
+      "elapsed_sec_max": 314.5,
+      "elapsed_sec_total": 10184.3,
+      "n_read": 94148416,
+      "n_after_golden_json": 92609925,
+      "n_after_trigger": 30943565,
+      "n_accepted": 9449024,
+      "n_exclusive": 9449024,
+      "n_rejected_version_b": 1112,
+      "n_electrons_removed": 233,
+      "n_guard_violations": 0
+    },
+    "SingleMuon": {
+      "files_expected": 152,
+      "files_complete": 152,
+      "files_missing": [],
+      "n_files_missing": 0,
+      "files_incomplete": [],
+      "n_files_incomplete": 0,
+      "complete": true,
+      "elapsed_sec_min": 85.2,
+      "elapsed_sec_max": 1183.8,
+      "elapsed_sec_total": 70894.3,
+      "n_read": 323952013,
+      "n_after_golden_json": 319083736,
+      "n_after_trigger": 203285172,
+      "n_accepted": 163146091,
+      "n_exclusive": 153802672,
+      "n_rejected_version_b": 4622,
+      "n_electrons_removed": 549,
+      "n_guard_violations": 0
+    },
+    "DoubleEG": {
+      "files_expected": 133,
+      "files_complete": 133,
+      "files_missing": [],
+      "n_files_missing": 0,
+      "files_incomplete": [],
+      "n_files_incomplete": 0,
+      "complete": true,
+      "elapsed_sec_min": 15.7,
+      "elapsed_sec_max": 231.9,
+      "elapsed_sec_total": 14719.2,
+      "n_read": 164185704,
+      "n_after_golden_json": 159107970,
+      "n_after_trigger": 17599145,
+      "n_accepted": 5154157,
+      "n_exclusive": 5153591,
+      "n_rejected_version_b": 621,
+      "n_electrons_removed": 48,
+      "n_guard_violations": 0
+    },
+    "MuonEG": {
+      "files_expected": 48,
+      "files_complete": 48,
+      "files_missing": [],
+      "n_files_missing": 0,
+      "files_incomplete": [],
+      "n_files_incomplete": 0,
+      "complete": true,
+      "elapsed_sec_min": 4.8,
+      "elapsed_sec_max": 365.3,
+      "elapsed_sec_total": 7906.8,
+      "n_read": 63091128,
+      "n_after_golden_json": 62385800,
+      "n_after_trigger": 10137471,
+      "n_accepted": 158215,
+      "n_exclusive": 13443,
+      "n_rejected_version_b": 1330,
+      "n_electrons_removed": 1328,
+      "n_guard_violations": 0
+    }
+  },
+  "settings_seen": {
+    "doubleeg_threshold_mode": [
+      "both"
+    ],
+    "emu_overlap_removal_dr_max": [
+      "0.12"
+    ],
+    "emu_overlap_removal_enabled": [
+      "True"
+    ]
+  },
+  "totals": {
+    "n_read": 645377261,
+    "n_after_golden_json": 633187431,
+    "n_after_trigger": 261965353,
+    "n_accepted": 177907487,
+    "n_exclusive": 168418730,
+    "n_rejected_version_b": 7685,
+    "n_electrons_removed": 2158,
+    "n_guard_violations": 0
+  },
+  "all_complete": true,
+  "n_files_expected_total": 390,
+  "n_files_complete_total": 390
+}
