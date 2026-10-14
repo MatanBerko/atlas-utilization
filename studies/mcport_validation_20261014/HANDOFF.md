@@ -77,10 +77,29 @@ for S in new:$R old:$RO; do /opt/pbs/bin/qsub -N mp_b_${S%%:*} -l mem=64gb,wallt
 
 ## Jobs
 
-(filled in after submission)
+| PBS id | array | what | status |
+|---|---|---|---|
+| `5223495[]` | 0-7 | A1 data per-file, NEW checkout | submitted 14 Oct 2026 |
+| `5223496[]` | 1-6 | B1 MC per-file, NEW checkout | submitted 14 Oct 2026 |
+| — | — | A2 data mini delivery; B2 two MC builds | submitted after A1 / B1 finish |
+
+Check: `ssh wipp-campus '/opt/pbs/bin/qstat -u berkom -t'`.
+
+### How to resume
+
+1. Wait for both arrays (each `.out` ends with `done` / `finished`).
+2. Submit A2 and B2 (commands above).
+3. Compare (analysis node, `nice -n 10`, `PY=$B/envs/atlas-pipeline/bin/python`, cwd `$W/inputs`):
+   - `$PY compare.py runs --a $B/work/rebuild_validation_20261014/new --b $W/data --out $W/results/data_runs_rebuild_vs_mcport.json`
+   - `$PY compare.py delivery --a $B/work/rebuild_validation_20261014/delivery_new --b $W/data_delivery --a-runs $B/work/rebuild_validation_20261014/new --b-runs $W/data --prefix rv8_four_dataset --out $W/results/data_delivery_rebuild_vs_mcport.json`
+   - `$PY mc_compare.py runs --a $W/mc_old/runs --b $W/mc_new/runs --jobs 67801:0,67801:1,35669:0,35669:1,37728:0,37728:1 --out $W/results/mc_runs_pilot_vs_new.json`
+   - `$PY mc_compare.py builds --a $W/mc_old/build_default --b $W/mc_new/build_default --a-runs $W/mc_old/runs --b-runs $W/mc_new/runs --a-scratch $W/mc_old/scratch_default --b-scratch $W/mc_new/scratch_default --out $W/results/mc_builds_old_vs_new.json`
+   - D3 data-neutrality on real shards: `$PY $R/studies/cms_mc_weights_v3/cluster/check_prune_regex_data_neutral.py --runs-dir $B/work/rebuild_validation_20261014/new --mapping $W/inputs/data_mapping.txt --scratch $W/prune_scratch --out $W/results/prune_regex_data_neutral.json`
+4. Plots, then archive the two checkouts (tar.gz, verify, remove only the uncompressed dirs).
 
 ## File count (`lfs quota -u berkom /storage`)
 
 | when | files |
 |---|---:|
 | before this task | 109,202 |
+| after checkouts + inputs + pilot copies | 111,378 |
