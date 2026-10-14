@@ -79,9 +79,15 @@ for S in new:$R old:$RO; do /opt/pbs/bin/qsub -N mp_b_${S%%:*} -l mem=64gb,wallt
 
 | PBS id | array | what | status |
 |---|---|---|---|
-| `5223495[]` | 0-7 | A1 data per-file, NEW checkout | submitted 14 Oct 2026 |
-| `5223496[]` | 1-6 | B1 MC per-file, NEW checkout | submitted 14 Oct 2026 |
-| — | — | A2 data mini delivery; B2 two MC builds | submitted after A1 / B1 finish |
+| `5223495[]` | 0-7 | A1 data per-file, NEW checkout | finished, 8/8 exit 0 |
+| `5223496[]` | 1-6 | B1 MC per-file, NEW checkout | finished, 6/6 exit 0 |
+| `5223509` | — | A2 data mini delivery | finished, exit 0 |
+| `5223610` | — | B2 MC build, NEW (`mp_b_new`) | submitted |
+| `5223611` | — | B2 MC build, OLD MC branch (`mp_b_old`) | submitted |
+
+The first B2 submission (without `-l io=25`) was refused by the queue
+("Job violates queue and/or server resource limits"); resubmitted with the
+pilot's own request: `-l select=1:ncpus=1:mem=64gb -l walltime=08:00:00 -l io=25`.
 
 Check: `ssh wipp-campus '/opt/pbs/bin/qstat -u berkom -t'`.
 
