@@ -1,0 +1,294 @@
+{
+  "what": "Which Fig. 4 panel of CMS-SMP-19-009 the jet study's read-off prediction/data ratios match (read-only check of the paper's own source files)",
+  "paper": "arXiv:2205.02872 (CMS-SMP-19-009)",
+  "source": "https://arxiv.org/e-print/2205.02872",
+  "fig4_caption": "The measured differential cross section as a function of inclusive (left) and exclusive (right) jet multiplicities.",
+  "study_values_from": "9927ca6:studies/cms_mc_weights_v3/jets/evidence/hepdata_smp19009.json key prediction_over_data",
+  "panels": {
+    "Figure_004-a": {
+      "x_axis_bin_labels_first": [
+        " 0",
+        "³",
+        " 1",
+        "³",
+        " 2",
+        "³",
+        " 3",
+        "³",
+        " 4",
+        "³",
+        " 5",
+        "³",
+        " 6",
+        "³",
+        " 7",
+        "³",
+        " 8",
+        "³",
+        " 0",
+        "³"
+      ],
+      "ratio_axis": {
+        "x_positions": {
+          "Measurement": 45.5822,
+          "Prediction": 30.6256
+        },
+        "numerator": "Prediction",
+        "denominator": "Measurement"
+      },
+      "prediction_over_measurement_extracted": {
+        "MG5_aMC NLO FxFx (<=2j NLO + PS)": {
+          "0": [
+            0.979
+          ],
+          "1": [
+            1.041
+          ],
+          "2": [
+            1.021
+          ],
+          "3": [
+            0.998
+          ],
+          "4": [
+            0.842
+          ],
+          "5": [
+            0.725
+          ],
+          "6": [
+            0.655
+          ],
+          "7": [
+            0.609
+          ],
+          "8": [
+            0.465
+          ]
+        },
+        "MG5_aMC LO MLM (<=4j LO + PS)": {
+          "0": [
+            0.936
+          ],
+          "1": [
+            0.888
+          ],
+          "2": [
+            0.838
+          ],
+          "3": [
+            0.876
+          ],
+          "4": [
+            0.947
+          ],
+          "5": [
+            0.961
+          ],
+          "6": [
+            0.979
+          ],
+          "7": [
+            0.99
+          ],
+          "8": [
+            0.659
+          ]
+        },
+        "GENEVA": {
+          "0": [
+            1.019
+          ],
+          "1": [
+            1.11
+          ],
+          "2": [
+            0.896
+          ],
+          "3": [
+            0.387
+          ],
+          "4": [
+            0.217,
+            0.235
+          ]
+        }
+      },
+      "comparison_with_jet_study": {
+        "MG5_aMC NLO FxFx (<=2j NLO + PS)": {
+          "diff_read_by_eye_minus_extracted": {
+            "0": -0.019,
+            "1": -0.001,
+            "2": -0.001,
+            "3": 0.042,
+            "4": 0.048,
+            "5": 0.035,
+            "6": 0.025,
+            "7": 0.071,
+            "8": -0.045
+          },
+          "max_abs_diff": 0.071
+        },
+        "MG5_aMC LO MLM (<=4j LO + PS)": {
+          "diff_read_by_eye_minus_extracted": {
+            "0": 0.014,
+            "1": 0.022,
+            "2": -0.028,
+            "3": -0.016,
+            "4": -0.007,
+            "5": -0.001,
+            "6": 0.011,
+            "7": 0.16,
+            "8": -0.149
+          },
+          "max_abs_diff": 0.16
+        }
+      }
+    },
+    "Figure_004-b": {
+      "x_axis_bin_labels_first": [
+        "= 0",
+        "= 1",
+        "= 2",
+        "= 3",
+        "= 4",
+        "= 5",
+        "= 6",
+        "= 7",
+        "= 8",
+        "= 0",
+        "= 1",
+        "= 2",
+        "= 3",
+        "= 4",
+        "= 5",
+        "= 6",
+        "= 7",
+        "= 8",
+        "= 0",
+        "= 1"
+      ],
+      "ratio_axis": {
+        "x_positions": {
+          "Measurement": 45.5822,
+          "Prediction": 30.6256
+        },
+        "numerator": "Prediction",
+        "denominator": "Measurement"
+      },
+      "prediction_over_measurement_extracted": {
+        "MG5_aMC NLO FxFx (<=2j NLO + PS)": {
+          "0": [
+            0.966
+          ],
+          "1": [
+            1.047
+          ],
+          "2": [
+            1.027
+          ],
+          "3": [
+            1.046
+          ],
+          "4": [
+            0.878
+          ],
+          "5": [
+            0.746
+          ],
+          "6": [
+            0.669
+          ],
+          "7": [
+            0.666
+          ],
+          "8": [
+            0.398
+          ]
+        },
+        "MG5_aMC LO MLM (<=4j LO + PS)": {
+          "0": [
+            0.945
+          ],
+          "1": [
+            0.903
+          ],
+          "2": [
+            0.827
+          ],
+          "3": [
+            0.854
+          ],
+          "4": [
+            0.942
+          ],
+          "5": [
+            0.956
+          ],
+          "6": [
+            0.976
+          ],
+          "7": [
+            1.12
+          ],
+          "8": [
+            0.509
+          ]
+        },
+        "GENEVA": {
+          "0": [
+            1.0
+          ],
+          "1": [
+            1.172
+          ],
+          "2": [
+            1.037
+          ],
+          "3": [
+            0.439
+          ],
+          "4": [
+            0.241,
+            0.25
+          ]
+        }
+      },
+      "comparison_with_jet_study": {
+        "MG5_aMC NLO FxFx (<=2j NLO + PS)": {
+          "diff_read_by_eye_minus_extracted": {
+            "0": -0.006,
+            "1": -0.007,
+            "2": -0.007,
+            "3": -0.006,
+            "4": 0.012,
+            "5": 0.014,
+            "6": 0.011,
+            "7": 0.014,
+            "8": 0.022
+          },
+          "max_abs_diff": 0.022
+        },
+        "MG5_aMC LO MLM (<=4j LO + PS)": {
+          "diff_read_by_eye_minus_extracted": {
+            "0": 0.005,
+            "1": 0.007,
+            "2": -0.017,
+            "3": 0.006,
+            "4": -0.002,
+            "5": 0.004,
+            "6": 0.014,
+            "7": 0.03,
+            "8": 0.001
+          },
+          "max_abs_diff": 0.03
+        }
+      }
+    }
+  },
+  "panel_matching_the_study_values": {
+    "MG5_aMC NLO FxFx (<=2j NLO + PS)": "Figure_004-b",
+    "MG5_aMC LO MLM (<=4j LO + PS)": "Figure_004-b"
+  },
+  "method_note": "Ratios are the centres of the drawn uncertainty boxes, converted with the 0.5/1.0/1.5 tick positions; good to about 0.001 in ratio."
+}
