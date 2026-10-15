@@ -1,0 +1,142 @@
+{
+  "what": "sigma_eff old vs new, per record. Arithmetic only; no cluster re-run.",
+  "old": "studies/cms_mc_weights_v3/cms_mc_normalisation_v3.json at 5906dcf8591f7b9bd83a4c36e41cc03b59b9f39a",
+  "new": "studies/cms_mc_weights_v3/cms_mc_normalisation_v3.json (v4 decisions, 15 Oct 2026)",
+  "records": [
+    {
+      "record": 35631,
+      "physics_short": "DYJetsToLL_M-10to50_amcatnloFXFX",
+      "in_full_run": true,
+      "old_sigma_eff_pb": null,
+      "new_sigma_eff_pb": 18610.0,
+      "ratio_new_over_old": null,
+      "note": "not in the old registry (was excluded)"
+    },
+    {
+      "record": 35669,
+      "physics_short": "DYJetsToLL_M-50_amcatnloFXFX",
+      "in_full_run": true,
+      "old_sigma_eff_pb": 5765.4,
+      "new_sigma_eff_pb": 5765.4,
+      "ratio_new_over_old": 1.0,
+      "note": null
+    },
+    {
+      "record": 35671,
+      "physics_short": "DYJetsToLL_M-50_madgraphMLM",
+      "in_full_run": false,
+      "old_sigma_eff_pb": 5765.4,
+      "new_sigma_eff_pb": 5765.4,
+      "ratio_new_over_old": 1.0,
+      "note": null
+    },
+    {
+      "record": 37728,
+      "physics_short": "GluGluHToZZTo4L_M125",
+      "in_full_run": true,
+      "old_sigma_eff_pb": 0.013447,
+      "new_sigma_eff_pb": 0.013335,
+      "ratio_new_over_old": 0.9916710046850598,
+      "note": null
+    },
+    {
+      "record": 42407,
+      "physics_short": "LQToBMu_M-400_pair",
+      "in_full_run": false,
+      "old_sigma_eff_pb": 2.276,
+      "new_sigma_eff_pb": 2.276,
+      "ratio_new_over_old": 1.0,
+      "note": null
+    },
+    {
+      "record": 64839,
+      "physics_short": "ST_tW_antitop_5f_NoFullyHadronicDecays",
+      "in_full_run": true,
+      "old_sigma_eff_pb": 19.56,
+      "new_sigma_eff_pb": 19.56,
+      "ratio_new_over_old": 1.0,
+      "note": null
+    },
+    {
+      "record": 64895,
+      "physics_short": "ST_tW_top_5f_NoFullyHadronicDecays",
+      "in_full_run": true,
+      "old_sigma_eff_pb": 19.56,
+      "new_sigma_eff_pb": 19.56,
+      "ratio_new_over_old": 1.0,
+      "note": null
+    },
+    {
+      "record": 67801,
+      "physics_short": "TTTo2L2Nu",
+      "in_full_run": true,
+      "old_sigma_eff_pb": 89.28,
+      "new_sigma_eff_pb": 89.28,
+      "ratio_new_over_old": 1.0,
+      "note": null
+    },
+    {
+      "record": 67993,
+      "physics_short": "TTToSemiLeptonic",
+      "in_full_run": true,
+      "old_sigma_eff_pb": 367.86,
+      "new_sigma_eff_pb": 367.86,
+      "ratio_new_over_old": 1.0,
+      "note": null
+    },
+    {
+      "record": 68073,
+      "physics_short": "TTWJetsToLNu",
+      "in_full_run": true,
+      "old_sigma_eff_pb": 0.2043,
+      "new_sigma_eff_pb": 0.2151,
+      "ratio_new_over_old": 1.052863436123348,
+      "note": null
+    },
+    {
+      "record": 68187,
+      "physics_short": "TTZToLLNuNu_M-10",
+      "in_full_run": true,
+      "old_sigma_eff_pb": 0.2529,
+      "new_sigma_eff_pb": 0.2439,
+      "ratio_new_over_old": 0.9644128113879004,
+      "note": null
+    },
+    {
+      "record": 68847,
+      "physics_short": "VBF_HToZZTo4L_M125",
+      "in_full_run": true,
+      "old_sigma_eff_pb": null,
+      "new_sigma_eff_pb": 0.0010382,
+      "ratio_new_over_old": null,
+      "note": "not in the old registry (was excluded)"
+    },
+    {
+      "record": 72676,
+      "physics_short": "WWTo2L2Nu",
+      "in_full_run": true,
+      "old_sigma_eff_pb": 12.178,
+      "new_sigma_eff_pb": 12.708,
+      "ratio_new_over_old": 1.0435211036294958,
+      "note": null
+    },
+    {
+      "record": 72752,
+      "physics_short": "WZTo3LNu_amcatnloFXFX",
+      "in_full_run": true,
+      "old_sigma_eff_pb": 5.218,
+      "new_sigma_eff_pb": 5.787,
+      "ratio_new_over_old": 1.109045611345343,
+      "note": null
+    },
+    {
+      "record": 75589,
+      "physics_short": "ZZTo4L",
+      "in_full_run": true,
+      "old_sigma_eff_pb": 1.256,
+      "new_sigma_eff_pb": 1.544,
+      "ratio_new_over_old": 1.2292993630573248,
+      "note": null
+    }
+  ]
+}
