@@ -54,7 +54,7 @@ from studies.cms_mc_weights_v3.deliver import build_mc_delivery as B  # noqa: E4
 
 RESULTS: list[tuple[str, bool, str]] = []
 RECORD = "37728"          # in the registry, postVFP
-SIGMA_EFF_PB = 0.013447   # the registry's value for 37728
+SIGMA_EFF_PB = 0.013335   # the registry's value for 37728 (v4 decision, 15 Oct 2026)
 GOOD_SIGMA_W = 1.15813237e5
 SKIMMED_SIGMA_W = 9.0e4   # a file whose events sum to far less than its Runs total
 

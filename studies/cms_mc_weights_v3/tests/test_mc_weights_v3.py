@@ -386,8 +386,9 @@ def test_negative_bin_inventory() -> None:
 def test_registry_closure() -> None:
     reg = json.loads(B.REGISTRY_PATH.read_text(encoding="utf-8"))
     records = reg["records"]
-    check("registry has the 12 v2 records plus 37728",
-          len(records) == 13 and "37728" in records, f"{len(records)} records")
+    check("registry has the 12 v2 records plus 37728, 35631, 68847",
+          len(records) == 15 and {"37728", "35631", "68847"} <= set(records),
+          f"{len(records)} records")
     bad_k = [r for r, v in records.items()
              if v["k_factor"] != 1.0 or v["gen_filt_eff"] != 1.0]
     check("registry pins k_factor and gen_filt_eff to 1.0 everywhere",
@@ -403,13 +404,19 @@ def test_registry_closure() -> None:
           reg["target_luminosity_fb"] == 16.393)
 
     # 37728: sigma_eff must be the reference sigma TIMES the H->4l BR
+    # (v4 decision, 15 Oct 2026: 48.58 pb x 2.745e-4, both at mH = 125.00 GeV,
+    # decided value 0.013335 pb -- the product rounded to 5 significant figures)
     r = records["37728"]
     prov = r["provenance"]
-    expect = prov["reference_sigma_pb"] * prov["br_value"]
+    inputs = r["decision_2026_10_15"]["inputs"]
+    expect = inputs["production_sigma_pb"] * inputs["branching_ratio"]
     check("37728 sigma_eff == reference sigma x BR(H->4l incl. tau)",
-          abs(r["cross_section_pb"] - expect) < 5e-7 * max(1.0, expect),
-          f"{r['cross_section_pb']} vs {prov['reference_sigma_pb']} x "
-          f"{prov['br_value']} = {expect}")
+          r["cross_section_pb"] == 0.013335
+          and inputs["production_sigma_pb"] == 48.58
+          and inputs["branching_ratio"] == 2.745e-4
+          and f"{expect:.5g}" == f"{r['cross_section_pb']:.5g}",
+          f"{r['cross_section_pb']} vs {inputs['production_sigma_pb']} x "
+          f"{inputs['branching_ratio']} = {expect}")
     check("37728 carries its k-factor in provenance only, marked DO NOT APPLY",
           "k_factor_from_table_DO_NOT_APPLY" in prov
           and prov["k_factor_from_table_DO_NOT_APPLY"] == 1.683)
