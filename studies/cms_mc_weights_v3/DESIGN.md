@@ -1158,6 +1158,28 @@ the Runs trees of the files that succeeded (D4).
 3. **e-μ spectrum** — the MuonEG channel, whose muon leg is unmatchable, so its
    data/MC behaviour is the least constrained of the four.
 
+### D11 — Pileup decision (15 Oct 2026)
+
+**Pileup weights NOT applied (Matan, 15 Oct 2026), to align with ATLAS.**
+Upstream PR #35 (aesenc, head `fa63544`, unmerged as of 15 Oct) computes
+w = genWeight × σ × 1000 × k × ε × L / Σw with no pileup weight
+(`services/calculations/mc_weights.py`, `domain/metadata.py:46` on that head).
+Upstream master uses `RandomRunNumber` only to assign the trigger year
+(`services/parsing/schemas.py:108-110`, `services/parsing/file_parser.py:284`).
+`Pileup_nTrueInt` remains stored (`_mcraw_puntrue`), so this can be revisited
+without re-processing; revisit if ATLAS adds pileup weighting. The CMS L1
+prefiring weight stays applied (CMS-specific).
+
+This replaces the D9 remark that pileup reweighting is "the most likely next
+correction": it stays *possible* at build time, but it is not applied.
+
+What the builder does today (read from the code on
+`feature/cms-mc-xsec-update-20261015`, no code changed):
+`deliver/build_mc_delivery.py::write_mcw_siblings` computes
+`w = g * p * norm` from the `_mcraw_genw` (genWeight) and `_mcraw_l1pf`
+(`L1PreFiringWeight_Nom`) siblings only, and refuses to run if either is
+missing. Nothing under `deliver/` reads `_mcraw_puntrue` or any pileup weight.
+
 ---
 
 ## Item-by-item comparison: this design vs PR #35
