@@ -1,0 +1,564 @@
+{
+  "what": "Live read-only cross-check of the v4 cross-section decisions against the CERN Open Data portal and the RazorAnalyzer table.",
+  "generated_utc": "2026-10-15T06:26:47.774707+00:00",
+  "decisions_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+  "api": "https://opendata.cern.ch/api/records/{0}",
+  "records": [
+    {
+      "nano_recid": 67801,
+      "physics_short": "TTTo2L2Nu",
+      "nano_title": "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "67800",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 67800,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 67800,
+      "mini_title": "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "1.0",
+        "neg_weight_fraction": "4.018e-03",
+        "total_value": "6.871e+02",
+        "total_value_uncertainty": "5.174e-01"
+      },
+      "total_value_pb": 687.1,
+      "total_value_uncertainty_pb": 0.5174,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 1.0,
+      "quoted_generator_pb": 687.1,
+      "generator_value_matches": true,
+      "decided_cross_section_pb": 89.28,
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 67993,
+      "physics_short": "TTToSemiLeptonic",
+      "nano_title": "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "67992",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 67992,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 67992,
+      "mini_title": "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "1.0",
+        "neg_weight_fraction": "4.017e-03",
+        "total_value": "6.871e+02",
+        "total_value_uncertainty": "5.174e-01"
+      },
+      "total_value_pb": 687.1,
+      "total_value_uncertainty_pb": 0.5174,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 1.0,
+      "quoted_generator_pb": 687.1,
+      "generator_value_matches": true,
+      "decided_cross_section_pb": 367.86,
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 35669,
+      "physics_short": "DYJetsToLL_M-50_amcatnloFXFX",
+      "nano_title": "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "35668",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 35668,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 35668,
+      "mini_title": "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "0.4",
+        "neg_weight_fraction": "1.636e-01",
+        "total_value": "6.422e+03",
+        "total_value_uncertainty": "1.129e+01"
+      },
+      "total_value_pb": 6422.0,
+      "total_value_uncertainty_pb": 11.29,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 0.4,
+      "quoted_generator_pb": 6422.0,
+      "generator_value_matches": true,
+      "decided_cross_section_pb": 5765.4,
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 35631,
+      "physics_short": "DYJetsToLL_M-10to50_amcatnloFXFX",
+      "nano_title": "/DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "35630",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 35630,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 35630,
+      "mini_title": "/DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "0.6",
+        "neg_weight_fraction": "1.251e-01",
+        "total_value": "2.048e+04",
+        "total_value_uncertainty": "1.550e+01"
+      },
+      "total_value_pb": 20480.0,
+      "total_value_uncertainty_pb": 15.5,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 0.6,
+      "quoted_generator_pb": 20480.0,
+      "generator_value_matches": true,
+      "decided_cross_section_pb": 18610,
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 64895,
+      "physics_short": "ST_tW_top_5f_NoFullyHadronicDecays",
+      "nano_title": "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "64894",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 64894,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 64894,
+      "mini_title": "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "1.0",
+        "neg_weight_fraction": "2.048e-05",
+        "total_value": "3.245e+01",
+        "total_value_uncertainty": "2.338e-02"
+      },
+      "total_value_pb": 32.45,
+      "total_value_uncertainty_pb": 0.02338,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 1.0,
+      "quoted_generator_pb": 32.45,
+      "generator_value_matches": true,
+      "decided_cross_section_pb": 19.56,
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 64839,
+      "physics_short": "ST_tW_antitop_5f_NoFullyHadronicDecays",
+      "nano_title": "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "64838",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 64838,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 64838,
+      "mini_title": "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "1.0",
+        "neg_weight_fraction": "2.463e-05",
+        "total_value": "3.251e+01",
+        "total_value_uncertainty": "2.346e-02"
+      },
+      "total_value_pb": 32.51,
+      "total_value_uncertainty_pb": 0.02346,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 1.0,
+      "quoted_generator_pb": 32.51,
+      "generator_value_matches": true,
+      "decided_cross_section_pb": 19.56,
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 72676,
+      "physics_short": "WWTo2L2Nu",
+      "nano_title": "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "72675",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 72675,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 72675,
+      "mini_title": "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "1.0",
+        "neg_weight_fraction": "1.910e-03",
+        "total_value": "1.109e+01",
+        "total_value_uncertainty": "7.040e-03"
+      },
+      "total_value_pb": 11.09,
+      "total_value_uncertainty_pb": 0.00704,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 1.0,
+      "quoted_generator_pb": 11.09,
+      "generator_value_matches": true,
+      "decided_cross_section_pb": 12.708,
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 72752,
+      "physics_short": "WZTo3LNu_amcatnloFXFX",
+      "nano_title": "/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "72751",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 72751,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 72751,
+      "mini_title": "/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "0.6",
+        "neg_weight_fraction": "1.701e-01",
+        "total_value": "5.218e+00",
+        "total_value_uncertainty": "5.017e-03"
+      },
+      "total_value_pb": 5.218,
+      "total_value_uncertainty_pb": 0.005017,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 0.6,
+      "quoted_generator_pb": 5.218,
+      "generator_value_matches": true,
+      "decided_cross_section_pb": 5.787,
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 75589,
+      "physics_short": "ZZTo4L",
+      "nano_title": "/ZZTo4L_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "75588",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 75588,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 75588,
+      "mini_title": "/ZZTo4L_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "1.0",
+        "neg_weight_fraction": "5.057e-03",
+        "total_value": "1.325e+00",
+        "total_value_uncertainty": "1.220e-03"
+      },
+      "total_value_pb": 1.325,
+      "total_value_uncertainty_pb": 0.00122,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 1.0,
+      "quoted_generator_pb": 1.325,
+      "generator_value_matches": true,
+      "decided_cross_section_pb": 1.544,
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 68187,
+      "physics_short": "TTZToLLNuNu_M-10",
+      "nano_title": "/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "68186",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 68186,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 68186,
+      "mini_title": "/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "1.0",
+        "neg_weight_fraction": "2.538e-01",
+        "total_value": "2.439e-01",
+        "total_value_uncertainty": "2.995e-04"
+      },
+      "total_value_pb": 0.2439,
+      "total_value_uncertainty_pb": 0.0002995,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 1.0,
+      "quoted_generator_pb": 0.2439,
+      "generator_value_matches": true,
+      "decided_cross_section_pb": 0.2439,
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 68073,
+      "physics_short": "TTWJetsToLNu",
+      "nano_title": "/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "68072",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 68072,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 68072,
+      "mini_title": "/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "0.6",
+        "neg_weight_fraction": "2.281e-01",
+        "total_value": "2.151e-01",
+        "total_value_uncertainty": "1.129e-03"
+      },
+      "total_value_pb": 0.2151,
+      "total_value_uncertainty_pb": 0.001129,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 0.6,
+      "quoted_generator_pb": 0.2151,
+      "generator_value_matches": true,
+      "decided_cross_section_pb": 0.2151,
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 37728,
+      "physics_short": "GluGluHToZZTo4L_M125",
+      "nano_title": "/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "37727",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 37727,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 37727,
+      "mini_title": "/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "1.0",
+        "neg_weight_fraction": "5.184e-03",
+        "total_value": "2.887e+01",
+        "total_value_uncertainty": "2.027e-02"
+      },
+      "total_value_pb": 28.87,
+      "total_value_uncertainty_pb": 0.02027,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 1.0,
+      "quoted_generator_pb": 28.87,
+      "generator_value_matches": true,
+      "decided_cross_section_pb": 0.013335,
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 68847,
+      "physics_short": "VBF_HToZZTo4L_M125",
+      "nano_title": "/VBF_HToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "68846",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 68846,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 68846,
+      "mini_title": "/VBF_HToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "1.0",
+        "neg_weight_fraction": "6.888e-04",
+        "total_value": "3.935e+00",
+        "total_value_uncertainty": "1.774e-02"
+      },
+      "total_value_pb": 3.935,
+      "total_value_uncertainty_pb": 0.01774,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 1.0,
+      "quoted_generator_pb": 3.935,
+      "generator_value_matches": true,
+      "decided_cross_section_pb": 0.0010382,
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 35671,
+      "physics_short": "DYJetsToLL_M-50_madgraphMLM",
+      "nano_title": "/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "35670",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 35670,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 35670,
+      "mini_title": "/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "0.4",
+        "neg_weight_fraction": "0.000e+00",
+        "total_value": "5.396e+03",
+        "total_value_uncertainty": "1.314e+00"
+      },
+      "total_value_pb": 5396.0,
+      "total_value_uncertainty_pb": 1.314,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 0.4,
+      "quoted_generator_pb": null,
+      "decided_cross_section_pb": 5765.4,
+      "in_full_run": false
+    },
+    {
+      "nano_recid": 42407,
+      "physics_short": "LQToBMu_M-400_pair",
+      "nano_title": "/LQToBMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "42406",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": 42406,
+      "relation_points_to_expected_mini": true,
+      "mini_recid": 42406,
+      "mini_title": "/LQToBMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+      "cross_section_raw": null,
+      "quoted_generator_pb": null,
+      "decided_cross_section_pb": 2.276,
+      "in_full_run": false
+    },
+    {
+      "nano_recid": 35633,
+      "physics_short": "DYJetsToLL_M-10to50_madgraphMLM (excluded)",
+      "nano_title": "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "relations": [
+        {
+          "description": "The corresponding MINIAODSIM dataset:",
+          "recid": "35632",
+          "type": "isParentOf"
+        }
+      ],
+      "expected_mini_recid": null,
+      "relation_points_to_expected_mini": false,
+      "mini_recid": 35632,
+      "mini_title": "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+      "cross_section_raw": {
+        "filter_efficiency": "1.000e+00",
+        "matching_efficiency": "0.8",
+        "neg_weight_fraction": "0.000e+00",
+        "total_value": "1.588e+04",
+        "total_value_uncertainty": "2.497e+00"
+      },
+      "total_value_pb": 15880.0,
+      "total_value_uncertainty_pb": 2.497,
+      "filter_efficiency": 1.0,
+      "matching_efficiency": 0.8,
+      "quoted_generator_pb": null
+    }
+  ],
+  "razoranalyzer": {
+    "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+    "sha256": "1c54206a2816b88d1aa092b9f5b9b2fc145d4210118168f8e6c9b9c416aa663c",
+    "n_lines": 506,
+    "lines": {
+      "35669": {
+        "expected_tokens": [
+          "DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8",
+          "1921.8*3"
+        ],
+        "found": [
+          {
+            "line_number": 90,
+            "line_verbatim": "DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8                          1921.8*3",
+            "tokens": [
+              "DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8",
+              "1921.8*3"
+            ],
+            "tokens_match": true,
+            "under_section": "#13 TeV Spring 15 MC"
+          }
+        ],
+        "verdict": "MATCH"
+      },
+      "35631": {
+        "expected_tokens": [
+          "DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8",
+          "18610.0"
+        ],
+        "found": [
+          {
+            "line_number": 80,
+            "line_verbatim": "DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8                     18610.0",
+            "tokens": [
+              "DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8",
+              "18610.0"
+            ],
+            "tokens_match": true,
+            "under_section": "#13 TeV Spring 15 MC"
+          }
+        ],
+        "verdict": "MATCH"
+      }
+    }
+  },
+  "summary": {
+    "n_records_checked": 16,
+    "records_with_relation_or_generator_mismatch": [],
+    "records_without_portal_cross_section": [
+      42407
+    ],
+    "razor_lines": {
+      "35669": "MATCH",
+      "35631": "MATCH"
+    },
+    "matching_efficiency_by_record": {
+      "67801": 1.0,
+      "67993": 1.0,
+      "35669": 0.4,
+      "35631": 0.6,
+      "64895": 1.0,
+      "64839": 1.0,
+      "72676": 1.0,
+      "72752": 0.6,
+      "75589": 1.0,
+      "68187": 1.0,
+      "68073": 0.6,
+      "37728": 1.0,
+      "68847": 1.0,
+      "35671": 0.4,
+      "42407": null,
+      "35633": 0.8
+    },
+    "matching_efficiency_note": "Reported only. Whether the portal total_value already includes the matching efficiency is an OPEN question; nothing was decided or changed here."
+  }
+}
