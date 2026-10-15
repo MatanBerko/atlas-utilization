@@ -1,14 +1,16 @@
 # HANDOFF — overlap-convention study (15 Oct 2026)
 
-**Status: jobs running.** PBS array `5227772[]` (8 subjobs, one per file),
-submitted from the pinned checkout at `440a7aa`.
+**Status: COMPLETE.** PBS array `5227772[]` (8 subjobs, one per file) ran
+from the pinned checkout at `440a7aa`; all 8 exit 0. The merge ran from
+`e3dce38`. Results, plots and REPORT.md are on this branch.
 
 | | |
 |---|---|
 | checkout | `/storage/agrp/berkom/atlas-utilization/checkouts/overlapconv_20261015/repo` (`440a7aa`) |
 | work dir | `/storage/agrp/berkom/atlas-utilization/work/overlapconv_20261015/` (`out/`, `logs/`, `smoke/`) |
 | route | `wipp-home` (`wipp-campus` timed out all day) |
-| file count before | 109,592 (`lfs quota -u berkom /storage`) |
+| file count before / after | 109,592 → 109,634 (+42) |
+| checkout | archived as `checkouts/overlapconv_20261015/repo.tar.gz` (256 entries, verified); uncompressed checkout removed |
 
 Submit command (from the checkout):
 
