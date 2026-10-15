@@ -161,8 +161,10 @@ def production_check(per_file_json, ref_dir):
         row["reference"] = path
         row["reference_git_commit"] = m.get("git_commit")
         for pop, key in (("inclusive", "inclusive_orderA"), ("exclusive", "exclusive_orderA")):
-            mine = {k: v for k, v in j["e_categories"][key]["V1"].items() if k != REJECTED}
-            theirs = r4[f"final_state_label_event_counts_{pop}"]
+            # zero-count labels are dropped on both sides: the production's
+            # exclusive table also lists labels that have no exclusive events
+            mine = {k: v for k, v in j["e_categories"][key]["V1"].items() if k != REJECTED and v}
+            theirs = {k: v for k, v in r4[f"final_state_label_event_counts_{pop}"].items() if v}
             row[f"{pop}_identical"] = (mine == theirs)
             row[f"{pop}_n_events_mine"] = sum(mine.values())
             row[f"{pop}_n_events_production"] = sum(theirs.values())
