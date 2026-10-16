@@ -1,0 +1,380 @@
+{
+  "what": "Step D: cost/benefit of the offline threshold on the matched SingleElectron electron",
+  "candidate_rule": "HLT_Ele27_WPTight_Gsf fired AND >=1 selected electron (after the dR<0.12 overlap removal) matched dR<0.1 to an id-11 bit-2 TrigObj with TrigObj_pt >= 27 AND that electron's offline pT > T",
+  "measurement_only": "this rule is evaluated here for measurement; it is NOT implemented in production and no threshold is chosen",
+  "n_files": 151,
+  "n_events_ele27_fired": 180509973,
+  "n_accepted_by_any_existing_dataset": 5017895,
+  "four_dataset_acceptance_counts_on_the_ele27_population": {
+    "DoubleMuon": 1646,
+    "SingleMuon": 126359,
+    "DoubleEG": 4884232,
+    "MuonEG": 111752
+  },
+  "existing_delivery_final_states": 103,
+  "min_events_per_final_state": 100,
+  "histogram_projection_method": "number of the 186 mass combinations each new final state satisfies, via the shared physics_calcs.is_finalstate_contain_combination; an UPPER BOUND -- the real delivery's post-processing can only remove histograms",
+  "e_trigger_guard_violations": 0,
+  "table": [
+    {
+      "threshold_gev": 27.0,
+      "a_events_accepted": 111511917,
+      "a_percent_lost_vs_27": 0.0,
+      "b_gain_not_accepted_by_existing": 106514265,
+      "b_gain_percent_of_T27_gain": 100.0,
+      "b_gain_percent_of_own_accepted": 95.518,
+      "c_gain_version_b_kept": 106512236,
+      "c_gain_version_b_rejected": 2029,
+      "c_n_final_states_total": 127,
+      "c_n_final_states_ge100": 64,
+      "c_n_final_states_ge100_not_in_current_delivery": 35,
+      "c_projected_new_histograms": 561,
+      "c_new_final_states_top10": [
+        {
+          "final_state": "1e_0m_0j_0b",
+          "events": 68280215,
+          "combinations_satisfied": 0
+        },
+        {
+          "final_state": "1e_0m_1j_0b",
+          "events": 25891912,
+          "combinations_satisfied": 1
+        },
+        {
+          "final_state": "1e_0m_2j_0b",
+          "events": 5913247,
+          "combinations_satisfied": 4
+        },
+        {
+          "final_state": "1e_0m_0j_1b",
+          "events": 1428354,
+          "combinations_satisfied": 1
+        },
+        {
+          "final_state": "1e_0m_3j_0b",
+          "events": 1361020,
+          "combinations_satisfied": 6
+        },
+        {
+          "final_state": "1e_0m_1j_1b",
+          "events": 797514,
+          "combinations_satisfied": 4
+        },
+        {
+          "final_state": "1e_0m_2j_1b",
+          "events": 391388,
+          "combinations_satisfied": 11
+        },
+        {
+          "final_state": "1e_0m_4j_0b",
+          "events": 313361,
+          "combinations_satisfied": 7
+        },
+        {
+          "final_state": "1e_0m_3j_1b",
+          "events": 173806,
+          "combinations_satisfied": 14
+        },
+        {
+          "final_state": "1e_0m_1j_2b",
+          "events": 137574,
+          "combinations_satisfied": 11
+        }
+      ],
+      "d_eff_barrel_first_1gev": 0.3478,
+      "d_eff_barrel_first_1gev_counts": [
+        27436,
+        78885
+      ],
+      "d_eff_barrel_T_to_T5": 0.5599,
+      "d_eff_barrel_T_to_T5_counts": [
+        291304,
+        520245
+      ],
+      "d_eff_barrel_plateau": 0.8326,
+      "d_eff_over_plateau_barrel_T_to_T5": 0.6725,
+      "d_eff_endcap_first_1gev": 0.1483,
+      "d_eff_endcap_first_1gev_counts": [
+        4806,
+        32416
+      ],
+      "d_eff_endcap_T_to_T5": 0.3138,
+      "d_eff_endcap_T_to_T5_counts": [
+        65160,
+        207644
+      ],
+      "d_eff_endcap_plateau": 0.7156,
+      "d_eff_over_plateau_endcap_T_to_T5": 0.4385
+    },
+    {
+      "threshold_gev": 30.0,
+      "a_events_accepted": 101715829,
+      "a_percent_lost_vs_27": 8.785,
+      "b_gain_not_accepted_by_existing": 96723260,
+      "b_gain_percent_of_T27_gain": 90.808,
+      "b_gain_percent_of_own_accepted": 95.092,
+      "c_gain_version_b_kept": 96721294,
+      "c_gain_version_b_rejected": 1966,
+      "c_n_final_states_total": 127,
+      "c_n_final_states_ge100": 63,
+      "c_n_final_states_ge100_not_in_current_delivery": 35,
+      "c_projected_new_histograms": 561,
+      "c_new_final_states_top10": [
+        {
+          "final_state": "1e_0m_0j_0b",
+          "events": 61040665,
+          "combinations_satisfied": 0
+        },
+        {
+          "final_state": "1e_0m_1j_0b",
+          "events": 24062623,
+          "combinations_satisfied": 1
+        },
+        {
+          "final_state": "1e_0m_2j_0b",
+          "events": 5594317,
+          "combinations_satisfied": 4
+        },
+        {
+          "final_state": "1e_0m_0j_1b",
+          "events": 1315651,
+          "combinations_satisfied": 1
+        },
+        {
+          "final_state": "1e_0m_3j_0b",
+          "events": 1302927,
+          "combinations_satisfied": 6
+        },
+        {
+          "final_state": "1e_0m_1j_1b",
+          "events": 753988,
+          "combinations_satisfied": 4
+        },
+        {
+          "final_state": "1e_0m_2j_1b",
+          "events": 375589,
+          "combinations_satisfied": 11
+        },
+        {
+          "final_state": "1e_0m_4j_0b",
+          "events": 302238,
+          "combinations_satisfied": 7
+        },
+        {
+          "final_state": "1e_0m_3j_1b",
+          "events": 167995,
+          "combinations_satisfied": 14
+        },
+        {
+          "final_state": "1e_0m_1j_2b",
+          "events": 132520,
+          "combinations_satisfied": 11
+        }
+      ],
+      "d_eff_barrel_first_1gev": 0.6231,
+      "d_eff_barrel_first_1gev_counts": [
+        72571,
+        116475
+      ],
+      "d_eff_barrel_T_to_T5": 0.6976,
+      "d_eff_barrel_T_to_T5_counts": [
+        524007,
+        751140
+      ],
+      "d_eff_barrel_plateau": 0.8326,
+      "d_eff_over_plateau_barrel_T_to_T5": 0.8379,
+      "d_eff_endcap_first_1gev": 0.3715,
+      "d_eff_endcap_first_1gev_counts": [
+        17103,
+        46043
+      ],
+      "d_eff_endcap_T_to_T5": 0.4521,
+      "d_eff_endcap_T_to_T5_counts": [
+        128019,
+        283140
+      ],
+      "d_eff_endcap_plateau": 0.7156,
+      "d_eff_over_plateau_endcap_T_to_T5": 0.6318
+    },
+    {
+      "threshold_gev": 32.0,
+      "a_events_accepted": 92523205,
+      "a_percent_lost_vs_27": 17.028,
+      "b_gain_not_accepted_by_existing": 87617464,
+      "b_gain_percent_of_T27_gain": 82.259,
+      "b_gain_percent_of_own_accepted": 94.698,
+      "c_gain_version_b_kept": 87615560,
+      "c_gain_version_b_rejected": 1904,
+      "c_n_final_states_total": 127,
+      "c_n_final_states_ge100": 63,
+      "c_n_final_states_ge100_not_in_current_delivery": 35,
+      "c_projected_new_histograms": 561,
+      "c_new_final_states_top10": [
+        {
+          "final_state": "1e_0m_0j_0b",
+          "events": 54250399,
+          "combinations_satisfied": 0
+        },
+        {
+          "final_state": "1e_0m_1j_0b",
+          "events": 22374504,
+          "combinations_satisfied": 1
+        },
+        {
+          "final_state": "1e_0m_2j_0b",
+          "events": 5295238,
+          "combinations_satisfied": 4
+        },
+        {
+          "final_state": "1e_0m_3j_0b",
+          "events": 1246875,
+          "combinations_satisfied": 6
+        },
+        {
+          "final_state": "1e_0m_0j_1b",
+          "events": 1217881,
+          "combinations_satisfied": 1
+        },
+        {
+          "final_state": "1e_0m_1j_1b",
+          "events": 714695,
+          "combinations_satisfied": 4
+        },
+        {
+          "final_state": "1e_0m_2j_1b",
+          "events": 360882,
+          "combinations_satisfied": 11
+        },
+        {
+          "final_state": "1e_0m_4j_0b",
+          "events": 291262,
+          "combinations_satisfied": 7
+        },
+        {
+          "final_state": "1e_0m_3j_1b",
+          "events": 162408,
+          "combinations_satisfied": 14
+        },
+        {
+          "final_state": "1e_0m_1j_2b",
+          "events": 127749,
+          "combinations_satisfied": 11
+        }
+      ],
+      "d_eff_barrel_first_1gev": 0.7015,
+      "d_eff_barrel_first_1gev_counts": [
+        104994,
+        149675
+      ],
+      "d_eff_barrel_T_to_T5": 0.7414,
+      "d_eff_barrel_T_to_T5_counts": [
+        782245,
+        1055059
+      ],
+      "d_eff_barrel_plateau": 0.8326,
+      "d_eff_over_plateau_barrel_T_to_T5": 0.8905,
+      "d_eff_endcap_first_1gev": 0.4499,
+      "d_eff_endcap_first_1gev_counts": [
+        25402,
+        56467
+      ],
+      "d_eff_endcap_T_to_T5": 0.5173,
+      "d_eff_endcap_T_to_T5_counts": [
+        195345,
+        377622
+      ],
+      "d_eff_endcap_plateau": 0.7156,
+      "d_eff_over_plateau_endcap_T_to_T5": 0.7229
+    },
+    {
+      "threshold_gev": 35.0,
+      "a_events_accepted": 77115261,
+      "a_percent_lost_vs_27": 30.846,
+      "b_gain_not_accepted_by_existing": 72446044,
+      "b_gain_percent_of_T27_gain": 68.015,
+      "b_gain_percent_of_own_accepted": 93.945,
+      "c_gain_version_b_kept": 72444249,
+      "c_gain_version_b_rejected": 1795,
+      "c_n_final_states_total": 127,
+      "c_n_final_states_ge100": 62,
+      "c_n_final_states_ge100_not_in_current_delivery": 35,
+      "c_projected_new_histograms": 561,
+      "c_new_final_states_top10": [
+        {
+          "final_state": "1e_0m_0j_0b",
+          "events": 42723254,
+          "combinations_satisfied": 0
+        },
+        {
+          "final_state": "1e_0m_1j_0b",
+          "events": 19726150,
+          "combinations_satisfied": 1
+        },
+        {
+          "final_state": "1e_0m_2j_0b",
+          "events": 4817696,
+          "combinations_satisfied": 4
+        },
+        {
+          "final_state": "1e_0m_3j_0b",
+          "events": 1156320,
+          "combinations_satisfied": 6
+        },
+        {
+          "final_state": "1e_0m_0j_1b",
+          "events": 1068548,
+          "combinations_satisfied": 1
+        },
+        {
+          "final_state": "1e_0m_1j_1b",
+          "events": 652187,
+          "combinations_satisfied": 4
+        },
+        {
+          "final_state": "1e_0m_2j_1b",
+          "events": 336968,
+          "combinations_satisfied": 11
+        },
+        {
+          "final_state": "1e_0m_4j_0b",
+          "events": 273541,
+          "combinations_satisfied": 7
+        },
+        {
+          "final_state": "1e_0m_3j_1b",
+          "events": 153069,
+          "combinations_satisfied": 14
+        },
+        {
+          "final_state": "1e_0m_1j_2b",
+          "events": 119994,
+          "combinations_satisfied": 11
+        }
+      ],
+      "d_eff_barrel_first_1gev": 0.7585,
+      "d_eff_barrel_first_1gev_counts": [
+        419522,
+        553069
+      ],
+      "d_eff_barrel_T_to_T5": 0.7688,
+      "d_eff_barrel_T_to_T5_counts": [
+        948362,
+        1233570
+      ],
+      "d_eff_barrel_plateau": 0.8326,
+      "d_eff_over_plateau_barrel_T_to_T5": 0.9234,
+      "d_eff_endcap_first_1gev": 0.5511,
+      "d_eff_endcap_first_1gev_counts": [
+        105773,
+        191914
+      ],
+      "d_eff_endcap_T_to_T5": 0.5774,
+      "d_eff_endcap_T_to_T5_counts": [
+        239936,
+        415549
+      ],
+      "d_eff_endcap_plateau": 0.7156,
+      "d_eff_over_plateau_endcap_T_to_T5": 0.8069
+    }
+  ]
+}
