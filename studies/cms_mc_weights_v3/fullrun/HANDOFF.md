@@ -16,7 +16,10 @@ files and ≤ 125,000 total.
 
 Reached over `wipp-home` (`wipp-campus` timed out).
 
-- Checkout: `/storage/agrp/berkom/atlas-utilization/checkouts/fullrun_20261017/repo` @ `294ee59` (do not move while jobs run)
+- Production checkout: `/storage/agrp/berkom/atlas-utilization/checkouts/fullrun_20261017/repo` @ `294ee59` (do not move while jobs run)
+- Post-production checkout (audit, build, reproducibility, sanity — `fullrun/pbs_fullrun.sh`):
+  `checkouts/fullrun_20261017/post` @ `dbd3107`. `build_mc_delivery.py` and the per-file code
+  are unchanged between 294ee59 and dbd3107 (`git diff` empty).
 - Work: `/storage/agrp/berkom/atlas-utilization/work/fullrun_20261017/`
   `mappings/mapping_<rid>.txt` (497 lines, no exclusion), `runs/record<rid>/job_<i>/`,
   `logs/<rid>/f_<idx>.{out,err}`, `logs/build/`, `evidence/`,
@@ -49,5 +52,10 @@ Reached over `wipp-home` (`wipp-campus` timed out).
    `runs/record<rid>/job_<i>/`, Σw self-check fails for exactly 75589/98.
    Resubmit a failed file once with identical resources (single-file:
    `-v ...,PILOT_ARRAY_INDEX=<line>` without `-J`); twice → STOP.
-3. Then: build (step 4), validation (step 5), FULL_RUN_REPORT.md (step 6),
-   archive + final HANDOFF (step 7).
+3. Then, from `post` (all `-l io=25`, logs in `logs/build/`):
+   `qsub -N mcfull_<what> -l mem=<..>,walltime=<..>,io=25 -o $W/logs/build/<what>.out -e $W/logs/build/<what>.err
+    -v WORK_DIR=$W,REPO_DIR=$C/post,WHAT=<audit|build|reproduce|sanity>[,PILOT_RUNS=...] $C/post/studies/cms_mc_weights_v3/fullrun/pbs_fullrun.sh`
+   audit (4gb, 2h) → build (64gb, 8h) → reproduce (16gb, 8h; PILOT_RUNS=work/cms_mc_v3_pilot_20261011/runs)
+   → sanity (32gb, 4h). Then FULL_RUN_REPORT.md (step 6), archive + final HANDOFF (step 7).
+
+Status at 11:45 IDT: 19 running, 478 queued (group io allowance), nothing failed.
