@@ -37,6 +37,14 @@ existing per-file Σw check (tolerance 1e-6) will therefore **exclude it
 automatically** and normalise 75589 with the Σw of the other 98 files; it
 costs 871,000 of 52,104,000 ZZ events (1.7%). See §7 for the options.
 
+## 1b. Smoke test of the 10 never-run records (17 Oct, VERIFIED)
+
+File 0 of each never-run record went through production (pilot launcher,
+`5234303[1-10]`, all exit 0) and a per-sample build (builder defaults,
+`--output-mode per-sample --smoke-test`): **10/10 built**, every per-file Σw
+check included its file, every histogram passed the TH1D/Sumw2 read-back.
+Table and PNGs: `fullrun_prep/HANDOFF.md`, `plots/fullrun_prep/smoke/`.
+
 ## 2. Run-time model (Matan's decision, 17 Oct)
 
 * **Realistic (used for the requests).** Per-file wall time fitted over all
@@ -89,14 +97,14 @@ costs 871,000 of 52,104,000 ZZ events (1.7%). See §7 for the options.
 
 | | files |
 |---|---:|
-| `/storage/agrp/berkom` now (17 Oct, `lfs quota`) | 110,397 |
+| `/storage/agrp/berkom` now (17 Oct, end of prep, `lfs quota`) | 110,147 |
 | + production, all 497 files re-run | +5,990 |
 | + default build with `--keep-scratch` (≈3 per job, as the pilot's 298 for 98 jobs) | +≈1,500 |
-| **after the run** | **≈117,900** |
+| **after the run** | **≈117,600** |
 | soft quota / hard limit | 150,000 / 200,000 |
 
-≈32,000 under the soft quota. (Reusing the pilot files would save 1,182
-production files: ≈116,700.) The task-level 5,000-new-files stop rule must
+≈32,400 under the soft quota. (Reusing the pilot files would save 1,182
+production files: ≈116,500.) The task-level 5,000-new-files stop rule must
 be lifted explicitly by the full-run prompt: the run needs ≈7,500.
 
 ## 5. The 98 pilot files (67801, 35669, 37728): **re-run** (recommended)
@@ -156,6 +164,12 @@ nothing in `$HOME`, HANDOFF pushed before waiting).
    (UNVERIFIED: the pilot build took 31 min and 4.2 GB for 116 M events).
    The builder refuses any record with `in_full_run = false`, so the runs
    directory must hold only the 13 records (it will).
+   **Lesson from 17 Oct:** the smoke-build job, started only after its `io`
+   request was cut to 0.5 to fit the full group allowance, stalled for 30 min
+   with 14 s of CPU while reading back its first ROOT file (job `5234304`,
+   cancelled). The same builds then ran in 1–8 s each on the login node from
+   the same pinned checkout. Do NOT cut the build's `io` request below the
+   pilot's 25; if the group allowance is full, wait.
 
 **Cluster I/O cap — expect queueing (VERIFIED on 17 Oct).** The server
 limits `io` to 800 per user and 1,000 per group (`watlas`). At `io=25` at
@@ -163,11 +177,12 @@ most 32 of our jobs run at once; ≈112 CPU h then needs ≥3.5 h of wall clock
 (UNVERIFIED). On 17 Oct the group's allowance was fully used by other
 users (server `resources_assigned.io` = 999.1 of 1,000): our one-core smoke
 build waited ≈1.5 h with "Server per-group limit reached on resource io",
-still waited at `io=2`, and started at once when lowered to `io=0.5`. The
+still waited at `io=2`, started at once when lowered to `io=0.5` — and then
+stalled. The
 full run may sit in the queue similarly; that is a scheduling delay, not a
-failure. Keep `io=25` for production (the pilot's validated request); if the
-queue stalls for hours, lowering `io` is a resource choice the next prompt
-may make (it changes nothing in the outputs).
+failure. Keep `io=25` for production and the build (the pilot's validated request).
+Do not lower it to jump the queue: the one job that ran at `io=0.5` stalled
+(see step 5). A queue wait is a delay, not a failure.
 
 ## 7. Decisions for Matan
 
