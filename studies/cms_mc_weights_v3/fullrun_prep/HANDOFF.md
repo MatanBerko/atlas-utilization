@@ -1,7 +1,22 @@
 # HANDOFF — CMS MC full-run preparation (17 Oct 2026)
 
-**Status: jobs submitted, results pending.** This file is updated at the end
-of the task with the results; until then it records how to resume.
+**Status (17 Oct, ~10:30 IDT): STOPPED in Part B, waiting for Matan.**
+The pilot re-build differs from expectation in 4 sparse ggH histograms
+(round-off decides peak ties) — see `FINDING_PEAK_TIES.md`. Per the task
+("any other difference: STOP after documenting it") Parts C (report) and D
+(plan) were NOT finished. Everything already measured is kept for resume.
+
+## State at the stop (all VERIFIED BY RUNNING)
+
+| part | state |
+|---|---|
+| A | done, pushed (`29d09ee`): merge clean, WZ 5.789, builder refuses in_full_run=false, tests 0 failures |
+| B | rebuild `5234302` exit 0 (31 min, 4.0 GB peak). ttbar, DY bit-identical; ggH 2,455/2,459 histograms ×0.9916710 to 3e-14; **4 histograms differ** (FINDING_PEAK_TIES.md). PNGs `plots/fullrun_prep/B3_*.png` |
+| C | production `5234303[1-10]`: **10/10 exit 0**, every Σw self-check passed. Per-sample builds `5234304` were still QUEUED at the stop (not cancelled; they write only into `smoke_builds/`) |
+| D | input sweep `5234305` done: 497 files, 392,680,763 events, all 13 records = portal. 75589 file 98: genEventCount != num_entries (to check). Pilot per-file timings collected (`evidence/pilot_per_file.json` in the work dir) |
+
+File count of `/storage/agrp/berkom`: 109,634 before, **110,397** at the stop
+(+763). The checkout is NOT archived yet: job `5234304` still needs it.
 
 **Branch:** `feature/cms-mc-fullrun-prep-20261017` (origin only), branched
 from `origin/feature/cms-mc-xsec-update-20261015` (`0fcab6d`).
@@ -46,6 +61,10 @@ and/or server resource limits"), so the builds carry `io=25` too.
 | `5234305` | D input sweep (`WHAT=sweep`) | mem=4gb, walltime=04:00:00, io=25 |
 
 ## How to resume
+
+0. After Matan's decision on FINDING_PEAK_TIES.md: let `5234304` finish (or
+   check `logs/smoke_builds/sb.out`), then steps 2–3 below. Local copies used
+   so far were in a temporary directory; re-copy from the work dir.
 
 1. `/opt/pbs/bin/qstat -u berkom -t`; logs in `work/mcprep_20261017/logs/`.
 2. When done: copy `build_default/*.root` and the 10 Oct

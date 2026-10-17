@@ -1,0 +1,176 @@
+{
+  "what": "pilot re-build (17 Oct, reviewed registry) vs 10 Oct build 3a",
+  "r_ggH": 0.9916710046850598,
+  "sigma_ggH_old_pb": 0.013447,
+  "sigma_ggH_new_pb": 0.013335,
+  "samples": {
+    "67801": {
+      "n_histograms_old": 3283,
+      "n_histograms_new": 3283,
+      "expected_factor": 1.0,
+      "structure_differences": [],
+      "n_histograms_compared": 3283,
+      "n_bins_compared_incl_flow": 3289566,
+      "n_histograms_bitwise_identical": 3283,
+      "all_bitwise_identical": true,
+      "max_rel_deviation_values_from_expectation": 0.0,
+      "max_rel_deviation_variances_from_expectation": 0.0,
+      "histogram_with_max_values_deviation": null,
+      "bins_zero_in_expectation_but_nonzero_new": 0,
+      "sum_of_weights_old": 4305877.987741851,
+      "sum_of_weights_new": 4305877.987741851,
+      "ratio_of_sums_new_over_old": 1.0
+    },
+    "35669": {
+      "n_histograms_old": 2498,
+      "n_histograms_new": 2498,
+      "expected_factor": 1.0,
+      "structure_differences": [],
+      "n_histograms_compared": 2498,
+      "n_bins_compared_incl_flow": 2502996,
+      "n_histograms_bitwise_identical": 2498,
+      "all_bitwise_identical": true,
+      "max_rel_deviation_values_from_expectation": 0.0,
+      "max_rel_deviation_variances_from_expectation": 0.0,
+      "histogram_with_max_values_deviation": null,
+      "bins_zero_in_expectation_but_nonzero_new": 0,
+      "sum_of_weights_old": 15421625.144870011,
+      "sum_of_weights_new": 15421625.144870011,
+      "ratio_of_sums_new_over_old": 1.0
+    },
+    "37728": {
+      "n_histograms_old": 2459,
+      "n_histograms_new": 2459,
+      "expected_factor": 0.9916710046850598,
+      "structure_differences": [
+        {
+          "what": "entries",
+          "histogram": "ROI_mass_e0j0j1_cat_2ex_0mx_6jx_0bx_width_10.0",
+          "old": 7.0,
+          "new": 3.0
+        },
+        {
+          "what": "entries",
+          "histogram": "ROI_mass_e1j0j1j2_cat_2ex_0mx_6jx_0bx_width_10.0",
+          "old": 2.0,
+          "new": 4.0
+        },
+        {
+          "what": "entries",
+          "histogram": "ROI_mass_e1j1b0_cat_2ex_0mx_2jx_2bx_width_10.0",
+          "old": 4.0,
+          "new": 5.0
+        },
+        {
+          "what": "entries",
+          "histogram": "ROI_mass_j0j1j2j3_cat_2ex_0mx_6jx_0bx_width_10.0",
+          "old": 4.0,
+          "new": 6.0
+        }
+      ],
+      "n_histograms_compared": 2459,
+      "n_bins_compared_incl_flow": 2463918,
+      "n_histograms_bitwise_identical": 0,
+      "all_bitwise_identical": false,
+      "max_rel_deviation_values_from_expectation": 1.0,
+      "max_rel_deviation_variances_from_expectation": 1.0,
+      "histogram_with_max_values_deviation": "ROI_mass_e0j0j1_cat_2ex_0mx_6jx_0bx_width_10.0",
+      "bins_zero_in_expectation_but_nonzero_new": 20,
+      "sum_of_weights_old": 141.83188888189113,
+      "sum_of_weights_new": 140.65068518657776,
+      "ratio_of_sums_new_over_old": 0.9916718045241786
+    }
+  },
+  "summed": {
+    "n_histograms_old": 3289,
+    "n_histograms_new": 3289,
+    "structure_differences": [
+      {
+        "what": "entries",
+        "histogram": "ROI_mass_e0j0j1_cat_2ex_0mx_6jx_0bx_width_10.0",
+        "old": 448.0,
+        "new": 444.0
+      },
+      {
+        "what": "entries",
+        "histogram": "ROI_mass_e1j0j1j2_cat_2ex_0mx_6jx_0bx_width_10.0",
+        "old": 114.0,
+        "new": 116.0
+      },
+      {
+        "what": "entries",
+        "histogram": "ROI_mass_e1j1b0_cat_2ex_0mx_2jx_2bx_width_10.0",
+        "old": 36325.0,
+        "new": 36326.0
+      },
+      {
+        "what": "entries",
+        "histogram": "ROI_mass_j0j1j2j3_cat_2ex_0mx_6jx_0bx_width_10.0",
+        "old": 306.0,
+        "new": 308.0
+      }
+    ],
+    "n_histograms_compared": 3289,
+    "n_bins_compared_incl_flow": 3295578,
+    "n_histograms_without_ggh_contribution": 830,
+    "n_histograms_without_ggh_that_CHANGED": 0,
+    "max_abs_deviation_of_(new_sum-old_sum)_from_(new_ggH-old_ggH)": 4.2237324748839455e-11,
+    "same_relative_to_the_old_summed_bin": 7.037912889088676e-15,
+    "same_relative_to_the_ggH_change_itself": 1.2892592483900331e-06,
+    "sum_of_weights_old": 19727644.96450077,
+    "sum_of_weights_new": 19727643.78329711
+  },
+  "unexpected_differences": [
+    "37728 structure differs",
+    "37728 not scaled by r to 1e-12",
+    "summed differs beyond the ggH change"
+  ],
+  "verdict": "UNEXPECTED DIFFERENCES",
+  "plots": [
+    {
+      "png": "B3_ggH_1.png",
+      "histogram": "ggH 37728 (weighted): ROI_mass_m0m1j0_cat_0ex_2mx_1jx_0bx_width_10.0",
+      "n_nonzero_bins": 74,
+      "expected_ratio": 0.9916710046850598,
+      "ratio_min": 0.9916710046850555,
+      "ratio_max": 0.991671004685064,
+      "max_abs_ratio_minus_expected": 4.218847493575595e-15
+    },
+    {
+      "png": "B3_ggH_2.png",
+      "histogram": "ggH 37728 (weighted): ROI_mass_m0j0_cat_0ex_2mx_1jx_0bx_width_10.0",
+      "n_nonzero_bins": 65,
+      "expected_ratio": 0.9916710046850598,
+      "ratio_min": 0.9916710046850574,
+      "ratio_max": 0.991671004685061,
+      "max_abs_ratio_minus_expected": 2.3314683517128287e-15
+    },
+    {
+      "png": "B3_ttbar.png",
+      "histogram": "ttbar 67801 TTTo2L2Nu (weighted): ROI_mass_m0j0b0_cat_0ex_1mx_1jx_1bx_width_10.0",
+      "n_nonzero_bins": 191,
+      "expected_ratio": 1.0,
+      "ratio_min": 1.0,
+      "ratio_max": 1.0,
+      "max_abs_ratio_minus_expected": 0.0
+    },
+    {
+      "png": "B3_DY.png",
+      "histogram": "DY 35669 DYJetsToLL_M-50 NLO (weighted): ROI_mass_m0j0_cat_0ex_1mx_1jx_0bx_width_10.0",
+      "n_nonzero_bins": 121,
+      "expected_ratio": 1.0,
+      "ratio_min": 1.0,
+      "ratio_max": 1.0,
+      "max_abs_ratio_minus_expected": 0.0
+    },
+    {
+      "png": "B3_summedSM.png",
+      "histogram": "summed SM (weighted): ROI_mass_m0j0_cat_0ex_1mx_1jx_0bx_width_10.0",
+      "n_nonzero_bins": 122,
+      "expected_ratio": 1.0,
+      "ratio_min": 0.9999999128562456,
+      "ratio_max": 1.0,
+      "max_abs_ratio_minus_expected": 8.714375443474864e-08
+    }
+  ]
+}
