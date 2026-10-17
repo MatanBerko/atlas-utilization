@@ -909,7 +909,7 @@
       "dataset_number": 72752,
       "record_id": 72752,
       "mini_recid": 72751,
-      "cross_section_pb": 5.787,
+      "cross_section_pb": 5.789,
       "k_factor": 1.0,
       "gen_filt_eff": 1.0,
       "sum_of_weights": null,
@@ -937,7 +937,8 @@
         "order": "NLO generator x NNLO/NLO k-factor",
         "previous_cross_section_pb": 5.218,
         "decision_note": "Approximation: an on-shell k-factor is applied to a sample that also contains gamma*/low-mass pairs.",
-        "arithmetic_note": "5.218 x 51.11 / 46.068 = 5.7891 (arithmetic checked 15 Oct 2026); the decided value 5.787 equals 5.218 x 1.109 (k rounded to 4 significant figures). Decided value kept unchanged; the 0.04% difference is reported for Matan."
+        "arithmetic_note": "5.218 x 51.11 / 46.068 = 5.78909 -> 5.789 pb (exact k-factor). The value 5.787 used until 17 Oct equalled 5.218 x 1.109 (k rounded to 4 significant figures); corrected to the exact formula by Matan's decision of 15 Oct 2026, applied 17 Oct 2026.",
+        "note": "corrected 17 Oct: exact k-factor 51.11/46.068, was 5.787"
       },
       "provenance": {
         "label": "WZTo3LNu_amcatnloFXFX",

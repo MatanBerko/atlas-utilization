@@ -81,7 +81,7 @@ PILEUP_NOTE = (
 DECISION_FIELDS = (
     "construction", "inputs", "sources", "order", "previous_cross_section_pb",
     "decision_note", "replaced_citation", "alternative_not_used",
-    "arithmetic_note", "not_in_full_run_reason",
+    "arithmetic_note", "not_in_full_run_reason", "note",
 )
 
 
