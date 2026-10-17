@@ -5,6 +5,12 @@ This is the human-readable twin of the registry
 `sources/v4_decisions_2026-10-15.json`, which holds Matan's reviewed values,
 transcribed exactly as he gave them. Nothing here was re-derived or rounded.
 
+**Update 17 Oct 2026.** One value changed, by Matan's decision of 15 Oct:
+72752 WZ is now **5.789 pb** = 5.218 × 51.11 / 46.068 (exact k-factor; it was
+5.787, which came from the k-factor rounded to 1.109). And the MC builder
+now **refuses** any record whose registry entry has `in_full_run = false`
+(see open point 4). No other value or record changed.
+
 **Convention (unchanged).** `cross_section_pb` is σ_eff: the production cross
 section × branching ratio × any generator-level selection × any k-factor.
 That means `k_factor` and `gen_filt_eff` stay pinned to 1.0 in the registry,
@@ -31,7 +37,7 @@ and `sum_of_weights` stays null, because it is measured at build time.
 | 64895 / 64894 | ST_tW_top_5f_NoFullyHadronicDecays | **19.56** | 71.7 pb / 2 x (1 - 0.6741^2) | approx. NNLO | 19.56 | 1.0000 | **yes** | 32.45 / 1.0 |
 | 64839 / 64838 | ST_tW_antitop_5f_NoFullyHadronicDecays | **19.56** | 71.7 pb / 2 x (1 - 0.6741^2) (antitop half) | approx. NNLO | 19.56 | 1.0000 | **yes** | 32.51 / 1.0 |
 | 72676 / 72675 | WWTo2L2Nu | **12.708** | 118.7 pb x 0.10706 | NNLO | 12.178 | 1.0435 | **yes** | 11.09 / 1.0 |
-| 72752 / 72751 | WZTo3LNu_amcatnloFXFX | **5.787** | generator 5.218 pb x (51.11 / 46.068) | NLO generator x NNLO/NLO k-factor | 5.218 | 1.1090 | **yes** | 5.218 / 0.6 |
+| 72752 / 72751 | WZTo3LNu_amcatnloFXFX | **5.789** (was 5.787 until 17 Oct) | generator 5.218 pb x (51.11 / 46.068) | NLO generator x NNLO/NLO k-factor | 5.218 | 1.1094 | **yes** | 5.218 / 0.6 |
 | 75589 / 75588 | ZZTo4L | **1.544** | generator 1.325 pb x (16.91 / 14.51) | NLO generator x NNLO/NLO k-factor | 1.256 | 1.2293 | **yes** | 1.325 / 1.0 |
 | 68187 / 68186 | TTZToLLNuNu_M-10 | **0.2439** | generator value | NLO | 0.2529 | 0.9644 | **yes** | 0.2439 / 1.0 |
 | 68073 / 68072 | TTWJetsToLNu | **0.2151** | generator value | NLO | 0.2043 | 1.0529 | **yes** | 0.2151 / 0.6 |
@@ -77,11 +83,11 @@ and `sum_of_weights` stays null, because it is measured at build time.
 - Source: arXiv:1408.5243: Table 1, 13 TeV, NNLO (includes gg -> WW; 4FNS). <https://arxiv.org/abs/1408.5243>
 - Note: Previous 12.178 pb came from the RazorAnalyzer table and could not be traced to a theory source; replaced by the NNLO value.
 
-**72752 WZTo3LNu_amcatnloFXFX** — σ_eff 5.787 pb
+**72752 WZTo3LNu_amcatnloFXFX** — σ_eff 5.789 pb (corrected 17 Oct: exact k-factor 51.11/46.068, was 5.787)
 - Source: CERN Open Data record 72751 (generator cross section): metadata.cross_section.total_value. <https://opendata.cern.ch/record/72751>
 - Source: arXiv:1604.08576: Table 1, 13 TeV, on-shell NNLO/NLO (k-factor). <https://arxiv.org/abs/1604.08576>
 - Note: Approximation: an on-shell k-factor is applied to a sample that also contains gamma*/low-mass pairs.
-- Arithmetic note: 5.218 x 51.11 / 46.068 = 5.7891 (arithmetic checked 15 Oct 2026); the decided value 5.787 equals 5.218 x 1.109 (k rounded to 4 significant figures). Decided value kept unchanged; the 0.04% difference is reported for Matan.
+- Arithmetic note: 5.218 x 51.11 / 46.068 = 5.78909 -> 5.789 pb (exact k-factor). The value 5.787 used until 17 Oct equalled 5.218 x 1.109 (k rounded to 4 significant figures); corrected to the exact formula by Matan's decision of 15 Oct 2026, applied 17 Oct 2026.
 
 **75589 ZZTo4L** — σ_eff 1.544 pb
 - Source: CERN Open Data record 75588 (generator cross section): metadata.cross_section.total_value. <https://opendata.cern.ch/record/75588>
@@ -124,9 +130,9 @@ and `sum_of_weights` stays null, because it is measured at build time.
 
 ## Open points for Matan (nothing was changed because of them)
 
-1. **72752 WZ arithmetic.** 5.218 × 51.11 / 46.068 = 5.7891. The decided 5.787
-   equals 5.218 × 1.109, so the k-factor appears to have been rounded to
-   1.109. The difference is 0.04%. The decided value is kept.
+1. **72752 WZ arithmetic — RESOLVED 17 Oct.** 5.218 × 51.11 / 46.068 = 5.7891.
+   The earlier 5.787 equalled 5.218 × 1.109 (rounded k-factor). Matan decided
+   on 15 Oct to use the exact formula; the registry now holds 5.789 pb.
 2. **68847 VBF order label.** The decision list gives no order for this
    record. The earlier v2 table called the same Higgs WG page "NNLO QCD + NLO
    EW". Please confirm that label.
@@ -139,7 +145,8 @@ and `sum_of_weights` stays null, because it is measured at build time.
    Whether the portal `total_value` already includes it is an open question.
    It only matters for values taken from the portal: 72752 (through its
    generator value) and 68073. Reported only; nothing was decided.
-4. **The builder does not read `in_full_run`.** The flag is bookkeeping. Which
-   records actually enter a build is decided by which records are submitted
-   on the cluster. A record that is in the registry with `in_full_run = false`
-   (35671, 42407) would still be weighted if its jobs were submitted.
+4. **`in_full_run` — RESOLVED 17 Oct.** Until 17 Oct the builder did not read
+   the flag. Since 17 Oct (Matan's decision of 15 Oct) `build_mc_delivery.py`
+   refuses to build if any input record has `in_full_run = false` in the
+   registry (today 35671 and 42407), with an error naming the record and the
+   registry's reason. Tested in `tests/test_builder_end_to_end.py`.

@@ -17,7 +17,10 @@ runs the real builder over them and checks:
   * TH1D + Sumw2 is written for both the per-sample and the summed output and
      passes read-back;
   * the Ele27-only entries are dropped by the event union;
-  * an unknown record, a missing `_mcw` input, and an APV title each abort.
+  * an unknown record, a missing `_mcw` input, and an APV title each abort;
+  * a record with in_full_run = false in the registry (35671) is refused,
+    naming the record and the reason, while an in_full_run = true record
+    (37728, the main build above) is accepted.
 
 No network, no cluster. Exit code 0 only if every check passes.
 
@@ -299,6 +302,34 @@ def main() -> int:
               str(exc)[:70])
     else:
         check("an unknown record is a HARD ERROR", False, "it built anyway")
+
+    # a record the registry marks in_full_run = false must be refused
+    # (Matan, 15 Oct 2026); 37728 (in_full_run = true) built above = accepted
+    excluded_rid = "35671"
+    check("registry marks 35671 in_full_run = false and 37728 true",
+          B.load_registry()["records"][excluded_rid]["in_full_run"] is False
+          and B.load_registry()["records"][RECORD]["in_full_run"] is True)
+    check("an in_full_run = true record (37728) is accepted and built",
+          RECORD in report["samples"], str(sorted(report["samples"])))
+    tmp5 = pathlib.Path(tempfile.mkdtemp(prefix="mc_e2e_notfullrun_"))
+    runs5 = tmp5 / "runs"
+    write_fake_job(runs5 / f"record{excluded_rid}" / "job_0", excluded_rid, 0,
+                   GOOD_SIGMA_W, GOOD_SIGMA_W, 1000, {"0e_2m_1j_0b": 400})
+    try:
+        B.build(Args(runs_dir=str(runs5), out_dir=str(tmp5 / "out"),
+                     scratch_dir=str(tmp5 / "scratch")))
+    except SystemExit as exc:
+        msg = str(exc)
+        check("an in_full_run = false record (35671) is REFUSED, naming the "
+              "record and the reason",
+              excluded_rid in msg and "in_full_run" in msg
+              and "double-count" in msg.lower(), msg[:90])
+        check("the refused build wrote no output and no scratch copy",
+              not any((tmp5 / "out").glob("*.root"))
+              and not (tmp5 / "scratch" / f"record_{excluded_rid}").exists())
+    else:
+        check("an in_full_run = false record (35671) is REFUSED, naming the "
+              "record and the reason", False, "it built anyway")
 
     # a shard whose genWeight sibling is missing must abort, not fall back
     tmp4 = pathlib.Path(tempfile.mkdtemp(prefix="mc_e2e_nosib_"))

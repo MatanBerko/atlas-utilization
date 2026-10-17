@@ -156,6 +156,22 @@ def assert_campaign_ok(record_id: str, record: dict) -> dict:
     return {"portal_dataset_title": title, "campaign_ok": True}
 
 
+def assert_in_full_run(record_id: str, record: dict) -> None:
+    """Matan, 15 Oct 2026: a record whose registry entry has
+    in_full_run = false (e.g. 35671, which would double-count Drell-Yan with
+    35669) must never be weighted into a delivery. Hard error, naming the
+    record and the registry's reason."""
+    if record.get("in_full_run") is True:
+        return
+    reason = ((record.get("decision_2026_10_15") or {})
+              .get("not_in_full_run_reason")
+              or "no reason recorded in the registry")
+    raise SystemExit(
+        f"STOP: record {record_id} ({record.get('physics_short', '?')}) has "
+        f"in_full_run = {record.get('in_full_run')!r} in {REGISTRY_PATH.name} "
+        f"and is refused by the builder. Reason: {reason}")
+
+
 def discover_jobs(runs_dir: pathlib.Path, only_records: set[int] | None,
                   only_file_indices: set[int] | None) -> dict:
     """{record_id (str): [job metadata dict, ...]}, from every job_*/ under
@@ -552,6 +568,11 @@ def build(args) -> dict:
     scratch_root = pathlib.Path(
         args.scratch_dir or tempfile.mkdtemp(prefix="mc_delivery_"))
     scratch_root.mkdir(parents=True, exist_ok=True)
+
+    # ---- refuse records excluded from the full run, before any work ------
+    for rid in sorted(jobs_by_record, key=int):
+        if rid in registry["records"]:
+            assert_in_full_run(rid, registry["records"][rid])
 
     # ---- per sample: guards, Sigma-w, scratch copies, _mcw --------------
     all_scratch_shards = []
