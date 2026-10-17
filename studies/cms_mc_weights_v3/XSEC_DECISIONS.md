@@ -166,3 +166,31 @@ and `sum_of_weights` stays null, because it is measured at build time.
    scaled exactly. Decision: accept and document; no code change, the
    peak-finding convention stays exactly as it is. Details:
    `fullrun_prep/FINDING_PEAK_TIES.md`.
+
+## Data quality
+
+1. **Decision 17 Oct 2026 (Matan): ZZTo4L file 98.** Record 75589, file
+   index 98 (`…/ZZTo4L…/50000/44F4BE4A-B82C-FA48-A8E1-AAE9565E362E.root`) is
+   intact but its header is inconsistent with its content (VERIFIED BY
+   RUNNING, `evidence/input_file_check_20261017.json`):
+   - 871,000 events in the file vs 904,000 in its Runs header
+     (`genEventCount`);
+   - Σ genWeight over the file 1,154,337.9 vs Runs `genEventSumw`
+     1,198,138.4 (−3.66%);
+   - size (1,193,133,570 B) and adler32 `36099d1e` match the CERN portal, so
+     it is exactly the published file (re-fetching is pointless);
+   - the other 496 files of the 13 full-run records are consistent
+     (Σw agreement ≤ 4.4e-8).
+
+   **Chosen: option A** — keep it in production; the builder's existing
+   per-file Σw check (D4, tolerance 1e-6) excludes it automatically, both its
+   histograms and its Σw, so ZZ is normalised with the other **98 of 99
+   files**: −1.7% ZZ statistics (871,000 of 52,104,000 events), normalisation
+   unaffected. No `--exclude`, no code change; the build must report exactly
+   this one exclusion.
+   **Rejected:** B (exclude it by hand in the mapping) — same physics as A,
+   but the exclusion would live in a mapping file instead of the build
+   report, a less visible record; C (normalise it by its own Σ genWeight) —
+   a change of the Σw convention that would need Maryna's and Yuval's
+   agreement.
+   **The MC delivery note must state: "ZZ uses 98 of 99 files".**

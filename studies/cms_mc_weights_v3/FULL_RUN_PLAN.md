@@ -202,3 +202,17 @@ Do not lower it to jump the queue: the one job that ran at `io=0.5` stalled
      the published file.)
 2. Re-run vs reuse the 98 pilot files (§5): recommended re-run.
 3. The next prompt must allow ≈7,500 new files (§4).
+
+**Decisions taken, Matan, 17 Oct 2026:**
+1. **75589 file 98 → option A**: kept in production; the builder's Σw check
+   excludes it automatically (histograms and Σw); ZZ uses 98 of 99 files
+   (−1.7% statistics, normalisation unaffected). B and C rejected (B: same
+   physics, less visible record; C: Σw-convention change needing
+   Maryna/Yuval). The build must report exactly this one exclusion. Full
+   entry: `XSEC_DECISIONS.md`, "Data quality". The MC delivery note must
+   state "ZZ uses 98 of 99 files".
+2. **The 98 pilot files → RE-RUN** with everything else; the pilot area is
+   neither reused nor touched.
+3. **New-file allowance for the full-run task: up to 9,000 new files**, and
+   never beyond 125,000 in total; the file count is measured before
+   submission, after production and after the build.
