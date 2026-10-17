@@ -150,3 +150,19 @@ and `sum_of_weights` stays null, because it is measured at build time.
    refuses to build if any input record has `in_full_run = false` in the
    registry (today 35671 and 42407), with an error naming the record and the
    registry's reason. Tested in `tests/test_builder_end_to_end.py`.
+
+## Known effects
+
+1. **Weighted peak finding can flip between near-tied single-event bins
+   under any global rescale (accepted, Matan, 17 Oct 2026).** The builder
+   removes everything below "the rightmost bin with the highest weighted
+   content". In very sparse histograms, several single-event bins carry
+   weights that agree to float64 round-off (1–8 ulps), so which one "wins"
+   is decided by round-off, and any global change of the normalisation
+   (a cross section, Σw from a different file set) can move the peak and
+   change which entries are kept. Measured in the 17 Oct pilot re-build
+   (ggH ×0.99167): 4 of 2,459 ggH histograms (2–7 entries each), at most
+   4×10⁻⁵ of the corresponding summed-SM histogram; every other histogram
+   scaled exactly. Decision: accept and document; no code change, the
+   peak-finding convention stays exactly as it is. Details:
+   `fullrun_prep/FINDING_PEAK_TIES.md`.

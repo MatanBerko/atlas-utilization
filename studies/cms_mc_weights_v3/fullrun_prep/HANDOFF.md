@@ -1,6 +1,13 @@
 # HANDOFF — CMS MC full-run preparation (17 Oct 2026)
 
-**Status (17 Oct, ~10:30 IDT): STOPPED in Part B, waiting for Matan.**
+**Status (17 Oct, resumed ~10:00 IDT after Matan's decisions):** peak-tie
+effect ACCEPTED and documented (no code change); C2/C3 done (497 files read,
+only 75589/98 inconsistent); FULL_RUN_PLAN.md written; smoke builds `5234304`
+RUNNING since 10:27 (io lowered 25 → 0.5 with `qalter` because the group io
+allowance was full; nothing else changed). Remaining: C1 report + PNGs,
+archive, final HANDOFF.
+
+**Earlier status (17 Oct, ~10:30 IDT... superseded): STOPPED in Part B, waiting for Matan.**
 The pilot re-build differs from expectation in 4 sparse ggH histograms
 (round-off decides peak ties) — see `FINDING_PEAK_TIES.md`. Per the task
 ("any other difference: STOP after documenting it") Parts C (report) and D

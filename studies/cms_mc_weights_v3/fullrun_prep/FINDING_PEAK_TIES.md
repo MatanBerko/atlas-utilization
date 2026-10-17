@@ -1,7 +1,9 @@
 # Part B finding (17 Oct 2026): 4 sparse ggH histograms change beyond ×0.99167
 
-**Status: task STOPPED here, as instructed ("any other difference: STOP after
-documenting it"). Needs a decision from Matan.** All numbers VERIFIED BY
+**DECISION (Matan, 17 Oct 2026): ACCEPT AND DOCUMENT as a known effect. No
+code change; the peak-finding convention stays exactly as it is.** Recorded
+in `XSEC_DECISIONS.md`, section "Known effects". (The task had stopped here on
+17 Oct, as instructed, until this decision.) All numbers VERIFIED BY
 RUNNING unless marked otherwise.
 
 ## What was compared
