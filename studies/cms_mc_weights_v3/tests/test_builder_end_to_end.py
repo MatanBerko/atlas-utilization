@@ -70,9 +70,12 @@ def check(name: str, condition: bool, detail: str = "") -> None:
 def write_fake_job(job_dir: pathlib.Path, record_id: str, file_index: int,
                    sigma_w: float, file_sum_genweight: float,
                    n_events: int, final_states: dict, acc_mode: str = "four",
-                   cap_signature: str | None = None) -> None:
+                   cap_signature: str | None = None,
+                   masses_by_fs: dict | None = None) -> None:
     """One fake `--is-mc` job output. `final_states` maps a final-state label
-    to the number of entries its single m0m1 signature should carry."""
+    to the number of entries its single m0m1 signature should carry.
+    `masses_by_fs` (optional) gives a final state's masses explicitly instead
+    of the default uniform 120-400 GeV draw."""
     job_dir.mkdir(parents=True, exist_ok=True)
     shard = job_dir / B.SHARD_NAME
     w = SqliteArrayShardWriter(str(shard))
@@ -81,6 +84,9 @@ def write_fake_job(job_dir: pathlib.Path, record_id: str, file_index: int,
         sig = f"MC_record{record_id}_file{file_index}_FS_{fs}_IM_m0m1"
         w.record_final_state_count(fs, n)
         masses = rng.uniform(120.0, 400.0, size=n).astype(np.float32)
+        if masses_by_fs and fs in masses_by_fs:
+            masses = np.asarray(masses_by_fs[fs], dtype=np.float32)
+            assert len(masses) == n
         w.append_array(sig, masses)
         genw = np.where(rng.random(n) < 0.1, -29.1721, 29.1721).astype(np.float64)
         l1pf = rng.uniform(0.95, 1.0, size=n).astype(np.float32)
@@ -139,6 +145,7 @@ class Args:
         self.records = kw.get("records")
         self.file_indices = kw.get("file_indices")
         self.peak_on = kw.get("peak_on", "weighted")
+        self.peak_scope = kw.get("peak_scope", "combined")
         self.min_events_basis = kw.get("min_events_basis", "raw")
         self.output_mode = kw.get("output_mode", "both")
         self.min_events_per_fs = kw.get("min_events_per_fs", 100)

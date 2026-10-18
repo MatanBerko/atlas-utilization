@@ -1,0 +1,85 @@
+{
+  "checks": [
+    {
+      "name": "combined build: every sample has the histogram",
+      "pass": true,
+      "detail": "['64839', '64895', '72752']"
+    },
+    {
+      "name": "CLOSURE: sum of per-sample == summed SM bin by bin (contents and sumw2)",
+      "pass": true,
+      "detail": "max relative difference 0.000e+00"
+    },
+    {
+      "name": "ONE CUT: every sample's peak mass == the combined peak mass",
+      "pass": true,
+      "detail": "{'64839': 260.0, '64895': 260.0, '72752': 260.0} vs 260.0"
+    },
+    {
+      "name": "ONE CUT: every sample's split mass == the combined split mass",
+      "pass": true,
+      "detail": "{'64839': 900.0, '64895': 900.0, '72752': 900.0} vs 900.0"
+    },
+    {
+      "name": "ONE CUT: no sample has content below the combined peak",
+      "pass": true,
+      "detail": "{'64839': 260.0, '64895': 260.0, '72752': 260.0}"
+    },
+    {
+      "name": "ONE CUT: the summed SM starts exactly at the combined peak",
+      "pass": true,
+      "detail": "260.0 vs 260.0"
+    },
+    {
+      "name": "ONE CUT: no sample has content at or above the combined split",
+      "pass": true,
+      "detail": "split 900.0"
+    },
+    {
+      "name": "the combined peak is the rightmost-highest weighted bin of the concatenated spectrum",
+      "pass": true,
+      "detail": "260.0 vs 260.0"
+    },
+    {
+      "name": "CONTROL: --peak-scope per-sample cuts the samples at different peaks",
+      "pass": true,
+      "detail": "{'64839': 110.0, '64895': 260.0, '72752': 700.0}"
+    },
+    {
+      "name": "ONE SAMPLE: combined == per-sample, ROOT contents and variances bit-identical",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "ONE SAMPLE: identical peak masses and entry counts in the report",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "ONE SAMPLE (property): postprocess with the combined cuts of a single sample == per-sample, 600 random spectra",
+      "pass": true,
+      "detail": "0 mismatches"
+    }
+  ],
+  "multi_sample_detail": {
+    "closure_max_rel": 0.0,
+    "combined_cut": {
+      "n_samples": 3,
+      "n_combined_after_z_and_max_mass": 11000,
+      "peak_mass": 260.0,
+      "split_mass": 900.0,
+      "combined_main_weight": 224813.31576036097
+    },
+    "per_sample_peaks_old": {
+      "64839": 110.0,
+      "64895": 260.0,
+      "72752": 700.0
+    },
+    "first_filled_combined": {
+      "64839": 260.0,
+      "64895": 260.0,
+      "72752": 260.0
+    },
+    "summed_first_combined": 260.0
+  }
+}

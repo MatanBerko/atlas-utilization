@@ -31,7 +31,10 @@ What it does, in order:
      summed file agree.
   7. Post-processes masses and weights IN LOCKSTEP -- Z cut 110 GeV, max-mass
      cut, peak removal, bin-aligned outlier split -- with any length mismatch
-     a HARD ERROR, never a fallback to unweighted.
+     a HARD ERROR, never a fallback to unweighted. With --peak-scope combined
+     (the default) the peak-removal and split masses of each histogram name
+     are found ONCE on the combined spectrum of all samples and applied to
+     every sample, so the summed SM is "sum, then cut" like the data.
   8. Writes TH1D + Sumw2 with names identical to data, asserts them on
      read-back, and reports per-sample Sigma-w, file counts, cap incidence,
      raw and weighted yields per final state, and the negative/empty-bin
@@ -39,6 +42,7 @@ What it does, in order:
 
 Build-time OPTIONS, so an answer from Maryna or Yuval needs no re-run:
   --peak-on {weighted,unweighted}   [weighted]
+  --peak-scope {combined,per-sample} [combined]
   --min-events-basis {raw,weighted} [raw]
   --output-mode {per-sample,summed,both} [both]
 
@@ -423,31 +427,88 @@ def find_peak_mass(masses: np.ndarray, weights: np.ndarray | None) -> float | No
     return float(edges[peak_idx])
 
 
-def main_split_mask(masses: np.ndarray) -> np.ndarray:
-    """The first-empty-bin split as a MASK, on UNWEIGHTED counts (PR #35's own
-    semantics: the split is a statement about where the spectrum runs out of
-    entries, not about weight)."""
+def split_mass(masses: np.ndarray) -> float | None:
+    """The low edge of the first empty bin (UNWEIGHTED counts, aligned grid),
+    i.e. where main_split_mask splits; None means "keep everything"."""
     if len(masses) == 0:
-        return np.zeros(0, dtype=bool)
+        return None
     edges = _aligned_bin_edges(masses, BIN_WIDTH_GEV)
     counts, _ = np.histogram(masses, bins=edges)
     if len(counts) == 0:
-        return np.ones(len(masses), dtype=bool)
+        return None
     first_empty = None
     for i in range(len(counts)):
         if counts[i] == 0:
             first_empty = i
             break
     if first_empty is None or first_empty <= 1:
+        return None
+    return float(edges[first_empty])
+
+
+def main_split_mask(masses: np.ndarray) -> np.ndarray:
+    """The first-empty-bin split as a MASK, on UNWEIGHTED counts (PR #35's own
+    semantics: the split is a statement about where the spectrum runs out of
+    entries, not about weight)."""
+    if len(masses) == 0:
+        return np.zeros(0, dtype=bool)
+    split = split_mass(masses)
+    if split is None:
         return np.ones(len(masses), dtype=bool)
-    return masses < float(edges[first_empty])
+    return masses < split
+
+
+def z_and_max_mass_mask(masses: np.ndarray, im_str: str) -> np.ndarray:
+    """The Z cut and the max-mass cut together (both independent of the
+    sample)."""
+    keep = z_peak_keep_mask(masses, f"x_FS_x_IM_{im_str}")
+    if MAX_MASS_CUTOFF > 0:
+        keep = keep & (masses <= MAX_MASS_CUTOFF)
+    return keep
+
+
+def combined_cuts(per_sample: list, im_str: str, peak_on: str) -> dict:
+    """--peak-scope combined: the peak-removal mass and the outlier-split mass
+    of ONE histogram name, found ONCE on the combined spectrum.
+
+    `per_sample` is [(masses, weights), ...] in record order. Each sample's
+    Z cut and max-mass cut are applied, the survivors are concatenated, and
+    the SAME rules as postprocess_in_lockstep are used: the weighted (or
+    unweighted, per --peak-on) rightmost-highest peak on the aligned grid,
+    then the first-empty-bin split on the unweighted counts above the peak.
+    With a single sample this reproduces that sample's own cuts exactly."""
+    ms, ws = [], []
+    for masses, weights in per_sample:
+        keep = z_and_max_mass_mask(masses, im_str)
+        ms.append(masses[keep])
+        ws.append(weights[keep])
+    masses = np.concatenate(ms) if ms else np.zeros(0)
+    weights = np.concatenate(ws) if ws else np.zeros(0)
+    out = {"n_samples": len(per_sample),
+           "n_combined_after_z_and_max_mass": int(len(masses))}
+    if len(masses) == 0:
+        return {**out, "peak_mass": None, "split_mass": None,
+                "combined_main_weight": 0.0}
+    peak = find_peak_mass(masses, weights if peak_on == "weighted" else None)
+    if peak is not None:
+        keep = masses >= peak
+        masses, weights = masses[keep], weights[keep]
+    split = split_mass(masses)
+    main = np.ones(len(masses), dtype=bool) if split is None else masses < split
+    return {**out, "peak_mass": peak, "split_mass": split,
+            "combined_main_weight": float(weights[main].sum())}
 
 
 def postprocess_in_lockstep(masses: np.ndarray, weights: np.ndarray,
-                            im_str: str, peak_on: str) -> dict:
+                            im_str: str, peak_on: str,
+                            cuts: dict | None = None) -> dict:
     """Z cut -> max-mass cut -> peak removal -> bin-aligned split, with every
     step a boolean mask applied to BOTH arrays. A length mismatch at any point
-    is a hard error."""
+    is a hard error.
+
+    cuts=None (--peak-scope per-sample) finds the peak and the split on THIS
+    spectrum. cuts=combined_cuts(...) (--peak-scope combined) applies the
+    peak mass and split mass found once on the combined spectrum instead."""
     if len(masses) != len(weights):
         raise SystemExit(
             f"IM {im_str}: {len(masses)} masses but {len(weights)} weights -- "
@@ -463,10 +524,14 @@ def postprocess_in_lockstep(masses: np.ndarray, weights: np.ndarray,
     if len(masses) == 0:
         return {**stages, "empty_at": "z_and_max_mass"}
 
-    peak_weights = weights if peak_on == "weighted" else None
-    peak_mass = find_peak_mass(masses, peak_weights)
+    if cuts is None:
+        peak_weights = weights if peak_on == "weighted" else None
+        peak_mass = find_peak_mass(masses, peak_weights)
+    else:
+        peak_mass = cuts["peak_mass"]
     stages["peak_mass"] = peak_mass
     stages["peak_on"] = peak_on
+    stages["peak_scope"] = "per-sample" if cuts is None else "combined"
     if peak_mass is not None:
         keep = masses >= peak_mass
         masses, weights = masses[keep], weights[keep]
@@ -474,7 +539,13 @@ def postprocess_in_lockstep(masses: np.ndarray, weights: np.ndarray,
     if len(masses) == 0:
         return {**stages, "empty_at": "peak_removal"}
 
-    main_mask = main_split_mask(masses)
+    if cuts is None:
+        main_mask = main_split_mask(masses)
+    else:
+        split = cuts["split_mass"]
+        stages["split_mass"] = split
+        main_mask = (np.ones(len(masses), dtype=bool) if split is None
+                     else masses < split)
     stages["n_main"] = int(np.count_nonzero(main_mask))
     stages["n_outliers"] = int(np.count_nonzero(~main_mask))
     if len(masses) != len(weights):
@@ -541,6 +612,7 @@ def build(args) -> dict:
         "is_smoke_test": bool(args.smoke_test),
         "options": {
             "peak_on": args.peak_on,
+            "peak_scope": args.peak_scope,
             "min_events_basis": args.min_events_basis,
             "output_mode": args.output_mode,
             "min_events_per_fs": args.min_events_per_fs,
@@ -663,11 +735,38 @@ def build(args) -> dict:
 
     # ---- per-sample histograms ------------------------------------------
     per_sample_hists = {}
-    for rid, shard_paths in sorted(shards_by_record.items(), key=lambda kv: int(kv[0])):
-        hists, diag = histograms_for_shards(shard_paths, args)
-        per_sample_hists[rid] = hists
-        report["samples"][rid]["histograms"] = diag
-        print(f"[{rid}] {len(hists)} histogram(s) after post-processing", flush=True)
+    record_order = sorted(shards_by_record, key=int)
+    if args.peak_scope == "per-sample":
+        # Each sample cut at its own peak/split (the 17-18 Oct full-run
+        # build); kept only to reproduce that build.
+        for rid in record_order:
+            hists, diag = histograms_for_shards(shards_by_record[rid], args)
+            per_sample_hists[rid] = hists
+            report["samples"][rid]["histograms"] = diag
+            print(f"[{rid}] {len(hists)} histogram(s) after post-processing", flush=True)
+    else:
+        # --peak-scope combined (Matan's decision, 18 Oct 2026, option A): the
+        # peak and split of each name are found ONCE on all samples together
+        # and the same cut is applied to every sample, so the per-sample
+        # files sum exactly to the summed-SM file, cut like the data.
+        arrays_by_record, diags = {}, {}
+        for rid in record_order:
+            arrays_by_record[rid], diags[rid] = name_arrays_for_shards(shards_by_record[rid])
+            print(f"[{rid}] {len(arrays_by_record[rid])} name(s) collected", flush=True)
+        names = sorted(set().union(*(a.keys() for a in arrays_by_record.values())))
+        cuts_by_name = {}
+        for name in names:
+            present = [arrays_by_record[rid][name] for rid in record_order
+                       if name in arrays_by_record[rid]]
+            cuts_by_name[name] = combined_cuts(
+                [(m, w) for m, w, _im in present], present[0][2], args.peak_on)
+        report["combined_cuts"] = cuts_by_name
+        for rid in record_order:
+            hists = histograms_from_name_arrays(
+                arrays_by_record.pop(rid), diags[rid], args, cuts_by_name)
+            per_sample_hists[rid] = hists
+            report["samples"][rid]["histograms"] = diags[rid]
+            print(f"[{rid}] {len(hists)} histogram(s) after post-processing", flush=True)
 
     # ---- outputs ---------------------------------------------------------
     written = {}
@@ -706,7 +805,17 @@ def build(args) -> dict:
 
 
 def histograms_for_shards(shard_paths: list, args) -> tuple[dict, dict]:
-    """{bumpnet_name: (sum_w, sum_w2, edges, n_raw_entries)} plus diagnostics."""
+    """{bumpnet_name: (sum_w, sum_w2, edges, n_raw_entries)} plus diagnostics,
+    for ONE sample with its own cuts (--peak-scope per-sample)."""
+    arrays, diag = name_arrays_for_shards(shard_paths)
+    hists = histograms_from_name_arrays(arrays, diag, args, None)
+    return hists, diag
+
+
+def name_arrays_for_shards(shard_paths: list) -> tuple[dict, dict]:
+    """{bumpnet_name: (masses, weights, im_str)} for one sample, after the
+    event union and BEFORE any post-processing, plus the diagnostics of that
+    stage."""
     masses_by_sig = collect_signature_arrays(shard_paths)
     weights_by_sig = collect_signature_arrays(shard_paths, MC_WEIGHT_SUFFIX)
     acc_by_sig = collect_signature_arrays(shard_paths, MC_SIBLING_ACCEPTANCE)
@@ -717,7 +826,7 @@ def histograms_for_shards(shard_paths: list, args) -> tuple[dict, dict]:
         fs_str, im_str = m.groups()
         grouped[_convert_to_bumpnet_name(fs_str, im_str)].append((sig, im_str))
 
-    hists = {}
+    arrays = {}
     diag = {
         "n_mass_signatures": len(masses_by_sig),
         "n_bumpnet_names_before_postprocessing": len(grouped),
@@ -768,8 +877,23 @@ def histograms_for_shards(shard_paths: list, args) -> tuple[dict, dict]:
         fs_str = SIG_PATTERN.search(sorted(entries)[0][0]).group(1)
         diag["raw_yield_by_final_state"][fs_str] += int(masses.size)
         diag["weighted_yield_by_final_state"][fs_str] += float(weights.sum())
+        arrays[name] = (masses, weights, im_str)
+    diag["raw_yield_by_final_state"] = dict(diag["raw_yield_by_final_state"])
+    diag["weighted_yield_by_final_state"] = dict(diag["weighted_yield_by_final_state"])
+    return arrays, diag
 
-        pp = postprocess_in_lockstep(masses, weights, im_str, args.peak_on)
+
+def histograms_from_name_arrays(arrays: dict, diag: dict, args,
+                                cuts_by_name: dict | None) -> dict:
+    """Post-process and fill one sample's histograms. cuts_by_name=None: each
+    histogram is cut at its own peak/split (per-sample scope); otherwise at
+    the combined cuts of its name, and the weighted min-events floor (if
+    requested) is judged on the combined spectrum too, so every sample keeps
+    or drops a name together."""
+    hists = {}
+    for name, (masses, weights, im_str) in sorted(arrays.items()):
+        cuts = None if cuts_by_name is None else cuts_by_name[name]
+        pp = postprocess_in_lockstep(masses, weights, im_str, args.peak_on, cuts)
         if "main_masses" not in pp:
             diag["n_dropped_empty"] += 1
             diag["per_histogram"][name] = {**pp, "kept": False}
@@ -779,7 +903,8 @@ def histograms_for_shards(shard_paths: list, args) -> tuple[dict, dict]:
             diag["n_dropped_empty"] += 1
             diag["per_histogram"][name] = {**_scrub(pp), "kept": False}
             continue
-        if args.min_events_basis == "weighted" and main_w.sum() < args.min_events_per_fs:
+        floor_w = main_w.sum() if cuts is None else cuts["combined_main_weight"]
+        if args.min_events_basis == "weighted" and floor_w < args.min_events_per_fs:
             diag["n_dropped_min_events_weighted"] += 1
             diag["per_histogram"][name] = {
                 **_scrub(pp), "kept": False,
@@ -797,10 +922,8 @@ def histograms_for_shards(shard_paths: list, args) -> tuple[dict, dict]:
             "sum_w2_in_hist": float(sum_w2.sum()),
             "negative_bin_inventory": negative_or_empty_bin_inventory(sum_w, sum_w2),
         }
-    diag["raw_yield_by_final_state"] = dict(diag["raw_yield_by_final_state"])
-    diag["weighted_yield_by_final_state"] = dict(diag["weighted_yield_by_final_state"])
     diag["n_histograms_kept"] = len(hists)
-    return hists, diag
+    return hists
 
 
 def _scrub(pp: dict) -> dict:
@@ -854,6 +977,14 @@ def main() -> int:
                         "spectrum. Default weighted (PR #35's semantics, DESIGN.md "
                         "D6); 'unweighted' answers the open question for Yuval "
                         "without a re-run.")
+    p.add_argument("--peak-scope", choices=("combined", "per-sample"), default="combined",
+                   help="where the peak-removal and outlier-split masses are found. "
+                        "Default combined: once per histogram name on all samples "
+                        "together, then applied to every sample, so the summed SM "
+                        "is cut like the data and the per-sample files sum to it "
+                        "exactly (Matan, 18 Oct 2026). 'per-sample' cuts each "
+                        "sample at its own peak and exists only to reproduce the "
+                        "17-18 Oct full-run build.")
     p.add_argument("--min-events-basis", choices=("raw", "weighted"), default="raw",
                    help="basis for the >=100-per-final-state rule. Default raw, so "
                         "the rule means the same thing in MC as in data; 'weighted' "
