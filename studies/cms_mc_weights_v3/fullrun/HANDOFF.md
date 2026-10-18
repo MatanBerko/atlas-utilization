@@ -1,6 +1,6 @@
 # HANDOFF — CMS MC FULL RUN (17 Oct 2026)
 
-**Current step: 3 — production submitted, waiting/monitoring.**
+**Current step: 3/4 — production finished (497/497, all exit 0); audit `5243008` submitted; reproduce `5243009` submitted (independent of the build).**
 Not delivered to anyone; not merged into master.
 
 **Branch:** `feature/cms-mc-fullrun-20261017` (origin only), from
@@ -58,4 +58,19 @@ Reached over `wipp-home` (`wipp-campus` timed out).
    audit (4gb, 2h) → build (64gb, 8h) → reproduce (16gb, 8h; PILOT_RUNS=work/cms_mc_v3_pilot_20261011/runs)
    → sanity (32gb, 4h). Then FULL_RUN_REPORT.md (step 6), archive + final HANDOFF (step 7).
 
-Status at 11:45 IDT: 19 running, 478 queued (group io allowance), nothing failed.
+Status at 11:45 IDT 17 Oct: 19 running, 478 queued (group io allowance), nothing failed.
+
+## Production result (18 Oct, 15:13 IDT)
+
+- 497/497 `job_metadata.json`, 497/497 `.err` with `Exit status: 0`, no resubmission (VERIFIED BY RUNNING)
+- Last files (68187, 68073; normE) waited overnight on the group io limit
+- File count: **116,798** (+6,651 = 6,014 in `work/fullrun_20261017` + 637 in the `post` checkout)
+
+## Post-production jobs (from `post` @ dbd3107)
+
+| step | PBS job | resources | state |
+|---|---|---|---|
+| audit | `5243008` | 4gb, 2h, io=25 | submitted 18 Oct |
+| reproduce | `5243009` | 16gb, 8h, io=25 | submitted 18 Oct |
+| build | — | 64gb, 8h, io=25 | after audit OK |
+| sanity | — | 32gb, 4h, io=25 | after build |
