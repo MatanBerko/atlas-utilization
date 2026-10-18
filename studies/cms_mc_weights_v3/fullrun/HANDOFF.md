@@ -1,6 +1,6 @@
 # HANDOFF — CMS MC FULL RUN (17 Oct 2026)
 
-**Current step: 3/4 — production finished (497/497, all exit 0); audit `5243008` submitted; reproduce `5243009` submitted (independent of the build).**
+**Current step: 4 — audit OK, reproducibility ALL IDENTICAL; build `5243011` running (started ~15:16 IDT 18 Oct).**
 Not delivered to anyone; not merged into master.
 
 **Branch:** `feature/cms-mc-fullrun-20261017` (origin only), from
@@ -70,7 +70,10 @@ Status at 11:45 IDT 17 Oct: 19 running, 478 queued (group io allowance), nothing
 
 | step | PBS job | resources | state |
 |---|---|---|---|
-| audit | `5243008` | 4gb, 2h, io=25 | submitted 18 Oct |
-| reproduce | `5243009` | 16gb, 8h, io=25 | submitted 18 Oct |
-| build | — | 64gb, 8h, io=25 | after audit OK |
+| audit | `5243008` | 4gb, 2h, io=25 | done: verdict OK, 497/497, Σw failure exactly 75589/98, 108.97 CPU h |
+| reproduce | `5243009` | 16gb, 8h, io=25 | done (exit 0, 28.5 min): 98/98 files, 784/784 shards identical; only created_utc/elapsed_sec/git_commit differ |
+| build | `5243011` | 64gb, 8h, io=25 | running |
 | sanity | — | 32gb, 4h, io=25 | after build |
+
+File count 15:46 IDT 18 Oct: 117,654 (build scratch in progress; expected final ≈118,350 < 119,147).
+Evidence copied to `fullrun/evidence/` (production_audit.json, reproducibility_pilot_vs_fullrun.json).
