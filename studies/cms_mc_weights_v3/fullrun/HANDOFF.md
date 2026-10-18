@@ -1,6 +1,6 @@
 # HANDOFF — CMS MC FULL RUN (17 Oct 2026)
 
-**Current step: 4 — audit OK, reproducibility ALL IDENTICAL; build `5243011` running (started ~15:16 IDT 18 Oct).**
+**Current step: COMPLETE (18 Oct 2026, 19:50 IDT). Nothing running. Not delivered; not merged. Next: the technical lead verifies (see `FULL_RUN_REPORT.md`).**
 Not delivered to anyone; not merged into master.
 
 **Branch:** `feature/cms-mc-fullrun-20261017` (origin only), from
@@ -72,8 +72,20 @@ Status at 11:45 IDT 17 Oct: 19 running, 478 queued (group io allowance), nothing
 |---|---|---|---|
 | audit | `5243008` | 4gb, 2h, io=25 | done: verdict OK, 497/497, Σw failure exactly 75589/98, 108.97 CPU h |
 | reproduce | `5243009` | 16gb, 8h, io=25 | done (exit 0, 28.5 min): 98/98 files, 784/784 shards identical; only created_utc/elapsed_sec/git_commit differ |
-| build | `5243011` | 64gb, 8h, io=25 | running |
-| sanity | — | 32gb, 4h, io=25 | after build |
+| build | `5243011` | 64gb, 8h, io=25 | done (exit 0, 2h15): 13/13 records + summedSM; exactly 1 exclusion 75589/98 |
+| sanity | `5243647` | 32gb, 4h, io=25 | done (2h15): 0 NaN/inf, 0 negative variances, yields consistent, 19 PNGs |
 
 File count 15:46 IDT 18 Oct: 117,654 (build scratch in progress; expected final ≈118,350 < 119,147).
 Evidence copied to `fullrun/evidence/` (production_audit.json, reproducibility_pilot_vs_fullrun.json).
+
+## Final state (18 Oct 2026, 19:50 IDT)
+
+- Report: `fullrun/FULL_RUN_REPORT.md`. PNGs: `plots/fullrun/` (19). Evidence: `fullrun/evidence/` (audit, reproducibility, sanity)
+- Output (cluster only): `work/fullrun_20261017/build_default/` (13 × `fullrun_record<rid>_mc.root`, `fullrun_summedSM_mc.root`, `fullrun_build_report.json`)
+- Checkouts archived, with listings verified (archive file entries == files on disk):
+  - `checkouts/fullrun_20261017/checkout_repo_294ee59.tar.gz` (260 files, 63 MiB)
+  - `checkouts/fullrun_20261017/checkout_post_dbd3107.tar.gz` (276 files, 63 MiB)
+
+  The checkout directories themselves were left in place (deleting cluster data is out of scope).
+- File count: **118,401** (+8,254 vs 110,147; limits 119,147 / 125,000 respected)
+- Local repo switched back to `master`. master and every other branch unchanged; nothing upstream; no PR.
