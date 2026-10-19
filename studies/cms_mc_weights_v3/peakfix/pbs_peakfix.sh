@@ -83,8 +83,8 @@ case "$WHAT" in
   compare)
     test ! -e "$WORK_DIR/evidence/compare"
     LOCAL=$(mktemp -d /dev/shm/mcpeak_XXXXXX)
-    stage old "$FULLRUN"/build_default/fullrun_*_mc.root
-    stage new "$WORK_DIR"/build_combined/peakfix_*_mc.root
+    stage old "$FULLRUN"/build_default/fullrun_*_mc.root "$FULLRUN"/build_default/fullrun_build_report.json
+    stage new "$WORK_DIR"/build_combined/peakfix_*_mc.root "$WORK_DIR"/build_combined/peakfix_build_report.json
     python -u $P/compare_old_new.py \
         --old-dir "$LOCAL/old" --old-prefix fullrun \
         --new-dir "$LOCAL/new" --new-prefix peakfix \

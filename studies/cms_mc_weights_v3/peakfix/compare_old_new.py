@@ -7,7 +7,9 @@ Per histogram name of the summed-SM file: present in old / new, first and
 last filled bin, total weight, and whether the histogram changed. Closure
 of each build: sum of the per-sample histograms vs the summed-SM file, bin
 by bin. Per-sample files: how many histograms changed. The 10 largest
-changes (by |delta total| / old total, and by first-bin shift).
+changes (by |delta total| / old total, and by first-bin shift). Sanity:
+excluded files per sample (from each build's report), the final-state
+sets, and no NaN/inf in any histogram of either build.
 
 PNGs: the 6 stacked summed-SM plots redrawn from the new build
 (new_stack_<i>.png), and stack 5 old vs new side by side.
@@ -74,6 +76,30 @@ def one_cut(per: dict, summed: dict) -> dict:
                     n_samples_starting_later += 1
     return {"n_names": n_names, "n_per_sample_starting_before_summed": n_violations,
             "n_per_sample_starting_after_summed_first_bin": n_samples_starting_later}
+
+
+def final_states(names) -> set:
+    return {n.split("_cat_", 1)[1] if "_cat_" in n else "unparsed" for n in names}
+
+
+def non_finite(per: dict, summed: dict) -> dict:
+    bad = []
+    for label, hs in [(str(rid), per[rid]) for rid in RECORDS] + [("summedSM", summed)]:
+        for name, h in hs.items():
+            if not (np.all(np.isfinite(h["values"])) and np.all(np.isfinite(h["variances"]))
+                    and np.isfinite(h["entries"])):
+                bad.append(f"{label}:{name}")
+    return {"n_histograms_with_nan_or_inf": len(bad), "examples": bad[:20]}
+
+
+def exclusions(report_path: Path) -> dict:
+    rep = json.loads(report_path.read_text())
+    out = {"n_files_excluded_total": 0, "excluded": []}
+    for rid, s in rep["samples"].items():
+        out["n_files_excluded_total"] += s["n_files_excluded"]
+        out["excluded"] += [{"record": rid, "file_index": e["file_index"], "verdict": e["verdict"]}
+                            for e in s["per_file_sigma_w"] if e.get("verdict", "").startswith("EXCLUDED")]
+    return out
 
 
 def side_by_side(name, title, old, new, out: Path) -> None:
@@ -148,6 +174,9 @@ def main() -> int:
     args = ap.parse_args()
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
+    exc_old = exclusions(Path(args.old_dir) / f"{args.old_prefix}_build_report.json")
+    exc_new = exclusions(Path(args.new_dir) / f"{args.new_prefix}_build_report.json")
+    print(f"excluded files: old {exc_old}, new {exc_new}", flush=True)
 
     old_per, old_sum = read_build(Path(args.old_dir), args.old_prefix)
     print(f"old: {len(old_sum)} summed histograms", flush=True)
@@ -201,6 +230,11 @@ def main() -> int:
         "closure_old": closure(old_per, old_sum), "closure_new": closure(new_per, new_sum),
         "one_cut_old": one_cut(old_per, old_sum), "one_cut_new": one_cut(new_per, new_sum),
         "per_sample": per_sample_changed,
+        "excluded_files_old": exc_old, "excluded_files_new": exc_new,
+        "n_final_states_old": len(final_states(names_old)), "n_final_states_new": len(final_states(names_new)),
+        "final_states_only_old": sorted(final_states(names_old) - final_states(names_new)),
+        "final_states_only_new": sorted(final_states(names_new) - final_states(names_old)),
+        "non_finite_old": non_finite(old_per, old_sum), "non_finite_new": non_finite(new_per, new_sum),
         "top10_by_rel_total_change": sorted(changed, key=lambda r: -abs(r["rel_change_total"] or 0))[:10],
         "top10_by_first_bin_shift": sorted(changed, key=lambda r: -abs(r["first_bin_shift_bins"] or 0))[:10],
         "top10_by_abs_total_change": sorted(changed, key=lambda r: -abs(r["new_total"] - r["old_total"]))[:10],

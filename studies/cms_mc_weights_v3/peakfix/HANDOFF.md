@@ -1,6 +1,6 @@
 # HANDOFF — CMS MC PEAK FIX (18–19 Oct 2026)
 
-**Current step: 3 — rebuild `5244700` and Z-peak `5244701` submitted (io=25).**
+**Current step: 4 — build `5244700` and Z-peak `5244701` FINISHED OK (checked 19 Oct 09:30); compare + datamc being submitted from the new pin.**
 Not delivered; not merged into master. Option B not implemented (question for Maryna).
 
 **Branch:** `feature/cms-mc-peakfix-20261018` (origin only), from
@@ -12,6 +12,9 @@ submitted whose walltime could end after Wed 21 Oct 15:00; by then
 `qstat -u berkom` must be empty and nobody connects.
 
 ## Done
+
+- **19 Oct, resume (VERIFIED BY RUNNING):** both jobs exit 0. Build output `work/peakfix_20261018/build_combined/` (13 per-sample + summed SM + report), scratch removed. Z-peak in `work/peakfix_20261018/evidence/zpeak/`.
+- **19 Oct:** `compare_old_new.py` gained exclusion / final-state / NaN-inf checks (the PBS compare stage now also stages both build reports). This is analysis-only; the builder is unchanged from `88d30ac`. Steps 4–6 run from the new pin (see below); the build itself stays pinned at `88d30ac`. Tests 12 + 24 + 46 + drift pass.
 
 - **Step 0, finding confirmed (VERIFIED BY RUNNING).** In the code, `histograms_for_shards` runs `postprocess_in_lockstep` per sample, and `sum_histograms` adds the already-cut histograms.
   - Job `5244611` (checkout `step0` @ `1611209`): in 4,976 of 4,977 summed names the kept samples have different peak masses.
@@ -46,10 +49,10 @@ Reached over `wipp-home`; `wipp-campus` timed out.
 | step | PBS job | resources | state |
 |---|---|---|---|
 | 0 verify | `5244611` | 16gb, 2h | done |
-| 3 build | `5244700` | 64gb, 8h | submitted 18 Oct ~20:11 |
+| 3 build | `5244700` | 64gb, 8h | done, exit 0, 2h07m wall, peak RSS 18.9 GB (PBS mem 28.5 GB) of 64 GB; 1 excluded file (75589); 4,977 summed names |
 | 4 compare | — | 32gb, 4h | after build |
 | 5–6 datamc | — | 32gb, 4h | after build |
-| 6 zpeak | `5244701` | 32gb, 8h | submitted 18 Oct ~20:13 |
+| 6 zpeak | `5244701` | 32gb, 8h | done, exit 0, 13 min; 0-jet 76–106: μμ 1.0340, ee 0.9534 (pilot 1.035 / 0.954) |
 
 ## How to resume
 
