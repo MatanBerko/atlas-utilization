@@ -21,7 +21,8 @@ lose most. Data vs MC: the fraction of kept events in 1b and 2b.
 PROJECTION (UNVERIFIED -- sample based): each group's sample counts are scaled
 to its full statistics by s_g = (production population of all files) /
 (production population of the sampled files), summed, and a final state passes
-if it reaches >= 100 events (raw, as both builders count it). Projected
+if it reaches >= 100 events (raw, as both builders count it) and has at least
+one of the 186 mass combinations (otherwise it yields no histogram). Projected
 histograms = for each passing final state, the number of the 186 mass
 combinations it satisfies (shared physics_calcs function, as the 7 Oct Step D;
 an UPPER BOUND). The exact 0.2598 numbers from the production metadata and the
@@ -132,7 +133,7 @@ def main() -> int:
             for which in ("incl", "excl"):
                 a = r0["rare4"][f"final_state_label_event_counts_{'inclusive' if which == 'incl' else 'exclusive'}"]
                 b = pfiles[pk][f"rare4_{which}"]
-                if a != b:
+                if {k: v for k, v in a.items() if v} != {k: v for k, v in (b or {}).items() if v}:
                     validation_fail.append(f"{g}/{pk}: rare4 {which} label counts differ from production")
             if not all(s["alignment_checks"].values()):
                 validation_fail.append(f"{g}/{pk}: alignment {s['alignment_checks']}")
@@ -160,7 +161,8 @@ def main() -> int:
             for r4 in run:
                 ref.update(r4["final_state_label_event_counts_inclusive" if pop_field == "n_after_gate"
                               else "final_state_label_event_counts_exclusive"])
-            if dict(ref) != dict(fs):
+            # the driver's exclusive label counts also list labels with 0 events; ignore those
+            if {k: v for k, v in ref.items() if v} != {k: v for k, v in fs.items() if v}:
                 validation_fail.append(f"{g} {t}: captured kept labels != run metadata rare4 labels")
             jets = int((nj + nb).sum())
             yield_grp = {c: int(((nb_cat(nb) == i) & kp).sum()) for i, c in enumerate(NB_CATS)}
@@ -209,19 +211,25 @@ def main() -> int:
         res[f"{kind}_final_states_gain_most"] = sorted(rows, key=lambda r: -r["delta"])[:10]
         res[f"{kind}_final_states_lose_most"] = sorted(rows, key=lambda r: r["delta"])[:10]
 
+    complete = {k: all("per_threshold" in v for v in res["groups"].values() if v["kind"] == k)
+                and any(v["kind"] == k for v in res["groups"].values()) for k in ("data", "mc")}
+    res["complete"] = complete
     # data vs MC
     res["data_vs_mc"] = {}
     for t in TAGS:
         row = {}
         for kind in ("data", "mc"):
             d = dm[kind][t]
+            if not complete[kind]:
+                row[kind] = None
+                continue
             row[kind] = {"frac_1b": d["1b"] / d["kept"], "frac_2b": d["2b"] / d["kept"],
                          "by_nlep": {str(L): {"frac_1b": v[1] / v[0], "frac_2b": v[2] / v[0]} if v[0] else None
                                      for L, v in d["by_nlep"].items()}}
         res["data_vs_mc"][t] = row
     res["data_vs_mc"]["relative_change"] = {
-        kind: {c: res["data_vs_mc"]["0p25"][kind][c] / res["data_vs_mc"]["0p2598"][kind][c] - 1
-               for c in ("frac_1b", "frac_2b")} for kind in ("data", "mc")}
+        kind: ({c: res["data_vs_mc"]["0p25"][kind][c] / res["data_vs_mc"]["0p2598"][kind][c] - 1
+                for c in ("frac_1b", "frac_2b")} if complete[kind] else None) for kind in ("data", "mc")}
     res["migration_full_stat_weighted"] = {k: v.tolist() for k, v in mig_tot.items()}
     res["migration_axes"] = list(NB_CATS) + ["rejected"]
 
@@ -229,7 +237,12 @@ def main() -> int:
     from services.calculations import physics_calcs
     from studies.cms_datasets.singleelectron_prep.aggregate_threshold import all_186_combinations
     combos = all_186_combinations()
-    ncomb = lambda fs: sum(1 for c in combos if physics_calcs.is_finalstate_contain_combination(fs, c))  # noqa: E731
+    _nc = {}
+
+    def ncomb(fs):
+        if fs not in _nc:
+            _nc[fs] = sum(1 for c in combos if physics_calcs.is_finalstate_contain_combination(fs, c))
+        return _nc[fs]
     exact = {"data": Counter(), "mc": Counter()}
     for ds in DATASETS:
         for v in prod["data"][ds].values():
@@ -241,10 +254,15 @@ def main() -> int:
                 exact["mc"].update(v["rare4_incl"])
     res["projection"] = {}
     for kind in ("data", "mc"):
-        ex = {f for f, n in exact[kind].items() if n >= MIN_EVENTS}
+        if not complete[kind]:
+            res["projection"][kind] = {"incomplete": "not every group of this kind finished"}
+            continue
+        # a final state is a delivered category only if it has >= 100 events AND at least one
+        # mass combination (e.g. 0e_1m_0j_0b has 112.5M data events but no histogram)
+        ex = {f for f, n in exact[kind].items() if n >= MIN_EVENTS and ncomb(f) > 0}
         p = {}
         for t in TAGS:
-            passing = {f for f, n in proj_counts[kind][t].items() if n >= MIN_EVENTS}
+            passing = {f for f, n in proj_counts[kind][t].items() if n >= MIN_EVENTS and ncomb(f) > 0}
             p[t] = {"n_final_states_ge100": len(passing), "projected_histograms_upper_bound":
                     sum(ncomb(f) for f in passing), "final_states": sorted(passing)}
         exact_hist = sum(ncomb(f) for f in ex)
@@ -294,6 +312,9 @@ def plots(res: dict, out: Path) -> None:
     x = np.arange(5)
     for ax, kind, title in ((axes[0], "data", "Data (4 datasets, delivered population)"),
                             (axes[1], "mc", "MC (13 records, weighted)")):
+        if not res["complete"][kind]:
+            ax.set_title(f"{title}: not complete", color=INK, fontsize=10)
+            continue
         for i, t in enumerate(TAGS):
             v = mw[kind].sum(axis=1) if t == "0p2598" else mw[kind].sum(axis=0)
             ax.bar(x + (i - 0.5) * 0.38, v / v.sum(), 0.36, color=C_T[t], label=f"DeepJet > {WP[t]}",
@@ -316,7 +337,8 @@ def plots(res: dict, out: Path) -> None:
                 res["sample"][g]["scale"] for g, v in gr.items() if v["kind"] == "mc") for c in NB_CATS}
     b = {c: sum(v["per_threshold"]["0p25"]["weighted_yield_kept_by_group"][c] *
                 res["sample"][g]["scale"] for g, v in gr.items() if v["kind"] == "mc") for c in NB_CATS}
-    series.append(("MC (weighted)", {c: b[c] / a[c] - 1 if a[c] else None for c in NB_CATS}))
+    if res["complete"]["mc"]:
+        series.append(("MC (weighted)", {c: b[c] / a[c] - 1 if a[c] else None for c in NB_CATS}))
     xs = np.arange(len(NB_CATS))
     wdt = 0.8 / len(series)
     for i, (name, rc) in enumerate(series):
@@ -347,7 +369,8 @@ def plots(res: dict, out: Path) -> None:
     ax.set_yticks(y, lab, fontsize=8)
     ax.invert_yaxis()
     ax.set_xlabel("selected jets that are b-tagged [%] (raw)", color=INK)
-    ax.legend(frameon=False, fontsize=8, loc="lower right")
+    ax.set_xlim(0, 1.15 * max(100 * gr[g]["per_threshold"]["0p25"]["fraction_jets_btagged"] for g in names))
+    ax.legend(frameon=False, fontsize=8, loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=2)
     ax.grid(axis="x", color=GRID, lw=0.6)
     style(ax)
     ax.grid(axis="y", visible=False)
@@ -357,6 +380,9 @@ def plots(res: dict, out: Path) -> None:
     # 4. migration matrices (row-normalised), data vs MC
     fig, axes = plt.subplots(1, 2, figsize=(11, 4.6), facecolor=SURF)
     for ax, kind, title in ((axes[0], "data", "Data"), (axes[1], "mc", "MC (weighted)")):
+        if not res["complete"][kind]:
+            ax.set_title(f"{title}: not complete", color=INK, fontsize=10)
+            continue
         m = mw[kind]
         rn = m / np.where(m.sum(axis=1, keepdims=True) > 0, m.sum(axis=1, keepdims=True), 1)
         ax.imshow(rn, cmap="Blues", vmin=0, vmax=1)
@@ -392,6 +418,9 @@ def print_summary(res: dict) -> None:
     print(json.dumps(res["data_vs_mc"], indent=1, default=float)[:1500])
     for kind in ("data", "mc"):
         p = res["projection"][kind]
+        if "incomplete" in p:
+            print(kind, "projection: incomplete")
+            continue
         print(kind, {t: (p[t]["n_final_states_ge100"], p[t]["projected_histograms_upper_bound"]) for t in TAGS},
               "exact", p["exact_0p2598_from_production_metadata"], "real", p["real_delivery"],
               "calibrated", {t: round(v) for t, v in p["projected_histograms_calibrated"].items()},

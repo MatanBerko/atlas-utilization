@@ -4,7 +4,7 @@
 chosen, nothing delivered. Every number is labelled VERIFIED BY RUNNING /
 UNVERIFIED in `RECHECK.md`.
 
-**Current step: proof PASSED; 1A DONE (reproduces 7 Oct); 1B DONE; `5249721[]`, 2-data `5249807[]`, 2-MC `5249808[]`, 1B `5249809[]` submitted (11:37 / 11:48).**
+**Current step: proof PASSED; 1A DONE (reproduces 7 Oct); 1B DONE; 2-data DONE; 2-MC running/queued; `5249721[]`, 2-data `5249807[]`, 2-MC `5249808[]`, 1B `5249809[]` submitted (11:37 / 11:48).**
 
 ## Branch
 
@@ -29,7 +29,7 @@ passed through unchanged) to save per-event object counts.
 | proof | normal vs wrapper@0.2598 on DoubleMuon 30522/0 and MC 35631/0, bit-identical? | `proof` | `5249720` done, exit 0: all 8 shards bit-identical (data and MC); job_metadata differs only in created_utc/elapsed_sec; `evidence/override_proof_{data,mc}.json` |
 | 1A | 7 Oct `measure_singleelectron.py` unchanged, 151 SE files, 10 per subjob (0–15) | `se_a` | `5249721[]` done 11:53, exit 0, 151/151. **Reproduces 7 Oct exactly**: 151/151 per-file JSONs identical (only elapsed_sec/git_commit differ), stepD byte-identical, stepB identical except the old-reference input path. Aggregated on the login node with nice (as on 7 Oct; JSON only) into `work/.../se/agg_a/`. Evidence `evidence/part1A_*.json` |
 | 1B | same via wrapper at 0.25 | `se_b` | `5249809[]` done ~12:15, 151/151, all logs show the override 0.2598 -> 0.25. Aggregated (`work/.../se/agg_b/`). FS>=100 / new FS / projected histograms unchanged at all T; b-independent columns identical. Evidence `evidence/part1B_*.json` |
-| 2 data | 41 sampled files (index % 10 == 0), driver ×2 | `sample` 0–40 | `5249807[]` submitted 11:48 (8gb, 2h) |
+| 2 data | 41 sampled files (index % 10 == 0), driver ×2 | `sample` 0–40 | `5249807[]` done ~12:17, 41/41, no errors. Copied (13 MB) and aggregated locally (`aggregate_btag.py`): every sampled file at 0.2598 reproduces production per file; 0 alignment failures |
 | 2 MC | 56 sampled files, MC driver @ `294ee59` ×2 | `sample` 41–96 | `5249808[]` submitted 11:48 (8gb, 4h) |
 
 Sample list: `recheck/evidence/sample_files.json`, mapping `recheck/mappings/sample_mapping.txt`.
