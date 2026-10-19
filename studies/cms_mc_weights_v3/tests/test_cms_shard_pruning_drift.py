@@ -4,7 +4,7 @@ Drift check for the CMS-owned copy of upstream's pruning function
 (studies/cms_mc_weights_v3/deliver/cms_shard_pruning.py).
 
   1. upstream's services/storage/sqlite_shards.py::prune_final_states_below_min_events
-     must still be exactly the e1ce8bb source recorded below. If this fails,
+     must still be exactly the 7f2da5d (#35) source recorded below. If this fails,
      upstream changed the function: re-compare the CMS copy with it, port
      the change (keeping only the D3 lines different), and update the
      recorded hash.
@@ -51,14 +51,18 @@ UPSTREAM_FILE = REPO_ROOT / "services" / "storage" / "sqlite_shards.py"
 CMS_FILE = REPO_ROOT / "studies" / "cms_mc_weights_v3" / "deliver" / "cms_shard_pruning.py"
 
 # sha256 of the function's source text (def line to last line, "\n"-joined,
-# trailing newline) in upstream commit e1ce8bb2bd648a7c35d80b4efe490a20025892b9.
-RECORDED_UPSTREAM_COMMIT = "e1ce8bb2bd648a7c35d80b4efe490a20025892b9"
-RECORDED_UPSTREAM_SHA256 = "a32c94346ad8e39d199086311bedd4e90f4f43a0e301327abdf2cda36b0b0128"
+# trailing newline) in upstream commit 7f2da5d97e539b758bc6c861eca5f794e3431add
+# (#35, which taught upstream's pattern the "_mcw" sibling but not the CMS
+# "_mcraw_<field>" family). Previously recorded: e1ce8bb, sha256 a32c9434...
+RECORDED_UPSTREAM_COMMIT = "7f2da5d97e539b758bc6c861eca5f794e3431add"
+RECORDED_UPSTREAM_SHA256 = "3a0add92e5d71581c25afb72ced0b5226abccf29fd9ad3dadac3e10fcfa510ac"
 
 D3_REMOVED = [
-    '    pattern = re.compile(r"(_FS_[0-9a-z_]+)_IM_([0-9a-z]+)$")',
-    "            final_state, combination = match.groups()",
-    "            if final_state not in counted_final_states:",
+    "    # ``_mcw`` rows are the per-event MC weights of a combination; they are",
+    "    # removed with their final state but never counted as events.",
+    '    pattern = re.compile(r"(_FS_[0-9a-z_]+)_IM_([0-9a-z]+)(_mcw)?$")',
+    "            final_state, combination, is_weight = match.groups()",
+    "            if final_state not in counted_final_states and not is_weight:",
 ]
 D3_ADDED_CODE = [
     '    pattern = re.compile(r"(_FS_[0-9a-z_]+)_IM_([0-9a-z]+)(_mcw|_mcraw_[a-z0-9]+)?$")',

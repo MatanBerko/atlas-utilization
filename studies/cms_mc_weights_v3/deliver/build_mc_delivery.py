@@ -57,6 +57,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import pathlib
 import re
 import shutil
@@ -71,9 +72,12 @@ import numpy as np
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO_ROOT))
 
+from domain.metadata import MCDatasetMetadata  # noqa: E402
+from services.calculations.mc_weights import compute_normalization  # noqa: E402
 from services.pipelines.post_processing_pipeline import (  # noqa: E402
     _aligned_bin_edges,
     _dilepton_flavor,
+    _find_rightmost_highest_peak,
 )
 from services.storage.sqlite_shards import (  # noqa: E402
     SqliteArrayShardWriter,
@@ -119,6 +123,7 @@ import uproot  # noqa: E402
 TARGET_LUMINOSITY_FB = 16.393
 PB_TO_FB = 1000.0
 SIGMA_W_TOLERANCE = 1e-6
+LOGGER = logging.getLogger("build_mc_delivery")
 
 REGISTRY_PATH = REPO_ROOT / "studies" / "cms_mc_weights_v3" / "cms_mc_normalisation_v3.json"
 SHARD_NAME = "dataset_shard_rare4_inclusive.sqlite"   # rare4 == the delivered Version B
@@ -325,7 +330,12 @@ def read_shard_arrays(shard_path: str) -> dict:
 
 
 def normalisation_factor(record: dict, sigma_w: float) -> float:
-    """sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w, with k = eps = 1."""
+    """sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w, with k = eps = 1.
+
+    The arithmetic is upstream #35's own compute_normalization; the inputs
+    stay CMS's: sigma_eff from the registry and Sigma-w measured over the
+    surviving files. Bit-identical to the previous inline formula
+    (tests/test_upstream35_drift.py pins its output)."""
     k = float(record["k_factor"])
     eps = float(record["gen_filt_eff"])
     if k != 1.0 or eps != 1.0:
@@ -334,8 +344,15 @@ def normalisation_factor(record: dict, sigma_w: float) -> float:
             "Both must be exactly 1.0 -- every correction is already inside "
             "cross_section_pb (see the registry header). Refusing to apply a "
             "correction twice.")
-    sigma_pb = float(record["cross_section_pb"])
-    return sigma_pb * PB_TO_FB * k * eps * TARGET_LUMINOSITY_FB / sigma_w
+    metadata = MCDatasetMetadata(
+        dataset_number=int(record["record_id"]),
+        cross_section_pb=float(record["cross_section_pb"]),
+        sum_of_weights=sigma_w,
+        k_factor=k,
+        gen_filt_eff=eps,
+        physics_short=record.get("physics_short"),
+    )
+    return compute_normalization(metadata, TARGET_LUMINOSITY_FB)
 
 
 def write_mcw_siblings(shard_path: str, norm: float, cap_scales: dict) -> dict:
@@ -404,27 +421,12 @@ def z_peak_keep_mask(masses: np.ndarray, signature: str) -> np.ndarray:
 
 
 def find_peak_mass(masses: np.ndarray, weights: np.ndarray | None) -> float | None:
-    """The rightmost highest peak on the aligned grid.
-
-    Reimplements the shared `_find_rightmost_highest_peak` with an optional
-    `weights` argument -- PR #35's own change, which is not merged here. With
-    weights=None the arithmetic is identical to the shared function's, which
-    the test suite asserts directly."""
-    if len(masses) == 0:
-        return None
-    edges = _aligned_bin_edges(masses, BIN_WIDTH_GEV)
-    counts, _ = np.histogram(masses, bins=edges, weights=weights)
-    if len(counts) == 0:
-        return None
-    max_count = np.max(counts)
-    peak_idx = None
-    for i in range(len(counts) - 1, -1, -1):
-        if counts[i] == max_count:
-            peak_idx = i
-            break
-    if peak_idx is None:
-        return None
-    return float(edges[peak_idx])
+    """The rightmost highest peak on the aligned grid: upstream #35's own
+    `_find_rightmost_highest_peak` (with its `weights` argument), returned
+    as a plain float as before. tests/test_upstream35_drift.py pins its
+    behaviour on fixed inputs."""
+    peak = _find_rightmost_highest_peak(masses, BIN_WIDTH_GEV, LOGGER, weights=weights)
+    return None if peak is None else float(peak)
 
 
 def split_mass(masses: np.ndarray) -> float | None:
