@@ -4,7 +4,7 @@
 chosen, nothing delivered. Every number is labelled VERIFIED BY RUNNING /
 UNVERIFIED in `RECHECK.md`.
 
-**Current step: ALL MEASUREMENTS DONE — proof PASSED; 1A reproduces 7 Oct exactly; 1B done; Part 2 data 41/41 and MC 56/56 done; `RECHECK.md` written. Remaining: archive checkouts, file count, switch to master.**
+**Current step: ALL MEASUREMENTS DONE; `RECHECK.md` written; checkouts archived; file count measured. PUSH BLOCKED: upstream merged #35 (`7f2da5d`, 19 Oct 13:18), so the gate is no longer empty — waiting for a decision whether to merge `upstream/master` into this branch (read-only test merge: no conflicts; #35 touches no CMS study file). Then push and switch the local repo to master.**
 
 ## Branch
 
@@ -62,4 +62,12 @@ V=WORK_DIR=$W,STUDY_REPO=$C/study,MC_REPO=$C/mcdriver
 
 ## File count
 
-Start: 119,243 (19 Oct 11:31); 119,770 after checkouts + dirs (+527). Budget ≤ 2,500 new, total ≤ 125,000.
+Start: 119,243 (19 Oct 11:31); 119,770 after checkouts + dirs (+527); **120,539 at the end (19 Oct 15:46; +1,296 new)**. Budget ≤ 2,500 new, total ≤ 125,000: within both.
+
+## Archive
+
+`checkouts/serecheck_20261019/{study,mcdriver}.tar.gz` (19 Oct 15:46), next to the directories (left in place). Verified: gzip -t OK; tar entries = files on disk (study 160 = 160, mcdriver 233 = 233); 65 MB each; sha256 prefixes study `798c0ed31f98c93a`, mcdriver `ca5b8f916af26f37`.
+
+## Cluster state
+
+`qstat -u berkom` empty (19 Oct 15:46). Nothing left to run.
