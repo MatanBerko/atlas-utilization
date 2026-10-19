@@ -787,10 +787,11 @@ def test_c7_names_match_upstream(pilot_final_states_path=None):
           "removing) while ours keeps 5j -- the group's decision",
           ours_capped[0] == "0e_2m_5j_1b" and up_capped["labels"][0] == "0e_2m_4j_1b",
           f"ours {ours_capped[0]}, upstream {up_capped['labels'][0]}")
-    check("NOTED: at 12 light jets upstream does NOT cap, because its own capping "
-          "function reads only the first digit ('1' of '12', which is not > 4) -- the "
-          "same one-digit limitation C1 pins in is_finalstate_contain_combination",
-          ours_capped[1] == "0e_2m_12j_1b" and up_capped["labels"][1] == "0e_2m_12j_1b",
+    # expectation updated for upstream PR #34 (f16768e), 16 Oct 2026
+    check("DOCUMENTED DIVERGENCE at 12 light jets too: upstream's own grouping caps "
+          "the label at 4j (since PR #34 its capping function reads the whole count, "
+          "12 > 4) while ours keeps 12j -- the group's decision",
+          ours_capped[1] == "0e_2m_12j_1b" and up_capped["labels"][1] == "0e_2m_4j_1b",
           f"ours {ours_capped[1]}, upstream {up_capped['labels'][1]}")
     check("the NAMING code itself agrees on both labels (it is the grouping, not the "
           "naming, that differs)",

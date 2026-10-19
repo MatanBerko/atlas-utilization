@@ -193,17 +193,20 @@ def test_exact_light_jet_labels():
     check("exactly 5 distinct labels (one per multiplicity, none merged)",
           len(labels) == 5, f"got {len(labels)}: {sorted(labels)}")
 
-    # What the OLD grouping did with the same input. NOTE: it merged 5 and 6
-    # light jets into "4j", but it did NOT merge 11 -- see
-    # test_old_capping_was_inconsistent below for why, and for the wider
-    # consequence. So the old grouping gives 3 labels here, not 2.
+    # What the capped grouping (live physics_calcs.limit_particles_in_fs)
+    # does with the same input. Before upstream PR #34 it merged 5 and 6 but
+    # NOT 11 (one-digit read); since #34 it caps every count above 4,
+    # including 11 -- see test_capping_after_upstream_pr34 below. So the
+    # capped grouping now gives 2 labels here.
+    # expectation updated for upstream PR #34 (f16768e), 16 Oct 2026
     old = old_capped_grouping(obj_record)
-    check("old grouping merged 5j and 6j into 4j (3 events under one 4j label)",
-          old.get("0e_2m_4j_1b") == 3, f"old grouping = {old}")
-    check("old grouping left 11j as its own label (the two-digit quirk)",
-          old.get("0e_2m_11j_1b") == 1, f"old grouping = {old}")
-    check("old grouping produced 3 labels where the new one produces 5",
-          len(old) == 3, f"old labels = {sorted(old)}")
+    check("capped grouping merges 5j, 6j and 11j into 4j (4 events under one 4j label)",
+          old.get("0e_2m_4j_1b") == 4, f"capped grouping = {old}")
+    check("capped grouping no longer leaves 11j as its own label (two-digit quirk "
+          "fixed upstream)",
+          "0e_2m_11j_1b" not in old, f"capped grouping = {old}")
+    check("capped grouping produces 2 labels where the exact one produces 5",
+          len(old) == 2, f"capped labels = {sorted(old)}")
 
     # Name format: still exactly six <count><letter> fields, order e m j g t b.
     for label in labels:
@@ -304,40 +307,37 @@ def test_event_conservation():
 # 2b. B1 -- what the OLD capping actually did (an unexpected finding)
 # --------------------------------------------------------------------------
 
-def test_old_capping_was_inconsistent():
-    """Documents, by running it, an inconsistency in the grouping this task
-    replaced -- found while writing these tests, not previously recorded.
+def test_capping_after_upstream_pr34():
+    """Documents, by running it, what the shared capping function does now
+    that upstream PR #34 (f16768e) changed it.
 
-    services.calculations.physics_calcs.limit_particles_in_fs reads only the
-    FIRST character of each count field. For a two-digit count that first
-    character is not the real count, so:
+    History: before #34, services.calculations.physics_calcs.
+    limit_particles_in_fs read only the FIRST character of each count
+    field, so counts 5..9 were capped to 4, counts 10..14/20..24/30..34/
+    40..44 were NOT capped, and counts 50..99 were MANGLED (e.g. "99j" ->
+    "49j"). The old 1 Oct delivery therefore did not consistently group
+    high-multiplicity final states under 4j.
 
-      - counts 5..9      WERE capped to 4  (merged into the 4j histograms)
-      - counts 10..14,
-        20..24, 30..34,
-        40..44           were NOT capped at all (own separate final state!)
-      - counts 50..99    were MANGLED: e.g. "99j" became "49j", "50j" -> "40j"
-
-    So the old 1 Oct delivery did not consistently group high-multiplicity
-    final states under 4j the way its own documentation described. The new
-    exact-label grouping does not call limit_particles_in_fs at all, so none
-    of this can affect the new delivery. Recorded here so the comparison
-    against the 1 Oct numbers is interpreted correctly."""
-    print("\n--- 2b. B1: the OLD capping was inconsistent (finding) ---")
+    Now: #34 makes it read the whole count, so EVERY count above 4 --
+    one-digit or multi-digit -- is capped to 4. The exact-label grouping
+    does not call limit_particles_in_fs at all, so neither the old nor the
+    new behaviour can affect the new delivery."""
+    print("\n--- 2b. B1: the shared capping after upstream PR #34 ---")
     cap = physics_calcs.limit_particles_in_fs
 
     for n in (5, 6, 7, 8, 9):
         check(f"OLD: {n} light jets WAS capped to 4j",
               cap(f"0e_2m_{n}j_1b", 4) == "0e_2m_4j_1b")
+    # expectation updated for upstream PR #34 (f16768e), 16 Oct 2026
     for n in (10, 11, 12, 13, 14, 20, 24, 40, 44):
         label = f"0e_2m_{n}j_1b"
-        check(f"OLD: {n} light jets was NOT capped (kept its own label)",
-              cap(label, 4) == label, f"got {cap(label, 4)}")
-    check("OLD: 99 light jets was MANGLED to 49j",
-          cap("0e_2m_99j_1b", 4) == "0e_2m_49j_1b",
+        check(f"CURRENT: {n} light jets IS capped to 4j (was left uncapped before #34)",
+              cap(label, 4) == "0e_2m_4j_1b", f"got {cap(label, 4)}")
+    check("CURRENT: 99 light jets IS capped to 4j (was mangled to 49j before #34)",
+          cap("0e_2m_99j_1b", 4) == "0e_2m_4j_1b",
           f"got {cap('0e_2m_99j_1b', 4)}")
-    check("OLD: 50 light jets was MANGLED to 40j",
-          cap("0e_2m_50j_1b", 4) == "0e_2m_40j_1b",
+    check("CURRENT: 50 light jets IS capped to 4j (was mangled to 40j before #34)",
+          cap("0e_2m_50j_1b", 4) == "0e_2m_4j_1b",
           f"got {cap('0e_2m_50j_1b', 4)}")
 
     # The new grouping has none of these problems: the label IS the count.
@@ -586,7 +586,7 @@ def main():
     print("=" * 74)
     test_exact_light_jet_labels()
     test_event_conservation()
-    test_old_capping_was_inconsistent()
+    test_capping_after_upstream_pr34()
     test_multidigit_label_parsing()
     test_z_cut_110()
     test_aligned_outlier_split()
