@@ -1783,8 +1783,15 @@ def run_combination_funnel(obj_record: ak.Array, is_exclusive_selected: np.ndarr
             if not physics_calcs.is_finalstate_contain_combination(label, combination):
                 continue
 
-            inv_mass, skip_reason = _calculate_combination_invariant_mass(
+            # Upstream #35 returns (inv_mass, mc_event_weights, skip_reason).
+            # CMS computes its own MC weights at build time, and im_config
+            # never enables #35's weighting, so the middle value must be None.
+            inv_mass, mc_event_weights, skip_reason = _calculate_combination_invariant_mass(
                 fs_events, combination, im_config, calculator, logger, label,
+            )
+            assert mc_event_weights is None, (
+                f"{label}/{combination}: upstream returned MC event weights; "
+                "CMS never enables #35's weighting"
             )
             if inv_mass is None:
                 if skip_reason:

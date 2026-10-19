@@ -1,0 +1,14 @@
+== norm_probe.py on peak-fix 24ecb7c + #35 (tree f77a975)
+records in full run: 13; comparisons: 13000; bit-identical: 13000
+== test_cms_shard_pruning_drift.py on peak-fix 24ecb7c
+[PASS] test_copy_differs_only_in_d3_lines
+[PASS] test_data_shard_behaviour_identical
+[PASS] test_mc_shard_no_orphans_with_cms_copy
+[PASS] test_upstream_function_unchanged
+ALL PASSED
+== test_cms_shard_pruning_drift.py on peak-fix 24ecb7c + #35 (tree f77a975)
+[FAIL] test_copy_differs_only_in_d3_lines: unexpected lines removed from upstream: ['    # ``_mcw`` rows are the per-event MC weights of a combination; they are', '    # removed with their final state but never counted as events.', '    pattern = re.compile(r"(_FS_[0-9a-z_]+)_IM_([0-9a-z]+)(_mcw)?$")', '            final_state, combination, is_weight = match.groups()', '            if final_state not in counted_final_states and not is_weight:']
+[PASS] test_data_shard_behaviour_identical
+[PASS] test_mc_shard_no_orphans_with_cms_copy
+[FAIL] test_upstream_function_unchanged: upstream prune_final_states_below_min_events changed since e1ce8bb (sha256 3a0add92e5d71581c25afb72ced0b5226abccf29fd9ad3dadac3e10fcfa510ac); re-compare cms_shard_pruning.py with it before using the MC builder
+2 FAILED
