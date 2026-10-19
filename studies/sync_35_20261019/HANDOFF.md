@@ -1,8 +1,6 @@
 # HANDOFF — sync with upstream #35 (19–20 Oct 2026)
 
-**Current step: PART 1 STOPPED at 1c/1d — #35 breaks the CMS per-file driver;
-fork master NOT updated (still `45a7e06`). Part 2 (read-only convention
-comparison) in progress.**
+**Current step: DONE. Part 1 STOPPED at 1c/1d: #35 breaks the CMS per-file driver, so fork master was NOT updated (still `45a7e06`). Part 2 done: `MC_CONVENTIONS_35_vs_CMS.md`. Next: the technical lead verifies; Matan decides the alignments, including the required driver adaptation before any master sync.**
 
 ## Branch
 
@@ -66,11 +64,17 @@ accept both return shapes, e.g. `res = _calculate_combination_invariant_mass(...
 `im_config` has no `mc_weighting_enabled`, so the new middle value is
 always `None` for CMS. Then repeat 1d (cluster) before merging into master.
 
+## Part 2
+
+`MC_CONVENTIONS_35_vs_CMS.md`: 12-row comparison, row 7 in detail, reuse table, recommendations. Local probes (VERIFIED BY RUNNING) in `evidence/part2_probes_local.txt`:
+
+- `norm_probe.py`: #35 `compute_normalization` vs the CMS normalisation, 13,000 / 13,000 bit-identical.
+- CMS `test_cms_shard_pruning_drift.py`: passes on `24ecb7c`; 2 of 4 checks fail on `24ecb7c` + #35, as designed.
+
 ## Cluster
 
-Not used: no checkouts, no outputs, no jobs. File count unchanged (~120,539).
+Not used for jobs: no checkouts, no outputs, no submissions, so there is nothing to archive. `checkouts/sync35_20261019/` and `work/sync35_20261019/` were never created. File count 120,539 (19 Oct, unchanged; 0 new). `qstat -u berkom` empty.
 
 ## Resume
 
-If this file is on origin: Part 1 is finished (STOPPED); do not update master.
-Continue with Part 2 if `MC_CONVENTIONS_35_vs_CMS.md` is missing.
+Both parts are finished. Do not update master until the CMS driver is adapted and 1d is repeated on the cluster.
