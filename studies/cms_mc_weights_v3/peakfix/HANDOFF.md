@@ -1,6 +1,6 @@
 # HANDOFF — CMS MC PEAK FIX (18–19 Oct 2026)
 
-**Current step: 4 — build `5244700` and Z-peak `5244701` FINISHED OK (checked 19 Oct 09:30); compare `5248340` + datamc `5248341` submitted 19 Oct 09:33 from checkout `repo` @ `4a72294`.**
+**Current step: COMPLETE (19 Oct 2026, 11:05 IDT). Report: `peakfix/REPORT.md`. Next: technical lead verifies; then delivery.**
 Not delivered; not merged into master. Option B not implemented (question for Maryna).
 
 **Branch:** `feature/cms-mc-peakfix-20261018` (origin only), from
@@ -50,8 +50,8 @@ Reached over `wipp-home`; `wipp-campus` timed out.
 |---|---|---|---|
 | 0 verify | `5244611` | 16gb, 2h | done |
 | 3 build | `5244700` | 64gb, 8h | done, exit 0, 2h07m wall, peak RSS 18.9 GB (PBS mem 28.5 GB) of 64 GB; 1 excluded file (75589); 4,977 summed names |
-| 4 compare | `5248340` | 32gb, 4h | submitted 19 Oct 09:33 @ `4a72294` |
-| 5–6 datamc | `5248341` | 32gb, 4h | submitted 19 Oct 09:33 @ `4a72294` |
+| 4 compare | `5248340` | 32gb, 4h | done, exit 0, 3 min |
+| 5–6 datamc | `5248341` | 32gb, 4h | done, exit 0, 1 min |
 | 6 zpeak | `5244701` | 32gb, 8h | done, exit 0, 13 min; 0-jet 76–106: μμ 1.0340, ee 0.9534 (pilot 1.035 / 0.954) |
 
 ## How to resume
@@ -64,3 +64,14 @@ qsub -N mcpeak_<what> -l mem=..,walltime=..,io=25 -o $W/logs/<what>.out -e $W/lo
 ```
 
 Then: copy the evidence JSONs and PNGs into `peakfix/evidence/` and `plots/peakfix/`, write `peakfix/REPORT.md`, archive `repo` (tar.gz + verify), measure the file count, push the final HANDOFF, and switch the local repo to master.
+
+## Final state (19 Oct 2026, 11:05 IDT)
+
+- Report: `peakfix/REPORT.md`. PNGs: `plots/peakfix/` (21). Evidence: `peakfix/evidence/` (`compare_old_new_summary.json`, `data_vs_mc.json`, `z_peak_ratio.json`, step 0, tests).
+- Cluster output: `work/peakfix_20261018/build_combined/` (13 per-sample + summed SM + report); evidence in `work/peakfix_20261018/evidence/`.
+- Checkouts archived, listings verified (archive entries == files on disk); directories left in place:
+  - `checkouts/peakfix_20261018/checkout_step0_1611209.tar.gz` (264 files, 65 MB)
+  - `checkouts/peakfix_20261018/checkout_repo_4a72294.tar.gz` (328 files, 65 MB)
+- File count: **119,243** (+842 vs 118,401; limits 121,901 / 125,000 respected).
+- `qstat -u berkom` empty at 11:01. No more cluster connections needed before the freeze.
+- Local repo switched back to `master`. master and every other branch unchanged; nothing upstream; no PR.
