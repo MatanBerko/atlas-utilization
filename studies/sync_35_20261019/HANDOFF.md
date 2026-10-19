@@ -1,6 +1,6 @@
 # HANDOFF — sync with upstream #35 (19–20 Oct 2026)
 
-**Current step (20 Oct task, started 19 Oct evening): A DONE; B SUBMITTED — per-file array `5251334[]` + build/compare `5251335` (afterok), 19 Oct 18:44, wipp-home. Master NOT yet updated (C waits for B to be fully identical).**
+**Current step (20 Oct task, done 19 Oct evening): A DONE; B DONE — every output identical (`PROOF.md`); C — fork master updated by a normal merge of this branch (see `git log master`); D — pinned code archived, file count measured, local repo back on master. Next: the technical lead verifies; then the email to Maryna.**
 
 ## 20 Oct task — make CMS compatible with #35, adopt #35 functions, prove, sync
 
@@ -42,6 +42,22 @@ How the jobs run:
 - Script: `studies/sync_35_20261019/cluster/pbs_proof.sh`.
 
 **Do not resubmit.** Each per-file output is skipped if it already exists.
+
+**B result (VERIFIED BY RUNNING).** `5251334[]` and `5251335` both exited 0 (19 Oct 18:44–19:43).
+
+- All 32 shards (4 files × 8) are identical, with 0 physics metadata differences.
+- The data delivery (220 + 220 histograms) is identical.
+- The MC build (982 + 937 + 1,059 histograms, contents and Sumw2) is identical, and its report differs only in `generated_utc`.
+
+Details: `PROOF.md`; evidence: `evidence/proof_B/`.
+
+**C.** The upstream head was still `7f2da5d` at merge time. The gate was empty and master was 0 commits behind upstream. Tests were run on master before the push.
+
+**D.**
+
+- Archive `checkouts/sync35b_20261020/pinned_code_20261019.tar.gz` (the 4 tarballs; gzip OK; each byte-identical). The tarballs themselves are left in place.
+- Cluster file count 120,686 (+147), and `qstat -u berkom` was empty (19 Oct 20:30).
+- The MC branch `sync/mc-upstream-35-20261020` is pushed and NOT merged into master. It is the MC code's next base when MC is delivered.
 
 
 ## Branch
