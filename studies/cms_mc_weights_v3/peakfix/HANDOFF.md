@@ -74,4 +74,5 @@ Then: copy the evidence JSONs and PNGs into `peakfix/evidence/` and `plots/peakf
   - `checkouts/peakfix_20261018/checkout_repo_4a72294.tar.gz` (328 files, 65 MB)
 - File count: **119,243** (+842 vs 118,401; limits 121,901 / 125,000 respected).
 - `qstat -u berkom` empty at 11:01. No more cluster connections needed before the freeze.
-- Local repo switched back to `master`. master and every other branch unchanged; nothing upstream; no PR.
+- **PUSH BLOCKED (19 Oct ~11:10):** the push gate is no longer empty because upstream/master moved to `b9f6ea3` ("fix: include b-jets in overlap removal (#38)"), which changes `services/parsing/event_selection.py`; this branch has the previous version (`e1ce8bb`). Nothing on this branch touches that file. The final commits are LOCAL ONLY (origin is at `aed1902`). Waiting for Matan: merge upstream/master into the branch, change the gate's reference, or leave unpushed.
+- Local repo left on the feature branch (not master) until the push is resolved. master and every other branch unchanged; nothing upstream; no PR.
