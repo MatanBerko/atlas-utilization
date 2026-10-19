@@ -30,8 +30,9 @@ the builder is unchanged from `88d30ac`.
 
 ## Step 4 — old (per-sample) vs new (combined) build
 
-Evidence: `evidence/compare_old_new_summary.json` (full per-name table on
-the cluster: `work/peakfix_20261018/evidence/compare/compare_old_new.json`).
+Evidence: `evidence/compare_old_new_summary.json`; full per-name table
+`evidence/compare_old_new.json` (copy of the cluster's
+`work/peakfix_20261018/evidence/compare/compare_old_new.json`).
 
 - **Same names:** 4,977 summed histograms in both, none only in one.
 - **Final states:** 205 in both, identical sets.
