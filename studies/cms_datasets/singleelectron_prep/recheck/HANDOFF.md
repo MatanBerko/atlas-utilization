@@ -4,7 +4,7 @@
 chosen, nothing delivered. Every number is labelled VERIFIED BY RUNNING /
 UNVERIFIED in `RECHECK.md`.
 
-**Current step: setup — code committed; checkouts and proof job next.**
+**Current step: proof `5249720` and Part 1A `5249721[]` (0–15) submitted 19 Oct 11:37.**
 
 ## Branch
 
@@ -26,8 +26,8 @@ passed through unchanged) to save per-event object counts.
 
 | part | what | mode | state |
 |---|---|---|---|
-| proof | normal vs wrapper@0.2598 on DoubleMuon 30522/0 and MC 35631/0, bit-identical? | `proof` | not submitted |
-| 1A | 7 Oct `measure_singleelectron.py` unchanged, 151 SE files, 10 per subjob (0–15) | `se_a` | not submitted |
+| proof | normal vs wrapper@0.2598 on DoubleMuon 30522/0 and MC 35631/0, bit-identical? | `proof` | `5249720` submitted 11:37 (8gb, 2h) |
+| 1A | 7 Oct `measure_singleelectron.py` unchanged, 151 SE files, 10 per subjob (0–15) | `se_a` | `5249721[]` submitted 11:37 (8gb, 2h) |
 | 1B | same via wrapper at 0.25 | `se_b` | after proof |
 | 2 data | 41 sampled files (index % 10 == 0), driver ×2 | `sample` 0–40 | after proof |
 | 2 MC | 56 sampled files, MC driver @ `294ee59` ×2 | `sample` 41–96 | after proof |
@@ -36,7 +36,7 @@ Sample list: `recheck/evidence/sample_files.json`, mapping `recheck/mappings/sam
 
 ## Cluster (all NEW dirs; everything else read-only)
 
-- Checkouts: `checkouts/serecheck_20261019/study` (this branch, pinned), `checkouts/serecheck_20261019/mcdriver` @ `294ee59`
+- Checkouts: `checkouts/serecheck_20261019/study` @ `0796e98` (pinned), `checkouts/serecheck_20261019/mcdriver` @ `294ee59`
 - Work: `work/serecheck_20261019/` — `logs/`, `evidence/`, `se/{a_0p2598,b_0p25}/`, `sample/`, `mappings/`
 - Read-only inputs: SE mapping `output/cms_datasets/singleelectron_prep_20261007/mappings/singleelectron.txt`; 7 Oct outputs `.../singleelectron_prep_20261007/{tnp,results}`; data production `output/cms_datasets/runs_matched4_full_20261007/`; MC full run `work/fullrun_20261017/` (mappings, runs, build report)
 
@@ -62,4 +62,4 @@ V=WORK_DIR=$W,STUDY_REPO=$C/study,MC_REPO=$C/mcdriver
 
 ## File count
 
-Start: 119,243 (19 Oct 11:31). Budget ≤ 2,500 new, total ≤ 125,000.
+Start: 119,243 (19 Oct 11:31); 119,770 after checkouts + dirs (+527). Budget ≤ 2,500 new, total ≤ 125,000.
