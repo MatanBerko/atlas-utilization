@@ -1,6 +1,6 @@
 # HANDOFF — CMS MC PEAK FIX (18–19 Oct 2026)
 
-**Current step: 4 — build `5244700` and Z-peak `5244701` FINISHED OK (checked 19 Oct 09:30); compare + datamc being submitted from the new pin.**
+**Current step: 4 — build `5244700` and Z-peak `5244701` FINISHED OK (checked 19 Oct 09:30); compare `5248340` + datamc `5248341` submitted 19 Oct 09:33 from checkout `repo` @ `4a72294`.**
 Not delivered; not merged into master. Option B not implemented (question for Maryna).
 
 **Branch:** `feature/cms-mc-peakfix-20261018` (origin only), from
@@ -34,7 +34,7 @@ submitted whose walltime could end after Wed 21 Oct 15:00; by then
 
 Reached over `wipp-home`; `wipp-campus` timed out.
 
-- Checkouts: `checkouts/peakfix_20261018/step0` @ `1611209` (step 0 only), `checkouts/peakfix_20261018/repo` @ `88d30ac` (pinned)
+- Checkouts: `checkouts/peakfix_20261018/step0` @ `1611209` (step 0 only), `checkouts/peakfix_20261018/repo` @ `88d30ac` for the build; moved to `4a72294` on 19 Oct for steps 4–6 (analysis scripts only; builder unchanged)
 - Work: `work/peakfix_20261018/` — `logs/`, `evidence/`, `build_combined/` (step 3)
 - Read-only inputs:
   - `work/fullrun_20261017/runs` (build input)
@@ -42,7 +42,7 @@ Reached over `wipp-home`; `wipp-campus` timed out.
   - `work/fullrun_20261017/scratch_default` (Z-peak MC weights)
   - `output/cms_datasets/deliver/four_dataset_vB_upstreamnames_w10p0_dr012_20261007/` (data delivery)
   - `output/cms_datasets/runs_matched4_full_20261007` (data shards for the Z peak; read via private copies)
-- File count (`lfs quota -u berkom /storage`): **118,401 at start**; 119,101 after the checkouts and backup. Budget ≤ 121,901 (+3,500) and ≤ 125,000 in total.
+- File count (`lfs quota -u berkom /storage`): **118,401 at start**; 119,101 after the checkouts and backup; 119,180 on 19 Oct after the build + Z-peak. Budget ≤ 121,901 (+3,500) and ≤ 125,000 in total.
 
 ## Jobs
 
@@ -50,8 +50,8 @@ Reached over `wipp-home`; `wipp-campus` timed out.
 |---|---|---|---|
 | 0 verify | `5244611` | 16gb, 2h | done |
 | 3 build | `5244700` | 64gb, 8h | done, exit 0, 2h07m wall, peak RSS 18.9 GB (PBS mem 28.5 GB) of 64 GB; 1 excluded file (75589); 4,977 summed names |
-| 4 compare | — | 32gb, 4h | after build |
-| 5–6 datamc | — | 32gb, 4h | after build |
+| 4 compare | `5248340` | 32gb, 4h | submitted 19 Oct 09:33 @ `4a72294` |
+| 5–6 datamc | `5248341` | 32gb, 4h | submitted 19 Oct 09:33 @ `4a72294` |
 | 6 zpeak | `5244701` | 32gb, 8h | done, exit 0, 13 min; 0-jet 76–106: μμ 1.0340, ee 0.9534 (pilot 1.035 / 0.954) |
 
 ## How to resume
