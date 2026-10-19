@@ -4,7 +4,7 @@
 chosen, nothing delivered. Every number is labelled VERIFIED BY RUNNING /
 UNVERIFIED in `RECHECK.md`.
 
-**Current step: ALL MEASUREMENTS DONE; `RECHECK.md` written; checkouts archived; file count measured. PUSH BLOCKED: upstream merged #35 (`7f2da5d`, 19 Oct 13:18), so the gate is no longer empty — waiting for a decision whether to merge `upstream/master` into this branch (read-only test merge: no conflicts; #35 touches no CMS study file). Then push and switch the local repo to master.**
+**Current step: DONE. All measurements finished, `RECHECK.md` written, checkouts archived, file count measured, cluster queue empty. Upstream merged #35 (`7f2da5d`) at 13:18 on 19 Oct; it was merged into THIS branch only (`f2db2bb`, no conflicts, tests unchanged), and fork master was left at `45a7e06`. The results are unaffected: the jobs ran from the pinned checkouts. Next: the technical lead verifies, then the email to Maryna.**
 
 ## Branch
 
