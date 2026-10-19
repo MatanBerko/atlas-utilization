@@ -1,0 +1,48 @@
+{
+ "label": "data",
+ "files": {
+  "dataset_shard_exclusive.sqlite": {
+   "in_wrapped": true,
+   "bytes_identical": true
+  },
+  "dataset_shard_inclusive.sqlite": {
+   "in_wrapped": true,
+   "bytes_identical": true
+  },
+  "dataset_shard_nonjet4_exclusive.sqlite": {
+   "in_wrapped": true,
+   "bytes_identical": true
+  },
+  "dataset_shard_nonjet4_inclusive.sqlite": {
+   "in_wrapped": true,
+   "bytes_identical": true
+  },
+  "dataset_shard_rare4_exclusive.sqlite": {
+   "in_wrapped": true,
+   "bytes_identical": true
+  },
+  "dataset_shard_rare4_inclusive.sqlite": {
+   "in_wrapped": true,
+   "bytes_identical": true
+  },
+  "dataset_shard_top4_exclusive.sqlite": {
+   "in_wrapped": true,
+   "bytes_identical": true
+  },
+  "dataset_shard_top4_inclusive.sqlite": {
+   "in_wrapped": true,
+   "bytes_identical": true
+  },
+  "job_metadata.json": {
+   "in_wrapped": true,
+   "bytes_identical": false,
+   "json_keys_differing_besides_volatile": []
+  }
+ },
+ "only_in_wrapped": [
+  "debug_events.csv"
+ ],
+ "verdict_identical": true,
+ "n_files_bytes_identical": 8,
+ "n_files": 9
+}

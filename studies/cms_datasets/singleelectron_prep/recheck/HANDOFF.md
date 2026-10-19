@@ -4,7 +4,7 @@
 chosen, nothing delivered. Every number is labelled VERIFIED BY RUNNING /
 UNVERIFIED in `RECHECK.md`.
 
-**Current step: proof `5249720` and Part 1A `5249721[]` (0–15) submitted 19 Oct 11:37.**
+**Current step: proof PASSED; 1A `5249721[]`, 2-data `5249807[]`, 2-MC `5249808[]`, 1B `5249809[]` submitted (11:37 / 11:48).**
 
 ## Branch
 
@@ -26,11 +26,11 @@ passed through unchanged) to save per-event object counts.
 
 | part | what | mode | state |
 |---|---|---|---|
-| proof | normal vs wrapper@0.2598 on DoubleMuon 30522/0 and MC 35631/0, bit-identical? | `proof` | `5249720` submitted 11:37 (8gb, 2h) |
+| proof | normal vs wrapper@0.2598 on DoubleMuon 30522/0 and MC 35631/0, bit-identical? | `proof` | `5249720` done, exit 0: all 8 shards bit-identical (data and MC); job_metadata differs only in created_utc/elapsed_sec; `evidence/override_proof_{data,mc}.json` |
 | 1A | 7 Oct `measure_singleelectron.py` unchanged, 151 SE files, 10 per subjob (0–15) | `se_a` | `5249721[]` submitted 11:37 (8gb, 2h) |
-| 1B | same via wrapper at 0.25 | `se_b` | after proof |
-| 2 data | 41 sampled files (index % 10 == 0), driver ×2 | `sample` 0–40 | after proof |
-| 2 MC | 56 sampled files, MC driver @ `294ee59` ×2 | `sample` 41–96 | after proof |
+| 1B | same via wrapper at 0.25 | `se_b` | `5249809[]` (0–15) submitted 11:48 (8gb, 2h) |
+| 2 data | 41 sampled files (index % 10 == 0), driver ×2 | `sample` 0–40 | `5249807[]` submitted 11:48 (8gb, 2h) |
+| 2 MC | 56 sampled files, MC driver @ `294ee59` ×2 | `sample` 41–96 | `5249808[]` submitted 11:48 (8gb, 4h) |
 
 Sample list: `recheck/evidence/sample_files.json`, mapping `recheck/mappings/sample_mapping.txt`.
 
