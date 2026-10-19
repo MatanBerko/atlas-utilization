@@ -20,7 +20,7 @@ import json
 from pathlib import Path
 
 PER_FILE_VOLATILE = {"elapsed_sec", "git_commit"}
-AGG_VOLATILE = {"in_dir", "out_json", "out_plots", "stepb_json", "delivery_json", "old_json"}
+AGG_VOLATILE = {"elapsed_sec", "in_dir", "out_json", "out_plots", "stepb_json", "delivery_json", "old_json"}
 
 
 def diff(a, b, ignore, path=""):
