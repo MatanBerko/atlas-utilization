@@ -19,6 +19,11 @@ running or finished; every job mode skips outputs that already exist.
   logs `logs/perfile/retry_<i>.log`), `5253219` (idx 6, `retry_6.log`), build
   `5253220` (afterok both), analyse `5253221` (afterok build). The earlier
   build/analyse jobs 5253153/5253154 never ran.
+- All 22 per-file runs DONE (retries finished by ~11:10). Build `5253220`
+  DONE 11:40 (exit 0). Analyse `5253221` FAILED in 0 s: compare.py lives only
+  on the MC line, and the script unpacked the data code. Fixed in
+  pbs_checks.sh (analyse unpacks new_mc). Analyse-only resubmitted as
+  `5255520` (13:59); the first log is kept as `logs/analyse/analyse_try1_failed.log`.
 
 ## Branches
 

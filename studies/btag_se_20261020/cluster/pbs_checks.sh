@@ -129,9 +129,10 @@ if [[ "$MODE" == "build" ]]; then
 fi
 
 if [[ "$MODE" == "analyse" ]]; then
-    # compare.py (studies/mcport_validation_20261014, unchanged) comes from the
-    # NEW data code; the analysis script itself is the work-dir copy.
-    unpack new_data
+    # compare.py (studies/mcport_validation_20261014, unchanged) exists only on
+    # the MC line, so it comes from the NEW MC code; the analysis script itself
+    # is the work-dir copy.
+    unpack new_mc
     mkdir -p "$W/evidence"
     python -u "$W/scripts/analyse.py" --repo "$T/repo" --work "$W" --out "$W/evidence"
     echo "MODE=analyse done at $(date)"
