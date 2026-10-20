@@ -318,8 +318,9 @@ def main() -> int:
         "data_population": "delivered four-dataset de-duplicated set "
                            "(DoubleMuon inclusive + the other three exclusive), "
                            "Version B rare4 shards",
-        "mc_population": "union of the four data acceptance flags; Ele27-only "
-                         "events excluded",
+        "mc_population": "union of the five delivered acceptance flags (four "
+                         "data flags OR SingleElectron, bit 6); Ele27-candidate-"
+                         "only events excluded",
         "n_mc_entries_dropped_by_event_union": n_union_dropped,
         "errors": "data sqrt(N), MC sqrt(sum w^2)",
         "plots": {},

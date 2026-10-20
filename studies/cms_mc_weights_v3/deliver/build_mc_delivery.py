@@ -49,9 +49,12 @@ Build-time OPTIONS, so an answer from Maryna or Yuval needs no re-run:
 No negative-bin fix is implemented -- only the inventory is reported. That
 choice is Maryna's (DESIGN.md open questions).
 
-The event union for this build is the FOUR data acceptance flags only. The
-SingleElectron candidate is stored by the driver and deliberately ignored
-here (its offline threshold is undecided and out of scope).
+The event union for this build is the FIVE delivered acceptance flags
+(Maryna, 20 Oct 2026): the four data flags OR the SingleElectron
+acceptance (driver bit 6, the T = 32 GeV rule). The bare SingleElectron
+candidate (bit 4, no offline cut) and the Ele27 fire bit (bit 5) are stored
+by the driver and are NOT part of the union. Shards made before bit 6
+existed are refused (discover_jobs).
 """
 from __future__ import annotations
 
@@ -97,6 +100,8 @@ from studies.cms_datasets.cluster.run_dataset_on_file import (  # noqa: E402
     DELIVERY_VETO_ORDER_4,
     MC_ACC_BIT_BY_LABEL,
     MC_ACC_BIT_ELE27_CANDIDATE,
+    MC_ACC_BIT_SINGLEELECTRON,
+    MC_ACC_BITS_DELIVERY_UNION,
     MC_SIBLING_ACCEPTANCE,
     MC_SIBLING_GENWEIGHT,
     MC_SIBLING_L1PREFIRE,
@@ -194,6 +199,13 @@ def discover_jobs(runs_dir: pathlib.Path, only_records: set[int] | None,
         meta = json.loads(meta_path.read_text(encoding="utf-8"))
         if not meta.get("is_mc"):
             continue
+        bit_map = (meta.get("mc_diagnostics") or {}).get("acceptance_bit_map")
+        if bit_map is not None and bit_map.get("SingleElectron") != MC_ACC_BIT_SINGLEELECTRON:
+            raise SystemExit(
+                f"STOP: {meta_path} has no SingleElectron acceptance bit "
+                f"({MC_ACC_BIT_SINGLEELECTRON}) in its acceptance_bit_map: it was "
+                "made before the five-flag union (20 Oct 2026). Re-produce it "
+                "with the current driver.")
         n_seen += 1
         rid = int(meta["record_id"])
         if only_records is not None and rid not in only_records:
@@ -566,10 +578,12 @@ def postprocess_in_lockstep(masses: np.ndarray, weights: np.ndarray,
 # --------------------------------------------------------------------------
 
 def event_union_mask(acceptance_bitmask: np.ndarray) -> np.ndarray:
-    """The event union for THIS build: the four data acceptance flags only.
-    The SingleElectron candidate (bit 4) is stored and deliberately ignored."""
-    four_bits = sum(MC_ACC_BIT_BY_LABEL.values())
-    return (np.asarray(acceptance_bitmask).astype(np.int64) & four_bits) != 0
+    """The event union for THIS build: the four data acceptance flags OR the
+    SingleElectron acceptance (bit 6, T = 32 GeV) -- the five delivered
+    datasets. The SingleElectron candidate (bit 4) and the Ele27 fire bit
+    (bit 5) are stored and are not part of the union."""
+    return (np.asarray(acceptance_bitmask).astype(np.int64)
+            & MC_ACC_BITS_DELIVERY_UNION) != 0
 
 
 def collect_signature_arrays(shard_paths: list, suffix: str = "") -> dict:
@@ -627,8 +641,9 @@ def build(args) -> dict:
             "n_bins": _n_bins(),
             "sigma_w_tolerance": SIGMA_W_TOLERANCE,
             "shard_read": SHARD_NAME,
-            "event_union": "the four data acceptance flags only; the "
-                           "SingleElectron candidate is stored and ignored",
+            "event_union": "the five delivered acceptance flags: the four data "
+                           "flags OR SingleElectron (bit 6, offline pT > 32 GeV); "
+                           "the bare Ele27 candidate (bit 4) is not used",
         },
         "samples": {},
     }

@@ -1,6 +1,64 @@
 # HANDOFF — sync with upstream #35 (19–20 Oct 2026)
 
-**Current step: DONE. Part 1 STOPPED at 1c/1d: #35 breaks the CMS per-file driver, so fork master was NOT updated (still `45a7e06`). Part 2 done: `MC_CONVENTIONS_35_vs_CMS.md`. Next: the technical lead verifies; Matan decides the alignments, including the required driver adaptation before any master sync.**
+**Current step (20 Oct task, done 19 Oct evening): A DONE; B DONE — every output identical (`PROOF.md`); C — fork master updated by a normal merge of this branch (see `git log master`); D — pinned code archived, file count measured, local repo back on master. Next: the technical lead verifies; then the email to Maryna.**
+
+## 20 Oct task — make CMS compatible with #35, adopt #35 functions, prove, sync
+
+**Branch layout.** Master and the sync branch hold no MC code; the MC driver, the MC builder and the MC tests exist only on the MC branch. So:
+
+- `sync/upstream-35-20261019` → master gets the data-driver fix only.
+- The MC changes live on a NEW branch, `sync/mc-upstream-35-20261020`. It was made from `feature/cms-mc-peakfix-20261018` (`24ecb7c`) and merged with the sync branch. It is not merged into master; `feature/cms-mc-peakfix-20261018` itself is untouched.
+
+**A (done, all tests pass, gate empty on both branches).**
+
+- **Data driver** (`studies/cms_datasets/cluster/run_dataset_on_file.py`, sync branch `69b10cb`): it unpacks #35's 3-value return and asserts the middle value (MC weights) is None. Only the new form is supported; a 2/3 dual form was judged not worth the complexity.
+- **New test** `studies/cms_datasets/tests/test_funnel_upstream35.py`: the real funnel on a fixed synthetic sample (200 events, 186 combinations). It hashes every written value and stat to `5c43cbc0…`, the same hash the pre-#35 code (master `45a7e06`) gives. VERIFIED BY RUNNING, under hash seeds 0 and 1.
+- **MC driver** (same call, now line 1789): fixed by the merge.
+- **MC builder** (`studies/cms_mc_weights_v3/deliver/build_mc_delivery.py`, MC branch `6b22872`):
+  - `normalisation_factor` now calls #35's `compute_normalization`, with `MCDatasetMetadata` built from σ_eff (registry), k = ε = 1 (the guard is kept) and the measured Σw.
+  - `find_peak_mass` now calls #35's `_find_rightmost_highest_peak(weights=)`, returned as a float. `--peak-scope combined` is unchanged and calls it.
+- **New drift test** `studies/cms_mc_weights_v3/tests/test_upstream35_drift.py`. Its expected values were produced by the builder's previous own code (`24ecb7c`) and are reproduced exactly (VERIFIED BY RUNNING):
+  - normalisation over 13 records × 5 Σw;
+  - peak over 400 fixed spectra (unweighted, Gaussian, ± and constant weights; float32 and float64);
+  - 6 literal cases;
+  - the k ≠ 1 guard.
+- **Pruning drift test** `test_cms_shard_pruning_drift.py`: the reference was moved from `e1ce8bb` to #35 (`7f2da5d`, sha256 `3a0add92…`). The CMS copy still differs only in the 3 D3 code lines (plus #35's 2 comment lines); `cms_shard_pruning.py` is unchanged.
+- **Tests:** CMS 5 files pass; MC 12 + 24 + 46 checks + pruning drift + the new drift test pass; upstream `tests/` 14 + 24 pass.
+
+**B (submitted).** OLD / NEW are pinned `git archive` tarballs in `checkouts/sync35b_20261020/` (`work/sync35b_20261020/code` links to it):
+
+| tarball | commit | sha256 prefix |
+|---|---|---|
+| `old_data.tar` | master `45a7e06` | `a11f0c7309022f63` |
+| `new_data.tar` | sync `85c6ba8` | `4d50b28ef71e6335` |
+| `old_mc.tar` | MC peak-fix `24ecb7c` | `0ebcfac06e860639` |
+| `new_mc.tar` | MC sync `0e98075` | `4fe6627f10243aab` |
+
+How the jobs run:
+
+- Each job unpacks into node-local `$TMPDIR`, and OLD then NEW run from the same path.
+- `perfile` covers DoubleMuon 30522/0, DoubleEG 30521/0, MC 67801/0 and 72752/0. Data uses the 7 Oct options (`--population matched4`); MC uses the `pbs_mc_pilot.sh` options.
+- `build` runs the data four-dataset builder (`--datasets DoubleMuon,DoubleEG`) and the MC builder (defaults, `--peak-scope combined`, `--smoke-test`), then runs the unchanged `mcport_validation_20261014/compare.py` / `mc_compare.py` (data runs via `cluster/compare_data_runs.py`, which only narrows compare.py's dataset list). Results go to `work/sync35b_20261020/evidence/`.
+- Script: `studies/sync_35_20261019/cluster/pbs_proof.sh`.
+
+**Do not resubmit.** Each per-file output is skipped if it already exists.
+
+**B result (VERIFIED BY RUNNING).** `5251334[]` and `5251335` both exited 0 (19 Oct 18:44–19:43).
+
+- All 32 shards (4 files × 8) are identical, with 0 physics metadata differences.
+- The data delivery (220 + 220 histograms) is identical.
+- The MC build (982 + 937 + 1,059 histograms, contents and Sumw2) is identical, and its report differs only in `generated_utc`.
+
+Details: `PROOF.md`; evidence: `evidence/proof_B/`.
+
+**C.** The upstream head was still `7f2da5d` at merge time. The gate was empty and master was 0 commits behind upstream. Tests were run on master before the push.
+
+**D.**
+
+- Archive `checkouts/sync35b_20261020/pinned_code_20261019.tar.gz` (the 4 tarballs; gzip OK; each byte-identical). The tarballs themselves are left in place.
+- Cluster file count 120,686 (+147), and `qstat -u berkom` was empty (19 Oct 20:30).
+- The MC branch `sync/mc-upstream-35-20261020` is pushed and NOT merged into master. It is the MC code's next base when MC is delivered.
+
 
 ## Branch
 

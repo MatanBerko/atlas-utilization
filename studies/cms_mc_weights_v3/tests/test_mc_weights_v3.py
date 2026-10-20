@@ -61,6 +61,7 @@ from studies.cms_datasets.cluster.run_dataset_on_file import (  # noqa: E402
     MC_ACC_BIT_BY_LABEL,
     MC_ACC_BIT_ELE27_CANDIDATE,
     MC_ACC_BIT_ELE27_FIRED,
+    MC_ACC_BIT_SINGLEELECTRON,
     MC_SIBLING_SUFFIXES,
     MC_WEIGHT_SUFFIX,
     mask_mc_siblings,
@@ -198,8 +199,9 @@ def test_alignment_rejects_mismatch() -> None:
 
 
 def test_event_union_ignores_ele27() -> None:
-    """The build's event union is the four data flags only; the Ele27
-    candidate is stored and ignored."""
+    """The build's event union is the five delivered flags (the four data
+    flags OR SingleElectron, bit 6 -- 20 Oct 2026); the bare Ele27
+    candidate (bit 4) is stored and ignored."""
     four = sum(MC_ACC_BIT_BY_LABEL.values())
     only_ele27 = np.array([MC_ACC_BIT_ELE27_CANDIDATE | MC_ACC_BIT_ELE27_FIRED])
     dm_only = np.array([MC_ACC_BIT_BY_LABEL["DoubleMuon"]])
@@ -211,6 +213,10 @@ def test_event_union_ignores_ele27() -> None:
           B.event_union_mask(dm_only)[0] == True)  # noqa: E712
     check("event union includes an event accepted by both",
           B.event_union_mask(both)[0] == True)  # noqa: E712
+    se_only = np.array([MC_ACC_BIT_SINGLEELECTRON | MC_ACC_BIT_ELE27_CANDIDATE
+                        | MC_ACC_BIT_ELE27_FIRED])
+    check("event union includes a SingleElectron-only event (bit 6)",
+          B.event_union_mask(se_only)[0] == True)  # noqa: E712
 
 
 # ---------------------------------------------------------------------------

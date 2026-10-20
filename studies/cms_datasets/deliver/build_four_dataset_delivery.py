@@ -55,6 +55,13 @@ Usage:
         --runs-dir   /storage/.../output/cms_datasets/runs_matched4_<date> \
         --out-dir    /storage/.../output/cms_datasets/deliver/four_<date> \
         --out-prefix four_dataset_matched_vB
+
+FIVE DATASETS (Maryna, 20 Oct 2026): per-file jobs run with --population
+matched5 add SingleElectron LAST (DELIVERY_VETO_ORDER_5). The same pooling
+rule then adds SingleElectron's exclusive shards, i.e. only the events none
+of the other four accepts. Pass
+--datasets DoubleMuon,SingleMuon,DoubleEG,MuonEG,SingleElectron; the
+builder stops if a dataset list is not in that priority order.
 """
 from __future__ import annotations
 
@@ -82,7 +89,10 @@ from studies.m0m1j0_cms.histograms import (  # noqa: E402
     FIXED_MASS_MIN_GEV,
     FIXED_MASS_MAX_GEV,
 )
-from studies.cms_datasets.cluster.run_dataset_on_file import DELIVERY_VETO_ORDER_4  # noqa: E402
+from studies.cms_datasets.cluster.run_dataset_on_file import (  # noqa: E402
+    DELIVERY_VETO_ORDER_4,
+    DELIVERY_VETO_ORDER_5,
+)
 from studies.cms_datasets.deliver.build_dataset_delivery import (  # noqa: E402
     build_sig_to_bumpnet,
     width_suffix,
@@ -187,6 +197,54 @@ def gather_shard_paths(runs_dir: Path, version: str, datasets: list[str]) -> dic
     return out
 
 
+def check_priority_order(datasets: list[str]) -> None:
+    """Stop unless `datasets` is in the per-file jobs' own priority order.
+
+    The pooling rule is only correct if the per-file exclusive shards were
+    made with the same order the builder pools in. Every order the jobs use
+    (DELIVERY_VETO_ORDER_4, and DELIVERY_VETO_ORDER_5 with SingleElectron
+    LAST, Maryna 20 Oct 2026) is a prefix-consistent part of
+    DELIVERY_VETO_ORDER_5, so a dataset list must follow that order."""
+    unknown = [d for d in datasets if d not in DELIVERY_VETO_ORDER_5]
+    if unknown:
+        raise SystemExit(f"STOP: unknown dataset(s) {unknown}; expected a subset "
+                         f"of {DELIVERY_VETO_ORDER_5}")
+    if len(set(datasets)) != len(datasets):
+        raise SystemExit(f"STOP: duplicate dataset in {datasets}")
+    expected = [d for d in DELIVERY_VETO_ORDER_5 if d in datasets]
+    if datasets != expected:
+        raise SystemExit(f"STOP: --datasets {datasets} is not in the delivery "
+                         f"priority order; expected {expected}")
+
+
+def per_dataset_event_counts(runs_dir: Path, version: str, datasets: list[str]) -> dict:
+    """Per dataset, the events its pooled shards contribute, summed from the
+    per-file job_metadata.json: the highest-priority dataset's INCLUSIVE
+    count, every other dataset's EXCLUSIVE count (after the Version B rule
+    for --version rare4). Also the acceptance-level totals and each job's
+    own delivery_veto_order. Reporting only; nothing is pooled from here."""
+    out = {}
+    for i, label in enumerate(datasets):
+        index = json.loads((runs_dir / f"{label}_index.json").read_text())
+        kind = "inclusive" if i == 0 else "exclusive"
+        n_pooled = n_accepted = n_exclusive = 0
+        orders = set()
+        for idx in index:
+            m = json.loads((runs_dir / label / f"job_{idx}" / "job_metadata.json").read_text())
+            node = m if version == "normal" else (m.get(f"{version}_diagnostics") or {})
+            n_pooled += sum((node.get(f"final_state_label_event_counts_{kind}") or {}).values())
+            d4 = m.get("matched4_diagnostics") or {}
+            n_accepted += int(d4.get("n_own_accepted", 0))
+            n_exclusive += int(d4.get("n_own_exclusive", 0))
+            orders.add(tuple(d4.get("delivery_veto_order") or ()))
+        out[label] = {"contribution": kind,
+                      f"n_events_pooled_{version}": n_pooled,
+                      "n_own_accepted": n_accepted,
+                      "n_own_exclusive": n_exclusive,
+                      "per_file_delivery_veto_orders": [list(o) for o in sorted(orders)]}
+    return out
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--runs-dir", required=True,
@@ -198,7 +256,10 @@ def main():
     p.add_argument("--datasets", default=",".join(DELIVERY_VETO_ORDER_4),
                    help="comma-separated, HIGHEST PRIORITY FIRST. The first one "
                         "contributes its inclusive shards, the rest their exclusive "
-                        f"ones. Default: {','.join(DELIVERY_VETO_ORDER_4)}")
+                        f"ones. Default: {','.join(DELIVERY_VETO_ORDER_4)}. The "
+                        "five-dataset delivery (--population matched5 runs) passes "
+                        f"{','.join(DELIVERY_VETO_ORDER_5)} (SingleElectron last). "
+                        "Any list must follow that priority order.")
     p.add_argument("--min-events-per-fs", type=int, default=PRIMARY_MIN_EVENTS_PER_FS,
                    help="the >=N-events-per-final-state rule, applied ONCE on the "
                         f"combined shards. Default {PRIMARY_MIN_EVENTS_PER_FS}.")
@@ -225,6 +286,7 @@ def main():
     args = p.parse_args()
 
     datasets = [d.strip() for d in args.datasets.split(",") if d.strip()]
+    check_priority_order(datasets)
     runs_dir = Path(args.runs_dir)
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -316,6 +378,7 @@ def main():
         "version": args.version,
         "priority_order_highest_first": datasets,
         "pooling": pooling,
+        "per_dataset_event_counts": per_dataset_event_counts(runs_dir, args.version, datasets),
         "n_shards_total": len(shard_paths),
         "n_distinct_raw_signatures": len(sig_to_bumpnet),
         "min_events_per_final_state": args.min_events_per_fs,
