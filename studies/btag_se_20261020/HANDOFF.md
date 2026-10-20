@@ -5,9 +5,24 @@ running or finished; every job mode skips outputs that already exist.
 
 ## Current step
 
-- Code: DONE and pushed (both branches, gate empty).
-- Local tests: DONE, all pass.
-- Real-file checks A–E: SUBMITTED 20 Oct 10:21 (see Jobs). PARTLY FAILED at
+**ALL DONE (20 Oct 14:35).** Code, local tests and real-file checks A–E are
+complete; the results are in [`CHECKS.md`](CHECKS.md). Nothing of ours is
+queued or running on the cluster. NEXT: the technical lead verifies; then
+wait for the ATLAS changes (multiplicity rule, lepton-trigger-first
+ordering, muon isolation #39). There was NO production, NO delivery and NO
+merge into master.
+
+Final cluster state:
+
+- Archive `checkouts/btagse_20261020/pinned_code_20261020.tar.gz`:
+  verified (gzip OK; 4 entries, each sha256-identical to its tarball).
+- 322 new entries. File count 120,686 → 121,008, within the limits of
+  ≤ 400 new and ≤ 125,000 total.
+- `qstat` empty at 14:33.
+
+History of the run:
+
+- SUBMITTED 20 Oct 10:21 (see Jobs). PARTLY FAILED at
   ~10:31: the CERN Open Data portal returned 502 Bad Gateway while file
   URLs were being looked up (an outage outside our code). 16 of 22 runs
   finished. Still missing: ovr DoubleMuon/DoubleEG/MuonEG/MC 67801, plus
@@ -24,6 +39,9 @@ running or finished; every job mode skips outputs that already exist.
   on the MC line, and the script unpacked the data code. Fixed in
   pbs_checks.sh (analyse unpacks new_mc). Analyse-only resubmitted as
   `5255520` (13:59); the first log is kept as `logs/analyse/analyse_try1_failed.log`.
+
+- Analyse `5255520` DONE 14:29 (exit 0). Evidence was copied to `evidence/`;
+  plots made locally by `make_plots.py` into `plots/`.
 
 ## Branches
 

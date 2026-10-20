@@ -1,0 +1,568 @@
+{
+  "per_file": {
+    "67801": {
+      "file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/089E6E3A-DFD1-7148-BD6F-F611D22A1B62.root",
+      "n_stored_old": 78632,
+      "n_stored_new": 78632,
+      "n_accepted_per_dataset_old": {
+        "DoubleMuon": 6527,
+        "SingleMuon": 49062,
+        "DoubleEG": 3815,
+        "MuonEG": 10783
+      },
+      "n_accepted_per_dataset_new": {
+        "DoubleMuon": 6527,
+        "SingleMuon": 49062,
+        "DoubleEG": 3815,
+        "MuonEG": 10783
+      },
+      "n_ele27_candidate_old": 37714,
+      "n_ele27_candidate_new": 37714,
+      "n_singleelectron_accepted_new": 35383,
+      "n_stored_singleelectron_new": 35383,
+      "n_stored_only_singleelectron_new": 23548,
+      "n_stored_in_delivery_union_new": 76920,
+      "singleelectron_pass_fraction_of_stored": 0.449982195543799,
+      "singleelectron_pass_fraction_of_triggered": 0.3970710357984514,
+      "singleelectron_cutflow": {
+        "n_events_considered": 89110,
+        "n_fired": 40599,
+        "n_fired_and_ge1_matched": 37731,
+        "n_fired_and_ge1_matched_online27": 37714,
+        "n_accepted": 35383,
+        "n_lost_to_offline_cut": 2331,
+        "trigobj_pt_min_gev": 27.0,
+        "offline_pt_min_gev": 32.0
+      },
+      "singleelectron_guard_violations": 0,
+      "jets_old": {
+        "n_events": 78632,
+        "n_light_jets": 100279,
+        "n_b_jets": 92136,
+        "b_tagged_jet_fraction": 0.47884000727594,
+        "n_b_distribution": {
+          "0": 14277,
+          "1": 37739,
+          "2": 25494,
+          "3+": 1122
+        }
+      },
+      "jets_new": {
+        "n_events": 78632,
+        "n_light_jets": 99585,
+        "n_b_jets": 92830,
+        "b_tagged_jet_fraction": 0.4824467946885638,
+        "n_b_distribution": {
+          "0": 14027,
+          "1": 37632,
+          "2": 25770,
+          "3+": 1203
+        }
+      },
+      "per_event_migration": {
+        "same_accepted_events": true,
+        "n_events_old": 78632,
+        "n_events_new": 78632,
+        "classes": {
+          "unchanged": 77941,
+          "b_migration_light_to_b": 676,
+          "kept_to_version_b_rejected": 15
+        },
+        "n_b_old_to_new_for_kept_events": {
+          "0->0": 14027,
+          "0->1": 248,
+          "0->2": 2,
+          "1->1": 37384,
+          "1->2": 355,
+          "2->2": 25408,
+          "2->3": 71,
+          "3->3": 874
+        },
+        "n_acceptance_or_exclusive_flag_changes": 0,
+        "other_examples": []
+      },
+      "override_0p2598_vs_old": {
+        "shards": {
+          "shards": {
+            "dataset_shard_exclusive.sqlite": {
+              "identical": true,
+              "n_signatures": 4568,
+              "n_arrays_compared": 4568,
+              "n_values_compared": 812915,
+              "n_final_state_rows": 197,
+              "n_metadata_keys": 21,
+              "differences": []
+            },
+            "dataset_shard_inclusive.sqlite": {
+              "identical": false,
+              "n_signatures": 27408,
+              "n_arrays_compared": 27408,
+              "n_values_compared": 4877490,
+              "n_final_state_rows": 197,
+              "n_metadata_keys": 21,
+              "differences": [],
+              "identical_after_clearing_bit6": true,
+              "n_acc_sibling_arrays_differing_only_by_bit6": 2665
+            },
+            "dataset_shard_nonjet4_exclusive.sqlite": {
+              "identical": true,
+              "n_signatures": 301,
+              "n_arrays_compared": 301,
+              "n_values_compared": 561462,
+              "n_final_state_rows": 49,
+              "n_metadata_keys": 22,
+              "differences": []
+            },
+            "dataset_shard_nonjet4_inclusive.sqlite": {
+              "identical": false,
+              "n_signatures": 1806,
+              "n_arrays_compared": 1806,
+              "n_values_compared": 3368772,
+              "n_final_state_rows": 49,
+              "n_metadata_keys": 22,
+              "differences": [],
+              "identical_after_clearing_bit6": true,
+              "n_acc_sibling_arrays_differing_only_by_bit6": 196
+            },
+            "dataset_shard_rare4_exclusive.sqlite": {
+              "identical": true,
+              "n_signatures": 3369,
+              "n_arrays_compared": 3369,
+              "n_values_compared": 805819,
+              "n_final_state_rows": 163,
+              "n_metadata_keys": 22,
+              "differences": []
+            },
+            "dataset_shard_rare4_inclusive.sqlite": {
+              "identical": false,
+              "n_signatures": 20214,
+              "n_arrays_compared": 20214,
+              "n_values_compared": 4834914,
+              "n_final_state_rows": 163,
+              "n_metadata_keys": 22,
+              "differences": [],
+              "identical_after_clearing_bit6": true,
+              "n_acc_sibling_arrays_differing_only_by_bit6": 1957
+            },
+            "dataset_shard_top4_exclusive.sqlite": {
+              "identical": true,
+              "n_signatures": 301,
+              "n_arrays_compared": 301,
+              "n_values_compared": 564015,
+              "n_final_state_rows": 49,
+              "n_metadata_keys": 22,
+              "differences": []
+            },
+            "dataset_shard_top4_inclusive.sqlite": {
+              "identical": false,
+              "n_signatures": 1806,
+              "n_arrays_compared": 1806,
+              "n_values_compared": 3384090,
+              "n_final_state_rows": 49,
+              "n_metadata_keys": 22,
+              "differences": [],
+              "identical_after_clearing_bit6": true,
+              "n_acc_sibling_arrays_differing_only_by_bit6": 196
+            }
+          },
+          "shards_only_on_one_side": [],
+          "all_shards_identical": true
+        },
+        "metadata": {
+          "n_differences": 7,
+          "paths": [
+            "/mc_diagnostics/acceptance_bit_map/SingleElectron",
+            "/mc_diagnostics/n_singleelectron_accepted",
+            "/mc_diagnostics/n_stored_in_delivery_union",
+            "/mc_diagnostics/n_stored_only_singleelectron",
+            "/mc_diagnostics/n_stored_singleelectron",
+            "/mc_diagnostics/singleelectron_cutflow",
+            "/mc_diagnostics/singleelectron_guard_violations"
+          ],
+          "differences": [
+            {
+              "path": "/mc_diagnostics/acceptance_bit_map/SingleElectron",
+              "a": "<missing>",
+              "b": 64
+            },
+            {
+              "path": "/mc_diagnostics/n_singleelectron_accepted",
+              "a": "<missing>",
+              "b": 35383
+            },
+            {
+              "path": "/mc_diagnostics/n_stored_in_delivery_union",
+              "a": "<missing>",
+              "b": 76920
+            },
+            {
+              "path": "/mc_diagnostics/n_stored_only_singleelectron",
+              "a": "<missing>",
+              "b": 23548
+            },
+            {
+              "path": "/mc_diagnostics/n_stored_singleelectron",
+              "a": "<missing>",
+              "b": 35383
+            },
+            {
+              "path": "/mc_diagnostics/singleelectron_cutflow",
+              "a": "<missing>",
+              "b": {
+                "n_events_considered": 89110,
+                "n_fired": 40599,
+                "n_fired_and_ge1_matched": 37731,
+                "n_fired_and_ge1_matched_online27": 37714,
+                "n_accepted": 35383,
+                "n_lost_to_offline_cut": 2331,
+                "trigobj_pt_min_gev": 27.0,
+                "offline_pt_min_gev": 32.0
+              }
+            },
+            {
+              "path": "/mc_diagnostics/singleelectron_guard_violations",
+              "a": "<missing>",
+              "b": 0
+            }
+          ]
+        }
+      }
+    },
+    "75589": {
+      "file_url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/ZZTo4L_TuneCP5_13TeV_powheg_pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2430000/051E9D22-4F30-8E49-8477-644E65768282.root",
+      "n_stored_old": 47946,
+      "n_stored_new": 47946,
+      "n_accepted_per_dataset_old": {
+        "DoubleMuon": 12065,
+        "SingleMuon": 29773,
+        "DoubleEG": 6259,
+        "MuonEG": 4171
+      },
+      "n_accepted_per_dataset_new": {
+        "DoubleMuon": 12065,
+        "SingleMuon": 29773,
+        "DoubleEG": 6259,
+        "MuonEG": 4171
+      },
+      "n_ele27_candidate_old": 21019,
+      "n_ele27_candidate_new": 21019,
+      "n_singleelectron_accepted_new": 18550,
+      "n_stored_singleelectron_new": 18550,
+      "n_stored_only_singleelectron_new": 10441,
+      "n_stored_in_delivery_union_new": 45835,
+      "singleelectron_pass_fraction_of_stored": 0.3868935886205314,
+      "singleelectron_pass_fraction_of_triggered": 0.31856431392752876,
+      "singleelectron_cutflow": {
+        "n_events_considered": 58230,
+        "n_fired": 22734,
+        "n_fired_and_ge1_matched": 21049,
+        "n_fired_and_ge1_matched_online27": 21019,
+        "n_accepted": 18550,
+        "n_lost_to_offline_cut": 2469,
+        "trigobj_pt_min_gev": 27.0,
+        "offline_pt_min_gev": 32.0
+      },
+      "singleelectron_guard_violations": 0,
+      "jets_old": {
+        "n_events": 47946,
+        "n_light_jets": 28251,
+        "n_b_jets": 1826,
+        "b_tagged_jet_fraction": 0.06071084217175915,
+        "n_b_distribution": {
+          "0": 46196,
+          "1": 1676,
+          "2": 72,
+          "3+": 2
+        }
+      },
+      "jets_new": {
+        "n_events": 47946,
+        "n_light_jets": 28145,
+        "n_b_jets": 1932,
+        "b_tagged_jet_fraction": 0.06423512983342754,
+        "n_b_distribution": {
+          "0": 46095,
+          "1": 1772,
+          "2": 77,
+          "3+": 2
+        }
+      },
+      "per_event_migration": {
+        "same_accepted_events": true,
+        "n_events_old": 47946,
+        "n_events_new": 47946,
+        "classes": {
+          "unchanged": 47840,
+          "b_migration_light_to_b": 105,
+          "kept_to_version_b_rejected": 1
+        },
+        "n_b_old_to_new_for_kept_events": {
+          "0->0": 46095,
+          "0->1": 101,
+          "1->1": 1653,
+          "1->2": 4,
+          "2->2": 58,
+          "3->3": 1
+        },
+        "n_acceptance_or_exclusive_flag_changes": 0,
+        "other_examples": []
+      },
+      "override_0p2598_vs_old": {
+        "shards": {
+          "shards": {
+            "dataset_shard_exclusive.sqlite": {
+              "identical": true,
+              "n_signatures": 2900,
+              "n_arrays_compared": 2900,
+              "n_values_compared": 122731,
+              "n_final_state_rows": 154,
+              "n_metadata_keys": 21,
+              "differences": []
+            },
+            "dataset_shard_inclusive.sqlite": {
+              "identical": false,
+              "n_signatures": 17400,
+              "n_arrays_compared": 17400,
+              "n_values_compared": 736386,
+              "n_final_state_rows": 154,
+              "n_metadata_keys": 21,
+              "differences": [],
+              "identical_after_clearing_bit6": true,
+              "n_acc_sibling_arrays_differing_only_by_bit6": 1989
+            },
+            "dataset_shard_nonjet4_exclusive.sqlite": {
+              "identical": true,
+              "n_signatures": 325,
+              "n_arrays_compared": 325,
+              "n_values_compared": 107516,
+              "n_final_state_rows": 54,
+              "n_metadata_keys": 22,
+              "differences": []
+            },
+            "dataset_shard_nonjet4_inclusive.sqlite": {
+              "identical": false,
+              "n_signatures": 1950,
+              "n_arrays_compared": 1950,
+              "n_values_compared": 645096,
+              "n_final_state_rows": 54,
+              "n_metadata_keys": 22,
+              "differences": [],
+              "identical_after_clearing_bit6": true,
+              "n_acc_sibling_arrays_differing_only_by_bit6": 218
+            },
+            "dataset_shard_rare4_exclusive.sqlite": {
+              "identical": true,
+              "n_signatures": 2182,
+              "n_arrays_compared": 2182,
+              "n_values_compared": 121674,
+              "n_final_state_rows": 135,
+              "n_metadata_keys": 22,
+              "differences": []
+            },
+            "dataset_shard_rare4_inclusive.sqlite": {
+              "identical": false,
+              "n_signatures": 13092,
+              "n_arrays_compared": 13092,
+              "n_values_compared": 730044,
+              "n_final_state_rows": 135,
+              "n_metadata_keys": 22,
+              "differences": [],
+              "identical_after_clearing_bit6": true,
+              "n_acc_sibling_arrays_differing_only_by_bit6": 1448
+            },
+            "dataset_shard_top4_exclusive.sqlite": {
+              "identical": true,
+              "n_signatures": 325,
+              "n_arrays_compared": 325,
+              "n_values_compared": 107756,
+              "n_final_state_rows": 54,
+              "n_metadata_keys": 22,
+              "differences": []
+            },
+            "dataset_shard_top4_inclusive.sqlite": {
+              "identical": false,
+              "n_signatures": 1950,
+              "n_arrays_compared": 1950,
+              "n_values_compared": 646536,
+              "n_final_state_rows": 54,
+              "n_metadata_keys": 22,
+              "differences": [],
+              "identical_after_clearing_bit6": true,
+              "n_acc_sibling_arrays_differing_only_by_bit6": 218
+            }
+          },
+          "shards_only_on_one_side": [],
+          "all_shards_identical": true
+        },
+        "metadata": {
+          "n_differences": 7,
+          "paths": [
+            "/mc_diagnostics/acceptance_bit_map/SingleElectron",
+            "/mc_diagnostics/n_singleelectron_accepted",
+            "/mc_diagnostics/n_stored_in_delivery_union",
+            "/mc_diagnostics/n_stored_only_singleelectron",
+            "/mc_diagnostics/n_stored_singleelectron",
+            "/mc_diagnostics/singleelectron_cutflow",
+            "/mc_diagnostics/singleelectron_guard_violations"
+          ],
+          "differences": [
+            {
+              "path": "/mc_diagnostics/acceptance_bit_map/SingleElectron",
+              "a": "<missing>",
+              "b": 64
+            },
+            {
+              "path": "/mc_diagnostics/n_singleelectron_accepted",
+              "a": "<missing>",
+              "b": 18550
+            },
+            {
+              "path": "/mc_diagnostics/n_stored_in_delivery_union",
+              "a": "<missing>",
+              "b": 45835
+            },
+            {
+              "path": "/mc_diagnostics/n_stored_only_singleelectron",
+              "a": "<missing>",
+              "b": 10441
+            },
+            {
+              "path": "/mc_diagnostics/n_stored_singleelectron",
+              "a": "<missing>",
+              "b": 18550
+            },
+            {
+              "path": "/mc_diagnostics/singleelectron_cutflow",
+              "a": "<missing>",
+              "b": {
+                "n_events_considered": 58230,
+                "n_fired": 22734,
+                "n_fired_and_ge1_matched": 21049,
+                "n_fired_and_ge1_matched_online27": 21019,
+                "n_accepted": 18550,
+                "n_lost_to_offline_cut": 2469,
+                "trigobj_pt_min_gev": 27.0,
+                "offline_pt_min_gev": 32.0
+              }
+            },
+            {
+              "path": "/mc_diagnostics/singleelectron_guard_violations",
+              "a": "<missing>",
+              "b": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "builds": {
+    "old": {
+      "event_union": "the four data acceptance flags only; the SingleElectron candidate is stored and ignored",
+      "samples": {
+        "67801": {
+          "normalisation_factor": 0.14922811777030368,
+          "sigma_w_over_surviving_files": 9807582.2564,
+          "n_entries_dropped_by_event_union": 209132,
+          "raw_entries_after_union": 556754,
+          "weighted_yield_after_union": 5816775.099729117
+        },
+        "75589": {
+          "normalisation_factor": 0.11373945269673225,
+          "sigma_w_over_surviving_files": 222533.0912,
+          "n_entries_dropped_by_event_union": 18563,
+          "raw_entries_after_union": 90803,
+          "weighted_yield_after_union": 13297.863290822292
+        }
+      },
+      "root": {
+        "smoke_record67801_mc.root": {
+          "n_histograms": 910,
+          "sum_entries": 360804.0,
+          "sum_contents": 3767646.1674564737
+        },
+        "smoke_record75589_mc.root": {
+          "n_histograms": 669,
+          "sum_entries": 41900.0,
+          "sum_contents": 6126.231895954091
+        },
+        "smoke_summedSM_mc.root": {
+          "n_histograms": 971,
+          "sum_entries": 402704.0,
+          "sum_contents": 3773772.3993524318
+        }
+      }
+    },
+    "oldbuilder_newruns": {
+      "event_union": "the four data acceptance flags only; the SingleElectron candidate is stored and ignored",
+      "samples": {
+        "67801": {
+          "normalisation_factor": 0.14922811777030368,
+          "sigma_w_over_surviving_files": 9807582.2564,
+          "n_entries_dropped_by_event_union": 209440,
+          "raw_entries_after_union": 560281,
+          "weighted_yield_after_union": 5852967.14270487
+        },
+        "75589": {
+          "normalisation_factor": 0.11373945269673225,
+          "sigma_w_over_surviving_files": 222533.0912,
+          "n_entries_dropped_by_event_union": 18575,
+          "raw_entries_after_union": 90843,
+          "weighted_yield_after_union": 13303.88736904879
+        }
+      },
+      "root": {
+        "smoke_record67801_mc.root": {
+          "n_histograms": 939,
+          "sum_entries": 360639.0,
+          "sum_contents": 3765426.009062433
+        },
+        "smoke_record75589_mc.root": {
+          "n_histograms": 676,
+          "sum_entries": 41903.0,
+          "sum_contents": 6127.5500671503805
+        },
+        "smoke_summedSM_mc.root": {
+          "n_histograms": 1000,
+          "sum_entries": 402542.0,
+          "sum_contents": 3771553.559129591
+        }
+      }
+    },
+    "new": {
+      "event_union": "the five delivered acceptance flags: the four data flags OR SingleElectron (bit 6, offline pT > 32 GeV); the bare Ele27 candidate (bit 4) is not used",
+      "samples": {
+        "67801": {
+          "normalisation_factor": 0.14922811777030368,
+          "sigma_w_over_surviving_files": 9807582.2564,
+          "n_entries_dropped_by_event_union": 14208,
+          "raw_entries_after_union": 755513,
+          "weighted_yield_after_union": 7903830.02870768
+        },
+        "75589": {
+          "normalisation_factor": 0.11373945269673225,
+          "sigma_w_over_surviving_files": 222533.0912,
+          "n_entries_dropped_by_event_union": 1926,
+          "raw_entries_after_union": 107492,
+          "weighted_yield_after_union": 15734.63766916592
+        }
+      },
+      "root": {
+        "smoke_record67801_mc.root": {
+          "n_histograms": 1137,
+          "sum_entries": 491305.0,
+          "sum_contents": 5137609.506089739
+        },
+        "smoke_record75589_mc.root": {
+          "n_histograms": 796,
+          "sum_entries": 50903.0,
+          "sum_contents": 7435.573031897416
+        },
+        "smoke_summedSM_mc.root": {
+          "n_histograms": 1197,
+          "sum_entries": 542208.0,
+          "sum_contents": 5145045.079121635
+        }
+      }
+    }
+  }
+}
