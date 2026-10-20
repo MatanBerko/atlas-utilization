@@ -7,7 +7,7 @@ running or finished; every job mode skips outputs that already exist.
 
 - Code: DONE and pushed (both branches, gate empty).
 - Local tests: DONE, all pass.
-- Real-file checks A–E: being prepared for the cluster.
+- Real-file checks A–E: SUBMITTED 20 Oct 10:21 (see Jobs).
 
 ## Branches
 
@@ -36,7 +36,21 @@ done on upstream, and no PR was opened.
   - **ovr:** the NEW code with the b-tag forced back to 0.2598 for that
     process only, so OLD vs ovr isolates the b-tag.
 
-Jobs: (none submitted yet)
+Jobs (wipp-campus, submitted 20 Oct 10:21 IDT):
+
+| job | what | resources |
+|---|---|---|
+| `5253152[]` (0-7) | per-file, `mapping.txt`: data DM/SM/DEG/MEG file 0 (new, old, ovr), SE 30529/0 and 30562/0 (new), MC 67801/0 and 75589/0 (new, old, ovr) | 32gb, 8h |
+| `5253153` | build (afterok): data NEW 5 datasets / OLD 4; MC OLD/OLD, OLD builder on NEW runs, NEW/NEW, all `--smoke-test` | 16gb, 3h |
+| `5253154` | analyse (afterok): `scripts/analyse.py` -> `evidence/` | 16gb, 1h |
+
+Pre-check (login node, VERIFIED BY RUNNING): all six data files carry every
+trigger branch matched5 needs and the "2 = 1e (WPTight)" bit title.
+File count before: 120,686.
+
+Study targets for check B (read-only `work/serecheck_20261019/se/a_0p2598/`):
+30529/0 accepted 32,459, not taken by the other four 30,774; 30562/0 902,673
+and 855,435.
 
 ## Freeze
 
