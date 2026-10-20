@@ -60,8 +60,11 @@ JET_PT_MIN_GEV = 30.0
 JET_ETA_MAX = 2.5
 JET_LEPTON_CLEAN_DR = 0.4
 
-# DeepJet Medium WP, UL2016 postVFP -- same value as config.cms_bjet_test.yaml:78
-BTAG_DEEPFLAVB_MEDIUM_WP = 0.2598
+# Official CMS DeepJet medium WP for UL2016 postVFP, decided by Maryna 20 Oct
+# 2026. Run2016G+H data and the UL16 postVFP MC are both postVFP. It replaces
+# 0.2598, which is the UL2016 preVFP medium value (the old comment here wrongly
+# called 0.2598 postVFP). Applied to data and MC alike, by select_and_split_jets.
+BTAG_DEEPFLAVB_MEDIUM_WP = 0.2489
 
 TRIGGER_BRANCHES = (
     "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ",
