@@ -7,7 +7,14 @@ running or finished; every job mode skips outputs that already exist.
 
 - Code: DONE and pushed (both branches, gate empty).
 - Local tests: DONE, all pass.
-- Real-file checks A–E: SUBMITTED 20 Oct 10:21 (see Jobs).
+- Real-file checks A–E: SUBMITTED 20 Oct 10:21 (see Jobs). PARTLY FAILED at
+  ~10:31: the CERN Open Data portal returned 502 Bad Gateway while file
+  URLs were being looked up (an outage outside our code). 16 of 22 runs
+  finished. Still missing: ovr DoubleMuon/DoubleEG/MuonEG/MC 67801, plus
+  old and ovr SingleMuon. Build 5253153 and analyse 5253154 never ran
+  (their dependency failed). NEXT: once the portal answers 200, resubmit
+  array indices 0,1,2,3,6 (finished sides are skipped automatically), then
+  build and analyse.
 
 ## Branches
 
