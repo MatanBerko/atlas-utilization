@@ -15,6 +15,10 @@ running or finished; every job mode skips outputs that already exist.
   (their dependency failed). NEXT: once the portal answers 200, resubmit
   array indices 0,1,2,3,6 (finished sides are skipped automatically), then
   build and analyse.
+- RESUBMITTED 20 Oct 10:48 (portal back, HTTP 200): `5253218[]` (idx 0-3,
+  logs `logs/perfile/retry_<i>.log`), `5253219` (idx 6, `retry_6.log`), build
+  `5253220` (afterok both), analyse `5253221` (afterok build). The earlier
+  build/analyse jobs 5253153/5253154 never ran.
 
 ## Branches
 
