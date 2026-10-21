@@ -1,6 +1,6 @@
 # HANDOFF — CMS ttbar with the PR #40 multiplicity rule (21 Oct 2026)
 
-**Current step: 5 running — builds `5266595` (exact), `5266596` (pr40), `5266597` (base) submitted 21 Oct 19:19 IDT. Production done and audited 49/49. Next: compare, then rulecheck.**
+**Current step: COMPLETE (21 Oct 2026, ~20:05 IDT). Nothing running. Result: `REPORT.md`. Not delivered, not merged, nothing sent; the WhatsApp reply to Maryna is only a DRAFT for Matan.**
 A TEST for Maryna, not a delivery. Nothing merged; nothing sent; nothing upstream.
 
 - Branch: `study/cms-ttbar-pr40-20261021` (origin only), from
@@ -117,3 +117,39 @@ audit (4gb, 1h) → build_exact, build_pr40 (repo), build_base (REPO_DIR=base, s
 | build_exact | `5266595` | repo @ ecdf59c |
 | build_pr40 | `5266596` | repo @ ecdf59c |
 | build_base | `5266597` | base @ cd22aa2 (script from repo) |
+
+## Step 5 result (VERIFIED BY RUNNING)
+
+- The three builds all exited 0 (6–10 min each; peak memory ≈ 7.7 GB; scratch in node-local
+  `$TMPDIR`). Outputs: `build_exact/` (3,606 TH1D), `build_pr40/` (302 TH1D; 275 exact labels
+  → 55 final states), `build_base/` (3,606 TH1D).
+- compare `5266714` (exit 0): build_exact == build_base **bit for bit** (3,606 names,
+  3,613,212 bins incl. flow, 0 different).
+
+## Step 6 result (rulecheck `5266715`, exit 0)
+
+R1–R7 **all PASS**. Oracle against c2488b7: 275/275 production labels, 6,657/6,657 stored
+pairs, 3,606/3,606 histogram pairs, 455/455 grid labels, 84,630/84,630 grid pairs.
+Evidence on the cluster: `work/ttbar_pr40_20261021/evidence/`. Copied to `evidence/` here:
+`rule_check.json`, `compare_exact_vs_base.json`, `oracle_result.json`, `production_audit.json`,
+`pr40_build_report.json`. Left on the cluster only (size): the exact/base build reports
+(5 MB each) and `oracle_answers.json`.
+
+## Steps 7–8
+
+- `REPORT.md`; PNGs in `plots/` (7), made on the Mac from `evidence/rule_check.json` by
+  `make_plots.py` (no ROOT read locally).
+- Checkouts archived, with listings verified (archive file entries == files on disk):
+  - `checkouts/ttbar_pr40_20261021/checkout_repo_ecdf59c.tar.gz` (357 files, 68 MB)
+  - `checkouts/ttbar_pr40_20261021/checkout_base_cd22aa2.tar.gz` (319 files, 69 MB)
+
+  The checkout directories and every output were left in place.
+- **Final file count: 122,579** (+1,564 vs 121,015; ceiling 125,000 respected).
+- Note: the connection to the cluster dropped once (19:55, `wipp-jump` not resolvable). Work
+  stopped until Matan reconnected the VPN; nothing on the cluster was affected.
+
+## Cluster outputs (all under /storage/agrp/berkom/atlas-utilization/)
+
+- `work/ttbar_pr40_20261021/`: `mappings/`, `runs/record67801/job_<i>/` (49), `logs/`,
+  `logs/post/`, `build_exact/`, `build_pr40/`, `build_base/`, `evidence/`, `jobids.txt`
+- `checkouts/ttbar_pr40_20261021/`: `repo/` @ ecdf59c, `base/` @ cd22aa2, and the two archives

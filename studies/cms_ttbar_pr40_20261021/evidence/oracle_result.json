@@ -1,0 +1,41 @@
+{
+  "oracle_tree": "/var/tmp/pbs.5266715.pbs/oracle_c2488b7_5266715.pbs",
+  "oracle_module": "/var/tmp/pbs.5266715.pbs/oracle_c2488b7_5266715.pbs/services/calculations/physics_calcs.py",
+  "labels": {
+    "grid": {
+      "n_checked": 455,
+      "n_agree": 455,
+      "disagreements": []
+    },
+    "production": {
+      "n_checked": 275,
+      "n_agree": 275,
+      "disagreements": []
+    },
+    "production_stored_labels": {
+      "n_checked": 273,
+      "n_agree": 273,
+      "disagreements": []
+    }
+  },
+  "pairs": {
+    "grid_x_186": {
+      "n_checked": 84630,
+      "n_agree": 84630,
+      "n_allowed_by_oracle": 3598,
+      "disagreements": []
+    },
+    "production_exact_histograms": {
+      "n_checked": 3606,
+      "n_agree": 3606,
+      "n_allowed_by_oracle": 1488,
+      "disagreements": []
+    },
+    "production_stored_pairs": {
+      "n_checked": 6657,
+      "n_agree": 6657,
+      "n_allowed_by_oracle": 2397,
+      "disagreements": []
+    }
+  }
+}
