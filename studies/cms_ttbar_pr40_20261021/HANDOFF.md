@@ -1,6 +1,6 @@
 # HANDOFF — CMS ttbar with the PR #40 multiplicity rule (21 Oct 2026)
 
-**Current step: 4 running — production array `5266327[]` (49 files) submitted 21 Oct 18:42 IDT. Next: audit, then the three builds.**
+**Current step: 5 running — builds `5266595` (exact), `5266596` (pr40), `5266597` (base) submitted 21 Oct 19:19 IDT. Production done and audited 49/49. Next: compare, then rulecheck.**
 A TEST for Maryna, not a delivery. Nothing merged; nothing sent; nothing upstream.
 
 - Branch: `study/cms-ttbar-pr40-20261021` (origin only), from
@@ -99,3 +99,21 @@ Next, from `repo` (all `-q N -m n -l ...,io=25`, logs in `logs/post/`):
  -v WORK_DIR=$W,REPO_DIR=<repo|base>,WHAT=<what> $C/repo/studies/cms_ttbar_pr40_20261021/cluster/pbs_post.sh`
 audit (4gb, 1h) → build_exact, build_pr40 (repo), build_base (REPO_DIR=base, script still from repo) (32gb, 4h each)
 → compare (8gb, 1h) → rulecheck (16gb, 2h).
+
+## Step 4 result (VERIFIED BY RUNNING)
+
+- Array `5266327[]` finished (F) at about 19:15 IDT. No resubmission.
+- Audit `5266594` (exit 0), `evidence/production_audit.json` on the cluster: **49/49 OK**.
+  Every file exited 0, has `job_metadata.json` and the rare4 shard, and is at commit
+  `ecdf59c`. Every file has SingleElectron bit 64 and passes the Σw self-check. 0 capped
+  signatures (largest 58,777 entries); no skipped combinations. 43,546,000 events read;
+  25,076,583 rare4 events kept. Peak memory 3.0 GB.
+- File count after production: **122,453**.
+
+## Step 5 (submitted 19:19 IDT; 32gb, 04:00:00, io=25, logs `logs/post/<what>.{out,err}`)
+
+| what | job | REPO_DIR |
+|---|---|---|
+| build_exact | `5266595` | repo @ ecdf59c |
+| build_pr40 | `5266596` | repo @ ecdf59c |
+| build_base | `5266597` | base @ cd22aa2 (script from repo) |
