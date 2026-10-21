@@ -1,6 +1,6 @@
 # HANDOFF — CMS ttbar with the PR #40 multiplicity rule (21 Oct 2026)
 
-**Current step: 3 done (code + local checks). Next: step 4, cluster production of 67801.**
+**Current step: 4 running — production array `5266327[]` (49 files) submitted 21 Oct 18:42 IDT. Next: audit, then the three builds.**
 A TEST for Maryna, not a delivery. Nothing merged; nothing sent; nothing upstream.
 
 - Branch: `study/cms-ttbar-pr40-20261021` (origin only), from
@@ -77,3 +77,25 @@ Production uses `cluster/pbs_mc_pilot.sh` (MEM=6gb, walltime 02:00:00, io=25), t
 
 1. `/opt/pbs/bin/qstat -u berkom -t`. Never resubmit an array that is queued, running or finished.
 2. Read the latest section of this file for job IDs and the next step.
+
+## Step 4: production (submitted 21 Oct 2026, 18:42 IDT)
+
+- Cluster reached over `wipp-home` (`wipp-campus` timed out once, as on 21 Oct).
+- File count before anything: **121,015** (VERIFIED BY RUNNING). Estimate ≈ +2,100
+  (2 checkouts, 49 × ~12, logs, builds) → ≈ 123,100 < 125,000 (UNVERIFIED estimate).
+- Checkouts (fresh clones of origin, detached, clean): `checkouts/ttbar_pr40_20261021/repo` @
+  `ecdf59c` (this branch) and `checkouts/ttbar_pr40_20261021/base` @ `cd22aa2` (unmodified
+  builder). File count after them: 121,823.
+- Mapping: `work/ttbar_pr40_20261021/mappings/mapping_67801.txt`, a COPY of the 17 Oct mapping
+  (`cmp` identical; 49 lines, record 67801, 49 distinct files).
+- Oracle code: `work/ttbar_pr40_20261021/evidence/oracle_c2488b7.tar` (`git archive c2488b7
+  services domain`; tar commit id c2488b77…).
+- **Production array `5266327[]`**: `-J 1-49 -l mem=6gb,walltime=02:00:00,io=25 -q N -m n`,
+  `cluster/pbs_mc_pilot.sh` from `repo`, logs `work/ttbar_pr40_20261021/logs/f_<i>.{out,err}`,
+  outputs `runs/record67801/job_<file>/`. Recorded in `work/ttbar_pr40_20261021/jobids.txt`.
+
+Next, from `repo` (all `-q N -m n -l ...,io=25`, logs in `logs/post/`):
+`qsub -N ttpr40_<what> -l mem=<..>,walltime=<..>,io=25 -o $W/logs/post/<what>.out -e $W/logs/post/<what>.err
+ -v WORK_DIR=$W,REPO_DIR=<repo|base>,WHAT=<what> $C/repo/studies/cms_ttbar_pr40_20261021/cluster/pbs_post.sh`
+audit (4gb, 1h) → build_exact, build_pr40 (repo), build_base (REPO_DIR=base, script still from repo) (32gb, 4h each)
+→ compare (8gb, 1h) → rulecheck (16gb, 2h).
