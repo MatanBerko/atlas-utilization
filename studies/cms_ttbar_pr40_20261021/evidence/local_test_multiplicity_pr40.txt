@@ -1,0 +1,21 @@
+[PASS] 1mu+5j 0e_1m_3j_0b
+[PASS] 1mu+100j 0e_1m_3j_0b
+[PASS] 2e+1b+5j 2e_0m_1j_1b
+[PASS] no jet slot 2e_0m_0j_2b
+[PASS] unchanged 
+[PASS] m0j0j1j2 in 1m3j 
+[PASS] j1j2j3 not in 1m3j 
+[PASS] e1b0 in 2e1j1b 
+[PASS] e0j1 not in 2e1j1b 
+[PASS] merged masses, 3j then 4j then 5j [300.0, 301.0, 200.0, 201.0, 202.0, 100.0, 101.0, 102.0, 103.0]
+[PASS] weights in the same order [3.0, 3.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0]
+[PASS] rank-3 combination dropped with siblings ['MC_record67801_file0_FS_0e_1m_3j_0b_IM_m0j0', 'MC_record67801_file0_FS_0e_1m_3j_0b_IM_m0j0_mcraw_acc', 'MC_record67801_file0_FS_0e_1m_3j_0b_IM_m0j0_mcw']
+[PASS] counts summed {'0e_1m_3j_0b': 9}
+[PASS] dropped rows {'n_rows_in': 15, 'n_rows_out': 9, 'n_rows_dropped_combination_not_in_capped_label': 6, 'n_mass_entries_dropped': 7, 'label_map': {'0e_1m_3j_0b': '0e_1m_3j_0b', '0e_1m_4j_0b': '0e_1m_3j_0b', '0e_1m_5j_0b': '0e_1m_3j_0b'}}
+[PASS] capped merge refused 
+[PASS] real: events conserved 532684 -> 532684
+[PASS] real: every merged combination holds every merged event 308 signatures, 0 bad
+[PASS] real: siblings aligned 
+[PASS] real: kept entries == allowed entries before 51 final states from 194 exact labels, 16182 rows dropped
+
+19/19 checks passed

@@ -45,6 +45,13 @@ Build-time OPTIONS, so an answer from Maryna or Yuval needs no re-run:
   --peak-scope {combined,per-sample} [combined]
   --min-events-basis {raw,weighted} [raw]
   --output-mode {per-sample,summed,both} [both]
+  --multiplicity-rule {exact,pr40}  [exact]
+      pr40 is a TEST of upstream PR #40 (c2488b7, NOT merged): before the
+      >=100 rule every label becomes #40's capped label, combinations the
+      capped label does not contain are dropped, and the arrays (masses and
+      every sibling, weights included) of exact labels that cap to the same
+      label + combination are merged (multiplicity_pr40.py). exact leaves the
+      shards untouched.
 
 No negative-bin fix is implemented -- only the inventory is reported. That
 choice is Maryna's (DESIGN.md open questions).
@@ -90,6 +97,11 @@ from services.storage.sqlite_shards import (  # noqa: E402
 )
 from studies.cms_mc_weights_v3.deliver.cms_shard_pruning import (  # noqa: E402
     prune_final_states_below_min_events,  # CMS copy with the D3 sibling change
+)
+from studies.cms_mc_weights_v3.deliver.multiplicity_pr40 import (  # noqa: E402
+    PR40_COMMIT,
+    apply_pr40_to_shard,
+    final_state_population,
 )
 from studies.cms_coverage.cluster.merge_and_count import (  # noqa: E402
     MAX_MASS_CUTOFF,
@@ -619,6 +631,8 @@ def build(args) -> dict:
                   if args.file_indices else None)
     jobs_by_record = discover_jobs(runs_dir, only_records, only_files)
 
+    # Callers that build their own args (the tests) predate the option.
+    multiplicity_rule = getattr(args, "multiplicity_rule", "exact")
     report = {
         "what": "CMS MC delivery build (studies/cms_mc_weights_v3)",
         "generated_utc": datetime.now(timezone.utc).isoformat(),
@@ -632,6 +646,7 @@ def build(args) -> dict:
             "min_events_basis": args.min_events_basis,
             "output_mode": args.output_mode,
             "min_events_per_fs": args.min_events_per_fs,
+            "multiplicity_rule": multiplicity_rule,
         },
         "constants": {
             "target_luminosity_fb": TARGET_LUMINOSITY_FB,
@@ -714,6 +729,32 @@ def build(args) -> dict:
               f"{record['cross_section_pb']:g} pb, Sigma-w={sw['sigma_w']:.6e} over "
               f"{sw['n_files_included']} file(s) ({sw['n_files_excluded']} excluded), "
               f"norm={norm:.6e}", flush=True)
+
+    # ---- optional PR #40 multiplicity rule (a TEST; default exact) -------
+    # Applied per scratch shard, after the _mcw siblings exist and before the
+    # >=100 rule, so the rule counts the merged populations. With exact the
+    # shards are not touched.
+    if multiplicity_rule == "pr40":
+        regroup = [apply_pr40_to_shard(p) for p in all_scratch_shards]
+        label_map = {}
+        for r in regroup:
+            label_map.update(r["label_map"])
+        merged_into = defaultdict(list)
+        for exact, capped in sorted(label_map.items()):
+            merged_into[capped].append(exact)
+        report["multiplicity_rule_pr40"] = {
+            "source": f"upstream PR #40 commit {PR40_COMMIT} (NOT merged)",
+            "n_shards": len(regroup),
+            "n_rows_dropped_combination_not_in_capped_label": sum(
+                r["n_rows_dropped_combination_not_in_capped_label"] for r in regroup),
+            "n_mass_entries_dropped": sum(r["n_mass_entries_dropped"] for r in regroup),
+            "label_map": dict(sorted(label_map.items())),
+            "exact_labels_merged_into": dict(sorted(merged_into.items())),
+        }
+        print(f"PR #40 rule: {len(label_map)} exact label(s) -> "
+              f"{len(merged_into)} final state(s)", flush=True)
+    report["final_state_population_before_prune"] = final_state_population(
+        all_scratch_shards, MC_WEIGHT_SUFFIX, MC_SIBLING_ACCEPTANCE, event_union_mask)
 
     # ---- the >=100 rule, ONCE, on the combined shards -------------------
     # Applied over every surviving file of every sample at once, so all samples
@@ -1012,6 +1053,12 @@ def main() -> int:
                    help="per-sample ROOT files, one summed-SM file, or both. "
                         "Default both -- the open question for Maryna.")
     p.add_argument("--min-events-per-fs", type=int, default=PRIMARY_MIN_EVENTS_PER_FS)
+    p.add_argument("--multiplicity-rule", choices=("exact", "pr40"), default="exact",
+                   help="exact (default): one final state per exact multiplicity, "
+                        "shards untouched. pr40: a TEST of upstream PR #40 "
+                        "(c2488b7, not merged) -- labels capped at 4 objects with "
+                        "light jets filling the free slots, applied before the "
+                        ">=100 rule (multiplicity_pr40.py).")
     p.add_argument("--scratch-dir", default=None,
                    help="where to copy the shards for mutation (default: a temp dir)")
     p.add_argument("--keep-scratch", action="store_true")
