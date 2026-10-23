@@ -1,0 +1,221 @@
+{
+  "what": "Matan's reviewed cross-section decisions for the CMS MC normalisation registry (v4 decisions, 15 Oct 2026). Input of record for build_registry.py; the older v2 sources stay untouched in this folder as history.",
+  "decided_by": "Matan (checked every source himself), 15 Oct 2026",
+  "convention": "cross_section_pb is sigma_eff = production sigma x branching ratio x any generator selection x any k-factor. k_factor and gen_filt_eff stay pinned to 1.0 in the registry; sum_of_weights stays null (measured at build time).",
+  "transcription_note": "Values, constructions, citations and orders are transcribed from the decision list as given. Nothing here was re-derived or rounded. Where the stated construction does not reproduce the decided value exactly, the decided value is kept and the difference is recorded in `arithmetic_note`.",
+  "records": [
+    {
+      "nano_recid": 67801, "mini_recid": 67800, "physics_short": "TTTo2L2Nu",
+      "cross_section_pb": 89.28,
+      "construction": "833.9 pb x 0.10706, where 0.10706 = (0.1071 + 0.1063 + 0.1138)^2",
+      "sources": [
+        {"citation": "LHC Top WG twiki TtbarNNLO", "location": "13 TeV, mt = 172.5 GeV, NNLO+NNLL", "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO"},
+        {"citation": "PDG W branching ratios", "location": "pdglive node S043, individually measured values (e, mu, tau)", "url": "https://pdglive.lbl.gov/Particle.action?node=S043"}
+      ],
+      "order": "NNLO+NNLL",
+      "previous_cross_section_pb": 89.28,
+      "decision_note": "Value unchanged; sources re-checked.",
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 67993, "mini_recid": 67992, "physics_short": "TTToSemiLeptonic",
+      "cross_section_pb": 367.86,
+      "construction": "833.9 pb x 0.44113, where 0.44113 = 2 x 0.3272 x 0.6741",
+      "sources": [
+        {"citation": "LHC Top WG twiki TtbarNNLO", "location": "13 TeV, mt = 172.5 GeV, NNLO+NNLL", "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO"},
+        {"citation": "PDG W branching ratios", "location": "pdglive node S043, individually measured leptonic values; BR(W -> hadrons) = 0.6741", "url": "https://pdglive.lbl.gov/Particle.action?node=S043"}
+      ],
+      "order": "NNLO+NNLL",
+      "previous_cross_section_pb": 367.86,
+      "decision_note": "Value unchanged; sources re-checked.",
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 35669, "mini_recid": 35668, "physics_short": "DYJetsToLL_M-50_amcatnloFXFX",
+      "cross_section_pb": 5765.4,
+      "construction": "3 x 1921.8 pb",
+      "sources": [
+        {"citation": "RazorAnalyzer public cross-section table (SECONDARY source)", "location": "line \"DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8 1921.8*3\" under \"#13 TeV Spring 15 MC\"", "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"}
+      ],
+      "order": "secondary-table",
+      "previous_cross_section_pb": 5765.4,
+      "decision_note": "Value unchanged. Citation CORRECTED: the old citation arXiv:1712.09814 (an electroweak Z+2-jets paper) is replaced by the RazorAnalyzer table. 2015-era value; a newer CMS-internal 6077.22 pb (not public) is ~5% higher; the generator NLO value is 6422 pb.",
+      "replaced_citation": "arXiv:1712.09814",
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 35631, "mini_recid": 35630, "physics_short": "DYJetsToLL_M-10to50_amcatnloFXFX",
+      "generator": "amcatnloFXFX",
+      "portal_dataset_title": "/DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "cross_section_pb": 18610,
+      "construction": "table value, 18610.0 pb",
+      "sources": [
+        {"citation": "RazorAnalyzer public cross-section table (SECONDARY source)", "location": "line \"DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8 18610.0\" under \"#13 TeV Spring 15 MC\"", "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"}
+      ],
+      "order": "secondary-table",
+      "previous_cross_section_pb": null,
+      "decision_note": "NEW in the full run (was excluded). Chosen for consistency with 35669 (same table), so there is no artificial step at m(ll) = 50 GeV.",
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 64895, "mini_recid": 64894, "physics_short": "ST_tW_top_5f_NoFullyHadronicDecays",
+      "cross_section_pb": 19.56,
+      "construction": "71.7 pb / 2 x (1 - 0.6741^2)",
+      "sources": [
+        {"citation": "LHC Top WG twiki SingleTopRefXsec", "location": "tW, 13 TeV, mt = 172.5 GeV, approx. NNLO", "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec"}
+      ],
+      "order": "approx. NNLO",
+      "previous_cross_section_pb": 19.56,
+      "decision_note": "Value unchanged. Citation CORRECTED: the old citation arXiv:2208.00924 (a CMS tW measurement) is replaced by the LHC Top WG twiki.",
+      "replaced_citation": "arXiv:2208.00924",
+      "alternative_not_used": "aN3LO 79.5 pb, arXiv:2106.12910 Sect. 2 (would give 21.69 pb)",
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 64839, "mini_recid": 64838, "physics_short": "ST_tW_antitop_5f_NoFullyHadronicDecays",
+      "cross_section_pb": 19.56,
+      "construction": "71.7 pb / 2 x (1 - 0.6741^2) (antitop half)",
+      "sources": [
+        {"citation": "LHC Top WG twiki SingleTopRefXsec", "location": "tW, 13 TeV, mt = 172.5 GeV, approx. NNLO", "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec"}
+      ],
+      "order": "approx. NNLO",
+      "previous_cross_section_pb": 19.56,
+      "decision_note": "Same as 64895 (antitop half). Value unchanged; old citation arXiv:2208.00924 replaced.",
+      "replaced_citation": "arXiv:2208.00924",
+      "alternative_not_used": "aN3LO 79.5 pb, arXiv:2106.12910 Sect. 2 (would give 21.69 pb)",
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 72676, "mini_recid": 72675, "physics_short": "WWTo2L2Nu",
+      "cross_section_pb": 12.708,
+      "construction": "118.7 pb x 0.10706",
+      "sources": [
+        {"citation": "arXiv:1408.5243", "location": "Table 1, 13 TeV, NNLO (includes gg -> WW; 4FNS)", "url": "https://arxiv.org/abs/1408.5243"}
+      ],
+      "order": "NNLO",
+      "previous_cross_section_pb": 12.178,
+      "decision_note": "Previous 12.178 pb came from the RazorAnalyzer table and could not be traced to a theory source; replaced by the NNLO value.",
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 72752, "mini_recid": 72751, "physics_short": "WZTo3LNu_amcatnloFXFX",
+      "cross_section_pb": 5.789,
+      "note": "corrected 17 Oct: exact k-factor 51.11/46.068, was 5.787",
+      "construction": "generator 5.218 pb x (51.11 / 46.068)",
+      "sources": [
+        {"citation": "CERN Open Data record 72751 (generator cross section)", "location": "metadata.cross_section.total_value", "url": "https://opendata.cern.ch/record/72751"},
+        {"citation": "arXiv:1604.08576", "location": "Table 1, 13 TeV, on-shell NNLO/NLO (k-factor)", "url": "https://arxiv.org/abs/1604.08576"}
+      ],
+      "order": "NLO generator x NNLO/NLO k-factor",
+      "previous_cross_section_pb": 5.218,
+      "decision_note": "Approximation: an on-shell k-factor is applied to a sample that also contains gamma*/low-mass pairs.",
+      "arithmetic_note": "5.218 x 51.11 / 46.068 = 5.78909 -> 5.789 pb (exact k-factor). The value 5.787 used until 17 Oct equalled 5.218 x 1.109 (k rounded to 4 significant figures); corrected to the exact formula by Matan's decision of 15 Oct 2026, applied 17 Oct 2026.",
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 75589, "mini_recid": 75588, "physics_short": "ZZTo4L",
+      "cross_section_pb": 1.544,
+      "construction": "generator 1.325 pb x (16.91 / 14.51)",
+      "sources": [
+        {"citation": "CERN Open Data record 75588 (generator cross section)", "location": "metadata.cross_section.total_value", "url": "https://opendata.cern.ch/record/75588"},
+        {"citation": "arXiv:1405.2219", "location": "Table 1, 13 TeV NNLO/NLO (includes gg -> ZZ) (k-factor)", "url": "https://arxiv.org/abs/1405.2219"}
+      ],
+      "order": "NLO generator x NNLO/NLO k-factor",
+      "previous_cross_section_pb": 1.256,
+      "decision_note": "If gg -> ZZ samples are ever added, switch to a qqbar-only k-factor to avoid double counting.",
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 68187, "mini_recid": 68186, "physics_short": "TTZToLLNuNu_M-10",
+      "cross_section_pb": 0.2439,
+      "construction": "generator value",
+      "sources": [
+        {"citation": "CERN Open Data record 68186 (generator cross section)", "location": "metadata.cross_section.total_value", "url": "https://opendata.cern.ch/record/68186"}
+      ],
+      "order": "NLO",
+      "previous_cross_section_pb": 0.2529,
+      "decision_note": "ORDER: NLO (no NNLO exists for ttZ).",
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 68073, "mini_recid": 68072, "physics_short": "TTWJetsToLNu",
+      "cross_section_pb": 0.2151,
+      "construction": "generator value",
+      "sources": [
+        {"citation": "CERN Open Data record 68072 (generator cross section)", "location": "metadata.cross_section.total_value", "url": "https://opendata.cern.ch/record/68072"}
+      ],
+      "order": "NLO",
+      "previous_cross_section_pb": 0.2043,
+      "decision_note": "ORDER: NLO (no NNLO exists for ttW).",
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 37728, "mini_recid": 37727, "physics_short": "GluGluHToZZTo4L_M125",
+      "cross_section_pb": 0.013335,
+      "construction": "48.58 pb x 2.745e-4",
+      "inputs": {"production_sigma_pb": 48.58, "branching_ratio": 2.745e-4},
+      "sources": [
+        {"citation": "LHC Higgs WG twiki CERNYellowReportPageAt13TeV", "location": "ggF, mH = 125.00 GeV, N3LO QCD + NLO EW", "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"},
+        {"citation": "LHC Higgs WG twiki CERNYellowReportPageBR", "location": "H -> ZZ -> 4l, l = e, mu, tau, mH = 125.00 GeV", "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"}
+      ],
+      "order": "N3LO QCD + NLO EW",
+      "previous_cross_section_pb": 0.013447,
+      "decision_note": "FIX: the previous 0.013447 used the branching ratio at mH = 125.09 GeV (2.768e-4) while the production cross section is at 125.00 GeV, a mass mix-up. Both are now at 125.00 GeV.",
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 68847, "mini_recid": 68846, "physics_short": "VBF_HToZZTo4L_M125",
+      "generator": "powheg2_JHUGenV7011",
+      "portal_dataset_title": "/VBF_HToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "cross_section_pb": 0.0010382,
+      "construction": "3.782 pb x 2.745e-4",
+      "inputs": {"production_sigma_pb": 3.782, "branching_ratio": 2.745e-4},
+      "sources": [
+        {"citation": "LHC Higgs WG twiki CERNYellowReportPageAt13TeV", "location": "VBF, mH = 125.00 GeV", "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"},
+        {"citation": "LHC Higgs WG twiki CERNYellowReportPageBR", "location": "H -> ZZ -> 4l, l = e, mu, tau, mH = 125.00 GeV", "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"}
+      ],
+      "order": "not stated in the decision list (the earlier v2 table recorded NNLO QCD + NLO EW for this page; UNVERIFIED here, for Matan to confirm)",
+      "previous_cross_section_pb": null,
+      "decision_note": "NEW in the full run (was excluded). Uses the same Higgs WG pages as 37728 (mH = 125.00 GeV).",
+      "in_full_run": true
+    },
+    {
+      "nano_recid": 35671, "mini_recid": 35670, "physics_short": "DYJetsToLL_M-50_madgraphMLM",
+      "cross_section_pb": 5765.4,
+      "construction": "unchanged from the previous registry (3 x 1921.8 pb)",
+      "sources": [
+        {"citation": "RazorAnalyzer public cross-section table (SECONDARY source)", "location": "same line as 35669", "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"}
+      ],
+      "order": "secondary-table",
+      "previous_cross_section_pb": 5765.4,
+      "decision_note": "NOT in the full run: LO sample that would double-count Drell-Yan with 35669. Kept in the registry as a cross-check only.",
+      "in_full_run": false,
+      "not_in_full_run_reason": "would double-count Drell-Yan with 35669; cross-check only"
+    },
+    {
+      "nano_recid": 42407, "mini_recid": 42406, "physics_short": "LQToBMu_M-400_pair",
+      "cross_section_pb": 2.276,
+      "construction": "unchanged from the previous registry",
+      "sources": [
+        {"citation": "previous registry provenance (LHC SUSY WG stop-pair proxy)", "location": "see provenance block", "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SUSYCrossSections13TeVstopsbottom"}
+      ],
+      "order": "unchanged (previous: NNLOapprox+NNLL stop-pair proxy)",
+      "previous_cross_section_pb": 2.276,
+      "decision_note": "NOT in the full run: BSM signal, not a Standard Model background. Kept in the registry because existing code and tests use it.",
+      "in_full_run": false,
+      "not_in_full_run_reason": "BSM signal, not SM background"
+    }
+  ],
+  "excluded_records": {
+    "35633": "DYJetsToLL_M-10to50 madgraphMLM (LO): would double-count Drell-Yan with 35631.",
+    "38428": "gg -> ZZ family: portal values ~1000x too large; gg -> ZZ is already inside the ZZTo4L k-factor.",
+    "38430": "gg -> ZZ family (as 38428).",
+    "38432": "gg -> ZZ family (as 38428).",
+    "38434": "gg -> ZZ family (as 38428).",
+    "38436": "gg -> ZZ family (as 38428).",
+    "38438": "gg -> ZZ family (as 38428).",
+    "38440": "gg -> ZZ family (as 38428).",
+    "38442": "gg -> ZZ family (as 38428).",
+    "75567": "ZZTo2L2Nu: unresolved 42% mismatch."
+  }
+}
