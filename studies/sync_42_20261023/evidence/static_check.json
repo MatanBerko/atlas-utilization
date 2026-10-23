@@ -1,0 +1,400 @@
+{
+ "before": "7f2da5d",
+ "after": "29291ae",
+ "cms_refs": {
+  "master": "sync/master-upstream-42-20261023",
+  "data": "sync/data-upstream-42-20261023",
+  "mc": "sync/mc-upstream-42-20261023"
+ },
+ "changed_modules": {
+  "orchestration.handlers.parsing_handler": [
+   "<module level>",
+   "ParsingHandler",
+   "ParsingHandler.handle"
+  ],
+  "services.calculations.consts": [
+   "<module level>",
+   "MUON_REL_ISOLATION_FIELD"
+  ],
+  "services.calculations.im_calculator": [
+   "IMCalculator",
+   "IMCalculator._get_all_events_fs",
+   "IMCalculator._limit_particles_in_fs"
+  ],
+  "services.calculations.physics_calcs": [
+   "filter_events_by_kinematics",
+   "limit_particles_in_fs"
+  ],
+  "services.parsing.event_selection": [
+   "<module level>",
+   "TRIGGER_LEPTON_FIELDS",
+   "TRIGGER_MATCHED_FIELD",
+   "_matched_lepton_mask",
+   "_trigger_years",
+   "_year_chains",
+   "apply_lepton_trigger_selection",
+   "apply_trigger_selection",
+   "attach_lepton_trigger_matches"
+  ],
+  "services.parsing.file_parser": [
+   "FileParser",
+   "FileParser._read_file_in_batches"
+  ],
+  "services.parsing.schemas": [
+   "<module level>",
+   "BASE_OBJECTS"
+  ]
+ },
+ "symbols": [
+  {
+   "module": "domain.metadata",
+   "symbol": "MCDatasetMetadata",
+   "used_by": [
+    "data:studies/sync_35_20261019/norm_probe.py:6",
+    "master:studies/sync_35_20261019/norm_probe.py:6",
+    "mc:studies/cms_mc_weights_v3/deliver/build_mc_delivery.py:78",
+    "mc:studies/cms_mc_weights_v3/tests/test_upstream35_drift.py:38",
+    "mc:studies/sync_35_20261019/norm_probe.py:6"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.calculations.combinatorics",
+   "symbol": "get_all_combinations",
+   "used_by": [
+    "data:studies/cms_datasets/cluster/run_dataset_on_file.py:177",
+    "data:studies/cms_datasets/tests/test_electron_datasets.py:51",
+    "data:studies/cms_datasets/tests/test_exact_jet_labels.py:40",
+    "data:studies/cms_datasets/tests/test_funnel_upstream35.py:39",
+    "master:studies/cms_datasets/cluster/run_dataset_on_file.py:177",
+    "master:studies/cms_datasets/tests/test_electron_datasets.py:51",
+    "master:studies/cms_datasets/tests/test_exact_jet_labels.py:40",
+    "master:studies/cms_datasets/tests/test_funnel_upstream35.py:39",
+    "mc:studies/cms_datasets/cluster/run_dataset_on_file.py:177",
+    "mc:studies/cms_datasets/tests/test_electron_datasets.py:51",
+    "mc:studies/cms_datasets/tests/test_exact_jet_labels.py:40",
+    "mc:studies/cms_datasets/tests/test_funnel_upstream35.py:39",
+    "mc:studies/cms_mc_weights_v3/probe/check_a9_labels_and_rules.py:33"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.calculations.combinatorics",
+   "symbol": "get_count",
+   "used_by": [
+    "data:studies/cms_datasets/cluster/run_dataset_on_file.py:177",
+    "data:studies/cms_datasets/tests/test_electron_datasets.py:51",
+    "data:studies/cms_datasets/tests/test_exact_jet_labels.py:40",
+    "master:studies/cms_datasets/cluster/run_dataset_on_file.py:177",
+    "master:studies/cms_datasets/tests/test_electron_datasets.py:51",
+    "master:studies/cms_datasets/tests/test_exact_jet_labels.py:40",
+    "mc:studies/cms_datasets/cluster/run_dataset_on_file.py:177",
+    "mc:studies/cms_datasets/tests/test_electron_datasets.py:51",
+    "mc:studies/cms_datasets/tests/test_exact_jet_labels.py:40",
+    "mc:studies/cms_mc_weights_v3/probe/check_a9_labels_and_rules.py:33"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.calculations.combinatorics",
+   "symbol": "get_start",
+   "used_by": [
+    "data:studies/cms_datasets/cluster/run_dataset_on_file.py:177",
+    "data:studies/cms_datasets/tests/test_electron_datasets.py:51",
+    "data:studies/cms_datasets/tests/test_exact_jet_labels.py:40",
+    "master:studies/cms_datasets/cluster/run_dataset_on_file.py:177",
+    "master:studies/cms_datasets/tests/test_electron_datasets.py:51",
+    "master:studies/cms_datasets/tests/test_exact_jet_labels.py:40",
+    "mc:studies/cms_datasets/cluster/run_dataset_on_file.py:177",
+    "mc:studies/cms_datasets/tests/test_electron_datasets.py:51",
+    "mc:studies/cms_datasets/tests/test_exact_jet_labels.py:40",
+    "mc:studies/cms_mc_weights_v3/probe/check_a9_labels_and_rules.py:33"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.calculations.im_calculator",
+   "symbol": "IMCalculator",
+   "used_by": [
+    "data:studies/cms_datasets/cluster/run_dataset_on_file.py:178",
+    "data:studies/sync_35_20261019/arity_probe.py:5",
+    "data:studies/sync_35_20261019/equiv_probe.py:6",
+    "master:studies/cms_datasets/cluster/run_dataset_on_file.py:178",
+    "master:studies/sync_35_20261019/arity_probe.py:5",
+    "master:studies/sync_35_20261019/equiv_probe.py:6",
+    "mc:studies/cms_datasets/cluster/run_dataset_on_file.py:178",
+    "mc:studies/sync_35_20261019/arity_probe.py:5",
+    "mc:studies/sync_35_20261019/equiv_probe.py:6"
+   ],
+   "changed": true
+  },
+  {
+   "module": "services.calculations.mc_weights",
+   "symbol": "compute_normalization",
+   "used_by": [
+    "data:studies/sync_35_20261019/norm_probe.py:5",
+    "master:studies/sync_35_20261019/norm_probe.py:5",
+    "mc:studies/cms_mc_weights_v3/deliver/build_mc_delivery.py:79",
+    "mc:studies/cms_mc_weights_v3/tests/test_upstream35_drift.py:39",
+    "mc:studies/sync_35_20261019/norm_probe.py:5"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.calculations.physics_calcs",
+   "symbol": "<whole module>",
+   "used_by": [
+    "data:studies/cms_datasets/cluster/run_dataset_on_file.py:176",
+    "data:studies/cms_datasets/tests/test_electron_datasets.py:50",
+    "data:studies/cms_datasets/tests/test_exact_jet_labels.py:39",
+    "data:studies/sync_35_20261019/equiv_probe.py:7",
+    "master:studies/cms_datasets/cluster/run_dataset_on_file.py:176",
+    "master:studies/cms_datasets/tests/test_electron_datasets.py:50",
+    "master:studies/cms_datasets/tests/test_exact_jet_labels.py:39",
+    "master:studies/sync_35_20261019/equiv_probe.py:7",
+    "mc:studies/cms_datasets/cluster/run_dataset_on_file.py:176",
+    "mc:studies/cms_datasets/tests/test_electron_datasets.py:50",
+    "mc:studies/cms_datasets/tests/test_exact_jet_labels.py:39",
+    "mc:studies/sync_35_20261019/equiv_probe.py:7"
+   ],
+   "attributes_used": [
+    "count_particles",
+    "filter_events_by_particle_counts",
+    "group_by_final_state",
+    "is_finalstate_contain_combination",
+    "limit_particles_in_fs"
+   ],
+   "changed_definitions_in_module": [
+    "filter_events_by_kinematics",
+    "limit_particles_in_fs"
+   ],
+   "changed_and_used": [
+    "limit_particles_in_fs"
+   ]
+  },
+  {
+   "module": "services.calculations.physics_calcs",
+   "symbol": "limit_particles_in_fs",
+   "used_by": [
+    "data:studies/m0m1j0_cms/histograms.py:99",
+    "master:studies/m0m1j0_cms/histograms.py:99",
+    "mc:studies/m0m1j0_cms/histograms.py:99"
+   ],
+   "changed": true
+  },
+  {
+   "module": "services.pipelines.im_pipeline",
+   "symbol": "_calculate_combination_invariant_mass",
+   "used_by": [
+    "data:studies/cms_datasets/cluster/run_dataset_on_file.py:181",
+    "data:studies/sync_35_20261019/arity_probe.py:6",
+    "data:studies/sync_35_20261019/equiv_probe.py:8",
+    "master:studies/cms_datasets/cluster/run_dataset_on_file.py:181",
+    "master:studies/sync_35_20261019/arity_probe.py:6",
+    "master:studies/sync_35_20261019/equiv_probe.py:8",
+    "mc:studies/cms_datasets/cluster/run_dataset_on_file.py:183",
+    "mc:studies/sync_35_20261019/arity_probe.py:6",
+    "mc:studies/sync_35_20261019/equiv_probe.py:8"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.pipelines.im_pipeline",
+   "symbol": "prepare_im_combination_name",
+   "used_by": [
+    "data:studies/cms_datasets/cluster/run_dataset_on_file.py:181",
+    "master:studies/cms_datasets/cluster/run_dataset_on_file.py:181",
+    "mc:studies/cms_datasets/cluster/run_dataset_on_file.py:183"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.pipelines.post_processing_pipeline",
+   "symbol": "_aligned_bin_edges",
+   "used_by": [
+    "mc:studies/cms_mc_weights_v3/deliver/build_mc_delivery.py:80"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.pipelines.post_processing_pipeline",
+   "symbol": "_apply_z_peak_cut",
+   "used_by": [
+    "data:studies/cms_coverage/cluster/merge_and_count.py:47",
+    "data:studies/cms_datasets/tests/test_exact_jet_labels.py:45",
+    "data:studies/sync_35_20261019/equiv_probe.py:5",
+    "master:studies/cms_coverage/cluster/merge_and_count.py:47",
+    "master:studies/cms_datasets/tests/test_exact_jet_labels.py:45",
+    "master:studies/sync_35_20261019/equiv_probe.py:5",
+    "mc:studies/cms_coverage/cluster/merge_and_count.py:47",
+    "mc:studies/cms_datasets/tests/test_exact_jet_labels.py:45",
+    "mc:studies/cms_mc_weights_v3/tests/test_mc_weights_v3.py:47",
+    "mc:studies/sync_35_20261019/equiv_probe.py:5"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.pipelines.post_processing_pipeline",
+   "symbol": "_dilepton_flavor",
+   "used_by": [
+    "mc:studies/cms_mc_weights_v3/deliver/build_mc_delivery.py:80"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.pipelines.post_processing_pipeline",
+   "symbol": "_find_rightmost_highest_peak",
+   "used_by": [
+    "data:studies/cms_coverage/cluster/merge_and_count.py:47",
+    "data:studies/sync_35_20261019/equiv_probe.py:5",
+    "master:studies/cms_coverage/cluster/merge_and_count.py:47",
+    "master:studies/sync_35_20261019/equiv_probe.py:5",
+    "mc:studies/cms_coverage/cluster/merge_and_count.py:47",
+    "mc:studies/cms_mc_weights_v3/deliver/build_mc_delivery.py:80",
+    "mc:studies/cms_mc_weights_v3/tests/test_mc_weights_v3.py:47",
+    "mc:studies/cms_mc_weights_v3/tests/test_upstream35_drift.py:40",
+    "mc:studies/sync_35_20261019/equiv_probe.py:5"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.pipelines.post_processing_pipeline",
+   "symbol": "_split_by_first_empty_bin",
+   "used_by": [
+    "data:studies/cms_coverage/cluster/merge_and_count.py:47",
+    "data:studies/cms_datasets/tests/test_exact_jet_labels.py:45",
+    "data:studies/sync_35_20261019/equiv_probe.py:5",
+    "master:studies/cms_coverage/cluster/merge_and_count.py:47",
+    "master:studies/cms_datasets/tests/test_exact_jet_labels.py:45",
+    "master:studies/sync_35_20261019/equiv_probe.py:5",
+    "mc:studies/cms_coverage/cluster/merge_and_count.py:47",
+    "mc:studies/cms_datasets/tests/test_exact_jet_labels.py:45",
+    "mc:studies/cms_mc_weights_v3/tests/test_mc_weights_v3.py:47",
+    "mc:studies/sync_35_20261019/equiv_probe.py:5"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.storage.sqlite_shards",
+   "symbol": "<whole module>",
+   "used_by": [
+    "mc:studies/cms_mc_weights_v3/tests/test_cms_shard_pruning_drift.py:38"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.storage.sqlite_shards",
+   "symbol": "SqliteArrayShardWriter",
+   "used_by": [
+    "data:studies/cms_datasets/cluster/run_dataset_on_file.py:185",
+    "data:studies/cms_datasets/tests/test_funnel_upstream35.py:40",
+    "master:studies/cms_datasets/cluster/run_dataset_on_file.py:185",
+    "master:studies/cms_datasets/tests/test_funnel_upstream35.py:40",
+    "mc:studies/cms_datasets/cluster/run_dataset_on_file.py:187",
+    "mc:studies/cms_datasets/tests/test_funnel_upstream35.py:40",
+    "mc:studies/cms_mc_weights_v3/deliver/build_mc_delivery.py:85",
+    "mc:studies/cms_mc_weights_v3/probe/check_d3_sibling_pruning.py:42",
+    "mc:studies/cms_mc_weights_v3/tests/test_builder_end_to_end.py:42",
+    "mc:studies/cms_mc_weights_v3/tests/test_cms_shard_pruning_drift.py:39",
+    "mc:studies/cms_mc_weights_v3/tests/test_mc_weights_v3.py:52"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.storage.sqlite_shards",
+   "symbol": "_deserialize_array",
+   "used_by": [
+    "mc:studies/cms_mc_weights_v3/cluster/compare_data_regression.py:52",
+    "mc:studies/cms_mc_weights_v3/deliver/build_mc_delivery.py:85"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.storage.sqlite_shards",
+   "symbol": "iter_all_chunks",
+   "used_by": [
+    "data:studies/cms_coverage/cluster/merge_and_count.py:42",
+    "master:studies/cms_coverage/cluster/merge_and_count.py:42",
+    "mc:studies/cms_coverage/cluster/merge_and_count.py:42"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.storage.sqlite_shards",
+   "symbol": "iter_arrays_for_signature",
+   "used_by": [
+    "mc:studies/cms_mc_weights_v3/deliver/build_mc_delivery.py:85",
+    "mc:studies/cms_mc_weights_v3/deliver/plot_smoke_test.py:62",
+    "mc:studies/cms_mc_weights_v3/tests/test_builder_end_to_end.py:42"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.storage.sqlite_shards",
+   "symbol": "list_signatures",
+   "used_by": [
+    "data:studies/cms_coverage/cluster/merge_and_count.py:42",
+    "data:studies/cms_datasets/deliver/build_dataset_delivery.py:78",
+    "data:studies/cms_datasets/deliver/build_muon_combined_delivery.py:129",
+    "master:studies/cms_coverage/cluster/merge_and_count.py:42",
+    "master:studies/cms_datasets/deliver/build_dataset_delivery.py:78",
+    "master:studies/cms_datasets/deliver/build_muon_combined_delivery.py:129",
+    "mc:studies/cms_coverage/cluster/merge_and_count.py:42",
+    "mc:studies/cms_datasets/deliver/build_dataset_delivery.py:78",
+    "mc:studies/cms_datasets/deliver/build_muon_combined_delivery.py:129",
+    "mc:studies/cms_mc_weights_v3/deliver/build_mc_delivery.py:85",
+    "mc:studies/cms_mc_weights_v3/deliver/plot_smoke_test.py:62",
+    "mc:studies/cms_mc_weights_v3/probe/check_d3_sibling_pruning.py:42",
+    "mc:studies/cms_mc_weights_v3/tests/test_builder_end_to_end.py:42",
+    "mc:studies/cms_mc_weights_v3/tests/test_cms_shard_pruning_drift.py:39",
+    "mc:studies/cms_mc_weights_v3/tests/test_mc_weights_v3.py:52"
+   ],
+   "module_changed": false
+  },
+  {
+   "module": "services.storage.sqlite_shards",
+   "symbol": "prune_final_states_below_min_events",
+   "used_by": [
+    "data:studies/cms_coverage/cluster/merge_and_count.py:42",
+    "master:studies/cms_coverage/cluster/merge_and_count.py:42",
+    "mc:studies/cms_coverage/cluster/merge_and_count.py:42"
+   ],
+   "module_changed": false
+  }
+ ],
+ "reached_changed_defs": {
+  "master": [
+   "services.calculations.consts.MUON_REL_ISOLATION_FIELD",
+   "services.calculations.im_calculator.IMCalculator",
+   "services.calculations.im_calculator.IMCalculator._get_all_events_fs",
+   "services.calculations.im_calculator.IMCalculator._limit_particles_in_fs",
+   "services.calculations.physics_calcs.filter_events_by_kinematics",
+   "services.calculations.physics_calcs.limit_particles_in_fs"
+  ],
+  "data": [
+   "services.calculations.consts.MUON_REL_ISOLATION_FIELD",
+   "services.calculations.im_calculator.IMCalculator",
+   "services.calculations.im_calculator.IMCalculator._get_all_events_fs",
+   "services.calculations.im_calculator.IMCalculator._limit_particles_in_fs",
+   "services.calculations.physics_calcs.filter_events_by_kinematics",
+   "services.calculations.physics_calcs.limit_particles_in_fs"
+  ],
+  "mc": [
+   "services.calculations.consts.MUON_REL_ISOLATION_FIELD",
+   "services.calculations.im_calculator.IMCalculator",
+   "services.calculations.im_calculator.IMCalculator._get_all_events_fs",
+   "services.calculations.im_calculator.IMCalculator._limit_particles_in_fs",
+   "services.calculations.physics_calcs.filter_events_by_kinematics",
+   "services.calculations.physics_calcs.limit_particles_in_fs"
+  ]
+ },
+ "verdicts_by_reading": {
+  "services.calculations.im_calculator.IMCalculator._get_all_events_fs": "NOT executed by CMS production. The only CMS construction is run_dataset_on_file.py:1419 / 1541 / 1882 (master/data/mc), IMCalculator(events=..., min_events_per_fs=1, ...); __init__ is unchanged and does not call it. The calculator is used only through _calculate_combination_invariant_mass (run_dataset_on_file.py:1454 / 1576 / 1933), which calls calculator.filter_by_particle_counts, slice_by_field and calculate_invariant_mass (services/pipelines/im_pipeline.py:171, 178, 185), none of them changed. group_by_final_state / final_state_counts / get_events_for_final_state (the only callers of _get_all_events_fs) are never called by any CMS file (git grep: comments only).",
+  "services.calculations.im_calculator.IMCalculator._limit_particles_in_fs": "NOT executed by CMS production: only called from _get_all_events_fs (above).",
+  "services.calculations.im_calculator.IMCalculator": "Class source changed only through the two methods above; the methods CMS executes are unchanged.",
+  "services.calculations.physics_calcs.limit_particles_in_fs": "NOT executed by CMS production. CMS labels events itself with the EXACT multiplicity (run_dataset_on_file.py _group_by_final_state_with_mask / exact_final_state_labels: `label = raw_fs`; the old capping call survives only in comments, e.g. :549 / :592 / :693). Live callers: the finished m0m1j0 study (studies/m0m1j0_cms/histograms.py:455 inside per_event_raw_and_capped_final_state, called only at :510 in that study; the delivery builders import only naming/binning helpers from that module), and CMS TESTS: studies/cms_datasets/tests/test_exact_jet_labels.py:125, :285, :326 (step 3).",
+  "services.calculations.physics_calcs.filter_events_by_kinematics": "NOT executed by CMS: reached only by name through IMCalculator.filter_by_kinematics, which no CMS file calls (git grep: no hit). CMS object selection is its own (studies/m0m1j0_cms/selection.py), so #39's muon isolation does not reach CMS.",
+  "services.calculations.consts.MUON_REL_ISOLATION_FIELD": "Used only by filter_events_by_kinematics (above): not executed by CMS.",
+  "parsing / trigger (#42: event_selection, file_parser, schemas, parsing_handler; config.yaml)": "No CMS file imports services.parsing.event_selection, file_parser, schemas or orchestration.handlers.parsing_handler (static check: no symbol rows), and no CMS production file reads config.yaml (git grep: a comment only). CMS reads NanoAOD with its own reader and does its own trigger matching (TRIGGER_42_CHECK.md)."
+ }
+}

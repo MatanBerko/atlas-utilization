@@ -1,0 +1,108 @@
+Local CMS tests (Mac), VERIFIED BY RUNNING 23 Oct 2026. Each test file run as a script from the tree root (PYTHONPATH=. PYTHONHASHSEED=0), in git worktrees.
+rc 0 = pass. OLD = aaf945a / b6b441c / cd22aa2. NEW = merge + CMS test update: dc1da07 / c0e734b / dc760da.
+
+## Before the test update (NEW = bare merge 91dfa13 / 5bc5f3a / 6785a97)
+### master_new
+1 studies/cms_datasets/tests/test_electron_datasets.py   FAILED: DOCUMENTED DIVERGENCE at 12 light jets too: upstream's own grouping caps the label at 4j (since PR #34 its capping function reads 
+1 studies/cms_datasets/tests/test_exact_jet_labels.py   - CURRENT: 50 light jets IS capped to 4j (was mangled to 40j before #34)
+0 studies/cms_datasets/tests/test_funnel_upstream35.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_upstream_names.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_width_suffix.py ALL CHECKS PASSED
+1 tests/test_trigger_requirements.py (run without PYTHONPATH=.; rerun below passes)
+1 tests/test_validated_runs.py (run without PYTHONPATH=.; rerun below passes)
+### data_new
+0 studies/cms_datasets/tests/test_btag_singleelectron.py 55 checks, 0 failure(s)
+1 studies/cms_datasets/tests/test_electron_datasets.py   FAILED: DOCUMENTED DIVERGENCE at 12 light jets too: upstream's own grouping caps the label at 4j (since PR #34 its capping function reads 
+1 studies/cms_datasets/tests/test_exact_jet_labels.py   - CURRENT: 50 light jets IS capped to 4j (was mangled to 40j before #34)
+0 studies/cms_datasets/tests/test_funnel_upstream35.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_upstream_names.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_width_suffix.py ALL CHECKS PASSED
+1 tests/test_trigger_requirements.py (run without PYTHONPATH=.; rerun below passes)
+1 tests/test_validated_runs.py (run without PYTHONPATH=.; rerun below passes)
+### mc_new
+0 studies/cms_datasets/tests/test_btag_singleelectron.py 55 checks, 0 failure(s)
+1 studies/cms_datasets/tests/test_electron_datasets.py   FAILED: DOCUMENTED DIVERGENCE at 12 light jets too: upstream's own grouping caps the label at 4j (since PR #34 its capping function reads 
+1 studies/cms_datasets/tests/test_exact_jet_labels.py   - CURRENT: 50 light jets IS capped to 4j (was mangled to 40j before #34)
+0 studies/cms_datasets/tests/test_funnel_upstream35.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_upstream_names.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_width_suffix.py ALL CHECKS PASSED
+0 studies/cms_mc_weights_v3/tests/test_builder_end_to_end.py wrote mc_new/studi
+0 studies/cms_mc_weights_v3/tests/test_cms_shard_pruning_drift.py ALL PASSED
+0 studies/cms_mc_weights_v3/tests/test_mc_singleelectron_flag.py 20 checks, 0 failure(s)
+0 studies/cms_mc_weights_v3/tests/test_mc_weights_v3.py wrote mc_new/studi
+0 studies/cms_mc_weights_v3/tests/test_peak_scope.py wrote mc_new/studi
+0 studies/cms_mc_weights_v3/tests/test_upstream35_drift.py ALL CHECKS PASSED
+1 tests/test_trigger_requirements.py (run without PYTHONPATH=.; rerun below passes)
+1 tests/test_validated_runs.py (run without PYTHONPATH=.; rerun below passes)
+
+## Final: OLD and NEW (with the test update)
+### master_old
+1 studies/cms_datasets/tests/test_electron_datasets.py   FAILED: DOCUMENTED DIVERGENCE at 12 light jets too: upstream's own grouping caps the label at 4j (since PR #34 its capping function reads 
+0 studies/cms_datasets/tests/test_exact_jet_labels.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_funnel_upstream35.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_upstream_names.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_width_suffix.py ALL CHECKS PASSED
+0 tests/test_trigger_requirements.py OK (skipped=3)
+0 tests/test_validated_runs.py OK (skipped=2)
+### master_new2
+0 studies/cms_datasets/tests/test_electron_datasets.py 110 checks, 0 failure(s)
+0 studies/cms_datasets/tests/test_exact_jet_labels.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_funnel_upstream35.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_upstream_names.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_width_suffix.py ALL CHECKS PASSED
+0 tests/test_trigger_requirements.py OK (skipped=3)
+0 tests/test_validated_runs.py OK (skipped=2)
+### data_old
+0 studies/cms_datasets/tests/test_btag_singleelectron.py 55 checks, 0 failure(s)
+1 studies/cms_datasets/tests/test_electron_datasets.py   FAILED: DOCUMENTED DIVERGENCE at 12 light jets too: upstream's own grouping caps the label at 4j (since PR #34 its capping function reads 
+0 studies/cms_datasets/tests/test_exact_jet_labels.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_funnel_upstream35.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_upstream_names.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_width_suffix.py ALL CHECKS PASSED
+0 tests/test_trigger_requirements.py OK (skipped=3)
+0 tests/test_validated_runs.py OK (skipped=2)
+### data_new2
+0 studies/cms_datasets/tests/test_btag_singleelectron.py 55 checks, 0 failure(s)
+0 studies/cms_datasets/tests/test_electron_datasets.py 110 checks, 0 failure(s)
+0 studies/cms_datasets/tests/test_exact_jet_labels.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_funnel_upstream35.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_upstream_names.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_width_suffix.py ALL CHECKS PASSED
+0 tests/test_trigger_requirements.py OK (skipped=3)
+0 tests/test_validated_runs.py OK (skipped=2)
+### mc_old
+0 studies/cms_datasets/tests/test_btag_singleelectron.py 55 checks, 0 failure(s)
+1 studies/cms_datasets/tests/test_electron_datasets.py   FAILED: DOCUMENTED DIVERGENCE at 12 light jets too: upstream's own grouping caps the label at 4j (since PR #34 its capping function reads 
+0 studies/cms_datasets/tests/test_exact_jet_labels.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_funnel_upstream35.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_upstream_names.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_width_suffix.py ALL CHECKS PASSED
+0 studies/cms_mc_weights_v3/tests/test_builder_end_to_end.py wrote mc_old/studi
+0 studies/cms_mc_weights_v3/tests/test_cms_shard_pruning_drift.py ALL PASSED
+0 studies/cms_mc_weights_v3/tests/test_mc_singleelectron_flag.py 20 checks, 0 failure(s)
+0 studies/cms_mc_weights_v3/tests/test_mc_weights_v3.py wrote mc_old/studi
+0 studies/cms_mc_weights_v3/tests/test_peak_scope.py wrote mc_old/studi
+0 studies/cms_mc_weights_v3/tests/test_upstream35_drift.py ALL CHECKS PASSED
+0 tests/test_trigger_requirements.py OK (skipped=3)
+0 tests/test_validated_runs.py OK (skipped=2)
+### mc_new2
+0 studies/cms_datasets/tests/test_btag_singleelectron.py 55 checks, 0 failure(s)
+0 studies/cms_datasets/tests/test_electron_datasets.py 110 checks, 0 failure(s)
+0 studies/cms_datasets/tests/test_exact_jet_labels.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_funnel_upstream35.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_upstream_names.py ALL CHECKS PASSED
+0 studies/cms_datasets/tests/test_width_suffix.py ALL CHECKS PASSED
+0 studies/cms_mc_weights_v3/tests/test_builder_end_to_end.py wrote mc_new2/stud
+0 studies/cms_mc_weights_v3/tests/test_cms_shard_pruning_drift.py ALL PASSED
+0 studies/cms_mc_weights_v3/tests/test_mc_singleelectron_flag.py 20 checks, 0 failure(s)
+0 studies/cms_mc_weights_v3/tests/test_mc_weights_v3.py wrote mc_new2/stud
+0 studies/cms_mc_weights_v3/tests/test_peak_scope.py wrote mc_new2/stud
+0 studies/cms_mc_weights_v3/tests/test_upstream35_drift.py ALL CHECKS PASSED
+0 tests/test_trigger_requirements.py OK (skipped=3)
+0 tests/test_validated_runs.py OK (skipped=2)
+
+## test_electron_datasets.py on OLD master (aaf945a) with its live upstream ref pinned to each upstream commit (scratch-only edit)
+7f2da5d: 109 checks, 0 failure(s)
+9af30d2 (#39): 109 checks, 0 failure(s)
+5fbf1ef (#40): 109 checks, 3 failure(s)
+29291ae (#42): 109 checks, 3 failure(s)
