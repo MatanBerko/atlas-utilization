@@ -1,0 +1,112 @@
+{
+  "30529/0": {
+    "file_url_new": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleElectron/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/110000/43B00DA0-41AF-D042-9F41-7F95FBE5E59F.root",
+    "file_url_study": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleElectron/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/110000/43B00DA0-41AF-D042-9F41-7F95FBE5E59F.root",
+    "same_file": true,
+    "n_after_trigger_new": 62554,
+    "n_after_ele27_study": 62554,
+    "n_accepted_new": 32459,
+    "n_accepted_study_T32": 32459,
+    "n_exclusive_new": 30774,
+    "n_not_accepted_by_existing_study_T32": 30774,
+    "accepted_equal": true,
+    "exclusive_equal": true,
+    "accepted_also_by_higher": {
+      "DoubleMuon": 2,
+      "SingleMuon": 41,
+      "DoubleEG": 1643,
+      "MuonEG": 42
+    },
+    "trigger_guard_violations_new": {
+      "muons_vs_id13_bit_trkisovvl": 0,
+      "muons_vs_id13_bit_iso": 0,
+      "electrons_vs_id11_bit_2e": 0,
+      "electrons_vs_id11_bit_1e1mu": 0,
+      "electrons_vs_id11_bit_1e_wptight": 0,
+      "total": 0
+    },
+    "trigger_guard_violations_study": 0,
+    "singleelectron_cutflow": {
+      "n_events_considered": 62554,
+      "n_fired": 62554,
+      "n_fired_and_ge1_matched": 40225,
+      "n_fired_and_ge1_matched_online27": 40220,
+      "n_accepted": 32459,
+      "n_lost_to_offline_cut": 7761,
+      "trigobj_pt_min_gev": 27.0,
+      "offline_pt_min_gev": 32.0
+    },
+    "jets_new": {
+      "n_events": 32459,
+      "n_light_jets": 14779,
+      "n_b_jets": 1294,
+      "b_tagged_jet_fraction": 0.08050768369315,
+      "n_b_distribution": {
+        "0": 31329,
+        "1": 977,
+        "2": 142,
+        "3+": 11
+      }
+    },
+    "version_b_new": {
+      "n_rejected_gt4_lepton_bjet": 1,
+      "n_kept_le4_lepton_bjet": 32458
+    },
+    "study_source": "/storage/agrp/berkom/atlas-utilization/work/serecheck_20261019/se/a_0p2598/tnp_G_0.json"
+  },
+  "30562/0": {
+    "file_url_new": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/SingleElectron/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/02A9B576-790A-9141-9762-AA2831FABF58.root",
+    "file_url_study": "root://eospublic.cern.ch//eos/opendata/cms/Run2016H/SingleElectron/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/02A9B576-790A-9141-9762-AA2831FABF58.root",
+    "same_file": true,
+    "n_after_trigger_new": 1730519,
+    "n_after_ele27_study": 1730519,
+    "n_accepted_new": 902673,
+    "n_accepted_study_T32": 902673,
+    "n_exclusive_new": 855435,
+    "n_not_accepted_by_existing_study_T32": 855435,
+    "accepted_equal": true,
+    "exclusive_equal": true,
+    "accepted_also_by_higher": {
+      "DoubleMuon": 9,
+      "SingleMuon": 969,
+      "DoubleEG": 46217,
+      "MuonEG": 1003
+    },
+    "trigger_guard_violations_new": {
+      "muons_vs_id13_bit_trkisovvl": 0,
+      "muons_vs_id13_bit_iso": 0,
+      "electrons_vs_id11_bit_2e": 0,
+      "electrons_vs_id11_bit_1e1mu": 0,
+      "electrons_vs_id11_bit_1e_wptight": 0,
+      "total": 0
+    },
+    "trigger_guard_violations_study": 0,
+    "singleelectron_cutflow": {
+      "n_events_considered": 1730519,
+      "n_fired": 1730519,
+      "n_fired_and_ge1_matched": 1077516,
+      "n_fired_and_ge1_matched_online27": 1077447,
+      "n_accepted": 902673,
+      "n_lost_to_offline_cut": 174774,
+      "trigobj_pt_min_gev": 27.0,
+      "offline_pt_min_gev": 32.0
+    },
+    "jets_new": {
+      "n_events": 902673,
+      "n_light_jets": 418880,
+      "n_b_jets": 37350,
+      "b_tagged_jet_fraction": 0.08186660237161081,
+      "n_b_distribution": {
+        "0": 870497,
+        "1": 27394,
+        "2": 4409,
+        "3+": 373
+      }
+    },
+    "version_b_new": {
+      "n_rejected_gt4_lepton_bjet": 44,
+      "n_kept_le4_lepton_bjet": 902629
+    },
+    "study_source": "/storage/agrp/berkom/atlas-utilization/work/serecheck_20261019/se/a_0p2598/tnp_H_0.json"
+  }
+}

@@ -1,0 +1,60 @@
+# 2026-10-23 22:19 IDT, Mac, branch feature/cms-data-multiplicity40-20261023 (uncommitted tree before the step-1 commit)
+# real shards: COPIES of 17 Oct 67801 files 0 and 7 (rare4 inclusive), in the scratchpad
+[PASS] grid: 455 labels 455
+[PASS] grid: cap_label == upstream limit_particles_in_fs(label, 4) []
+[PASS] grid: == the rule as written, <= 4 objects []
+[PASS] example 0e_1m_5j_0b 0e_1m_3j_0b
+[PASS] example 0e_1m_100j_0b 0e_1m_3j_0b
+[PASS] example 2e_0m_5j_1b 2e_0m_1j_1b
+[PASS] example 2e_0m_3j_2b 2e_0m_0j_2b
+[PASS] example 1e_1m_2j_0b 1e_1m_2j_0b
+[PASS] example 0e_0m_7j_0b 0e_0m_4j_0b
+[PASS] 186 driver combinations named 186
+[PASS] names are letter+rank 
+[PASS] pairs == upstream is_finalstate_contain_combination 84630 pairs, 3598 allowed; []
+[PASS] pairs == every rank below the capped count []
+[PASS] m0j0j1j2 in 0e_1m_3j_0b 
+[PASS] j0j1j2j3 not in 0e_1m_3j_0b 
+[PASS] e1b0 in 2e_0m_1j_1b 
+[PASS] e0j1 not in 2e_0m_1j_1b 
+[PASS] unknown combination is an error 
+[PASS] data: merged masses, 3j then 4j then 5j [300.0, 301.0, 200.0, 201.0, 202.0, 100.0, 101.0, 102.0, 103.0]
+[PASS] data: rank-3 combination dropped with siblings ['DoubleMuon_record30522_file0_FS_0e_1m_3j_0b_IM_m0j0', 'DoubleMuon_record30522_file0_FS_0e_2m_0j_0b_IM_m0m1']
+[PASS] data: counts summed, events conserved {'0e_1m_3j_0b': 9, '0e_2m_0j_0b': 5}
+[PASS] data: unchanged label untouched 
+[PASS] data: dropped rows {'n_rows_in': 6, 'n_rows_out': 4, 'n_rows_dropped_combination_not_in_capped_label': 2, 'n_mass_entries_dropped': 7, 'label_map': {'0e_1m_3j_0b': '0e_1m_3j_0b', '0e_1m_4j_0b': '0e_1m_3j_0b', '0e_1m_5j_0b': '0e_1m_3j_0b', '0e_2m_0j_0b': '0e_2m_0j_0b'}}
+[PASS] data: payload bytes unchanged 
+[PASS] data: capped merge refused 
+[PASS] data: capped signature that keeps its label accepted 
+[PASS] mc: merged masses, 3j then 4j then 5j [300.0, 301.0, 200.0, 201.0, 202.0, 100.0, 101.0, 102.0, 103.0]
+[PASS] mc: weights in the same order [3.0, 3.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0]
+[PASS] mc: rank-3 combination dropped with siblings ['MC_record67801_file0_FS_0e_1m_3j_0b_IM_m0j0', 'MC_record67801_file0_FS_0e_1m_3j_0b_IM_m0j0_mcraw_acc', 'MC_record67801_file0_FS_0e_1m_3j_0b_IM_m0j0_mcw', 'MC_record67801_file0_FS_0e_2m_0j_0b_IM_m0m1', 'MC_record67801_file0_FS_0e_2m_0j_0b_IM_m0m1_mcraw_acc', 'MC_record67801_file0_FS_0e_2m_0j_0b_IM_m0m1_mcw']
+[PASS] mc: counts summed, events conserved {'0e_1m_3j_0b': 9, '0e_2m_0j_0b': 5}
+[PASS] mc: unchanged label untouched 
+[PASS] mc: dropped rows {'n_rows_in': 18, 'n_rows_out': 12, 'n_rows_dropped_combination_not_in_capped_label': 6, 'n_mass_entries_dropped': 7, 'label_map': {'0e_1m_3j_0b': '0e_1m_3j_0b', '0e_1m_4j_0b': '0e_1m_3j_0b', '0e_1m_5j_0b': '0e_1m_3j_0b', '0e_2m_0j_0b': '0e_2m_0j_0b'}}
+[PASS] mc: payload bytes unchanged 
+[PASS] mc: capped merge refused 
+[PASS] mc: capped signature that keeps its label accepted 
+[PASS] real job_0/dataset_shard_rare4_inclusive.sqlite: events conserved 78384 -> 78384
+[PASS] real job_0/dataset_shard_rare4_inclusive.sqlite: every merged combination holds every merged event 301 signatures, 0 bad
+[PASS] real job_0/dataset_shard_rare4_inclusive.sqlite: siblings aligned 
+[PASS] real job_0/dataset_shard_rare4_inclusive.sqlite: kept entries == allowed entries before 49 final states from 163 exact labels, 11694 rows dropped
+[PASS] real job_7/dataset_shard_rare4_inclusive.sqlite: events conserved 532684 -> 532684
+[PASS] real job_7/dataset_shard_rare4_inclusive.sqlite: every merged combination holds every merged event 308 signatures, 0 bad
+[PASS] real job_7/dataset_shard_rare4_inclusive.sqlite: siblings aligned 
+[PASS] real job_7/dataset_shard_rare4_inclusive.sqlite: kept entries == allowed entries before 51 final states from 194 exact labels, 16182 rows dropped
+
+43/43 checks passed
+rc=0
+== test_width_suffix
+rc=0
+== test_upstream_names
+rc=0
+== test_exact_jet_labels
+rc=0
+== test_btag_singleelectron
+rc=0
+== test_funnel_upstream35
+rc=0
+== test_electron_datasets
+rc=0

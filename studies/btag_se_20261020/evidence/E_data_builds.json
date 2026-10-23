@@ -1,0 +1,177 @@
+{
+  "new": {
+    "priority_order_highest_first": [
+      "DoubleMuon",
+      "SingleMuon",
+      "DoubleEG",
+      "MuonEG",
+      "SingleElectron"
+    ],
+    "pooling": {
+      "DoubleMuon": {
+        "shards": 1,
+        "contribution": "inclusive"
+      },
+      "SingleMuon": {
+        "shards": 1,
+        "contribution": "exclusive"
+      },
+      "DoubleEG": {
+        "shards": 1,
+        "contribution": "exclusive"
+      },
+      "MuonEG": {
+        "shards": 1,
+        "contribution": "exclusive"
+      },
+      "SingleElectron": {
+        "shards": 2,
+        "contribution": "exclusive"
+      }
+    },
+    "per_dataset_event_counts": {
+      "DoubleMuon": {
+        "contribution": "inclusive",
+        "n_events_pooled_rare4": 223372,
+        "n_own_accepted": 223393,
+        "n_own_exclusive": 223393,
+        "per_file_delivery_veto_orders": [
+          [
+            "DoubleMuon",
+            "SingleMuon",
+            "DoubleEG",
+            "MuonEG",
+            "SingleElectron"
+          ]
+        ]
+      },
+      "SingleMuon": {
+        "contribution": "exclusive",
+        "n_events_pooled_rare4": 1425322,
+        "n_own_accepted": 1511878,
+        "n_own_exclusive": 1425358,
+        "per_file_delivery_veto_orders": [
+          [
+            "DoubleMuon",
+            "SingleMuon",
+            "DoubleEG",
+            "MuonEG",
+            "SingleElectron"
+          ]
+        ]
+      },
+      "DoubleEG": {
+        "contribution": "exclusive",
+        "n_events_pooled_rare4": 60183,
+        "n_own_accepted": 60201,
+        "n_own_exclusive": 60189,
+        "per_file_delivery_veto_orders": [
+          [
+            "DoubleMuon",
+            "SingleMuon",
+            "DoubleEG",
+            "MuonEG",
+            "SingleElectron"
+          ]
+        ]
+      },
+      "MuonEG": {
+        "contribution": "exclusive",
+        "n_events_pooled_rare4": 393,
+        "n_own_accepted": 4512,
+        "n_own_exclusive": 394,
+        "per_file_delivery_veto_orders": [
+          [
+            "DoubleMuon",
+            "SingleMuon",
+            "DoubleEG",
+            "MuonEG",
+            "SingleElectron"
+          ]
+        ]
+      },
+      "SingleElectron": {
+        "contribution": "exclusive",
+        "n_events_pooled_rare4": 886187,
+        "n_own_accepted": 935132,
+        "n_own_exclusive": 886209,
+        "per_file_delivery_veto_orders": [
+          [
+            "DoubleMuon",
+            "SingleMuon",
+            "DoubleEG",
+            "MuonEG",
+            "SingleElectron"
+          ]
+        ]
+      }
+    },
+    "n_shards_total": 6,
+    "n_delivered_histograms": 752,
+    "n_distinct_final_state_categories_delivered": 64,
+    "funnel": {
+      "b_after_min_events_per_fs": 752,
+      "c_after_postprocessing": 752,
+      "d_gt30bins_informational": 342
+    },
+    "root": {
+      "five_bumpnet.root": {
+        "n_histograms": 752,
+        "sum_entries": 1365338.0,
+        "sum_contents": 1365338.0
+      },
+      "five_bumpnet_cropped.root": {
+        "n_histograms": 752,
+        "sum_entries": 1365338.0,
+        "sum_contents": 1365338.0
+      }
+    }
+  },
+  "old": {
+    "priority_order_highest_first": [
+      "DoubleMuon",
+      "SingleMuon",
+      "DoubleEG",
+      "MuonEG"
+    ],
+    "pooling": {
+      "DoubleMuon": {
+        "shards": 1,
+        "contribution": "inclusive"
+      },
+      "SingleMuon": {
+        "shards": 1,
+        "contribution": "exclusive"
+      },
+      "DoubleEG": {
+        "shards": 1,
+        "contribution": "exclusive"
+      },
+      "MuonEG": {
+        "shards": 1,
+        "contribution": "exclusive"
+      }
+    },
+    "per_dataset_event_counts": null,
+    "n_shards_total": 4,
+    "n_delivered_histograms": 492,
+    "n_distinct_final_state_categories_delivered": 43,
+    "funnel": {
+      "b_after_min_events_per_fs": 492,
+      "c_after_postprocessing": 492,
+      "d_gt30bins_informational": 214
+    },
+    "root": {
+      "four_bumpnet.root": {
+        "n_histograms": 492,
+        "sum_entries": 849065.0,
+        "sum_contents": 849065.0
+      },
+      "four_bumpnet_cropped.root": {
+        "n_histograms": 492,
+        "sum_entries": 849065.0,
+        "sum_contents": 849065.0
+      }
+    }
+  }
+}

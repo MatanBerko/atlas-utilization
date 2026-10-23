@@ -1,0 +1,175 @@
+{
+  "files": [
+    "DoubleEG",
+    "DoubleMuon",
+    "MuonEG",
+    "SingleElectron/0",
+    "SingleElectron/1",
+    "SingleMuon"
+  ],
+  "n_accepted_events_per_file": {
+    "DoubleEG": 60201,
+    "DoubleMuon": 223393,
+    "MuonEG": 4512,
+    "SingleElectron/0": 32459,
+    "SingleElectron/1": 902673,
+    "SingleMuon": 1511878
+  },
+  "shared_runs": {
+    "DoubleEG & DoubleMuon": 22,
+    "DoubleEG & MuonEG": 3,
+    "DoubleEG & SingleElectron/0": 2,
+    "DoubleEG & SingleElectron/1": 0,
+    "DoubleEG & SingleMuon": 16,
+    "DoubleMuon & MuonEG": 5,
+    "DoubleMuon & SingleElectron/0": 2,
+    "DoubleMuon & SingleElectron/1": 0,
+    "DoubleMuon & SingleMuon": 20,
+    "MuonEG & SingleElectron/0": 0,
+    "MuonEG & SingleElectron/1": 0,
+    "MuonEG & SingleMuon": 1,
+    "SingleElectron/0 & SingleElectron/1": 0,
+    "SingleElectron/0 & SingleMuon": 1,
+    "SingleElectron/1 & SingleMuon": 0
+  },
+  "shared_lumisections": {
+    "DoubleEG & DoubleMuon": 63,
+    "DoubleEG & MuonEG": 34,
+    "DoubleEG & SingleElectron/0": 0,
+    "DoubleEG & SingleElectron/1": 0,
+    "DoubleEG & SingleMuon": 33,
+    "DoubleMuon & MuonEG": 88,
+    "DoubleMuon & SingleElectron/0": 0,
+    "DoubleMuon & SingleElectron/1": 0,
+    "DoubleMuon & SingleMuon": 47,
+    "MuonEG & SingleElectron/0": 0,
+    "MuonEG & SingleElectron/1": 0,
+    "MuonEG & SingleMuon": 12,
+    "SingleElectron/0 & SingleElectron/1": 0,
+    "SingleElectron/0 & SingleMuon": 1,
+    "SingleElectron/1 & SingleMuon": 0
+  },
+  "n_events_accepted_in_more_than_one_file": 4331,
+  "shared_events_by_files": {
+    "DoubleMuon & SingleMuon": 4307,
+    "DoubleMuon & MuonEG": 1,
+    "DoubleEG & SingleMuon": 1,
+    "MuonEG & SingleMuon": 22
+  },
+  "acceptance_flags_identical_in_every_file_holding_the_event": true,
+  "n_events_pooled_more_than_once": 0,
+  "n_events_pooled_exactly_once": 2595543,
+  "n_accepted_events_not_pooled": 135242,
+  "shared_event_examples": [
+    [
+      [
+        "278822",
+        "1208",
+        "2062567547"
+      ],
+      [
+        "DoubleMuon",
+        "SingleMuon"
+      ]
+    ],
+    [
+      [
+        "278822",
+        "1208",
+        "2062616621"
+      ],
+      [
+        "DoubleMuon",
+        "SingleMuon"
+      ]
+    ],
+    [
+      [
+        "278822",
+        "1208",
+        "2062399373"
+      ],
+      [
+        "DoubleMuon",
+        "SingleMuon"
+      ]
+    ],
+    [
+      [
+        "278822",
+        "1208",
+        "2061922249"
+      ],
+      [
+        "DoubleMuon",
+        "SingleMuon"
+      ]
+    ],
+    [
+      [
+        "278822",
+        "1208",
+        "2061885080"
+      ],
+      [
+        "DoubleMuon",
+        "SingleMuon"
+      ]
+    ],
+    [
+      [
+        "278822",
+        "1208",
+        "2062313152"
+      ],
+      [
+        "DoubleMuon",
+        "SingleMuon"
+      ]
+    ],
+    [
+      [
+        "278822",
+        "1208",
+        "2062392079"
+      ],
+      [
+        "DoubleMuon",
+        "SingleMuon"
+      ]
+    ],
+    [
+      [
+        "278822",
+        "1208",
+        "2062783357"
+      ],
+      [
+        "DoubleMuon",
+        "SingleMuon"
+      ]
+    ],
+    [
+      [
+        "278822",
+        "1208",
+        "2063005861"
+      ],
+      [
+        "DoubleMuon",
+        "SingleMuon"
+      ]
+    ],
+    [
+      [
+        "278822",
+        "1208",
+        "2063039448"
+      ],
+      [
+        "DoubleMuon",
+        "SingleMuon"
+      ]
+    ]
+  ]
+}
