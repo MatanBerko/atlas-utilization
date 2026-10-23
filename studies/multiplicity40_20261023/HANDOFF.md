@@ -1,6 +1,6 @@
 # HANDOFF — the #40 multiplicity rule as the default in both CMS builders (23 Oct 2026)
 
-**Current step: 3 — proof jobs submitted (23 Oct, ~22:35 IDT); waiting for them. Never resubmit.**
+**Current step: COMPLETE (23 Oct 2026). Nothing running. Result: `REPORT.md`.** Next (needs Matan): the full data + MC builds with the new default.
 Nothing merged into master or the two existing feature branches; nothing sent; nothing upstream.
 
 ## Branches (origin only)
@@ -113,6 +113,33 @@ Local checks (Mac), VERIFIED BY RUNNING:
 | data_upstream40 | `5311263` | 8gb, 1h |
 | data_exact | `5311264` | 8gb, 1h |
 | check | `5311265` (afterok on all four) | 16gb, 2h |
+
+## Step 3 result (VERIFIED BY RUNNING)
+
+- All five jobs exited 0. Builds took 2–9 min of wall time (MC) and under a minute (data).
+- MC default == `ttbar_pr40_20261021/build_pr40`, 302/302, bit for bit. MC exact == `build_exact`, 3,606/3,606.
+- Data exact == the sync42 NEW data delivery, 548/548, in both ROOT files; the manifest is identical; the summary
+  differs only by the added `"multiplicity_rule": "exact"` key.
+- R1–R7 pass for data (548 → 201 histograms, 50 → 33 final states; smoke test) and MC (3,606 → 302,
+  169 → 48).
+- Evidence copied to `evidence/cluster/`.
+
+## Steps 4–5
+
+- PNGs: `plots/` (4), made on the Mac by `make_plots.py` from the rule-check JSONs.
+- `REPORT.md`.
+- Checkouts archived, listings verified (archive file entries == files on disk):
+  - `checkouts/mult40_20261023/checkout_data_baf3ff4.tar.gz` (173 files, 65 MB)
+  - `checkouts/mult40_20261023/checkout_mc_c00d0ab.tar.gz` (344 files, 69 MB)
+
+  The checkout directories and every output were left in place.
+- **Final file count: 123,602** (+724 vs 122,878; ceiling 125,000 respected).
+
+## Cluster outputs (under /storage/agrp/berkom/atlas-utilization/)
+
+- `work/mult40_20261023/`: `mc/build_upstream40/`, `mc/build_exact/`, `data/upstream40/`, `data/exact/`,
+  `evidence/`, `logs/`, `pbs_proof.sh`, `jobids.txt`
+- `checkouts/mult40_20261023/`: `data/` @ baf3ff4, `mc/` @ c00d0ab, and the two archives
 
 ## How to resume
 
