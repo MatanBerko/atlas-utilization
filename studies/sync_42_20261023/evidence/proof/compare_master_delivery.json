@@ -1,0 +1,37 @@
+{
+  "a": "/storage/agrp/berkom/atlas-utilization/work/sync42_20261023/deliver/old/master",
+  "b": "/storage/agrp/berkom/atlas-utilization/work/sync42_20261023/deliver/new/master",
+  "root_files": {
+    "_bumpnet.root": {
+      "identical": true,
+      "n_histograms_a": 220,
+      "n_histograms_b": 220,
+      "n_bins_compared": 220440,
+      "total_entries_a": 216498.0,
+      "total_entries_b": 216498.0,
+      "differences": []
+    },
+    "_bumpnet_cropped.root": {
+      "identical": true,
+      "n_histograms_a": 220,
+      "n_histograms_b": 220,
+      "n_bins_compared": 6830,
+      "total_entries_a": 216498.0,
+      "total_entries_b": 216498.0,
+      "differences": []
+    }
+  },
+  "json_files": {
+    "build_summary_rare4_four_dataset.json": {
+      "identical_except_paths": true,
+      "n_path_mentions_normalised": 2,
+      "differences": []
+    },
+    "manifest_proof.json": {
+      "identical_except_paths": true,
+      "n_path_mentions_normalised": 0,
+      "differences": []
+    }
+  },
+  "all_identical": true
+}
