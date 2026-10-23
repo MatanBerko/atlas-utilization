@@ -195,18 +195,21 @@ def test_exact_light_jet_labels():
 
     # What the capped grouping (live physics_calcs.limit_particles_in_fs)
     # does with the same input. Before upstream PR #34 it merged 5 and 6 but
-    # NOT 11 (one-digit read); since #34 it caps every count above 4,
-    # including 11 -- see test_capping_after_upstream_pr34 below. So the
-    # capped grouping now gives 2 labels here.
-    # expectation updated for upstream PR #34 (f16768e), 16 Oct 2026
+    # NOT 11 (one-digit read); #34 capped every count above 4 at 4. Since
+    # upstream PR #40 the cap is slot-aware: light jets get only the slots
+    # the non-jet objects leave free, here 4 - (2 muons + 1 b-jet) = 1, so
+    # ALL five events (3, 4, 5, 6 and 11 light jets) share one 1j label --
+    # see test_capping_after_upstream_pr34 below.
+    # expectation updated for upstream PR #40 (5fbf1ef), 23 Oct 2026
     old = old_capped_grouping(obj_record)
-    check("capped grouping merges 5j, 6j and 11j into 4j (4 events under one 4j label)",
-          old.get("0e_2m_4j_1b") == 4, f"capped grouping = {old}")
+    check("capped grouping merges 3j, 4j, 5j, 6j and 11j into 1j (5 events under one "
+          "1j label: 2 muons + 1 b-jet leave one jet slot)",
+          old.get("0e_2m_1j_1b") == 5, f"capped grouping = {old}")
     check("capped grouping no longer leaves 11j as its own label (two-digit quirk "
           "fixed upstream)",
           "0e_2m_11j_1b" not in old, f"capped grouping = {old}")
-    check("capped grouping produces 2 labels where the exact one produces 5",
-          len(old) == 2, f"capped labels = {sorted(old)}")
+    check("capped grouping produces 1 label where the exact one produces 5",
+          len(old) == 1, f"capped labels = {sorted(old)}")
 
     # Name format: still exactly six <count><letter> fields, order e m j g t b.
     for label in labels:
@@ -296,10 +299,13 @@ def test_event_conservation():
               f"{sorted(contributors)}",
               matched == old_n, f"got {matched}")
 
-    # <=3 light jets must be completely untouched, label and count.
+    # A label the capping leaves as it is, and that no other label folds
+    # into, must be completely untouched, label and count. Since upstream
+    # PR #40 that means light jets <= 4 - (e + m + b), not simply <= 3.
+    # expectation updated for upstream PR #40 (5fbf1ef), 23 Oct 2026
     for label, n in sorted(new_counts.items()):
-        if jet_count(label) <= 3:
-            check(f"final state with <=3 light jets unchanged: {label} ({n} events)",
+        if folded.get(label) == [label]:
+            check(f"final state the cap leaves unchanged: {label} ({n} events)",
                   old.get(label) == n, f"old had {old.get(label)}")
 
 
@@ -309,7 +315,7 @@ def test_event_conservation():
 
 def test_capping_after_upstream_pr34():
     """Documents, by running it, what the shared capping function does now
-    that upstream PR #34 (f16768e) changed it.
+    that upstream PR #34 (f16768e) and PR #40 (5fbf1ef) changed it.
 
     History: before #34, services.calculations.physics_calcs.
     limit_particles_in_fs read only the FIRST character of each count
@@ -318,27 +324,36 @@ def test_capping_after_upstream_pr34():
     "49j"). The old 1 Oct delivery therefore did not consistently group
     high-multiplicity final states under 4j.
 
-    Now: #34 makes it read the whole count, so EVERY count above 4 --
-    one-digit or multi-digit -- is capped to 4. The exact-label grouping
-    does not call limit_particles_in_fs at all, so neither the old nor the
-    new behaviour can affect the new delivery."""
-    print("\n--- 2b. B1: the shared capping after upstream PR #34 ---")
+    #34 made it read the whole count, so every count above 4 -- one-digit
+    or multi-digit -- was capped to 4.
+
+    Now: #40 makes the cap slot-aware -- at most 4 objects in total, light
+    jets filling only the slots the non-jet objects leave free:
+    jets -> min(jets, 4 - (e + m + b)); a non-jet count above 4 still
+    becomes 4. With 2 muons + 1 b-jet that leaves one jet slot, so every
+    jet count from 1 up gives 1j. The exact-label grouping does not call
+    limit_particles_in_fs at all, so none of these behaviours can affect
+    the CMS delivery."""
+    print("\n--- 2b. B1: the shared capping after upstream PRs #34 and #40 ---")
     cap = physics_calcs.limit_particles_in_fs
 
-    for n in (5, 6, 7, 8, 9):
-        check(f"OLD: {n} light jets WAS capped to 4j",
-              cap(f"0e_2m_{n}j_1b", 4) == "0e_2m_4j_1b")
-    # expectation updated for upstream PR #34 (f16768e), 16 Oct 2026
-    for n in (10, 11, 12, 13, 14, 20, 24, 40, 44):
+    # expectation updated for upstream PR #40 (5fbf1ef), 23 Oct 2026
+    for n in (1, 2, 3, 4, 5, 6, 7, 8, 9):
+        check(f"CURRENT: {n} light jets with 2 muons + 1 b-jet IS capped to 1j "
+              "(one free slot; #34 gave min(n, 4)j)",
+              cap(f"0e_2m_{n}j_1b", 4) == "0e_2m_1j_1b", f"got {cap(f'0e_2m_{n}j_1b', 4)}")
+    for n in (10, 11, 12, 13, 14, 20, 24, 40, 44, 50, 99):
         label = f"0e_2m_{n}j_1b"
-        check(f"CURRENT: {n} light jets IS capped to 4j (was left uncapped before #34)",
-              cap(label, 4) == "0e_2m_4j_1b", f"got {cap(label, 4)}")
-    check("CURRENT: 99 light jets IS capped to 4j (was mangled to 49j before #34)",
-          cap("0e_2m_99j_1b", 4) == "0e_2m_4j_1b",
-          f"got {cap('0e_2m_99j_1b', 4)}")
-    check("CURRENT: 50 light jets IS capped to 4j (was mangled to 40j before #34)",
-          cap("0e_2m_50j_1b", 4) == "0e_2m_4j_1b",
-          f"got {cap('0e_2m_50j_1b', 4)}")
+        check(f"CURRENT: {n} light jets with 2 muons + 1 b-jet IS capped to 1j "
+              "(multi-digit count read whole, as since #34)",
+              cap(label, 4) == "0e_2m_1j_1b", f"got {cap(label, 4)}")
+    # Maryna's examples for #40 (20 Oct 2026) and the edge cases.
+    for raw, capped in (("0e_1m_5j_0b", "0e_1m_3j_0b"), ("0e_1m_100j_0b", "0e_1m_3j_0b"),
+                        ("2e_0m_5j_1b", "2e_0m_1j_1b"), ("2e_0m_3j_2b", "2e_0m_0j_2b"),
+                        ("1e_1m_2j_0b", "1e_1m_2j_0b"), ("0e_0m_7j_0b", "0e_0m_4j_0b"),
+                        ("0e_5m_2j_0b", "0e_4m_0j_0b")):
+        check(f"CURRENT: {raw} -> {capped} (#40 slot-aware cap)",
+              cap(raw, 4) == capped, f"got {cap(raw, 4)}")
 
     # The new grouping has none of these problems: the label IS the count.
     jet_counts = [5, 9, 10, 14, 20, 50, 99]
