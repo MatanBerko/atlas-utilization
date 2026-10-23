@@ -1,6 +1,6 @@
 # HANDOFF — lean CMS branch and its proof (23 Oct 2026)
 
-**Current step: 5–6 — proof tools pushed; tarballs and jobs next.**
+**Current step: 5–6 — jobs submitted (23 Oct 2026, ~23:30 IDT); waiting. Never resubmit.**
 Nothing merged; no existing branch changed; nothing sent; nothing upstream.
 
 ## Branches (origin only)
@@ -46,6 +46,18 @@ by `merge_and_count.py`'s own `main()` self-check, which no launcher or builder 
   (the sync_42 data and MC lines: 5 data files, MC 67801:0 and 72752:0), `precheck_capped.py`.
 - Checkouts: `checkouts/lean_20261023/{old,new,tools}.tar` (`git archive` of `de012d2`, the lean tip,
   this branch). Work: `work/lean_20261023/`.
+
+## Steps 5–6: submitted (VERIFIED BY RUNNING)
+
+- File count before: **123,602**. `wipp-campus` timed out once; `wipp-home` used.
+- `checkouts/lean_20261023/`: `old.tar` (de012d2, sha256 60a00644…), `new.tar` (33d77f5, fae6b20a…),
+  `tools.tar` (cf73f87, fb789565…). The commit IDs and checksums were checked on the Mac and on the cluster.
+- `work/lean_20261023/`: `mapping.txt`, `tools/` (the launcher, from tools.tar), `logs/`, `evidence/`, `jobids.txt`.
+- Jobs (queue N, `-m n`):
+  - `5311724[]` perfile 0–6 (8gb, 4h, io=25);
+  - `5311725` build + compare (afterok, 16gb, 4h, io=25);
+  - `5311726` precheck (2gb, 1h, io=1).
+- File count after submission: 123,617.
 
 ## How to resume
 
