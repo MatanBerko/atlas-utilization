@@ -1,0 +1,31 @@
+{
+ "what": "LOCAL two-file MC trial (17 Oct 67801 files 0 and 7, the ttbar study's local copies with patched metadata; NOT a result)",
+ "new_code": "feature/cms-mc-multiplicity40-20261023 working tree before the step-2 commit",
+ "reference": "the ttbar study's own local trial builds (study branch ecdf59c code), 21 Oct",
+ "upstream40_vs_study_pr40": {
+  "a": "local/build_pr40/pr40_record67801_mc.root",
+  "b": "m40_local/mc/build_upstream40/upstream40_record67801_mc.root",
+  "n_keys_a": 174,
+  "n_keys_b": 174,
+  "only_in_a": [],
+  "only_in_b": [],
+  "n_compared": 174,
+  "n_bins_compared_incl_flow": 174348,
+  "n_different": 0,
+  "different": [],
+  "identical": true
+ },
+ "exact_vs_study_exact": {
+  "a": "local/build_exact/exact_record67801_mc.root",
+  "b": "m40_local/mc/build_exact/exact_record67801_mc.root",
+  "n_keys_a": 1525,
+  "n_keys_b": 1525,
+  "only_in_a": [],
+  "only_in_b": [],
+  "n_compared": 1525,
+  "n_bins_compared_incl_flow": 1528050,
+  "n_different": 0,
+  "different": [],
+  "identical": true
+ }
+}

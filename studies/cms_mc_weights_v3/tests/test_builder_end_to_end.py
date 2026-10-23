@@ -152,6 +152,11 @@ class Args:
         self.scratch_dir = kw.get("scratch_dir")
         self.keep_scratch = kw.get("keep_scratch", False)
         self.smoke_test = kw.get("smoke_test", True)
+        # This test pins the exact-label build, including the D8 coverage-cap
+        # path on 0e_2m_2j_1b, a label the #40 rule (the builder's default
+        # since 23 Oct 2026) would merge and therefore refuses; that refusal
+        # is tested in studies/cms_datasets/tests/test_multiplicity40.py.
+        self.multiplicity_rule = kw.get("multiplicity_rule", "exact")
 
 
 def _evidence_path(filename: str) -> pathlib.Path:

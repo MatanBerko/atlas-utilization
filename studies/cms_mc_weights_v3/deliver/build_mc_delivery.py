@@ -25,17 +25,26 @@ What it does, in order:
      convention -- next to each mass signature.
   5. D8 coverage cap: a signature capped in a file has its weights scaled by
      `true_size / kept` for that file BEFORE the files are merged.
-  6. Applies the >= 100-entries-per-final-state rule ONCE, on the combined
+  6. Multiplicity rule (--multiplicity-rule, default upstream40): before
+     the >=100 rule every exact label becomes upstream #40's capped label
+     (limit_particles_in_fs(label, 4): at most 4 objects, light jets fill
+     the slots left by e + m + b), combinations the capped label does not
+     contain are dropped, and the arrays (masses and every sibling, weights
+     included) of exact labels that cap to the same label + combination are
+     merged, with the event counts summed
+     (studies/cms_datasets/common/multiplicity.py). exact leaves the shards
+     untouched.
+  7. Applies the >= 100-entries-per-final-state rule ONCE, on the combined
      shards of every surviving file of every sample at once, so all samples
      share one surviving final-state set and the per-sample files and the
      summed file agree.
-  7. Post-processes masses and weights IN LOCKSTEP -- Z cut 110 GeV, max-mass
+  8. Post-processes masses and weights IN LOCKSTEP -- Z cut 110 GeV, max-mass
      cut, peak removal, bin-aligned outlier split -- with any length mismatch
      a HARD ERROR, never a fallback to unweighted. With --peak-scope combined
      (the default) the peak-removal and split masses of each histogram name
      are found ONCE on the combined spectrum of all samples and applied to
      every sample, so the summed SM is "sum, then cut" like the data.
-  8. Writes TH1D + Sumw2 with names identical to data, asserts them on
+  9. Writes TH1D + Sumw2 with names identical to data, asserts them on
      read-back, and reports per-sample Sigma-w, file counts, cap incidence,
      raw and weighted yields per final state, and the negative/empty-bin
      inventory.
@@ -45,6 +54,11 @@ Build-time OPTIONS, so an answer from Maryna or Yuval needs no re-run:
   --peak-scope {combined,per-sample} [combined]
   --min-events-basis {raw,weighted} [raw]
   --output-mode {per-sample,summed,both} [both]
+  --multiplicity-rule {upstream40,exact} [upstream40]
+      upstream40 is upstream #40's max-4-objects rule (5fbf1ef), applied at
+      build time as in step 6; exact reproduces the exact-label builds made
+      before 23 Oct 2026. The ttbar test of 21 Oct (study branch
+      study/cms-ttbar-pr40-20261021, option name pr40 there) proved both.
 
 No negative-bin fix is implemented -- only the inventory is reported. That
 choice is Maryna's (DESIGN.md open questions).
@@ -90,6 +104,13 @@ from services.storage.sqlite_shards import (  # noqa: E402
 )
 from studies.cms_mc_weights_v3.deliver.cms_shard_pruning import (  # noqa: E402
     prune_final_states_below_min_events,  # CMS copy with the D3 sibling change
+)
+from studies.cms_datasets.common.multiplicity import (  # noqa: E402
+    DEFAULT_RULE as DEFAULT_MULTIPLICITY_RULE,
+    RULES as MULTIPLICITY_RULES,
+    final_state_population,
+    regroup_report,
+    regroup_shard,
 )
 from studies.cms_coverage.cluster.merge_and_count import (  # noqa: E402
     MAX_MASS_CUTOFF,
@@ -619,6 +640,8 @@ def build(args) -> dict:
                   if args.file_indices else None)
     jobs_by_record = discover_jobs(runs_dir, only_records, only_files)
 
+    # Callers that build their own args (the tests) predate the option.
+    multiplicity_rule = getattr(args, "multiplicity_rule", DEFAULT_MULTIPLICITY_RULE)
     report = {
         "what": "CMS MC delivery build (studies/cms_mc_weights_v3)",
         "generated_utc": datetime.now(timezone.utc).isoformat(),
@@ -632,6 +655,7 @@ def build(args) -> dict:
             "min_events_basis": args.min_events_basis,
             "output_mode": args.output_mode,
             "min_events_per_fs": args.min_events_per_fs,
+            "multiplicity_rule": multiplicity_rule,
         },
         "constants": {
             "target_luminosity_fb": TARGET_LUMINOSITY_FB,
@@ -714,6 +738,22 @@ def build(args) -> dict:
               f"{record['cross_section_pb']:g} pb, Sigma-w={sw['sigma_w']:.6e} over "
               f"{sw['n_files_included']} file(s) ({sw['n_files_excluded']} excluded), "
               f"norm={norm:.6e}", flush=True)
+
+    # ---- the multiplicity rule (default upstream40) ----------------------
+    # Applied per scratch shard, after the _mcw siblings exist and before the
+    # >=100 rule, so the rule counts the merged populations. With exact the
+    # shards are not touched. A coverage-capped signature that would merge
+    # is refused inside regroup_shard (the MC driver records caps in the
+    # inclusive shard, the one read here).
+    if multiplicity_rule == "upstream40":
+        report["multiplicity_rule_upstream40"] = regroup_report(
+            [regroup_shard(p) for p in all_scratch_shards])
+        print(f"multiplicity rule upstream40: "
+              f"{len(report['multiplicity_rule_upstream40']['label_map'])} exact label(s) -> "
+              f"{len(report['multiplicity_rule_upstream40']['exact_labels_merged_into'])} "
+              "final state(s)", flush=True)
+    report["final_state_population_before_prune"] = final_state_population(
+        all_scratch_shards, MC_WEIGHT_SUFFIX, MC_SIBLING_ACCEPTANCE, event_union_mask)
 
     # ---- the >=100 rule, ONCE, on the combined shards -------------------
     # Applied over every surviving file of every sample at once, so all samples
@@ -1012,6 +1052,13 @@ def main() -> int:
                    help="per-sample ROOT files, one summed-SM file, or both. "
                         "Default both -- the open question for Maryna.")
     p.add_argument("--min-events-per-fs", type=int, default=PRIMARY_MIN_EVENTS_PER_FS)
+    p.add_argument("--multiplicity-rule", choices=MULTIPLICITY_RULES,
+                   default=DEFAULT_MULTIPLICITY_RULE,
+                   help="upstream40 (default): upstream #40's max-4-objects rule "
+                        "(5fbf1ef) -- labels capped at 4 objects with light jets "
+                        "filling the free slots, applied before the >=100 rule "
+                        "(studies/cms_datasets/common/multiplicity.py). exact: one "
+                        "final state per exact multiplicity, shards untouched.")
     p.add_argument("--scratch-dir", default=None,
                    help="where to copy the shards for mutation (default: a temp dir)")
     p.add_argument("--keep-scratch", action="store_true")

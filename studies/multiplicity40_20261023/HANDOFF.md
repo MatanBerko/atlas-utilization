@@ -1,6 +1,6 @@
 # HANDOFF — the #40 multiplicity rule as the default in both CMS builders (23 Oct 2026)
 
-**Current step: 1 DONE (data branch committed and pushed). Next: step 2 (MC branch).**
+**Current step: 2 DONE (MC branch committed and pushed). Next: step 3 (proof jobs on the cluster).**
 Nothing merged into master or the two existing feature branches; nothing sent; nothing upstream.
 
 ## Branches (origin only)
@@ -59,6 +59,31 @@ Local checks (Mac), VERIFIED BY RUNNING (`evidence/local_tests_data_branch.txt`)
   Both ROOT files are identical, and so is the manifest. The summary differs only by the added
   `"multiplicity_rule": "exact"` key (`evidence/local_synthetic_exact_vs_c0e734b.json`).
   Made-up shards, NOT a result.
+
+## Step 2: MC (branch `feature/cms-mc-multiplicity40-20261023`)
+
+- From `dc760da`, then a plain merge of the data branch (`baf3ff4`) with no conflict (merge `35d3542`).
+  The merge also brings in the data branch's own study folder `studies/btag_se_20261020/`
+  (documents, evidence and plots of the 20 Oct b-tag checks, no production code). That is
+  expected, because the data branch has it.
+- `studies/cms_mc_weights_v3/deliver/build_mc_delivery.py`: `--multiplicity-rule {upstream40,exact}`,
+  default `upstream40`, using the shared module. Same place and logic as the ttbar study's `pr40`:
+  per scratch shard, after the `_mcw` siblings exist and before the ≥100 rule. Its report
+  gains `multiplicity_rule_upstream40` and, in both modes, `final_state_population_before_prune`.
+  `multiplicity_pr40.py` is NOT on this branch (no second copy of the rule).
+- `studies/cms_mc_weights_v3/tests/test_builder_end_to_end.py`: now passes `multiplicity_rule="exact"`.
+  The test pins the exact-label build, including the coverage-cap path on `0e_2m_2j_1b`. Under the
+  #40 default the builder refuses to merge that capped signature, which is correct.
+- **Behaviour to know for the full run:** with the default rule, the MC builder (and the data builder)
+  STOP if a coverage-capped signature (> 500,000 entries in one file) would be merged.
+  The 49 ttbar files had 0 capped signatures. Other samples and data are UNVERIFIED.
+
+Local checks (Mac), VERIFIED BY RUNNING:
+- All 6 MC test scripts and `test_multiplicity40.py` pass (`evidence/local_tests_mc_branch.txt`).
+- Two-file local MC trial (the ttbar study's local copies of 17 Oct 67801 files 0 and 7; NOT a result),
+  compared with the study's own local builds (`evidence/local_mc_trial_2files.json`):
+  - new default `upstream40` == the study's `pr40`, **bit for bit, 174/174** histograms;
+  - new `exact` == the study's `exact`, **1,525/1,525**.
 
 ## How to resume
 

@@ -1,0 +1,29 @@
+# 2026-10-23 22:22 IDT, Mac, branch feature/cms-mc-multiplicity40-20261023 (working tree before the step-2 commit)
+== studies/cms_mc_weights_v3/tests/test_builder_end_to_end.py
+==========================================================================
+wrote /Users/matan/Research/atlas-utilization/studies/cms_mc_weights_v3/evidence/builder_end_to_end.json
+rc=0
+== studies/cms_mc_weights_v3/tests/test_cms_shard_pruning_drift.py
+[PASS] test_upstream_function_unchanged
+ALL PASSED
+rc=0
+== studies/cms_mc_weights_v3/tests/test_mc_singleelectron_flag.py
+========================================================================
+20 checks, 0 failure(s)
+rc=0
+== studies/cms_mc_weights_v3/tests/test_mc_weights_v3.py
+==========================================================================
+wrote /Users/matan/Research/atlas-utilization/studies/cms_mc_weights_v3/evidence/selfchecks_v3.json
+rc=0
+== studies/cms_mc_weights_v3/tests/test_peak_scope.py
+12 pass, 0 fail, 12 checks total
+wrote /Users/matan/Research/atlas-utilization/studies/cms_mc_weights_v3/peakfix/evidence/peak_scope_tests.json
+rc=0
+== studies/cms_mc_weights_v3/tests/test_upstream35_drift.py
+[PASS] k != 1 is still refused (CMS guard kept)
+ALL CHECKS PASSED
+rc=0
+== studies/cms_datasets/tests/test_multiplicity40.py
+
+35/35 checks passed
+rc=0
