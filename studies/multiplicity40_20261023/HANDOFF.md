@@ -1,6 +1,6 @@
 # HANDOFF — the #40 multiplicity rule as the default in both CMS builders (23 Oct 2026)
 
-**Current step: 2 DONE (MC branch committed and pushed). Next: step 3 (proof jobs on the cluster).**
+**Current step: 3 — proof tools pushed; checkouts and jobs next (see "Step 3").**
 Nothing merged into master or the two existing feature branches; nothing sent; nothing upstream.
 
 ## Branches (origin only)
@@ -84,6 +84,24 @@ Local checks (Mac), VERIFIED BY RUNNING:
   compared with the study's own local builds (`evidence/local_mc_trial_2files.json`):
   - new default `upstream40` == the study's `pr40`, **bit for bit, 174/174** histograms;
   - new `exact` == the study's `exact`, **1,525/1,525**.
+
+## Step 3: proof on the cluster (plan; the tools are on the MC branch)
+
+- `studies/multiplicity40_20261023/compare_root.py`: bit-for-bit ROOT comparison, ported unchanged
+  from the ttbar study's `compare_builds.py`.
+- `studies/multiplicity40_20261023/rule_check.py`: R1–R7 for `--kind data|mc`, adapted from the ttbar
+  study. R2 is checked against upstream's `limit_particles_in_fs` itself. Tried locally on the
+  synthetic data builds and the two-file MC builds: all pass (NOT results).
+- `studies/multiplicity40_20261023/cluster/pbs_proof.sh`, with `WHAT=`:
+  - `mc_upstream40`, `mc_exact`: MC builder on `work/ttbar_pr40_20261021/runs` (read-only),
+    `--records 67801 --output-mode per-sample`, as in the ttbar study;
+  - `data_upstream40`, `data_exact`: data builder on `work/sync42_20261023/runs/new/data`
+    (read-only), `--datasets <five> --out-prefix proof`, as in the sync42 proof;
+  - `check`: the comparisons and the rule checks.
+- Cluster preflight (23 Oct, 22:26 IDT, `wipp-home`; `wipp-campus` timed out once), VERIFIED BY RUNNING:
+  - file count **122,878**; nothing queued;
+  - every input present; the 10 data rare4 shards have 0 coverage-capped signatures.
+- Checkouts: `checkouts/mult40_20261023/{data,mc}`. Work: `work/mult40_20261023/{logs,mc,data,evidence}`.
 
 ## How to resume
 
