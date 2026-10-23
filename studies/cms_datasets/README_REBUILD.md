@@ -81,6 +81,14 @@ With no extra flags, `build_four_dataset_delivery.py` (default
 ≥100-events-per-final-state rule applied once over the combined shards. The
 7 Oct prefix was `four_dataset_matched_vB_upstreamnames_w10p0_dr012`.
 
+Since 23 Oct 2026 the builder's default is also upstream #40's max-4-objects
+multiplicity rule (`--multiplicity-rule upstream40`, applied before the ≥100
+rule; see the builder's docstring). The 7 Oct delivery used the exact labels:
+to reproduce it, run the builder with `--multiplicity-rule exact`.
+`pbs_delivery.sh` passes no flags, so it now builds with the #40 rule. The
+current five-dataset delivery (matched5 runs) passes
+`--datasets DoubleMuon,SingleMuon,DoubleEG,MuonEG,SingleElectron`.
+
 ## 4. Checks and plots (Steps D2–D4)
 
 ```bash
