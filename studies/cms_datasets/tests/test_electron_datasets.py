@@ -742,13 +742,19 @@ def test_c7_names_match_upstream(pilot_final_states_path=None):
     print(f"      final states under test: {source}")
 
     pairs = [[fs, im, BIN_WIDTH_GEV] for fs in final_states for im in IM_STRINGS]
-    # Counts at or below 4 only: upstream's own group_by_final_state still
-    # calls limit_particles_in_fs(fs, 4), which CAPS any count above 4 (its
-    # authors are removing that themselves -- the 5+-jet bug, out of scope
-    # here). The capped case is checked separately and explicitly below.
+    # upstream's own group_by_final_state calls limit_particles_in_fs(fs, 4).
+    # Since upstream PR #40 that cap is slot-aware: light jets keep only the
+    # slots the non-jet objects leave free, jets -> min(jets, 4 - (e+m+b)).
+    # The first five specs are the original ones; #40 caps three of them
+    # (asserted explicitly below). The last two are left as they are by #40,
+    # so they test the label FORMAT on a non-trivial count combination.
+    # expectation updated for upstream PR #40 (5fbf1ef), 23 Oct 2026
     label_specs = [{"e": 0, "m": 2, "j": 4, "b": 1}, {"e": 1, "m": 1, "j": 0, "b": 0},
                    {"e": 2, "m": 0, "j": 3, "b": 2}, {"e": 0, "m": 0, "j": 0, "b": 0},
-                   {"e": 4, "m": 0, "j": 4, "b": 4}]
+                   {"e": 4, "m": 0, "j": 4, "b": 4},
+                   {"e": 0, "m": 1, "j": 3, "b": 0}, {"e": 2, "m": 0, "j": 1, "b": 1}]
+    up40_labels = ["0e_2m_1j_1b", "1e_1m_0j_0b", "2e_0m_0j_2b", "0e_0m_0j_0b",
+                   "4e_0m_0j_4b", "0e_1m_3j_0b", "2e_0m_1j_1b"]
     capped_spec = [{"e": 0, "m": 2, "j": 5, "b": 1}, {"e": 0, "m": 2, "j": 12, "b": 1}]
     try:
         commit, up = upstream_names(pairs, label_specs)
@@ -773,25 +779,32 @@ def test_c7_names_match_upstream(pilot_final_states_path=None):
 
     ours_labels = [str(drv.exact_final_state_labels(obj_record_from_counts([c]))[0])
                    for c in label_specs]
+    unchanged = [i for i, lab in enumerate(up40_labels) if lab == ours_labels[i]]
     check("our final-state label format equals upstream's own group_by_final_state "
-          "output for every count combination at or below 4",
-          ours_labels == up["labels"], f"ours {ours_labels} vs upstream {up['labels']}")
+          "output wherever #40's slot-aware cap leaves the label as it is "
+          f"({[ours_labels[i] for i in unchanged]})",
+          len(unchanged) == 4 and all(ours_labels[i] == up["labels"][i] for i in unchanged),
+          f"ours {ours_labels} vs upstream {up['labels']}")
+    check("upstream's own grouping applies #40's slot-aware cap to the other three "
+          "(0e_2m_4j_1b -> 0e_2m_1j_1b, 2e_0m_3j_2b -> 2e_0m_0j_2b, "
+          "4e_0m_4j_4b -> 4e_0m_0j_4b)",
+          up["labels"] == up40_labels, f"upstream {up['labels']}")
 
     # The one deliberate divergence, asserted rather than left implicit.
     _, up_capped = upstream_names([["0e_2m_5j_1b", "m0m1", BIN_WIDTH_GEV],
                                    ["0e_2m_12j_1b", "m0m1", BIN_WIDTH_GEV]], capped_spec)
     ours_capped = [str(x) for x in drv.exact_final_state_labels(
         obj_record_from_counts(capped_spec))]
-    check("DOCUMENTED DIVERGENCE at 5 light jets: upstream's own grouping still caps "
-          "the label at 4j (its limit_particles_in_fs call, which its authors are "
-          "removing) while ours keeps 5j -- the group's decision",
-          ours_capped[0] == "0e_2m_5j_1b" and up_capped["labels"][0] == "0e_2m_4j_1b",
+    # expectation updated for upstream PR #40 (5fbf1ef), 23 Oct 2026
+    check("DOCUMENTED DIVERGENCE at 5 light jets: upstream's own grouping caps the "
+          "label with #40's slot-aware rule (2 muons + 1 b-jet leave one jet slot: "
+          "1j) while ours keeps 5j -- the group's decision",
+          ours_capped[0] == "0e_2m_5j_1b" and up_capped["labels"][0] == "0e_2m_1j_1b",
           f"ours {ours_capped[0]}, upstream {up_capped['labels'][0]}")
-    # expectation updated for upstream PR #34 (f16768e), 16 Oct 2026
     check("DOCUMENTED DIVERGENCE at 12 light jets too: upstream's own grouping caps "
-          "the label at 4j (since PR #34 its capping function reads the whole count, "
-          "12 > 4) while ours keeps 12j -- the group's decision",
-          ours_capped[1] == "0e_2m_12j_1b" and up_capped["labels"][1] == "0e_2m_4j_1b",
+          "the label at 1j (#40; the whole count is read, as since PR #34) while ours "
+          "keeps 12j -- the group's decision",
+          ours_capped[1] == "0e_2m_12j_1b" and up_capped["labels"][1] == "0e_2m_1j_1b",
           f"ours {ours_capped[1]}, upstream {up_capped['labels'][1]}")
     check("the NAMING code itself agrees on both labels (it is the grouping, not the "
           "naming, that differs)",
