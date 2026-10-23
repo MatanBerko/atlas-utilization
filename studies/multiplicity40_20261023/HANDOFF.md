@@ -1,6 +1,6 @@
 # HANDOFF — the #40 multiplicity rule as the default in both CMS builders (23 Oct 2026)
 
-**Current step: 3 — proof tools pushed; checkouts and jobs next (see "Step 3").**
+**Current step: 3 — proof jobs submitted (23 Oct, ~22:35 IDT); waiting for them. Never resubmit.**
 Nothing merged into master or the two existing feature branches; nothing sent; nothing upstream.
 
 ## Branches (origin only)
@@ -101,7 +101,18 @@ Local checks (Mac), VERIFIED BY RUNNING:
 - Cluster preflight (23 Oct, 22:26 IDT, `wipp-home`; `wipp-campus` timed out once), VERIFIED BY RUNNING:
   - file count **122,878**; nothing queued;
   - every input present; the 10 data rare4 shards have 0 coverage-capped signatures.
-- Checkouts: `checkouts/mult40_20261023/{data,mc}`. Work: `work/mult40_20261023/{logs,mc,data,evidence}`.
+- Checkouts (fresh clones of origin, detached, clean): `checkouts/mult40_20261023/data` @ `baf3ff4`,
+  `checkouts/mult40_20261023/mc` @ `c00d0ab`. File count after them: **123,560**.
+- Work: `work/mult40_20261023/{logs,mc,data,evidence}`, with `pbs_proof.sh` (a copy) and `jobids.txt`.
+- Jobs (queue N, `-m n`, io=25; logs `work/mult40_20261023/logs/<what>.{out,err}`):
+
+| what | job | resources |
+|---|---|---|
+| mc_upstream40 | `5311261` | 32gb, 4h |
+| mc_exact | `5311262` | 32gb, 4h |
+| data_upstream40 | `5311263` | 8gb, 1h |
+| data_exact | `5311264` | 8gb, 1h |
+| check | `5311265` (afterok on all four) | 16gb, 2h |
 
 ## How to resume
 
