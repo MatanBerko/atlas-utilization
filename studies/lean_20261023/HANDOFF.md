@@ -1,6 +1,6 @@
 # HANDOFF — lean CMS branch and its proof (23 Oct 2026)
 
-**Current step: 5–6 — jobs submitted (23 Oct 2026, ~23:30 IDT); waiting. Never resubmit.**
+**Current step: COMPLETE (24 Oct 2026, ~00:20 IDT). Nothing running. Result: `REPORT.md`.** Next (needs Matan): the full run from the lean branch.
 Nothing merged; no existing branch changed; nothing sent; nothing upstream.
 
 ## Branches (origin only)
@@ -8,7 +8,7 @@ Nothing merged; no existing branch changed; nothing sent; nothing upstream.
 | branch | commit | what |
 |---|---|---|
 | `lean/cms-layer-20261023` | `33d77f5` | upstream master `29291ae` + 63 added files (the minimal CMS layer), no records |
-| `study/lean-branch-proof-20261023` | (this branch, from the lean branch) | this proof: tools, report, evidence |
+| `study/lean-branch-proof-20261023` | this branch (from `33d77f5`) | this proof: tools, report, evidence |
 | `feature/cms-mc-multiplicity40-20261023` | `de012d2` | the OLD side of the proof (unchanged) |
 
 ## Steps 1–4 (VERIFIED BY RUNNING, Mac)
@@ -58,6 +58,17 @@ by `merge_and_count.py`'s own `main()` self-check, which no launcher or builder 
   - `5311725` build + compare (afterok, 16gb, 4h, io=25);
   - `5311726` precheck (2gb, 1h, io=1).
 - File count after submission: 123,617.
+
+## Steps 5–7 result (VERIFIED BY RUNNING)
+
+- `5311724[]` 0–6 all exit 0; `5311725` exit 0 (comparison rc=0); `5311726` exit 0.
+- OLD == NEW: data per-file 40/40 databases, MC per-file 16/16 (siblings included), data delivery
+  201/201 histograms (both ROOT files), MC smoke build 290 + 292 + 296 histograms; 0 physics
+  metadata differences. Evidence: `evidence/cluster/`.
+- Pre-check: 0 trimmed lists in 390 data and 497 MC files; largest lists 292,176 (data) and 142,407 (MC).
+- `checkouts/lean_20261023/lean_20261023_code_tarballs.tar.gz`: verified (the three tarballs
+  inside are byte-identical). The tarballs and every output were left in place.
+- **Final file count: 123,867** (+265 vs 123,602).
 
 ## How to resume
 

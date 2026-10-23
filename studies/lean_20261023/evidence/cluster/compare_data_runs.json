@@ -1,0 +1,567 @@
+{
+  "a": "/storage/agrp/berkom/atlas-utilization/work/lean_20261023/runs/old/data",
+  "b": "/storage/agrp/berkom/atlas-utilization/work/lean_20261023/runs/new/data",
+  "jobs": {
+    "DoubleMuon/job_0": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/05DD095C-F6C3-9A4F-9FB3-348A5A6403D5.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v2/2430000/05DD095C-F6C3-9A4F-9FB3-348A5A6403D5.root",
+      "git_commit_a": "UNKNOWN (CalledProcessError: Command '['git', 'rev-parse', 'HEAD']' returned non-zero exit status 128.)",
+      "git_commit_b": "UNKNOWN (CalledProcessError: Command '['git', 'rev-parse', 'HEAD']' returned non-zero exit status 128.)",
+      "cutflow_a": {
+        "n_read": 2315223,
+        "n_after_golden_json": 2298786,
+        "n_after_trigger": 729741,
+        "n_after_gate": 223393,
+        "n_exclusive": 223393,
+        "n_final_state_groups": 48,
+        "n_signature_writes_inclusive": 1237,
+        "n_signature_writes_exclusive": 1237,
+        "n_values_written_inclusive": 464657,
+        "n_values_written_exclusive": 464657
+      },
+      "cutflow_b": {
+        "n_read": 2315223,
+        "n_after_golden_json": 2298786,
+        "n_after_trigger": 729741,
+        "n_after_gate": 223393,
+        "n_exclusive": 223393,
+        "n_final_state_groups": 48,
+        "n_signature_writes_inclusive": 1237,
+        "n_signature_writes_exclusive": 1237,
+        "n_values_written_inclusive": 464657,
+        "n_values_written_exclusive": 464657
+      },
+      "n_labels_inclusive": 48,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec"
+      ],
+      "n_metadata_leaves_compared": 12792,
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1237,
+          "n_arrays_compared": 1237,
+          "n_values_compared": 464657,
+          "n_final_state_rows": 48,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1237,
+          "n_arrays_compared": 1237,
+          "n_values_compared": 464657,
+          "n_final_state_rows": 48,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 96,
+          "n_arrays_compared": 96,
+          "n_values_compared": 440238,
+          "n_final_state_rows": 14,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 96,
+          "n_arrays_compared": 96,
+          "n_values_compared": 440238,
+          "n_final_state_rows": 14,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 782,
+          "n_arrays_compared": 782,
+          "n_values_compared": 463990,
+          "n_final_state_rows": 37,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 782,
+          "n_arrays_compared": 782,
+          "n_values_compared": 463990,
+          "n_final_state_rows": 37,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 102,
+          "n_arrays_compared": 102,
+          "n_values_compared": 440459,
+          "n_final_state_rows": 15,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 102,
+          "n_arrays_compared": 102,
+          "n_values_compared": 440459,
+          "n_final_state_rows": 15,
+          "n_metadata_keys": 13,
+          "differences": []
+        }
+      }
+    },
+    "SingleMuon/job_0": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/0A4230E2-0C75-604D-890F-A4CE5E5C164E.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleMuon/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/130000/0A4230E2-0C75-604D-890F-A4CE5E5C164E.root",
+      "git_commit_a": "UNKNOWN (CalledProcessError: Command '['git', 'rev-parse', 'HEAD']' returned non-zero exit status 128.)",
+      "git_commit_b": "UNKNOWN (CalledProcessError: Command '['git', 'rev-parse', 'HEAD']' returned non-zero exit status 128.)",
+      "cutflow_a": {
+        "n_read": 2939781,
+        "n_after_golden_json": 2931332,
+        "n_after_trigger": 1878767,
+        "n_after_gate": 1511878,
+        "n_exclusive": 1425358,
+        "n_final_state_groups": 109,
+        "n_signature_writes_inclusive": 2287,
+        "n_signature_writes_exclusive": 1944,
+        "n_values_written_inclusive": 1053138,
+        "n_values_written_exclusive": 871969
+      },
+      "cutflow_b": {
+        "n_read": 2939781,
+        "n_after_golden_json": 2931332,
+        "n_after_trigger": 1878767,
+        "n_after_gate": 1511878,
+        "n_exclusive": 1425358,
+        "n_final_state_groups": 109,
+        "n_signature_writes_inclusive": 2287,
+        "n_signature_writes_exclusive": 1944,
+        "n_values_written_inclusive": 1053138,
+        "n_values_written_exclusive": 871969
+      },
+      "n_labels_inclusive": 109,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec"
+      ],
+      "n_metadata_leaves_compared": 10975,
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1944,
+          "n_arrays_compared": 1944,
+          "n_values_compared": 871969,
+          "n_final_state_rows": 109,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 2287,
+          "n_arrays_compared": 2287,
+          "n_values_compared": 1053138,
+          "n_final_state_rows": 109,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 173,
+          "n_arrays_compared": 173,
+          "n_values_compared": 803959,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 198,
+          "n_arrays_compared": 198,
+          "n_values_compared": 975743,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1572,
+          "n_arrays_compared": 1572,
+          "n_values_compared": 870954,
+          "n_final_state_rows": 94,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1831,
+          "n_arrays_compared": 1831,
+          "n_values_compared": 1051870,
+          "n_final_state_rows": 94,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 173,
+          "n_arrays_compared": 173,
+          "n_values_compared": 804245,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 198,
+          "n_arrays_compared": 198,
+          "n_values_compared": 976128,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 13,
+          "differences": []
+        }
+      }
+    },
+    "DoubleEG/job_0": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root",
+      "git_commit_a": "UNKNOWN (CalledProcessError: Command '['git', 'rev-parse', 'HEAD']' returned non-zero exit status 128.)",
+      "git_commit_b": "UNKNOWN (CalledProcessError: Command '['git', 'rev-parse', 'HEAD']' returned non-zero exit status 128.)",
+      "cutflow_a": {
+        "n_read": 2014154,
+        "n_after_golden_json": 1912413,
+        "n_after_trigger": 219416,
+        "n_after_gate": 60201,
+        "n_exclusive": 60189,
+        "n_final_state_groups": 31,
+        "n_signature_writes_inclusive": 593,
+        "n_signature_writes_exclusive": 521,
+        "n_values_written_inclusive": 122744,
+        "n_values_written_exclusive": 122633
+      },
+      "cutflow_b": {
+        "n_read": 2014154,
+        "n_after_golden_json": 1912413,
+        "n_after_trigger": 219416,
+        "n_after_gate": 60201,
+        "n_exclusive": 60189,
+        "n_final_state_groups": 31,
+        "n_signature_writes_inclusive": 593,
+        "n_signature_writes_exclusive": 521,
+        "n_values_written_inclusive": 122744,
+        "n_values_written_exclusive": 122633
+      },
+      "n_labels_inclusive": 31,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec"
+      ],
+      "n_metadata_leaves_compared": 9221,
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 521,
+          "n_arrays_compared": 521,
+          "n_values_compared": 122633,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 593,
+          "n_arrays_compared": 593,
+          "n_values_compared": 122744,
+          "n_final_state_rows": 31,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 82,
+          "n_arrays_compared": 82,
+          "n_values_compared": 115873,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 93,
+          "n_arrays_compared": 93,
+          "n_values_compared": 115945,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 478,
+          "n_arrays_compared": 478,
+          "n_values_compared": 122504,
+          "n_final_state_rows": 28,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 525,
+          "n_arrays_compared": 525,
+          "n_values_compared": 122590,
+          "n_final_state_rows": 28,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 82,
+          "n_arrays_compared": 82,
+          "n_values_compared": 115939,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 93,
+          "n_arrays_compared": 93,
+          "n_values_compared": 116022,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        }
+      }
+    },
+    "MuonEG/job_0": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/MuonEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/2ADBED61-A06A-D64B-BE90-E9B267D15700.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/MuonEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/2ADBED61-A06A-D64B-BE90-E9B267D15700.root",
+      "git_commit_a": "UNKNOWN (CalledProcessError: Command '['git', 'rev-parse', 'HEAD']' returned non-zero exit status 128.)",
+      "git_commit_b": "UNKNOWN (CalledProcessError: Command '['git', 'rev-parse', 'HEAD']' returned non-zero exit status 128.)",
+      "cutflow_a": {
+        "n_read": 2238235,
+        "n_after_golden_json": 2237659,
+        "n_after_trigger": 279559,
+        "n_after_gate": 4512,
+        "n_exclusive": 394,
+        "n_final_state_groups": 44,
+        "n_signature_writes_inclusive": 1164,
+        "n_signature_writes_exclusive": 370,
+        "n_values_written_inclusive": 49672,
+        "n_values_written_exclusive": 3214
+      },
+      "cutflow_b": {
+        "n_read": 2238235,
+        "n_after_golden_json": 2237659,
+        "n_after_trigger": 279559,
+        "n_after_gate": 4512,
+        "n_exclusive": 394,
+        "n_final_state_groups": 44,
+        "n_signature_writes_inclusive": 1164,
+        "n_signature_writes_exclusive": 370,
+        "n_values_written_inclusive": 49672,
+        "n_values_written_exclusive": 3214
+      },
+      "n_labels_inclusive": 44,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec"
+      ],
+      "n_metadata_leaves_compared": 9456,
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 370,
+          "n_arrays_compared": 370,
+          "n_values_compared": 3214,
+          "n_final_state_rows": 44,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 1164,
+          "n_arrays_compared": 1164,
+          "n_values_compared": 49672,
+          "n_final_state_rows": 44,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 42,
+          "n_arrays_compared": 42,
+          "n_values_compared": 2293,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 105,
+          "n_arrays_compared": 105,
+          "n_values_compared": 31347,
+          "n_final_state_rows": 13,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 356,
+          "n_arrays_compared": 356,
+          "n_values_compared": 3200,
+          "n_final_state_rows": 36,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 851,
+          "n_arrays_compared": 851,
+          "n_values_compared": 48434,
+          "n_final_state_rows": 36,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 42,
+          "n_arrays_compared": 42,
+          "n_values_compared": 2304,
+          "n_final_state_rows": 14,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 111,
+          "n_arrays_compared": 111,
+          "n_values_compared": 31793,
+          "n_final_state_rows": 14,
+          "n_metadata_keys": 13,
+          "differences": []
+        }
+      }
+    },
+    "SingleElectron/job_0": {
+      "identical": true,
+      "file_url_a": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleElectron/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/110000/43B00DA0-41AF-D042-9F41-7F95FBE5E59F.root",
+      "file_url_b": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleElectron/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/110000/43B00DA0-41AF-D042-9F41-7F95FBE5E59F.root",
+      "git_commit_a": "UNKNOWN (CalledProcessError: Command '['git', 'rev-parse', 'HEAD']' returned non-zero exit status 128.)",
+      "git_commit_b": "UNKNOWN (CalledProcessError: Command '['git', 'rev-parse', 'HEAD']' returned non-zero exit status 128.)",
+      "cutflow_a": {
+        "n_read": 112955,
+        "n_after_golden_json": 112955,
+        "n_after_trigger": 62554,
+        "n_after_gate": 32459,
+        "n_exclusive": 30774,
+        "n_final_state_groups": 55,
+        "n_signature_writes_inclusive": 820,
+        "n_signature_writes_exclusive": 513,
+        "n_values_written_inclusive": 29563,
+        "n_values_written_exclusive": 25554
+      },
+      "cutflow_b": {
+        "n_read": 112955,
+        "n_after_golden_json": 112955,
+        "n_after_trigger": 62554,
+        "n_after_gate": 32459,
+        "n_exclusive": 30774,
+        "n_final_state_groups": 55,
+        "n_signature_writes_inclusive": 820,
+        "n_signature_writes_exclusive": 513,
+        "n_values_written_inclusive": 29563,
+        "n_values_written_exclusive": 25554
+      },
+      "n_labels_inclusive": 55,
+      "metadata_physics_differences": [],
+      "metadata_provenance_differences": [
+        "/created_utc",
+        "/elapsed_sec"
+      ],
+      "n_metadata_leaves_compared": 9272,
+      "shards": {
+        "dataset_shard_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 513,
+          "n_arrays_compared": 513,
+          "n_values_compared": 25554,
+          "n_final_state_rows": 55,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 820,
+          "n_arrays_compared": 820,
+          "n_values_compared": 29563,
+          "n_final_state_rows": 55,
+          "n_metadata_keys": 12,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 113,
+          "n_arrays_compared": 113,
+          "n_values_compared": 24097,
+          "n_final_state_rows": 25,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_nonjet4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 149,
+          "n_arrays_compared": 149,
+          "n_values_compared": 27705,
+          "n_final_state_rows": 25,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 513,
+          "n_arrays_compared": 513,
+          "n_values_compared": 25554,
+          "n_final_state_rows": 54,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_rare4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 791,
+          "n_arrays_compared": 791,
+          "n_values_compared": 29534,
+          "n_final_state_rows": 54,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_exclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 113,
+          "n_arrays_compared": 113,
+          "n_values_compared": 24097,
+          "n_final_state_rows": 25,
+          "n_metadata_keys": 13,
+          "differences": []
+        },
+        "dataset_shard_top4_inclusive.sqlite": {
+          "identical": true,
+          "n_signatures": 149,
+          "n_arrays_compared": 149,
+          "n_values_compared": 27716,
+          "n_final_state_rows": 25,
+          "n_metadata_keys": 13,
+          "differences": []
+        }
+      }
+    }
+  },
+  "all_identical": true
+}
