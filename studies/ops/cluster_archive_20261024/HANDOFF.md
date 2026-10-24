@@ -1,7 +1,7 @@
 # HANDOFF — cluster archive, 24 Oct 2026
 
-**Current step: Phase 1 DONE (inventory and plan). WAITING for Matan's reply, exactly:
-"go ahead with archiving: <list of directories>". Nothing has been archived, moved or deleted.**
+**Current step: Phase 2 DONE — 25/25 folders archived and verified; originals untouched. WAITING for
+Matan's reply, exactly: "delete originals: <list of directories>". Nothing has been deleted.**
 
 - Branch: `ops/cluster-archive-20261024` (origin only), from `origin/master` @ `8aa6960`.
 - Result: `INVENTORY.md` (every folder, what it is, files, size, newest change, proposal).
@@ -38,6 +38,30 @@
   4. member list == manifest list;
   5. every member's sha256, recomputed from the archive stream, == the manifest.
 - Originals are NOT removed in Phase 2.
+
+## Phase 2 (VERIFIED BY RUNNING)
+
+- Matan's go-ahead (24 Oct): all 25 folders of A and B (`scripts/archive_dirs.txt`).
+- Tools: `scripts/archive_tool.py`, `scripts/pbs_archive.sh`, pushed at `ab7ab53` before the job. The cluster copies in
+  `work/cluster_archive_20261024/` were checked by sha256 against the pushed files.
+- Before: 123,882 files; 293 GiB of space used of 4 TiB.
+- Job `5311954[]` (0–24, 4gb, 12h, io=25): 25/25 exit 0.
+- `archive/20261024/`: 25 `.tar.gz` + 25 `.manifest.tsv`. For every folder:
+  - gzip test ok;
+  - member list == manifest (same count, same paths and types; the count equals the Phase 1 inventory);
+  - every file's sha256 recomputed from the archive == manifest.
+  - In total, 51,688 entries were archived (14.27 GB → 11.57 GB). Table: INVENTORY.md, "Phase 2".
+- After: 124,011 files, 330,985,564 KB.
+- If all 25 originals are deleted: about 72,323 files (UNVERIFIED).
+
+## Phase 3 method (only after "delete originals: ...", only those folders)
+
+- Per folder, just before deleting:
+  1. re-run `gzip -t`;
+  2. re-count the archive members (`tar -tzf`) and check that the count equals the manifest's;
+  3. check that the Phase 2 verify file says verified.
+- Delete with `rm -rf -- "$ROOT/<rel>"` on that exact path only (no wildcard), never anything else.
+- Then `lfs quota`; update this file; gate, commit, push; back to master.
 
 ## How to resume
 

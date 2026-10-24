@@ -170,3 +170,44 @@ Each folder becomes ONE `archive/20261024/<name>.tar.gz` plus ONE `<name>.manife
 - Adding **B** brings it to about 72,239. It is not needed for the target, but these are old, finished folders, each superseded by the 7 Oct production and delivery.
 - Not proposed: the older `output/cms_datasets/runs*` folders (9,789 files, 13.6 GB), which could be archived later if more room is needed; the H→γγ and m0m1j0 outputs; everything from 6 Oct on.
 - Space: group A is 12.5 GB before compression and the area has about 3.7 TiB free under the soft quota, so space is not a constraint. The originals stay until a separate "delete originals" message.
+
+## Phase 2 — archived and verified (24 Oct 2026, VERIFIED BY RUNNING)
+
+Approved by Matan: all 25 folders of groups A and B. PBS array `5311954[]` (0–24, io=25), every subjob exit 0.
+Archives in `/storage/agrp/berkom/atlas-utilization/archive/20261024/` (`<name>.tar.gz` + `<name>.manifest.tsv`, where `<name>` is the path with "/" → "_").
+Verification results are in `work/cluster_archive_20261024/verify/` and in `evidence/verify/` here.
+"Entries" = files + folders + links in the manifest = the archive's members (equal to the Phase 1 inventory count for every folder).
+"Checked" = the regular files whose sha256 was recomputed from the archive stream and matched the manifest. **The originals are untouched.**
+
+| folder | entries (= inventory) | files sha256-checked | size before | archive | gzip test | members == manifest | verified |
+|---|---:|---:|---:|---:|---|---|---|
+| `logs` | 7,104 | 7,047 | 0.01 GB | 0.001 GB | ok | yes | **yes** |
+| `work/electron_prep` | 5,518 | 4,615 | 0.47 GB | 0.330 GB | ok | yes | **yes** |
+| `work/ttbar_count_vs_atlas` | 5,406 | 4,376 | 5.32 GB | 4.956 GB | ok | yes | **yes** |
+| `work/cms_mc_v2` | 3,708 | 3,245 | 5.46 GB | 4.320 GB | ok | yes | **yes** |
+| `work/cms_mc_phase1` | 3,012 | 2,168 | 1.20 GB | 0.689 GB | ok | yes | **yes** |
+| `work/deliver_all_datasets_bumpnet` | 1,878 | 1,482 | 0.10 GB | 0.067 GB | ok | yes | **yes** |
+| `work/rare4_production_pinned` | 1,636 | 1,375 | 0.14 GB | 0.098 GB | ok | yes | **yes** |
+| `work/rare4_delivery` | 1,629 | 1,369 | 0.14 GB | 0.098 GB | ok | yes | **yes** |
+| `work/rare4_pilot_pinned` | 1,617 | 1,364 | 0.14 GB | 0.098 GB | ok | yes | **yes** |
+| `work/nonjet4_production_pinned` | 1,571 | 1,321 | 0.13 GB | 0.091 GB | ok | yes | **yes** |
+| `work/nonjet4_delivery` | 1,564 | 1,315 | 0.13 GB | 0.091 GB | ok | yes | **yes** |
+| `work/nonjet4_pilot_pinned` | 1,551 | 1,309 | 0.13 GB | 0.091 GB | ok | yes | **yes** |
+| `work/muon_combined_delivery` | 1,491 | 1,245 | 0.11 GB | 0.075 GB | ok | yes | **yes** |
+| `work/matched_top4_production_pinned` | 1,480 | 1,242 | 0.11 GB | 0.075 GB | ok | yes | **yes** |
+| `work/top4_pilot_pinned` | 1,462 | 1,232 | 0.11 GB | 0.074 GB | ok | yes | **yes** |
+| `work/matching_validation_pinned` | 1,421 | 1,199 | 0.11 GB | 0.073 GB | ok | yes | **yes** |
+| `work/muoneg_run_pinned` | 1,380 | 1,165 | 0.09 GB | 0.063 GB | ok | yes | **yes** |
+| `work/m0m1j0_cms` | 1,329 | 1,016 | 0.04 GB | 0.027 GB | ok | yes | **yes** |
+| `work/upstream_trigger_cms` | 1,220 | 1,022 | 0.05 GB | 0.041 GB | ok | yes | **yes** |
+| `work/ceiling_yield` | 1,124 | 961 | 0.05 GB | 0.034 GB | ok | yes | **yes** |
+| `work/per_dataset_yield` | 1,056 | 850 | 0.04 GB | 0.033 GB | ok | yes | **yes** |
+| `work/cms_coverage` | 1,011 | 803 | 0.05 GB | 0.035 GB | ok | yes | **yes** |
+| `work/investigate_bumpnet_rejection` | 910 | 751 | 0.05 GB | 0.041 GB | ok | yes | **yes** |
+| `work/deliver_doublemuon_bumpnet` | 889 | 732 | 0.05 GB | 0.040 GB | ok | yes | **yes** |
+| `work/generic_cuts` | 721 | 615 | 0.04 GB | 0.032 GB | ok | yes | **yes** |
+| **total (25)** | **51,688** | | 14.27 GB | 11.57 GB | | | **25/25** |
+
+- Quota after Phase 2: **124,011 files**, 330,985,564 KB (the 50 archive files, the archive folders and the job logs are new).
+- If the 25 originals are deleted: 124,011 − 51,688 = **72,323 files** (UNVERIFIED projection), and about 14.3 GB freed against the 11.6 GB of archives.
+
