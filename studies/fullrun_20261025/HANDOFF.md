@@ -69,3 +69,9 @@ and the new test, by design.)
 Tests (`evidence/local_tests.txt`, Mac, `PYTHONPATH=.`): **all 16 CMS test files + the new one
 pass, 0 failures — VERIFIED BY RUNNING.** The 5 skips in `tests/` are the network tests that read
 real ROOT files (`RUN_NETWORK_TESTS=1`); they are skipped by design (ROOT reading only in PBS).
+
+## Step 3 — small real-file check (in progress)
+
+Scripts: `cluster/pbs_precheck.sh` (method of `studies/sync_42_20261023/cluster/pbs_proof.sh`),
+`cluster/object_compare.py` (per-object OLD vs NEW selection on the real file),
+`cluster/build_compare.py` (OLD vs NEW per-file metadata and builds), `cluster/mapping_precheck.txt`.
