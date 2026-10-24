@@ -1,7 +1,7 @@
 # HANDOFF — cluster archive, 24 Oct 2026
 
-**Current step: Phase 2 DONE — 25/25 folders archived and verified; originals untouched. WAITING for
-Matan's reply, exactly: "delete originals: <list of directories>". Nothing has been deleted.**
+**Current step: COMPLETE (24 Oct 2026, 10:06 IDT). Phase 3 done: the 25 originals Matan named were deleted after
+re-verification; the archives remain in `archive/20261024/`. File count 124,013 → 72,328. Nothing running.**
 
 - Branch: `ops/cluster-archive-20261024` (origin only), from `origin/master` @ `8aa6960`.
 - Result: `INVENTORY.md` (every folder, what it is, files, size, newest change, proposal).
@@ -62,6 +62,32 @@ Matan's reply, exactly: "delete originals: <list of directories>". Nothing has b
   3. check that the Phase 2 verify file says verified.
 - Delete with `rm -rf -- "$ROOT/<rel>"` on that exact path only (no wildcard), never anything else.
 - Then `lfs quota`; update this file; gate, commit, push; back to master.
+
+## Phase 3 (VERIFIED BY RUNNING)
+
+- Matan's message (24 Oct): "delete originals:" followed by the same 25 folders. `scripts/delete_dirs.txt` is identical
+  to `archive_dirs.txt`.
+- Tool: `scripts/pbs_delete.sh`, pushed at `4e94a64` before the job; the cluster copy was checked by sha256.
+  A scratch test on the Mac deleted only the named test folder and refused a `..` path.
+- Job `5321379` (io=25): exit 0, 15 minutes. For each folder, in list order, just before deleting:
+  1. the Phase 2 result said verified;
+  2. `gzip -t` ok;
+  3. archive members == manifest entries == entries on disk.
+
+  Then `rm -rf` on that exact path. `evidence/delete_log.tsv`: 25/25 rows `yes`, all three counts equal,
+  51,688 entries removed.
+- Afterwards: none of the 25 paths exists. Still present: `envs/`, `home_backup_20261018/`, the ACL folders
+  (`output/cms_datasets/deliver`, `work/acltest_20261008`), the 7 Oct production, the 17 Oct MC full run, the
+  four recent proofs and `checkouts/`. `archive/20261024/` holds 50 files (25 archives + 25 manifests).
+
+| | files (quota) | space (KB) |
+|---|---:|---:|
+| before Phase 1 | 123,867 | 307,537,552 |
+| before Phase 3 | 124,013 | 330,985,564 |
+| **after Phase 3** | **72,328** | 307,971,412 |
+
+- Restoring a folder: `tar -C /storage/agrp/berkom/atlas-utilization -xzf archive/20261024/<name>.tar.gz`. It recreates
+  `<rel>/` with the original paths and times; `<name>.manifest.tsv` lists every file's sha256.
 
 ## How to resume
 
