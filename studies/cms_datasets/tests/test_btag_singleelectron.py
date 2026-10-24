@@ -83,7 +83,7 @@ def _jet_events(scores):
         "Jet_btagDeepFlavB": jag(scores, np.float64),
         "Muon_pt": empty(np.float64), "Muon_eta": empty(np.float64),
         "Muon_phi": empty(np.float64), "Muon_mass": empty(np.float64),
-        "Muon_mediumId": empty(bool), "Muon_pfRelIso04_all": empty(np.float64),
+        "Muon_looseId": empty(bool), "Muon_pfRelIso04_all": empty(np.float64),
         "Electron_pt": empty(np.float64), "Electron_eta": empty(np.float64),
         "Electron_phi": empty(np.float64), "Electron_mass": empty(np.float64),
         "Electron_cutBased": empty(np.int32),

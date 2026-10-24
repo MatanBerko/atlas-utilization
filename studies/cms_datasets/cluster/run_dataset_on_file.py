@@ -198,7 +198,8 @@ TRIGGER_PATHS_BY_DATASET = {d.label: d.trigger_paths for d in DATASETS}
 BASE_OBJECT_BRANCHES = (
     "run", "luminosityBlock", "event",
     "nMuon", "Muon_pt", "Muon_eta", "Muon_phi", "Muon_mass",
-    "Muon_mediumId", "Muon_pfRelIso04_all", "Muon_charge",
+    # Muon ID branch from selection.py (24 Oct 2026: Muon_looseId, was Muon_mediumId).
+    selection.MUON_ID_BRANCH, "Muon_pfRelIso04_all", "Muon_charge",
     "nElectron", "Electron_pt", "Electron_eta", "Electron_phi", "Electron_mass",
     "Electron_cutBased", "Electron_charge",
     "nJet", "Jet_pt", "Jet_eta", "Jet_phi", "Jet_mass", "Jet_jetId",

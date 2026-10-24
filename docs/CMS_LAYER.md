@@ -13,6 +13,8 @@ git diff --name-status upstream/master HEAD      # every line starts with "A"
 git diff de012d2 HEAD -- $(git diff --name-only upstream/master HEAD) ':!docs/CMS_LAYER.md'   # empty
 ```
 
+24 Oct 2026, Maryna: loose muon and electron IDs; muon iso < 0.15 kept
+
 The folder names are historical (`m0m1j0_cms`, `cms_coverage`, `electron_vB`,
 `cms_mc_weights_v3`) and were kept, so that nothing had to be moved or edited.
 

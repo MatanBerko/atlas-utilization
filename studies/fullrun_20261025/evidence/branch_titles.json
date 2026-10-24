@@ -1,0 +1,56 @@
+[
+  {
+    "record_id": 30521,
+    "file_index": 0,
+    "url": "root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root",
+    "branches": {
+      "Muon_looseId": {
+        "present": true,
+        "title": "muon is loose muon",
+        "interpretation": "AsJagged(AsDtype('bool'))"
+      },
+      "Muon_mediumId": {
+        "present": true,
+        "title": "cut-based ID, medium WP",
+        "interpretation": "AsJagged(AsDtype('bool'))"
+      },
+      "Muon_pfRelIso04_all": {
+        "present": true,
+        "title": "PF relative isolation dR=0.4, total (deltaBeta corrections)",
+        "interpretation": "AsJagged(AsDtype('>f4'))"
+      },
+      "Electron_cutBased": {
+        "present": true,
+        "title": "cut-based ID Fall17 V2 (0:fail, 1:veto, 2:loose, 3:medium, 4:tight)",
+        "interpretation": "AsJagged(AsDtype('>i4'))"
+      }
+    }
+  },
+  {
+    "record_id": 67801,
+    "file_index": 0,
+    "url": "root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/089E6E3A-DFD1-7148-BD6F-F611D22A1B62.root",
+    "branches": {
+      "Muon_looseId": {
+        "present": true,
+        "title": "muon is loose muon",
+        "interpretation": "AsJagged(AsDtype('bool'))"
+      },
+      "Muon_mediumId": {
+        "present": true,
+        "title": "cut-based ID, medium WP",
+        "interpretation": "AsJagged(AsDtype('bool'))"
+      },
+      "Muon_pfRelIso04_all": {
+        "present": true,
+        "title": "PF relative isolation dR=0.4, total (deltaBeta corrections)",
+        "interpretation": "AsJagged(AsDtype('>f4'))"
+      },
+      "Electron_cutBased": {
+        "present": true,
+        "title": "cut-based ID Fall17 V2 (0:fail, 1:veto, 2:loose, 3:medium, 4:tight)",
+        "interpretation": "AsJagged(AsDtype('>i4'))"
+      }
+    }
+  }
+]

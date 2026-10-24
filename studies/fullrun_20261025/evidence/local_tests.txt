@@ -1,0 +1,16 @@
+rc=0 tests/test_trigger_requirements.py | OK (skipped=3)
+rc=0 tests/test_validated_runs.py | OK (skipped=2)
+rc=0 studies/cms_datasets/tests/test_btag_singleelectron.py | 55 checks, 0 failure(s)
+rc=0 studies/cms_datasets/tests/test_electron_datasets.py | 110 checks, 0 failure(s)
+rc=0 studies/cms_datasets/tests/test_exact_jet_labels.py | ALL CHECKS PASSED
+rc=0 studies/cms_datasets/tests/test_funnel_upstream35.py | ALL CHECKS PASSED
+rc=0 studies/cms_datasets/tests/test_loose_lepton_ids.py | 17/17 checks passed
+rc=0 studies/cms_datasets/tests/test_multiplicity40.py | 35/35 checks passed
+rc=0 studies/cms_datasets/tests/test_upstream_names.py | ALL CHECKS PASSED
+rc=0 studies/cms_datasets/tests/test_width_suffix.py | ALL CHECKS PASSED
+rc=0 studies/cms_mc_weights_v3/tests/test_builder_end_to_end.py | wrote studies/cms_mc_weights_v3/evidence/builder_end_to_end.json
+rc=0 studies/cms_mc_weights_v3/tests/test_cms_shard_pruning_drift.py | ALL PASSED
+rc=0 studies/cms_mc_weights_v3/tests/test_mc_singleelectron_flag.py | 20 checks, 0 failure(s)
+rc=0 studies/cms_mc_weights_v3/tests/test_mc_weights_v3.py | wrote studies/cms_mc_weights_v3/evidence/selfchecks_v3.json
+rc=0 studies/cms_mc_weights_v3/tests/test_peak_scope.py | wrote studies/cms_mc_weights_v3/peakfix/evidence/peak_scope_tests.json
+rc=0 studies/cms_mc_weights_v3/tests/test_upstream35_drift.py | ALL CHECKS PASSED
