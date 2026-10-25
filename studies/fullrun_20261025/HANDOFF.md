@@ -358,3 +358,46 @@ Both limits are VERIFIED BY RUNNING (`qmgr -c "list server"`, qstat counts).
 5. Home folder: compare `ls -la --time-style=full-iso` of `~`, `~/.cache`, `~/.config` (and
    `~/.local`, `~/.matplotlib` if they appear) with `$W/data/evidence/home_before.txt`, to check
    whether the data jobs (HOME not redirected) wrote anything there.
+
+## Completed submission (25 Oct, evening) — all 1,038 production pieces and all 10 post jobs are in
+
+Technical lead's decision: submit the missing pieces now, once. Done at 17:36:17–17:36:32 on
+wipp-home (wipp-an1), from the same pinned clone `repo_75b399e` (HEAD asserted = `75b399e`).
+Script exactly as executed and its output: `evidence/submitted_20261025/complete_run_as_executed.sh`,
+`complete_output.txt`; updated job lists `data_jobids.txt`, `mc_jobids.txt` (13 lines),
+`post_jobids.txt`. Everything below is VERIFIED BY RUNNING.
+
+- Before: no `mcfull_37728` job in qstat history; 887 of this user's pieces queued/running/held
+  (≤ 990); `$W/post_jobids.txt` absent; no fr25_data_*/fr25_mc_*/mcfull_post job.
+- **Record 37728: `5341381[]`** (8 files, `-J 1-8`, mem 6gb, walltime 02:00:00, io=25 — the
+  block's MC loop line). Appended `37728 5341381[].pbs 8 02:00:00` to `$W/mc/jobids.txt`, which
+  now has 13 lines (the audit's input).
+- **Post jobs** (the block's commands; only DATA_ARR / MC_ARR built from unfinished arrays):
+
+| stage | job | waits on (from `qstat -f … depend`) |
+|---|---|---|
+| data_check | `5341390` | afterany 5340545[] 5340546[] 5340547[] 5340548[] |
+| data_build | `5341391` | afterok 5341390 |
+| data_exact | `5341392` | afterok 5341390 |
+| data_checks | `5341393` | afterok 5341391, 5341392 |
+| mc_audit (pbs_fullrun.sh, name mcfull_post) | `5341394` | afterany all 13 MC arrays (5340549[]–5340560[], 5341381[]) |
+| mc_gate | `5341395` | afterok 5341394 |
+| mc_build (64gb, 8h) | `5341396` | afterok 5341395 |
+| mc_sanity | `5341397` | afterok 5341396 |
+| mc_rule_builds | `5341398` | afterok 5341395 |
+| mc_rulecheck | `5341399` | afterok 5341398 |
+
+  All 10 were in state H (held on dependencies) right after submission.
+- **Finished array left out of the dependencies: DoubleMuon `5340544[]`**, finished with
+  **57/57 subjobs Exit_status 0** before the submission. Honest note: the script's own
+  "is it finished?" filter read the wrong qstat column and passed `5340544[]` into the list
+  anyway; PBS accepted the qsub and **dropped the finished array from the dependency by itself**
+  (it is absent from `data_check`'s `depend` above). The result is what was intended. This also
+  answers the open question in "What Prompt B must do" (1b): this PBS accepts a dependency on a
+  finished array and simply ignores it. Safe because data_check checks every file's completeness.
+- Progress at 17:37: of 1,038 production pieces, **143 finished — all 143 logs `Exit status: 0`,
+  0 tracebacks** (DoubleMuon 57/57, SingleMuon 86), 32 running, 863 queued (the 8 of 37728 among
+  them). File quota 76,158.
+
+Prompt B: the "What Prompt B must do" list above still applies, except that step 1 (the missing
+pieces) is now done — the post chain will start by itself when the arrays finish.
