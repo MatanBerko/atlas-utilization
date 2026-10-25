@@ -255,3 +255,106 @@ Today this task added 1,456 files (72,328 → 73,784): three pinned clones (~500
 
 Local repo switched back to `master`. STOPPED: next is the technical lead's check, then the
 separate submit prompt.
+
+## Submitted (25 Oct) — PARTLY: 17 of 18 production arrays; record 37728 and the 10 post jobs NOT submitted
+
+**Status: 1,030 of 1,038 file jobs are submitted and running/queued. The submission STOPPED at
+the 18th array because of a cluster limit. Nothing was retried or cancelled.** Evidence:
+`evidence/submitted_20261025/` (job lists, the submit script exactly as executed, its output, the
+HOME test).
+
+- Host: wipp-home (wipp-an1). `ssh wipp-campus` failed once ("No route to host").
+- Pinned clone `checkouts/fullrun_20261025/repo_75b399e`, HEAD `75b399e2dfdacc50affd4e2c78bc865b12f000cc` — VERIFIED BY RUNNING.
+- Preflight (VERIFIED BY RUNNING): origin branch head `da3b93d` contains `75b399e`; the commits
+  after it touch only `HANDOFF.md` and `evidence/`; upstream/master still `29291ae`; no
+  fr25_*/mcfull_* job was queued; none of the three jobids files existed; mappings 57/152/133/48/151
+  (541) data lines and 13 MC files with 497 lines.
+- **File quota before submitting: 73,784** (17:07, `lfs quota`); 73,794 just before the first
+  qsub; **75,942** at 17:33. VERIFIED BY RUNNING.
+
+### HOME test (step 1)
+
+Job `5340532` (io=1, 1 min) with `-v HOME=$W/jobhome,MPLCONFIGDIR=$W/jobhome/mpl,XDG_CACHE_HOME=$W/jobhome/cache`
+printed `HOME=/srv01/agrp/berkom` (**PBS overrides HOME**) while MPLCONFIGDIR and
+XDG_CACHE_HOME did arrive. Per the instruction for this case, **the data arrays were submitted
+unchanged, exactly as on 7 Oct (no HOME redirect).** A listing of the home folder before the
+submission is in `work/fullrun_20261025/data/evidence/home_before.txt` (kept on the cluster only,
+not in git: it lists private file names). `$W/jobhome/` (empty) was created for the test.
+
+### What was submitted (17:07:48, `evidence/submitted_20261025/submit_output.txt`)
+
+The "Ready to submit" block was run verbatim (extracted from this file by script), with a
+no-double-submit guard and `set -euo pipefail` in front (`submit_run_as_executed.sh`).
+
+| data array | job | files |
+|---|---|---:|
+| DoubleMuon | `5340544[]` | 57 |
+| SingleMuon | `5340545[]` | 152 |
+| DoubleEG | `5340546[]` | 133 |
+| MuonEG | `5340547[]` | 48 |
+| SingleElectron | `5340548[]` | 151 |
+
+| MC record | job | files | walltime |
+|---|---|---:|---|
+| 67993 | `5340549[]` | 138 | 02:00:00 |
+| 75589 | `5340550[]` | 99 | 02:00:00 |
+| 67801 | `5340551[]` | 49 | 02:00:00 |
+| 68187 | `5340552[]` | 42 | 03:00:00 |
+| 35669 | `5340553[]` | 41 | 02:00:00 |
+| 72752 | `5340554[]` | 31 | 02:00:00 |
+| 35631 | `5340555[]` | 25 | 02:00:00 |
+| 68847 | `5340556[]` | 24 | 02:00:00 |
+| 68073 | `5340557[]` | 12 | 03:00:00 |
+| 64895 | `5340558[]` | 11 | 02:00:00 |
+| 64839 | `5340559[]` | 10 | 02:00:00 |
+| 72676 | `5340560[]` | 7 | 02:00:00 |
+| **37728** | **NOT SUBMITTED** | 8 | 02:00:00 |
+
+**The failure:** the qsub of record 37728 answered
+`qsub: would exceed complex's per-user limit of jobs in 'Q' state`. The server has
+`queued_jobs_threshold = [u:PBS_GENERIC=1000]`: at most 1,000 queued subjobs per user. At that
+moment 998 were queued and 32 running (541 + 489 = 1,030 submitted); 8 more would pass 1,000.
+`set -e` stopped the script there, so `$W/post_jobids.txt` does not exist and **none of the 10
+post jobs (data_check … mc_rulecheck) were submitted.** `$W/mc/logs/37728/` exists (empty).
+Second limit seen: `max_run_res.io = [u:PBS_GENERIC=800]`, so with io=25 at most **32 jobs of
+this user run at once**; the scheduler is working through the arrays in submission order.
+Both limits are VERIFIED BY RUNNING (`qmgr -c "list server"`, qstat counts).
+
+### First results (VERIFIED BY RUNNING, 17:33)
+
+- All 57 DoubleMuon subjobs finished: 57 logs with `Exit status: 0`, 0 tracebacks, 57
+  `job_metadata.json`. `5340544[0]` Exit_status 0 (3:01 wall), `.out` ends
+  `[DoubleMuon] wrote …/data/runs/DoubleMuon/job_0/dataset_shard_inclusive.sqlite, …, and job_metadata.json … (179.0s elapsed)` / `[0] done Sun Oct 25 05:11:07 PM IST 2026`;
+  `5340544[7]` Exit_status 0, `(31.7s elapsed)` / `[7] done …05:08:41 PM`.
+- SingleMuon: 71 finished, all `Exit status: 0`, 0 tracebacks; 32 running, 52 queued.
+- All MC arrays: queued, none started yet (they are behind the data arrays) — "queued, none
+  finished yet" for MC.
+
+### What Prompt B must do
+
+0. Read this section. Do not resubmit anything that is in the two job lists above.
+1. **The missing pieces need a decision by the technical lead / Matan first** (not done here
+   because this task said STOP on a qsub failure):
+   - (a) record 37728: submit it ONCE, exactly as the MC loop line for that record
+     (`-J 1-8 -N mcfull_37728 -l mem=6gb,walltime=02:00:00,io=25`, same -o/-e/-v), when the
+     user's queued count is below 992, and append `37728 <job> 8 02:00:00` to `$W/mc/jobids.txt`
+     (the audit reads that file and would otherwise not expect 37728 at all);
+   - (b) the post chain: the written block makes `data_check` and `mc_audit` depend
+     (`afterany`) on the array IDs. If the arrays have already finished, it is UNVERIFIED
+     whether this PBS accepts a dependency on a finished job. Options: submit the chain as
+     written while the arrays are still in the queue; or, once they have all finished, submit the
+     same 10 jobs with the two `-W depend=afterany…` arguments removed (the gates inside
+     data_check / mc_gate still stop the builds if anything is missing). Either is a deviation
+     from the written block only in timing / that one argument; the lead should pick.
+2. Still running → report progress (per array: finished / running / queued, any non-zero exit
+   or traceback) and stop.
+3. All production finished: run (or let the chain run) data_check and the MC audit + gate.
+   If data_check or mc_gate fails → list the failed files, resubmit each failed file ONCE
+   (data: pbs_matched4.sh as a one-file array or with the mapping line; MC: pbs_mc_pilot.sh with
+   `PILOT_ARRAY_INDEX`), then a NEW gate → build → checks chain (new output names; never
+   overwrite). The expected MC Σw failure 75589 file 98 is not a failure.
+4. All OK → verify the builds and checks (rule checks R1–R7, sanity report, plots) and prepare
+   the delivery (no upload, no message without Matan).
+5. Home folder: compare `ls -la --time-style=full-iso` of `~`, `~/.cache`, `~/.config` (and
+   `~/.local`, `~/.matplotlib` if they appear) with `$W/data/evidence/home_before.txt`, to check
+   whether the data jobs (HOME not redirected) wrote anything there.
