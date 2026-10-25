@@ -84,3 +84,174 @@ real ROOT files (`RUN_NETWORK_TESTS=1`); they are skipped by design (ROOT readin
 - Data build 201 → 214 histograms (none lost); MC summedSM 296 → 302.
 - Scripts: `cluster/pbs_precheck.sh`, `cluster/object_compare.py`, `cluster/build_compare.py`,
   `make_precheck_plots.py`; PNGs in `precheck_plots/`; evidence in `evidence/`.
+
+## Step 4 — full run prepared, NOTHING submitted — DONE
+
+### Mappings (job `5331479`, io=1, from clone `step4_67e3f28`; VERIFIED BY RUNNING)
+
+Data, `work/fullrun_20261025/mappings_data/` (copies of the mapping files in `evidence/mappings_data/`):
+the lean branch's `gen_full_mapping.py` loops over the four old datasets only, so a minimal
+ADDED script, `gen_full_mapping_5.py`, does the same with the five matched5 datasets (same
+helpers, same file formats, same "STOP if the portal count differs from the record table").
+
+| dataset | era G record (files) | era H record (files) | total | array |
+|---|---|---|---:|---|
+| DoubleMuon | 30522 (29) | 30555 (28) | 57 | 0-56 |
+| SingleMuon | 30530 (70) | 30563 (82) | 152 | 0-151 |
+| DoubleEG | 30521 (47) | 30554 (86) | 133 | 0-132 |
+| MuonEG | 30528 (29) | 30561 (19) | 48 | 0-47 |
+| SingleElectron | 30529 (71) | 30562 (80) | 151 | 0-150 |
+| **total** | | | **541** | (= 7 Oct's 390 + 151 SingleElectron) |
+
+MC, `work/fullrun_20261025/mappings_mc/` (`make_fullrun_mappings.py`, unchanged): 13 records,
+**497 files**, every one of the 13 mapping files **byte-identical** to
+`work/fullrun_20261017/mappings/` (read-only). 75589 file 98 is in (line 99), as on 17 Oct (the
+audit expects exactly that one Σw failure; Matan's 17 Oct option A).
+
+### Launchers (VERIFIED by reading; the production ones were not run as such)
+
+- **Data production `electron_vB/cluster/pbs_matched4.sh` with `POPULATION=matched5`: works
+  unchanged.** It reads the 5-column, 0-based mapping that `gen_full_mapping_5.py` writes, and
+  passes `--population` to the driver; its fixed 8 GB / 2 h / io=25 fits (the slowest precheck
+  file took 432 s). One remark: it does not point `HOME`, `MPLCONFIGDIR` or `XDG_CACHE_HOME`
+  away from the home directory, unlike the MC launcher. It was used this way on 7 Oct. Whether
+  anything is written to `$HOME` is UNVERIFIED — for the technical lead.
+- **MC production `cms_mc_weights_v3/cluster/pbs_mc_pilot.sh`: works unchanged** (1-based
+  mapping, `-l mem=6gb,walltime=…,io=25` at qsub, exactly as on 17 Oct).
+- **Data delivery launcher `electron_vB/cluster/pbs_delivery.sh` would need a change:** it passes
+  no `--datasets`, and the builder's default is the four old datasets, so it would build
+  **without SingleElectron**. Not changed. The ADDED `cluster/pbs_post.sh` runs the builder with
+  `--datasets DoubleMuon,SingleMuon,DoubleEG,MuonEG,SingleElectron` (other options default).
+- `electron_vB/check_production_complete.py` checks four datasets only: the ADDED
+  `check_production_complete_5.py` runs its `main()` unchanged with the five datasets (tested on a
+  synthetic folder: it finds a missing SingleElectron file that the original misses).
+- `electron_vB/make_delivery_plots.py` loops over the four old datasets for its per-dataset
+  diagnostic plots, so SingleElectron is absent from those (its histogram plots read the delivered
+  file and do include it). Not changed.
+- `fullrun/audit_production.py` always exits 0 (the verdict is inside its JSON): `pbs_post.sh
+  WHAT=mc_gate` turns the verdict into an exit code.
+- `rule_check.py` is copied byte-identical from `origin/feature/cms-mc-multiplicity40-20261023`
+  `studies/multiplicity40_20261023/` into `studies/fullrun_20261025/rule_check.py` (same depth,
+  so its repo-root path still works). It needs an "exact" build next to the default build.
+
+`cluster/pbs_post.sh` (ADDED) was tested stage by stage on the precheck outputs (jobs
+`5335417`–`5335424`, `work/fullrun_20261025/posttest/`, evidence in `evidence/posttest/`):
+`data_check` stopped with exit 1 as it should (1 file per dataset); a job with `afterok` on it did
+**not** run; `data_build` 214 histograms; `data_exact` 608; `data_checks`: rule check R1–R7 all
+true, delivery plots written; `mc_gate` read "OK" from the 17 Oct audit (read-only);
+`mc_rule_builds` 222 / 1,034 histograms; `mc_rulecheck` R1–R7 all true. VERIFIED BY RUNNING.
+
+### OpenPBS dependency syntax (tested with io=1 dummy jobs, `cluster/pbs_dummy.sh`; `evidence/deptest/`)
+
+| test | result (VERIFIED BY RUNNING) |
+|---|---|
+| `-W depend=afterok:5331480[].pbs` (array, all subjobs exit 0) | ran after the whole array |
+| array depending on array, `-J 0-1 -W depend=afterok:<array>[].pbs` | ran after the whole array |
+| `-W depend=afterok:<array>[].pbs`, one subjob exit 1 (twice: 5331483, 5331537) | **RAN anyway** |
+| `-W depend=afterany:<array>[].pbs`, one subjob exit 1 | ran |
+| `-W depend=afternotok:<array>[].pbs`, one subjob exit 1 | **never ran** (deleted) |
+| `-W depend=afterok:<array>[1].pbs` (one subjob) | refused: "illegal -W value" |
+| single job exit 1, `afterok:<id>` / `afternotok:<id>` | not run / ran |
+| several: `-W depend=afterok:<id1>:<id2>` (single jobs) | works (5335421) |
+
+**So on this cluster `afterok` on an array does NOT protect against failed subjobs.** The
+working pattern: `afterany:<array1>[]:<array2>[]:…` to a single check job that exits non-zero
+when anything is missing, then `afterok:<check job>` (single job — this works) for every build.
+Quote array IDs in zsh: `'<id>[]'`.
+
+## Ready to submit
+
+Pin: **commit `75b399e2dfdacc50affd4e2c78bc865b12f000cc`** on `run/cms-fullrun-20261025` (all
+code; later commits only change this study's .md files). Run from wipp-home, in bash
+(`ssh wipp-home 'bash -s' <<'EOF' … EOF`), after the technical lead's check and Matan's go.
+
+```bash
+B=/storage/agrp/berkom/atlas-utilization
+CK=$B/checkouts/fullrun_20261025; W=$B/work/fullrun_20261025
+C=75b399e2dfdacc50affd4e2c78bc865b12f000cc; R=$CK/repo_75b399e
+Q=/opt/pbs/bin/qsub; FIVE="DoubleMuon SingleMuon DoubleEG MuonEG SingleElectron"
+MCREC="67993 75589 67801 68187 35669 72752 35631 68847 68073 64895 64839 72676 37728"
+
+# 0. pinned checkout + layout (new directories only)
+git clone -q --no-checkout https://github.com/MatanBerko/atlas-utilization.git $R
+git -C $R checkout -q $C && test "$(git -C $R rev-parse HEAD)" = $C
+mkdir -p $W/data/runs $W/data/evidence $W/logs/post $W/mc/mappings $W/mc/runs $W/mc/evidence
+cp $W/mappings_data/*_index.json $W/data/runs/          # what the builder and the check read
+cp $W/mappings_mc/mapping_*.txt $W/mc/mappings/
+
+# 1. data production: 5 arrays, 541 files (launcher unchanged; 8gb 2h io=25 inside it)
+for ds in $FIVE; do
+  n=$(wc -l < $W/mappings_data/${ds}_mapping.txt); mkdir -p $W/data/logs/$ds
+  J=$($Q -J 0-$((n-1)) -N fr25_$ds \
+      -o "$W/data/logs/$ds/f_^array_index^.out" -e "$W/data/logs/$ds/f_^array_index^.err" \
+      -v REPO_DIR=$R,MAPPING_FILE=$W/mappings_data/${ds}_mapping.txt,OUT_BASE=$W/data/runs,POPULATION=matched5 \
+      $R/studies/cms_datasets/electron_vB/cluster/pbs_matched4.sh)
+  echo "$ds $J $n" | tee -a $W/data/jobids.txt
+done
+
+# 2. MC production: 13 arrays, 497 files (exactly the 17 Oct submit_production.sh loop)
+for rid in $MCREC; do
+  n=$(wc -l < $W/mc/mappings/mapping_$rid.txt); wt=02:00:00; case $rid in 68187|68073) wt=03:00:00;; esac
+  mkdir -p $W/mc/logs/$rid
+  J=$($Q -J 1-$n -N mcfull_$rid -l mem=6gb,walltime=$wt,io=25 \
+      -o "$W/mc/logs/$rid/f_^array_index^.out" -e "$W/mc/logs/$rid/f_^array_index^.err" \
+      -v WORK_DIR=$W/mc,REPO_DIR=$R,OUTPUT_BASE=$W/mc/runs,MAPPING_FILE=$W/mc/mappings/mapping_$rid.txt \
+      $R/studies/cms_mc_weights_v3/cluster/pbs_mc_pilot.sh)
+  echo "$rid $J $n $wt" | tee -a $W/mc/jobids.txt     # the format audit_production.py reads
+done
+
+# 3. post-production chain (afterany on arrays -> a gate job -> afterok on the gate)
+DATA_ARR=$(awk '{printf ":%s", $2}' $W/data/jobids.txt); MC_ARR=$(awk '{printf ":%s", $2}' $W/mc/jobids.txt)
+P=$R/studies/fullrun_20261025/cluster/pbs_post.sh
+post() { local what=$1 res=$2; shift 2; $Q -N fr25_$what -l $res \
+  -o $W/logs/post/$what.out -e $W/logs/post/$what.err -v WORK_DIR=$W,REPO_DIR=$R,WHAT=$what "$@" $P; }
+F=$R/studies/cms_mc_weights_v3/fullrun/pbs_fullrun.sh
+mcpost() { local what=$1 res=$2; shift 2; $Q -l $res -o $W/logs/post/mc_$what.out -e $W/logs/post/mc_$what.err \
+  -v WORK_DIR=$W/mc,REPO_DIR=$R,WHAT=$what "$@" $F; }
+# data: completeness (5 datasets) -> default build + exact build -> rule check + delivery plots
+DC=$(post data_check select=1:ncpus=1:mem=4gb,walltime=01:00:00,io=25 -W depend=afterany$DATA_ARR)
+DB=$(post data_build select=1:ncpus=1:mem=32gb,walltime=06:00:00,io=25 -W depend=afterok:$DC)
+DE=$(post data_exact select=1:ncpus=1:mem=32gb,walltime=06:00:00,io=25 -W depend=afterok:$DC)
+DK=$(post data_checks select=1:ncpus=1:mem=16gb,walltime=02:00:00,io=25 -W depend=afterok:$DB:$DE)
+# MC: audit -> gate on its verdict -> build (defaults, 64gb 8h) -> sanity; rule-check builds
+MA=$(mcpost audit select=1:ncpus=1:mem=4gb,walltime=01:00:00,io=25 -W depend=afterany$MC_ARR)
+MG=$(post mc_gate select=1:ncpus=1:mem=1gb,walltime=00:10:00,io=1 -W depend=afterok:$MA)
+MB=$(mcpost build select=1:ncpus=1:mem=64gb,walltime=08:00:00,io=25 -W depend=afterok:$MG)
+MS=$(mcpost sanity select=1:ncpus=1:mem=16gb,walltime=02:00:00,io=25 -W depend=afterok:$MB)
+MR=$(post mc_rule_builds select=1:ncpus=1:mem=32gb,walltime=04:00:00,io=25 -W depend=afterok:$MG)
+MK=$(post mc_rulecheck select=1:ncpus=1:mem=16gb,walltime=02:00:00,io=25 -W depend=afterok:$MR)
+printf "%s\n" "data_check $DC" "data_build $DB" "data_exact $DE" "data_checks $DK" \
+  "mc_audit $MA" "mc_gate $MG" "mc_build $MB" "mc_sanity $MS" "mc_rule_builds $MR" "mc_rulecheck $MK" | tee $W/post_jobids.txt
+```
+
+What each step runs (for reading, the scripts are the source):
+- audit, data: `python studies/fullrun_20261025/check_production_complete_5.py --runs-root $W/data/runs --out $W/data/evidence/production_complete.json` (exit 1 if anything missing or incomplete).
+- audit, MC: `pbs_fullrun.sh WHAT=audit` = `python studies/cms_mc_weights_v3/fullrun/audit_production.py --work $W/mc --out $W/mc/evidence/production_audit.json`; gate = verdict "OK" (expects exactly one Σw failure, 75589 file 98).
+- data build: `python studies/cms_datasets/deliver/build_four_dataset_delivery.py --runs-dir $W/data/runs --datasets DoubleMuon,SingleMuon,DoubleEG,MuonEG,SingleElectron --out-dir $W/data/deliver/default --out-prefix fullrun` (defaults: rare4, #40 rule, ≥100 events per final state). The exact build adds `--multiplicity-rule exact` → `$W/data/deliver/exact` (rule-check input only, not a delivery).
+- MC build: `pbs_fullrun.sh WHAT=build` = `build_mc_delivery.py --runs-dir $W/mc/runs --out-dir $W/mc/build_default --out-prefix fullrun --scratch-dir $W/mc/scratch_default --keep-scratch` (all physics options default), 64 GB, 8 h.
+- checks: `rule_check.py --kind data` (exact vs default data build) and `--kind mc` (record 67801, per-sample, default vs exact — the 23 Oct method); `make_delivery_plots.py --runs-root $W/data/runs --delivery-dir $W/data/deliver/default --out-dir $W/data/evidence/plots --out-json …`; `pbs_fullrun.sh WHAT=sanity` = `sanity_and_plots.py --build-dir $W/mc/build_default --prefix fullrun --audit $W/mc/evidence/production_audit.json --out-dir $W/mc/evidence/plots`.
+- Memory/walltime of the post jobs are proposals (the data build launcher uses 32 GB / 6 h; the MC build 64 GB / 8 h as asked). The `reproduce` stage of `pbs_fullrun.sh` is not in the chain (it compares to the 10 Oct pilot, which used the old IDs, so differences are expected).
+
+### File-count projection (quota now **73,784**, VERIFIED BY RUNNING `lfs quota`, 25 Oct 07:20)
+
+| item | basis | files |
+|---|---|---:|
+| data production, 541 jobs | measured: 9 per job folder + 4 SQLite `-shm`/`-wal` the builder leaves in each folder + 2 logs = 15 | 8,115 |
+| data mappings, builds, evidence, logs | precheck/posttest outputs: ~6 per build, plots, JSONs | ~100 |
+| MC production, 497 jobs | 17 Oct: 6,014 (runs 4,473 + logs 1,002 + …) | 6,014 |
+| MC build and post (incl. kept scratch 1,488) | 17 Oct: ~2,240 | 2,240 |
+| MC rule-check builds | posttest: ~10 (scratch on the node) | ~10 |
+| pinned clone `repo_75b399e` | measured clones ~170 | ~170 |
+| **total new** | | **~16,650** |
+| **projected after the full run** | 73,784 + 16,650 | **~90,400** — under 125,000 |
+
+(7 Oct scaling instead: 4,694 × 541/390 = 6,511 for data, giving ~88,800. Either way well under
+125,000. UNVERIFIED until the run.) If anything, the full SingleElectron is the bigger unknown:
+its file 0 was small (113 k events), the other 150 may be larger, but the file count does not
+depend on size.
+
+Today this task added 1,456 files (72,328 → 73,784): three pinned clones (~500), the precheck
+(~300), the post-launcher test and the mappings.
+
+Local repo switched back to `master`. STOPPED: next is the technical lead's check, then the
+separate submit prompt.
