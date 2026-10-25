@@ -162,7 +162,7 @@ Quote array IDs in zsh: `'<id>[]'`.
 ## Ready to submit
 
 Pin: **commit `75b399e2dfdacc50affd4e2c78bc865b12f000cc`** on `run/cms-fullrun-20261025` (all
-code; later commits only change this study's .md files). Run from wipp-home, in bash
+code; later commits only add this study's HANDOFF and evidence files, no code). Run from wipp-home, in bash
 (`ssh wipp-home 'bash -s' <<'EOF' … EOF`), after the technical lead's check and Matan's go.
 
 ```bash
