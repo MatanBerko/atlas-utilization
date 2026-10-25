@@ -1,0 +1,72 @@
+MODE=perfile on wn002 at Sat Oct 24 11:56:13 PM IDT 2026
+code old: commit 33d77f54a04006d573059d2a989427d7901cd3d5 sha256 fae6b20a2867f9c3
+[SingleElectron] resolved record 30529 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleElectron/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/110000/43B00DA0-41AF-D042-9F41-7F95FBE5E59F.root
+[SingleElectron] read 112955 events
+[SingleElectron] golden-JSON filter: 112955 -> 112955
+[SingleElectron] own-trigger requirement (('HLT_Ele27_WPTight_Gsf',)): 112955 -> 62554, per_path={'HLT_Ele27_WPTight_Gsf': 62554}
+[SingleElectron] population=matched5: n_after_gate=32459, n_exclusive=30774, n_vetoed_by_each_higher_dataset={'DoubleMuon': 8, 'SingleMuon': 58, 'DoubleEG': 3310, 'MuonEG': 174}
+{
+  "dataset_label": "SingleElectron",
+  "population": "matched5",
+  "n_read": 112955,
+  "n_after_gate": 32459,
+  "n_exclusive": 30774,
+  "n_signature_writes_inclusive": 820,
+  "n_signature_writes_exclusive": 513,
+  "elapsed_sec": 90.6
+}
+[SingleElectron] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data/SingleElectron/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data/SingleElectron/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data/SingleElectron/job_0 (90.6s elapsed)
+[SingleElectron] resolved record 30529 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleElectron/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/110000/43B00DA0-41AF-D042-9F41-7F95FBE5E59F.root
+[SingleElectron] read 112955 events
+[SingleElectron] golden-JSON filter: 112955 -> 112955
+[SingleElectron] own-trigger requirement (('HLT_Ele27_WPTight_Gsf',)): 112955 -> 62554, per_path={'HLT_Ele27_WPTight_Gsf': 62554}
+[SingleElectron] population=matched5: n_after_gate=32459, n_exclusive=30774, n_vetoed_by_each_higher_dataset={'DoubleMuon': 8, 'SingleMuon': 58, 'DoubleEG': 3310, 'MuonEG': 174}
+{
+  "dataset_label": "SingleElectron",
+  "population": "matched5",
+  "n_read": 112955,
+  "n_after_gate": 32459,
+  "n_exclusive": 30774,
+  "n_signature_writes_inclusive": 820,
+  "n_signature_writes_exclusive": 513,
+  "elapsed_sec": 91.3
+}
+[SingleElectron] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data_noor/SingleElectron/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data_noor/SingleElectron/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data_noor/SingleElectron/job_0 (91.3s elapsed)
+code new: commit 9588cdbb124c115bc33c3cffc743e6b7c115c3de sha256 960246367f3cb41c
+[SingleElectron] resolved record 30529 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleElectron/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/110000/43B00DA0-41AF-D042-9F41-7F95FBE5E59F.root
+[SingleElectron] read 112955 events
+[SingleElectron] golden-JSON filter: 112955 -> 112955
+[SingleElectron] own-trigger requirement (('HLT_Ele27_WPTight_Gsf',)): 112955 -> 62554, per_path={'HLT_Ele27_WPTight_Gsf': 62554}
+[SingleElectron] population=matched5: n_after_gate=35674, n_exclusive=33680, n_vetoed_by_each_higher_dataset={'DoubleMuon': 8, 'SingleMuon': 58, 'DoubleEG': 3310, 'MuonEG': 174}
+{
+  "dataset_label": "SingleElectron",
+  "population": "matched5",
+  "n_read": 112955,
+  "n_after_gate": 35674,
+  "n_exclusive": 33680,
+  "n_signature_writes_inclusive": 830,
+  "n_signature_writes_exclusive": 563,
+  "elapsed_sec": 93.7
+}
+[SingleElectron] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data/SingleElectron/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data/SingleElectron/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data/SingleElectron/job_0 (93.7s elapsed)
+[SingleElectron] resolved record 30529 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/Run2016G/SingleElectron/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/110000/43B00DA0-41AF-D042-9F41-7F95FBE5E59F.root
+[SingleElectron] read 112955 events
+[SingleElectron] golden-JSON filter: 112955 -> 112955
+[SingleElectron] own-trigger requirement (('HLT_Ele27_WPTight_Gsf',)): 112955 -> 62554, per_path={'HLT_Ele27_WPTight_Gsf': 62554}
+[SingleElectron] population=matched5: n_after_gate=35674, n_exclusive=33680, n_vetoed_by_each_higher_dataset={'DoubleMuon': 8, 'SingleMuon': 58, 'DoubleEG': 3310, 'MuonEG': 174}
+{
+  "dataset_label": "SingleElectron",
+  "population": "matched5",
+  "n_read": 112955,
+  "n_after_gate": 35674,
+  "n_exclusive": 33680,
+  "n_signature_writes_inclusive": 830,
+  "n_signature_writes_exclusive": 563,
+  "elapsed_sec": 91.3
+}
+[SingleElectron] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data_noor/SingleElectron/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data_noor/SingleElectron/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data_noor/SingleElectron/job_0 (91.3s elapsed)
+{"old": {"muon_id": "Muon_mediumId", "muon_iso_max": 0.15, "electron_cutbased_min": 3}, "new": {"muon_id": "Muon_looseId", "muon_iso_max": 0.15, "electron_cutbased_min": 2}}
+chunk 0-112955: 112955 certified, 62554 triggered
+certified 112955 muons 101 -> 141 electrons 52881 -> 62703 old_not_new 0 0
+triggered 62554 muons 62 -> 89 electrons 42479 -> 47458 old_not_new 0 0
+MODE=perfile done idx=4 at Sun Oct 25 12:02:29 AM IDT 2026

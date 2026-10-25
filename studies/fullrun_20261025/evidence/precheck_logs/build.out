@@ -1,0 +1,435 @@
+MODE=build on wn001 at Sun Oct 25 12:22:42 AM IDT 2026
+code old: commit 33d77f54a04006d573059d2a989427d7901cd3d5 sha256 fae6b20a2867f9c3
+=== 5-dataset delivery, version=rare4 ===
+priority order (highest first): ['DoubleMuon', 'SingleMuon', 'DoubleEG', 'MuonEG', 'SingleElectron']
+width suffix: _width_10.0
+per-histogram minimum entries: 1
+filled-bin cut: NONE
+events per final state: >= 100 (applied once, combined)
+multiplicity rule: upstream40
+DoubleMuon   inclusive: 1 shards
+SingleMuon   exclusive: 1 shards
+DoubleEG     exclusive: 1 shards
+MuonEG       exclusive: 1 shards
+SingleElectron exclusive: 1 shards
+total shards pooled: 5
+
+=== Funnel (the shared post-processing chain) ===
+distinct raw signatures across all 5 shards: 3701
+multiplicity rule upstream40: 160 exact label(s) -> 52 final state(s); 506 signatures after regrouping
+stage_b(>=100 events per final state)=201 stage_c(post-processed)=201 stage_d(>30 bins, informational)=108
+
+delivered histograms: 201
+  of which >=25 filled bins (BumpNet's own cut, informational): 130
+
+=== Writing ROOT files ===
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/old/data/precheck_bumpnet.root (201 histograms, uncropped)
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/old/data/precheck_bumpnet_cropped.root (201 histograms, cropped <- BumpNet uses this one)
+
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/old/data/README.txt
+{
+  "what": "combined four-dataset matched BumpNet delivery (electron-datasets task B3)",
+  "version": "rare4",
+  "priority_order_highest_first": [
+    "DoubleMuon",
+    "SingleMuon",
+    "DoubleEG",
+    "MuonEG",
+    "SingleElectron"
+  ],
+  "pooling": {
+    "DoubleMuon": {
+      "shards": 1,
+      "contribution": "inclusive"
+    },
+    "SingleMuon": {
+      "shards": 1,
+      "contribution": "exclusive"
+    },
+    "DoubleEG": {
+      "shards": 1,
+      "contribution": "exclusive"
+    },
+    "MuonEG": {
+      "shards": 1,
+      "contribution": "exclusive"
+    },
+    "SingleElectron": {
+      "shards": 1,
+      "contribution": "exclusive"
+    }
+  },
+  "per_dataset_event_counts": {
+    "DoubleMuon": {
+      "contribution": "inclusive",
+      "n_events_pooled_rare4": 223372,
+      "n_own_accepted": 223393,
+      "n_own_exclusive": 223393,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    },
+    "SingleMuon": {
+      "contribution": "exclusive",
+      "n_events_pooled_rare4": 1425322,
+      "n_own_accepted": 1511878,
+      "n_own_exclusive": 1425358,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    },
+    "DoubleEG": {
+      "contribution": "exclusive",
+      "n_events_pooled_rare4": 60183,
+      "n_own_accepted": 60201,
+      "n_own_exclusive": 60189,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    },
+    "MuonEG": {
+      "contribution": "exclusive",
+      "n_events_pooled_rare4": 393,
+      "n_own_accepted": 4512,
+      "n_own_exclusive": 394,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    },
+    "SingleElectron": {
+      "contribution": "exclusive",
+      "n_events_pooled_rare4": 30774,
+      "n_own_accepted": 32459,
+      "n_own_exclusive": 30774,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    }
+  },
+  "n_shards_total": 5,
+  "n_distinct_raw_signatures": 3701,
+  "min_events_per_final_state": 100,
+  "min_events_per_final_state_applied": "once, on the combined shards of all files",
+  "per_histogram_min_entries": 1,
+  "per_histogram_min_entries_source": "upstream: no minimum, a histogram is written whenever it has >=1 entry",
+  "filled_bin_cut": "NONE (applied on the BumpNet side during smoothing)",
+  "width_suffix": "_width_10.0",
+  "width_suffix_matches_upstream": true,
+  "legacy_gt_label_conversion_applied": false,
+  "funnel": {
+    "b_after_min_events_per_fs": 201,
+    "c_after_postprocessing": 201,
+    "d_gt30bins_informational": 108
+  },
+  "n_delivered_histograms": 201,
+  "n_distinct_final_state_categories_delivered": 33,
+  "informational_bin_counts": {
+    "n_with_ge_25_filled_bins": 130,
+    "n_with_gt_25_filled_bins": 129,
+    "n_with_gt_30_filled_bins": 108
+  },
+  "n_excluded_at_histogram_step": 0,
+  "n_excluded_at_postprocessing_step": 0,
+  "output_files": {
+    "precheck_bumpnet.root": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/old/data/precheck_bumpnet.root",
+    "precheck_bumpnet_cropped.root": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/old/data/precheck_bumpnet_cropped.root"
+  },
+  "file_for_bumpnet": "precheck_bumpnet_cropped.root",
+  "multiplicity_rule": "upstream40"
+}
+
+All mandatory build-time checks PASSED (per-histogram TH1F verification already run inside write_root_file/write_cropped_root_file via verify_written_th1f).
+[67801] TTTo2L2Nu: sigma_eff=89.28 pb, Sigma-w=9.807582e+06 over 1 file(s) (0 excluded), norm=1.492281e-01
+[72752] WZTo3LNu_amcatnloFXFX: sigma_eff=5.789 pb, Sigma-w=3.875806e+06 over 1 file(s) (0 excluded), norm=2.448499e-02
+multiplicity rule upstream40: 197 exact label(s) -> 54 final state(s)
+[67801] 292 name(s) collected
+[72752] 296 name(s) collected
+[67801] 290 histogram(s) after post-processing
+[72752] 292 histogram(s) after post-processing
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/old/mc/precheck_record67801_mc.root -- 290 TH1D histogram(s), all read-back assertions passed
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/old/mc/precheck_record72752_mc.root -- 292 TH1D histogram(s), all read-back assertions passed
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/old/mc/precheck_summedSM_mc.root -- 296 TH1D histogram(s), all read-back assertions passed
+
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/old/mc/precheck_build_report.json
+code new: commit 9588cdbb124c115bc33c3cffc743e6b7c115c3de sha256 960246367f3cb41c
+=== 5-dataset delivery, version=rare4 ===
+priority order (highest first): ['DoubleMuon', 'SingleMuon', 'DoubleEG', 'MuonEG', 'SingleElectron']
+width suffix: _width_10.0
+per-histogram minimum entries: 1
+filled-bin cut: NONE
+events per final state: >= 100 (applied once, combined)
+multiplicity rule: upstream40
+DoubleMuon   inclusive: 1 shards
+SingleMuon   exclusive: 1 shards
+DoubleEG     exclusive: 1 shards
+MuonEG       exclusive: 1 shards
+SingleElectron exclusive: 1 shards
+total shards pooled: 5
+
+=== Funnel (the shared post-processing chain) ===
+distinct raw signatures across all 5 shards: 4136
+multiplicity rule upstream40: 165 exact label(s) -> 52 final state(s); 543 signatures after regrouping
+stage_b(>=100 events per final state)=214 stage_c(post-processed)=214 stage_d(>30 bins, informational)=114
+
+delivered histograms: 214
+  of which >=25 filled bins (BumpNet's own cut, informational): 139
+
+=== Writing ROOT files ===
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/new/data/precheck_bumpnet.root (214 histograms, uncropped)
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/new/data/precheck_bumpnet_cropped.root (214 histograms, cropped <- BumpNet uses this one)
+
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/new/data/README.txt
+{
+  "what": "combined four-dataset matched BumpNet delivery (electron-datasets task B3)",
+  "version": "rare4",
+  "priority_order_highest_first": [
+    "DoubleMuon",
+    "SingleMuon",
+    "DoubleEG",
+    "MuonEG",
+    "SingleElectron"
+  ],
+  "pooling": {
+    "DoubleMuon": {
+      "shards": 1,
+      "contribution": "inclusive"
+    },
+    "SingleMuon": {
+      "shards": 1,
+      "contribution": "exclusive"
+    },
+    "DoubleEG": {
+      "shards": 1,
+      "contribution": "exclusive"
+    },
+    "MuonEG": {
+      "shards": 1,
+      "contribution": "exclusive"
+    },
+    "SingleElectron": {
+      "shards": 1,
+      "contribution": "exclusive"
+    }
+  },
+  "per_dataset_event_counts": {
+    "DoubleMuon": {
+      "contribution": "inclusive",
+      "n_events_pooled_rare4": 227503,
+      "n_own_accepted": 227525,
+      "n_own_exclusive": 227525,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    },
+    "SingleMuon": {
+      "contribution": "exclusive",
+      "n_events_pooled_rare4": 1444526,
+      "n_own_accepted": 1532646,
+      "n_own_exclusive": 1444567,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    },
+    "DoubleEG": {
+      "contribution": "exclusive",
+      "n_events_pooled_rare4": 72034,
+      "n_own_accepted": 72056,
+      "n_own_exclusive": 72043,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    },
+    "MuonEG": {
+      "contribution": "exclusive",
+      "n_events_pooled_rare4": 578,
+      "n_own_accepted": 5402,
+      "n_own_exclusive": 579,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    },
+    "SingleElectron": {
+      "contribution": "exclusive",
+      "n_events_pooled_rare4": 33680,
+      "n_own_accepted": 35674,
+      "n_own_exclusive": 33680,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    }
+  },
+  "n_shards_total": 5,
+  "n_distinct_raw_signatures": 4136,
+  "min_events_per_final_state": 100,
+  "min_events_per_final_state_applied": "once, on the combined shards of all files",
+  "per_histogram_min_entries": 1,
+  "per_histogram_min_entries_source": "upstream: no minimum, a histogram is written whenever it has >=1 entry",
+  "filled_bin_cut": "NONE (applied on the BumpNet side during smoothing)",
+  "width_suffix": "_width_10.0",
+  "width_suffix_matches_upstream": true,
+  "legacy_gt_label_conversion_applied": false,
+  "funnel": {
+    "b_after_min_events_per_fs": 214,
+    "c_after_postprocessing": 214,
+    "d_gt30bins_informational": 114
+  },
+  "n_delivered_histograms": 214,
+  "n_distinct_final_state_categories_delivered": 35,
+  "informational_bin_counts": {
+    "n_with_ge_25_filled_bins": 139,
+    "n_with_gt_25_filled_bins": 136,
+    "n_with_gt_30_filled_bins": 114
+  },
+  "n_excluded_at_histogram_step": 0,
+  "n_excluded_at_postprocessing_step": 0,
+  "output_files": {
+    "precheck_bumpnet.root": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/new/data/precheck_bumpnet.root",
+    "precheck_bumpnet_cropped.root": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/new/data/precheck_bumpnet_cropped.root"
+  },
+  "file_for_bumpnet": "precheck_bumpnet_cropped.root",
+  "multiplicity_rule": "upstream40"
+}
+
+All mandatory build-time checks PASSED (per-histogram TH1F verification already run inside write_root_file/write_cropped_root_file via verify_written_th1f).
+[67801] TTTo2L2Nu: sigma_eff=89.28 pb, Sigma-w=9.807582e+06 over 1 file(s) (0 excluded), norm=1.492281e-01
+[72752] WZTo3LNu_amcatnloFXFX: sigma_eff=5.789 pb, Sigma-w=3.875806e+06 over 1 file(s) (0 excluded), norm=2.448499e-02
+multiplicity rule upstream40: 202 exact label(s) -> 55 final state(s)
+[67801] 298 name(s) collected
+[72752] 302 name(s) collected
+[67801] 298 histogram(s) after post-processing
+[72752] 297 histogram(s) after post-processing
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/new/mc/precheck_record67801_mc.root -- 298 TH1D histogram(s), all read-back assertions passed
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/new/mc/precheck_record72752_mc.root -- 297 TH1D histogram(s), all read-back assertions passed
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/new/mc/precheck_summedSM_mc.root -- 302 TH1D histogram(s), all read-back assertions passed
+
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/deliver/new/mc/precheck_build_report.json
+code new: commit 9588cdbb124c115bc33c3cffc743e6b7c115c3de sha256 960246367f3cb41c
+{
+ "n_labels_old": 188,
+ "n_labels_new": 195,
+ "n_events_old": 1832443,
+ "n_events_new": 1873303,
+ "top": [
+  {
+   "label": "0e_1m_0j_0b",
+   "old": 1042869,
+   "new": 1056048,
+   "change": 13179
+  },
+  {
+   "label": "2e_0m_0j_0b",
+   "old": 50382,
+   "new": 60310,
+   "change": 9928
+  },
+  {
+   "label": "0e_2m_0j_0b",
+   "old": 254477,
+   "new": 259995,
+   "change": 5518
+  },
+  {
+   "label": "0e_1m_1j_0b",
+   "old": 255895,
+   "new": 259200,
+   "change": 3305
+  },
+  {
+   "label": "1e_0m_0j_0b",
+   "old": 19200,
+   "new": 20697,
+   "change": 1497
+  },
+  {
+   "label": "2e_0m_1j_0b",
+   "old": 7941,
+   "new": 9428,
+   "change": 1487
+  },
+  {
+   "label": "0e_2m_1j_0b",
+   "old": 44698,
+   "new": 45623,
+   "change": 925
+  },
+  {
+   "label": "1e_0m_1j_0b",
+   "old": 7783,
+   "new": 8688,
+   "change": 905
+  },
+  {
+   "label": "1e_1m_0j_0b",
+   "old": 1316,
+   "new": 1808,
+   "change": 492
+  },
+  {
+   "label": "0e_1m_2j_0b",
+   "old": 55596,
+   "new": 56032,
+   "change": 436
+  }
+ ]
+}
+MODE=build done at Sun Oct 25 12:35:43 AM IDT 2026

@@ -70,8 +70,17 @@ Tests (`evidence/local_tests.txt`, Mac, `PYTHONPATH=.`): **all 16 CMS test files
 pass, 0 failures — VERIFIED BY RUNNING.** The 5 skips in `tests/` are the network tests that read
 real ROOT files (`RUN_NETWORK_TESTS=1`); they are skipped by design (ROOT reading only in PBS).
 
-## Step 3 — small real-file check (in progress)
+## Step 3 — small real-file check — DONE (details: `PRECHECK.md`)
 
-Scripts: `cluster/pbs_precheck.sh` (method of `studies/sync_42_20261023/cluster/pbs_proof.sh`),
-`cluster/object_compare.py` (per-object OLD vs NEW selection on the real file),
-`cluster/build_compare.py` (OLD vs NEW per-file metadata and builds), `cluster/mapping_precheck.txt`.
+- Jobs `5331447[]` (7 files) and `5331448` (builds + comparison), wipp-home; all exit 0.
+  Code: OLD `33d77f5` vs NEW `9588cdb` tarballs from the pinned clone
+  `checkouts/fullrun_20261025/precheck_9588cdb`. Work: `work/fullrun_20261025/precheck/`.
+- **0 exceptions: every OLD-selected muon/electron is NEW-selected on all 7 files** — VERIFIED BY RUNNING.
+- Triggered events, file 0: electrons ×1.49 DoubleMuon, ×1.27 SingleMuon, ×1.13 DoubleEG,
+  ×1.58 MuonEG, ×1.12 SingleElectron, ×1.08 both MC; muons ×1.01–1.03 (×2.4 DoubleEG and ×1.4
+  SingleElectron on tens of muons). Accepted events: DoubleMuon +1.8 %, SingleMuon +1.4 %,
+  DoubleEG +19.7 %, MuonEG +19.7 %, SingleElectron +9.9 %, MC +1.8 % / +1.5 %.
+- Overlap removal costs MuonEG 31 → 65 events, DoubleEG 0 → 2, others 0.
+- Data build 201 → 214 histograms (none lost); MC summedSM 296 → 302.
+- Scripts: `cluster/pbs_precheck.sh`, `cluster/object_compare.py`, `cluster/build_compare.py`,
+  `make_precheck_plots.py`; PNGs in `precheck_plots/`; evidence in `evidence/`.
