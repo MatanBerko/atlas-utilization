@@ -35,12 +35,11 @@ not have her DSID-by-DSID list yet, so this plan works from her group list.
 5. fifteen Higgs samples (H → WW, H → ττ, H → ZZ in the production modes we do not have).
 
 **What it costs (ESTIMATES, from the 25-26 Oct production).** About 1,145 files, 740 million events,
-~180 CPU hours, and ~20,600 new files on the cluster. With today's count (90,665, measured on 26 Oct
-by the full-run task; I could not re-measure it, the cluster was unreachable) that gives ~111,000, under
-the 125,000 ceiling, **so all five tiers fit**. Tier 1 alone is 518 files / 75 CPU hours / ~7,500 cluster files.
+~180 CPU hours, and ~20,600 new files on the cluster. With today's count (92,041, VERIFIED BY RUNNING after
+the probe; 90,665 before it) that gives ~112,600, under the 125,000 ceiling, **so all five tiers fit**. Tier 1 alone is 518 files / 75 CPU hours / ~7,500 cluster files.
 
 **The one statistical warning.** W+jets is the only group whose simulation has *less* luminosity than
-the data: 2.1, 4.7 and 2.7 fb⁻¹ for the three pieces, i.e. 0.13-0.29 × the data's 16.4 fb⁻¹ (ESTIMATE). Once the
+the data: 2.1, 4.7 and 2.7 fb⁻¹ for the three pieces, i.e. 0.13-0.29 × the data's 16.4 fb⁻¹ (confirmed by the probe). Once the
 negative weights are taken into account, each effective simulated W+jets event stands for about 3.5-8 data
 events, which can make isolated spikes in sparse histograms. Every other sample has 7 to 100,000 × the data luminosity. (`plots/mc_lumi_vs_data.png`)
 
@@ -48,11 +47,13 @@ events, which can make isolated spikes in sparse histograms. Every other sample 
 conditions 106X_mcRun2_asymptotic_v17), none is the pre-VFP "APV" campaign, all use tune CP5.
 **No problem found.**
 
-**Not done:** the one-file probe of each sample (step 4) could not run: the cluster was unreachable
-all session (`wipp-campus`: "No route to host"; `wipp-home`: the jump host name does not resolve, which
-last time meant the Mac's VPN had dropped). The probe script is committed and pushed; HANDOFF.md says how
-to run it. Until then the effective-event numbers are ESTIMATES from the portal's negative-weight fraction,
-and the genWeight plots do not exist yet.
+**The one-file probe (step 4) ran on 26 Oct** (PBS array 5365612[], 30 samples, all exit 0). Every probed
+sample has **all the branches our production reads** (including the prefiring weight and pileup branches),
+the per-file weight sums match the files' own bookkeeping, and the statistics agree with the earlier
+estimates (within ~3 %, except s-channel +14 % and four-top −9 %): **no conclusion changed**. One detail for
+the technical lead: the NLO W+jets pieces are not "pure" 0 / 1 / 2 parton samples at the LHE level (each also
+has events with one parton more, as NLO samples do), so they must not be cut against each other by
+LHE_Njets — not needed for the recommended option. Details §4a; genWeight plots in `plots/`.
 
 ## 1. Campaign check of the 13 delivered samples (step 1)
 
@@ -180,7 +181,8 @@ For every proposed sample: what else could cover the same events, and why the pr
 
 **W+jets.** The three NLO pieces are exclusive by construction (0, 1, 2 partons in the NLO matrix element,
 one FxFx setup) and add up to the inclusive W: their portal values sum to 65,588 pb vs 66,970 pb for the
-inclusive NLO sample. So **no stitching is needed** as long as they are used *alone*: never together with
+inclusive NLO sample. So **no stitching is needed** as long as they are used *alone* (they are separate by their *Born* parton
+count; the probe shows each also holds real-emission events with one more LHE parton, §4a): never together with
 the inclusive NLO or any LO sample. *If* an LO set were mixed (inclusive LO + W1-4Jets, or inclusive LO +
 HT-binned), the standard LHE-level stitching would be needed: per event, the inclusive sample's weight is
 replaced by L·σ_n / (N_incl·f_n + N_n) in the LHE_Njets = n (or LHE_HT bin) slice, where f_n is the fraction
@@ -238,68 +240,140 @@ is constant; the probe will replace it). MC lumi = N_eff / σ_eff. CPU = events 
 the most similar delivered sample, from the 25-26 Oct audit `studies/fullrun_20261025/evidence/final_mc/production_audit.json`,
 audit job 5341394 over arrays 5340549[]-5340560[] and 5341381[]). Cluster files = 12.1 per input file
 (6,014 files for 497 jobs on 17 Oct) plus ~172 per sample for the build (2,240 for 13 samples on 17 Oct).
-All from `stats_cost.py` → `evidence/stats_cost.json`.
+All from `stats_cost.py` → `evidence/stats_cost.json`. **Updated 26 Oct after the probe:** N_eff, MC lumi and
+weight/event now come from the probe (file 0 scaled to the sample: Σw = N·Σw_file/N_file, Σw² likewise) for
+the 30 probed samples; the old portal-based estimates are kept in the italic column; for probed samples the weight/event column is
+the factor that multiplies genWeight (σ_eff·L/Σw), for the others it is in units of the mean |genWeight|; the file-count
+projection starts from 92,041 (measured after the probe).
 
-| tier | NanoAOD | sample | events | files | σ_eff PROPOSED [pb] | weight/event PROVISIONAL | N_eff (ESTIMATE) | MC lumi [fb⁻¹] | ÷ data | CPU h | CPU s/file | cluster files |
-|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | 69715 | WJetsToLNu_0J_amcatnloFXFX | 159,756,701 | 97 | 5e+04 | 6.4 | 102.82 M | 2.06 | 0.125 **< data** | 10.7 | 398 | 1174 |
-| 1 | 69717 | WJetsToLNu_1J_amcatnloFXFX | 167,292,982 | 117 | 8403 | 1.7 | 39.38 M | 4.69 | 0.286 **< data** | 11.2 | 345 | 1416 |
-| 1 | 69719 | WJetsToLNu_2J_amcatnloFXFX | 85,825,681 | 63 | 3124 | 1.91 | 8.37 M | 2.68 | 0.163 **< data** | 5.8 | 329 | 762 |
-| 1 | 69745 | WJetsToLNu_amcatnloFXFX (inclusive NLO) (alt.) | 28,268,221 | 28 | 6.153e+04 | 52 | 13.30 M | 0.216 | 0.0132 **< data** | 1.9 | 244 | 339 |
-| 1 | 69747 | WJetsToLNu_madgraphMLM (inclusive LO) (alt.) | 80,958,227 | 68 | 6.153e+04 | 12.5 | 80.96 M | 1.32 | 0.0803 **< data** | 5.4 | 287 | 823 |
-| 1 | 64793 | ST_t-channel_top_5f_InclusiveDecays | 55,783,000 | 51 | 134.2 | 0.0397 | 55.15 M | 411 | 25.1 | 19.3 | 1363 | 617 |
-| 1 | 64693 | ST_t-channel_antitop_5f_InclusiveDecays | 29,394,000 | 25 | 80 | 0.0449 | 29.07 M | 363 | 22.2 | 10.2 | 1465 | 303 |
-| 1 | 64759 | ST_t-channel_top_4f_InclusiveDecays (alt.) | 63,073,000 | 86 | 134.2 | 0.0372 | 55.35 M | 412 | 25.2 | 21.8 | 914 | 1041 |
-| 1 | 64659 | ST_t-channel_antitop_4f_InclusiveDecays (alt.) | 30,609,000 | 35 | 80 | 0.0455 | 27.13 M | 339 | 20.7 | 10.6 | 1090 | 424 |
-| 1 | 64635 | ST_s-channel_4f_leptonDecays | 5,471,000 | 19 | 3.623 | 0.0167 | 2.32 M | 640 | 39.1 | 1.9 | 359 | 230 |
-| 1 | 67841 | TTToHadronic | 107,067,000 | 146 | 378.9 | 0.0585 | 105.34 M | 278 | 17 | 15.4 | 380 | 1767 |
-| 2 | 72742 | WZTo2Q2L_mllmin4p0 | 13,526,954 | 39 | 7.133 | 0.0139 | 5.26 M | 738 | 45 | 5.7 | 522 | 472 |
-| 2 | 75573 | ZZTo2Q2L_mllmin4p0 | 13,740,600 | 14 | 4.311 | 0.00794 | 5.77 M | 1.34e+03 | 81.6 | 5.7 | 1477 | 169 |
-| 2 | 72738 | WZTo1L1Nu2Q | 3,690,271 | 23 | 10.16 | 0.0783 | 1.23 M | 121 | 7.37 | 1.5 | 241 | 278 |
-| 2 | 72658 | WWTo1L1Nu2Q | 19,976,139 | 30 | 52.36 | 0.0712 | 7.28 M | 139 | 8.48 | 8.4 | 1002 | 363 |
-| 2 | 72740 | WZTo1L3Nu | 1,229,946 | 21 | 3.789 | 0.0881 | 0.40 M | 107 | 6.51 | 0.5 | 88 | 254 |
-| 3 | 72701 | WWW_4F (ext1) | 4,159,000 | 24 | 0.2158 | 0.000938 | 3.42 M | 1.58e+04 | 966 | 1.7 | 261 | 290 |
-| 3 | 72711 | WWZ_4F (ext1) | 4,595,000 | 7 | 0.1707 | 0.000671 | 3.78 M | 2.21e+04 | 1.35e+03 | 1.9 | 988 | 85 |
-| 3 | 72761 | WZZ (ext1) | 4,554,000 | 9 | 0.05709 | 0.000226 | 3.75 M | 6.57e+04 | 4.01e+03 | 1.9 | 761 | 109 |
-| 3 | 75600 | ZZZ (ext1) | 4,534,000 | 20 | 0.01476 | 5.99e-05 | 3.60 M | 2.44e+05 | 1.49e+04 | 1.9 | 341 | 242 |
-| 4 | 68325 | tZq_ll_4f | 3,967,000 | 52 | 0.07561 | 0.00115 | 0.29 M | 3.84e+03 | 234 | 1.4 | 95 | 629 |
-| 4 | 64873 | ST_tWll_5f | 320,000 | 2 | 0.01105 | 0.000566 | 0.32 M | 2.9e+04 | 1.77e+03 | 0.1 | 199 | 24 |
-| 4 | 67645 | ttHTobb_M125 (powheg) | 4,937,000 | 26 | 0.2953 | 0.001 | 4.73 M | 1.6e+04 | 978 | 10.1 | 1397 | 315 |
-| 4 | 67691 | ttHToNonbb_M125 (powheg) | 2,240,994 | 20 | 0.2118 | 0.00158 | 2.15 M | 1.01e+04 | 619 | 4.6 | 825 | 242 |
-| 4 | 68206 | TTZToQQ | 5,401,000 | 20 | 0.5113 | 0.00313 | 1.33 M | 2.61e+03 | 159 | 11.0 | 1987 | 242 |
-| 4 | 68083 | TTWJetsToQQ | 308,983 | 8 | 0.4375 | 0.0424 | 0.09 M | 211 | 12.9 | 0.6 | 284 | 97 |
-| 4 | 68045 | TTTT | 4,544,000 | 23 | 0.008091 | 6.68e-05 | 0.87 M | 1.07e+05 | 6.55e+03 | 9.3 | 1454 | 278 |
-| 4 | 68185 | TTZToLL_M-1to10 | 320,000 | 9 | 0.0537 | 0.00493 | 0.10 M | 1.85e+03 | 113 | 0.7 | 262 | 109 |
-| 5 | 37474 | GluGluHToWWTo2L2Nu_M-125 | 2,838,995 | 10 | 1.111 | 0.00642 | 2.84 M | 2.55e+03 | 156 | 2.8 | 997 | 121 |
-| 5 | 68601 | VBFHToWWTo2L2Nu_M125 | 3,596,630 | 30 | 0.08653 | 0.000395 | 3.59 M | 4.15e+04 | 2.53e+03 | 3.5 | 421 | 363 |
-| 5 | 41877 | HWplusJ_HToWW_M-125 | 2,855,188 | 58 | 0.1795 | 0.00109 | 2.55 M | 1.42e+04 | 865 | 2.8 | 173 | 702 |
-| 5 | 41873 | HWminusJ_HToWW_M-125 | 2,931,162 | 66 | 0.1139 | 0.000672 | 2.63 M | 2.31e+04 | 1.41e+03 | 2.9 | 156 | 799 |
-| 5 | 41914 | HZJ_HToWW_M-125 (ext1) | 4,465,166 | 6 | 0.1627 | 0.000635 | 3.95 M | 2.43e+04 | 1.48e+03 | 4.4 | 2614 | 73 |
-| 5 | 40095 | GluGluZH_HToWW_ZTo2L_M-125 (ext1) | 4,737,669 | 5 | 0.002648 | 9.16e-06 | 4.74 M | 1.79e+06 | 1.09e+05 | 4.6 | 3328 | 61 |
-| 5 | 37446 | GluGluHToTauTau_M125 | 6,439,000 | 40 | 3.047 | 0.00784 | 6.31 M | 2.07e+03 | 126 | 6.3 | 565 | 484 |
-| 5 | 68591 | VBFHToTauTau_M125 | 1,500,000 | 7 | 0.2372 | 0.0026 | 1.50 M | 6.31e+03 | 385 | 1.5 | 753 | 85 |
-| 5 | 71297 | WplusHToTauTau_M125 | 2,000,000 | 7 | 0.05268 | 0.000457 | 1.78 M | 3.38e+04 | 2.06e+03 | 2.0 | 1004 | 85 |
-| 5 | 70453 | WminusHToTauTau_M125 | 1,995,182 | 3 | 0.03342 | 0.00029 | 1.79 M | 5.35e+04 | 3.27e+03 | 1.9 | 2336 | 36 |
-| 5 | 74684 | ZHToTauTau_M125 | 2,419,675 | 6 | 0.04774 | 0.000343 | 2.15 M | 4.5e+04 | 2.74e+03 | 2.4 | 1417 | 73 |
-| 5 | 37616 | GluGluHToZZTo2L2Nu_M125 | 496,000 | 2 | 0.03425 | 0.00114 | 0.49 M | 1.42e+04 | 866 | 0.5 | 871 | 24 |
-| 5 | 68741 | VBF_HToZZTo2L2Nu_M125 | 500,000 | 21 | 0.002666 | 8.75e-05 | 0.50 M | 1.87e+05 | 1.14e+04 | 0.5 | 84 | 254 |
-| 5 | 71227 | WplusH_HToZZTo4L_M125 | 294,744 | 12 | 0.0002306 | 1.36e-05 | 0.26 M | 1.14e+06 | 6.96e+04 | 0.3 | 86 | 145 |
-| 5 | 70383 | WminusH_HToZZTo4L_M125 | 193,088 | 7 | 0.0001463 | 1.31e-05 | 0.17 M | 1.19e+06 | 7.25e+04 | 0.2 | 97 | 85 |
+| tier | NanoAOD | sample | events | files | σ_eff PROPOSED [pb] | weight/event PROVISIONAL | N_eff | MC lumi [fb⁻¹] | ÷ data | *old estimate: N_eff / ÷ data* | source | CPU h | CPU s/file | cluster files |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|---:|---:|---:|
+| 1 | 69715 | WJetsToLNu_0J_amcatnloFXFX | 159,756,701 | 97 | 5e+04 | 8.61e-05 | 103 M | 2.05 | 0.125 **< data** | *103 M / 0.125* | probe | 10.7 | 398 | 1174 |
+| 1 | 69717 | WJetsToLNu_1J_amcatnloFXFX | 167,292,982 | 117 | 8403 | 1.8e-05 | 39.6 M | 4.72 | 0.288 **< data** | *39.4 M / 0.286* | probe | 11.2 | 345 | 1416 |
+| 1 | 69719 | WJetsToLNu_2J_amcatnloFXFX | 85,825,681 | 63 | 3124 | 2.45e-05 | 8.3 M | 2.66 | 0.162 **< data** | *8.37 M / 0.163* | probe | 5.8 | 329 | 762 |
+| 1 | 69745 | WJetsToLNu_amcatnloFXFX (inclusive NLO) (alt.) | 28,268,221 | 28 | 6.153e+04 | 0.000207 | 13.3 M | 0.216 | 0.0132 **< data** | *13.3 M / 0.0132* | probe | 1.9 | 244 | 339 |
+| 1 | 69747 | WJetsToLNu_madgraphMLM (inclusive LO) (alt.) | 80,958,227 | 68 | 6.153e+04 | 0.000103 | 81 M | 1.32 | 0.0803 **< data** | *81 M / 0.0803* | probe | 5.4 | 287 | 823 |
+| 1 | 64793 | ST_t-channel_top_5f_InclusiveDecays | 55,783,000 | 51 | 134.2 | 0.000329 | 55.2 M | 411 | 25.1 | *55.1 M / 25.1* | probe | 19.3 | 1363 | 617 |
+| 1 | 64693 | ST_t-channel_antitop_5f_InclusiveDecays | 29,394,000 | 25 | 80 | 0.000622 | 29.1 M | 363 | 22.2 | *29.1 M / 22.2* | probe | 10.2 | 1465 | 303 |
+| 1 | 64759 | ST_t-channel_top_4f_InclusiveDecays (alt.) | 63,073,000 | 86 | 134.2 | 0.0372 (|w| units) | 55.4 M | 412 | 25.2 | *55.4 M / 25.2* | ESTIMATE (not probed) | 21.8 | 914 | 1041 |
+| 1 | 64659 | ST_t-channel_antitop_4f_InclusiveDecays (alt.) | 30,609,000 | 35 | 80 | 0.0455 (|w| units) | 27.1 M | 339 | 20.7 | *27.1 M / 20.7* | ESTIMATE (not probed) | 10.6 | 1090 | 424 |
+| 1 | 64635 | ST_s-channel_4f_leptonDecays | 5,471,000 | 19 | 3.623 | 0.00286 | 2.65 M | 731 | 44.6 | *2.32 M / 39.1* | probe | 1.9 | 359 | 230 |
+| 1 | 67841 | TTToHadronic | 107,067,000 | 146 | 378.9 | 0.000185 | 105 M | 278 | 17 | *105 M / 17* | probe | 15.4 | 380 | 1767 |
+| 2 | 72742 | WZTo2Q2L_mllmin4p0 | 13,526,954 | 39 | 7.133 | 0.000901 | 5.26 M | 737 | 45 | *5.26 M / 45* | probe | 5.7 | 522 | 472 |
+| 2 | 75573 | ZZTo2Q2L_mllmin4p0 | 13,740,600 | 14 | 4.311 | 0.000933 | 5.76 M | 1.34e+03 | 81.5 | *5.77 M / 81.6* | probe | 5.7 | 1477 | 169 |
+| 2 | 72738 | WZTo1L1Nu2Q | 3,690,271 | 23 | 10.16 | 0.00295 | 1.26 M | 124 | 7.54 | *1.23 M / 7.37* | probe | 1.5 | 241 | 278 |
+| 2 | 72658 | WWTo1L1Nu2Q | 19,976,139 | 30 | 52.36 | 0.000509 | 7.27 M | 139 | 8.47 | *7.28 M / 8.48* | probe | 8.4 | 1002 | 363 |
+| 2 | 72740 | WZTo1L3Nu | 1,229,946 | 21 | 3.789 | 0.00899 | 0.403 M | 106 | 6.49 | *0.404 M / 6.51* | probe | 0.5 | 88 | 254 |
+| 3 | 72701 | WWW_4F (ext1) | 4,159,000 | 24 | 0.2158 | 0.00394 | 3.42 M | 1.59e+04 | 968 | *3.42 M / 966* | probe | 1.7 | 261 | 290 |
+| 3 | 72711 | WWZ_4F (ext1) | 4,595,000 | 7 | 0.1707 | 0.00356 | 3.78 M | 2.22e+04 | 1.35e+03 | *3.78 M / 1.35e+03* | probe | 1.9 | 988 | 85 |
+| 3 | 72761 | WZZ (ext1) | 4,554,000 | 9 | 0.05709 | 0.0036 | 3.74 M | 6.55e+04 | 4e+03 | *3.75 M / 4.01e+03* | probe | 1.9 | 761 | 109 |
+| 3 | 75600 | ZZZ (ext1) | 4,534,000 | 20 | 0.01476 | 0.00362 | 3.59 M | 2.43e+05 | 1.48e+04 | *3.6 M / 1.49e+04* | probe | 1.9 | 341 | 242 |
+| 4 | 68325 | tZq_ll_4f | 3,967,000 | 52 | 0.07561 | 0.00399 | 0.297 M | 3.92e+03 | 239 | *0.29 M / 234* | probe | 1.4 | 95 | 629 |
+| 4 | 64873 | ST_tWll_5f | 320,000 | 2 | 0.01105 | 0.000566 | 0.32 M | 2.9e+04 | 1.77e+03 | *0.32 M / 1.77e+03* | probe | 0.1 | 199 | 24 |
+| 4 | 67645 | ttHTobb_M125 (powheg) | 4,937,000 | 26 | 0.2953 | 0.00196 | 4.72 M | 1.6e+04 | 974 | *4.73 M / 978* | probe | 10.1 | 1397 | 315 |
+| 4 | 67691 | ttHToNonbb_M125 (powheg) | 2,240,994 | 20 | 0.2118 | 0.00309 | 2.16 M | 1.02e+04 | 621 | *2.15 M / 619* | probe | 4.6 | 825 | 242 |
+| 4 | 68206 | TTZToQQ | 5,401,000 | 20 | 0.5113 | 0.003 | 1.36 M | 2.67e+03 | 163 | *1.33 M / 159* | probe | 11.0 | 1987 | 242 |
+| 4 | 68083 | TTWJetsToQQ | 308,983 | 8 | 0.4375 | 0.0348 | 0.0896 M | 205 | 12.5 | *0.0925 M / 12.9* | probe | 0.6 | 284 | 97 |
+| 4 | 68045 | TTTT | 4,544,000 | 23 | 0.008091 | 0.00377 | 0.789 M | 9.75e+04 | 5.95e+03 | *0.869 M / 6.55e+03* | probe | 9.3 | 1454 | 278 |
+| 4 | 68185 | TTZToLL_M-1to10 | 320,000 | 9 | 0.0537 | 0.0509 | 0.1 M | 1.87e+03 | 114 | *0.0995 M / 113* | probe | 0.7 | 262 | 109 |
+| 5 | 37474 | GluGluHToWWTo2L2Nu_M-125 | 2,838,995 | 10 | 1.111 | 0.000299 | 2.84 M | 2.55e+03 | 156 | *2.84 M / 156* | probe | 2.8 | 997 | 121 |
+| 5 | 68601 | VBFHToWWTo2L2Nu_M125 | 3,596,630 | 30 | 0.08653 | 0.000101 | 3.59 M | 4.15e+04 | 2.53e+03 | *3.59 M / 2.53e+03* | probe | 3.5 | 421 | 363 |
+| 5 | 41877 | HWplusJ_HToWW_M-125 | 2,855,188 | 58 | 0.1795 | 0.00118 | 2.55 M | 1.42e+04 | 866 | *2.55 M / 865* | probe | 2.8 | 173 | 702 |
+| 5 | 41873 | HWminusJ_HToWW_M-125 | 2,931,162 | 66 | 0.1139 | 0.000672 (|w| units) | 2.63 M | 2.31e+04 | 1.41e+03 | *2.63 M / 1.41e+03* | ESTIMATE (not probed) | 2.9 | 156 | 799 |
+| 5 | 41914 | HZJ_HToWW_M-125 (ext1) | 4,465,166 | 6 | 0.1627 | 0.000635 (|w| units) | 3.95 M | 2.43e+04 | 1.48e+03 | *3.95 M / 1.48e+03* | ESTIMATE (not probed) | 4.4 | 2614 | 73 |
+| 5 | 40095 | GluGluZH_HToWW_ZTo2L_M-125 (ext1) | 4,737,669 | 5 | 0.002648 | 9.16e-06 (|w| units) | 4.74 M | 1.79e+06 | 1.09e+05 | *4.74 M / 1.09e+05* | ESTIMATE (not probed) | 4.6 | 3328 | 61 |
+| 5 | 37446 | GluGluHToTauTau_M125 | 6,439,000 | 40 | 3.047 | 0.00036 | 6.36 M | 2.09e+03 | 127 | *6.31 M / 126* | probe | 6.3 | 565 | 484 |
+| 5 | 68591 | VBFHToTauTau_M125 | 1,500,000 | 7 | 0.2372 | 0.0026 (|w| units) | 1.5 M | 6.31e+03 | 385 | *1.5 M / 385* | ESTIMATE (not probed) | 1.5 | 753 | 85 |
+| 5 | 71297 | WplusHToTauTau_M125 | 2,000,000 | 7 | 0.05268 | 0.000457 (|w| units) | 1.78 M | 3.38e+04 | 2.06e+03 | *1.78 M / 2.06e+03* | ESTIMATE (not probed) | 2.0 | 1004 | 85 |
+| 5 | 70453 | WminusHToTauTau_M125 | 1,995,182 | 3 | 0.03342 | 0.00029 (|w| units) | 1.79 M | 5.35e+04 | 3.27e+03 | *1.79 M / 3.27e+03* | ESTIMATE (not probed) | 1.9 | 2336 | 36 |
+| 5 | 74684 | ZHToTauTau_M125 | 2,419,675 | 6 | 0.04774 | 0.000343 (|w| units) | 2.15 M | 4.5e+04 | 2.74e+03 | *2.15 M / 2.74e+03* | ESTIMATE (not probed) | 2.4 | 1417 | 73 |
+| 5 | 37616 | GluGluHToZZTo2L2Nu_M125 | 496,000 | 2 | 0.03425 | 0.00114 (|w| units) | 0.486 M | 1.42e+04 | 866 | *0.486 M / 866* | ESTIMATE (not probed) | 0.5 | 871 | 24 |
+| 5 | 68741 | VBF_HToZZTo2L2Nu_M125 | 500,000 | 21 | 0.002666 | 8.75e-05 (|w| units) | 0.499 M | 1.87e+05 | 1.14e+04 | *0.499 M / 1.14e+04* | ESTIMATE (not probed) | 0.5 | 84 | 254 |
+| 5 | 71227 | WplusH_HToZZTo4L_M125 | 294,744 | 12 | 0.0002306 | 1.36e-05 (|w| units) | 0.263 M | 1.14e+06 | 6.96e+04 | *0.263 M / 6.96e+04* | ESTIMATE (not probed) | 0.3 | 86 | 145 |
+| 5 | 70383 | WminusH_HToZZTo4L_M125 | 193,088 | 7 | 0.0001463 | 1.31e-05 (|w| units) | 0.174 M | 1.19e+06 | 7.25e+04 | *0.174 M / 7.25e+04* | ESTIMATE (not probed) | 0.2 | 97 | 85 |
 
-| tier | samples | files | events | CPU h | cluster files added (production + build) | cumulative file count | under 125,000? |
+| tier | samples | files | events | CPU h | cluster files added (production + build) | cumulative file count (from 92,041) | under 125,000? |
 |---|---:|---:|---:|---:|---:|---:|---|
-| 1 | 7 | 518 | 610,590,364 | 74 | 7,474 | 98,139 | yes |
-| 2 | 5 | 127 | 52,163,910 | 22 | 2,398 | 100,538 | yes |
-| 3 | 4 | 60 | 17,842,000 | 7 | 1,415 | 101,953 | yes |
-| 4 | 8 | 160 | 22,038,977 | 38 | 3,315 | 105,267 | yes |
-| 5 | 15 | 280 | 37,262,499 | 36 | 5,973 | 111,240 | yes |
+| 1 | 7 | 518 | 610,590,364 | 74 | 7,474 | 99,515 | yes |
+| 2 | 5 | 127 | 52,163,910 | 22 | 2,398 | 101,914 | yes |
+| 3 | 4 | 60 | 17,842,000 | 7 | 1,415 | 103,329 | yes |
+| 4 | 8 | 160 | 22,038,977 | 38 | 3,315 | 106,643 | yes |
+| 5 | 15 | 280 | 37,262,499 | 36 | 5,973 | 112,616 | yes |
 
 CPU seconds per event used (25-26 Oct audit): 35669: 241 µs, 37728: 3513 µs, 64895: 1246 µs, 67993: 518 µs, 68187: 7359 µs, 72752: 1505 µs
+
+
+### 4a. Probe results (step 4, PBS array 5365612[], 26 Oct 2026; VERIFIED BY RUNNING)
+
+File index 0 of each of the 30 samples in `plan_samples.PROBE`, read with uproot in a PBS job (io=25) from the
+checkout pinned to `868352ab100da6e45a22682d2d0a324eecf7ed52`; all 30 subjobs exit status 0, ≤ 13 s each.
+Raw results `evidence/probe/probe_<recid>.json`, logs `evidence/probe/logs/`.
+
+- **Branches:** all 42 branches the production reads (object, trigger, trigger-object and MC branches,
+  including `genWeight`, `L1PreFiringWeight_Nom`, `Pileup_nTrueInt`) are present in **every** probed file;
+  `LHE_HT` and `LHE_Njets` too. `branches_missing` is empty for all 30.
+- **Runs tree vs events:** Σ genWeight over the file equals the Runs-tree `genEventSumw` to ≤ 5 × 10⁻⁸ in
+  all 30 files (no pre-skim, as for the 25 Oct samples).
+- **Negative-weight fraction:** matches the portal value within 0.011 everywhere except s-channel (0.152 vs
+  0.174; its file 0 has only 1,000 events) and ggH → ττ (0.003 vs 0.005; 1,000 events).
+- **N_eff and MC luminosity:** within ~3 % of the portal estimates for every sample except s-channel
+  (+14 %, small file 0) and tt̄tt̄ (−9 %). The table above shows both. 11 of the 15 recommended Higgs samples and the
+  two 4-flavour alternatives were not probed (the ≤ 30 limit) and keep the ESTIMATE.
+- **LHE_Njets in the three W+jets pieces** (file 0):
+
+| piece | LHE_Njets counts | 
+|---|---|
+| 69715 0J | 0: 539,283, 1: 99,738 |
+| 69717 1J | 1: 1,472,816, 2: 610,243 |
+| 69719 2J | 2: 1,126,525, 3: 629,573 |
+| 69745 inclusive NLO (alt.) | 0: 263,893, 1: 110,790, 2: 58,433, 3: 18,540 |
+| 69747 inclusive LO (alt.) | 0: 101,865, 1: 22,104, 2: 6,785, 3: 2,025, 4: 913 |
+
+  Not exactly 0 / 1 / 2: each NLO piece also has events with one parton *more* (0J: 16 % with 1, 1J: 29 %
+  with 2, 2J: 36 % with 3). That is what an NLO sample looks like (the real-emission parton is written to
+  the LHE record); the pieces are still separate by their Born-level parton count, which is how they were
+  generated. **It means LHE_Njets cannot be used to cut the pieces against each other or against an
+  inclusive sample** — irrelevant for the recommended option A (each piece normalised on its own, no
+  stitching), but it rules out naive LHE_Njets stitching of the NLO set. For the technical lead to confirm.
+- **genWeight distributions** (sign and log10 |w|, file 0): `plots/genweight_<recid>.png`, below. The MG5
+  samples have a single |w| value (constant weights ±); POWHEG samples have a spread.
+
+![genWeight 37446](plots/genweight_37446.png)
+![genWeight 37474](plots/genweight_37474.png)
+![genWeight 41877](plots/genweight_41877.png)
+![genWeight 64635](plots/genweight_64635.png)
+![genWeight 64693](plots/genweight_64693.png)
+![genWeight 64793](plots/genweight_64793.png)
+![genWeight 64873](plots/genweight_64873.png)
+![genWeight 67645](plots/genweight_67645.png)
+![genWeight 67691](plots/genweight_67691.png)
+![genWeight 67841](plots/genweight_67841.png)
+![genWeight 68045](plots/genweight_68045.png)
+![genWeight 68083](plots/genweight_68083.png)
+![genWeight 68185](plots/genweight_68185.png)
+![genWeight 68206](plots/genweight_68206.png)
+![genWeight 68325](plots/genweight_68325.png)
+![genWeight 68601](plots/genweight_68601.png)
+![genWeight 69715](plots/genweight_69715.png)
+![genWeight 69717](plots/genweight_69717.png)
+![genWeight 69719](plots/genweight_69719.png)
+![genWeight 69745](plots/genweight_69745.png)
+![genWeight 69747](plots/genweight_69747.png)
+![genWeight 72658](plots/genweight_72658.png)
+![genWeight 72701](plots/genweight_72701.png)
+![genWeight 72711](plots/genweight_72711.png)
+![genWeight 72738](plots/genweight_72738.png)
+![genWeight 72740](plots/genweight_72740.png)
+![genWeight 72742](plots/genweight_72742.png)
+![genWeight 72761](plots/genweight_72761.png)
+![genWeight 75573](plots/genweight_75573.png)
+![genWeight 75600](plots/genweight_75600.png)
+
 
 **Flags.**
 - **MC luminosity below the data's 16.393 fb⁻¹:** only W+jets — the recommended pieces at 0.13 / 0.29 / 0.16 ×
   the data, the alternatives at 0.013 × (inclusive NLO) and 0.08 × (inclusive LO). A W+jets event will carry
-  a weight of 6.4 / 1.7 / 1.9 (0J / 1J / 2J, in units of |genWeight|, PROVISIONAL), and each effective MC
+  a weight of 6.4 / 1.7 / 1.9 (0J / 1J / 2J, in units of |genWeight|, PROVISIONAL; confirmed by the probe), and each effective MC
   event stands for 8 / 3.5 / 6 data events, so sparse histograms can show isolated spikes —
   relevant for a bump-hunting input. Everything else is ≥ 6.5 × the data (WZ → ℓννν lowest).
 - **Wall time:** no file is estimated above the 2 h wall time used on 25 Oct (largest: gg → ZH 3,300 s, qq̄
@@ -422,7 +496,7 @@ vs 5,765 pb). This supports "matching is already in total_value" for the FxFx re
 See HANDOFF.md. In short: Matan's cross-section decisions → new registry entries (a new registry version,
 never an edit of v3 in place) → the input-file sweep and mappings for the new records → production tier by
 tier (≤ 1,000 queued subjobs; io=25; 2 h, 3 h for tier 4) → one MC build with old + new samples → the usual
-audits and plots. The probe results (branches, Runs fields, real N_eff) should come first.
+audits and plots. The probe (§4a) found no missing branch.
 
 ## 8. Files
 
@@ -433,7 +507,8 @@ audits and plots. The probe results (branches, Runs fields, real N_eff) should c
 - evidence: `evidence/records/` (622 raw API records), `evidence/cards/` (generator cards),
   `evidence/portal_search_titles.json`, `evidence/records_summary.json`, `evidence/xsec_proposals.json`,
   `evidence/stats_cost.json`, `evidence/group_tables.md`, `evidence/stats_table.md`;
-- plots: `plots/mc_lumi_vs_data.png` (the genWeight plots wait for the probe).
+- plots: `plots/mc_lumi_vs_data.png`, `plots/genweight_<recid>.png` (30, from the probe);
+- probe: `evidence/probe/probe_<recid>.json`, `evidence/probe/logs/`.
 
 ## Appendix: every candidate record, by group
 

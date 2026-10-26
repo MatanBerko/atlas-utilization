@@ -19,58 +19,40 @@ edited (the upstream gate printed nothing before each push). No Pull Request; no
   source page/paper opened on 26 Oct (VERIFIED BY RUNNING), nothing applied.
 - **Step 7, plan:** `PLAN.md`, `candidates.json`, `plots/mc_lumi_vs_data.png`.
 
-## NOT done: step 4, the probe (cluster unreachable)
+## Step 4, the probe — DONE (26 Oct 2026, second session)
 
-`ssh wipp-campus` once: "No route to host". `ssh wipp-home`: "Could not resolve hostname
-wipp-jump.weizmann.ac.il" on every try during the session (five tries, 26 Oct). As on 21-23 Oct, this
-usually means the Mac's VPN has dropped: **Matan, please reconnect the VPN.** Consequences:
-- no probe job was submitted (no job IDs);
-- the file quota was **not re-measured**; the plan uses 90,665 (end of 26 Oct, measured by the full-run task);
-- the genWeight plots do not exist yet; N_eff values are ESTIMATES;
-- the presence of `L1PreFiringWeight_Nom`, `Pileup_nTrueInt`, `LHE_HT`, `LHE_Njets` and the trigger branches
-  in the new samples is UNVERIFIED (expected for NanoAODv9, not checked).
+Everything below VERIFIED BY RUNNING.
+- Preflight: branch head `868352a` (unchanged), `upstream/master` `29291ae`. `ssh wipp-campus`: "No route to
+  host" (one try); `wipp-home` worked.
+- File quota (`lfs quota -u berkom /storage`): **90,665 before**, **92,041 after** (+1,376: the pinned clone and
+  the probe outputs/logs). Under 125,000.
+- New directories (did not exist before): `checkouts/mcplan_20261026/repo_868352ab100da6e45a22682d2d0a324eecf7ed52`
+  (HEAD asserted = that sha) and `work/mcplan_20261026/{logs,probe}`.
+- Submitted exactly the command of the first HANDOFF with C = `868352ab100da6e45a22682d2d0a324eecf7ed52`:
+  **PBS array `5365612[]`**, `-J 0-29`, mem 4gb, walltime 1 h, io=25, queue N, `-m n`. All 30 subjobs
+  `Exit status: 0`, wall ≤ 12.6 s; every log prints `commit=868352a…`.
+- Collected: `evidence/probe/probe_<recid>.json` (30) and `evidence/probe/logs/p_*.{out,err}`; re-ran
+  `stats_cost.py`, `make_candidates.py`, `make_plots.py` (30 `plots/genweight_<recid>.png`).
 
-### How to run it (the probe script is committed and pushed)
+Results (PLAN.md §4a):
+- `branches_missing` is **empty for all 30** (42 production branches incl. `L1PreFiringWeight_Nom`,
+  `Pileup_nTrueInt`); `LHE_HT`, `LHE_Njets` present in all.
+- `runs_vs_events_sumw_rel` |·| ≤ 5e-8 in all 30.
+- `frac_negative` matches the portal within 0.011, except s-channel 0.152 vs 0.174 and ggH → ττ 0.003 vs
+  0.005 (both have only 1,000 events in file 0).
+- N_eff / MC luminosity within ~3 % of the estimates except s-channel (+14 %) and tt̄tt̄ (−9 %); W+jets still
+  0.125 / 0.288 / 0.162 × the data luminosity. No conclusion of the plan changed.
+- LHE_Njets in the W+jets NLO pieces: 0J {0: 539,283, 1: 99,738}, 1J {1: 1,472,816, 2: 610,243},
+  2J {2: 1,126,525, 3: 629,573} — each piece also contains real-emission events with one more LHE parton,
+  so the pieces cannot be cut against each other by LHE_Njets (not needed for option A). For the technical lead.
+- Not probed (keep ESTIMATES): 11 of the 15 recommended Higgs samples and the two 4-flavour t-channel
+  alternatives (the ≤ 30 limit).
 
-Pin: the branch head at the time of running (it contains `probe_sample.py`, `plan_samples.py` and
-`cluster/pbs_probe.sh`; first pushed in `7e26f5c`). From the Mac:
-
-```bash
-ssh wipp-home 'bash -s' <<'EOF'
-set -euo pipefail
-B=/storage/agrp/berkom/atlas-utilization
-CK=$B/checkouts/mcplan_20261026; W=$B/work/mcplan_20261026
-C=<full sha of the pushed branch head>
-lfs quota -u berkom /storage | head -5                       # BEFORE (stop if > 125,000)
-test ! -e $CK && test ! -e $W                                # new directories only
-mkdir -p $CK $W/logs $W/probe
-git clone -q --no-checkout https://github.com/MatanBerko/atlas-utilization.git $CK/repo_$C
-git -C $CK/repo_$C checkout -q $C && test "$(git -C $CK/repo_$C rev-parse HEAD)" = $C
-R=$CK/repo_$C
-/opt/pbs/bin/qsub -J 0-29 -N mcplan_probe -l select=1:ncpus=1:mem=4gb,walltime=01:00:00,io=25 \
-  -o "$W/logs/p_^array_index^.out" -e "$W/logs/p_^array_index^.err" \
-  -v REPO_DIR=$R,WORK_DIR=$W,OUT_DIR=$W/probe $R/studies/mc_expansion_plan_20261026/cluster/pbs_probe.sh \
-  | tee $W/probe_jobid.txt
-EOF
-```
-
-(30 subjobs = `plan_samples.PROBE`: every tier 1-4 sample, the two W+jets alternatives, four Higgs samples.
-`#PBS -m n` and queue N are in the script; io=25 because it reads ROOT files.) If still queued after ~1 h,
-write the job ID here and continue.
-
-### Collecting it
-
-```bash
-scp 'wipp-home:/storage/agrp/berkom/atlas-utilization/work/mcplan_20261026/probe/probe_*.json' \
-    studies/mc_expansion_plan_20261026/evidence/probe/
-python3 studies/mc_expansion_plan_20261026/stats_cost.py      # uses the probe files automatically
-python3 studies/mc_expansion_plan_20261026/make_candidates.py
-python3 studies/mc_expansion_plan_20261026/make_plots.py      # writes plots/genweight_<recid>.png
-```
-Then check: every `branches_missing` is empty (else STOP: the production would fail on that sample);
-`runs_vs_events_sumw_rel` ≈ 0 (no pre-skim, like the 25 Oct files); `frac_negative` ≈ the portal value;
-for the W+jets pieces, `lhe_njets_counts`. Re-assemble PLAN.md §4 from `evidence/stats_table.md`
-and measure the quota again (`lfs quota`, then after).
+Changed files: `stats_cost.py` (quota baseline 92,041; keeps the portal estimate next to the probe value),
+`PLAN.md` (summary, §3 note, §4 table with old-estimate column, new §4a with the plots, §8), this file, the
+regenerated `candidates.json`, `evidence/stats_cost.json`, `evidence/stats_table.md`, `evidence/stats_cost_table.txt`,
+new `evidence/probe/`, `evidence/probe_section.md`, `plots/genweight_*.png`. Nothing outside this folder;
+no registry or config touched; cluster outputs left in place.
 
 ## What the implementation step would need (after the technical lead and Matan)
 
@@ -87,6 +69,6 @@ and measure the quota again (`lfs quota`, then after).
    the recommended option A).
 6. One MC build with the old 13 + new samples, then the usual audit, rule check, sanity plots; check the
    W+jets histograms for single-event spikes (MC luminosity 0.13-0.29 × data).
-7. File quota: ~+20,600 files for all tiers (ESTIMATE) → ~111,000 of 125,000.
+7. File quota: ~+20,600 files for all tiers (ESTIMATE) → ~112,600 of 125,000 (from 92,041 measured 26 Oct).
 
 Local repo switched back to `master` at the end. STOPPED.

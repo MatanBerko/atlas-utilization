@@ -28,7 +28,7 @@ sys.path.insert(0, str(HERE))
 from plan_samples import SAMPLES  # noqa: E402
 
 L_DATA_PB = 16393.0          # 16.393 fb^-1
-QUOTA_NOW = 90665            # lfs quota at the end of 26 Oct (fullrun_20261025/HANDOFF.md); not re-measured here
+QUOTA_NOW = 92041            # lfs quota measured 26 Oct after the probe (90,665 before it); HANDOFF.md
 QUOTA_MAX = 125000
 FILES_PER_JOB = 6014 / 497   # 17 Oct MC production, measured (fullrun_20261025/HANDOFF.md projection table)
 BUILD_FILES_PER_SAMPLE = 2240 / 13  # 17 Oct MC build + post incl. kept scratch, for 13 samples
@@ -74,6 +74,7 @@ def main():
             sumw = n * mean_w
             neff = n * mean_w ** 2
             how = "ESTIMATE from the portal negative-weight fraction"
+        est_neff = n * (1.0 - 2.0 * f) ** 2
         lumi_mc_pb = neff / s if s else None
         a = analog_for(recid, group)
         cpu_s = n * rate[a]
@@ -84,6 +85,9 @@ def main():
             weight_per_event_PROVISIONAL=(s * L_DATA_PB / sumw) if s else None,
             weight_note="in units of the sample's mean |genWeight|" if not pr.exists() else "x genWeight",
             n_eff=neff, mc_lumi_fb=lumi_mc_pb / 1000 if lumi_mc_pb else None,
+            n_eff_estimate_portal=est_neff, mc_lumi_fb_estimate_portal=est_neff / s / 1000 if s else None,
+            probe_events_in_file0=p["events_in_file"] if pr.exists() else None,
+            probe_frac_negative=p["frac_negative"] if pr.exists() else None,
             mc_lumi_over_data=lumi_mc_pb / L_DATA_PB if lumi_mc_pb else None,
             stats_source=how,
             cpu_analog=a, cpu_s_per_event_analog=rate[a], cpu_hours=cpu_s / 3600,
@@ -102,7 +106,7 @@ def main():
     res = dict(
         what="Statistics and cost of the planned samples; sigma_eff values are PROPOSALS (PROVISIONAL)",
         data_luminosity_fb=L_DATA_PB / 1000, quota_now=QUOTA_NOW,
-        quota_now_source="lfs quota 26 Oct 2026 end of the full run (studies/fullrun_20261025/HANDOFF.md); NOT re-measured in this task (cluster unreachable)",
+        quota_now_source="lfs quota on wipp-home, 26 Oct 2026, after the probe job 5365612[] (90,665 before it); VERIFIED BY RUNNING",
         quota_max=QUOTA_MAX, files_per_job=FILES_PER_JOB, build_files_per_sample=BUILD_FILES_PER_SAMPLE,
         cpu_rates_s_per_event={k: rate[k] for k in sorted(set(ANALOG.values()) | set(ANALOG_RARE.values()) | {"68187"})},
         cpu_source="studies/fullrun_20261025/evidence/final_mc/production_audit.json (audit job 5341394 of the 25-26 Oct production arrays 5340549[]-5340560[], 5341381[]): cpu_seconds_driver / events_read",
