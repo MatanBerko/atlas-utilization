@@ -1,0 +1,17 @@
+start 2026-10-25T17:36:17+02:00 on wipp-an1
+queued+running+held pieces: 887
+37728 5341381[].pbs 8 02:00:00
+mc/jobids.txt lines: 13
+DATA_ARR=:5340544[].pbs:5340545[].pbs:5340546[].pbs:5340547[].pbs:5340548[].pbs
+MC_ARR=:5340549[].pbs:5340550[].pbs:5340551[].pbs:5340552[].pbs:5340553[].pbs:5340554[].pbs:5340555[].pbs:5340556[].pbs:5340557[].pbs:5340558[].pbs:5340559[].pbs:5340560[].pbs:5341381[].pbs
+data_check 5341390.pbs
+data_build 5341391.pbs
+data_exact 5341392.pbs
+data_checks 5341393.pbs
+mc_audit 5341394.pbs
+mc_gate 5341395.pbs
+mc_build 5341396.pbs
+mc_sanity 5341397.pbs
+mc_rule_builds 5341398.pbs
+mc_rulecheck 5341399.pbs
+end 2026-10-25T17:36:32+02:00

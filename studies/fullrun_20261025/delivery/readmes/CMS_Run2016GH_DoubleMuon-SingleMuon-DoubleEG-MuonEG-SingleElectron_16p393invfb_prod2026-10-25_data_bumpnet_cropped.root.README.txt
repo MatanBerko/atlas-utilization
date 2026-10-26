@@ -1,0 +1,73 @@
+CMS_Run2016GH_DoubleMuon-SingleMuon-DoubleEG-MuonEG-SingleElectron_16p393invfb_prod2026-10-25_data_bumpnet_cropped.root
+=======================================================================================================================
+
+CMS 2016 collision DATA, Run G+H, 16.393 fb^-1, five datasets.
+  THE FILE FOR BUMPNET. Every histogram is cropped to its first..last filled bin
+  (the first bin is never empty, as BumpNet requires).
+
+CONTENTS
+  313 histograms (TH1F, event counts) in 49 final states.
+  Events pooled per dataset after de-duplication:
+    DoubleMuon         9,627,969 events (inclusive)
+    SingleMuon       155,900,821 events (exclusive)
+    DoubleEG           6,157,959 events (exclusive)
+    MuonEG                19,547 events (exclusive)
+    SingleElectron    96,293,946 events (exclusive)
+
+DATA AND LUMINOSITY
+  CMS Open Data, Run2016G + Run2016H, UL2016 MiniAODv2 NanoAODv9, five primary
+  datasets (541 files: DoubleMuon 57, SingleMuon 152, DoubleEG 133,
+  MuonEG 48, SingleElectron 151). Only certified luminosity sections are used
+  (golden JSON Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON).
+  Integrated luminosity 16.393 fb^-1 (G 7.653 + H 8.740; the documented value
+  used for the MC normalisation).
+
+OBJECT SELECTION (identical for data and MC)
+  Muons:     pT > 25 GeV, |eta| < 2.4, CMS Loose ID (Muon_looseId),
+             isolation pfRelIso04_all < 0.15
+  Electrons: pT > 25 GeV, |eta| < 2.5, cut-based ID >= 2 (Loose or tighter,
+             Fall17 V2: 0 fail, 1 veto, 2 loose, 3 medium, 4 tight)
+  Jets:      pT > 30 GeV, |eta| < 2.5, tight jet ID, removed within dR < 0.4
+             of a selected lepton
+  b-jets:    DeepJet Jet_btagDeepFlavB > 0.2489 (UL2016 postVFP medium WP)
+  e-mu overlap removal: every selected electron within dR < 0.12 of a
+             selected muon is removed, before trigger matching and before the
+             final state is decided.
+  (Loose muon and electron IDs since 24 Oct 2026, Maryna; before that the
+   deliveries used medium IDs.)
+
+TRIGGERS AND OFFLINE THRESHOLDS (trigger-object match dR < 0.1)
+  DoubleMuon     HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ OR ..._TkMu8_..._DZ;
+                 >= 2 matched muons, leading > 17 GeV
+  SingleMuon     HLT_IsoMu24 OR HLT_IsoTkMu24; >= 1 matched muon > 24 GeV
+  DoubleEG       HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ; 2 matched
+                 electrons, BOTH offline > 30 GeV
+  MuonEG         HLT_Mu23_TrkIsoVVL_Ele12_..._DZ OR HLT_Mu8_TrkIsoVVL_Ele23_..._DZ;
+                 >= 1 selected muon, electron leg 12 / 23 GeV by path
+  SingleElectron HLT_Ele27_WPTight_Gsf; matched electron, offline > 32 GeV
+  De-duplication (each collision counted once), highest priority first:
+    DoubleMuon > SingleMuon > DoubleEG > MuonEG > SingleElectron
+  (DoubleMuon contributes all its accepted events, every other dataset only
+   the events no higher-priority dataset accepted.)
+  MC: no de-duplication; an MC event is kept if ANY of the five dataset
+  acceptances above holds (the same functions as data).
+
+FINAL STATES AND POST-PROCESSING
+  * Multiplicity rule of upstream #40 (5fbf1ef): at most 4 objects per final
+    state. Events with electrons + muons + b-jets > 4 are rejected; light
+    jets fill the free slots (light jets in the name = min(jets,
+    4 - (e + m + b))); the masses use the kept leading-pT jets.
+  * >= 100 events per final state, applied once over all files combined.
+  * Same-flavour dilepton masses below 110 GeV are removed (Z-peak cut);
+    masses above 10,000 GeV are removed.
+  * Peak removal: entries below the rightmost highest peak are removed, and
+    the outlier tail is split off at the first empty bin (upstream
+    post-processing).
+  * Fixed binning: 0-10,000 GeV in 10 GeV bins (1000 bins).
+  Names: ROI_mass_<combination>_cat_<n>ex_<n>mx_<n>jx_<n>bx_width_10.0
+
+PRODUCTION
+  Produced 25-26 Oct 2026 on the Weizmann WIPP cluster from the code at commit
+  75b399e2dfdacc50affd4e2c78bc865b12f000cc (github.com/MatanBerko/atlas-utilization, branch
+  run/cms-fullrun-20261025). Checksums: SHA256SUMS.txt. Sources of every
+  value: MANIFEST.md.

@@ -1,153 +1,111 @@
-# The CMS layer on top of upstream
+# The CMS layer on top of upstream (lean branch)
 
-This branch is **upstream master `e1ce8bb` plus added files only**. Every file
-that exists in upstream `e1ce8bb` is byte-identical to upstream; nothing in it
-was edited, moved or deleted. Everything CMS-specific lives in the files
-listed below, all copied byte-for-byte from the fork's old master `ba89791`
-(archived as `archive/master-2026-10-14`), except the four documentation
-files, which are new.
+This branch, `lean/cms-layer-20261023`, is **upstream master `29291ae` plus added files only**:
+the minimal CMS layer needed to run the CMS production and build the deliveries. Every file
+that exists upstream is byte-identical to upstream; nothing upstream was edited, moved or
+deleted. Every added file is byte-identical to the same path on
+`feature/cms-mc-multiplicity40-20261023` @ `de012d2`, except this document.
 
 Check it yourself:
 
 ```bash
-git diff --name-status upstream/master HEAD     # every line starts with "A"
+git diff --name-status upstream/master HEAD      # every line starts with "A"
+git diff de012d2 HEAD -- $(git diff --name-only upstream/master HEAD) ':!docs/CMS_LAYER.md'   # empty
 ```
 
-"Delivery" below means the four-dataset BumpNet delivery of 7 Oct 2026
-(`four_dataset_matched_vB_upstreamnames_w10p0_dr012_bumpnet_cropped.root`,
-1,975 histograms, 103 final states; see
-`studies/cms_datasets/electron_vB/DELIVERY_NOTES.md`).
+24 Oct 2026, Maryna: loose muon and electron IDs; muon iso < 0.15 kept
 
-## Added files
+The folder names are historical (`m0m1j0_cms`, `cms_coverage`, `electron_vB`,
+`cms_mc_weights_v3`) and were kept, so that nothing had to be moved or edited.
 
-### Shared CMS modules and data
+## A. Run code, inputs and launchers
 
-| file | what it is | why CMS needs it | generic / upstreamable? | used by delivery |
-|---|---|---|---|---|
-| `services/parsing/validated_runs.py` | Filters events to the certified-luminosity ("golden JSON") run/lumi-section list | CMS data must be restricted to certified lumi sections; ATLAS Open Data is pre-filtered | Yes — experiment-agnostic (any run/lumi JSON); only stdlib, numpy, awkward | Yes (`run_dataset_on_file.py`) |
-| `services/parsing/trigger_requirements.py` | Applies an "any of these HLT bits" trigger requirement to events | CMS primary datasets overlap and each needs its own trigger decision | Yes — generic boolean-branch OR; only stdlib, numpy, awkward | Yes (`run_dataset_on_file.py`) |
-| `data/cms/validated_runs/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt` | The official 2016 Legacy certified-run list | Read by `validated_runs.py` at its default path | Data file, CMS-specific | Yes |
-| `data/cms/validated_runs/README.md` | Where the JSON came from | Provenance | — | Documentation |
+Shared modules and data:
+- `services/parsing/validated_runs.py`: keeps only events in certified ("golden JSON") run/lumi sections.
+- `services/parsing/trigger_requirements.py`: an "any of these HLT bits fired" trigger requirement.
+- `data/cms/validated_runs/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt`: the official 2016 certified-run list, read by `validated_runs.py`.
+- `data/cms/validated_runs/README.md`: where that list came from.
 
-### The delivery program (`studies/cms_datasets/`)
+Per-file production (data and MC):
+- `studies/cms_datasets/cluster/run_dataset_on_file.py`: the per-file driver. It reads one NanoAOD file and applies certified runs, triggers and trigger matching, object selection, e–μ overlap removal, de-duplication and the rare4 rule. It writes the mass shards and `job_metadata.json` (`--is-mc` for MC).
+- `studies/cms_datasets/cluster/datasets_records.py`: the datasets, their record IDs, triggers and priority order.
+- `studies/m0m1j0_cms/selection.py`: CMS object selection (electrons, muons, jets, b-tag).
+- `studies/m0m1j0_cms/histograms.py`: the fixed 10 GeV grid, BumpNet naming, ROOT writing and checks.
+- `studies/m0m1j0_cms/design_checks/common.py`: `fetch_file_list()`, the file URLs of a CERN Open Data record.
+- `studies/cms_datasets/electron_vB/gen_full_mapping.py`: writes the data file mapping and the `<Dataset>_index.json` files.
+- `studies/cms_datasets/electron_prep/__init__.py`: package marker.
+- `studies/cms_datasets/electron_prep/common.py`: `record_for()` (dataset + era → record ID), imported by `gen_full_mapping.py`. *(Added beyond the original list: needed by an import.)*
+- `studies/cms_datasets/electron_vB/__init__.py`: package marker.
+- `studies/cms_datasets/electron_vB/cluster/pbs_matched4.sh`: PBS array launcher for the data per-file driver.
+- `studies/cms_datasets/electron_vB/check_production_complete.py`: completeness check over every data job directory.
+- `studies/cms_mc_weights_v3/cluster/pbs_mc_pilot.sh`: PBS launcher for the MC per-file driver.
+- `studies/cms_mc_weights_v3/fullrun_prep/make_fullrun_mappings.py`: writes the MC full-run mappings.
+- `studies/cms_mc_weights_v3/evidence/fullrun_inputs_20261017.json`: the MC input-file sweep that `make_fullrun_mappings.py` reads. *(Added beyond the original list: a program input.)*
+- `studies/cms_mc_weights_v3/fullrun_prep/check_input_files.py`: checks that the MC input files are readable (it produces such a sweep).
+- `studies/cms_mc_weights_v3/fullrun/pbs_fullrun.sh`: PBS launcher for the MC full run.
+- `studies/cms_mc_weights_v3/fullrun/audit_production.py`: audit of the MC full-run job directories.
 
-| file | what it is | used by delivery |
-|---|---|---|
-| `cluster/run_dataset_on_file.py` | Per-file production driver: reads one NanoAOD file, applies certified runs, trigger + trigger matching, object selection, e–μ overlap removal (dR < 0.12), de-duplication flags, and writes the invariant-mass shards + `job_metadata.json` | Yes — Step C (`--population matched4`) |
-| `cluster/datasets_records.py` | The four datasets, their CERN Open Data record IDs, triggers and veto order | Yes |
-| `electron_vB/cluster/pbs_matched4.sh` | PBS array launcher for the per-file driver | Yes — Step C |
-| `electron_vB/gen_full_mapping.py` | Builds the 390-file mapping and `<Dataset>_index.json` files | Yes — Step C input |
-| `electron_prep/__init__.py`, `electron_prep/common.py` | `record_for()` (dataset+era → record ID), used by `gen_full_mapping.py` | Yes (helper) |
-| `electron_vB/__init__.py` | Package marker | Yes (import) |
-| `electron_vB/check_production_complete.py` | Step C3 completeness/consistency check over all 390 job directories | Yes — Step C3 |
-| `deliver/build_four_dataset_delivery.py` | The delivery builder (`--version rare4`, no extra flags) | Yes — Step D1 |
-| `deliver/build_dataset_delivery.py`, `deliver/build_muon_combined_delivery.py` | Helper functions the four-dataset builder imports (naming, ROOT writing, manifests) | Yes (imported) |
-| `electron_vB/cluster/pbs_delivery.sh` | PBS launcher for the delivery build | Yes — Step D1 |
-| `electron_vB/verify_delivery.py` | Step D2/D3 read-back checks of the delivered ROOT file | Yes — Step D2/D3 |
-| `electron_vB/make_delivery_plots.py` | Step D4 delivery plots | Yes — Step D4 |
-| `electron_vB/HANDOFF.md`, `DELIVERY_NOTES.md`, `REPORT_production.md` | Documentation of the 7 Oct production and delivery | Documentation |
-| `electron_vB/evidence/C3_production.json`, `D2_D3_delivery_checks.json`, `delivery_README.txt` | Small production/delivery check records (≤ 24 KB each) | Documentation |
-| `electron_vB/evidence/pilot_final_states.json` | Pilot final-state list read by `tests/test_electron_datasets.py --pilot-final-states` | Test input |
+Delivery builders:
+- `studies/cms_datasets/common/multiplicity.py`: the upstream #40 max-4-objects rule applied at build time (calls upstream's functions), shared by both builders.
+- `studies/cms_datasets/deliver/build_four_dataset_delivery.py`: the data delivery builder. Five datasets, matched5, `--multiplicity-rule upstream40` by default.
+- `studies/cms_datasets/deliver/build_dataset_delivery.py`: helpers the data builder imports (naming, ROOT writing, manifests).
+- `studies/cms_datasets/deliver/build_muon_combined_delivery.py`: more helpers the data builder imports.
+- `studies/cms_coverage/cluster/merge_and_count.py`: `copy_shards`, the shared post-processing funnel and the ≥100-events rule.
+- `studies/cms_coverage/deliver/crop_bumpnet_root.py`: crops histograms to their filled range (the BumpNet file).
+- `studies/cms_datasets/electron_vB/cluster/pbs_delivery.sh`: PBS launcher for the data delivery build. It passes no flags, so it uses the #40 rule.
+- `studies/cms_datasets/electron_vB/verify_delivery.py`: read-back checks of a delivered ROOT file.
+- `studies/cms_datasets/electron_vB/make_delivery_plots.py`: delivery plots.
+- `studies/cms_datasets/electron_vB/evidence/delivery_README.txt`: the README shipped with a delivery.
+- `studies/cms_mc_weights_v3/deliver/build_mc_delivery.py`: the MC builder. Weights, the #40 rule by default, the ≥100 rule, peak/outlier cuts, TH1D + Sumw2.
+- `studies/cms_mc_weights_v3/deliver/cms_shard_pruning.py`: upstream's ≥100-events pruning plus removal of the MC sibling rows.
+- `studies/cms_mc_weights_v3/deliver/weighted_histograms.py`: weighted fixed-grid histograms and the negative-bin inventory.
+- `studies/cms_mc_weights_v3/fullrun/sanity_and_plots.py`: sanity checks and plots of an MC build.
 
-None of these is meant to be upstreamed as-is: they are a self-contained CMS
-study program. Parts that could become generic (e.g. the trigger-object
-matching helpers) would need a separate design discussion.
+MC normalisation:
+- `studies/cms_mc_weights_v3/cms_mc_normalisation_v3.json`: the MC registry (cross sections, records, Σw rules) that the builder reads.
+- `studies/cms_mc_weights_v3/build_registry.py`: regenerates and `--check`s that registry from `sources/`.
+- `studies/cms_mc_weights_v3/evidence/probe_mc_records.json`: portal dataset titles that `build_registry.py` reads. *(Added beyond the original list: a program input.)*
 
-### Study modules the delivery imports (kept although their studies are archived)
+## B. Tests
 
-The delivery program imports five modules that live in older study folders.
-They are kept, unchanged, because the delivery cannot run without them;
-the **rest** of those study folders is archived.
+- `tests/test_trigger_requirements.py`, `tests/test_validated_runs.py`: the shared modules above.
+- `studies/cms_datasets/tests/`: b-tag/SingleElectron, electron datasets, exact jet labels, #35 funnel, the #40 rule, upstream names, width suffix.
+- `studies/cms_mc_weights_v3/tests/`: MC builder end to end, shard pruning drift, the SingleElectron flag, weights, peak scope, #35 drift.
 
-| file | what the delivery uses from it |
-|---|---|
-| `studies/m0m1j0_cms/selection.py` | CMS object selection (`build_object_record` etc.), `MIN_EVENTS_PER_FINAL_STATE` |
-| `studies/m0m1j0_cms/histograms.py` | Fixed 10 GeV grid, BumpNet naming, TH1F writing/verification |
-| `studies/m0m1j0_cms/design_checks/common.py` | `fetch_file_list()` — file URLs of a CERN Open Data record |
-| `studies/cms_coverage/cluster/merge_and_count.py` | `copy_shards`, `run_funnel_at_threshold`, the ≥100-events rule constants |
-| `studies/cms_coverage/deliver/crop_bumpnet_root.py` | `crop_arrays` — the cropped BumpNet output |
+Run each as a script from the repo root: `PYTHONPATH=. python <test file>`.
+`test_electron_datasets.py` compares against `upstream/master`, so the `upstream` remote must be fetched.
+Some tests write a small result JSON into an `evidence/` folder. That output is not part of the branch.
 
-### Tests
+## C. Documentation and provenance
 
-| file | notes |
-|---|---|
-| `tests/test_validated_runs.py` | Byte-identical copy. 3 of its tests exercise the fork's old `ParsingConfig.validated_runs_json` field (a fork edit to upstream `domain/config.py`, not carried over) and error on this branch; the rest pass. |
-| `tests/test_trigger_requirements.py` | Byte-identical copy. Its module imports `RequiredScalarBranchMissingError` from `services/parsing/file_parser.py`, which exists only in the fork's edited `file_parser.py`, so the file does not import on this branch. |
-| `studies/cms_datasets/tests/test_*.py` (4 files) | Run as scripts (`python studies/cms_datasets/tests/<name>.py`). Output identical to `ba89791` (14 Oct 2026): `test_width_suffix` and `test_upstream_names` pass; `test_exact_jet_labels` 70 pass / 14 fail and `test_electron_datasets` 108 / 109 (one "NOTED" check). All 15 failures are checks that pin the old one-digit label reading in the shared functions, which upstream PR #34 fixed (already in `ba89791` as `2734dd3`). They are test expectations, not delivery behaviour. |
+- `docs/CMS_LAYER.md`: this file.
+- `docs/CMS_KNOWN_LIMITATIONS.md`: known CMS limitations.
+- `docs/BRANCH_LAYOUT.md`: the fork's branch layout (written for an earlier master).
+- `studies/cms_datasets/README_REBUILD.md`: how to run the data production and delivery.
+- `studies/cms_mc_weights_v3/XSEC_DECISIONS.md`: the cross-section decisions behind the registry.
+- `studies/cms_mc_weights_v3/DESIGN.md`: the MC weighting design (D1–D8).
+- `studies/cms_mc_weights_v3/sources/`: the inputs of `build_registry.py`: `README.md`, `v2_cms_mc_normalisation.json`, `v2_normalisation_table_v2.csv`, `v4_decisions_2026-10-15.json`.
 
-### New documentation
+## Known references to files not on this branch (not on the run path)
 
-`docs/CMS_LAYER.md` (this file), `docs/BRANCH_LAYOUT.md`,
-`docs/CMS_KNOWN_LIMITATIONS.md` (carried over, predates the rebuild) and
-`studies/cms_datasets/README_REBUILD.md`. Upstream `e1ce8bb` has no `docs/`
-folder, so none of these shadows an upstream file.
+- `studies/cms_coverage/cluster/merge_and_count.py`, inside its own `main()` self-check, reads
+  `studies/m0m1j0_cms/v2/data/merge_v2_summary.json`, a past-study record. The builders only
+  import functions from this file and never run its `main()`.
+- Comments and docstrings in the code mention study scripts, reports and evidence (for
+  example `electron_vB/REPORT.md`, `cms_ttbar_pr40_20261021/REPORT.md`). These are references
+  for readers, not files the code opens.
+- `test_electron_datasets.py --pilot-final-states <json>` is an optional argument. The pilot
+  file is a record and is not here; the test runs without it.
 
-## Paths in kept files that point at archived files
+## Where the records live
 
-No kept code was edited. These references to archive-only paths are known and
-are **not** on the delivery path:
-
-- `studies/cms_coverage/cluster/merge_and_count.py`, inside `main()`, reads
-  `studies/m0m1j0_cms/v2/data/merge_v2_summary.json` (archived). The delivery
-  only imports helper functions from this file and never runs `main()`.
-- The documentation files (`HANDOFF.md`, `REPORT_production.md`,
-  `DELIVERY_NOTES.md`) mention scripts and evidence files that stay in the
-  archive (Step B gate scripts, pilot comparisons, plots). They are records
-  of what was done, not instructions that must run on this branch.
-- `studies/cms_datasets/tests/test_electron_datasets.py` reads
-  `services/pipelines/histograms_pipeline.py` (upstream file, present) and
-  compares against `upstream/master` via `git archive`; it needs the
-  `upstream` remote to be fetched.
-
-## What was intentionally NOT carried over
-
-All of this stays in `archive/master-2026-10-14` (= `ba89791`).
-
-**The fork's edits inside upstream files** — the older "CMS through the main
-pipeline" route. Not carried, because upstream files are never modified:
-
-`.gitignore`, `config.yaml`, `config.cms_records_master.yaml`,
-`config.cms_singleelectronsinglemuon.yaml`, `config.short_parse_btag.yaml`,
-`config.short_parse_local.yaml`, `submit_mc.sh`, `domain/config.py`,
-`domain/events.py`, `domain/statistics.py`,
-`orchestration/handlers/{fetch_metadata,mass_calculation,parsing}_handler.py`,
-`pipeline/executor.py`, `services/calculations/{consts,im_calculator,physics_calcs}.py`,
-`services/metadata/fetcher.py`, `services/parsing/{event_selection,file_parser,root_io,schemas,threaded_processor}.py`,
-`services/pipelines/{histograms_pipeline,im_pipeline}.py`. These carried
-units handling (MeV/GeV), NanoAOD schema entries, extra fields and boolean
-cuts, de-duplication wiring, MC weight reading and similar.
-
-The delivery calls none of the functions that differ between those fork
-versions and upstream (checked function by function; see the rebuild
-validation branch `validate/rebuild-2026-10-14`).
-
-**Fork-only shared modules not needed by the delivery:**
-`services/parsing/mc_weights.py`, `services/parsing/event_deduplication.py`.
-
-**Archived studies:** `studies/cms_coverage/` (except the two modules above),
-`studies/hgg_cms/`, `studies/m0m1j0_cms/` (except the three modules above),
-`reports/`, `logs/`, `scripts/` (fork additions), the one-off
-`config.cms_*.yaml` files the fork added (upstream's own
-`config.cms_records_master.yaml` and `config.cms_singleelectronsinglemuon.yaml`
-are present in upstream's form), `config.atlas_scale_test.yaml` /
-`configWmaxTotal_up4j_minEvt100_subleading.yaml` files,
-`pbs_m0m1j0_fullscale.sh`, `pbs_m0m1j0_smoketest.sh`, and the fork's other
-`tests/` files (they test fork edits to upstream files).
-
-**From `studies/cms_datasets/` itself:** delivered and intermediate ROOT
-files, PNG plots, large JSON evidence, the superseded per-dataset and
-muon-only deliveries (`deliver/committed/`), the older production/preflight
-scripts (`cluster/gen_*_mapping.py`, `merge_*.py`, `pbs_run_*.sh`,
-`trigger_preflight_*`, `compare_regression.py`, `fetch_record_file_lists.py`),
-the older delivery helpers (`deliver/aggregate_cutflow_and_resonances.py`,
-`compute_manifest_breakdown.py`, `make_delivery_check_plots.py`,
-`verify_with_real_root.py`, `compare_pilot_reproducibility.py`), the
-`matching/` studies, `electron_prep/` except `common.py`, the electron_vB
-Step A/B/E study scripts and evidence (closure, band check, radius change,
-pilot comparisons), `electron_vB/REPORT.md` (the 6 Oct measurement report)
-and `PREFLIGHT_REPORT.md`.
-
-**Main-pipeline CMS runs no longer apply on this master.** `config.mac.yaml`
-(local, never committed) and `config.cms_records_master.yaml` main-pipeline
-runs relied on the fork's edits to upstream files; on this master `main.py`
-is upstream's own, without CMS support. Use the archive branch for those.
+The study records (reports, handoffs, evidence, plots, past checks) were not copied here. They
+stay, unchanged, on the existing branches:
+- `feature/cms-mc-multiplicity40-20261023` (@ `de012d2`): everything up to 23 Oct 2026,
+  including `studies/multiplicity40_20261023/`, `studies/sync_42_20261023/`, `studies/btag_se_20261020/`,
+  the electron_vB production and delivery records, and the MC weights v3 studies;
+- `feature/cms-btag-singleelectron-20261020`, `feature/cms-mc-btag-singleelectron-20261020`,
+  `master`: the same history up to the 23 Oct sync;
+- `study/cms-ttbar-pr40-20261021`: the ttbar test of #40;
+- `archive/master-2026-10-14`: the fork's old master, including the older CMS-through-main-pipeline route;
+- `study/lean-branch-proof-20261023`: the proof that this branch gives the same outputs as `de012d2`.

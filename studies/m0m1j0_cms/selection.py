@@ -15,9 +15,9 @@ recipe is documented, with citations, in ``studies/m0m1j0_cms/RECIPE.md``
 truth for the numbers themselves.
 
 Object handling summary (RECIPE.md section 6):
-  - Muons: pt>25 GeV, |eta|<2.4, mediumId, pfRelIso04_all<0.15. Used both
+  - Muons: pt>25 GeV, |eta|<2.4, looseId, pfRelIso04_all<0.15. Used both
     for the m0m1j0 mass (leading + subleading) and for jet cleaning.
-  - Electrons: pt>25 GeV, |eta|<2.5, cutBased>=3. COUNT-ONLY: used for
+  - Electrons: pt>25 GeV, |eta|<2.5, cutBased>=2 (Loose). COUNT-ONLY: used for
     jet cleaning and the final-state category string, never for the mass.
   - Jets: raw jets are split into b-tagged/light FIRST (mirrors the ATLAS
     recipe's parse-time split order, RECIPE.md section 3), by
@@ -36,6 +36,11 @@ Object handling summary (RECIPE.md section 6):
     faithfully onto the m0m1j0 mass itself (RECIPE.md section 5/6.3),
     since m0m1j0 contains two muons and the shared pipeline's own
     _dilepton_flavor() check does not special-case 3+-object combinations.
+
+24 Oct 2026 (Maryna, approved by Matan): BumpNet is model-agnostic, so the
+lepton IDs are LOOSE, like the ATLAS side: muons use Muon_looseId (was
+Muon_mediumId; the pfRelIso04_all < 0.15 isolation is kept) and electrons
+cutBased >= 2 (Loose; was >= 3, Medium). Jets are unchanged (tight jet ID).
 """
 from __future__ import annotations
 
@@ -51,17 +56,25 @@ vector.register_awkward()
 MUON_PT_MIN_GEV = 25.0
 MUON_ETA_MAX = 2.4
 MUON_ISO_MAX = 0.15
+# 24 Oct 2026 (Maryna): CMS Loose muon ID (was Muon_mediumId). The one place
+# the muon ID branch is named; select_muons and NEEDED_BRANCHES use it.
+MUON_ID_BRANCH = "Muon_looseId"
 
 ELECTRON_PT_MIN_GEV = 25.0
 ELECTRON_ETA_MAX = 2.5
-ELECTRON_CUTBASED_MIN = 3  # medium; branch title quoted verbatim at read time
+# 24 Oct 2026 (Maryna): Loose (was 3, Medium). Electron_cutBased is
+# 0=fail, 1=veto, 2=loose, 3=medium, 4=tight; branch title quoted verbatim at read time.
+ELECTRON_CUTBASED_MIN = 2
 
 JET_PT_MIN_GEV = 30.0
 JET_ETA_MAX = 2.5
 JET_LEPTON_CLEAN_DR = 0.4
 
-# DeepJet Medium WP, UL2016 postVFP -- same value as config.cms_bjet_test.yaml:78
-BTAG_DEEPFLAVB_MEDIUM_WP = 0.2598
+# Official CMS DeepJet medium WP for UL2016 postVFP, decided by Maryna 20 Oct
+# 2026. Run2016G+H data and the UL16 postVFP MC are both postVFP. It replaces
+# 0.2598, which is the UL2016 preVFP medium value (the old comment here wrongly
+# called 0.2598 postVFP). Applied to data and MC alike, by select_and_split_jets.
+BTAG_DEEPFLAVB_MEDIUM_WP = 0.2489
 
 TRIGGER_BRANCHES = (
     "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ",
@@ -91,7 +104,7 @@ NEEDED_BRANCHES = (
     "run", "luminosityBlock", "event",
     *TRIGGER_BRANCHES,
     "nMuon", "Muon_pt", "Muon_eta", "Muon_phi", "Muon_mass",
-    "Muon_mediumId", "Muon_pfRelIso04_all", "Muon_charge",
+    MUON_ID_BRANCH, "Muon_pfRelIso04_all", "Muon_charge",
     "nElectron", "Electron_pt", "Electron_eta", "Electron_phi", "Electron_mass",
     "Electron_cutBased",
     "nJet", "Jet_pt", "Jet_eta", "Jet_phi", "Jet_mass", "Jet_jetId",
@@ -153,7 +166,7 @@ def select_muons(events: ak.Array, extra_fields: Dict[str, ak.Array] = None, app
     every other cut is unaffected."""
     fields = {
         "pt": events.Muon_pt, "eta": events.Muon_eta, "phi": events.Muon_phi,
-        "mass": events.Muon_mass, "mediumId": events.Muon_mediumId,
+        "mass": events.Muon_mass, "looseId": events[MUON_ID_BRANCH],
         "pfRelIso04_all": events.Muon_pfRelIso04_all,
     }
     if extra_fields:
@@ -162,7 +175,7 @@ def select_muons(events: ak.Array, extra_fields: Dict[str, ak.Array] = None, app
     mask = (
         (muons.pt > MUON_PT_MIN_GEV)
         & (abs(muons.eta) < MUON_ETA_MAX)
-        & muons.mediumId
+        & muons.looseId
     )
     if apply_iso:
         mask = mask & (muons.pfRelIso04_all < MUON_ISO_MAX)

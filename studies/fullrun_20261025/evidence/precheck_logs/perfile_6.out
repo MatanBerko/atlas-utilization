@@ -1,0 +1,41 @@
+MODE=perfile on wn002 at Sat Oct 24 11:56:13 PM IDT 2026
+code old: commit 33d77f54a04006d573059d2a989427d7901cd3d5 sha256 fae6b20a2867f9c3
+[MC] resolved record 72752 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/E1169FF2-EA6C-EA45-81C7-7C27A8E53F8D.root
+[MC] read 457263 events
+[MC] simulation confirmed; golden-JSON filter SKIPPED (457263 events kept)
+[MC] own-trigger requirement (('HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ', 'HLT_Ele27_WPTight_Gsf', 'HLT_IsoMu24', 'HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ', 'HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ', 'HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ', 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ')): 457263 -> 187398, per_path={'HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ': 39591, 'HLT_Ele27_WPTight_Gsf': 80670, 'HLT_IsoMu24': 107784, 'HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ': 52268, 'HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ': 54321, 'HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ': 29704, 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ': 33658}
+[MC] population=matched4: n_after_gate=163294, n_exclusive=163294, n_vetoed_by_each_higher_dataset={}
+{
+  "dataset_label": "MC",
+  "population": "matched4",
+  "n_read": 457263,
+  "n_after_gate": 163294,
+  "n_exclusive": 163294,
+  "n_signature_writes_inclusive": 3432,
+  "n_signature_writes_exclusive": 3432,
+  "elapsed_sec": 349.6
+}
+[MC] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/mc/record72752/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/mc/record72752/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/mc/record72752/job_0 (349.6s elapsed)
+code new: commit 9588cdbb124c115bc33c3cffc743e6b7c115c3de sha256 960246367f3cb41c
+[MC] resolved record 72752 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/mc/RunIISummer20UL16NanoAODv9/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/E1169FF2-EA6C-EA45-81C7-7C27A8E53F8D.root
+[MC] read 457263 events
+[MC] simulation confirmed; golden-JSON filter SKIPPED (457263 events kept)
+[MC] own-trigger requirement (('HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ', 'HLT_Ele27_WPTight_Gsf', 'HLT_IsoMu24', 'HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ', 'HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ', 'HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ', 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ')): 457263 -> 187398, per_path={'HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ': 39591, 'HLT_Ele27_WPTight_Gsf': 80670, 'HLT_IsoMu24': 107784, 'HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ': 52268, 'HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ': 54321, 'HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ': 29704, 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ': 33658}
+[MC] population=matched4: n_after_gate=165814, n_exclusive=165814, n_vetoed_by_each_higher_dataset={}
+{
+  "dataset_label": "MC",
+  "population": "matched4",
+  "n_read": 457263,
+  "n_after_gate": 165814,
+  "n_exclusive": 165814,
+  "n_signature_writes_inclusive": 3446,
+  "n_signature_writes_exclusive": 3446,
+  "elapsed_sec": 314.4
+}
+[MC] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/mc/record72752/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/mc/record72752/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/mc/record72752/job_0 (314.4s elapsed)
+{"old": {"muon_id": "Muon_mediumId", "muon_iso_max": 0.15, "electron_cutbased_min": 3}, "new": {"muon_id": "Muon_looseId", "muon_iso_max": 0.15, "electron_cutbased_min": 2}}
+chunk 0-300000: 300000 certified, 122776 triggered
+chunk 300000-457263: 157263 certified, 64622 triggered
+certified 457263 muons 147660 -> 148837 electrons 123854 -> 136610 old_not_new 0 0
+triggered 187398 muons 140659 -> 141538 electrons 109473 -> 118427 old_not_new 0 0
+MODE=perfile done idx=6 at Sun Oct 25 12:07:29 AM IDT 2026

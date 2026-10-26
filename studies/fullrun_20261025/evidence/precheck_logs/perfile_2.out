@@ -1,0 +1,78 @@
+MODE=perfile on wn002 at Sat Oct 24 11:56:13 PM IDT 2026
+code old: commit 33d77f54a04006d573059d2a989427d7901cd3d5 sha256 fae6b20a2867f9c3
+[DoubleEG] resolved record 30521 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root
+[DoubleEG] read 2014154 events
+[DoubleEG] golden-JSON filter: 2014154 -> 1912413
+[DoubleEG] own-trigger requirement (('HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ',)): 1912413 -> 219416, per_path={'HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ': 219416}
+[DoubleEG] population=matched5: n_after_gate=60201, n_exclusive=60189, n_vetoed_by_each_higher_dataset={'DoubleMuon': 14, 'SingleMuon': 79}
+{
+  "dataset_label": "DoubleEG",
+  "population": "matched5",
+  "n_read": 2014154,
+  "n_after_gate": 60201,
+  "n_exclusive": 60189,
+  "n_signature_writes_inclusive": 593,
+  "n_signature_writes_exclusive": 521,
+  "elapsed_sec": 94.6
+}
+[DoubleEG] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data/DoubleEG/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data/DoubleEG/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data/DoubleEG/job_0 (94.6s elapsed)
+[DoubleEG] resolved record 30521 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root
+[DoubleEG] read 2014154 events
+[DoubleEG] golden-JSON filter: 2014154 -> 1912413
+[DoubleEG] own-trigger requirement (('HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ',)): 1912413 -> 219416, per_path={'HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ': 219416}
+[DoubleEG] population=matched5: n_after_gate=60201, n_exclusive=60189, n_vetoed_by_each_higher_dataset={'DoubleMuon': 14, 'SingleMuon': 79}
+{
+  "dataset_label": "DoubleEG",
+  "population": "matched5",
+  "n_read": 2014154,
+  "n_after_gate": 60201,
+  "n_exclusive": 60189,
+  "n_signature_writes_inclusive": 593,
+  "n_signature_writes_exclusive": 521,
+  "elapsed_sec": 89.5
+}
+[DoubleEG] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data_noor/DoubleEG/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data_noor/DoubleEG/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data_noor/DoubleEG/job_0 (89.5s elapsed)
+code new: commit 9588cdbb124c115bc33c3cffc743e6b7c115c3de sha256 960246367f3cb41c
+[DoubleEG] resolved record 30521 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root
+[DoubleEG] read 2014154 events
+[DoubleEG] golden-JSON filter: 2014154 -> 1912413
+[DoubleEG] own-trigger requirement (('HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ',)): 1912413 -> 219416, per_path={'HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ': 219416}
+[DoubleEG] population=matched5: n_after_gate=72056, n_exclusive=72043, n_vetoed_by_each_higher_dataset={'DoubleMuon': 14, 'SingleMuon': 79}
+{
+  "dataset_label": "DoubleEG",
+  "population": "matched5",
+  "n_read": 2014154,
+  "n_after_gate": 72056,
+  "n_exclusive": 72043,
+  "n_signature_writes_inclusive": 789,
+  "n_signature_writes_exclusive": 753,
+  "elapsed_sec": 106.0
+}
+[DoubleEG] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data/DoubleEG/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data/DoubleEG/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data/DoubleEG/job_0 (106.0s elapsed)
+[DoubleEG] resolved record 30521 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/Run2016G/DoubleEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/100000/11DA657F-5262-BD4A-AD1E-8E53BE62A601.root
+[DoubleEG] read 2014154 events
+[DoubleEG] golden-JSON filter: 2014154 -> 1912413
+[DoubleEG] own-trigger requirement (('HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ',)): 1912413 -> 219416, per_path={'HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ': 219416}
+[DoubleEG] population=matched5: n_after_gate=72058, n_exclusive=72045, n_vetoed_by_each_higher_dataset={'DoubleMuon': 14, 'SingleMuon': 79}
+{
+  "dataset_label": "DoubleEG",
+  "population": "matched5",
+  "n_read": 2014154,
+  "n_after_gate": 72058,
+  "n_exclusive": 72045,
+  "n_signature_writes_inclusive": 789,
+  "n_signature_writes_exclusive": 753,
+  "elapsed_sec": 104.1
+}
+[DoubleEG] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data_noor/DoubleEG/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data_noor/DoubleEG/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data_noor/DoubleEG/job_0 (104.1s elapsed)
+{"old": {"muon_id": "Muon_mediumId", "muon_iso_max": 0.15, "electron_cutbased_min": 3}, "new": {"muon_id": "Muon_looseId", "muon_iso_max": 0.15, "electron_cutbased_min": 2}}
+chunk 0-300000: 293863 certified, 32906 triggered
+chunk 300000-600000: 227407 certified, 26199 triggered
+chunk 600000-900000: 292684 certified, 33566 triggered
+chunk 900000-1200000: 298752 certified, 33838 triggered
+chunk 1200000-1500000: 289155 certified, 33252 triggered
+chunk 1500000-1800000: 296398 certified, 34221 triggered
+chunk 1800000-2014154: 214154 certified, 25434 triggered
+certified 1912413 muons 672 -> 1588 electrons 272907 -> 340245 old_not_new 0 0
+triggered 219416 muons 95 -> 228 electrons 201009 -> 226165 old_not_new 0 0
+MODE=perfile done idx=2 at Sun Oct 25 12:03:12 AM IDT 2026

@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 """
-Build the combined FOUR-dataset matched BumpNet delivery
-(electron-datasets task, B3): DoubleMuon + SingleMuon + DoubleEG + MuonEG.
+Build the combined matched BumpNet delivery over several datasets: the
+four-dataset delivery of the electron-datasets task (B3: DoubleMuon +
+SingleMuon + DoubleEG + MuonEG, --population matched4 runs) and, since
+20 Oct 2026, the FIVE-dataset delivery (+ SingleElectron, --population
+matched5 runs; see FIVE DATASETS below). The file name is historical.
 
 This is the generalisation of
 studies/cms_datasets/deliver/build_muon_combined_delivery.py from two
@@ -30,9 +33,25 @@ requirements):
   * NO filled-bin cut (the >=25-filled-bins requirement is applied on the
     BumpNet side during smoothing);
   * the >=100-events-per-final-state rule applied ONCE, on the combined
-    shards of all files.
+    shards of all files;
+  * the max-4-objects multiplicity rule of upstream #40 (5fbf1ef), since
+    23 Oct 2026 (--multiplicity-rule upstream40, the default; see
+    MULTIPLICITY RULE below).
 Each of those can be turned back off with an explicit flag, for
 cross-checks only.
+
+MULTIPLICITY RULE (--multiplicity-rule {upstream40,exact}):
+the per-file shards store EXACT labels (e.g. 0e_1m_5j_0b). With upstream40
+(default) the builder, on the scratch copies and BEFORE the >=100 rule,
+renames every label to upstream's limit_particles_in_fs(label, 4) (light
+jets fill the slots left by e + m + b, at most 4 objects), drops the
+combinations the new label does not contain (upstream's
+is_finalstate_contain_combination; e.g. a combination using the 4th jet
+under a 3-jet label), and merges the mass arrays of exact labels that land
+on the same name; the events per final state are summed over the merged
+labels, so the >=100 rule counts the merged populations
+(studies/cms_datasets/common/multiplicity.py). With exact nothing is
+relabelled and the output is what this builder produced before 23 Oct 2026.
 
 Everything after the pooling step is the existing, shared post-processing
 chain, imported unmodified:
@@ -55,6 +74,23 @@ Usage:
         --runs-dir   /storage/.../output/cms_datasets/runs_matched4_<date> \
         --out-dir    /storage/.../output/cms_datasets/deliver/four_<date> \
         --out-prefix four_dataset_matched_vB
+
+    five datasets (matched5 runs), the current delivery:
+    python build_four_dataset_delivery.py \
+        --runs-dir   /storage/.../runs_matched5_<date> \
+        --out-dir    /storage/.../deliver/five_<date> \
+        --out-prefix five_dataset_matched5 \
+        --datasets DoubleMuon,SingleMuon,DoubleEG,MuonEG,SingleElectron
+    (add --multiplicity-rule exact to reproduce the exact-label delivery)
+
+FIVE DATASETS (Maryna, 20 Oct 2026): per-file jobs run with --population
+matched5 add SingleElectron LAST (DELIVERY_VETO_ORDER_5). The same pooling
+rule then adds SingleElectron's exclusive shards, i.e. only the events none
+of the other four accepts. Pass
+--datasets DoubleMuon,SingleMuon,DoubleEG,MuonEG,SingleElectron; the
+builder stops if a dataset list is not in that priority order. Used with
+--population matched5 runs and those five datasets, this builder makes the
+five-dataset matched5 delivery.
 """
 from __future__ import annotations
 
@@ -82,7 +118,11 @@ from studies.m0m1j0_cms.histograms import (  # noqa: E402
     FIXED_MASS_MIN_GEV,
     FIXED_MASS_MAX_GEV,
 )
-from studies.cms_datasets.cluster.run_dataset_on_file import DELIVERY_VETO_ORDER_4  # noqa: E402
+from studies.cms_datasets.cluster.run_dataset_on_file import (  # noqa: E402
+    DELIVERY_VETO_ORDER_4,
+    DELIVERY_VETO_ORDER_5,
+    EMU_OVERLAP_DR_MAX,
+)
 from studies.cms_datasets.deliver.build_dataset_delivery import (  # noqa: E402
     build_sig_to_bumpnet,
     width_suffix,
@@ -97,6 +137,16 @@ from studies.cms_datasets.deliver.build_muon_combined_delivery import (  # noqa:
     convert_legacy_fs_label,
     assert_no_name_collisions,
 )
+from studies.cms_datasets.common.multiplicity import (  # noqa: E402
+    DEFAULT_RULE as DEFAULT_MULTIPLICITY_RULE,
+    RULES as MULTIPLICITY_RULES,
+    UPSTREAM40_COMMIT,
+    capped_signatures,
+    final_state_event_counts,
+    refuse_merged_capped,
+    regroup_report,
+    regroup_shard,
+)
 
 SHARD_NAMES_BY_VERSION = {
     "normal": ("dataset_shard_inclusive.sqlite", "dataset_shard_exclusive.sqlite"),
@@ -105,8 +155,8 @@ SHARD_NAMES_BY_VERSION = {
     "rare4": ("dataset_shard_rare4_inclusive.sqlite", "dataset_shard_rare4_exclusive.sqlite"),
 }
 
-README_TEMPLATE = """BumpNet delivery -- FOUR datasets, Version B (rare4)
-====================================================
+README_TEMPLATE = """BumpNet delivery -- {n_datasets} datasets, Version B (rare4)
+=================================================
 
 WHICH FILE TO USE
 -----------------
@@ -126,11 +176,11 @@ WHAT IS IN IT
 {n_delivered} histograms over {n_final_states} distinct final-state
 categories, on the unchanged fixed grid: 0-10000 GeV in 10 GeV bins.
 Every histogram is named ROI_mass_<combination>_cat_<final state>{suffix},
-e.g. ROI_mass_m0m1_cat_0ex_2mx_5jx_1bx{suffix}.
+e.g. ROI_mass_m0m1_cat_0ex_2mx_1jx_1bx{suffix}.
 
 WHICH DATA
 ----------
-Run2016G+H, four primary datasets, de-duplicated so every accepted
+Run2016G+H, {n_datasets} primary datasets, de-duplicated so every accepted
 collision is counted exactly once:
 
 {pooling_table}
@@ -140,8 +190,12 @@ dataset's exclusive set if that dataset's own acceptance (its trigger
 path(s) fired AND its own trigger-matching/threshold rule passes) holds
 and no higher-priority dataset's acceptance does.
 
-Electrons within dR < 0.05 of a selected muon are removed, in all four
-datasets, before trigger matching and before the final state is decided.
+Electrons within dR < {emu_dr} of a selected muon are removed, in every
+dataset, before trigger matching and before the final state is decided.
+
+FINAL STATES (multiplicity rule: {rule_name})
+------------
+{rule_text}
 
 THRESHOLDS APPLIED
 ------------------
@@ -159,10 +213,24 @@ WHAT IS UNCHANGED FROM THE MUON DELIVERY
 ----------------------------------------
 Object definitions, the b-tag working point, the golden-JSON run filter,
 the Version B reject rule (reject an event if electrons + muons + b-jets
-> 4, otherwise keep ALL selected light jets), exact light-jet final
-states, the 186 combinations, the fixed 10 GeV binning, the Z-peak cut at
+> 4), the 186 combinations, the fixed 10 GeV binning, the Z-peak cut at
 110 GeV, the bin-aligned outlier split, the max-mass cut and peak removal.
 """
+
+RULE_TEXT = {
+    "upstream40": (
+        "At most 4 objects per final state (upstream #40, " + UPSTREAM40_COMMIT + "):\n"
+        "electrons + muons + b-jets > 4 is rejected; light jets fill the free\n"
+        "slots, i.e. light jets in the name = min(selected light jets,\n"
+        "4 - (e + m + b)). Extra jets are ignored and the event is kept; the\n"
+        "masses use only the kept leading-pT jets. Example: 1 muon + 5 light\n"
+        "jets is final state 0ex_1mx_3jx_0bx. The >=100-events rule counts\n"
+        "the merged final states."),
+    "exact": (
+        "Exact multiplicity: every selected light jet counts in the name\n"
+        "(e.g. 1 muon + 5 light jets is 0ex_1mx_5jx_0bx). Cross-check option;\n"
+        "the default is upstream #40's max-4-objects rule."),
+}
 
 
 def gather_shard_paths(runs_dir: Path, version: str, datasets: list[str]) -> dict:
@@ -187,6 +255,54 @@ def gather_shard_paths(runs_dir: Path, version: str, datasets: list[str]) -> dic
     return out
 
 
+def check_priority_order(datasets: list[str]) -> None:
+    """Stop unless `datasets` is in the per-file jobs' own priority order.
+
+    The pooling rule is only correct if the per-file exclusive shards were
+    made with the same order the builder pools in. Every order the jobs use
+    (DELIVERY_VETO_ORDER_4, and DELIVERY_VETO_ORDER_5 with SingleElectron
+    LAST, Maryna 20 Oct 2026) is a prefix-consistent part of
+    DELIVERY_VETO_ORDER_5, so a dataset list must follow that order."""
+    unknown = [d for d in datasets if d not in DELIVERY_VETO_ORDER_5]
+    if unknown:
+        raise SystemExit(f"STOP: unknown dataset(s) {unknown}; expected a subset "
+                         f"of {DELIVERY_VETO_ORDER_5}")
+    if len(set(datasets)) != len(datasets):
+        raise SystemExit(f"STOP: duplicate dataset in {datasets}")
+    expected = [d for d in DELIVERY_VETO_ORDER_5 if d in datasets]
+    if datasets != expected:
+        raise SystemExit(f"STOP: --datasets {datasets} is not in the delivery "
+                         f"priority order; expected {expected}")
+
+
+def per_dataset_event_counts(runs_dir: Path, version: str, datasets: list[str]) -> dict:
+    """Per dataset, the events its pooled shards contribute, summed from the
+    per-file job_metadata.json: the highest-priority dataset's INCLUSIVE
+    count, every other dataset's EXCLUSIVE count (after the Version B rule
+    for --version rare4). Also the acceptance-level totals and each job's
+    own delivery_veto_order. Reporting only; nothing is pooled from here."""
+    out = {}
+    for i, label in enumerate(datasets):
+        index = json.loads((runs_dir / f"{label}_index.json").read_text())
+        kind = "inclusive" if i == 0 else "exclusive"
+        n_pooled = n_accepted = n_exclusive = 0
+        orders = set()
+        for idx in index:
+            m = json.loads((runs_dir / label / f"job_{idx}" / "job_metadata.json").read_text())
+            node = m if version == "normal" else (m.get(f"{version}_diagnostics") or {})
+            n_pooled += sum((node.get(f"final_state_label_event_counts_{kind}") or {}).values())
+            d4 = m.get("matched4_diagnostics") or {}
+            n_accepted += int(d4.get("n_own_accepted", 0))
+            n_exclusive += int(d4.get("n_own_exclusive", 0))
+            orders.add(tuple(d4.get("delivery_veto_order") or ()))
+        out[label] = {"contribution": kind,
+                      f"n_events_pooled_{version}": n_pooled,
+                      "n_own_accepted": n_accepted,
+                      "n_own_exclusive": n_exclusive,
+                      "per_file_delivery_veto_orders": [list(o) for o in sorted(orders)]}
+    return out
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--runs-dir", required=True,
@@ -198,7 +314,10 @@ def main():
     p.add_argument("--datasets", default=",".join(DELIVERY_VETO_ORDER_4),
                    help="comma-separated, HIGHEST PRIORITY FIRST. The first one "
                         "contributes its inclusive shards, the rest their exclusive "
-                        f"ones. Default: {','.join(DELIVERY_VETO_ORDER_4)}")
+                        f"ones. Default: {','.join(DELIVERY_VETO_ORDER_4)}. The "
+                        "five-dataset delivery (--population matched5 runs) passes "
+                        f"{','.join(DELIVERY_VETO_ORDER_5)} (SingleElectron last). "
+                        "Any list must follow that priority order.")
     p.add_argument("--min-events-per-fs", type=int, default=PRIMARY_MIN_EVENTS_PER_FS,
                    help="the >=N-events-per-final-state rule, applied ONCE on the "
                         f"combined shards. Default {PRIMARY_MIN_EVENTS_PER_FS}.")
@@ -218,6 +337,14 @@ def main():
                    help="cross-check only: the shards carry pre-upstream-names "
                         "six-field labels (0e_2m_5j_0g_0t_1b); convert them as they "
                         "are read. matched4 shards never need this.")
+    p.add_argument("--multiplicity-rule", choices=MULTIPLICITY_RULES,
+                   default=DEFAULT_MULTIPLICITY_RULE,
+                   help="upstream40 (default): upstream #40's max-4-objects rule, "
+                        "applied on the scratch copies before the >=100 rule "
+                        "(labels capped with limit_particles_in_fs(label, 4), "
+                        "combinations the capped label does not contain dropped, "
+                        "merged arrays and event counts). exact: the exact labels "
+                        "stored by the per-file jobs, as before 23 Oct 2026.")
     p.add_argument("--allow-overwrite", action="store_true",
                    help="allow writing into an output directory that already has "
                         "these ROOT files. Off by default: existing outputs are "
@@ -225,6 +352,7 @@ def main():
     args = p.parse_args()
 
     datasets = [d.strip() for d in args.datasets.split(",") if d.strip()]
+    check_priority_order(datasets)
     runs_dir = Path(args.runs_dir)
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -233,12 +361,13 @@ def main():
         "fixed-grid constants have drifted from the expected 0-10000 GeV / 10 GeV grid")
 
     upstream_suffix = not args.legacy_width_suffix
-    print(f"=== Four-dataset delivery, version={args.version} ===")
+    print(f"=== {len(datasets)}-dataset delivery, version={args.version} ===")
     print(f"priority order (highest first): {datasets}")
     print(f"width suffix: {width_suffix(upstream=upstream_suffix)}")
     print(f"per-histogram minimum entries: {args.hist_min_entries}")
     print(f"filled-bin cut: {'>' + str(BINS_THRESHOLD_B) if args.filled_bin_cut else 'NONE'}")
     print(f"events per final state: >= {args.min_events_per_fs} (applied once, combined)")
+    print(f"multiplicity rule: {args.multiplicity_rule}")
 
     paths_by_dataset = gather_shard_paths(runs_dir, args.version, datasets)
     shard_paths = [p for label in datasets for p in paths_by_dataset[label]]
@@ -254,12 +383,33 @@ def main():
     else:
         sig_to_bumpnet = build_sig_to_bumpnet(shard_paths)
     print(f"distinct raw signatures across all {len(shard_paths)} shards: {len(sig_to_bumpnet)}")
+    n_distinct_raw_signatures = len(sig_to_bumpnet)
+
+    multiplicity = {"rule": args.multiplicity_rule,
+                    "final_state_events_exact_labels": final_state_event_counts(shard_paths)}
+    if args.multiplicity_rule == "upstream40":
+        # The driver records coverage caps in the INCLUSIVE shard of each job
+        # only; an exclusive shard's rows are subsets of those arrays.
+        incl_name = SHARD_NAMES_BY_VERSION[args.version][0]
+        for p_ in shard_paths:
+            incl = Path(p_).parent / incl_name
+            refuse_merged_capped(capped_signatures(str(incl)), str(incl))
 
     funnel_diagnostics: dict = {}
     # copy_shards makes scratch COPIES: prune_final_states_below_min_events
     # deletes rows in place, so it must never touch the originals.
     with tempfile.TemporaryDirectory(prefix=f"four_dataset_{args.version}_funnel_") as tmp:
         scratch_shards = copy_shards(shard_paths, Path(tmp))
+        if args.multiplicity_rule == "upstream40":
+            # Before the >=100 rule, so it counts the merged populations.
+            multiplicity.update(regroup_report([regroup_shard(p_) for p_ in scratch_shards]))
+            converter = convert_legacy_fs_label if args.legacy_gt_labels else None
+            sig_to_bumpnet = build_sig_to_bumpnet(scratch_shards, fs_converter=converter)
+            print(f"multiplicity rule upstream40: {len(multiplicity['label_map'])} exact "
+                  f"label(s) -> {len(multiplicity['exact_labels_merged_into'])} final "
+                  f"state(s); {len(sig_to_bumpnet)} signatures after regrouping")
+        multiplicity["final_state_events_before_min_events_rule"] = (
+            final_state_event_counts(scratch_shards))
         stage_b_names, stage_c_survivors, stage_d_survivors, im_str_by_name = run_funnel_at_threshold(
             scratch_shards, args.min_events_per_fs, sig_to_bumpnet,
             diagnostics=funnel_diagnostics, min_main_entries=args.hist_min_entries,
@@ -316,8 +466,9 @@ def main():
         "version": args.version,
         "priority_order_highest_first": datasets,
         "pooling": pooling,
+        "per_dataset_event_counts": per_dataset_event_counts(runs_dir, args.version, datasets),
         "n_shards_total": len(shard_paths),
-        "n_distinct_raw_signatures": len(sig_to_bumpnet),
+        "n_distinct_raw_signatures": n_distinct_raw_signatures,
         "min_events_per_final_state": args.min_events_per_fs,
         "min_events_per_final_state_applied": "once, on the combined shards of all files",
         "per_histogram_min_entries": args.hist_min_entries,
@@ -349,9 +500,12 @@ def main():
                                if not k.startswith("names_")},
         "output_files": {path_main.name: str(path_main), path_cropped.name: str(path_cropped)},
         "file_for_bumpnet": path_cropped.name,
+        "multiplicity_rule": args.multiplicity_rule,
     }
     (out_dir / f"build_summary_{args.version}_four_dataset.json").write_text(
         json.dumps(summary, indent=2))
+    (out_dir / f"multiplicity_rule_{args.out_prefix}.json").write_text(
+        json.dumps(multiplicity, indent=2))
 
     pooling_table = "\n".join(
         f"  {label:12s} {pooling[label]['contribution']:9s} "
@@ -359,6 +513,8 @@ def main():
     (out_dir / "README.txt").write_text(README_TEMPLATE.format(
         cropped=path_cropped.name, uncropped=path_main.name,
         n_delivered=len(delivered), n_final_states=n_final_states,
+        n_datasets=len(datasets), emu_dr=EMU_OVERLAP_DR_MAX, rule_name=args.multiplicity_rule,
+        rule_text=RULE_TEXT[args.multiplicity_rule],
         suffix=width_suffix(upstream=upstream_suffix),
         pooling_table=pooling_table, order=" > ".join(datasets),
         n_shards=len(shard_paths),

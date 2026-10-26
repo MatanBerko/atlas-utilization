@@ -1,0 +1,79 @@
+MODE=perfile on wn002 at Sat Oct 24 11:56:13 PM IDT 2026
+code old: commit 33d77f54a04006d573059d2a989427d7901cd3d5 sha256 fae6b20a2867f9c3
+[MuonEG] resolved record 30528 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/Run2016G/MuonEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/2ADBED61-A06A-D64B-BE90-E9B267D15700.root
+[MuonEG] read 2238235 events
+[MuonEG] golden-JSON filter: 2238235 -> 2237659
+[MuonEG] own-trigger requirement (('HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ', 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ')): 2237659 -> 279559, per_path={'HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ': 75477, 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ': 249181}
+[MuonEG] population=matched5: n_after_gate=4512, n_exclusive=394, n_vetoed_by_each_higher_dataset={'DoubleMuon': 4034, 'SingleMuon': 23892, 'DoubleEG': 1452}
+{
+  "dataset_label": "MuonEG",
+  "population": "matched5",
+  "n_read": 2238235,
+  "n_after_gate": 4512,
+  "n_exclusive": 394,
+  "n_signature_writes_inclusive": 1164,
+  "n_signature_writes_exclusive": 370,
+  "elapsed_sec": 140.3
+}
+[MuonEG] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data/MuonEG/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data/MuonEG/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data/MuonEG/job_0 (140.3s elapsed)
+[MuonEG] resolved record 30528 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/Run2016G/MuonEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/2ADBED61-A06A-D64B-BE90-E9B267D15700.root
+[MuonEG] read 2238235 events
+[MuonEG] golden-JSON filter: 2238235 -> 2237659
+[MuonEG] own-trigger requirement (('HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ', 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ')): 2237659 -> 279559, per_path={'HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ': 75477, 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ': 249181}
+[MuonEG] population=matched5: n_after_gate=4543, n_exclusive=419, n_vetoed_by_each_higher_dataset={'DoubleMuon': 4034, 'SingleMuon': 23892, 'DoubleEG': 1452}
+{
+  "dataset_label": "MuonEG",
+  "population": "matched5",
+  "n_read": 2238235,
+  "n_after_gate": 4543,
+  "n_exclusive": 419,
+  "n_signature_writes_inclusive": 1164,
+  "n_signature_writes_exclusive": 370,
+  "elapsed_sec": 139.6
+}
+[MuonEG] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data_noor/MuonEG/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data_noor/MuonEG/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/old/data_noor/MuonEG/job_0 (139.6s elapsed)
+code new: commit 9588cdbb124c115bc33c3cffc743e6b7c115c3de sha256 960246367f3cb41c
+[MuonEG] resolved record 30528 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/Run2016G/MuonEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/2ADBED61-A06A-D64B-BE90-E9B267D15700.root
+[MuonEG] read 2238235 events
+[MuonEG] golden-JSON filter: 2238235 -> 2237659
+[MuonEG] own-trigger requirement (('HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ', 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ')): 2237659 -> 279559, per_path={'HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ': 75477, 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ': 249181}
+[MuonEG] population=matched5: n_after_gate=5402, n_exclusive=579, n_vetoed_by_each_higher_dataset={'DoubleMuon': 4034, 'SingleMuon': 23892, 'DoubleEG': 1452}
+{
+  "dataset_label": "MuonEG",
+  "population": "matched5",
+  "n_read": 2238235,
+  "n_after_gate": 5402,
+  "n_exclusive": 579,
+  "n_signature_writes_inclusive": 1264,
+  "n_signature_writes_exclusive": 374,
+  "elapsed_sec": 143.3
+}
+[MuonEG] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data/MuonEG/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data/MuonEG/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data/MuonEG/job_0 (143.3s elapsed)
+[MuonEG] resolved record 30528 file index 0 -> root://eospublic.cern.ch//eos/opendata/cms/Run2016G/MuonEG/NANOAOD/UL2016_MiniAODv2_NanoAODv9-v1/120000/2ADBED61-A06A-D64B-BE90-E9B267D15700.root
+[MuonEG] read 2238235 events
+[MuonEG] golden-JSON filter: 2238235 -> 2237659
+[MuonEG] own-trigger requirement (('HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ', 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ')): 2237659 -> 279559, per_path={'HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ': 75477, 'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ': 249181}
+[MuonEG] population=matched5: n_after_gate=5467, n_exclusive=634, n_vetoed_by_each_higher_dataset={'DoubleMuon': 4034, 'SingleMuon': 23892, 'DoubleEG': 1452}
+{
+  "dataset_label": "MuonEG",
+  "population": "matched5",
+  "n_read": 2238235,
+  "n_after_gate": 5467,
+  "n_exclusive": 634,
+  "n_signature_writes_inclusive": 1264,
+  "n_signature_writes_exclusive": 374,
+  "elapsed_sec": 135.0
+}
+[MuonEG] wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data_noor/MuonEG/job_0/dataset_shard_inclusive.sqlite, /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data_noor/MuonEG/job_0/dataset_shard_exclusive.sqlite, and job_metadata.json under /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/precheck/runs/new/data_noor/MuonEG/job_0 (135.0s elapsed)
+{"old": {"muon_id": "Muon_mediumId", "muon_iso_max": 0.15, "electron_cutbased_min": 3}, "new": {"muon_id": "Muon_looseId", "muon_iso_max": 0.15, "electron_cutbased_min": 2}}
+chunk 0-300000: 300000 certified, 34117 triggered
+chunk 300000-600000: 300000 certified, 36613 triggered
+chunk 600000-900000: 300000 certified, 41243 triggered
+chunk 900000-1200000: 300000 certified, 40799 triggered
+chunk 1200000-1500000: 300000 certified, 36156 triggered
+chunk 1500000-1800000: 300000 certified, 34723 triggered
+chunk 1800000-2100000: 300000 certified, 37619 triggered
+chunk 2100000-2238235: 137659 certified, 18289 triggered
+certified 2237659 muons 116859 -> 121199 electrons 48908 -> 87802 old_not_new 0 0
+triggered 279559 muons 24352 -> 25065 electrons 20782 -> 32908 old_not_new 0 0
+MODE=perfile done idx=3 at Sun Oct 25 12:06:00 AM IDT 2026

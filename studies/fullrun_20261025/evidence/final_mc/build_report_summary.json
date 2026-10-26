@@ -1,0 +1,403 @@
+{
+ "what": "CMS MC delivery build (studies/cms_mc_weights_v3)",
+ "generated_utc": "2026-10-25T19:20:51.915122+00:00",
+ "git_commit": "75b399e2dfdacc50affd4e2c78bc865b12f000cc",
+ "is_smoke_test": false,
+ "options": {
+  "peak_on": "weighted",
+  "peak_scope": "combined",
+  "min_events_basis": "raw",
+  "output_mode": "both",
+  "min_events_per_fs": 100,
+  "multiplicity_rule": "upstream40"
+ },
+ "constants": {
+  "target_luminosity_fb": 16.393,
+  "z_peak_cutoff_gev": 110.0,
+  "max_mass_cutoff_gev": 10000.0,
+  "bin_width_gev": 10.0,
+  "n_bins": 1000,
+  "sigma_w_tolerance": 1e-06,
+  "shard_read": "dataset_shard_rare4_inclusive.sqlite",
+  "event_union": "the five delivered acceptance flags: the four data flags OR SingleElectron (bit 6, offline pT > 32 GeV); the bare Ele27 candidate (bit 4) is not used"
+ },
+ "samples": {
+  "35631": {
+   "physics_short": "DYJetsToLL_M-10to50_amcatnloFXFX",
+   "cross_section_pb_sigma_eff": 18610.0,
+   "k_factor": 1.0,
+   "gen_filt_eff": 1.0,
+   "campaign_guard": {
+    "portal_dataset_title": "/DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "campaign_ok": true
+   },
+   "sigma_w_over_surviving_files": 1664772623359.524,
+   "n_files_included": 25,
+   "n_files_excluded": 0,
+   "normalisation_factor": 0.00018325249089233512,
+   "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+   "n_capped_signatures_total": 0,
+   "per_file_sigma_w_n": 25,
+   "weight_write_stats_n": 25,
+   "histograms_n": 9
+  },
+  "35669": {
+   "physics_short": "DYJetsToLL_M-50_amcatnloFXFX",
+   "cross_section_pb_sigma_eff": 5765.4,
+   "k_factor": 1.0,
+   "gen_filt_eff": 1.0,
+   "campaign_guard": {
+    "portal_dataset_title": "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "campaign_ok": true
+   },
+   "sigma_w_over_surviving_files": 1220934627963.072,
+   "n_files_included": 41,
+   "n_files_excluded": 0,
+   "normalisation_factor": 7.740971550432476e-05,
+   "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+   "n_capped_signatures_total": 0,
+   "per_file_sigma_w_n": 41,
+   "weight_write_stats_n": 41,
+   "histograms_n": 9
+  },
+  "37728": {
+   "physics_short": "GluGluHToZZTo4L_M125",
+   "cross_section_pb_sigma_eff": 0.013335,
+   "k_factor": 1.0,
+   "gen_filt_eff": 1.0,
+   "campaign_guard": {
+    "portal_dataset_title": "/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "campaign_ok": true
+   },
+   "sigma_w_over_surviving_files": 28869643.6672,
+   "n_files_included": 8,
+   "n_files_excluded": 0,
+   "normalisation_factor": 7.571990064025669e-06,
+   "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+   "n_capped_signatures_total": 0,
+   "per_file_sigma_w_n": 8,
+   "weight_write_stats_n": 8,
+   "histograms_n": 9
+  },
+  "64839": {
+   "physics_short": "ST_tW_antitop_5f_NoFullyHadronicDecays",
+   "cross_section_pb_sigma_eff": 19.56,
+   "k_factor": 1.0,
+   "gen_filt_eff": 1.0,
+   "campaign_guard": {
+    "portal_dataset_title": "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "campaign_ok": true
+   },
+   "sigma_w_over_surviving_files": 118799344.836,
+   "n_files_included": 10,
+   "n_files_excluded": 0,
+   "normalisation_factor": 0.002699064379880601,
+   "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+   "n_capped_signatures_total": 0,
+   "per_file_sigma_w_n": 10,
+   "weight_write_stats_n": 10,
+   "histograms_n": 9
+  },
+  "64895": {
+   "physics_short": "ST_tW_top_5f_NoFullyHadronicDecays",
+   "cross_section_pb_sigma_eff": 19.56,
+   "k_factor": 1.0,
+   "gen_filt_eff": 1.0,
+   "campaign_guard": {
+    "portal_dataset_title": "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "campaign_ok": true
+   },
+   "sigma_w_over_surviving_files": 109290196.41010001,
+   "n_files_included": 11,
+   "n_files_excluded": 0,
+   "normalisation_factor": 0.002933905240656769,
+   "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+   "n_capped_signatures_total": 0,
+   "per_file_sigma_w_n": 11,
+   "weight_write_stats_n": 11,
+   "histograms_n": 9
+  },
+  "67801": {
+   "physics_short": "TTTo2L2Nu",
+   "cross_section_pb_sigma_eff": 89.28,
+   "k_factor": 1.0,
+   "gen_filt_eff": 1.0,
+   "campaign_guard": {
+    "portal_dataset_title": "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "campaign_ok": true
+   },
+   "sigma_w_over_surviving_files": 3140127171.474801,
+   "n_files_included": 49,
+   "n_files_excluded": 0,
+   "normalisation_factor": 0.0004660852761936444,
+   "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+   "n_capped_signatures_total": 0,
+   "per_file_sigma_w_n": 49,
+   "weight_write_stats_n": 49,
+   "histograms_n": 9
+  },
+  "67993": {
+   "physics_short": "TTToSemiLeptonic",
+   "cross_section_pb_sigma_eff": 367.86,
+   "k_factor": 1.0,
+   "gen_filt_eff": 1.0,
+   "campaign_guard": {
+    "portal_dataset_title": "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "campaign_ok": true
+   },
+   "sigma_w_over_surviving_files": 43548253725.28402,
+   "n_files_included": 138,
+   "n_files_excluded": 0,
+   "normalisation_factor": 0.00013847464511530585,
+   "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+   "n_capped_signatures_total": 0,
+   "per_file_sigma_w_n": 138,
+   "weight_write_stats_n": 138,
+   "histograms_n": 9
+  },
+  "68073": {
+   "physics_short": "TTWJetsToLNu",
+   "cross_section_pb_sigma_eff": 0.2151,
+   "k_factor": 1.0,
+   "gen_filt_eff": 1.0,
+   "campaign_guard": {
+    "portal_dataset_title": "/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "campaign_ok": true
+   },
+   "sigma_w_over_surviving_files": 1113150.4285124398,
+   "n_files_included": 12,
+   "n_files_excluded": 0,
+   "normalisation_factor": 0.0031677069061655534,
+   "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+   "n_capped_signatures_total": 0,
+   "per_file_sigma_w_n": 12,
+   "weight_write_stats_n": 12,
+   "histograms_n": 9
+  },
+  "68187": {
+   "physics_short": "TTZToLLNuNu_M-10",
+   "cross_section_pb_sigma_eff": 0.2439,
+   "k_factor": 1.0,
+   "gen_filt_eff": 1.0,
+   "campaign_guard": {
+    "portal_dataset_title": "/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "campaign_ok": true
+   },
+   "sigma_w_over_surviving_files": 1468242.1649147205,
+   "n_files_included": 42,
+   "n_files_excluded": 0,
+   "normalisation_factor": 0.0027231561628883135,
+   "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+   "n_capped_signatures_total": 0,
+   "per_file_sigma_w_n": 42,
+   "weight_write_stats_n": 42,
+   "histograms_n": 9
+  },
+  "68847": {
+   "physics_short": "VBF_HToZZTo4L_M125",
+   "cross_section_pb_sigma_eff": 0.0010382,
+   "k_factor": 1.0,
+   "gen_filt_eff": 1.0,
+   "campaign_guard": {
+    "portal_dataset_title": "/VBF_HToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+    "campaign_ok": true
+   },
+   "sigma_w_over_surviving_files": 1959725.49468,
+   "n_files_included": 24,
+   "n_files_excluded": 0,
+   "normalisation_factor": 8.684488029676338e-06,
+   "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+   "n_capped_signatures_total": 0,
+   "per_file_sigma_w_n": 24,
+   "weight_write_stats_n": 24,
+   "histograms_n": 9
+  },
+  "72676": {
+   "physics_short": "WWTo2L2Nu",
+   "cross_section_pb_sigma_eff": 12.708,
+   "k_factor": 1.0,
+   "gen_filt_eff": 1.0,
+   "campaign_guard": {
+    "portal_dataset_title": "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "campaign_ok": true
+   },
+   "sigma_w_over_surviving_files": 32147079.59480001,
+   "n_files_included": 7,
+   "n_files_excluded": 0,
+   "normalisation_factor": 0.006480285196223467,
+   "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+   "n_capped_signatures_total": 0,
+   "per_file_sigma_w_n": 7,
+   "weight_write_stats_n": 7,
+   "histograms_n": 9
+  },
+  "72752": {
+   "physics_short": "WZTo3LNu_amcatnloFXFX",
+   "cross_section_pb_sigma_eff": 5.789,
+   "k_factor": 1.0,
+   "gen_filt_eff": 1.0,
+   "campaign_guard": {
+    "portal_dataset_title": "/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "campaign_ok": true
+   },
+   "sigma_w_over_surviving_files": 88368498.47598001,
+   "n_files_included": 31,
+   "n_files_excluded": 0,
+   "normalisation_factor": 0.0010739016576794627,
+   "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+   "n_capped_signatures_total": 0,
+   "per_file_sigma_w_n": 31,
+   "weight_write_stats_n": 31,
+   "histograms_n": 9
+  },
+  "75589": {
+   "physics_short": "ZZTo4L",
+   "cross_section_pb_sigma_eff": 1.544,
+   "k_factor": 1.0,
+   "gen_filt_eff": 1.0,
+   "campaign_guard": {
+    "portal_dataset_title": "/ZZTo4L_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+    "campaign_ok": true
+   },
+   "sigma_w_over_surviving_files": 67876431.34719999,
+   "n_files_included": 98,
+   "n_files_excluded": 1,
+   "normalisation_factor": 0.00037289514928283147,
+   "normalisation_formula": "sigma_eff[pb] * 1000 * k * eps * L_fb / Sigma-w",
+   "n_capped_signatures_total": 0,
+   "per_file_sigma_w_n": 99,
+   "weight_write_stats_n": 98,
+   "histograms_n": 9
+  }
+ },
+ "prune": {
+  "basis": "raw",
+  "min_events_per_fs": 100,
+  "applied_to_n_shards": 496,
+  "applied": "once, on the combined shards of every surviving file of every sample",
+  "n_final_states_removed": 0,
+  "final_states_removed": [],
+  "n_orphan_rows_after_prune": 0
+ },
+ "summed_sm": {
+  "n_histograms": 331,
+  "n_samples_summed": 13,
+  "negative_bin_inventory_n_hists_with_le0_bins": 288
+ },
+ "outputs": {
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record35631_mc.root": {
+   "n_histograms": 4
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record35669_mc.root": {
+   "n_histograms": 4
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record37728_mc.root": {
+   "n_histograms": 4
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record64839_mc.root": {
+   "n_histograms": 4
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record64895_mc.root": {
+   "n_histograms": 4
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record67801_mc.root": {
+   "n_histograms": 4
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record67993_mc.root": {
+   "n_histograms": 4
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record68073_mc.root": {
+   "n_histograms": 4
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record68187_mc.root": {
+   "n_histograms": 4
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record68847_mc.root": {
+   "n_histograms": 4
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record72676_mc.root": {
+   "n_histograms": 4
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record72752_mc.root": {
+   "n_histograms": 4
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record75589_mc.root": {
+   "n_histograms": 4
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_summedSM_mc.root": {
+   "n_histograms": 4
+  }
+ },
+ "readback_assertions": {
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record35631_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record35631_mc.root",
+   "n_histograms": 249,
+   "all_readback_assertions_passed": true
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record35669_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record35669_mc.root",
+   "n_histograms": 314,
+   "all_readback_assertions_passed": true
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record37728_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record37728_mc.root",
+   "n_histograms": 318,
+   "all_readback_assertions_passed": true
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record64839_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record64839_mc.root",
+   "n_histograms": 316,
+   "all_readback_assertions_passed": true
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record64895_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record64895_mc.root",
+   "n_histograms": 304,
+   "all_readback_assertions_passed": true
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record67801_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record67801_mc.root",
+   "n_histograms": 331,
+   "all_readback_assertions_passed": true
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record67993_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record67993_mc.root",
+   "n_histograms": 308,
+   "all_readback_assertions_passed": true
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record68073_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record68073_mc.root",
+   "n_histograms": 331,
+   "all_readback_assertions_passed": true
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record68187_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record68187_mc.root",
+   "n_histograms": 331,
+   "all_readback_assertions_passed": true
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record68847_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record68847_mc.root",
+   "n_histograms": 327,
+   "all_readback_assertions_passed": true
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record72676_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record72676_mc.root",
+   "n_histograms": 303,
+   "all_readback_assertions_passed": true
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record72752_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record72752_mc.root",
+   "n_histograms": 331,
+   "all_readback_assertions_passed": true
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record75589_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_record75589_mc.root",
+   "n_histograms": 331,
+   "all_readback_assertions_passed": true
+  },
+  "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_summedSM_mc.root": {
+   "path": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/build_default/fullrun_summedSM_mc.root",
+   "n_histograms": 331,
+   "all_readback_assertions_passed": true
+  }
+ }
+}

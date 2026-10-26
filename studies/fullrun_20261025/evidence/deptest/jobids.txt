@@ -1,0 +1,13 @@
+A 5331480[].pbs array 0-2
+B 5331481.pbs depend=afterok:5331480[].pbs
+F 5331482[].pbs array 0-2 FAIL_INDEX=1
+G 5331483.pbs depend=afterok:5331482[].pbs
+H 5331484.pbs depend=afterany:5331482[].pbs
+K 5331486[].pbs array 0-1 depend=afterok:5331480[].pbs
+F2 5331536[].pbs array 0-2 FAIL_INDEX=1
+G2 5331537.pbs depend=afterok:5331536[].pbs
+G3  depend=afterok:5331536[1].pbs (one subjob)
+H3 5331538.pbs depend=afternotok:5331536[].pbs
+X 5331544.pbs single, fails
+Y 5331545.pbs depend=afterok:5331544.pbs
+Z 5331546.pbs depend=afternotok:5331544.pbs
