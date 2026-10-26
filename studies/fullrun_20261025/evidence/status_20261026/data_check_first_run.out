@@ -1,0 +1,13 @@
+Job 5341390.pbs WHAT=data_check commit=75b399e2dfdacc50affd4e2c78bc865b12f000cc host=wn015 Sun Oct 25 08:12:55 PM IST 2026
+/dev/sda2       2.0T   62G  1.9T   4% /
+DoubleMuon     57/57   complete  missing   0  incomplete   0  read   94,148,416  accepted  9,629,231  exclusive  9,629,231  guard 0
+SingleMuon    152/152  complete  missing   0  incomplete   0  read  323,952,013  accepted 165,419,655  exclusive 155,904,913  guard 0
+DoubleEG      133/133  complete  missing   0  incomplete   0  read  164,185,704  accepted  6,159,445  exclusive  6,158,747  guard 0
+MuonEG         48/48   complete  missing   0  incomplete   0  read   63,091,128  accepted    188,633  exclusive     19,658  guard 0
+SingleElectron  150/151  complete  missing   1  incomplete   0  read  280,047,890  accepted 101,038,939  exclusive 95,368,381  guard 0
+             missing job indices: [73]
+
+TOTAL 540/541 files complete; settings seen: {'doubleeg_threshold_mode': ['both'], 'emu_overlap_removal_dr_max': ['0.12'], 'emu_overlap_removal_enabled': ['True']}
+guard violations across the whole production: 0
+all_complete = False
+wrote /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/data/evidence/production_complete.json

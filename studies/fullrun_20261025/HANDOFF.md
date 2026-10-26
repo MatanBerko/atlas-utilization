@@ -401,3 +401,43 @@ Script exactly as executed and its output: `evidence/submitted_20261025/complete
 
 Prompt B: the "What Prompt B must do" list above still applies, except that step 1 (the missing
 pieces) is now done — the post chain will start by itself when the arrays finish.
+
+## Status 26 Oct 11:30 — production complete (541 + 497); one data file re-run; data builds running
+
+Checked from wipp-home (`wipp-campus`: "No route to host", one try). Everything VERIFIED BY
+RUNNING. Evidence: `evidence/status_20261026/`.
+
+- **All 1,038 production pieces finished.** Exit codes from `qstat -xf -t`: every subjob 0
+  except one, `5340548[73]` = SingleElectron job 73 (record 30562, file index 2): exit 1 after
+  33 s, `requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='opendata.cern.ch', port=443):
+  Read timed out. (read timeout=30)` while looking up the file's address on the CERN Open Data
+  portal, before any data was read. A one-off network timeout, not a code or physics problem. Its
+  output folder `data/runs/SingleElectron/job_73/` existed but was **empty** (the launcher makes
+  it before the driver starts), so nothing partial was overwritten.
+- **MC chain: all 6 jobs exit 0.** Audit `5341394` verdict **OK**, problems [] (75589 file 98
+  handled as expected); gate `5341395` OK; build `5341396` (36 min); sanity `5341397`; rule
+  builds `5341398`; rule check `5341399`. Results not yet examined (next run of Prompt B).
+- **Data chain, first try:** `data_check` `5341390` exit 1 ("SingleElectron 150/151, missing
+  job indices: [73]", `data_check_first_run.out`). As designed, `data_build`, `data_exact` and
+  `data_checks` (5341391–3) were dropped by PBS and never ran.
+- **Re-run of the one failed file (once):** `5363447[]`, submitted with `-J 73-74:2` (a
+  one-piece array with index 73; OpenPBS refuses `-J 73-73`). Tested first with the io=1 dummy
+  (`5363430` with `-v PBS_ARRAY_INDEX=73`, and `5363431[]` with `-J 73-74:2`: both printed
+  idx=73). Same launcher, resources, mapping, `OUT_BASE`, `-v` list as the original. **Only
+  difference: logs go to `data/logs/SingleElectron_resubmit/`**, so the original failed logs
+  `data/logs/SingleElectron/f_73.*` are kept. Result: **exit 0**, 5:20 wall, 0 tracebacks,
+  outputs written.
+- **New data chain (identical commands):** `data_check` `5363448` → `data_build` `5363449` +
+  `data_exact` `5363450` → `data_checks` `5363451` (`$W/post_jobids_data2.txt`). To avoid
+  overwriting the first chain's outputs (`data/evidence/production_complete.json`,
+  `logs/post/data_check.*`), it runs with **`WORK_DIR=$W/datachain2`**, whose `data/runs` is a
+  symlink to `$W/data/runs`, and logs into `logs/post_data2/`. So the data builds will be in
+  **`$W/datachain2/data/deliver/{default,exact}/`** and the data checks in
+  `$W/datachain2/data/evidence/`. `data_check` `5363448`: **exit 0, 541/541 complete,
+  guard violations 0** (`data_check_second_run.out`). At 11:30 data_build and data_exact were
+  running, data_checks held.
+- File quota 90,268 (VERIFIED BY RUNNING).
+
+**Next run of Prompt B:** confirm 5363449/50/51 finished with exit 0 (read
+`logs/post_data2/*.out`), then do steps 2–5 (verification, plots, delivery drafts, report),
+using the data build in `$W/datachain2/data/deliver/default/` and the MC outputs in `$W/mc/`.
