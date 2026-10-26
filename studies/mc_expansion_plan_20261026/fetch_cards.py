@@ -24,7 +24,7 @@ from plan_samples import SAMPLES  # noqa: E402
 REC = HERE / "evidence" / "records"
 OUT = HERE / "evidence" / "cards"
 SKIP = (".tar.xz", ".tgz", ".tar.gz", ".sh")
-DECAY_RX = re.compile(r"'((?:\d+):(?:onMode|onIfAny|onIfMatch|oneChannel|addChannel|mMin|mMax)[^']*)'")
+DECAY_RX = re.compile(r"'((?:\d+):(?:onMode|onIfAny|onIfMatch|offIfAny|offIfMatch|oneChannel|addChannel|mMin|mMax)[^']*)'")
 
 
 def load(recid):
