@@ -441,3 +441,27 @@ RUNNING. Evidence: `evidence/status_20261026/`.
 **Next run of Prompt B:** confirm 5363449/50/51 finished with exit 0 (read
 `logs/post_data2/*.out`), then do steps 2–5 (verification, plots, delivery drafts, report),
 using the data build in `$W/datachain2/data/deliver/default/` and the MC outputs in `$W/mc/`.
+
+## Results and delivery drafts (26 Oct, afternoon) — run complete, verified; see REPORT.md
+
+- Data chain 2 finished: `data_build` `5363449` (313 histograms), `data_exact` `5363450` (2,779),
+  `data_checks` `5363451` (rule check all pass, delivery plots) — all exit 0. MC chain finished on
+  25 Oct (all exit 0). Production: data 541/541, MC 497/497.
+- Rule checks R1–R7: all pass, data and MC. No NaN/inf, no negative variances; 0 capped signatures.
+- Z peak 0j 76–106: μμ 1.0453, ee 0.9766 (18 Oct: 1.0340 / 0.9534). eμ 0j delivered data/MC 2.19
+  (18 Oct 1.27) — open question for the technical lead.
+- Analysis job `5364861` (32 GB, io=25, 18 min, exit 0) from the pinned clone
+  `checkouts/fullrun_20261025/analysis_faf7be2` (commit `faf7be2`, production code = 75b399e);
+  outputs `work/fullrun_20261025/report/analysis/`, copied to `evidence/analysis/` and `plots/`.
+- Delivery drafts: `work/fullrun_20261025/deliver/{data,mc,docs}/` + `SHA256SUMS.txt` (16 ROOT
+  copies, byte-identical to the build outputs). Not uploaded, not sent.
+- Home folder: compared twice with `data/evidence/home_before.txt` (on the cluster only): 17 entries
+  before and after, nothing new, removed or modified.
+- A stray command line sent a tar stream to a remote `bash -s` once (26 Oct ~15:05); bash stopped
+  at a syntax error on line 3 ("command not found" on line 1); nothing was executed or written (home
+  re-checked: unchanged).
+- Pinned clone archived: `checkouts/fullrun_20261025/repo_75b399e.tar.gz` (65 MB, 235 files listed
+  = 235 in the clone; clone kept, HEAD 75b399e).
+- **File quota at the end: 90665** (VERIFIED BY RUNNING, `lfs quota`), under 125,000.
+- Next: the technical lead verifies (REPORT.md, the eμ question first); then Matan uploads the files in
+  `deliver/` and writes to Maryna.
