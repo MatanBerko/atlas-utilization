@@ -1,0 +1,149 @@
+{
+  "what": "combined four-dataset matched BumpNet delivery (electron-datasets task B3)",
+  "version": "rare4",
+  "priority_order_highest_first": [
+    "DoubleMuon",
+    "SingleMuon",
+    "DoubleEG",
+    "MuonEG",
+    "SingleElectron"
+  ],
+  "pooling": {
+    "DoubleMuon": {
+      "shards": 57,
+      "contribution": "inclusive"
+    },
+    "SingleMuon": {
+      "shards": 152,
+      "contribution": "exclusive"
+    },
+    "DoubleEG": {
+      "shards": 133,
+      "contribution": "exclusive"
+    },
+    "MuonEG": {
+      "shards": 48,
+      "contribution": "exclusive"
+    },
+    "SingleElectron": {
+      "shards": 151,
+      "contribution": "exclusive"
+    }
+  },
+  "per_dataset_event_counts": {
+    "DoubleMuon": {
+      "contribution": "inclusive",
+      "n_events_pooled_rare4": 9627969,
+      "n_own_accepted": 9629231,
+      "n_own_exclusive": 9629231,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    },
+    "SingleMuon": {
+      "contribution": "exclusive",
+      "n_events_pooled_rare4": 155900821,
+      "n_own_accepted": 165419655,
+      "n_own_exclusive": 155904913,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    },
+    "DoubleEG": {
+      "contribution": "exclusive",
+      "n_events_pooled_rare4": 6157959,
+      "n_own_accepted": 6159445,
+      "n_own_exclusive": 6158747,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    },
+    "MuonEG": {
+      "contribution": "exclusive",
+      "n_events_pooled_rare4": 19547,
+      "n_own_accepted": 188633,
+      "n_own_exclusive": 19658,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    },
+    "SingleElectron": {
+      "contribution": "exclusive",
+      "n_events_pooled_rare4": 96293946,
+      "n_own_accepted": 102022396,
+      "n_own_exclusive": 96296146,
+      "per_file_delivery_veto_orders": [
+        [
+          "DoubleMuon",
+          "SingleMuon",
+          "DoubleEG",
+          "MuonEG",
+          "SingleElectron"
+        ]
+      ]
+    }
+  },
+  "n_shards_total": 541,
+  "n_distinct_raw_signatures": 531360,
+  "min_events_per_final_state": 100,
+  "min_events_per_final_state_applied": "once, on the combined shards of all files",
+  "per_histogram_min_entries": 1,
+  "per_histogram_min_entries_source": "upstream: no minimum, a histogram is written whenever it has >=1 entry",
+  "filled_bin_cut": "NONE (applied on the BumpNet side during smoothing)",
+  "width_suffix": "_width_10.0",
+  "width_suffix_matches_upstream": true,
+  "legacy_gt_label_conversion_applied": false,
+  "funnel": {
+    "b_after_min_events_per_fs": 313,
+    "c_after_postprocessing": 313,
+    "d_gt30bins_informational": 268
+  },
+  "n_delivered_histograms": 313,
+  "n_distinct_final_state_categories_delivered": 49,
+  "informational_bin_counts": {
+    "n_with_ge_25_filled_bins": 279,
+    "n_with_gt_25_filled_bins": 278,
+    "n_with_gt_30_filled_bins": 268
+  },
+  "n_excluded_at_histogram_step": 0,
+  "n_excluded_at_postprocessing_step": 0,
+  "funnel_diagnostics": {
+    "threshold": 100,
+    "min_main_entries": 1,
+    "n_stage_b_names": 313,
+    "n_empty_after_z_and_max_mass": 0,
+    "n_empty_after_peak_removal": 0,
+    "n_excluded_by_min_main_entries": 0,
+    "n_stage_c_survivors": 313
+  },
+  "output_files": {
+    "fullrun_bumpnet.root": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/datachain2/data/deliver/default/fullrun_bumpnet.root",
+    "fullrun_bumpnet_cropped.root": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/datachain2/data/deliver/default/fullrun_bumpnet_cropped.root"
+  },
+  "file_for_bumpnet": "fullrun_bumpnet_cropped.root",
+  "multiplicity_rule": "upstream40"
+}
