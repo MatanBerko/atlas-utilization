@@ -1,0 +1,3647 @@
+{
+ "call": "atom.set_release('2024r-pp'); atom.get_all_metadata() deduplicated by dataset_number",
+ "n_unique": 626,
+ "dataset_numbers": [
+  "301204",
+  "301209",
+  "301243",
+  "301247",
+  "301333",
+  "301826",
+  "301928",
+  "302520",
+  "302521",
+  "302522",
+  "302523",
+  "302524",
+  "302525",
+  "302526",
+  "302527",
+  "302528",
+  "302529",
+  "302530",
+  "302531",
+  "302532",
+  "302533",
+  "302534",
+  "302733",
+  "304014",
+  "304480",
+  "304506",
+  "306149",
+  "311490",
+  "312613",
+  "312674",
+  "312675",
+  "312678",
+  "312679",
+  "312682",
+  "312683",
+  "341456",
+  "341458",
+  "341460",
+  "343981",
+  "344158",
+  "345056",
+  "345058",
+  "345060",
+  "345061",
+  "345066",
+  "345097",
+  "345098",
+  "345103",
+  "345104",
+  "345105",
+  "345106",
+  "345112",
+  "345114",
+  "345120",
+  "345121",
+  "345122",
+  "345123",
+  "345124",
+  "345125",
+  "345211",
+  "345212",
+  "345213",
+  "345214",
+  "345215",
+  "345216",
+  "345217",
+  "345218",
+  "345219",
+  "345316",
+  "345317",
+  "345318",
+  "345319",
+  "345320",
+  "345321",
+  "345322",
+  "345324",
+  "345325",
+  "345433",
+  "345445",
+  "345596",
+  "345697",
+  "345698",
+  "345699",
+  "345833",
+  "345834",
+  "345876",
+  "345877",
+  "345878",
+  "345944",
+  "345948",
+  "345949",
+  "345961",
+  "345963",
+  "345964",
+  "345965",
+  "346188",
+  "346189",
+  "346190",
+  "346191",
+  "346192",
+  "346193",
+  "346194",
+  "346195",
+  "346198",
+  "346214",
+  "346228",
+  "346310",
+  "346311",
+  "346312",
+  "346317",
+  "346340",
+  "346341",
+  "346342",
+  "346343",
+  "346344",
+  "346345",
+  "346398",
+  "346400",
+  "346414",
+  "346446",
+  "346447",
+  "346448",
+  "346449",
+  "346450",
+  "346451",
+  "346452",
+  "346453",
+  "346454",
+  "346486",
+  "346511",
+  "346524",
+  "346525",
+  "346526",
+  "346588",
+  "346601",
+  "346602",
+  "346605",
+  "346606",
+  "346607",
+  "346632",
+  "346633",
+  "346634",
+  "346645",
+  "346646",
+  "346647",
+  "346726",
+  "346728",
+  "346797",
+  "346802",
+  "346877",
+  "346878",
+  "346879",
+  "346880",
+  "346881",
+  "346882",
+  "346919",
+  "346923",
+  "346927",
+  "364242",
+  "364243",
+  "364244",
+  "364245",
+  "364246",
+  "364247",
+  "364248",
+  "364249",
+  "364336",
+  "364337",
+  "364338",
+  "364339",
+  "364350",
+  "364351",
+  "364352",
+  "364353",
+  "364354",
+  "364541",
+  "364542",
+  "364543",
+  "364544",
+  "364545",
+  "364546",
+  "364547",
+  "364700",
+  "364701",
+  "364702",
+  "364703",
+  "364704",
+  "364705",
+  "364706",
+  "364707",
+  "364708",
+  "364709",
+  "364710",
+  "364711",
+  "364712",
+  "375884",
+  "376359",
+  "376518",
+  "390420",
+  "390447",
+  "391833",
+  "392202",
+  "394997",
+  "398384",
+  "410081",
+  "410082",
+  "410087",
+  "410155",
+  "410156",
+  "410157",
+  "410218",
+  "410219",
+  "410220",
+  "410389",
+  "410395",
+  "410396",
+  "410408",
+  "410470",
+  "410471",
+  "410560",
+  "410644",
+  "410645",
+  "410658",
+  "410659",
+  "411233",
+  "411234",
+  "411316",
+  "412043",
+  "412044",
+  "423099",
+  "423100",
+  "423101",
+  "423102",
+  "423103",
+  "423104",
+  "423105",
+  "423106",
+  "423107",
+  "423108",
+  "423109",
+  "423110",
+  "423111",
+  "423112",
+  "448624",
+  "449595",
+  "450576",
+  "500335",
+  "500553",
+  "500554",
+  "500555",
+  "501058",
+  "506098",
+  "506099",
+  "506101",
+  "506102",
+  "506103",
+  "506104",
+  "506811",
+  "506813",
+  "506814",
+  "507366",
+  "510097",
+  "523692",
+  "546703",
+  "546708",
+  "546712",
+  "546714",
+  "546715",
+  "546717",
+  "546719",
+  "562813",
+  "562815",
+  "562817",
+  "562818",
+  "562820",
+  "562822",
+  "562824",
+  "562826",
+  "562827",
+  "562829",
+  "562831",
+  "562833",
+  "562835",
+  "562837",
+  "562839",
+  "562840",
+  "562842",
+  "562844",
+  "562846",
+  "562848",
+  "562850",
+  "562852",
+  "562854",
+  "562856",
+  "562857",
+  "562859",
+  "562861",
+  "562863",
+  "562865",
+  "562867",
+  "562869",
+  "562871",
+  "562873",
+  "562875",
+  "562877",
+  "562878",
+  "562880",
+  "562882",
+  "562884",
+  "562886",
+  "562888",
+  "562889",
+  "562891",
+  "562893",
+  "562895",
+  "562897",
+  "562899",
+  "562900",
+  "562902",
+  "562904",
+  "562906",
+  "562908",
+  "562910",
+  "562911",
+  "562913",
+  "562915",
+  "562917",
+  "562919",
+  "562921",
+  "562922",
+  "562924",
+  "562926",
+  "562928",
+  "562930",
+  "562932",
+  "562933",
+  "562935",
+  "562937",
+  "562939",
+  "562941",
+  "562943",
+  "562944",
+  "562946",
+  "562948",
+  "562950",
+  "562952",
+  "562954",
+  "563239",
+  "563241",
+  "563243",
+  "563244",
+  "563246",
+  "563248",
+  "563250",
+  "563252",
+  "563253",
+  "563255",
+  "563257",
+  "563259",
+  "563261",
+  "563263",
+  "563265",
+  "563266",
+  "563268",
+  "563270",
+  "563272",
+  "563274",
+  "563276",
+  "563278",
+  "563280",
+  "563282",
+  "563283",
+  "563285",
+  "563287",
+  "563289",
+  "563291",
+  "563293",
+  "563295",
+  "563297",
+  "563299",
+  "563301",
+  "563303",
+  "563304",
+  "563306",
+  "563308",
+  "563310",
+  "563312",
+  "563314",
+  "563315",
+  "563317",
+  "563319",
+  "563321",
+  "563323",
+  "563325",
+  "563326",
+  "563328",
+  "563330",
+  "563332",
+  "563334",
+  "563336",
+  "563337",
+  "563339",
+  "563341",
+  "563343",
+  "563345",
+  "563347",
+  "563348",
+  "563350",
+  "563352",
+  "563354",
+  "563356",
+  "563358",
+  "563359",
+  "563361",
+  "563363",
+  "563365",
+  "563367",
+  "563369",
+  "563370",
+  "563372",
+  "563374",
+  "563376",
+  "563378",
+  "563380",
+  "563381",
+  "563383",
+  "563385",
+  "563386",
+  "563388",
+  "563390",
+  "563392",
+  "563394",
+  "563395",
+  "563397",
+  "563399",
+  "563401",
+  "563403",
+  "563405",
+  "563407",
+  "563408",
+  "563410",
+  "563412",
+  "563414",
+  "563416",
+  "563418",
+  "563420",
+  "563422",
+  "563424",
+  "563425",
+  "563427",
+  "563429",
+  "563431",
+  "563433",
+  "563435",
+  "563437",
+  "563439",
+  "563441",
+  "563443",
+  "563445",
+  "563446",
+  "563448",
+  "563450",
+  "563452",
+  "563454",
+  "563456",
+  "563457",
+  "563459",
+  "563461",
+  "563463",
+  "563465",
+  "563467",
+  "563468",
+  "563470",
+  "563472",
+  "563474",
+  "563476",
+  "563478",
+  "563479",
+  "563481",
+  "563483",
+  "563485",
+  "563487",
+  "563489",
+  "563490",
+  "563492",
+  "563494",
+  "563496",
+  "563498",
+  "563500",
+  "563501",
+  "563503",
+  "563505",
+  "563507",
+  "563509",
+  "563511",
+  "563512",
+  "563514",
+  "563516",
+  "563518",
+  "563520",
+  "563522",
+  "600017",
+  "600018",
+  "600019",
+  "600020",
+  "600565",
+  "600566",
+  "600567",
+  "600568",
+  "600569",
+  "600570",
+  "600571",
+  "600572",
+  "600573",
+  "600574",
+  "600575",
+  "600686",
+  "601352",
+  "601355",
+  "601487",
+  "601489",
+  "601491",
+  "601495",
+  "601497",
+  "601624",
+  "601627",
+  "601628",
+  "601631",
+  "601761",
+  "601762",
+  "601763",
+  "601764",
+  "603559",
+  "603695",
+  "603696",
+  "700000",
+  "700007",
+  "700195",
+  "700196",
+  "700197",
+  "700198",
+  "700199",
+  "700200",
+  "700201",
+  "700320",
+  "700321",
+  "700322",
+  "700323",
+  "700324",
+  "700325",
+  "700335",
+  "700336",
+  "700337",
+  "700338",
+  "700339",
+  "700340",
+  "700341",
+  "700342",
+  "700343",
+  "700344",
+  "700345",
+  "700346",
+  "700347",
+  "700348",
+  "700349",
+  "700352",
+  "700353",
+  "700358",
+  "700359",
+  "700360",
+  "700361",
+  "700362",
+  "700363",
+  "700364",
+  "700398",
+  "700399",
+  "700400",
+  "700401",
+  "700402",
+  "700403",
+  "700404",
+  "700442",
+  "700467",
+  "700468",
+  "700469",
+  "700470",
+  "700471",
+  "700472",
+  "700488",
+  "700489",
+  "700490",
+  "700491",
+  "700492",
+  "700493",
+  "700494",
+  "700495",
+  "700496",
+  "700507",
+  "700587",
+  "700588",
+  "700589",
+  "700590",
+  "700591",
+  "700592",
+  "700593",
+  "700594",
+  "700600",
+  "700601",
+  "700602",
+  "700603",
+  "700604",
+  "700605",
+  "700709",
+  "700710",
+  "700792",
+  "700793",
+  "700794",
+  "700843",
+  "700849",
+  "700855",
+  "700901",
+  "700902",
+  "700903",
+  "801976",
+  "801978",
+  "data"
+ ],
+ "not_in_maryna_list": {
+  "301204": {
+   "physics_short": "Pythia8EvtGen_A14MSTW2008LO_Zprime_NoInt_ee_SSM3000",
+   "process": "pp>Zprime>ee",
+   "keywords": [
+    "2electron",
+    "BSM",
+    "SSM",
+    "Zprime",
+    "electroweak",
+    "heavyBoson",
+    "resonance"
+   ]
+  },
+  "301209": {
+   "physics_short": "Pythia8EvtGen_A14MSTW2008LO_Zprime_NoInt_mumu_SSM3000",
+   "process": "pp>Zprime>mm",
+   "keywords": [
+    "2muon",
+    "BSM",
+    "SSM",
+    "Zprime",
+    "electroweak",
+    "heavyBoson",
+    "resonance"
+   ]
+  },
+  "301243": {
+   "physics_short": "Pythia8EvtGen_A14NNPDF23LO_Wprime_enu_SSM3000",
+   "process": "pp>Wprime>enu",
+   "keywords": [
+    "BSM",
+    "SSM",
+    "Wprime",
+    "electroweak",
+    "heavyBoson",
+    "lepton",
+    "neutrino",
+    "resonance"
+   ]
+  },
+  "301247": {
+   "physics_short": "Pythia8EvtGen_A14NNPDF23LO_Wprime_munu_SSM3000",
+   "process": "pp>Wprime>munu",
+   "keywords": [
+    "BSM",
+    "SSM",
+    "Wprime",
+    "electroweak",
+    "heavyBoson",
+    "lepton",
+    "neutrino",
+    "resonance"
+   ]
+  },
+  "301333": {
+   "physics_short": "Pythia8EvtGen_A14NNPDF23LO_zprime3000_tt",
+   "process": "pp>Zprime>ttbar",
+   "keywords": [
+    "BSM",
+    "Zprime",
+    "resonance",
+    "ttbar"
+   ]
+  },
+  "301826": {
+   "physics_short": "Pythia8EvtGen_A14NNPDF23LO_Wprime_qq_3000",
+   "process": "pp>Wprime>qq",
+   "keywords": [
+    "BSM",
+    "Wprime",
+    "exotic",
+    "jets"
+   ]
+  },
+  "301928": {
+   "physics_short": "Pythia8EvtGen_A14NNPDF23LO_Zprimebb3000",
+   "process": "Zprime->bb",
+   "keywords": [
+    "Zprime",
+    "exotic"
+   ]
+  },
+  "302733": {
+   "physics_short": "MadGraphPythia8EvtGen_A14NNPDF23LO_WpL_tblep_M3000",
+   "process": "Wprime->tb",
+   "keywords": [
+    "bsm",
+    "bsmtop",
+    "exotic",
+    "schannel",
+    "singletop",
+    "top",
+    "wprime"
+   ]
+  },
+  "304480": {
+   "physics_short": "Charybdis2Pythia8EvtGen_A14CTEQ6L1_BH2_n2_Mth8_0_MD2_5",
+   "process": "BH",
+   "keywords": [
+    "BSM",
+    "blackhole",
+    "exotic",
+    "extraDimensions"
+   ]
+  },
+  "304506": {
+   "physics_short": "Charybdis2Pythia8EvtGen_A14CTEQ6L1_BH2_n2_Mth9_5_MD2_5",
+   "process": "BH",
+   "keywords": [
+    "BSM",
+    "blackhole",
+    "exotic",
+    "extraDimensions"
+   ]
+  },
+  "306149": {
+   "physics_short": "MadGraphPythia8EvtGen_A14NNPDF23LO_WpL_tbhad_M3000",
+   "process": "Wprime->tb",
+   "keywords": [
+    "BSM",
+    "BSMtop",
+    "Wprime",
+    "exotic",
+    "sChannel",
+    "singleTop",
+    "top"
+   ]
+  },
+  "311490": {
+   "physics_short": "PowhegPy8EG_A14N23LO_DMA_500_700_gq0p25",
+   "process": "pp->A(XXbar)j'",
+   "keywords": [
+    "BSM",
+    "WIMP",
+    "exotic",
+    "invisible"
+   ]
+  },
+  "312613": {
+   "physics_short": "aMcAtNloPy8EG_A14N30NLO_LQd_gstML_0p3_nonallhad_M1000",
+   "process": "pp -> LQ LQ",
+   "keywords": [
+    "bsm",
+    "exotic",
+    "leptoquark",
+    "scalar"
+   ]
+  },
+  "312674": {
+   "physics_short": "MGPy8EG_A14N30LO_2HDMa_bb_monoHyy_tb1_sp035_mA600_ma300",
+   "process": "MonoHyy",
+   "keywords": [
+    "bsmhiggs",
+    "exotic",
+    "higgs",
+    "simplifiedmodel",
+    "wimp"
+   ]
+  },
+  "312675": {
+   "physics_short": "MGPy8EG_A14N30LO_2HDMa_ggF_monoHyy_tb1_sp035_mA600_ma300",
+   "process": "MonoHyy",
+   "keywords": [
+    "bsmhiggs",
+    "exotic",
+    "higgs",
+    "simplifiedmodel",
+    "wimp"
+   ]
+  },
+  "312678": {
+   "physics_short": "MGPy8EG_A14N30LO_2HDMa_bb_monoHyy_tb1_sp035_mA900_ma250",
+   "process": "MonoHyy",
+   "keywords": [
+    "bsmhiggs",
+    "exotic",
+    "higgs",
+    "simplifiedmodel",
+    "wimp"
+   ]
+  },
+  "312679": {
+   "physics_short": "MGPy8EG_A14N30LO_2HDMa_ggF_monoHyy_tb1_sp035_mA900_ma250",
+   "process": "MonoHyy",
+   "keywords": [
+    "bsmhiggs",
+    "exotic",
+    "higgs",
+    "simplifiedmodel",
+    "wimp"
+   ]
+  },
+  "312682": {
+   "physics_short": "MGPy8EG_A14N30LO_2HDMa_bb_monoHyy_tb1_sp035_mA1600_ma100",
+   "process": "MonoHyy",
+   "keywords": [
+    "bsmhiggs",
+    "exotic",
+    "higgs",
+    "simplifiedmodel",
+    "wimp"
+   ]
+  },
+  "312683": {
+   "physics_short": "MGPy8EG_A14N30LO_2HDMa_ggF_monoHyy_tb1_sp035_mA1600_ma100",
+   "process": "MonoHyy",
+   "keywords": [
+    "bsmhiggs",
+    "exotic",
+    "higgs",
+    "simplifiedmodel",
+    "wimp"
+   ]
+  },
+  "344158": {
+   "physics_short": "aMcAtNloPythia8EvtGen_A14NNPDF23LO_ppx0_FxFx_Np012_SM",
+   "process": "GGF H",
+   "keywords": [
+    "BSM",
+    "Higgs",
+    "ZZ",
+    "gluonFusionHiggs",
+    "jets",
+    "mH125",
+    "resonance"
+   ]
+  },
+  "345697": {
+   "physics_short": "MadGraphPythia8EvtGen_AZNLOCTEQ6L1_ggfhtautaullNp2",
+   "process": "H->tautau dilep in GGF production",
+   "keywords": [
+    "2lepton",
+    "BSM",
+    "BSMHiggs",
+    "Higgs",
+    "dijet",
+    "mH125",
+    "resonance"
+   ]
+  },
+  "345698": {
+   "physics_short": "MadGraphPythia8EvtGen_AZNLOCTEQ6L1_ggfhtautaulhNp2",
+   "process": "GGF H->tau tau->lep had",
+   "keywords": [
+    "BSM",
+    "BSMHiggs",
+    "Higgs",
+    "dijet",
+    "mH125",
+    "resonance"
+   ]
+  },
+  "345699": {
+   "physics_short": "MadGraphPythia8EvtGen_AZNLOCTEQ6L1_ggfhtautauhhNp2",
+   "process": "GGF H->tau tau->had had",
+   "keywords": [
+    "BSM",
+    "BSMHiggs",
+    "Higgs",
+    "dijet",
+    "mH125",
+    "resonance"
+   ]
+  },
+  "345944": {
+   "physics_short": "aMcAtNloPy8EG_A14NNPDF23LO_ppx0yy_FxFx_Np012_SM",
+   "process": "GGF H->gamma gamma",
+   "keywords": [
+    "BSM",
+    "Higgs",
+    "gluonFusionHiggs",
+    "jets",
+    "mH125",
+    "resonance"
+   ]
+  },
+  "375884": {
+   "physics_short": "MGPy8EG_A14N_GG_ttn1_2000_5000_200",
+   "process": "Gluino pair, gluino->tt neutralino",
+   "keywords": [
+    "gluino",
+    "neutralino",
+    "simplifiedmodel",
+    "susy",
+    "top"
+   ]
+  },
+  "376359": {
+   "physics_short": "MGPy8EG_A14N23LO_SS_onestepCC_1600_900_200",
+   "process": "Squark pair, squark->q chargino, chargino->W neutralino",
+   "keywords": [
+    "simplifiedmodel",
+    "squark",
+    "susy"
+   ]
+  },
+  "376518": {
+   "physics_short": "MadGraphPythia8EvtGen_A14NNPDF23LO_GG_direct_2400_200",
+   "process": "Gluino pair, gluino->qq neutralino",
+   "keywords": [
+    "simplifiedModel",
+    "gluino"
+   ]
+  },
+  "390420": {
+   "physics_short": "MGPy8EG_A14N23LO_TT_bWNLH_172d5_0_MadSpin_2L15",
+   "process": "Stop 2l",
+   "keywords": [
+    "simplifiedmodel",
+    "stop",
+    "susy"
+   ]
+  },
+  "390447": {
+   "physics_short": "MGPy8EG_A14N23LO_TT_bWNLH_190_17d5_MadSpin_2L15",
+   "process": "Stop 2l",
+   "keywords": [
+    "simplifiedmodel",
+    "stop",
+    "susy"
+   ]
+  },
+  "391833": {
+   "physics_short": "MGPy8EG_A14N23LO_TT_bWNLH_230_30_MadSpin_2L15",
+   "process": "Stop 2l",
+   "keywords": [
+    "simplifiedmodel",
+    "stop",
+    "susy"
+   ]
+  },
+  "392202": {
+   "physics_short": "MGPy8EG_A14N23LO_C1N2_WZ_500p0_100p0_3L_2L7",
+   "process": "Electroweakino WZ+neutralino",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "394997": {
+   "physics_short": "MGPy8EG_A14N23LO_SM_N2C1p_105_100_2L2MET75_MadSpin",
+   "process": "Compressed electroweakino",
+   "keywords": [
+    "gaugino",
+    "chargino",
+    "neutralino"
+   ]
+  },
+  "398384": {
+   "physics_short": "MGPy8EG_A14N23LO_C1N2N1_GGMHinoZh50_800_noFilter",
+   "process": "Higgsino, GGM decays to gravitino",
+   "keywords": [
+    "chargino",
+    "gravitino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "448624": {
+   "physics_short": "MGPy8EG_A14N23LO_TT_higgsinoRPV_1075_700",
+   "process": "Higgsino, RPV decays",
+   "keywords": [
+    "higgsino",
+    "rpv",
+    "stop",
+    "susy"
+   ]
+  },
+  "449595": {
+   "physics_short": "MGPy8EG_A14N23LO_TT_RPVdirectBL_1400",
+   "process": "Stop pair, Stop->bl",
+   "keywords": [
+    "simplifiedmodel",
+    "susy"
+   ]
+  },
+  "500553": {
+   "physics_short": "aMCPy8EG_ZH_FxFx_Hyy",
+   "process": "ZH H->gamma gamma",
+   "keywords": [
+    "BSM",
+    "Higgs",
+    "ZH",
+    "jets",
+    "mH125",
+    "resonance"
+   ]
+  },
+  "500554": {
+   "physics_short": "aMCPy8EG_WH_FxFx_Hyy",
+   "process": "WH H->gamma gamma, W->lnu",
+   "keywords": [
+    "BSM",
+    "Higgs",
+    "ZH",
+    "jets",
+    "mH125",
+    "resonance"
+   ]
+  },
+  "500555": {
+   "physics_short": "aMCPy8EG_ggZH_Hyy",
+   "process": "ZH H->gamma gamma, Z->ll or nunu",
+   "keywords": [
+    "BSM",
+    "Higgs",
+    "ZH",
+    "jets",
+    "mH125",
+    "resonance"
+   ]
+  },
+  "501058": {
+   "physics_short": "MGPy8EG_StauStauDirect_200p0_1p0_TFilt",
+   "process": "Stau pair, stau->tau neutralino",
+   "keywords": [
+    "stau",
+    "susy"
+   ]
+  },
+  "506101": {
+   "physics_short": "aMCH7EG_VBF_Htautauh30h20",
+   "process": "VBF H->tautau",
+   "keywords": [
+    "Higgs",
+    "VBF",
+    "mH125",
+    "resonance"
+   ]
+  },
+  "506102": {
+   "physics_short": "aMCH7EG_VBF_Htautaul13l7",
+   "process": "VBF H->tautau",
+   "keywords": [
+    "Higgs",
+    "VBF",
+    "mH125",
+    "resonance"
+   ]
+  },
+  "506103": {
+   "physics_short": "aMCH7EG_VBF_Htautaulp15hm20",
+   "process": "VBF H->tautau",
+   "keywords": [
+    "Higgs",
+    "VBF",
+    "mH125",
+    "resonance"
+   ]
+  },
+  "506104": {
+   "physics_short": "aMCH7EG_VBF_Htautaulm15hp20",
+   "process": "VBF H->tautau",
+   "keywords": [
+    "Higgs",
+    "VBF",
+    "mH125",
+    "resonance"
+   ]
+  },
+  "506811": {
+   "physics_short": "aMCH7EG_VBF_HC_Hyy",
+   "process": "VBF H->gamma gamma",
+   "keywords": [
+    "Higgs",
+    "VBF",
+    "gluonFusionHiggs",
+    "mH125",
+    "resonance"
+   ]
+  },
+  "507366": {
+   "physics_short": "MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_950",
+   "process": "Electroweakino GGM",
+   "keywords": [
+    "chargino",
+    "neutralino",
+    "simplifiedmodel",
+    "susy"
+   ]
+  },
+  "510097": {
+   "physics_short": "MGPy8EG_A14N23LO_DM_4topscalar_p1000_c1_nonallhad",
+   "process": "Dark matter 4-top scalar mediation",
+   "keywords": [
+    "bsm",
+    "exotic",
+    "susy",
+    "wimp"
+   ]
+  },
+  "523692": {
+   "physics_short": "MGPy8EG_A14N23LO_TT_tN1_1200_200_MS",
+   "process": "Stop pair, stop->top neutralino",
+   "keywords": [
+    "gluino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "546703": {
+   "physics_short": "MGPy8EG_A14N23LO_GGF_RS_G_ZZ_llll_kt1_m200",
+   "process": "RS ZZ 4l",
+   "keywords": [
+    "bsm",
+    "exotic",
+    "graviton",
+    "randallsundrum",
+    "warpeded"
+   ]
+  },
+  "546708": {
+   "physics_short": "MGPy8EG_A14N23LO_GGF_RS_G_ZZ_llll_kt1_m600",
+   "process": "RS ZZ 4l",
+   "keywords": [
+    "bsm",
+    "exotic",
+    "graviton",
+    "randallsundrum",
+    "warpeded"
+   ]
+  },
+  "546712": {
+   "physics_short": "MGPy8EG_A14N23LO_GGF_RS_G_ZZ_llll_kt1_m1000",
+   "process": "RS ZZ 4l",
+   "keywords": [
+    "bsm",
+    "exotic",
+    "graviton",
+    "randallsundrum",
+    "warpeded"
+   ]
+  },
+  "546714": {
+   "physics_short": "MGPy8EG_A14N23LO_GGF_RS_G_ZZ_llll_kt1_m1400",
+   "process": "RS ZZ 4l",
+   "keywords": [
+    "bsm",
+    "exotic",
+    "graviton",
+    "randallsundrum",
+    "warpeded"
+   ]
+  },
+  "546715": {
+   "physics_short": "MGPy8EG_A14N23LO_GGF_RS_G_ZZ_llll_kt1_m1600",
+   "process": "RS ZZ 4l",
+   "keywords": [
+    "bsm",
+    "exotic",
+    "graviton",
+    "randallsundrum",
+    "warpeded"
+   ]
+  },
+  "546717": {
+   "physics_short": "MGPy8EG_A14N23LO_GGF_RS_G_ZZ_llll_kt1_m2000",
+   "process": "RS ZZ 4l",
+   "keywords": [
+    "bsm",
+    "exotic",
+    "graviton",
+    "randallsundrum",
+    "warpeded"
+   ]
+  },
+  "546719": {
+   "physics_short": "MGPy8EG_A14N23LO_GGF_RS_G_ZZ_llll_kt1_m3000",
+   "process": "RS ZZ 4l",
+   "keywords": [
+    "bsm",
+    "exotic",
+    "graviton",
+    "randallsundrum",
+    "warpeded"
+   ]
+  },
+  "562813": {
+   "physics_short": "MGPy8EG_C1C1_WW_200_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562815": {
+   "physics_short": "MGPy8EG_C1C1_WW_250_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562817": {
+   "physics_short": "MGPy8EG_C1C1_WW_250_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562818": {
+   "physics_short": "MGPy8EG_C1C1_WW_300_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562820": {
+   "physics_short": "MGPy8EG_C1C1_WW_300_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562822": {
+   "physics_short": "MGPy8EG_C1C1_WW_350_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562824": {
+   "physics_short": "MGPy8EG_C1C1_WW_350_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562826": {
+   "physics_short": "MGPy8EG_C1C1_WW_350_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562827": {
+   "physics_short": "MGPy8EG_C1C1_WW_400_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562829": {
+   "physics_short": "MGPy8EG_C1C1_WW_400_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562831": {
+   "physics_short": "MGPy8EG_C1C1_WW_400_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562833": {
+   "physics_short": "MGPy8EG_C1C1_WW_450_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562835": {
+   "physics_short": "MGPy8EG_C1C1_WW_450_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562837": {
+   "physics_short": "MGPy8EG_C1C1_WW_450_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562839": {
+   "physics_short": "MGPy8EG_C1C1_WW_450_300_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562840": {
+   "physics_short": "MGPy8EG_C1C1_WW_500_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562842": {
+   "physics_short": "MGPy8EG_C1C1_WW_500_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562844": {
+   "physics_short": "MGPy8EG_C1C1_WW_500_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562846": {
+   "physics_short": "MGPy8EG_C1C1_WW_500_300_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562848": {
+   "physics_short": "MGPy8EG_C1C1_WW_550_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562850": {
+   "physics_short": "MGPy8EG_C1C1_WW_550_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562852": {
+   "physics_short": "MGPy8EG_C1C1_WW_550_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562854": {
+   "physics_short": "MGPy8EG_C1C1_WW_550_300_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562856": {
+   "physics_short": "MGPy8EG_C1C1_WW_550_400_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562857": {
+   "physics_short": "MGPy8EG_C1C1_WW_600_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562859": {
+   "physics_short": "MGPy8EG_C1C1_WW_600_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562861": {
+   "physics_short": "MGPy8EG_C1C1_WW_600_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562863": {
+   "physics_short": "MGPy8EG_C1C1_WW_600_300_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562865": {
+   "physics_short": "MGPy8EG_C1C1_WW_600_400_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562867": {
+   "physics_short": "MGPy8EG_C1C1_WW_650_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562869": {
+   "physics_short": "MGPy8EG_C1C1_WW_650_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562871": {
+   "physics_short": "MGPy8EG_C1C1_WW_650_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562873": {
+   "physics_short": "MGPy8EG_C1C1_WW_650_300_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562875": {
+   "physics_short": "MGPy8EG_C1C1_WW_650_400_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562877": {
+   "physics_short": "MGPy8EG_C1C1_WW_650_500_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562878": {
+   "physics_short": "MGPy8EG_C1C1_WW_700_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562880": {
+   "physics_short": "MGPy8EG_C1C1_WW_700_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562882": {
+   "physics_short": "MGPy8EG_C1C1_WW_700_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562884": {
+   "physics_short": "MGPy8EG_C1C1_WW_700_300_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562886": {
+   "physics_short": "MGPy8EG_C1C1_WW_700_400_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562888": {
+   "physics_short": "MGPy8EG_C1C1_WW_700_500_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562889": {
+   "physics_short": "MGPy8EG_C1C1_WW_750_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562891": {
+   "physics_short": "MGPy8EG_C1C1_WW_750_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562893": {
+   "physics_short": "MGPy8EG_C1C1_WW_750_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562895": {
+   "physics_short": "MGPy8EG_C1C1_WW_750_300_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562897": {
+   "physics_short": "MGPy8EG_C1C1_WW_750_400_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562899": {
+   "physics_short": "MGPy8EG_C1C1_WW_750_500_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562900": {
+   "physics_short": "MGPy8EG_C1C1_WW_800_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562902": {
+   "physics_short": "MGPy8EG_C1C1_WW_800_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562904": {
+   "physics_short": "MGPy8EG_C1C1_WW_800_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562906": {
+   "physics_short": "MGPy8EG_C1C1_WW_800_300_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562908": {
+   "physics_short": "MGPy8EG_C1C1_WW_800_400_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562910": {
+   "physics_short": "MGPy8EG_C1C1_WW_800_500_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562911": {
+   "physics_short": "MGPy8EG_C1C1_WW_900_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562913": {
+   "physics_short": "MGPy8EG_C1C1_WW_900_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562915": {
+   "physics_short": "MGPy8EG_C1C1_WW_900_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562917": {
+   "physics_short": "MGPy8EG_C1C1_WW_900_300_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562919": {
+   "physics_short": "MGPy8EG_C1C1_WW_900_400_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562921": {
+   "physics_short": "MGPy8EG_C1C1_WW_900_500_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562922": {
+   "physics_short": "MGPy8EG_C1C1_WW_1000_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562924": {
+   "physics_short": "MGPy8EG_C1C1_WW_1000_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562926": {
+   "physics_short": "MGPy8EG_C1C1_WW_1000_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562928": {
+   "physics_short": "MGPy8EG_C1C1_WW_1000_300_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562930": {
+   "physics_short": "MGPy8EG_C1C1_WW_1000_400_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562932": {
+   "physics_short": "MGPy8EG_C1C1_WW_1000_500_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562933": {
+   "physics_short": "MGPy8EG_C1C1_WW_1100_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562935": {
+   "physics_short": "MGPy8EG_C1C1_WW_1100_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562937": {
+   "physics_short": "MGPy8EG_C1C1_WW_1100_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562939": {
+   "physics_short": "MGPy8EG_C1C1_WW_1100_300_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562941": {
+   "physics_short": "MGPy8EG_C1C1_WW_1100_400_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562943": {
+   "physics_short": "MGPy8EG_C1C1_WW_1100_500_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562944": {
+   "physics_short": "MGPy8EG_C1C1_WW_1200_0_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562946": {
+   "physics_short": "MGPy8EG_C1C1_WW_1200_100_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562948": {
+   "physics_short": "MGPy8EG_C1C1_WW_1200_200_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562950": {
+   "physics_short": "MGPy8EG_C1C1_WW_1200_300_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562952": {
+   "physics_short": "MGPy8EG_C1C1_WW_1200_400_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "562954": {
+   "physics_short": "MGPy8EG_C1C1_WW_1200_500_2L7_MadSpin",
+   "process": "C1C1 WW 2l",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "slepton",
+    "sneutrino",
+    "susy"
+   ]
+  },
+  "563239": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_200_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563241": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_250_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563243": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_250_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563244": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_300_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563246": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_300_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563248": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_350_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563250": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_350_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563252": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_350_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563253": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_400_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563255": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_400_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563257": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_400_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563259": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_450_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563261": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_450_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563263": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_450_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563265": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_450_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563266": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_500_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563268": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_500_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563270": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_500_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563272": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_500_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563274": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_550_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563276": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_550_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563278": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_550_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563280": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_550_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563282": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_550_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563283": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_600_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563285": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_600_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563287": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_600_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563289": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_600_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563291": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_600_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563293": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_650_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563295": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_650_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563297": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_650_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563299": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_650_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563301": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_650_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563303": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_650_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563304": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_700_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563306": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_700_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563308": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_700_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563310": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_700_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563312": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_700_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563314": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_700_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563315": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_750_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563317": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_750_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563319": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_750_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563321": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_750_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563323": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_750_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563325": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_750_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563326": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_800_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563328": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_800_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563330": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_800_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563332": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_800_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563334": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_800_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563336": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_800_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563337": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_900_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563339": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_900_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563341": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_900_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563343": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_900_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563345": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_900_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563347": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_900_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563348": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1000_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563350": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1000_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563352": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1000_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563354": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1000_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563356": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1000_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563358": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1000_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563359": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1100_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563361": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1100_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563363": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1100_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563365": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1100_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563367": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1100_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563369": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1100_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563370": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1200_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563372": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1200_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563374": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1200_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563376": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1200_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563378": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1200_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563380": {
+   "physics_short": "MGPy8EG_C1pN2_WZ_1200_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563381": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_200_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563383": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_250_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563385": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_250_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563386": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_300_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563388": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_300_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563390": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_350_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563392": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_350_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563394": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_350_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563395": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_400_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563397": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_400_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563399": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_400_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563401": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_450_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563403": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_450_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563405": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_450_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563407": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_450_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563408": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_500_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563410": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_500_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563412": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_500_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563414": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_500_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563416": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_550_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563418": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_550_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563420": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_550_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563422": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_550_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563424": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_550_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563425": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_600_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563427": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_600_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563429": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_600_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563431": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_600_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563433": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_600_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563435": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_650_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563437": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_650_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563439": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_650_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563441": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_650_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563443": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_650_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563445": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_650_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563446": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_700_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563448": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_700_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563450": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_700_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563452": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_700_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563454": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_700_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563456": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_700_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563457": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_750_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563459": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_750_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563461": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_750_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563463": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_750_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563465": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_750_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563467": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_750_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563468": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_800_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563470": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_800_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563472": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_800_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563474": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_800_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563476": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_800_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563478": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_800_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563479": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_900_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563481": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_900_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563483": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_900_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563485": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_900_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563487": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_900_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563489": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_900_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563490": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1000_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563492": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1000_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563494": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1000_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563496": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1000_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563498": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1000_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563500": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1000_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563501": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1100_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563503": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1100_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563505": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1100_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563507": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1100_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563509": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1100_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563511": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1100_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563512": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1200_0_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563514": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1200_100_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563516": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1200_200_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563518": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1200_300_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563520": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1200_400_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "563522": {
+   "physics_short": "MGPy8EG_C1mN2_WZ_1200_500_2L7_MadSpin",
+   "process": "C1N2 WZ ll",
+   "keywords": [
+    "chargino",
+    "gaugino",
+    "neutralino",
+    "susy"
+   ]
+  },
+  "603559": {
+   "physics_short": "PhPy8EG_PDF4LHC21_HHbbyy_chhh1p0",
+   "process": "HHbbyy",
+   "keywords": [
+    "SM",
+    "SMHiggs",
+    "bbbar",
+    "bottom",
+    "diphoton",
+    "hh",
+    "nonResonant",
+    "photon"
+   ]
+  },
+  "603695": {
+   "physics_short": "PhPy8EG_PDF4LHC21_HHbbyy_chhh2p5",
+   "process": "HHbbyy",
+   "keywords": [
+    "SM",
+    "SMHiggs",
+    "bbbar",
+    "bottom",
+    "diphoton",
+    "hh",
+    "nonResonant",
+    "photon"
+   ]
+  },
+  "603696": {
+   "physics_short": "PhPy8EG_PDF4LHC21_HHbbyy_chhh10p0",
+   "process": "HHbbyy",
+   "keywords": [
+    "SM",
+    "SMHiggs",
+    "bbbar",
+    "bottom",
+    "diphoton",
+    "hh",
+    "nonResonant",
+    "photon"
+   ]
+  },
+  "data": {
+   "physics_short": null,
+   "process": null,
+   "keywords": null
+  }
+ }
+}

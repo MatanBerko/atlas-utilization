@@ -1,0 +1,5028 @@
+{
+ "what": "ATLAS background DSID → physics process → CMS sample mapping (27 Oct 2026). ATLAS σ are CROSS-CHECKS only.",
+ "atlas_source": "atlas_bkg_metadata.json (atlasopenmagic, release 2024r-pp)",
+ "n_dsids": 337,
+ "n_processes": 108,
+ "rows": [
+  {
+   "key": "Zll_jets",
+   "process": "Z/γ* → ℓℓ + jets (ee, μμ, ττ), mass range not stated in the metadata",
+   "category": "V+jets",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700320",
+    "700321",
+    "700322",
+    "700323",
+    "700324",
+    "700325",
+    "700792",
+    "700793",
+    "700794"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 6685.691857838,
+   "atlas_sigma_per_dsid_pb": {
+    "700320": 55.38770992799999,
+    "700321": 288.3439674,
+    "700322": 1879.2953485199998,
+    "700323": 54.187258507,
+    "700324": 288.835639,
+    "700325": 1880.0925487700001,
+    "700792": 55.693029712999994,
+    "700793": 289.2421004,
+    "700794": 1894.6142555999998
+   },
+   "atlas_files_nominal": 2135,
+   "atlas_files_alternatives": {},
+   "slicing": "b/c-hadron filter split per flavour: BFilter / CFilterBVeto / CVetoBVeto (exclusive slices, summed)",
+   "cms_status": "delivered",
+   "cms_records": [
+    {
+     "recid": 35669,
+     "name": "DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 71839442,
+     "files": 41,
+     "portal_total_value": "6.422e+03",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": 5765.4,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.1596232451933952,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "ee and μμ: Sherpa 2.2.11; ττ: Sherpa 2.2.14. CMS DY M-50 holds all three flavours in one sample."
+  },
+  {
+   "key": "Zll_lowmass",
+   "process": "Z/γ* → ℓℓ + jets, 10 < m(ℓℓ) < 40 GeV (ee, μμ, ττ)",
+   "category": "V+jets",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700467",
+    "700468",
+    "700469",
+    "700470",
+    "700471",
+    "700472",
+    "700901",
+    "700902",
+    "700903"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 9478.9546200568,
+   "atlas_sigma_per_dsid_pb": {
+    "700467": 15.3038046,
+    "700468": 300.357485325,
+    "700469": 2569.92313714,
+    "700470": 14.84237356,
+    "700471": 314.02665774,
+    "700472": 2157.7934743200003,
+    "700901": 17.0918868498,
+    "700902": 388.77334144200006,
+    "700903": 3700.8424590800005
+   },
+   "atlas_files_nominal": 1076,
+   "atlas_files_alternatives": {},
+   "slicing": "b/c-hadron filter split per flavour; ee/μμ names also carry 'pT5' (meaning UNKNOWN from the metadata) and list a MultiLeptonFilter",
+   "cms_status": "delivered",
+   "cms_records": [
+    {
+     "recid": 35631,
+     "name": "DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 49267069,
+     "files": 25,
+     "portal_total_value": "2.048e+04",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": 18610.0,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.5093473734581838,
+   "ratio_flag": true,
+   "ratio_note": "different phase space: ATLAS 10-40 GeV with a multi-lepton filter (ee, μμ) vs CMS 10-50 GeV unfiltered",
+   "note": ""
+  },
+  {
+   "key": "Znunu_jets",
+   "process": "Z → νν + jets",
+   "category": "V+jets",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700335",
+    "700336",
+    "700337"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 446.84710532030005,
+   "atlas_sigma_per_dsid_pb": {
+    "700335": 37.6793365803,
+    "700336": 90.49061653,
+    "700337": 318.67715221000003
+   },
+   "atlas_files_nominal": 154,
+   "atlas_files_alternatives": {},
+   "slicing": "b/c-hadron filter split",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74894,
+     "name": "ZJetsToNuNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 7083216,
+     "files": 18,
+     "portal_total_value": "2.663e+02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 74898,
+     "name": "ZJetsToNuNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 6814106,
+     "files": 10,
+     "portal_total_value": "7.302e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 74902,
+     "name": "ZJetsToNuNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 6114046,
+     "files": 13,
+     "portal_total_value": "9.914e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 74904,
+     "name": "ZJetsToNuNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 1881671,
+     "files": 21,
+     "portal_total_value": "2.409e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 74906,
+     "name": "ZJetsToNuNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 633500,
+     "files": 22,
+     "portal_total_value": "1.077e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 74896,
+     "name": "ZJetsToNuNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 115609,
+     "files": 21,
+     "portal_total_value": "2.495e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 74900,
+     "name": "ZJetsToNuNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 110461,
+     "files": 2,
+     "portal_total_value": "5.614e-03",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 73752,
+     "name": "Z1JetsToNuNu_M-50_LHEFilterPtZ-50To150_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 6880793,
+     "files": 81,
+     "portal_total_value": "5.776e+02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 73746,
+     "name": "Z1JetsToNuNu_M-50_LHEFilterPtZ-150To250_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 19042898,
+     "files": 103,
+     "portal_total_value": "1.741e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 73748,
+     "name": "Z1JetsToNuNu_M-50_LHEFilterPtZ-250To400_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 9182520,
+     "files": 18,
+     "portal_total_value": "1.978e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 73750,
+     "name": "Z1JetsToNuNu_M-50_LHEFilterPtZ-400ToInf_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 804519,
+     "files": 23,
+     "portal_total_value": "2.171e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 73766,
+     "name": "Z2JetsToNuNu_M-50_LHEFilterPtZ-50To150_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 9965435,
+     "files": 37,
+     "portal_total_value": "3.151e+02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 73760,
+     "name": "Z2JetsToNuNu_M-50_LHEFilterPtZ-150To250_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 42184787,
+     "files": 47,
+     "portal_total_value": "2.883e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 73762,
+     "name": "Z2JetsToNuNu_M-50_LHEFilterPtZ-250To400_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 40464278,
+     "files": 125,
+     "portal_total_value": "4.976e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 73764,
+     "name": "Z2JetsToNuNu_M-50_LHEFilterPtZ-400ToInf_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 5860253,
+     "files": 17,
+     "portal_total_value": "8.151e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "not proposed: D11 (no prompt leptons). CMS has HT-binned LO (no HT < 100 bin) and pT-binned NLO, no inclusive sample."
+  },
+  {
+   "key": "Wlnu_jets",
+   "process": "W → ℓν + jets (eν, μν, τν; τ split into leptonic / hadronic τ decays)",
+   "category": "V+jets",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700338",
+    "700339",
+    "700340",
+    "700341",
+    "700342",
+    "700343",
+    "700344",
+    "700345",
+    "700346",
+    "700347",
+    "700348",
+    "700349"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 65394.810314342,
+   "atlas_sigma_per_dsid_pb": {
+    "700338": 203.861058282,
+    "700339": 3239.0492372,
+    "700340": 18341.4598836,
+    "700341": 213.62902079999998,
+    "700342": 3183.9202272,
+    "700343": 18394.5341628,
+    "700344": 69.20683776,
+    "700345": 1121.53344,
+    "700346": 6508.574208,
+    "700347": 122.5818965,
+    "700348": 2025.2785224000002,
+    "700349": 11971.1818198
+   },
+   "atlas_files_nominal": 6627,
+   "atlas_files_alternatives": {},
+   "slicing": "b/c-hadron filter split per flavour; τν further split L (leptonic τ) / H (hadronic τ)",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 69715,
+     "name": "WJetsToLNu_0J_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 159756701,
+     "files": 97,
+     "portal_total_value": "5.330e+04",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 1
+    },
+    {
+     "recid": 69717,
+     "name": "WJetsToLNu_1J_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 167292982,
+     "files": 117,
+     "portal_total_value": "8.958e+03",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 1
+    },
+    {
+     "recid": 69719,
+     "name": "WJetsToLNu_2J_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 85825681,
+     "files": 63,
+     "portal_total_value": "3.330e+03",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 1
+    }
+   ],
+   "cms_sigma_eff_pb": 61526.69999999999,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.062868808409065,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS set decided by Matan (D1: the three NLO jet-binned pieces, each alone; D2: RazorAnalyzer normalisation)."
+  },
+  {
+   "key": "EWZll_jj",
+   "process": "electroweak Z/γ*(→ ℓℓ) + 2 jets (VBF-like, ee, μμ, ττ)",
+   "category": "V+jets",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700358",
+    "700359",
+    "700360"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 2.33789,
+   "atlas_sigma_per_dsid_pb": {
+    "700358": 0.77937,
+    "700359": 0.77941,
+    "700360": 0.77911
+   },
+   "atlas_files_nominal": 3,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 35999,
+     "name": "EWKZ2Jets_ZToLL_M-50_TuneCP5_withDipoleRecoil_13TeV-madgraph-pythia8",
+     "events": 453000,
+     "files": 10,
+     "portal_total_value": "6.206e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "not in the plan. CMS DY+jets samples are QCD production and do not contain this."
+  },
+  {
+   "key": "EWWlnu_jj",
+   "process": "electroweak W(→ ℓν) + 2 jets",
+   "category": "V+jets",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700362",
+    "700363",
+    "700364"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 25.5062,
+   "atlas_sigma_per_dsid_pb": {
+    "700362": 8.5022,
+    "700363": 8.5027,
+    "700364": 8.5013
+   },
+   "atlas_files_nominal": 11,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 35987,
+     "name": "EWKWMinus2Jets_WToLNu_M-50_TuneCP5_withDipoleRecoil_13TeV-madgraph-pythia8",
+     "events": 2202000,
+     "files": 18,
+     "portal_total_value": "3.210e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 35993,
+     "name": "EWKWPlus2Jets_WToLNu_M-50_TuneCP5_withDipoleRecoil_13TeV-madgraph-pythia8",
+     "events": 2033000,
+     "files": 8,
+     "portal_total_value": "3.908e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "not in the plan (§2a lists them as available)."
+  },
+  {
+   "key": "EWZnunu_jj",
+   "process": "electroweak Z(→ νν) + 2 jets",
+   "category": "V+jets",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700361"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 3.6571,
+   "atlas_sigma_per_dsid_pb": {
+    "700361": 3.6571
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 36001,
+     "name": "EWKZ2Jets_ZToNuNu_M-50_TuneCP5_withDipoleRecoil_13TeV-madgraph-pythia8",
+     "events": 1500000,
+     "files": 28,
+     "portal_total_value": "1.065e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "no prompt leptons"
+  },
+  {
+   "key": "Wqq_highpt",
+   "process": "W → qq' + jets, pT(W) > 200 GeV",
+   "category": "V+jets",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700843"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 143.21,
+   "atlas_sigma_per_dsid_pb": {
+    "700843": 143.21
+   },
+   "atlas_files_nominal": 130,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 69751,
+     "name": "WJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 7065076,
+     "files": 12,
+     "portal_total_value": "2.564e+03",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 69753,
+     "name": "WJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 4455853,
+     "files": 26,
+     "portal_total_value": "2.772e+02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 69755,
+     "name": "WJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 6804490,
+     "files": 52,
+     "portal_total_value": "5.911e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 69757,
+     "name": "WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 6769101,
+     "files": 32,
+     "portal_total_value": "2.876e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "no leptons; CMS WJetsToQQ is HT-binned from 200 GeV (different slicing variable)"
+  },
+  {
+   "key": "Zqq_highpt",
+   "process": "Z → qq + jets, pT(Z) > 200 GeV",
+   "category": "V+jets",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700849"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 47.467,
+   "atlas_sigma_per_dsid_pb": {
+    "700849": 47.467
+   },
+   "atlas_files_nominal": 29,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74912,
+     "name": "ZJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 7285673,
+     "files": 21,
+     "portal_total_value": "1.012e+03",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 74914,
+     "name": "ZJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 6942718,
+     "files": 23,
+     "portal_total_value": "1.145e+02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 74916,
+     "name": "ZJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 5529896,
+     "files": 29,
+     "portal_total_value": "2.537e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 74918,
+     "name": "ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8",
+     "events": 4388402,
+     "files": 40,
+     "portal_total_value": "1.292e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "no leptons; CMS ZJetsToQQ is HT-binned from 200 GeV"
+  },
+  {
+   "key": "Zbb_highpt",
+   "process": "Z → bb + jets, pT(Z) > 200 GeV",
+   "category": "V+jets",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700855"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 13.354,
+   "atlas_sigma_per_dsid_pb": {
+    "700855": 13.354
+   },
+   "atlas_files_nominal": 5,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "none",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "ZJetsToBB not observed (fetch_cms_extra.py); whether CMS ZJetsToQQ includes b quarks is UNVERIFIED"
+  },
+  {
+   "key": "WW_lvqq",
+   "process": "WW → ℓνqq",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700488"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 47.918099776000005,
+   "atlas_sigma_per_dsid_pb": {
+    "700488": 47.918099776000005
+   },
+   "atlas_files_nominal": 22,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 72658,
+     "name": "WWTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 19976139,
+     "files": 30,
+     "portal_total_value": "5.089e+01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 2
+    }
+   ],
+   "cms_sigma_eff_pb": 52.362254448,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.9151267507701869,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "WZ_lvqq",
+   "process": "WZ → ℓν qq (incl. Z → bb)",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700489",
+    "700490"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 10.9948,
+   "atlas_sigma_per_dsid_pb": {
+    "700489": 8.5822,
+    "700490": 2.4126
+   },
+   "atlas_files_nominal": 9,
+   "atlas_files_alternatives": {},
+   "slicing": "Z → qq and Z → bb in separate DSIDs (exclusive, summed)",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 72738,
+     "name": "WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 3690271,
+     "files": 23,
+     "portal_total_value": "9.159e+00",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 2
+    }
+   ],
+   "cms_sigma_eff_pb": 10.16142419901016,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.0820136808254714,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "WZ_qqvv",
+   "process": "WZ → qq νν",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700491"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 6.5437,
+   "atlas_sigma_per_dsid_pb": {
+    "700491": 6.5437
+   },
+   "atlas_files_nominal": 4,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "none",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "WZTo2Q2Nu / WZToQQ2Nu not observed; no leptons"
+  },
+  {
+   "key": "WZ_qqll",
+   "process": "WZ → qq ℓℓ",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700492"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 3.3048,
+   "atlas_sigma_per_dsid_pb": {
+    "700492": 3.3048
+   },
+   "atlas_files_nominal": 3,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 72742,
+     "name": "WZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 13526954,
+     "files": 39,
+     "portal_total_value": "6.429e+00",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 2
+    }
+   ],
+   "cms_sigma_eff_pb": 7.132634149518104,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.46333513407851984,
+   "ratio_flag": true,
+   "ratio_note": "different phase space: the CMS sample includes γ* → ℓℓ down to m(ℓℓ) = 4 GeV (PLAN D9)",
+   "note": ""
+  },
+  {
+   "key": "ZZ_qqll",
+   "process": "ZZ → qq ℓℓ (incl. Z → bb)",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700493",
+    "700494"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 2.126761128668,
+   "atlas_sigma_per_dsid_pb": {
+    "700493": 1.65989626392,
+    "700494": 0.466864864748
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "Z → qq and Z → bb in separate DSIDs",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 75573,
+     "name": "ZZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 13740600,
+     "files": 14,
+     "portal_total_value": "3.699e+00",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 2
+    }
+   ],
+   "cms_sigma_eff_pb": 4.310826326671261,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.49335347042622446,
+   "ratio_flag": true,
+   "ratio_note": "different phase space: the CMS sample includes γ* → ℓℓ down to m(ℓℓ) = 4 GeV (as WZ → qqℓℓ)",
+   "note": ""
+  },
+  {
+   "key": "ZZ_qqvv",
+   "process": "ZZ → qq νν (incl. Z → bb)",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700495",
+    "700496"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 4.2041527391499995,
+   "atlas_sigma_per_dsid_pb": {
+    "700495": 3.2819793743999996,
+    "700496": 0.92217336475
+   },
+   "atlas_files_nominal": 3,
+   "atlas_files_alternatives": {},
+   "slicing": "Z → qq and Z → bb in separate DSIDs",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 75571,
+     "name": "ZZTo2Nu2Q_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 2468807,
+     "files": 23,
+     "portal_total_value": "4.557e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "no leptons; not proposed"
+  },
+  {
+   "key": "VV_4l",
+   "process": "VV → ℓℓℓℓ (Sherpa 2.2.12)",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700600"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 1.2974,
+   "atlas_sigma_per_dsid_pb": {
+    "700600": 1.2974
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "delivered",
+   "cms_records": [
+    {
+     "recid": 75589,
+     "name": "ZZTo4L_TuneCP5_13TeV_powheg_pythia8",
+     "events": 52104000,
+     "files": 99,
+     "portal_total_value": "1.325e+00",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": 1.544,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.8402849740932643,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "VV_3lv",
+   "process": "VV → ℓℓℓν",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700601"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 4.661,
+   "atlas_sigma_per_dsid_pb": {
+    "700601": 4.661
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "delivered",
+   "cms_records": [
+    {
+     "recid": 72752,
+     "name": "WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 10441724,
+     "files": 31,
+     "portal_total_value": "5.218e+00",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": 5.789,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.8051476939022283,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "VV_2l2v_os",
+   "process": "VV → ℓℓνν, opposite sign (WW and ZZ → ℓℓνν together)",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700602"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 12.079,
+   "atlas_sigma_per_dsid_pb": {
+    "700602": 12.079
+   },
+   "atlas_files_nominal": 6,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "delivered",
+   "cms_records": [
+    {
+     "recid": 72676,
+     "name": "WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2900000,
+     "files": 7,
+     "portal_total_value": "1.109e+01",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": 12.708,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.9505036197670759,
+   "ratio_flag": false,
+   "ratio_note": "the ATLAS sample also holds ZZ → ℓℓνν; CMS has WW → 2ℓ2ν only (ZZTo2L2Nu 75567 excluded, D14)",
+   "note": ""
+  },
+  {
+   "key": "WW_ss_qcd",
+   "process": "W±W± → ℓ±ℓ±νν, QCD-induced, 0-1 jets",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700603"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.022206,
+   "atlas_sigma_per_dsid_pb": {
+    "700603": 0.022206
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 71642,
+     "name": "WpWpJJ_QCD_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 75000,
+     "files": 17,
+     "portal_total_value": "2.377e-02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS WpWpJJ_QCD (madgraph) exists, not proposed"
+  },
+  {
+   "key": "VV_lvvv",
+   "process": "VV → ℓννν",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700604"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 3.1081,
+   "atlas_sigma_per_dsid_pb": {
+    "700604": 3.1081
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 72740,
+     "name": "WZTo1L3Nu_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+     "events": 1229946,
+     "files": 21,
+     "portal_total_value": "3.415e+00",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 2
+    }
+   ],
+   "cms_sigma_eff_pb": 3.788761179126509,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.8203472990389344,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "VV_4v",
+   "process": "VV → νννν",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700605"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.57762,
+   "atlas_sigma_per_dsid_pb": {
+    "700605": 0.57762
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "none",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "ZZTo4Nu not observed (PLAN §2d); no leptons"
+  },
+  {
+   "key": "VBS_4ljj",
+   "process": "electroweak ℓℓℓℓ jj (VBS, incl. triboson-like diagrams)",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700587"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.01151,
+   "atlas_sigma_per_dsid_pb": {
+    "700587": 0.01151
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 75561,
+     "name": "ZZJJTo4L_EWKnotop_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 1149069,
+     "files": 9,
+     "portal_total_value": "9.928e-04",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS ZZJJTo4L_EWKnotop exists, not proposed"
+  },
+  {
+   "key": "VBS_3lvjj",
+   "process": "electroweak ℓℓℓν jj (VBS)",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700588"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.048453,
+   "atlas_sigma_per_dsid_pb": {
+    "700588": 0.048453
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 69771,
+     "name": "WLLJJ_WToLNu_EWK_TuneCP5_13TeV_madgraph-madspin-pythia8",
+     "events": 500000,
+     "files": 34,
+     "portal_total_value": "3.566e-02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 72728,
+     "name": "WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8",
+     "events": 1858000,
+     "files": 14,
+     "portal_total_value": "1.630e-02",
+     "delivered": false,
+     "plan_role": "optional",
+     "plan_tier": 9
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS WLLJJ_WToLNu_EWK and WZJJ_EWK exist; which matches the ATLAS phase space is UNVERIFIED"
+  },
+  {
+   "key": "VBS_2l2vjj_os",
+   "process": "electroweak ℓℓνν jj, opposite sign (VBS)",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700589"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.19336,
+   "atlas_sigma_per_dsid_pb": {
+    "700589": 0.19336
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 72648,
+     "name": "WWJJToLNuLNu_EWK_noTop_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 500000,
+     "files": 5,
+     "portal_total_value": "9.219e-02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS WWJJToLNuLNu_EWK_noTop exists, not proposed"
+  },
+  {
+   "key": "VBS_2l2vjj_ss",
+   "process": "electroweak ℓ±ℓ±νν jj, same sign (VBS)",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700590"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.045598,
+   "atlas_sigma_per_dsid_pb": {
+    "700590": 0.045598
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 71638,
+     "name": "WpWpJJ_EWK_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 75000,
+     "files": 22,
+     "portal_total_value": "2.824e-02",
+     "delivered": false,
+     "plan_role": "optional",
+     "plan_tier": 9
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS WpWpJJ_EWK is in the plan as 'optional' (no proposal)"
+  },
+  {
+   "key": "VBS_interference",
+   "process": "EW-QCD interference terms of the four VBS channels",
+   "category": "diboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700591",
+    "700592",
+    "700593",
+    "700594"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.019732,
+   "atlas_sigma_per_dsid_pb": {
+    "700591": 0.0023142,
+    "700592": 0.0077437,
+    "700593": 0.0063366,
+    "700594": 0.0033375
+   },
+   "atlas_files_nominal": 4,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "none",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "no CMS interference sample observed in the plan's searches (not searched by name)"
+  },
+  {
+   "key": "WWW",
+   "process": "WWW (leptonic: 3ℓ3ν, and ℓνℓν jj same-/opposite-sign)",
+   "category": "triboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "364242",
+    "364336",
+    "364337",
+    "364338",
+    "364339"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.03651962081,
+   "atlas_sigma_per_dsid_pb": {
+    "364242": 0.0071985,
+    "364336": 0.0044970367,
+    "364337": 0.00249151734,
+    "364338": 0.014204207520000001,
+    "364339": 0.00812835925
+   },
+   "atlas_files_nominal": 5,
+   "atlas_files_alternatives": {},
+   "slicing": "split by decay channel and charge (W+W+W- / W-W-W+), summed",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 72701,
+     "name": "WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8",
+     "events": 4159000,
+     "files": 24,
+     "portal_total_value": "2.158e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 3
+    }
+   ],
+   "cms_sigma_eff_pb": 0.2158,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.16922901209453198,
+   "ratio_flag": true,
+   "ratio_note": "different decay channels: ATLAS leptonic channels only, CMS WWW_4F all decays",
+   "note": ""
+  },
+  {
+   "key": "WWZ",
+   "process": "WWZ (4ℓ2ν, 2ℓ4ν)",
+   "category": "triboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "364243",
+    "364244"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0053433,
+   "atlas_sigma_per_dsid_pb": {
+    "364243": 0.0017966,
+    "364244": 0.0035467
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 72711,
+     "name": "WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8",
+     "events": 4595000,
+     "files": 7,
+     "portal_total_value": "1.707e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 3
+    }
+   ],
+   "cms_sigma_eff_pb": 0.1707,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.03130228471001757,
+   "ratio_flag": true,
+   "ratio_note": "different decay channels: ATLAS leptonic only, CMS all decays",
+   "note": ""
+  },
+  {
+   "key": "WZZ",
+   "process": "WZZ (5ℓ1ν, 3ℓ3ν)",
+   "category": "triboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "364245",
+    "364246"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.00093243168,
+   "atlas_sigma_per_dsid_pb": {
+    "364245": 0.00018807,
+    "364246": 0.00074436168
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 72761,
+     "name": "WZZ_TuneCP5_13TeV-amcatnlo-pythia8",
+     "events": 4554000,
+     "files": 9,
+     "portal_total_value": "5.709e-02",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 3
+    }
+   ],
+   "cms_sigma_eff_pb": 0.05709,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.01633266211245402,
+   "ratio_flag": true,
+   "ratio_note": "different decay channels: ATLAS leptonic only, CMS all decays",
+   "note": ""
+  },
+  {
+   "key": "ZZZ",
+   "process": "ZZZ (6ℓ, 4ℓ2ν, 2ℓ4ν)",
+   "category": "triboson",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "364247",
+    "364248",
+    "364249"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.000272099392,
+   "atlas_sigma_per_dsid_pb": {
+    "364247": 1.45e-05,
+    "364248": 8.6418591e-05,
+    "364249": 0.000171180801
+   },
+   "atlas_files_nominal": 3,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 75600,
+     "name": "ZZZ_TuneCP5_13TeV-amcatnlo-pythia8",
+     "events": 4534000,
+     "files": 20,
+     "portal_total_value": "1.476e-02",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 3
+    }
+   ],
+   "cms_sigma_eff_pb": 0.01476,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.01843491815718157,
+   "ratio_flag": true,
+   "ratio_note": "different decay channels: ATLAS leptonic only, CMS all decays",
+   "note": ""
+  },
+  {
+   "key": "tt_nonallhad",
+   "process": "tt̄, not all-hadronic (single-lepton + dilepton)",
+   "category": "top",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "410470"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (single-lepton 411233 + dilepton 411234)": [
+     "411233",
+     "411234"
+    ],
+    "Powheg+Pythia8 pThard=1 (dilepton 601491 + single-lepton 601497)": [
+     "601491",
+     "601497"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 452.3081770013661,
+   "atlas_sigma_per_dsid_pb": {
+    "410470": 452.3081770013661,
+    "411233": 320.159603705,
+    "411234": 76.94203875999999,
+    "601491": 76.933704897,
+    "601497": 320.120182179
+   },
+   "atlas_files_nominal": 190,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (single-lepton 411233 + dilepton 411234)": 110,
+    "Powheg+Pythia8 pThard=1 (dilepton 601491 + single-lepton 601497)": 183
+   },
+   "slicing": "",
+   "cms_status": "delivered",
+   "cms_records": [
+    {
+     "recid": 67801,
+     "name": "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
+     "events": 43546000,
+     "files": 49,
+     "portal_total_value": "6.871e+02",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 67993,
+     "name": "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
+     "events": 144722000,
+     "files": 138,
+     "portal_total_value": "6.871e+02",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": 457.14,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.9894303211299955,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "tt_allhad",
+   "process": "tt̄, all-hadronic",
+   "category": "top",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "410471"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7": [
+     "411316"
+    ],
+    "Powheg+Pythia8 pThard=1 (name; see note)": [
+     "601495"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 379.44945163939803,
+   "atlas_sigma_per_dsid_pb": {
+    "410471": 379.44945163939803,
+    "411316": 333.05365305600003,
+    "601495": 0.08913343591185045
+   },
+   "atlas_files_nominal": 148,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7": 165,
+    "Powheg+Pythia8 pThard=1 (name; see note)": 1
+   },
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 67841,
+     "name": "TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
+     "events": 107067000,
+     "files": 146,
+     "portal_total_value": "6.871e+02",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 1
+    }
+   ],
+   "cms_sigma_eff_pb": 378.93317445900004,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.0013624491472277,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "601495: name says 'allhad', but the metadata lists a TTbarWToLeptonFilter, a MadGraph generator and σ×filter = 0.089 pb (vs ~379 pb for 410471): its content is UNKNOWN from the metadata"
+  },
+  {
+   "key": "st_tchan",
+   "process": "single top t-channel, leptonic top decay (top + antitop)",
+   "category": "top",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "410658",
+    "410659"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (600017 antitop, 600018 top)": [
+     "600017",
+     "600018"
+    ],
+    "Powheg+Pythia8 pThard=1 (601487 antitop, 601489 top)": [
+     "601487",
+     "601489"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 70.4275137,
+   "atlas_sigma_per_dsid_pb": {
+    "410658": 44.154726000000004,
+    "410659": 26.2727877,
+    "600017": 22.194,
+    "600018": 37.019,
+    "601487": 22.193,
+    "601489": 37.019
+   },
+   "atlas_files_nominal": 22,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (600017 antitop, 600018 top)": 30,
+    "Powheg+Pythia8 pThard=1 (601487 antitop, 601489 top)": 37
+   },
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 64793,
+     "name": "ST_t-channel_top_5f_InclusiveDecays_TuneCP5_13TeV-powheg-pythia8",
+     "events": 55783000,
+     "files": 51,
+     "portal_total_value": "1.197e+02",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 1
+    },
+    {
+     "recid": 64693,
+     "name": "ST_t-channel_antitop_5f_InclusiveDecays_TuneCP5_13TeV-powheg-pythia8",
+     "events": 29394000,
+     "files": 25,
+     "portal_total_value": "7.174e+01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 1
+    }
+   ],
+   "cms_sigma_eff_pb": 214.2,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.3287932478991597,
+   "ratio_flag": true,
+   "ratio_note": "different decay channels: ATLAS leptonic top decays only, CMS inclusive decays",
+   "note": ""
+  },
+  {
+   "key": "st_schan",
+   "process": "single top s-channel, leptonic (top + antitop)",
+   "category": "top",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "410644",
+    "410645"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (600019 antitop, 600020 top)": [
+     "600019",
+     "600020"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 3.3500245800000004,
+   "atlas_sigma_per_dsid_pb": {
+    "410644": 2.061459,
+    "410645": 1.28856558,
+    "600019": 1.2687,
+    "600020": 2.0279
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (600019 antitop, 600020 top)": 3
+   },
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 64635,
+     "name": "ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8",
+     "events": 5471000,
+     "files": 19,
+     "portal_total_value": "3.549e+00",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 1
+    }
+   ],
+   "cms_sigma_eff_pb": 3.6230856,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.9246330199871624,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "st_tW",
+   "process": "single top tW, inclusive decays (top + antitop), diagram removal",
+   "category": "top",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "601352",
+    "601355"
+   ],
+   "atlas_alternatives": {
+    "DR, pThard=1 (601761, 601762)": [
+     "601761",
+     "601762"
+    ],
+    "diagram subtraction DS (601627, 601631)": [
+     "601627",
+     "601631"
+    ]
+   },
+   "atlas_subset_dsids": [
+    "601763",
+    "601764",
+    "601624",
+    "601628"
+   ],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 71.975,
+   "atlas_sigma_per_dsid_pb": {
+    "601352": 35.972,
+    "601355": 36.003,
+    "601761": 36.005,
+    "601762": 35.973,
+    "601627": 35.932,
+    "601631": 35.154,
+    "601763": 3.7935,
+    "601764": 3.7901,
+    "601624": 3.7841,
+    "601628": 3.7062
+   },
+   "atlas_files_nominal": 44,
+   "atlas_files_alternatives": {
+    "DR, pThard=1 (601761, 601762)": 55,
+    "diagram subtraction DS (601627, 601631)": 33
+   },
+   "slicing": "",
+   "cms_status": "delivered",
+   "cms_records": [
+    {
+     "recid": 64895,
+     "name": "ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8",
+     "events": 3368375,
+     "files": 11,
+     "portal_total_value": "3.245e+01",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 64839,
+     "name": "ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8",
+     "events": 3654510,
+     "files": 10,
+     "portal_total_value": "3.251e+01",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": 39.12,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.8398517382413089,
+   "ratio_flag": true,
+   "ratio_note": "different decay channels: ATLAS inclusive, CMS NoFullyHadronic",
+   "note": "subset DSIDs: dilepton tW (DR pThard=1: 601763/601764; DS: 601624/601628)"
+  },
+  {
+   "key": "ttW",
+   "process": "tt̄W (inclusive)",
+   "category": "top",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "410155"
+   ],
+   "atlas_alternatives": {
+    "Sherpa 2.2.8 (700000)": [
+     "700000"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.6008491200000001,
+   "atlas_sigma_per_dsid_pb": {
+    "410155": 0.6008491200000001,
+    "700000": 0.59045
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Sherpa 2.2.8 (700000)": 1
+   },
+   "slicing": "",
+   "cms_status": "delivered",
+   "cms_records": [
+    {
+     "recid": 68073,
+     "name": "TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8",
+     "events": 3322643,
+     "files": 12,
+     "portal_total_value": "2.151e-01",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 68083,
+     "name": "TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8",
+     "events": 308983,
+     "files": 8,
+     "portal_total_value": "4.375e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 4
+    }
+   ],
+   "cms_sigma_eff_pb": 0.6526000000000001,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.920700459699663,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS: ℓν part delivered (68073), qq part proposed tier 4 (68083)"
+  },
+  {
+   "key": "ttZ_ll_vv",
+   "process": "tt̄Z/γ* → ℓℓ (ee, μμ, ττ) and tt̄Z → νν",
+   "category": "top",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "410218",
+    "410219",
+    "410220",
+    "410156"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.29561248000000007,
+   "atlas_sigma_per_dsid_pb": {
+    "410218": 0.04128768000000001,
+    "410219": 0.04128880000000001,
+    "410220": 0.0409416,
+    "410156": 0.17209440000000004
+   },
+   "atlas_files_nominal": 4,
+   "atlas_files_alternatives": {},
+   "slicing": "one DSID per Z decay (exclusive, summed); the m(ℓℓ) threshold is not stated in the metadata",
+   "cms_status": "delivered",
+   "cms_records": [
+    {
+     "recid": 68187,
+     "name": "TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8",
+     "events": 6017000,
+     "files": 42,
+     "portal_total_value": "2.439e-01",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": 0.2439,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.2120232882328825,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "ttZ_qq",
+   "process": "tt̄Z → qq",
+   "category": "top",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "410157"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.5863131,
+   "atlas_sigma_per_dsid_pb": {
+    "410157": 0.5863131
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 68206,
+     "name": "TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8",
+     "events": 5401000,
+     "files": 20,
+     "portal_total_value": "5.113e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 4
+    }
+   ],
+   "cms_sigma_eff_pb": 0.5113,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.1467105417563075,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "tZq",
+   "process": "tZ t-channel (4-flavour), excluding all-hadronic decays",
+   "category": "top",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "410560"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.24041,
+   "atlas_sigma_per_dsid_pb": {
+    "410560": 0.24041
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 68325,
+     "name": "tZq_ll_4f_ckm_NLO_TuneCP5_13TeV-amcatnlo-pythia8",
+     "events": 3967000,
+     "files": 52,
+     "portal_total_value": "7.561e-02",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 4
+    }
+   ],
+   "cms_sigma_eff_pb": 0.07561,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 3.1796058722391223,
+   "ratio_flag": true,
+   "ratio_note": "different decay channels: ATLAS 'noAllHad' keeps Z → qq with a leptonic top, CMS tZq_ll has Z → ℓℓ only",
+   "note": ""
+  },
+  {
+   "key": "tWZ",
+   "process": "tWZ, Z → ℓℓ",
+   "category": "top",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "410408"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.016071,
+   "atlas_sigma_per_dsid_pb": {
+    "410408": 0.016071
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 64873,
+     "name": "ST_tWll_5f_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 320000,
+     "files": 2,
+     "portal_total_value": "1.105e-02",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 4
+    }
+   ],
+   "cms_sigma_eff_pb": 0.01105,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.454389140271493,
+   "ratio_flag": true,
+   "ratio_note": "generator order (CMS value is LO, D8) and an ATLAS ΔR(ℓℓ) > 1 cut in the name",
+   "note": ""
+  },
+  {
+   "key": "tttt",
+   "process": "tt̄tt̄",
+   "category": "top",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "412043"
+   ],
+   "atlas_alternatives": {
+    "aMC@NLO+Herwig7": [
+     "412044"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.012025269100000001,
+   "atlas_sigma_per_dsid_pb": {
+    "412043": 0.012025269100000001,
+    "412044": 0.011953508700000002
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "aMC@NLO+Herwig7": 1
+   },
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 68045,
+     "name": "TTTT_TuneCP5_13TeV-amcatnlo-pythia8",
+     "events": 4544000,
+     "files": 23,
+     "portal_total_value": "8.091e-03",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 4
+    }
+   ],
+   "cms_sigma_eff_pb": 0.008091,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.4862525151402797,
+   "ratio_flag": true,
+   "ratio_note": "generator order: the CMS proposal is the generator NLO value (8.09 fb); D7 recommends 11.97 fb",
+   "note": ""
+  },
+  {
+   "key": "ttt",
+   "process": "three top quarks (SM)",
+   "category": "top",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "304014"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0016396,
+   "atlas_sigma_per_dsid_pb": {
+    "304014": 0.0016396
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 67771,
+     "name": "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 160000,
+     "files": 3,
+     "portal_total_value": "4.004e-04",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 68067,
+     "name": "TTTW_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 159000,
+     "files": 18,
+     "portal_total_value": "7.288e-04",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS TTTJ + TTTW (LO) exist, not proposed"
+  },
+  {
+   "key": "ttWW",
+   "process": "tt̄WW",
+   "category": "top",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "410081"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0099038776613928,
+   "atlas_sigma_per_dsid_pb": {
+    "410081": 0.0099038776613928
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 68087,
+     "name": "TTWW_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 309000,
+     "files": 13,
+     "portal_total_value": "6.998e-03",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS TTWW (LO) exists, not proposed"
+  },
+  {
+   "key": "ttgamma",
+   "process": "tt̄γ",
+   "category": "photon",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "410389"
+   ],
+   "atlas_alternatives": {
+    "MG+Pythia8 older (410082 non-allhad, 410087 allhad)": [
+     "410082",
+     "410087"
+    ],
+    "MG+Herwig7 (410395 non-allhad, 410396 allhad)": [
+     "410395",
+     "410396"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 5.3641879999999995,
+   "atlas_sigma_per_dsid_pb": {
+    "410389": 5.3641879999999995,
+    "410082": 4.37913,
+    "410087": 3.276189,
+    "410395": 4.6236,
+    "410396": 3.6279
+   },
+   "atlas_files_nominal": 3,
+   "atlas_files_alternatives": {
+    "MG+Pythia8 older (410082 non-allhad, 410087 allhad)": 16,
+    "MG+Herwig7 (410395 non-allhad, 410396 allhad)": 5
+   },
+   "slicing": "",
+   "cms_status": "out_of_scope",
+   "cms_records": [
+    {
+     "recid": 67439,
+     "name": "TTGamma_Dilept_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 4678000,
+     "files": 15,
+     "portal_total_value": "1.502e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 67459,
+     "name": "TTGamma_SingleLept_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 9654000,
+     "files": 17,
+     "portal_total_value": "5.091e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 67453,
+     "name": "TTGamma_Hadronic_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 4773000,
+     "files": 16,
+     "portal_total_value": "4.181e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "photons deferred"
+  },
+  {
+   "key": "gamma_jets",
+   "process": "γ + jets (prompt photon), pT(γ)-sliced",
+   "category": "photon",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "364541",
+    "364542",
+    "364543",
+    "364544",
+    "364545",
+    "364546",
+    "364547"
+   ],
+   "atlas_alternatives": {
+    "Pythia8 (423099-423112)": [
+     "423099",
+     "423100",
+     "423101",
+     "423102",
+     "423103",
+     "423104",
+     "423105",
+     "423106",
+     "423107",
+     "423108",
+     "423109",
+     "423110",
+     "423111",
+     "423112"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 464381.68755400006,
+   "atlas_sigma_per_dsid_pb": {
+    "364541": 415480.0,
+    "364542": 43976.0,
+    "364543": 4526.3,
+    "364544": 376.03,
+    "364545": 21.864,
+    "364546": 1.4637,
+    "364547": 0.029854,
+    "423099": 5532114.0,
+    "423100": 479720.5,
+    "423101": 35052.15,
+    "423102": 10133.717999999999,
+    "423103": 4174.053,
+    "423104": 331.20724,
+    "423105": 19.244134,
+    "423106": 1.2552641,
+    "423107": 0.07981281000000001,
+    "423108": 0.025904907,
+    "423109": 0.0014596995,
+    "423110": 0.00011414011000000001,
+    "423111": 9.845985000000001e-06,
+    "423112": 9.03476e-07
+   },
+   "atlas_files_nominal": 402,
+   "atlas_files_alternatives": {
+    "Pythia8 (423099-423112)": 170
+   },
+   "slicing": "pT(γ) slices 17 → E_CMS (Sherpa); 8 → ∞ (Pythia8)",
+   "cms_status": "out_of_scope",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "diphoton",
+   "process": "γγ (+ jets), m(γγ)-sliced",
+   "category": "photon",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "364350",
+    "364351",
+    "364352",
+    "364353",
+    "364354"
+   ],
+   "atlas_alternatives": {
+    "Pythia8 2DP20 (302520-302534; Maryna's class 'HC model (SM modes)')": [
+     "302520",
+     "302521",
+     "302522",
+     "302523",
+     "302524",
+     "302525",
+     "302526",
+     "302527",
+     "302528",
+     "302529",
+     "302530",
+     "302531",
+     "302532",
+     "302533",
+     "302534"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 295.38070335,
+   "atlas_sigma_per_dsid_pb": {
+    "364350": 93.499,
+    "364351": 139.06,
+    "364352": 51.822,
+    "364353": 10.999,
+    "364354": 0.00070335,
+    "302520": 36.06345534,
+    "302521": 8.07899862,
+    "302522": 2.1487660799999997,
+    "302523": 0.58844802744,
+    "302524": 0.13707512700000002,
+    "302525": 0.025573357940000003,
+    "302526": 0.00502907712,
+    "302527": 0.0007831117959999999,
+    "302528": 0.0001733229946,
+    "302529": 4.6405473835000005e-05,
+    "302530": 1.394496e-05,
+    "302531": 4.4660370000000005e-06,
+    "302532": 1.48868235e-06,
+    "302533": 5.01404592e-07,
+    "302534": 2.582194e-07
+   },
+   "atlas_files_nominal": 82,
+   "atlas_files_alternatives": {
+    "Pythia8 2DP20 (302520-302534; Maryna's class 'HC model (SM modes)')": 35
+   },
+   "slicing": "m(γγ) slices 0 → E_CMS (Sherpa); 55 → ∞ (Pythia8)",
+   "cms_status": "out_of_scope",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "Vgamma",
+   "process": "V + γ (ℓℓγ, ννγ, ℓνγ, qqγ, bbγ, EW ℓνγjj / ℓℓγjj)",
+   "category": "photon",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700398",
+    "700399",
+    "700400",
+    "700401",
+    "700402",
+    "700403",
+    "700404",
+    "700352",
+    "700353",
+    "700507",
+    "700709",
+    "700710"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 1469.3005999999996,
+   "atlas_sigma_per_dsid_pb": {
+    "700398": 103.22,
+    "700399": 103.18,
+    "700400": 103.33,
+    "700401": 56.438,
+    "700402": 364.84,
+    "700403": 364.83,
+    "700404": 364.84,
+    "700352": 4.5571,
+    "700353": 1.28,
+    "700507": 0.68358,
+    "700709": 1.781,
+    "700710": 0.32092
+   },
+   "atlas_files_nominal": 602,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "out_of_scope",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "Vgammagamma",
+   "process": "V + γγ and γγγ",
+   "category": "photon",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700195",
+    "700196",
+    "700197",
+    "700198",
+    "700199",
+    "700200",
+    "700201",
+    "700007"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 10.566460000000001,
+   "atlas_sigma_per_dsid_pb": {
+    "700195": 1.3192,
+    "700196": 1.3189,
+    "700197": 1.3188,
+    "700198": 0.23733,
+    "700199": 2.0108,
+    "700200": 1.9989,
+    "700201": 2.0074,
+    "700007": 0.35513
+   },
+   "atlas_files_nominal": 14,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "out_of_scope",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "EWgamma_jj",
+   "process": "electroweak γ + 2 jets, pT(γ) > 140 GeV (Maryna's class 'QCD jets')",
+   "category": "photon",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "700442"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 1.388,
+   "atlas_sigma_per_dsid_pb": {
+    "700442": 1.388
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "out_of_scope",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "the metadata describes it as 'Electroweak Sherpa gamma + 2,3j@LO', not QCD multijet"
+  },
+  {
+   "key": "qcd_dijet",
+   "process": "QCD dijet (Pythia8, JZ0-JZ12 leading-jet-pT slices)",
+   "category": "QCD",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "364700",
+    "364701",
+    "364702",
+    "364703",
+    "364704",
+    "364705",
+    "364706",
+    "364707",
+    "364708",
+    "364709",
+    "364710",
+    "364711",
+    "364712"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 78054848618.5184,
+   "atlas_sigma_per_dsid_pb": {
+    "364700": 76124170885.0,
+    "364701": 1906368908.5,
+    "364702": 23996990.424000002,
+    "364703": 308362.8285,
+    "364704": 3402.9975933,
+    "364705": 66.141968736,
+    "364706": 2.4397794360000002,
+    "364707": 0.17997028499999998,
+    "364708": 0.00634810936,
+    "364709": 0.000236787423,
+    "364710": 7.0504027999999994e-06,
+    "364711": 1.1308481999999999e-07,
+    "364712": 4.461392e-10
+   },
+   "atlas_files_nominal": 1611,
+   "atlas_files_alternatives": {},
+   "slicing": "JZ0 … JZ12 slices",
+   "cms_status": "out_of_scope",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "in Maryna's 'EW boson / V+jets / diboson' class; this IS a QCD multijet set"
+  },
+  {
+   "key": "bsm_Zprime_tautau",
+   "process": "Z' → ττ, SSM 3 TeV",
+   "category": "BSM",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "801976"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 1.2465,
+   "atlas_sigma_per_dsid_pb": {
+    "801976": 1.2465
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "out_of_scope",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "bsm_Wprime_taunu",
+   "process": "W' → τν, SSM 3 TeV",
+   "category": "BSM",
+   "higgs_cell": null,
+   "atlas_nominal_dsids": [
+    "801978"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.011409,
+   "atlas_sigma_per_dsid_pb": {
+    "801978": 0.011409
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "out_of_scope",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "ggF_ZZ4l",
+   "process": "ggF, H → ZZ → 4ℓ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "ggF",
+    "ZZ → 4ℓ"
+   ],
+   "atlas_nominal_dsids": [
+    "345060"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7, no τ (346446)": [
+     "346446"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0060252964000000004,
+   "atlas_sigma_per_dsid_pb": {
+    "345060": 0.0060252964000000004,
+    "346446": 0.0060252964000000004
+   },
+   "atlas_files_nominal": 17,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7, no τ (346446)": 13
+   },
+   "slicing": "",
+   "cms_status": "delivered",
+   "cms_records": [
+    {
+     "recid": 37728,
+     "name": "GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8",
+     "events": 1000000,
+     "files": 8,
+     "portal_total_value": "2.887e+01",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": 0.013335,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.4518407499062618,
+   "ratio_flag": true,
+   "ratio_note": "different decay channels: ATLAS 4ℓ with ℓ = e, μ; CMS JHUGen ZZ → 4ℓ includes τ",
+   "note": ""
+  },
+  {
+   "key": "ggF_WW",
+   "process": "ggF, H → WW",
+   "category": "Higgs",
+   "higgs_cell": [
+    "ggF",
+    "WW"
+   ],
+   "atlas_nominal_dsids": [
+    "345324"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7, no τ (346802)": [
+     "346802"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 1.1360599180000002,
+   "atlas_sigma_per_dsid_pb": {
+    "345324": 1.1360599180000002,
+    "346802": 0.512636105
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7, no τ (346802)": 7
+   },
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 37474,
+     "name": "GluGluHToWWTo2L2Nu_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2838995,
+     "files": 10,
+     "portal_total_value": "2.147e+01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ],
+   "cms_sigma_eff_pb": 1.11144665371264,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.0221452502512314,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "ATLAS: H → WW → ℓνℓν, name carries a lepton filter 'EF_15_5'"
+  },
+  {
+   "key": "ggF_tautau",
+   "process": "ggF, H → ττ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "ggF",
+    "ττ"
+   ],
+   "atlas_nominal_dsids": [
+    "345120",
+    "345121",
+    "345122",
+    "345123"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (600565-600568)": [
+     "600565",
+     "600566",
+     "600567",
+     "600568"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.9698789779660801,
+   "atlas_sigma_per_dsid_pb": {
+    "345120": 0.16384079265792,
+    "345121": 0.11504817564800002,
+    "345122": 0.11529198635136002,
+    "345123": 0.5756980233088,
+    "600565": 1.365525306026112,
+    "600566": 1.3194855423142402,
+    "600567": 0.5006072935400321,
+    "600568": 0.5005158806798081
+   },
+   "atlas_files_nominal": 4,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (600565-600568)": 24
+   },
+   "slicing": "split by ττ decay with lepton/hadron pT filters (ll 13/7, ℓ±h∓ 15/20, hh 30/20 GeV), summed",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 37446,
+     "name": "GluGluHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 6439000,
+     "files": 40,
+     "portal_total_value": "2.146e+01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ],
+   "cms_sigma_eff_pb": 3.0469375999999997,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.31831271436805275,
+   "ratio_flag": true,
+   "ratio_note": "filter: the ATLAS pieces carry ττ-decay and lepton/hadron pT filters",
+   "note": ""
+  },
+  {
+   "key": "ggF_ZZ4nu",
+   "process": "ggF, H → invisible (ZZ → 4ν)",
+   "category": "Higgs",
+   "higgs_cell": [
+    "ggF",
+    "invisible (ZZ → 4ν)"
+   ],
+   "atlas_nominal_dsids": [
+    "346588"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.05092347280000001,
+   "atlas_sigma_per_dsid_pb": {
+    "346588": 0.05092347280000001
+   },
+   "atlas_files_nominal": 5,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "none",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "MET > 75 GeV filter; GluGluHToZZTo4Nu not observed; no leptons"
+  },
+  {
+   "key": "ggF_mumu",
+   "process": "ggF, H → μμ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "ggF",
+    "μμ"
+   ],
+   "atlas_nominal_dsids": [
+    "345097"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.01057342336,
+   "atlas_sigma_per_dsid_pb": {
+    "345097": 0.01057342336
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 37432,
+     "name": "GluGluHToMuMu_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 500000,
+     "files": 1,
+     "portal_total_value": "2.146e+01",
+     "delivered": false,
+     "plan_role": "optional",
+     "plan_tier": 9
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "in the plan as 'optional' (no proposal)"
+  },
+  {
+   "key": "ggF_gamgam",
+   "process": "ggF, H → γγ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "ggF",
+    "γγ"
+   ],
+   "atlas_nominal_dsids": [
+    "343981"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346797)": [
+     "346797"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.11030179700000001,
+   "atlas_sigma_per_dsid_pb": {
+    "343981": 0.11030179700000001,
+    "346797": 0.11030179700000001
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (346797)": 14
+   },
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 37350,
+     "name": "GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 540000,
+     "files": 3,
+     "portal_total_value": "2.146e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "photon final state"
+  },
+  {
+   "key": "ggF_Zgam",
+   "process": "ggF, H → Zγ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "ggF",
+    "Zγ"
+   ],
+   "atlas_nominal_dsids": [
+    "345316"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.007449015630000002,
+   "atlas_sigma_per_dsid_pb": {
+    "345316": 0.007449015630000002
+   },
+   "atlas_files_nominal": 13,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 37604,
+     "name": "GluGluHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 216000,
+     "files": 19,
+     "portal_total_value": "2.938e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "ATLAS and CMS: Z → ℓℓ"
+  },
+  {
+   "key": "ggF_dalitz",
+   "process": "ggF, H → γ*γ, γ* → ℓℓ (Dalitz)",
+   "category": "Higgs",
+   "higgs_cell": [
+    "ggF",
+    "γ*γ, γ* → ℓℓ (Dalitz)"
+   ],
+   "atlas_nominal_dsids": [
+    "345961"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0209242508909,
+   "atlas_sigma_per_dsid_pb": {
+    "345961": 0.0209242508909
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 37420,
+     "name": "GluGluHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8",
+     "events": 1825052,
+     "files": 4,
+     "portal_total_value": "1.858e-03",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 37276,
+     "name": "GluGluHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8",
+     "events": 1855064,
+     "files": 16,
+     "portal_total_value": "2.816e-03",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "ggF_etau_mutau",
+   "process": "ggF, H → eτ / μτ (as named)",
+   "category": "Higgs",
+   "higgs_cell": [
+    "ggF",
+    "eτ / μτ (as named)"
+   ],
+   "atlas_nominal_dsids": [
+    "345124",
+    "345125"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0006213829868,
+   "atlas_sigma_per_dsid_pb": {
+    "345124": 0.0003106429023,
+    "345125": 0.00031074008450000004
+   },
+   "atlas_files_nominal": 29,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "out_of_scope",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "named H → eτ / μτ with a TauFilter; whether this is lepton-flavour-violating (BSM) or a ττ subset is UNKNOWN from the metadata"
+  },
+  {
+   "key": "VBF_ZZ4l",
+   "process": "VBF, H → ZZ → 4ℓ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "VBF",
+    "ZZ → 4ℓ"
+   ],
+   "atlas_nominal_dsids": [
+    "346228"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346447)": [
+     "346447"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.000468968,
+   "atlas_sigma_per_dsid_pb": {
+    "346228": 0.000468968,
+    "346447": 0.000468968
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (346447)": 7
+   },
+   "slicing": "",
+   "cms_status": "delivered",
+   "cms_records": [
+    {
+     "recid": 68847,
+     "name": "VBF_HToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8",
+     "events": 498000,
+     "files": 24,
+     "portal_total_value": "3.935e+00",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": 0.0010382,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.45171257946445775,
+   "ratio_flag": true,
+   "ratio_note": "different decay channels: ATLAS 4ℓ without τ; CMS JHUGen includes τ",
+   "note": ""
+  },
+  {
+   "key": "VBF_WW",
+   "process": "VBF, H → WW",
+   "category": "Higgs",
+   "higgs_cell": [
+    "VBF",
+    "WW"
+   ],
+   "atlas_nominal_dsids": [
+    "345948"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346877)": [
+     "346877"
+    ],
+    "MadGraph+Herwig7 (500335; Maryna's class 'Higgs related')": [
+     "500335"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.08842316,
+   "atlas_sigma_per_dsid_pb": {
+    "345948": 0.08842316,
+    "346877": 0.08842316,
+    "500335": 0.08706164
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (346877)": 3,
+    "MadGraph+Herwig7 (500335; Maryna's class 'Higgs related')": 1
+   },
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 68601,
+     "name": "VBFHToWWTo2L2Nu_M125_TuneCP5_13TeV_powheg2_JHUGenV714_pythia8",
+     "events": 3596630,
+     "files": 30,
+     "portal_total_value": "3.892e+00",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ],
+   "cms_sigma_eff_pb": 0.08652719728985599,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.0219117545642067,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "H → WW → ℓνℓν"
+  },
+  {
+   "key": "VBF_tautau",
+   "process": "VBF, H → ττ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "VBF",
+    "ττ"
+   ],
+   "atlas_nominal_dsids": [
+    "346190",
+    "346191",
+    "346192",
+    "346193"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (600569-600572)": [
+     "600569",
+     "600570",
+     "600571",
+     "600572"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.30635289216,
+   "atlas_sigma_per_dsid_pb": {
+    "346190": 0.110467318528,
+    "346191": 0.041843321855999996,
+    "346192": 0.04186704256,
+    "346193": 0.11217520921600001,
+    "600569": 0.11051854847487999,
+    "600570": 0.10940727045713919,
+    "600571": 0.041156325946444805,
+    "600572": 0.0411200751618944
+   },
+   "atlas_files_nominal": 6,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (600569-600572)": 8
+   },
+   "slicing": "split by ττ decay with lepton/hadron pT filters (ll 13/7, ℓ±h∓ 15/20, hh 30/20 GeV), summed",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 68591,
+     "name": "VBFHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 1500000,
+     "files": 7,
+     "portal_total_value": "3.861e+00",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ],
+   "cms_sigma_eff_pb": 0.23720704,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.2914999999999999,
+   "ratio_flag": false,
+   "ratio_note": "possible error on the ATLAS side: the four ATLAS filtered pieces sum to MORE than σ(VBF) × BR(ττ); they do not behave like the ggF pieces (cross-check only)",
+   "note": ""
+  },
+  {
+   "key": "VBF_gamgam",
+   "process": "VBF, H → γγ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "VBF",
+    "γγ"
+   ],
+   "atlas_nominal_dsids": [
+    "346214"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346878)": [
+     "346878"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.00858514,
+   "atlas_sigma_per_dsid_pb": {
+    "346214": 0.00858514,
+    "346878": 0.00858514
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (346878)": 2
+   },
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 68499,
+     "name": "VBFHToGG_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 485000,
+     "files": 17,
+     "portal_total_value": "3.861e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "photon final state"
+  },
+  {
+   "key": "VBF_mumu",
+   "process": "VBF, H → μμ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "VBF",
+    "μμ"
+   ],
+   "atlas_nominal_dsids": [
+    "345106"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.001038159,
+   "atlas_sigma_per_dsid_pb": {
+    "345106": 0.001038159
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 68571,
+     "name": "VBFHToMuMu_M125_TuneCP5_withDipoleRecoil_13TeV-powheg-pythia8",
+     "events": 943000,
+     "files": 1,
+     "portal_total_value": "3.861e+00",
+     "delivered": false,
+     "plan_role": "optional",
+     "plan_tier": 9
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "in the plan as 'optional'"
+  },
+  {
+   "key": "VBF_bb",
+   "process": "VBF, H → bb̄",
+   "category": "Higgs",
+   "higgs_cell": [
+    "VBF",
+    "bb̄"
+   ],
+   "atlas_nominal_dsids": [
+    "345949"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 2.2026368,
+   "atlas_sigma_per_dsid_pb": {
+    "345949": 2.2026368
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 68445,
+     "name": "VBFHToBB_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 3514000,
+     "files": 6,
+     "portal_total_value": "3.873e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "VBF_Zgam",
+   "process": "VBF, H → Zγ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "VBF",
+    "Zγ"
+   ],
+   "atlas_nominal_dsids": [
+    "345833"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0005855784060000001,
+   "atlas_sigma_per_dsid_pb": {
+    "345833": 0.0005855784060000001
+   },
+   "atlas_files_nominal": 6,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 68731,
+     "name": "VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 108000,
+     "files": 4,
+     "portal_total_value": "3.861e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "ATLAS and CMS: Z → ℓℓ"
+  },
+  {
+   "key": "VBF_dalitz",
+   "process": "VBF, H → γ*γ, γ* → ℓℓ (Dalitz)",
+   "category": "Higgs",
+   "higgs_cell": [
+    "VBF",
+    "γ*γ, γ* → ℓℓ (Dalitz)"
+   ],
+   "atlas_nominal_dsids": [
+    "345834"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.00858514,
+   "atlas_sigma_per_dsid_pb": {
+    "345834": 0.00858514
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 68559,
+     "name": "VBFHToMuMuG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8",
+     "events": 1754000,
+     "files": 4,
+     "portal_total_value": "2.080e-04",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 68459,
+     "name": "VBFHToEEG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8",
+     "events": 1840000,
+     "files": 29,
+     "portal_total_value": "3.150e-04",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "VBF_ZZllbb",
+   "process": "VBF, H → ZZ → ℓℓbb",
+   "category": "Higgs",
+   "higgs_cell": [
+    "VBF",
+    "ZZ → ℓℓbb"
+   ],
+   "atlas_nominal_dsids": [
+    "450576"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0020188315999999998,
+   "atlas_sigma_per_dsid_pb": {
+    "450576": 0.0020188315999999998
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 68833,
+     "name": "VBF_HToZZTo2L2X_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8_withDipoleRecoil",
+     "events": 270000,
+     "files": 1,
+     "portal_total_value": "3.935e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS VBF_HToZZTo2L2X (2ℓ + anything) is a superset"
+  },
+  {
+   "key": "VBF_etau_mutau",
+   "process": "VBF, H → eτ / μτ (as named)",
+   "category": "Higgs",
+   "higgs_cell": [
+    "VBF",
+    "eτ / μτ (as named)"
+   ],
+   "atlas_nominal_dsids": [
+    "346194",
+    "346195"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.005083386200000001,
+   "atlas_sigma_per_dsid_pb": {
+    "346194": 0.0025422604000000003,
+    "346195": 0.0025411258000000003
+   },
+   "atlas_files_nominal": 4,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "out_of_scope",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "as ggF eτ/μτ"
+  },
+  {
+   "key": "VBF_incl",
+   "process": "VBF, H → all decays",
+   "category": "Higgs",
+   "higgs_cell": [
+    "VBF",
+    "all decays"
+   ],
+   "atlas_nominal_dsids": [
+    "346317"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 3.782,
+   "atlas_sigma_per_dsid_pb": {
+    "346317": 3.782
+   },
+   "atlas_files_nominal": 6,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "none",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "no CMS inclusive-decay VBF H sample observed; overlaps every ATLAS VBF decay sample above"
+  },
+  {
+   "key": "WH_ZZ4l",
+   "process": "W±H, H → ZZ → 4ℓ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "W±H",
+    "ZZ → 4ℓ"
+   ],
+   "atlas_nominal_dsids": [
+    "346449",
+    "346450"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Pythia8 'shw' (346646, 346647)": [
+     "346646",
+     "346647"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0003768336,
+   "atlas_sigma_per_dsid_pb": {
+    "346449": 0.00023058,
+    "346450": 0.0001462536,
+    "346646": 0.00023058,
+    "346647": 0.000148232745
+   },
+   "atlas_files_nominal": 3,
+   "atlas_files_alternatives": {
+    "Powheg+Pythia8 'shw' (346646, 346647)": 3
+   },
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 71227,
+     "name": "WplusH_HToZZTo4L_M125_TuneCP5_13TeV_powheg2-minlo-HWJ_JHUGenV7011_pythia8",
+     "events": 294744,
+     "files": 12,
+     "portal_total_value": "8.648e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    },
+    {
+     "recid": 70383,
+     "name": "WminusH_HToZZTo4L_M125_TuneCP5_13TeV_powheg2-minlo-HWJ_JHUGenV7011_pythia8",
+     "events": 193088,
+     "files": 7,
+     "portal_total_value": "5.409e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ],
+   "cms_sigma_eff_pb": 0.0003768336,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.0,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "WH_WW",
+   "process": "W±H, H → WW",
+   "category": "Higgs",
+   "higgs_cell": [
+    "W±H",
+    "WW"
+   ],
+   "atlas_nominal_dsids": [
+    "345325",
+    "345433"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0216359567424,
+   "atlas_sigma_per_dsid_pb": {
+    "345325": 0.01323878472,
+    "345433": 0.008397172022400002
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 41877,
+     "name": "HWplusJ_HToWW_M-125_TuneCP5_13TeV-powheg-jhugen727-pythia8",
+     "events": 2855188,
+     "files": 58,
+     "portal_total_value": "8.720e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    },
+    {
+     "recid": 41873,
+     "name": "HWminusJ_HToWW_M-125_TuneCP5_13TeV-powheg-jhugen727-pythia8",
+     "events": 2931162,
+     "files": 66,
+     "portal_total_value": "5.445e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ],
+   "cms_sigma_eff_pb": 0.29336736,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.07375038839494619,
+   "ratio_flag": true,
+   "ratio_note": "different decay channels: ATLAS W → qq and H → WW → ℓνℓν only; CMS HWJ H → WW and W inclusive (superset)",
+   "note": ""
+  },
+  {
+   "key": "WH_tautau",
+   "process": "W±H, H → ττ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "W±H",
+    "ττ"
+   ],
+   "atlas_nominal_dsids": [
+    "345211",
+    "345212"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (600573, 600574)": [
+     "600573",
+     "600574"
+    ],
+    "aMC@NLO FxFx W+H only (506098)": [
+     "506098"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.086102016,
+   "atlas_sigma_per_dsid_pb": {
+    "345211": 0.033417216,
+    "345212": 0.0526848,
+    "600573": 0.0338756992,
+    "600574": 0.0540602496,
+    "506098": 0.90303
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (600573, 600574)": 3,
+    "aMC@NLO FxFx W+H only (506098)": 2
+   },
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 71297,
+     "name": "WplusHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2000000,
+     "files": 7,
+     "portal_total_value": "8.670e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    },
+    {
+     "recid": 70453,
+     "name": "WminusHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 1995182,
+     "files": 3,
+     "portal_total_value": "5.412e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ],
+   "cms_sigma_eff_pb": 0.086102016,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.0,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "506098 σ×filter = 0.903 pb ≈ σ(W+H) itself, i.e. BR(ττ) apparently not included (ATLAS metadata, cross-check only)"
+  },
+  {
+   "key": "WH_mumu",
+   "process": "W±H, H → μμ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "W±H",
+    "μμ"
+   ],
+   "atlas_nominal_dsids": [
+    "345104",
+    "345105"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0003768336,
+   "atlas_sigma_per_dsid_pb": {
+    "345104": 0.00023058,
+    "345105": 0.0001462536
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 71295,
+     "name": "WplusHToMuMu_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 300000,
+     "files": 1,
+     "portal_total_value": "8.670e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 70451,
+     "name": "WminusHToMuMu_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 300000,
+     "files": 1,
+     "portal_total_value": "5.412e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "WH_gamgam",
+   "process": "W±H, H → γγ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "W±H",
+    "γγ"
+   ],
+   "atlas_nominal_dsids": [
+    "345317",
+    "345318"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346880, 346881)": [
+     "346880",
+     "346881"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0031162559999999995,
+   "atlas_sigma_per_dsid_pb": {
+    "345317": 0.001209456,
+    "345318": 0.0019067999999999997,
+    "346880": 0.001209456,
+    "346881": 0.0019067999999999997
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (346880, 346881)": 3
+   },
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 71013,
+     "name": "WplusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 162000,
+     "files": 4,
+     "portal_total_value": "8.670e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 70173,
+     "name": "WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 147484,
+     "files": 15,
+     "portal_total_value": "5.412e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "photon final state"
+  },
+  {
+   "key": "WH_Zgam",
+   "process": "W±H, H → Zγ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "W±H",
+    "Zγ"
+   ],
+   "atlas_nominal_dsids": [
+    "345320",
+    "345321"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0021045024,
+   "atlas_sigma_per_dsid_pb": {
+    "345320": 0.0008167824000000001,
+    "345321": 0.00128772
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 71145,
+     "name": "WplusH_HToZG_WToAll_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 161991,
+     "files": 1,
+     "portal_total_value": "8.668e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 70301,
+     "name": "WminusH_HToZG_WToAll_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 161988,
+     "files": 9,
+     "portal_total_value": "5.413e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "Z decay not stated in the ATLAS metadata; CMS WToAll, Z inclusive per its name"
+  },
+  {
+   "key": "WH_dalitz",
+   "process": "W±H, H → γ*γ, γ* → ℓℓ (Dalitz)",
+   "category": "Higgs",
+   "higgs_cell": [
+    "W±H",
+    "γ*γ, γ* → ℓℓ (Dalitz)"
+   ],
+   "atlas_nominal_dsids": [
+    "345963",
+    "345964"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0031162559999999995,
+   "atlas_sigma_per_dsid_pb": {
+    "345963": 0.001209456,
+    "345964": 0.0019067999999999997
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "none",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "W±H Dalitz not observed (fetch_cms_extra.py)"
+  },
+  {
+   "key": "WH_etau_mutau",
+   "process": "W±H, H → eτ / μτ (as named)",
+   "category": "Higgs",
+   "higgs_cell": [
+    "W±H",
+    "eτ / μτ (as named)"
+   ],
+   "atlas_nominal_dsids": [
+    "345213",
+    "345214",
+    "345215",
+    "345216"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 1.7555366399999998e-05,
+   "atlas_sigma_per_dsid_pb": {
+    "345213": 3.4061904e-06,
+    "345214": 5.370119999999999e-06,
+    "345215": 3.407256e-06,
+    "345216": 5.3718e-06
+   },
+   "atlas_files_nominal": 6,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "out_of_scope",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "as ggF eτ/μτ"
+  },
+  {
+   "key": "WH_ee",
+   "process": "W±H, H → ee",
+   "category": "Higgs",
+   "higgs_cell": [
+    "W±H",
+    "ee"
+   ],
+   "atlas_nominal_dsids": [
+    "345877",
+    "345878"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 7.468032000000001e-09,
+   "atlas_sigma_per_dsid_pb": {
+    "345877": 4.5696000000000004e-09,
+    "345878": 2.8984320000000005e-09
+   },
+   "atlas_files_nominal": 3,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 69343,
+     "name": "VHToEE_M125_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8",
+     "events": 450586,
+     "files": 13,
+     "portal_total_value": "2.448e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS VHToEE covers W±H and ZH together"
+  },
+  {
+   "key": "WH_inv",
+   "process": "W±H, H → invisible (ZZ → 4ν)",
+   "category": "Higgs",
+   "higgs_cell": [
+    "W±H",
+    "invisible (ZZ → 4ν)"
+   ],
+   "atlas_nominal_dsids": [
+    "346605",
+    "346606"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0014386944,
+   "atlas_sigma_per_dsid_pb": {
+    "346605": 0.0008803200000000001,
+    "346606": 0.0005583744000000001
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 71359,
+     "name": "WplusH_WToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8",
+     "events": 499989,
+     "files": 4,
+     "portal_total_value": "5.884e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 70515,
+     "name": "WminusH_WToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8",
+     "events": 499985,
+     "files": 2,
+     "portal_total_value": "3.674e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "ATLAS: W inclusive, MET > 75 GeV filter. CMS only with W → qq (no leptons); CMS H → invisible normalisation would need a BR decision"
+  },
+  {
+   "key": "WH_incl",
+   "process": "W±H, H → all decays",
+   "category": "Higgs",
+   "higgs_cell": [
+    "W±H",
+    "all decays"
+   ],
+   "atlas_nominal_dsids": [
+    "346311",
+    "346312"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 1.3728,
+   "atlas_sigma_per_dsid_pb": {
+    "346311": 0.84,
+    "346312": 0.5328
+   },
+   "atlas_files_nominal": 3,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "none",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "no CMS inclusive W±H sample observed (VHToNonbb 69389 is W±H + ZH, H ≠ bb)"
+  },
+  {
+   "key": "qqZH_bb_vv",
+   "process": "qq̄ → ZH, H → bb̄",
+   "category": "Higgs",
+   "higgs_cell": [
+    "qq̄ → ZH",
+    "bb̄"
+   ],
+   "atlas_nominal_dsids": [
+    "345056"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346398)": [
+     "346398"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.08866457600000001,
+   "atlas_sigma_per_dsid_pb": {
+    "345056": 0.08866457600000001,
+    "346398": 0.08866457600000001
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (346398)": 1
+   },
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74118,
+     "name": "ZH_HToBB_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2194852,
+     "files": 28,
+     "portal_total_value": "1.573e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "Z → νν (ATLAS and CMS)"
+  },
+  {
+   "key": "qqZH_cc_vv",
+   "process": "qq̄ → ZH, H → cc̄",
+   "category": "Higgs",
+   "higgs_cell": [
+    "qq̄ → ZH",
+    "cc̄"
+   ],
+   "atlas_nominal_dsids": [
+    "345112"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346726)": [
+     "346726"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0044012584,
+   "atlas_sigma_per_dsid_pb": {
+    "345112": 0.0044012584,
+    "346726": 0.0044012584
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (346726)": 1
+   },
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74126,
+     "name": "ZH_HToCC_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2205750,
+     "files": 45,
+     "portal_total_value": "1.573e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "Z → νν (ATLAS and CMS). 346726: name 'vvcc', but the metadata 'process' field says H → bb (ATLAS metadata inconsistency)"
+  },
+  {
+   "key": "qqZH_mumu",
+   "process": "qq̄ → ZH, H → μμ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "qq̄ → ZH",
+    "μμ"
+   ],
+   "atlas_nominal_dsids": [
+    "345103"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0002089494,
+   "atlas_sigma_per_dsid_pb": {
+    "345103": 0.0002089494
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74682,
+     "name": "ZHToMuMu_M125_CP5_13TeV-powheg-pythia8",
+     "events": 496320,
+     "files": 1,
+     "portal_total_value": "7.891e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "qqZH_tautau",
+   "process": "qq̄ → ZH, H → ττ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "qq̄ → ZH",
+    "ττ"
+   ],
+   "atlas_nominal_dsids": [
+    "345217"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (600575)": [
+     "600575"
+    ],
+    "aMC@NLO FxFx (506099)": [
+     "506099"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.047742464,
+   "atlas_sigma_per_dsid_pb": {
+    "345217": 0.047742464,
+    "600575": 0.047720512,
+    "506099": 0.78732
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (600575)": 2,
+    "aMC@NLO FxFx (506099)": 1
+   },
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 74684,
+     "name": "ZHToTauTau_M125_CP5_13TeV-powheg-pythia8_ext1",
+     "events": 2419675,
+     "files": 6,
+     "portal_total_value": "7.891e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ],
+   "cms_sigma_eff_pb": 0.047742464,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.0,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "506099 σ×filter = 0.787 pb ≈ σ(ZH) itself, BR(ττ) apparently not included (ATLAS metadata)"
+  },
+  {
+   "key": "qqZH_gamgam",
+   "process": "qq̄ → ZH, H → γγ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "qq̄ → ZH",
+    "γγ"
+   ],
+   "atlas_nominal_dsids": [
+    "345319"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346879)": [
+     "346879"
+    ],
+    "aMC@NLO FxFx, Z → qq (506813)": [
+     "506813"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0017279239999999998,
+   "atlas_sigma_per_dsid_pb": {
+    "345319": 0.0017279239999999998,
+    "346879": 0.0017279239999999998,
+    "506813": 0.54655
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (346879)": 2,
+    "aMC@NLO FxFx, Z → qq (506813)": 1
+   },
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74132,
+     "name": "ZH_HToGG_ZToAll_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 151002,
+     "files": 20,
+     "portal_total_value": "7.891e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "photon final state"
+  },
+  {
+   "key": "qqZH_Zgam",
+   "process": "qq̄ → ZH, H → Zγ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "qq̄ → ZH",
+    "Zγ"
+   ],
+   "atlas_nominal_dsids": [
+    "345322"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0011669196,
+   "atlas_sigma_per_dsid_pb": {
+    "345322": 0.0011669196
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74292,
+     "name": "ZH_HToZG_ZToAll_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 162044,
+     "files": 8,
+     "portal_total_value": "7.891e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "qqZH_dalitz",
+   "process": "qq̄ → ZH, H → γ*γ, γ* → ℓℓ (Dalitz)",
+   "category": "Higgs",
+   "higgs_cell": [
+    "qq̄ → ZH",
+    "γ*γ, γ* → ℓℓ (Dalitz)"
+   ],
+   "atlas_nominal_dsids": [
+    "345965"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0017279239999999998,
+   "atlas_sigma_per_dsid_pb": {
+    "345965": 0.0017279239999999998
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74670,
+     "name": "ZHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+     "events": 924063,
+     "files": 3,
+     "portal_total_value": "4.459e-05",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 74652,
+     "name": "ZHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+     "events": 905541,
+     "files": 5,
+     "portal_total_value": "6.762e-05",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": ""
+  },
+  {
+   "key": "qqZH_WW",
+   "process": "qq̄ → ZH, H → WW",
+   "category": "Higgs",
+   "higgs_cell": [
+    "qq̄ → ZH",
+    "WW"
+   ],
+   "atlas_nominal_dsids": [
+    "345445",
+    "341456",
+    "341458",
+    "341460"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.00832776640784,
+   "atlas_sigma_per_dsid_pb": {
+    "345445": 0.0035593712000000005,
+    "341456": 0.0015894650692799997,
+    "341458": 0.0015894650692799997,
+    "341460": 0.0015894650692799997
+   },
+   "atlas_files_nominal": 4,
+   "atlas_files_alternatives": {},
+   "slicing": "ℓνqq split by Z → νeνe / νμνμ / ντντ (341456/58/60; Maryna's class 'ggF Higgs', but the metadata says qq → ZH)",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 41914,
+     "name": "HZJ_HToWW_M-125_TuneCP5_13TeV-powheg-jhugen727-pythia8",
+     "events": 4465166,
+     "files": 6,
+     "portal_total_value": "9.595e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ],
+   "cms_sigma_eff_pb": 0.16266844,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 0.051194727187646234,
+   "ratio_flag": true,
+   "ratio_note": "different decay channels: ATLAS Z → νν only; CMS HZJ H → WW, Z inclusive (superset)",
+   "note": ""
+  },
+  {
+   "key": "qqZH_ZZ4l",
+   "process": "qq̄ → ZH, H → ZZ → 4ℓ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "qq̄ → ZH",
+    "ZZ → 4ℓ"
+   ],
+   "atlas_nominal_dsids": [
+    "346645"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346448)": [
+     "346448"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0002089494,
+   "atlas_sigma_per_dsid_pb": {
+    "346645": 0.0002089494,
+    "346448": 0.0002089494
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (346448)": 1
+   },
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74314,
+     "name": "ZH_HToZZ_4LFilter_M125_TuneCP5_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8",
+     "events": 486281,
+     "files": 4,
+     "portal_total_value": "7.935e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "ATLAS: Z inclusive. CMS ZH_HToZZ_4LFilter: not proposed, its portal 'matching efficiency' looks misplaced (D13, UNVERIFIED)"
+  },
+  {
+   "key": "qqZH_ee",
+   "process": "qq̄ → ZH, H → ee",
+   "category": "Higgs",
+   "higgs_cell": [
+    "qq̄ → ZH",
+    "ee"
+   ],
+   "atlas_nominal_dsids": [
+    "345876"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 4.140928e-09,
+   "atlas_sigma_per_dsid_pb": {
+    "345876": 4.140928e-09
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 69343,
+     "name": "VHToEE_M125_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8",
+     "events": 450586,
+     "files": 13,
+     "portal_total_value": "2.448e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS VHToEE covers W±H and ZH"
+  },
+  {
+   "key": "qqZH_inv",
+   "process": "qq̄ → ZH, H → invisible (ZZ → 4ν)",
+   "category": "Higgs",
+   "higgs_cell": [
+    "qq̄ → ZH",
+    "invisible (ZZ → 4ν)"
+   ],
+   "atlas_nominal_dsids": [
+    "346607"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0007977376000000001,
+   "atlas_sigma_per_dsid_pb": {
+    "346607": 0.0007977376000000001
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74892,
+     "name": "ZH_ZToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8",
+     "events": 497466,
+     "files": 10,
+     "portal_total_value": "5.561e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "ATLAS: Z inclusive, MET > 75 GeV. CMS only with Z → qq"
+  },
+  {
+   "key": "qqZH_etau_mutau",
+   "process": "qq̄ → ZH, H → eτ / μτ (as named)",
+   "category": "Higgs",
+   "higgs_cell": [
+    "qq̄ → ZH",
+    "eτ / μτ (as named)"
+   ],
+   "atlas_nominal_dsids": [
+    "345218",
+    "345219"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 9.7342256e-06,
+   "atlas_sigma_per_dsid_pb": {
+    "345218": 4.8663515999999995e-06,
+    "345219": 4.867874e-06
+   },
+   "atlas_files_nominal": 4,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "out_of_scope",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "as ggF eτ/μτ"
+  },
+  {
+   "key": "qqZH_incl",
+   "process": "qq̄ → ZH, H → all decays",
+   "category": "Higgs",
+   "higgs_cell": [
+    "qq̄ → ZH",
+    "all decays"
+   ],
+   "atlas_nominal_dsids": [
+    "346310"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.7612,
+   "atlas_sigma_per_dsid_pb": {
+    "346310": 0.7612
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "none",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "no CMS inclusive ZH sample observed"
+  },
+  {
+   "key": "ggZH_bb_vv",
+   "process": "gg → ZH, H → bb̄",
+   "category": "Higgs",
+   "higgs_cell": [
+    "gg → ZH",
+    "bb̄"
+   ],
+   "atlas_nominal_dsids": [
+    "345058"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346400)": [
+     "346400"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.014292096000000002,
+   "atlas_sigma_per_dsid_pb": {
+    "345058": 0.014292096000000002,
+    "346400": 0.014292096000000002
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (346400)": 1
+   },
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 36597,
+     "name": "ggZH_HToBB_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2190000,
+     "files": 20,
+     "portal_total_value": "1.222e-02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "Z → νν (ATLAS and CMS)"
+  },
+  {
+   "key": "ggZH_cc_vv",
+   "process": "gg → ZH, H → cc̄",
+   "category": "Higgs",
+   "higgs_cell": [
+    "gg → ZH",
+    "cc̄"
+   ],
+   "atlas_nominal_dsids": [
+    "345114"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346728)": [
+     "346728"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0007094514000000001,
+   "atlas_sigma_per_dsid_pb": {
+    "345114": 0.0007094514000000001,
+    "346728": 0.0007094514000000001
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (346728)": 1
+   },
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 36605,
+     "name": "ggZH_HToCC_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2260000,
+     "files": 18,
+     "portal_total_value": "1.222e-02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "Z → νν (ATLAS and CMS)"
+  },
+  {
+   "key": "ggZH_gamgam",
+   "process": "gg → ZH, H → γγ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "gg → ZH",
+    "γγ"
+   ],
+   "atlas_nominal_dsids": [
+    "345061"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346882)": [
+     "346882"
+    ],
+    "aMC@NLO, Z → qq (506814)": [
+     "506814"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.000278529,
+   "atlas_sigma_per_dsid_pb": {
+    "345061": 0.000278529,
+    "346882": 0.000278529,
+    "506814": 0.00019469177099999997
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (346882)": 1,
+    "aMC@NLO, Z → qq (506814)": 1
+   },
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 36611,
+     "name": "ggZH_HToGG_ZToLL_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 160000,
+     "files": 10,
+     "portal_total_value": "6.185e-03",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 36617,
+     "name": "ggZH_HToGG_ZToNuNu_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 160000,
+     "files": 6,
+     "portal_total_value": "1.222e-02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 36623,
+     "name": "ggZH_HToGG_ZToQQ_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 157576,
+     "files": 9,
+     "portal_total_value": "4.320e-02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "photon final state"
+  },
+  {
+   "key": "ggZH_ZZ4l",
+   "process": "gg → ZH, H → ZZ → 4ℓ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "gg → ZH",
+    "ZZ → 4ℓ"
+   ],
+   "atlas_nominal_dsids": [
+    "345066"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346451)": [
+     "346451"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 3.368115e-05,
+   "atlas_sigma_per_dsid_pb": {
+    "345066": 3.368115e-05,
+    "346451": 3.368115e-05
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {
+    "Powheg+Herwig7 (346451)": 1
+   },
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 40062,
+     "name": "GluGluToZH_HToZZTo4L_M125_TuneCP5_13TeV-jhugenv723-pythia8",
+     "events": 999739,
+     "files": 21,
+     "portal_total_value": "2.330e-04",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "ATLAS: Z inclusive. CMS GluGluToZH_HToZZTo4L (JHUGen) exists: PLAN §2g says 'not observed' for this cell, which is a correction"
+  },
+  {
+   "key": "ggZH_mumu",
+   "process": "gg → ZH, H → μμ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "gg → ZH",
+    "μμ"
+   ],
+   "atlas_nominal_dsids": [
+    "345098"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 3.368115e-05,
+   "atlas_sigma_per_dsid_pb": {
+    "345098": 3.368115e-05
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "none",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "not observed"
+  },
+  {
+   "key": "ggZH_tautau",
+   "process": "gg → ZH, H → ττ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "gg → ZH",
+    "ττ"
+   ],
+   "atlas_nominal_dsids": [
+    "600686"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.007695744,
+   "atlas_sigma_per_dsid_pb": {
+    "600686": 0.007695744
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "none",
+   "cms_records": [],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "ATLAS: Z inclusive; CMS not observed"
+  },
+  {
+   "key": "ggZH_WW",
+   "process": "gg → ZH, H → WW",
+   "category": "Higgs",
+   "higgs_cell": [
+    "gg → ZH",
+    "WW"
+   ],
+   "atlas_nominal_dsids": [
+    "346524"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0028687260000000003,
+   "atlas_sigma_per_dsid_pb": {
+    "346524": 0.0028687260000000003
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 40095,
+     "name": "GluGluZH_HToWW_ZTo2L_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 4737669,
+     "files": 5,
+     "portal_total_value": "6.185e-03",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ],
+   "cms_sigma_eff_pb": 0.0026480577801,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.083332101572069,
+   "ratio_flag": false,
+   "ratio_note": "different decay channels: CMS proposal is Z → ℓℓ only",
+   "note": "ATLAS: Z inclusive. CMS proposed sample has Z → ℓℓ only; GluGluZH_HToWWTo2L2Nu 40090 (Z inclusive, H → 2ℓ2ν) also exists"
+  },
+  {
+   "key": "ggZH_inv",
+   "process": "gg → ZH, H → invisible (ZZ → 4ν)",
+   "category": "Higgs",
+   "higgs_cell": [
+    "gg → ZH",
+    "invisible (ZZ → 4ν)"
+   ],
+   "atlas_nominal_dsids": [
+    "345596"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.0001285896,
+   "atlas_sigma_per_dsid_pb": {
+    "345596": 0.0001285896
+   },
+   "atlas_files_nominal": 1,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 36929,
+     "name": "ggZH_ZToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8",
+     "events": 500000,
+     "files": 2,
+     "portal_total_value": "4.319e-02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "ATLAS: Z inclusive. CMS only with Z → qq"
+  },
+  {
+   "key": "ttH_incl",
+   "process": "tt̄H, H → all decays",
+   "category": "Higgs",
+   "higgs_cell": [
+    "tt̄H",
+    "all decays"
+   ],
+   "atlas_nominal_dsids": [
+    "346343",
+    "346344",
+    "346345"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [
+    "346189",
+    "346525",
+    "346526",
+    "346601",
+    "346340",
+    "346341",
+    "346342",
+    "346452",
+    "346453",
+    "346454",
+    "346919",
+    "346923",
+    "346927",
+    "346198",
+    "346632",
+    "346633",
+    "346634"
+   ],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 0.5071,
+   "atlas_sigma_per_dsid_pb": {
+    "346343": 0.233266,
+    "346344": 0.228195,
+    "346345": 0.045639,
+    "346189": 0.001151117,
+    "346525": 0.001151117,
+    "346526": 0.001151117,
+    "346601": 0.001151117,
+    "346340": 2.8924984e-05,
+    "346341": 2.829618e-05,
+    "346342": 5.659236e-06,
+    "346452": 2.8924984e-05,
+    "346453": 2.829618e-05,
+    "346454": 5.659236e-06,
+    "346919": 0.01463044352,
+    "346923": 0.0143123904,
+    "346927": 0.0028624780799999996,
+    "346198": 0.0007773843,
+    "346632": 0.00024446276800000005,
+    "346633": 0.00023914836000000003,
+    "346634": 4.7829672000000004e-05
+   },
+   "atlas_files_nominal": 3,
+   "atlas_files_alternatives": {},
+   "slicing": "split by tt̄ decay, summed",
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 67645,
+     "name": "ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 4937000,
+     "files": 26,
+     "portal_total_value": "5.013e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 4
+    },
+    {
+     "recid": 67691,
+     "name": "ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2240994,
+     "files": 20,
+     "portal_total_value": "5.013e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 4
+    }
+   ],
+   "cms_sigma_eff_pb": 0.5071,
+   "cms_sigma_source": "registry v3 (delivered) / xsec_proposals.json (PROPOSED)",
+   "ratio_atlas_over_cms": 1.0,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "subset DSIDs (ATLAS-side overlap with the inclusive ones): γγ 346189/346525 (+ Herwig 346526, 346601), ZZ → 4ℓ 346340-346342 (+ Herwig 346452-346454), ττ 346919/346923/346927, Zγ 346198, ZZ → 4ν 346632-346634 (the metadata 'process' field of all three says 'allhad', the names say semilep/allhad/dilep). On the CMS side all of them are inside ttH → bb + ttH → non-bb."
+  },
+  {
+   "key": "tHjb",
+   "process": "tHq (tHjb), H → γγ and ZZ → 4ℓ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "tHq (tHjb)",
+    "γγ and ZZ → 4ℓ"
+   ],
+   "atlas_nominal_dsids": [
+    "346188",
+    "346414"
+   ],
+   "atlas_alternatives": {
+    "aMC@NLO+Herwig7 γγ (346602)": [
+     "346602"
+    ]
+   },
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 7.3256155e-06,
+   "atlas_sigma_per_dsid_pb": {
+    "346188": 6.5353299999999995e-06,
+    "346414": 7.902855e-07,
+    "346602": 6.5353299999999995e-06
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {
+    "aMC@NLO+Herwig7 γγ (346602)": 1
+   },
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 65657,
+     "name": "THQ_ctcvcp_HToGG_M125_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 1998000,
+     "files": 10,
+     "portal_total_value": "7.452e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 65649,
+     "name": "THQ_ctcvcp_4f_Hincl_TuneCP5_13TeV_madgraph_pythia8",
+     "events": 14939986,
+     "files": 77,
+     "portal_total_value": "7.449e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS THQ_ctcvcp: generated at a non-SM coupling, needs reweighting (D13, UNVERIFIED); not proposed"
+  },
+  {
+   "key": "tWH",
+   "process": "tWH, H → γγ and ZZ → 4ℓ",
+   "category": "Higgs",
+   "higgs_cell": [
+    "tWH",
+    "γγ and ZZ → 4ℓ"
+   ],
+   "atlas_nominal_dsids": [
+    "346486",
+    "346511"
+   ],
+   "atlas_alternatives": {},
+   "atlas_subset_dsids": [],
+   "atlas_sigma_nominal_pb_CROSSCHECK": 3.86764e-05,
+   "atlas_sigma_per_dsid_pb": {
+    "346486": 3.4504e-05,
+    "346511": 4.1724e-06
+   },
+   "atlas_files_nominal": 2,
+   "atlas_files_alternatives": {},
+   "slicing": "",
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 65725,
+     "name": "THW_ctcvcp_HToGG_M125_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 1000000,
+     "files": 21,
+     "portal_total_value": "1.468e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 65721,
+     "name": "THW_ctcvcp_5f_Hincl_TuneCP5_13TeV_madgraph_pythia8",
+     "events": 7484000,
+     "files": 35,
+     "portal_total_value": "1.466e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ],
+   "cms_sigma_eff_pb": null,
+   "cms_sigma_source": null,
+   "ratio_atlas_over_cms": null,
+   "ratio_flag": false,
+   "ratio_note": "",
+   "note": "CMS THW_ctcvcp: as tHq"
+  }
+ ],
+ "like_for_like_checks": {
+  "st_tchan: ATLAS leptonic / (CMS inclusive × BR(W → ℓν))": 1.0048693395451092,
+  "st_tchan alt pThard=1 / (CMS × BR(W → ℓν))": 0.8448448654115275,
+  "st_tW: ATLAS inclusive × (1 − BR(W → had)²) / CMS NoFullyHadronic": 1.0038032195871676,
+  "VV_2l2v_os + nothing: ATLAS / CMS WW → 2ℓ2ν": 0.9505036197670759,
+  "VBF_tautau: ATLAS sum of the 4 filtered pieces / CMS σ(VBF) × BR(ττ)": 1.2914999999999999
+ }
+}

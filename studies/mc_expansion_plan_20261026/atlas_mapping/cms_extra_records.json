@@ -1,0 +1,721 @@
+{
+ "what": "CMS 2016 post-VFP NanoAODv9 records looked up for the ATLAS mapping (27 Oct 2026); VERIFIED BY RUNNING (public CERN Open Data API, URL per row)",
+ "rows": [
+  {
+   "name": "WJetsToQQ_HT-200to400",
+   "atlas_process": "W->qq' (pT>200)",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AWJetsToQQ_HT-200to400%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 69751,
+   "mini_recid": 69750,
+   "dataset": "/WJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 7065076,
+   "number_files": 12,
+   "size_bytes": 10257378223,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.2",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.564e+03",
+    "total_value_uncertainty": "8.675e-01"
+   },
+   "link": "https://opendata.cern.ch/record/69751"
+  },
+  {
+   "name": "WJetsToQQ_HT-400to600",
+   "atlas_process": "W->qq' (pT>200)",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AWJetsToQQ_HT-400to600%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 69753,
+   "mini_recid": 69752,
+   "dataset": "/WJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 4455853,
+   "number_files": 26,
+   "size_bytes": 8695849459,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.2",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.772e+02",
+    "total_value_uncertainty": "1.184e-01"
+   },
+   "link": "https://opendata.cern.ch/record/69753"
+  },
+  {
+   "name": "WJetsToQQ_HT-600to800",
+   "atlas_process": "W->qq' (pT>200)",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AWJetsToQQ_HT-600to800%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 69755,
+   "mini_recid": 69754,
+   "dataset": "/WJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 6804490,
+   "number_files": 52,
+   "size_bytes": 15002406669,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.2",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "5.911e+01",
+    "total_value_uncertainty": "2.047e-02"
+   },
+   "link": "https://opendata.cern.ch/record/69755"
+  },
+  {
+   "name": "WJetsToQQ_HT-800toInf",
+   "atlas_process": "W->qq' (pT>200)",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AWJetsToQQ_HT-800toInf%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 69757,
+   "mini_recid": 69756,
+   "dataset": "/WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 6769101,
+   "number_files": 32,
+   "size_bytes": 16160573193,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.2",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.876e+01",
+    "total_value_uncertainty": "9.970e-03"
+   },
+   "link": "https://opendata.cern.ch/record/69757"
+  },
+  {
+   "name": "ZJetsToQQ_HT-200to400",
+   "atlas_process": "Z->qq (pT>200)",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AZJetsToQQ_HT-200to400%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 74912,
+   "mini_recid": 74911,
+   "dataset": "/ZJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 7285673,
+   "number_files": 21,
+   "size_bytes": 10776029079,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.1",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.012e+03",
+    "total_value_uncertainty": "3.528e-01"
+   },
+   "link": "https://opendata.cern.ch/record/74912"
+  },
+  {
+   "name": "ZJetsToQQ_HT-400to600",
+   "atlas_process": "Z->qq (pT>200)",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AZJetsToQQ_HT-400to600%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 74914,
+   "mini_recid": 74913,
+   "dataset": "/ZJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 6942718,
+   "number_files": 23,
+   "size_bytes": 13711453593,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.1",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.145e+02",
+    "total_value_uncertainty": "4.145e-02"
+   },
+   "link": "https://opendata.cern.ch/record/74914"
+  },
+  {
+   "name": "ZJetsToQQ_HT-600to800",
+   "atlas_process": "Z->qq (pT>200)",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AZJetsToQQ_HT-600to800%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 74916,
+   "mini_recid": 74915,
+   "dataset": "/ZJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 5529896,
+   "number_files": 29,
+   "size_bytes": 12494263824,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.1",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.537e+01",
+    "total_value_uncertainty": "1.752e-02"
+   },
+   "link": "https://opendata.cern.ch/record/74916"
+  },
+  {
+   "name": "ZJetsToQQ_HT-800toInf",
+   "atlas_process": "Z->qq (pT>200)",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AZJetsToQQ_HT-800toInf%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 74918,
+   "mini_recid": 74917,
+   "dataset": "/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 4388402,
+   "number_files": 40,
+   "size_bytes": 10961247575,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.1",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.292e+01",
+    "total_value_uncertainty": "5.923e-03"
+   },
+   "link": "https://opendata.cern.ch/record/74918"
+  },
+  {
+   "name": "ZJetsToBB",
+   "atlas_process": "Z->bb (pT>200)",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AZJetsToBB%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "WZTo2Q2Nu",
+   "atlas_process": "WZ->qq nu nu",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AWZTo2Q2Nu%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "WZToQQ2Nu",
+   "atlas_process": "WZ->qq nu nu",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AWZToQQ2Nu%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "ZZTo4Nu",
+   "atlas_process": "ZZ->4nu",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AZZTo4Nu%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "ZH_HToBB_ZToNuNu_M-125",
+   "atlas_process": "qqZH H->bb Z->nunu",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AZH_HToBB_ZToNuNu_M-125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 74118,
+   "mini_recid": 74117,
+   "dataset": "/ZH_HToBB_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 2194852,
+   "number_files": 28,
+   "size_bytes": 3245121677,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.980e-02",
+    "total_value": "1.573e-01",
+    "total_value_uncertainty": "6.437e-04"
+   },
+   "link": "https://opendata.cern.ch/record/74118"
+  },
+  {
+   "name": "ggZH_HToBB_ZToNuNu_M-125",
+   "atlas_process": "ggZH H->bb Z->nunu",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AggZH_HToBB_ZToNuNu_M-125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 36597,
+   "mini_recid": 36596,
+   "dataset": "/ggZH_HToBB_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 2190000,
+   "number_files": 20,
+   "size_bytes": 3346809722,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.222e-02",
+    "total_value_uncertainty": "1.337e-05"
+   },
+   "link": "https://opendata.cern.ch/record/36597"
+  },
+  {
+   "name": "ZH_HToCC_ZToNuNu_M-125",
+   "atlas_process": "qqZH H->cc Z->nunu",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AZH_HToCC_ZToNuNu_M-125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 74126,
+   "mini_recid": 74125,
+   "dataset": "/ZH_HToCC_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 2205750,
+   "number_files": 45,
+   "size_bytes": 3136742751,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.985e-02",
+    "total_value": "1.573e-01",
+    "total_value_uncertainty": "6.437e-04"
+   },
+   "link": "https://opendata.cern.ch/record/74126"
+  },
+  {
+   "name": "ggZH_HToCC_ZToNuNu_M-125",
+   "atlas_process": "ggZH H->cc Z->nunu",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AggZH_HToCC_ZToNuNu_M-125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 36605,
+   "mini_recid": 36604,
+   "dataset": "/ggZH_HToCC_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 2260000,
+   "number_files": 18,
+   "size_bytes": 3251027004,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.222e-02",
+    "total_value_uncertainty": "1.337e-05"
+   },
+   "link": "https://opendata.cern.ch/record/36605"
+  },
+  {
+   "name": "VHToEE_M125",
+   "atlas_process": "VH H->ee",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AVHToEE_M125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 69343,
+   "mini_recid": 69342,
+   "dataset": "/VHToEE_M125_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 450586,
+   "number_files": 13,
+   "size_bytes": 922005518,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "1.958e-01",
+    "total_value": "2.448e+00",
+    "total_value_uncertainty": "6.422e-03"
+   },
+   "link": "https://opendata.cern.ch/record/69343"
+  },
+  {
+   "name": "GluGluHToMuMuG_M125_Dalitz_012j",
+   "atlas_process": "ggF H->gamma* gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AGluGluHToMuMuG_M125_Dalitz_012j%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 37420,
+   "mini_recid": 37419,
+   "dataset": "/GluGluHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 1825052,
+   "number_files": 4,
+   "size_bytes": 2772640075,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "2.151e-01",
+    "total_value": "1.858e-03",
+    "total_value_uncertainty": "2.031e-06"
+   },
+   "link": "https://opendata.cern.ch/record/37420"
+  },
+  {
+   "name": "GluGluHToEEG_M125_Dalitz_012j",
+   "atlas_process": "ggF H->gamma* gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AGluGluHToEEG_M125_Dalitz_012j%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 37276,
+   "mini_recid": 37275,
+   "dataset": "/GluGluHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 1855064,
+   "number_files": 16,
+   "size_bytes": 3015830926,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "2.151e-01",
+    "total_value": "2.816e-03",
+    "total_value_uncertainty": "3.055e-06"
+   },
+   "link": "https://opendata.cern.ch/record/37276"
+  },
+  {
+   "name": "VBFHToMuMuG_M125_Dalitz",
+   "atlas_process": "VBF H->gamma* gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AVBFHToMuMuG_M125_Dalitz%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 68559,
+   "mini_recid": 68558,
+   "dataset": "/VBFHToMuMuG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 1754000,
+   "number_files": 4,
+   "size_bytes": 3002656587,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "3.435e-01",
+    "total_value": "2.080e-04",
+    "total_value_uncertainty": "1.061e-08"
+   },
+   "link": "https://opendata.cern.ch/record/68559"
+  },
+  {
+   "name": "VBFHToEEG_M125_Dalitz",
+   "atlas_process": "VBF H->gamma* gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AVBFHToEEG_M125_Dalitz%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 68459,
+   "mini_recid": 68458,
+   "dataset": "/VBFHToEEG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 1840000,
+   "number_files": 29,
+   "size_bytes": 3396592561,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "3.429e-01",
+    "total_value": "3.150e-04",
+    "total_value_uncertainty": "6.441e-08"
+   },
+   "link": "https://opendata.cern.ch/record/68459"
+  },
+  {
+   "name": "ZHToMuMuG_M125_Dalitz_012j",
+   "atlas_process": "ZH H->gamma* gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AZHToMuMuG_M125_Dalitz_012j%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 74670,
+   "mini_recid": 74669,
+   "dataset": "/ZHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 924063,
+   "number_files": 3,
+   "size_bytes": 1746080510,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "1.992e-01",
+    "total_value": "4.459e-05",
+    "total_value_uncertainty": "6.552e-08"
+   },
+   "link": "https://opendata.cern.ch/record/74670"
+  },
+  {
+   "name": "ZHToEEG_M125_Dalitz_012j",
+   "atlas_process": "ZH H->gamma* gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AZHToEEG_M125_Dalitz_012j%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 74652,
+   "mini_recid": 74651,
+   "dataset": "/ZHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 905541,
+   "number_files": 5,
+   "size_bytes": 1803644469,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "1.988e-01",
+    "total_value": "6.762e-05",
+    "total_value_uncertainty": "1.002e-07"
+   },
+   "link": "https://opendata.cern.ch/record/74652"
+  },
+  {
+   "name": "WplusHToMuMuG_M125_Dalitz",
+   "atlas_process": "WH H->gamma* gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AWplusHToMuMuG_M125_Dalitz%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "WminusHToMuMuG_M125_Dalitz",
+   "atlas_process": "WH H->gamma* gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AWminusHToMuMuG_M125_Dalitz%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "GluGluHToZZTo4Nu",
+   "atlas_process": "ggF H->ZZ->4nu",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AGluGluHToZZTo4Nu%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "WplusH_WToQQ_HToInvisible_M125",
+   "atlas_process": "WH H->inv",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AWplusH_WToQQ_HToInvisible_M125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 71359,
+   "mini_recid": 71358,
+   "dataset": "/WplusH_WToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 499989,
+   "number_files": 4,
+   "size_bytes": 659931422,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.824e-02",
+    "total_value": "5.884e-01",
+    "total_value_uncertainty": "1.368e-03"
+   },
+   "link": "https://opendata.cern.ch/record/71359"
+  },
+  {
+   "name": "WminusH_WToQQ_HToInvisible_M125",
+   "atlas_process": "WH H->inv",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AWminusH_WToQQ_HToInvisible_M125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 70515,
+   "mini_recid": 70514,
+   "dataset": "/WminusH_WToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 499985,
+   "number_files": 2,
+   "size_bytes": 654055104,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.692e-02",
+    "total_value": "3.674e-01",
+    "total_value_uncertainty": "7.676e-04"
+   },
+   "link": "https://opendata.cern.ch/record/70515"
+  },
+  {
+   "name": "ZH_ZToQQ_HToInvisible_M125",
+   "atlas_process": "qqZH H->inv",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AZH_ZToQQ_HToInvisible_M125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 74892,
+   "mini_recid": 74891,
+   "dataset": "/ZH_ZToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 497466,
+   "number_files": 10,
+   "size_bytes": 693210039,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.999e-02",
+    "total_value": "5.561e-01",
+    "total_value_uncertainty": "2.166e-03"
+   },
+   "link": "https://opendata.cern.ch/record/74892"
+  },
+  {
+   "name": "ggZH_ZToQQ_HToInvisible_M125",
+   "atlas_process": "ggZH H->inv",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AggZH_ZToQQ_HToInvisible_M125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 36929,
+   "mini_recid": 36928,
+   "dataset": "/ggZH_ZToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 500000,
+   "number_files": 2,
+   "size_bytes": 714602852,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "4.319e-02",
+    "total_value_uncertainty": "4.725e-05"
+   },
+   "link": "https://opendata.cern.ch/record/36929"
+  },
+  {
+   "name": "ttH_HToInvisible_M125",
+   "atlas_process": "ttH H->inv",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AttH_HToInvisible_M125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 67511,
+   "mini_recid": 67510,
+   "dataset": "/ttH_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 3000000,
+   "number_files": 11,
+   "size_bytes": 7188563992,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "1.054e-02",
+    "total_value": "4.916e-01",
+    "total_value_uncertainty": "1.773e-03"
+   },
+   "link": "https://opendata.cern.ch/record/67511"
+  },
+  {
+   "name": "ttHToGG_M125",
+   "atlas_process": "ttH H->gamma gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AttHToGG_M125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "THQ_ctcvcp_HToGG",
+   "atlas_process": "tHq H->gamma gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2ATHQ_ctcvcp_HToGG%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "ggZH_HToGG_ZToNuNu_M125",
+   "atlas_process": "ggZH H->gamma gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AggZH_HToGG_ZToNuNu_M125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 36617,
+   "mini_recid": 36616,
+   "dataset": "/ggZH_HToGG_ZToNuNu_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 160000,
+   "number_files": 6,
+   "size_bytes": 242645867,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.222e-02",
+    "total_value_uncertainty": "1.337e-05"
+   },
+   "link": "https://opendata.cern.ch/record/36617"
+  },
+  {
+   "name": "ggZH_HToGG_ZToQQ_M125",
+   "atlas_process": "ggZH H->gamma gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AggZH_HToGG_ZToQQ_M125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 36623,
+   "mini_recid": 36622,
+   "dataset": "/ggZH_HToGG_ZToQQ_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 157576,
+   "number_files": 9,
+   "size_bytes": 312556020,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "4.320e-02",
+    "total_value_uncertainty": "4.728e-05"
+   },
+   "link": "https://opendata.cern.ch/record/36623"
+  },
+  {
+   "name": "ZH_HToBB_ZToQQ_M-125",
+   "atlas_process": "qqZH H->bb",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AZH_HToBB_ZToQQ_M-125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 74121,
+   "mini_recid": 74119,
+   "dataset": "/ZH_HToBB_ZToQQ_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "number_events": 4583204,
+   "number_files": 39,
+   "size_bytes": 8033644546,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.999e-02",
+    "total_value": "5.612e-01",
+    "total_value_uncertainty": "1.332e-03"
+   },
+   "link": "https://opendata.cern.ch/record/74121"
+  },
+  {
+   "name": "GluGluZH_HToZZ",
+   "atlas_process": "ggZH H->ZZ->4l",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AGluGluZH_HToZZ%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "ggZH_HToZZ",
+   "atlas_process": "ggZH H->ZZ->4l",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AggZH_HToZZ%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "ggZH_HToTauTau",
+   "atlas_process": "ggZH H->tautau",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AggZH_HToTauTau%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "GluGluZH_HToTauTau",
+   "atlas_process": "ggZH H->tautau",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AGluGluZH_HToTauTau%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "ggZH_HToMuMu",
+   "atlas_process": "ggZH H->mumu",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AggZH_HToMuMu%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "GluGluZH_HToMuMu",
+   "atlas_process": "ggZH H->mumu",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AGluGluZH_HToMuMu%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "GluGluZH_HToWW_M-125",
+   "atlas_process": "ggZH H->WW (Z incl)",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AGluGluZH_HToWW_M-125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "NOT OBSERVED"
+  },
+  {
+   "name": "GluGluToZH_HToZZTo4L_M125",
+   "atlas_process": "ggZH H->ZZ->4l",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AGluGluToZH_HToZZTo4L_M125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 40062,
+   "mini_recid": 40061,
+   "dataset": "/GluGluToZH_HToZZTo4L_M125_TuneCP5_13TeV-jhugenv723-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 999739,
+   "number_files": 21,
+   "size_bytes": 2078601326,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.2",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.330e-04",
+    "total_value_uncertainty": "2.330e+10"
+   },
+   "link": "https://opendata.cern.ch/record/40062"
+  },
+  {
+   "name": "ttHJetToGG_M125",
+   "atlas_process": "ttH H->gamma gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2AttHJetToGG_M125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 67611,
+   "mini_recid": 67610,
+   "dataset": "/ttHJetToGG_M125_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 433412,
+   "number_files": 16,
+   "size_bytes": 1259167791,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.5",
+    "neg_weight_fraction": "3.340e-01",
+    "total_value": "4.998e-01",
+    "total_value_uncertainty": "1.985e-03"
+   },
+   "link": "https://opendata.cern.ch/record/67611"
+  },
+  {
+   "name": "THQ_ctcvcp_HToGG_M125",
+   "atlas_process": "tHq H->gamma gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2ATHQ_ctcvcp_HToGG_M125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 65657,
+   "mini_recid": 65656,
+   "dataset": "/THQ_ctcvcp_HToGG_M125_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 1998000,
+   "number_files": 10,
+   "size_bytes": 4699268504,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "7.452e-01",
+    "total_value_uncertainty": "1.756e-04"
+   },
+   "link": "https://opendata.cern.ch/record/65657"
+  },
+  {
+   "name": "THW_ctcvcp_HToGG_M125",
+   "atlas_process": "tWH H->gamma gamma",
+   "search": "https://opendata.cern.ch/api/records/?q=title%3A%2ATHW_ctcvcp_HToGG_M125%2A&experiment=CMS&type=Dataset&subtype=Simulated&file_type=nanoaodsim&size=100",
+   "status": "found",
+   "nano_recid": 65725,
+   "mini_recid": 65724,
+   "dataset": "/THW_ctcvcp_HToGG_M125_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+   "number_events": 1000000,
+   "number_files": 21,
+   "size_bytes": 2839797878,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.468e-01",
+    "total_value_uncertainty": "3.535e-05"
+   },
+   "link": "https://opendata.cern.ch/record/65725"
+  }
+ ]
+}

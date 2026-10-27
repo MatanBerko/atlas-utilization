@@ -1,0 +1,1521 @@
+{
+ "what": "ATLAS Higgs DSIDs vs CMS Higgs samples (27 Oct 2026). Costs are ESTIMATES (PLAN §4 method).",
+ "cpu_rate_s_per_event": 0.0035125419433116914,
+ "cpu_rate_source": "production_audit.json record 37728",
+ "n_atlas_higgs_dsids": 136,
+ "cells": [
+  {
+   "key": "ggF_ZZ4l",
+   "production": "ggF",
+   "decay": "ZZ → 4ℓ",
+   "atlas_dsids": [
+    "345060"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7, no τ (346446)": [
+     "346446"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.0060252964000000004,
+   "cms_status": "delivered",
+   "cms_records": [
+    {
+     "recid": 37728,
+     "name": "GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8",
+     "events": 1000000,
+     "files": 8,
+     "portal_total_value": "2.887e+01",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "ggF_WW",
+   "production": "ggF",
+   "decay": "WW",
+   "atlas_dsids": [
+    "345324"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7, no τ (346802)": [
+     "346802"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 1.1360599180000002,
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 37474,
+     "name": "GluGluHToWWTo2L2Nu_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2838995,
+     "files": 10,
+     "portal_total_value": "2.147e+01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ]
+  },
+  {
+   "key": "ggF_tautau",
+   "production": "ggF",
+   "decay": "ττ",
+   "atlas_dsids": [
+    "345120",
+    "345121",
+    "345122",
+    "345123"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (600565-600568)": [
+     "600565",
+     "600566",
+     "600567",
+     "600568"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.9698789779660801,
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 37446,
+     "name": "GluGluHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 6439000,
+     "files": 40,
+     "portal_total_value": "2.146e+01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ]
+  },
+  {
+   "key": "ggF_ZZ4nu",
+   "production": "ggF",
+   "decay": "invisible (ZZ → 4ν)",
+   "atlas_dsids": [
+    "346588"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.05092347280000001,
+   "cms_status": "none",
+   "cms_records": []
+  },
+  {
+   "key": "ggF_mumu",
+   "production": "ggF",
+   "decay": "μμ",
+   "atlas_dsids": [
+    "345097"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.01057342336,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 37432,
+     "name": "GluGluHToMuMu_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 500000,
+     "files": 1,
+     "portal_total_value": "2.146e+01",
+     "delivered": false,
+     "plan_role": "optional",
+     "plan_tier": 9
+    }
+   ]
+  },
+  {
+   "key": "ggF_gamgam",
+   "production": "ggF",
+   "decay": "γγ",
+   "atlas_dsids": [
+    "343981"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346797)": [
+     "346797"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.11030179700000001,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 37350,
+     "name": "GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 540000,
+     "files": 3,
+     "portal_total_value": "2.146e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "ggF_Zgam",
+   "production": "ggF",
+   "decay": "Zγ",
+   "atlas_dsids": [
+    "345316"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.007449015630000002,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 37604,
+     "name": "GluGluHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 216000,
+     "files": 19,
+     "portal_total_value": "2.938e+01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "ggF_dalitz",
+   "production": "ggF",
+   "decay": "γ*γ, γ* → ℓℓ (Dalitz)",
+   "atlas_dsids": [
+    "345961"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0209242508909,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 37420,
+     "name": "GluGluHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8",
+     "events": 1825052,
+     "files": 4,
+     "portal_total_value": "1.858e-03",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 37276,
+     "name": "GluGluHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8",
+     "events": 1855064,
+     "files": 16,
+     "portal_total_value": "2.816e-03",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "ggF_etau_mutau",
+   "production": "ggF",
+   "decay": "eτ / μτ (as named)",
+   "atlas_dsids": [
+    "345124",
+    "345125"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0006213829868,
+   "cms_status": "out_of_scope",
+   "cms_records": []
+  },
+  {
+   "key": "VBF_ZZ4l",
+   "production": "VBF",
+   "decay": "ZZ → 4ℓ",
+   "atlas_dsids": [
+    "346228"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346447)": [
+     "346447"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.000468968,
+   "cms_status": "delivered",
+   "cms_records": [
+    {
+     "recid": 68847,
+     "name": "VBF_HToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8",
+     "events": 498000,
+     "files": 24,
+     "portal_total_value": "3.935e+00",
+     "delivered": true,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "VBF_WW",
+   "production": "VBF",
+   "decay": "WW",
+   "atlas_dsids": [
+    "345948"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346877)": [
+     "346877"
+    ],
+    "MadGraph+Herwig7 (500335; Maryna's class 'Higgs related')": [
+     "500335"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.08842316,
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 68601,
+     "name": "VBFHToWWTo2L2Nu_M125_TuneCP5_13TeV_powheg2_JHUGenV714_pythia8",
+     "events": 3596630,
+     "files": 30,
+     "portal_total_value": "3.892e+00",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ]
+  },
+  {
+   "key": "VBF_tautau",
+   "production": "VBF",
+   "decay": "ττ",
+   "atlas_dsids": [
+    "346190",
+    "346191",
+    "346192",
+    "346193"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (600569-600572)": [
+     "600569",
+     "600570",
+     "600571",
+     "600572"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.30635289216,
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 68591,
+     "name": "VBFHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 1500000,
+     "files": 7,
+     "portal_total_value": "3.861e+00",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ]
+  },
+  {
+   "key": "VBF_gamgam",
+   "production": "VBF",
+   "decay": "γγ",
+   "atlas_dsids": [
+    "346214"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346878)": [
+     "346878"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.00858514,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 68499,
+     "name": "VBFHToGG_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 485000,
+     "files": 17,
+     "portal_total_value": "3.861e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "VBF_mumu",
+   "production": "VBF",
+   "decay": "μμ",
+   "atlas_dsids": [
+    "345106"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.001038159,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 68571,
+     "name": "VBFHToMuMu_M125_TuneCP5_withDipoleRecoil_13TeV-powheg-pythia8",
+     "events": 943000,
+     "files": 1,
+     "portal_total_value": "3.861e+00",
+     "delivered": false,
+     "plan_role": "optional",
+     "plan_tier": 9
+    }
+   ]
+  },
+  {
+   "key": "VBF_bb",
+   "production": "VBF",
+   "decay": "bb̄",
+   "atlas_dsids": [
+    "345949"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 2.2026368,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 68445,
+     "name": "VBFHToBB_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 3514000,
+     "files": 6,
+     "portal_total_value": "3.873e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "VBF_Zgam",
+   "production": "VBF",
+   "decay": "Zγ",
+   "atlas_dsids": [
+    "345833"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0005855784060000001,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 68731,
+     "name": "VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 108000,
+     "files": 4,
+     "portal_total_value": "3.861e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "VBF_dalitz",
+   "production": "VBF",
+   "decay": "γ*γ, γ* → ℓℓ (Dalitz)",
+   "atlas_dsids": [
+    "345834"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.00858514,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 68559,
+     "name": "VBFHToMuMuG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8",
+     "events": 1754000,
+     "files": 4,
+     "portal_total_value": "2.080e-04",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 68459,
+     "name": "VBFHToEEG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8",
+     "events": 1840000,
+     "files": 29,
+     "portal_total_value": "3.150e-04",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "VBF_ZZllbb",
+   "production": "VBF",
+   "decay": "ZZ → ℓℓbb",
+   "atlas_dsids": [
+    "450576"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0020188315999999998,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 68833,
+     "name": "VBF_HToZZTo2L2X_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8_withDipoleRecoil",
+     "events": 270000,
+     "files": 1,
+     "portal_total_value": "3.935e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "VBF_etau_mutau",
+   "production": "VBF",
+   "decay": "eτ / μτ (as named)",
+   "atlas_dsids": [
+    "346194",
+    "346195"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.005083386200000001,
+   "cms_status": "out_of_scope",
+   "cms_records": []
+  },
+  {
+   "key": "VBF_incl",
+   "production": "VBF",
+   "decay": "all decays",
+   "atlas_dsids": [
+    "346317"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 3.782,
+   "cms_status": "none",
+   "cms_records": []
+  },
+  {
+   "key": "WH_ZZ4l",
+   "production": "W±H",
+   "decay": "ZZ → 4ℓ",
+   "atlas_dsids": [
+    "346449",
+    "346450"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Pythia8 'shw' (346646, 346647)": [
+     "346646",
+     "346647"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.0003768336,
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 71227,
+     "name": "WplusH_HToZZTo4L_M125_TuneCP5_13TeV_powheg2-minlo-HWJ_JHUGenV7011_pythia8",
+     "events": 294744,
+     "files": 12,
+     "portal_total_value": "8.648e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    },
+    {
+     "recid": 70383,
+     "name": "WminusH_HToZZTo4L_M125_TuneCP5_13TeV_powheg2-minlo-HWJ_JHUGenV7011_pythia8",
+     "events": 193088,
+     "files": 7,
+     "portal_total_value": "5.409e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ]
+  },
+  {
+   "key": "WH_WW",
+   "production": "W±H",
+   "decay": "WW",
+   "atlas_dsids": [
+    "345325",
+    "345433"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0216359567424,
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 41877,
+     "name": "HWplusJ_HToWW_M-125_TuneCP5_13TeV-powheg-jhugen727-pythia8",
+     "events": 2855188,
+     "files": 58,
+     "portal_total_value": "8.720e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    },
+    {
+     "recid": 41873,
+     "name": "HWminusJ_HToWW_M-125_TuneCP5_13TeV-powheg-jhugen727-pythia8",
+     "events": 2931162,
+     "files": 66,
+     "portal_total_value": "5.445e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ]
+  },
+  {
+   "key": "WH_tautau",
+   "production": "W±H",
+   "decay": "ττ",
+   "atlas_dsids": [
+    "345211",
+    "345212"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (600573, 600574)": [
+     "600573",
+     "600574"
+    ],
+    "aMC@NLO FxFx W+H only (506098)": [
+     "506098"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.086102016,
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 71297,
+     "name": "WplusHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2000000,
+     "files": 7,
+     "portal_total_value": "8.670e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    },
+    {
+     "recid": 70453,
+     "name": "WminusHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 1995182,
+     "files": 3,
+     "portal_total_value": "5.412e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ]
+  },
+  {
+   "key": "WH_mumu",
+   "production": "W±H",
+   "decay": "μμ",
+   "atlas_dsids": [
+    "345104",
+    "345105"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0003768336,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 71295,
+     "name": "WplusHToMuMu_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 300000,
+     "files": 1,
+     "portal_total_value": "8.670e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 70451,
+     "name": "WminusHToMuMu_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 300000,
+     "files": 1,
+     "portal_total_value": "5.412e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "WH_gamgam",
+   "production": "W±H",
+   "decay": "γγ",
+   "atlas_dsids": [
+    "345317",
+    "345318"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346880, 346881)": [
+     "346880",
+     "346881"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.0031162559999999995,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 71013,
+     "name": "WplusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 162000,
+     "files": 4,
+     "portal_total_value": "8.670e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 70173,
+     "name": "WminusH_HToGG_WToAll_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 147484,
+     "files": 15,
+     "portal_total_value": "5.412e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "WH_Zgam",
+   "production": "W±H",
+   "decay": "Zγ",
+   "atlas_dsids": [
+    "345320",
+    "345321"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0021045024,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 71145,
+     "name": "WplusH_HToZG_WToAll_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 161991,
+     "files": 1,
+     "portal_total_value": "8.668e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 70301,
+     "name": "WminusH_HToZG_WToAll_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 161988,
+     "files": 9,
+     "portal_total_value": "5.413e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "WH_dalitz",
+   "production": "W±H",
+   "decay": "γ*γ, γ* → ℓℓ (Dalitz)",
+   "atlas_dsids": [
+    "345963",
+    "345964"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0031162559999999995,
+   "cms_status": "none",
+   "cms_records": []
+  },
+  {
+   "key": "WH_etau_mutau",
+   "production": "W±H",
+   "decay": "eτ / μτ (as named)",
+   "atlas_dsids": [
+    "345213",
+    "345214",
+    "345215",
+    "345216"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 1.7555366399999998e-05,
+   "cms_status": "out_of_scope",
+   "cms_records": []
+  },
+  {
+   "key": "WH_ee",
+   "production": "W±H",
+   "decay": "ee",
+   "atlas_dsids": [
+    "345877",
+    "345878"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 7.468032000000001e-09,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 69343,
+     "name": "VHToEE_M125_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8",
+     "events": 450586,
+     "files": 13,
+     "portal_total_value": "2.448e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "WH_inv",
+   "production": "W±H",
+   "decay": "invisible (ZZ → 4ν)",
+   "atlas_dsids": [
+    "346605",
+    "346606"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0014386944,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 71359,
+     "name": "WplusH_WToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8",
+     "events": 499989,
+     "files": 4,
+     "portal_total_value": "5.884e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 70515,
+     "name": "WminusH_WToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8",
+     "events": 499985,
+     "files": 2,
+     "portal_total_value": "3.674e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "WH_incl",
+   "production": "W±H",
+   "decay": "all decays",
+   "atlas_dsids": [
+    "346311",
+    "346312"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 1.3728,
+   "cms_status": "none",
+   "cms_records": []
+  },
+  {
+   "key": "qqZH_bb_vv",
+   "production": "qq̄ → ZH",
+   "decay": "bb̄",
+   "atlas_dsids": [
+    "345056"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346398)": [
+     "346398"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.08866457600000001,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74118,
+     "name": "ZH_HToBB_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2194852,
+     "files": 28,
+     "portal_total_value": "1.573e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "qqZH_cc_vv",
+   "production": "qq̄ → ZH",
+   "decay": "cc̄",
+   "atlas_dsids": [
+    "345112"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346726)": [
+     "346726"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.0044012584,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74126,
+     "name": "ZH_HToCC_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2205750,
+     "files": 45,
+     "portal_total_value": "1.573e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "qqZH_mumu",
+   "production": "qq̄ → ZH",
+   "decay": "μμ",
+   "atlas_dsids": [
+    "345103"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0002089494,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74682,
+     "name": "ZHToMuMu_M125_CP5_13TeV-powheg-pythia8",
+     "events": 496320,
+     "files": 1,
+     "portal_total_value": "7.891e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "qqZH_tautau",
+   "production": "qq̄ → ZH",
+   "decay": "ττ",
+   "atlas_dsids": [
+    "345217"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (600575)": [
+     "600575"
+    ],
+    "aMC@NLO FxFx (506099)": [
+     "506099"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.047742464,
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 74684,
+     "name": "ZHToTauTau_M125_CP5_13TeV-powheg-pythia8_ext1",
+     "events": 2419675,
+     "files": 6,
+     "portal_total_value": "7.891e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ]
+  },
+  {
+   "key": "qqZH_gamgam",
+   "production": "qq̄ → ZH",
+   "decay": "γγ",
+   "atlas_dsids": [
+    "345319"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346879)": [
+     "346879"
+    ],
+    "aMC@NLO FxFx, Z → qq (506813)": [
+     "506813"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.0017279239999999998,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74132,
+     "name": "ZH_HToGG_ZToAll_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 151002,
+     "files": 20,
+     "portal_total_value": "7.891e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "qqZH_Zgam",
+   "production": "qq̄ → ZH",
+   "decay": "Zγ",
+   "atlas_dsids": [
+    "345322"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0011669196,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74292,
+     "name": "ZH_HToZG_ZToAll_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 162044,
+     "files": 8,
+     "portal_total_value": "7.891e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "qqZH_dalitz",
+   "production": "qq̄ → ZH",
+   "decay": "γ*γ, γ* → ℓℓ (Dalitz)",
+   "atlas_dsids": [
+    "345965"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0017279239999999998,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74670,
+     "name": "ZHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+     "events": 924063,
+     "files": 3,
+     "portal_total_value": "4.459e-05",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 74652,
+     "name": "ZHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+     "events": 905541,
+     "files": 5,
+     "portal_total_value": "6.762e-05",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "qqZH_WW",
+   "production": "qq̄ → ZH",
+   "decay": "WW",
+   "atlas_dsids": [
+    "345445",
+    "341456",
+    "341458",
+    "341460"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.00832776640784,
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 41914,
+     "name": "HZJ_HToWW_M-125_TuneCP5_13TeV-powheg-jhugen727-pythia8",
+     "events": 4465166,
+     "files": 6,
+     "portal_total_value": "9.595e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ]
+  },
+  {
+   "key": "qqZH_ZZ4l",
+   "production": "qq̄ → ZH",
+   "decay": "ZZ → 4ℓ",
+   "atlas_dsids": [
+    "346645"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346448)": [
+     "346448"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.0002089494,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74314,
+     "name": "ZH_HToZZ_4LFilter_M125_TuneCP5_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8",
+     "events": 486281,
+     "files": 4,
+     "portal_total_value": "7.935e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "qqZH_ee",
+   "production": "qq̄ → ZH",
+   "decay": "ee",
+   "atlas_dsids": [
+    "345876"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 4.140928e-09,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 69343,
+     "name": "VHToEE_M125_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8",
+     "events": 450586,
+     "files": 13,
+     "portal_total_value": "2.448e+00",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "qqZH_inv",
+   "production": "qq̄ → ZH",
+   "decay": "invisible (ZZ → 4ν)",
+   "atlas_dsids": [
+    "346607"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0007977376000000001,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 74892,
+     "name": "ZH_ZToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8",
+     "events": 497466,
+     "files": 10,
+     "portal_total_value": "5.561e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "qqZH_etau_mutau",
+   "production": "qq̄ → ZH",
+   "decay": "eτ / μτ (as named)",
+   "atlas_dsids": [
+    "345218",
+    "345219"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 9.7342256e-06,
+   "cms_status": "out_of_scope",
+   "cms_records": []
+  },
+  {
+   "key": "qqZH_incl",
+   "production": "qq̄ → ZH",
+   "decay": "all decays",
+   "atlas_dsids": [
+    "346310"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.7612,
+   "cms_status": "none",
+   "cms_records": []
+  },
+  {
+   "key": "ggZH_bb_vv",
+   "production": "gg → ZH",
+   "decay": "bb̄",
+   "atlas_dsids": [
+    "345058"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346400)": [
+     "346400"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.014292096000000002,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 36597,
+     "name": "ggZH_HToBB_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2190000,
+     "files": 20,
+     "portal_total_value": "1.222e-02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "ggZH_cc_vv",
+   "production": "gg → ZH",
+   "decay": "cc̄",
+   "atlas_dsids": [
+    "345114"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346728)": [
+     "346728"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.0007094514000000001,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 36605,
+     "name": "ggZH_HToCC_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2260000,
+     "files": 18,
+     "portal_total_value": "1.222e-02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "ggZH_gamgam",
+   "production": "gg → ZH",
+   "decay": "γγ",
+   "atlas_dsids": [
+    "345061"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346882)": [
+     "346882"
+    ],
+    "aMC@NLO, Z → qq (506814)": [
+     "506814"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 0.000278529,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 36611,
+     "name": "ggZH_HToGG_ZToLL_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 160000,
+     "files": 10,
+     "portal_total_value": "6.185e-03",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 36617,
+     "name": "ggZH_HToGG_ZToNuNu_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 160000,
+     "files": 6,
+     "portal_total_value": "1.222e-02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 36623,
+     "name": "ggZH_HToGG_ZToQQ_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 157576,
+     "files": 9,
+     "portal_total_value": "4.320e-02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "ggZH_ZZ4l",
+   "production": "gg → ZH",
+   "decay": "ZZ → 4ℓ",
+   "atlas_dsids": [
+    "345066"
+   ],
+   "atlas_alternatives": {
+    "Powheg+Herwig7 (346451)": [
+     "346451"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 3.368115e-05,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 40062,
+     "name": "GluGluToZH_HToZZTo4L_M125_TuneCP5_13TeV-jhugenv723-pythia8",
+     "events": 999739,
+     "files": 21,
+     "portal_total_value": "2.330e-04",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "ggZH_mumu",
+   "production": "gg → ZH",
+   "decay": "μμ",
+   "atlas_dsids": [
+    "345098"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 3.368115e-05,
+   "cms_status": "none",
+   "cms_records": []
+  },
+  {
+   "key": "ggZH_tautau",
+   "production": "gg → ZH",
+   "decay": "ττ",
+   "atlas_dsids": [
+    "600686"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.007695744,
+   "cms_status": "none",
+   "cms_records": []
+  },
+  {
+   "key": "ggZH_WW",
+   "production": "gg → ZH",
+   "decay": "WW",
+   "atlas_dsids": [
+    "346524"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0028687260000000003,
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 40095,
+     "name": "GluGluZH_HToWW_ZTo2L_M-125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 4737669,
+     "files": 5,
+     "portal_total_value": "6.185e-03",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 5
+    }
+   ]
+  },
+  {
+   "key": "ggZH_inv",
+   "production": "gg → ZH",
+   "decay": "invisible (ZZ → 4ν)",
+   "atlas_dsids": [
+    "345596"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.0001285896,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 36929,
+     "name": "ggZH_ZToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8",
+     "events": 500000,
+     "files": 2,
+     "portal_total_value": "4.319e-02",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "ttH_incl",
+   "production": "tt̄H",
+   "decay": "all decays",
+   "atlas_dsids": [
+    "346343",
+    "346344",
+    "346345"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 0.5071,
+   "cms_status": "proposed",
+   "cms_records": [
+    {
+     "recid": 67645,
+     "name": "ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 4937000,
+     "files": 26,
+     "portal_total_value": "5.013e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 4
+    },
+    {
+     "recid": 67691,
+     "name": "ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8",
+     "events": 2240994,
+     "files": 20,
+     "portal_total_value": "5.013e-01",
+     "delivered": false,
+     "plan_role": "recommended",
+     "plan_tier": 4
+    }
+   ]
+  },
+  {
+   "key": "tHjb",
+   "production": "tHq (tHjb)",
+   "decay": "γγ and ZZ → 4ℓ",
+   "atlas_dsids": [
+    "346188",
+    "346414"
+   ],
+   "atlas_alternatives": {
+    "aMC@NLO+Herwig7 γγ (346602)": [
+     "346602"
+    ]
+   },
+   "atlas_sigma_pb_CROSSCHECK": 7.3256155e-06,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 65657,
+     "name": "THQ_ctcvcp_HToGG_M125_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 1998000,
+     "files": 10,
+     "portal_total_value": "7.452e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 65649,
+     "name": "THQ_ctcvcp_4f_Hincl_TuneCP5_13TeV_madgraph_pythia8",
+     "events": 14939986,
+     "files": 77,
+     "portal_total_value": "7.449e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  },
+  {
+   "key": "tWH",
+   "production": "tWH",
+   "decay": "γγ and ZZ → 4ℓ",
+   "atlas_dsids": [
+    "346486",
+    "346511"
+   ],
+   "atlas_alternatives": {},
+   "atlas_sigma_pb_CROSSCHECK": 3.86764e-05,
+   "cms_status": "portal",
+   "cms_records": [
+    {
+     "recid": 65725,
+     "name": "THW_ctcvcp_HToGG_M125_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 1000000,
+     "files": 21,
+     "portal_total_value": "1.468e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    },
+    {
+     "recid": 65721,
+     "name": "THW_ctcvcp_5f_Hincl_TuneCP5_13TeV_madgraph_pythia8",
+     "events": 7484000,
+     "files": 35,
+     "portal_total_value": "1.466e-01",
+     "delivered": false,
+     "plan_role": null,
+     "plan_tier": null
+    }
+   ]
+  }
+ ],
+ "cost_all_remaining_cells_with_a_cms_sample": {
+  "samples": 41,
+  "files": 508,
+  "events": 56406759,
+  "cluster_files": 13212,
+  "cpu_hours": 55.0364185760484
+ },
+ "cost_by_group": {
+  "recommended to add": {
+   "cells": [
+    "ggF_mumu",
+    "ggF_Zgam",
+    "VBF_mumu",
+    "VBF_Zgam",
+    "WH_mumu",
+    "WH_Zgam",
+    "qqZH_mumu",
+    "qqZH_Zgam",
+    "ggZH_ZZ4l"
+   ],
+   "samples": 11,
+   "files": 67,
+   "events": 4349082,
+   "cluster_files": 2706,
+   "cpu_hours": 4.243425816639416
+  },
+  "photon final state (deferred)": {
+   "cells": [
+    "ggF_gamgam",
+    "VBF_gamgam",
+    "WH_gamgam",
+    "qqZH_gamgam",
+    "ggZH_gamgam"
+   ],
+   "samples": 8,
+   "files": 84,
+   "events": 1963062,
+   "cluster_files": 2395,
+   "cpu_hours": 1.9153715589781488
+  },
+  "other (tiny, overlapping, or needs a decision)": {
+   "cells": [
+    "ggF_dalitz",
+    "VBF_dalitz",
+    "VBF_ZZllbb",
+    "WH_ee",
+    "qqZH_dalitz",
+    "qqZH_ZZ4l",
+    "qqZH_ee",
+    "tHjb",
+    "tWH"
+   ],
+   "samples": 13,
+   "files": 222,
+   "events": 35732573,
+   "cluster_files": 4926,
+   "cpu_hours": 34.86448927915191
+  },
+  "no leptons on the CMS side": {
+   "cells": [
+    "VBF_bb",
+    "WH_inv",
+    "qqZH_bb_vv",
+    "qqZH_cc_vv",
+    "qqZH_inv",
+    "ggZH_bb_vv",
+    "ggZH_cc_vv",
+    "ggZH_inv"
+   ],
+   "samples": 9,
+   "files": 135,
+   "events": 14362042,
+   "cluster_files": 3184,
+   "cpu_hours": 14.013131921278926
+  }
+ },
+ "plan_tier5_cost": {
+  "samples": 15,
+  "files": 280,
+  "cluster_files": 5973,
+  "cpu_hours": 36.35724740280832
+ }
+}

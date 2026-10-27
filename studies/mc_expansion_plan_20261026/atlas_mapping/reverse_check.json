@@ -1,0 +1,121 @@
+[
+ {
+  "recid": 69745,
+  "name": "WJetsToLNu_amcatnloFXFX (inclusive NLO)",
+  "tier": 1,
+  "role": "alternative",
+  "note": "W+jets inclusive NLO: alternative only (D1 decided the jet-binned set)"
+ },
+ {
+  "recid": 69747,
+  "name": "WJetsToLNu_madgraphMLM (inclusive LO)",
+  "tier": 1,
+  "role": "alternative",
+  "note": "W+jets inclusive LO: alternative only (D1 decided)"
+ },
+ {
+  "recid": 64759,
+  "name": "ST_t-channel_top_4f_InclusiveDecays",
+  "tier": 1,
+  "role": "alternative",
+  "note": "t-channel 4-flavour: alternative for D4; ATLAS uses Powheg t-channel (flavour scheme not stated in the metadata)"
+ },
+ {
+  "recid": 64659,
+  "name": "ST_t-channel_antitop_4f_InclusiveDecays",
+  "tier": 1,
+  "role": "alternative",
+  "note": "t-channel 4-flavour antitop: as 64759"
+ },
+ {
+  "recid": 68185,
+  "name": "TTZToLL_M-1to10",
+  "tier": 4,
+  "role": "recommended",
+  "note": "tt̄ + ℓℓ with 1 < m(ℓℓ) < 10 GeV: ATLAS tt̄ee/μμ/ττ state no m(ℓℓ) threshold in the metadata, so whether they cover it is UNKNOWN"
+ },
+ {
+  "recid": 37616,
+  "name": "GluGluHToZZTo2L2Nu_M125",
+  "tier": 5,
+  "role": "recommended",
+  "note": "ggF H → ZZ → 2ℓ2ν: ATLAS list has ggF H → ZZ → 4ν and → 4ℓ but no 2ℓ2ν; a genuine lepton background, cheap (2 files)"
+ },
+ {
+  "recid": 68741,
+  "name": "VBF_HToZZTo2L2Nu_M125",
+  "tier": 5,
+  "role": "recommended",
+  "note": "VBF H → ZZ → 2ℓ2ν: no ATLAS counterpart (ATLAS has VBF ZZ → 4ℓ and → ℓℓbb only); 21 files"
+ },
+ {
+  "recid": 64633,
+  "name": "ST_s-channel_4f_hadronicDecays",
+  "tier": 9,
+  "role": "optional",
+  "note": "s-channel hadronic (optional): ATLAS has leptonic s-channel only"
+ },
+ {
+  "recid": 72678,
+  "name": "WWTo2L2Nu_DoubleScattering",
+  "tier": 9,
+  "role": "optional",
+  "note": "WW double-parton scattering (optional): no ATLAS counterpart"
+ },
+ {
+  "recid": 68071,
+  "name": "ttWJetsToLNu_5f_EWK",
+  "tier": 9,
+  "role": "optional",
+  "note": "tt̄W EWK (optional): ATLAS tt̄W (aMC@NLO 410155 / Sherpa 700000) — whether the EW part is inside is UNKNOWN"
+ },
+ {
+  "recid": 37678,
+  "name": "GluGluHToZZTo2L2Q_M125",
+  "tier": 9,
+  "role": "optional",
+  "note": "ggF H → ZZ → 2ℓ2q (optional): no ATLAS counterpart"
+ },
+ {
+  "recid": 71003,
+  "name": "WplusH_HToBB_WToLNu_M-125",
+  "tier": 9,
+  "role": "optional",
+  "note": "W+H → bb, W → ℓν (optional): ATLAS has VH → bb only with Z → νν"
+ },
+ {
+  "recid": 70163,
+  "name": "WminusH_HToBB_WToLNu_M-125",
+  "tier": 9,
+  "role": "optional",
+  "note": "W−H → bb, W → ℓν (optional): as 71003"
+ },
+ {
+  "recid": 74116,
+  "name": "ZH_HToBB_ZToLL_M-125",
+  "tier": 9,
+  "role": "optional",
+  "note": "ZH → bb, Z → ℓℓ (optional): as 71003"
+ },
+ {
+  "recid": 36595,
+  "name": "ggZH_HToBB_ZToLL_M-125",
+  "tier": 9,
+  "role": "optional",
+  "note": "gg → ZH → bb, Z → ℓℓ (optional): as 71003"
+ },
+ {
+  "recid": 32783,
+  "name": "bbH_inclusive_M-125_4FS_yb2",
+  "tier": 9,
+  "role": "optional",
+  "note": "bb̄H inclusive (optional): no bb̄H in the ATLAS list"
+ },
+ {
+  "recid": 37532,
+  "name": "GluGluHToWWToLNuQQ_M-125",
+  "tier": 9,
+  "role": "optional",
+  "note": "ggF H → WW → ℓνqq (optional): ATLAS has H → WW → ℓνqq only in qq̄ → ZH (Z → νν)"
+ }
+]

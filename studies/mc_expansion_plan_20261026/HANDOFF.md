@@ -54,6 +54,29 @@ regenerated `candidates.json`, `evidence/stats_cost.json`, `evidence/stats_table
 new `evidence/probe/`, `evidence/probe_section.md`, `plots/genweight_*.png`. Nothing outside this folder;
 no registry or config touched; cluster outputs left in place.
 
+## ATLAS DSID mapping — DONE (27 Oct 2026, third session)
+
+Everything below VERIFIED BY RUNNING unless marked ESTIMATE / UNKNOWN. No cluster use; no ROOT file
+downloaded; no access to anyone's storage; no registry/config change; no cross section changed.
+- Preflight: branch head `21e5fa7` (unchanged), `upstream/master` `29291ae`. atlasopenmagic 1.10.1 in env
+  `hep`; release `2024r-pp` available (626 dataset entries).
+- Step 1: metadata for all **337** DSIDs (none missing): `atlas_mapping/atlas_bkg_metadata.{json,csv}`.
+- Step 2-3: 337 DSIDs → **108 processes** (53 non-Higgs, 55 Higgs cells) → CMS status, σ, ratio
+  (`mapping.py` → `mapping.json`, `mapping_tables.md`). 86 DSIDs are ATLAS alternative generators and 21 are
+  decay subsets (listed for Maryna).
+- Step 4: reverse check, 17 rows (`reverse_check.json`). Only ggF/VBF H → ZZ → 2ℓ2ν clearly lack an ATLAS
+  counterpart; for tt̄ + ℓℓ (1-10 GeV) it is UNKNOWN.
+- Step 5: Higgs production × decay table and costs (`higgs_scope.py` → `higgs_scope.json`). The recommendation
+  is option (a) + 11 samples (H → μμ ×5, H → Zγ ×5, gg → ZH → 4ℓ).
+- Extra CMS portal lookups: 31 records + 16 NOT OBSERVED (`fetch_cms_extra.py`, `cms_extra_records.json`,
+  `cms_records/`).
+- Findings for Matan/Maryna:
+  - Maryna's "EW boson" class contains the Pythia8 QCD dijet set 364700-364712.
+  - Her "QCD jets" 700442 is EW γ + 2 jets.
+  - The 16 DSIDs between 353 and 337 are UNKNOWN from the metadata.
+- Written: `atlas_mapping/` (all new files) and the new PLAN.md section "7. ATLAS DSID mapping (27 Oct)" (no
+  existing section rewritten), plus this section.
+
 ## What the implementation step would need (after the technical lead and Matan)
 
 1. Matan's decisions D1-D15 (PLAN.md §6) and his sample-by-sample check of `XSEC_PROPOSALS.md`.

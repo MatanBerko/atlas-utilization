@@ -510,6 +510,53 @@ audits and plots. The probe (§4a) found no missing branch.
 - plots: `plots/mc_lumi_vs_data.png`, `plots/genweight_<recid>.png` (30, from the probe);
 - probe: `evidence/probe/probe_<recid>.json`, `evidence/probe/logs/`.
 
+## 7. ATLAS DSID mapping (27 Oct)
+
+*(Added 27 Oct as requested; it shares the number 7 with "What the implementation step would need" above,
+which is unchanged.)* Full write-up and tables: **`atlas_mapping/MAPPING.md`**. All of it comes from the
+public ATLAS Open Data metadata (atlasopenmagic, release 2024r-pp; VERIFIED BY RUNNING). ATLAS cross sections
+are cross-checks only.
+
+- **Coverage.** All 337 of Maryna's background DSIDs are in the metadata and map to **108 processes**: 53
+  non-Higgs processes and 55 Higgs production × decay cells.
+  - Of the 44 in-scope non-Higgs processes: **9 delivered, 17 added by this plan, 14 on the CMS portal but not
+    proposed** (5 of them without leptons), and 4 with no CMS 2016 sample (WZ → qqνν, VV → 4ν, Z → bb at high
+    pT, VBS interference terms).
+  - Higgs: 2 cells delivered, 11 proposed, 31 on the portal but not proposed, 7 with no CMS sample, 4 out of
+    scope.
+  - Photons, QCD and BSM: 9 processes, marked out of scope.
+- **The class labels in Maryna's list do not always match the metadata.**
+  - Her "EW boson" class holds a full **Pythia8 QCD dijet set** (364700–364712, 13 DSIDs).
+  - Her "QCD jets" DSID 700442 is an electroweak γ + 2 jets sample.
+  - "HC model (SM modes)" is Pythia8 diphoton.
+
+  The QCD decision is not reopened. It may be worth asking Maryna whether those dijet DSIDs are used.
+- **Cross sections.** Like-for-like ratios ATLAS/CMS are 0.81–1.21 (tt̄, W, Z, single top, dibosons,
+  tt̄V, Higgs). The flagged ratios are explained by different decay channels or phase space. One
+  exception: **tt̄tt̄**, where ATLAS's 12.0 fb supports D7's 11.97 fb over the provisional 8.09 fb. A few ATLAS
+  metadata values look wrong on their side (MAPPING.md).
+- **337 vs 353:** the metadata does not show which 16 DSIDs differ (UNKNOWN).
+
+**Recommended changes to the sample list (for Matan; not applied):**
+1. D13: option (a) **plus 11 small Higgs samples**:
+   - H → μμ: 37432, 68571, 71295, 70451, 74682;
+   - H → Zγ: 37604, 68731, 71145, 70301, 74292;
+   - gg → ZH → 4ℓ: 40062.
+
+   Cost (ESTIMATE): ~67 files, ~2,700 cluster files, ~4 CPU h. Cross-section proposals are still needed.
+2. Optional ATLAS-parity extras, low priority:
+   - EW Z/W + 2 jets: 35999, 35987, 35993;
+   - VBS: 75561, 69771, 72648, 71638, 71642;
+   - tt̄WW and three-top: 68087, 67771, 68067.
+
+   Together about 157 files and ~3,800 cluster files (ESTIMATE).
+3. Keep ggF/VBF H → ZZ → 2ℓ2ν and tt̄ + ℓℓ (1–10 GeV), even though ATLAS has no clear counterpart.
+4. D14 matters for parity: the ATLAS VV → ℓℓνν sample includes ZZ → ℓℓνν.
+5. **Correction to §2g:** gg → ZH, H → ZZ → 4ℓ *does* exist (40062).
+
+File-quota projection: ~115,300 with item 1, ~119,100 with items 1 + 2. Both are under 125,000; this is a
+projection, not re-measured.
+
 ## Appendix: every candidate record, by group
 
 ### The 13 delivered samples (campaign check)

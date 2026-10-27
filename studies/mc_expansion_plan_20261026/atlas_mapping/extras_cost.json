@@ -1,0 +1,116 @@
+{
+ "what": "ESTIMATES; portal values are NOT proposals",
+ "groups": {
+  "EW V + 2 jets (Z → ℓℓ jj, W± → ℓν jj)": {
+   "records": [
+    {
+     "recid": 35999,
+     "name": "EWKZ2Jets_ZToLL_M-50_TuneCP5_withDipoleRecoil_13TeV-madgraph-pythia8",
+     "events": 453000,
+     "files": 10,
+     "portal_total_value": "6.206e+00"
+    },
+    {
+     "recid": 35987,
+     "name": "EWKWMinus2Jets_WToLNu_M-50_TuneCP5_withDipoleRecoil_13TeV-madgraph-pythia8",
+     "events": 2202000,
+     "files": 18,
+     "portal_total_value": "3.210e+01"
+    },
+    {
+     "recid": 35993,
+     "name": "EWKWPlus2Jets_WToLNu_M-50_TuneCP5_withDipoleRecoil_13TeV-madgraph-pythia8",
+     "events": 2033000,
+     "files": 8,
+     "portal_total_value": "3.908e+01"
+    }
+   ],
+   "files": 36,
+   "events": 4688000,
+   "cluster_files": 953,
+   "cpu_hours": 0.3143069451361922,
+   "cpu_analog": "35669"
+  },
+  "VBS (ZZjj → 4ℓ, WLLJJ, WWjj → 2ℓ2ν, W±W±jj EWK + QCD)": {
+   "records": [
+    {
+     "recid": 75561,
+     "name": "ZZJJTo4L_EWKnotop_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 1149069,
+     "files": 9,
+     "portal_total_value": "9.928e-04"
+    },
+    {
+     "recid": 69771,
+     "name": "WLLJJ_WToLNu_EWK_TuneCP5_13TeV_madgraph-madspin-pythia8",
+     "events": 500000,
+     "files": 34,
+     "portal_total_value": "3.566e-02"
+    },
+    {
+     "recid": 72648,
+     "name": "WWJJToLNuLNu_EWK_noTop_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 500000,
+     "files": 5,
+     "portal_total_value": "9.219e-02"
+    },
+    {
+     "recid": 71638,
+     "name": "WpWpJJ_EWK_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 75000,
+     "files": 22,
+     "portal_total_value": "2.824e-02"
+    },
+    {
+     "recid": 71642,
+     "name": "WpWpJJ_QCD_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 75000,
+     "files": 17,
+     "portal_total_value": "2.377e-02"
+    }
+   ],
+   "files": 87,
+   "events": 2299069,
+   "cluster_files": 1914,
+   "cpu_hours": 0.9610371164357596,
+   "cpu_analog": "72752"
+  },
+  "tt̄WW and three-top (TTWW, TTTJ, TTTW)": {
+   "records": [
+    {
+     "recid": 68087,
+     "name": "TTWW_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 309000,
+     "files": 13,
+     "portal_total_value": "6.998e-03"
+    },
+    {
+     "recid": 67771,
+     "name": "TTTJ_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 160000,
+     "files": 3,
+     "portal_total_value": "4.004e-04"
+    },
+    {
+     "recid": 68067,
+     "name": "TTTW_TuneCP5_13TeV-madgraph-pythia8",
+     "events": 159000,
+     "files": 18,
+     "portal_total_value": "7.288e-04"
+    }
+   ],
+   "files": 34,
+   "events": 628000,
+   "cluster_files": 928,
+   "cpu_hours": 1.2837995312330261,
+   "cpu_analog": "68187"
+  }
+ },
+ "quota_projection": {
+  "after_tier5": 112616,
+  "plus_recommended_higgs": 115322,
+  "plus_all_extras_here": 119117,
+  "ceiling": 125000,
+  "note": "projection from the 26 Oct measurement (92,041); not re-measured (no cluster use in this task)"
+ }
+}
