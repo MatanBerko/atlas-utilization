@@ -5,7 +5,8 @@ pushed commit, with the repo root on PYTHONPATH:
 
     python studies/mc_expansion_plan_20261026/probe_sample.py --index $PBS_ARRAY_INDEX --out-dir <dir>
 
-`--index` selects plan_samples.PROBE[index]. It writes <out-dir>/probe_<recid>.json with:
+`--index` selects plan_samples.PROBE[index] (or, with `--list v2`, plan_samples_v2.PROBE2[index],
+the 31 Oct probe of the never-probed samples). It writes <out-dir>/probe_<recid>.json with:
 - presence of every branch the CMS production reads (taken from the production driver
   studies/cms_datasets/cluster/run_dataset_on_file.py and studies/m0m1j0_cms/selection.py
   at this commit, so the list cannot drift), plus LHE_HT and LHE_Njets;
@@ -33,6 +34,7 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from plan_samples import PROBE, by_recid  # noqa: E402
+from plan_samples_v2 import PROBE2, by_recid_v2  # noqa: E402
 from studies.cms_datasets.cluster import run_dataset_on_file as drv  # noqa: E402
 from studies.m0m1j0_cms import selection  # noqa: E402
 from studies.m0m1j0_cms.design_checks.common import fetch_file_list  # noqa: E402
@@ -73,9 +75,10 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--index", type=int, required=True)
     ap.add_argument("--out-dir", required=True)
+    ap.add_argument("--list", choices=("v1", "v2"), default="v1")
     a = ap.parse_args()
-    recid = PROBE[a.index]
-    meta = by_recid()[recid]
+    recid = (PROBE2 if a.list == "v2" else PROBE)[a.index]
+    meta = (by_recid_v2() if a.list == "v2" else by_recid())[recid]
     out_dir = Path(a.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
