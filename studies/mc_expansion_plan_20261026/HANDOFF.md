@@ -95,3 +95,32 @@ downloaded; no access to anyone's storage; no registry/config change; no cross s
 7. File quota: ~+20,600 files for all tiers (ESTIMATE) → ~112,600 of 125,000 (from 92,041 measured 26 Oct).
 
 Local repo switched back to `master` at the end. STOPPED.
+
+## Matan's decisions recorded, second probe, proposals v2 — DONE (31 Oct 2026, fourth session)
+
+Everything below VERIFIED BY RUNNING unless marked ESTIMATE / UNVERIFIED. Planning only: no production, no build,
+no registry/config change, no cross section applied; `studies/cms_mc_weights_v3/` untouched. No Pull Request.
+- Preflight: branch head `721e492`, `upstream/master` `29291ae` (both as expected). File count 92,041 before.
+- `DECISIONS.md`: D1–D14, exception E1, ON HOLD list, final list (57 planned + 4 on hold; `plan_samples_v2.py`).
+  ATLAS numbers re-checked against `atlas_mapping/atlas_bkg_metadata.json`; PDG W and Z re-read on pdglive (unchanged).
+- Probe: committed + pushed first (`53c6b8c`), then `ssh wipp-campus` timed out (one try) and `wipp-home` worked.
+  - New directories `checkouts/mcplan2_20261031/repo_53c6b8ca4122580e434dde03a0d775b008729510` (HEAD asserted)
+    and `work/mcplan2_20261031/{logs,probe}`.
+  - PBS array **5420807[]**: `-J 0-34`, queue N, io=25, `-m n`, `PROBE_LIST=v2`.
+  - 35/35 `Exit status: 0`. File count after: **93,638**.
+- Results: no missing branch in any of the 35; Σw consistent to 4.5e-8; negative-weight fractions match the portal
+  (`PLAN_v2_summary.md`); 35 genWeight PNGs in `plots/`.
+- Cards (new dirs only): `fetch_cards_v2.py`. Findings:
+  - ZZTo2L2Nu has the same `mllmin 4d0` as ZZTo4L (qualitative support for D14, size not shown);
+  - EW V+2j are `QED=4 QCD=0` with loose cuts vs ATLAS "Min_N_TChannels"; they overlap the tier-2 dibosons (flagged);
+  - Z→νν HT bins are contiguous from 100 GeV;
+  - 40062 is a 4-lepton-filtered gg→ZH (options, not decided).
+- `XSEC_PROPOSALS_v2.md`: 61 cards. 31 unchanged, 4 changed, 11 new with a proposal, 11 DECISION NEEDED, 4 ON HOLD.
+- `PLAN_v2_summary.md`: summary, probe table, card findings, cost per tier (all six tiers → ~119,600 files, ESTIMATE),
+  open points.
+- One pointer line added at the top of `PLAN.md` and `XSEC_PROPOSALS.md`; no other existing text changed.
+  - If `xsec_proposals.py` is ever re-run, it would regenerate `XSEC_PROPOSALS.md` without that line.
+- Cluster outputs left in place (`checkouts/mcplan2_20261031/`, `work/mcplan2_20261031/`).
+
+**Next:** the technical lead verifies this branch; then Matan reviews `XSEC_PROPOSALS_v2.md` one sample at a time,
+starting with tier 1, and settles the four open value questions (D14 check, EW V+2j value and overlap, Z→νν, 40062).

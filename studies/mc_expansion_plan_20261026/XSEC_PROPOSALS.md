@@ -1,5 +1,7 @@
 # Cross-section PROPOSALS for the planned samples (26 Oct 2026)
 
+> **31 Oct 2026: superseded for the sample list and normalisation by `DECISIONS.md` / `XSEC_PROPOSALS_v2.md` (summary: `PLAN_v2_summary.md`).**
+
 **Nothing here is applied.** No value enters any registry or config. Each section is for Matan's
 manual check, one sample at a time, in the order of the plan's tiers. Format as in the 14-15 Oct review.
 

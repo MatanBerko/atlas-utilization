@@ -62,8 +62,8 @@ def lumi_plot():
     plt.close(fig)
 
 
-def genweight_plots():
-    files = sorted((HERE / "evidence" / "probe").glob("probe_*.json"))
+def genweight_plots(probe_dir=HERE / "evidence" / "probe"):
+    files = sorted(Path(probe_dir).glob("probe_*.json"))
     for f in files:
         p = json.loads(f.read_text())
         h = p["genweight_hist"]

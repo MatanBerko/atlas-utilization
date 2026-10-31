@@ -1,0 +1,2183 @@
+{
+ "what": "PROPOSALS v2 (31 Oct 2026), not applied; options = DECISION NEEDED",
+ "sources": {
+  "TTBAR": [
+   "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO",
+   "table 'Updated reference cross sections ...' (Updated: July 2022), block '13 TeV', column 'Central value'",
+   "833.9"
+  ],
+  "ST_NNLO_T": [
+   "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopNNLORef",
+   "section 'Single top-quark t channel cross-sections', 13 TeV table, rows 'top quark' / 'top antiquark' (MCFM NNLO, mt = 172.5 GeV, page dated 2026-10-02)",
+   "134.2 / 80.0"
+  ],
+  "ST_NNLO_S": [
+   "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopNNLORef",
+   "section 'Single-top-quark s channel cross-sections', 13 TeV table, rows 'top quark' / 'top antiquark' / 'top quark + antiquark' (NNLO, Liu & Gao arXiv:1807.03835)",
+   "6.828 / 4.245 / 11.073"
+  ],
+  "ST_NNLO_TW": [
+   "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopNNLORef",
+   "section 'Single-top-quark tW channel cross-sections', 13 TeV, row 'top quark + antiquark' (NLO + NNLL soft-gluon third order, Kidonakis arXiv:2102.11300)",
+   "79.3"
+  ],
+  "ST_NLO_T": [
+   "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec",
+   "section 'Single-top t channel cross sections (superseded)', 13 TeV table, rows 'top' / 'anti-top', column 'Central value' (Hathor NLO; page rev. r36, 2022-12-06; re-read 31 Oct 2026)",
+   "136.02 / 80.95"
+  ],
+  "ST_NLO_S": [
+   "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec",
+   "section 'Single-top s channel cross sections', 13 TeV table, rows 'top' / 'anti-top' / 'top + anti-top', column 'Central value' (re-read 31 Oct 2026)",
+   "6.35 / 3.97 / 10.32"
+  ],
+  "ST_TW_OLD": [
+   "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec",
+   "section 'Single-top Wt channel cross sections', 13 TeV, row 'top + antitop' (re-read 31 Oct 2026)",
+   "71.7"
+  ],
+  "PDG_W": [
+   "https://pdglive.lbl.gov/Particle.action?node=S043",
+   "W DECAY MODES Γ2 e+ν, Γ3 μ+ν, Γ4 τ+ν, Γ5 hadrons (re-read 31 Oct 2026)",
+   "(10.71 ± 0.16) %, (10.63 ± 0.15) %, (11.38 ± 0.21) %, (67.41 ± 0.27) %"
+  ],
+  "PDG_Z": [
+   "https://pdglive.lbl.gov/Particle.action?node=S044",
+   "Z DECAY MODES Γ1 e+e−, Γ2 μ+μ−, Γ3 τ+τ−, Γ7 invisible, Γ8 hadrons (re-read 31 Oct 2026, D6)",
+   "(3.3632 ± 0.0042) %, (3.3662 ± 0.0066) %, (3.3696 ± 0.0083) %, (20.000 ± 0.055) %, (69.911 ± 0.056) %"
+  ],
+  "RAZOR": [
+   "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+   "line 64, under '#13 TeV Spring 15 MC' (SECONDARY source; same table as our DY 1921.8*3, line 90)",
+   "WJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8 61526.7"
+  ],
+  "ATLAS_W": [
+   "https://arxiv.org/abs/1603.09222",
+   "ATLAS, PLB 759 (2016) 601, Table 3, row 'W±', 'Predicted ... Total' (DYNNLO NNLO QCD + NLO EW, CT14nnlo; per lepton flavour)",
+   "20.08 nb"
+  ],
+  "WZ": [
+   "https://arxiv.org/abs/1604.08576",
+   "Table 1 (on-shell W±Z), row √s = 13: σNLO, σNNLO",
+   "46.068(3) pb, 51.11(3) pb"
+  ],
+  "ZZ": [
+   "https://arxiv.org/abs/1405.2219",
+   "Table 1 (inclusive ZZ, includes gg → ZZ at NNLO), row 13: σNLO, σNNLO",
+   "14.51 pb, 16.91 pb"
+  ],
+  "WW": [
+   "https://arxiv.org/abs/1408.5243",
+   "Table I (on-shell W+W−, 4FNS, includes gg → WW), row 13: σNNLO",
+   "118.7 pb"
+  ],
+  "TTTT_NLO": [
+   "https://arxiv.org/abs/1711.02116",
+   "Table 5 (TeX label table:4t), row µ = HT/4, column 'LO + NLO' (complete NLO QCD+EW); re-read from the arXiv TeX source 31 Oct 2026",
+   "11.97 (+18 % −21 %) fb"
+  ],
+  "TTTT_NLL": [
+   "https://arxiv.org/abs/2212.03259",
+   "Table I, √s = 13 TeV, NLO(QCD+EW)+NLL′ (µ0 = 2 mt)",
+   "14.65(2) fb"
+  ],
+  "YR4_XS": [
+   "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV",
+   "rows mH = 125.00: ggF N3LO table; VBF table; WH table (W+H, W−H columns); ZH process table at 125.0 ('all but gg→ZH', 'gg→ZH'); page rev. r29, 2024-07-24; re-read 31 Oct 2026",
+   "ggF 4.858E+01; VBF 3.782E+00; W+H 8.400E-01, W−H 5.328E-01; all-but-gg→ZH 0.7612, gg→ZH 0.1227 (pb)"
+  ],
+  "YR4_BR": [
+   "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR",
+   "rows MH = 125.00: 'Higgs → 2 fermions' (bb, ττ), 'Higgs → 2 gauge bosons' (WW, ZZ), 'Higgs → 4 fermions' (H → llll, l = e,μ,τ)",
+   "bb 5.824E-01; ττ 6.272E-02; WW 2.137E-01; ZZ 2.619E-02; 4l 2.745E-04"
+  ],
+  "JHUGEN": [
+   "https://raw.githubusercontent.com/JHUGen/JHUGen/master/JHUGenerator/main.F90",
+   "comment block at lines 357-368 (JHUGen master; the samples used v7.x -- assumed unchanged, UNVERIFIED for the exact version)",
+   "DecayMode=0: Z --> l+ l- (l=e,mu); 3: Z --> nu nubar; 8: Z --> l+ l- (l=e,mu,tau); 10: W --> l nu_l (l=e,mu,tau); 11: W --> anything"
+  ],
+  "YR4_BR2": [
+   "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR",
+   "rows MH = 125.00: table 'H → bb, H → ττ, H → μμ, H → cc' (column H → μμ, BR); table 'H → gg, H → γγ, H → Zγ' (column H → Zγ, BR); table 'H → WW, H → ZZ' (column H → ZZ); re-read 31 Oct 2026",
+   "μμ 2.176E-04; Zγ 1.533E-03; ZZ 2.619E-02"
+  ],
+  "RAZOR_ZNN": [
+   "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+   "lines 96-103, 'ZJetsToNuNu_HT-<bin>_13TeV-madgraph <LO>*1.23' (SECONDARY source; older CUETP8M1 samples; the origin of 1.23 is not stated in the file); re-read 31 Oct 2026",
+   "e.g. line 96: ZJetsToNuNu_HT-100To200_13TeV-madgraph 280.35*1.23"
+  ],
+  "RAZOR_DY": [
+   "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+   "line 90 (the value our delivered DY M-50 uses); re-read 31 Oct 2026",
+   "DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8 1921.8*3"
+  ],
+  "SMP16018": [
+   "https://arxiv.org/abs/1712.09814",
+   "CMS SMP-16-018 (EW Z + 2 jets, 13 TeV 2016), §2 and abstract: region m(ℓℓ) > 50, pT(j) > 25, m(jj) > 120 GeV, ℓ = e or μ; LO MadGraph prediction and measurement; text: 'agreement within 5 % with the NLO predictions of vbfnlo'; read from the arXiv TeX source 31 Oct 2026",
+   "σ_LO = 543 +7 −9 (scale) ± 22 (PDF) fb; measured 534 ± 20 (stat) ± 57 (syst) fb"
+  ],
+  "SMP17011": [
+   "https://arxiv.org/abs/1903.04040",
+   "CMS SMP-17-011 (EW W + 2 jets, 13 TeV 2016), §2 and §8: region pT(j) > 25, m(jj) > 120 GeV; LO 'for the ℓνjj final state (with ℓ = e, μ or τ)'; measurement 'per channel'; text: 'in agreement within 2-5 % with the NLO predictions of vbfnlo'; read from the arXiv TeX source 31 Oct 2026",
+   "σ_LO = 6.81 +0.03 −0.06 (scale) ± 0.26 (PDF) pb; measured 6.23 ± 0.12 (stat) ± 0.61 (syst) pb"
+  ],
+  "POWHEG_ZZ": [
+   "https://arxiv.org/abs/1311.1365",
+   "Nason & Zanderighi, 'W+W−, WZ and ZZ production in the POWHEG-BOX-V2', §1 (TeX source, read 31 Oct 2026)",
+   "'Singly resonant contributions and interference effects were included, and in fact all diagrams relevant to the production of four leptons were accounted for, with the exception of interference effects between W+W− and ZZ'"
+  ],
+  "SHERPA_MAN": [
+   "https://sherpa.hepforge.org/doc/SHERPA-MC-2.2.11.html",
+   "Sherpa 2.2.11 manual §5.6.14 (read 31 Oct 2026)",
+   "'Min_N_TChannels: Limits the minimum number of t-channel propagators in the process to the given value.'"
+  ],
+  "JHUGEN_SRC": [
+   "https://raw.githubusercontent.com/JHUGen/JHUGen/master/JHUGenerator/main.F90",
+   "comment block lines 357-368 and help text line 7269 (JHUGen master, read 31 Oct 2026; the sample used v7.2.3, assumed equivalent: UNVERIFIED for that version)",
+   "DecayMode=8: Z --> l+ l- (l=e,mu,tau); 9: Z --> anything; 'WriteFailedEvents: Write events that fail in the LHE file, but with a weight of 0'"
+  ]
+ },
+ "cards": [
+  {
+   "recid": 69715,
+   "status": "unchanged from v1",
+   "decision": "D1, D2",
+   "sentence": "W boson decaying to a charged lepton (e, μ or τ) and a neutrino, with exactly 0 extra parton(s) in the NLO matrix element (one of three pieces that together make all of W+jets).",
+   "factors": [
+    [
+     "generator σ (portal, 0J piece)",
+     53300.0,
+     "portal"
+    ],
+    [
+     "k = 61526.7 / (53300 + 8958 + 3330), NNLO inclusive ÷ sum of the three NLO pieces",
+     0.9380786119412087,
+     "RAZOR"
+    ]
+   ],
+   "sigma_eff_pb": 49999.59001646642,
+   "order": "NLO generator × NNLO/NLO k-factor (inclusive W → ℓν, FEWZ NNLO in the table)",
+   "kfactor": "",
+   "look": "RazorAnalyzer xSections.dat line 64: 'WJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8 61526.7'. The three portal values on the MiniAOD records 69714 / 69716 / 69718 (metadata.cross_section.total_value).",
+   "convention": "No published total for a jet-multiplicity piece → generator × k-factor. The k-factor numerator is the same SECONDARY table as our DY (Matan, 15 Oct), for consistency. Not a paper table, so the 'k-factor from a paper table' rule is only partly met.",
+   "alternatives": [
+    [
+     "k from the inclusive NLO sample instead (61526.7 / 66970)",
+     -0.02063610571897867
+    ],
+    [
+     "primary source instead: ATLAS 1603.09222 Table 3, 3 × 20.08 nb = 60240 pb",
+     -0.020912871972655678
+    ]
+   ],
+   "atlas": "No ATLAS sample per jet piece. Whole W → ℓν: ATLAS 700338-700349 = 65395 pb vs CMS 61,526.7 pb → ATLAS/CMS = 1.063 (MAPPING.md table A). D2's primary cross-check, ATLAS arXiv:1603.09222 Table 3 (3 × 20.08 nb = 60,240 pb), is −2.1 %.",
+   "notes": "Portal matching efficiencies 0.9 / 0.2 / 0.1 are shown but NOT multiplied in. The three portal values add up to 65588 pb, close to the inclusive NLO sample's 66970 pb, which suggests total_value already includes the matching efficiency (if it did not, the pieces would sum to 50095 pb). Also, the inclusive NLO value 66970 pb × 0.4 = 26788 pb would be less than half of every W → ℓν prediction and measurement (ATLAS measured 3 × 20.64 nb), so for this record total_value must already include the matching efficiency. Evidence for the open point, not a decision.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 69717,
+   "status": "unchanged from v1",
+   "decision": "D1, D2",
+   "sentence": "W boson decaying to a charged lepton (e, μ or τ) and a neutrino, with exactly 1 extra parton(s) in the NLO matrix element (one of three pieces that together make all of W+jets).",
+   "factors": [
+    [
+     "generator σ (portal, 1J piece)",
+     8958.0,
+     "portal"
+    ],
+    [
+     "k = 61526.7 / (53300 + 8958 + 3330), NNLO inclusive ÷ sum of the three NLO pieces",
+     0.9380786119412087,
+     "RAZOR"
+    ]
+   ],
+   "sigma_eff_pb": 8403.308205769346,
+   "order": "NLO generator × NNLO/NLO k-factor (inclusive W → ℓν, FEWZ NNLO in the table)",
+   "kfactor": "",
+   "look": "RazorAnalyzer xSections.dat line 64: 'WJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8 61526.7'. The three portal values on the MiniAOD records 69714 / 69716 / 69718 (metadata.cross_section.total_value).",
+   "convention": "No published total for a jet-multiplicity piece → generator × k-factor. The k-factor numerator is the same SECONDARY table as our DY (Matan, 15 Oct), for consistency. Not a paper table, so the 'k-factor from a paper table' rule is only partly met.",
+   "alternatives": [
+    [
+     "k from the inclusive NLO sample instead (61526.7 / 66970)",
+     -0.02063610571897867
+    ],
+    [
+     "primary source instead: ATLAS 1603.09222 Table 3, 3 × 20.08 nb = 60240 pb",
+     -0.020912871972655678
+    ]
+   ],
+   "atlas": "No ATLAS sample per jet piece. Whole W → ℓν: ATLAS 700338-700349 = 65395 pb vs CMS 61,526.7 pb → ATLAS/CMS = 1.063 (MAPPING.md table A). D2's primary cross-check, ATLAS arXiv:1603.09222 Table 3 (3 × 20.08 nb = 60,240 pb), is −2.1 %.",
+   "notes": "Portal matching efficiencies 0.9 / 0.2 / 0.1 are shown but NOT multiplied in. The three portal values add up to 65588 pb, close to the inclusive NLO sample's 66970 pb, which suggests total_value already includes the matching efficiency (if it did not, the pieces would sum to 50095 pb). Also, the inclusive NLO value 66970 pb × 0.4 = 26788 pb would be less than half of every W → ℓν prediction and measurement (ATLAS measured 3 × 20.64 nb), so for this record total_value must already include the matching efficiency. Evidence for the open point, not a decision.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 69719,
+   "status": "unchanged from v1",
+   "decision": "D1, D2",
+   "sentence": "W boson decaying to a charged lepton (e, μ or τ) and a neutrino, with exactly 2 extra parton(s) in the NLO matrix element (one of three pieces that together make all of W+jets).",
+   "factors": [
+    [
+     "generator σ (portal, 2J piece)",
+     3330.0,
+     "portal"
+    ],
+    [
+     "k = 61526.7 / (53300 + 8958 + 3330), NNLO inclusive ÷ sum of the three NLO pieces",
+     0.9380786119412087,
+     "RAZOR"
+    ]
+   ],
+   "sigma_eff_pb": 3123.801777764225,
+   "order": "NLO generator × NNLO/NLO k-factor (inclusive W → ℓν, FEWZ NNLO in the table)",
+   "kfactor": "",
+   "look": "RazorAnalyzer xSections.dat line 64: 'WJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8 61526.7'. The three portal values on the MiniAOD records 69714 / 69716 / 69718 (metadata.cross_section.total_value).",
+   "convention": "No published total for a jet-multiplicity piece → generator × k-factor. The k-factor numerator is the same SECONDARY table as our DY (Matan, 15 Oct), for consistency. Not a paper table, so the 'k-factor from a paper table' rule is only partly met.",
+   "alternatives": [
+    [
+     "k from the inclusive NLO sample instead (61526.7 / 66970)",
+     -0.02063610571897867
+    ],
+    [
+     "primary source instead: ATLAS 1603.09222 Table 3, 3 × 20.08 nb = 60240 pb",
+     -0.020912871972655678
+    ]
+   ],
+   "atlas": "No ATLAS sample per jet piece. Whole W → ℓν: ATLAS 700338-700349 = 65395 pb vs CMS 61,526.7 pb → ATLAS/CMS = 1.063 (MAPPING.md table A). D2's primary cross-check, ATLAS arXiv:1603.09222 Table 3 (3 × 20.08 nb = 60,240 pb), is −2.1 %.",
+   "notes": "Portal matching efficiencies 0.9 / 0.2 / 0.1 are shown but NOT multiplied in. The three portal values add up to 65588 pb, close to the inclusive NLO sample's 66970 pb, which suggests total_value already includes the matching efficiency (if it did not, the pieces would sum to 50095 pb). Also, the inclusive NLO value 66970 pb × 0.4 = 26788 pb would be less than half of every W → ℓν prediction and measurement (ATLAS measured 3 × 20.64 nb), so for this record total_value must already include the matching efficiency. Evidence for the open point, not a decision.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 64759,
+   "status": "CHANGED (D4: 4-flavour sample; D5: old Top WG NLO value)",
+   "decision": "D4, D5",
+   "sentence": "Single top production in the t-channel, 4-flavour scheme (POWHEG + MadSpin), all top decays.",
+   "factors": [
+    [
+     "σ(t-channel top), Hathor NLO",
+     136.02,
+     "ST_NLO_T"
+    ]
+   ],
+   "sigma_eff_pb": 136.02,
+   "order": "NLO QCD (Hathor), 13 TeV, mt = 172.5 GeV",
+   "kfactor": "none (the sample is normalised to the total directly)",
+   "look": "SingleTopRefXsec, section 'Single-top t channel cross sections (superseded)', 13 TeV table, row 'top', Central value = 136.02. (The section is marked 'superseded' on the page; D5 uses it on purpose, to match ATLAS.)",
+   "convention": "D5: match ATLAS = the OLD Top WG page throughout.",
+   "alternatives": [
+    [
+     "SingleTopNNLORef NNLO 134.2 pb (recorded alternative, D5)",
+     -0.013380385237465209
+    ],
+    [
+     "generator value (portal)",
+     -0.16629907366563745
+    ]
+   ],
+   "atlas": "ATLAS 410658 (leptonic top decays only, four-flavour): σ×k = 44.155 pb. Like-for-like with our PDG W BR: 44.155 / (136.02 × 0.3272) = 0.992; with ATLAS's own implied BR 0.3246: 1.000.",
+   "notes": "Card (evidence/cards/64759): MadSpin decays the top inclusively. Probe 31 Oct: all 42 branches present.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 64659,
+   "status": "CHANGED (D4: 4-flavour sample; D5: old Top WG NLO value)",
+   "decision": "D4, D5",
+   "sentence": "Single antitop production in the t-channel, 4-flavour scheme (POWHEG + MadSpin), all top decays.",
+   "factors": [
+    [
+     "σ(t-channel antitop), Hathor NLO",
+     80.95,
+     "ST_NLO_T"
+    ]
+   ],
+   "sigma_eff_pb": 80.95,
+   "order": "NLO QCD (Hathor), 13 TeV, mt = 172.5 GeV",
+   "kfactor": "none (the sample is normalised to the total directly)",
+   "look": "SingleTopRefXsec, section 'Single-top t channel cross sections (superseded)', 13 TeV table, row 'anti-top', Central value = 80.95. (The section is marked 'superseded' on the page; D5 uses it on purpose, to match ATLAS.)",
+   "convention": "D5: match ATLAS = the OLD Top WG page throughout.",
+   "alternatives": [
+    [
+     "SingleTopNNLORef NNLO 80.0 pb (recorded alternative, D5)",
+     -0.011735639283508403
+    ],
+    [
+     "generator value (portal)",
+     -0.16084002470660896
+    ]
+   ],
+   "atlas": "ATLAS 410659 (leptonic top decays only, four-flavour): σ×k = 26.273 pb. Like-for-like with our PDG W BR: 26.273 / (80.95 × 0.3272) = 0.992; with ATLAS's own implied BR 0.3246: 1.000.",
+   "notes": "Card (evidence/cards/64659): MadSpin decays the top inclusively. Probe 31 Oct: all 42 branches present.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 64635,
+   "status": "CHANGED (D5: old Top WG NLO value)",
+   "decision": "D5",
+   "sentence": "Single top (or antitop) in the s-channel, top → b W, W → ℓν (ℓ = e, μ, τ).",
+   "factors": [
+    [
+     "σ(s-channel, top + antitop), Hathor NLO",
+     10.32,
+     "ST_NLO_S"
+    ],
+    [
+     "BR(W → ℓν) = 0.1071 + 0.1063 + 0.1138 (BR(t → Wb) = 1 assumed)",
+     0.3272,
+     "PDG_W"
+    ]
+   ],
+   "sigma_eff_pb": 3.376704,
+   "order": "NLO QCD (Hathor)",
+   "kfactor": "none",
+   "look": "SingleTopRefXsec, 's channel' 13 TeV table, row 'top + anti-top' = 10.32. pdglive S043: Γ2, Γ3, Γ4.",
+   "convention": "D5 (old page) × settled PDG individual W branching ratios.",
+   "alternatives": [
+    [
+     "SingleTopNNLORef NNLO 11.073 × 0.3272 (recorded alternative, D5)",
+     0.07296511627906987
+    ],
+    [
+     "ATLAS's implied leptonic BR 0.3246 instead of 0.3272",
+     -0.007946210268948595
+    ],
+    [
+     "generator value 3.549 pb (portal)",
+     0.051024904759197076
+    ]
+   ],
+   "atlas": "ATLAS 410644 + 410645 (leptonic): 3.3500 pb → ATLAS/CMS = 0.992 (= 0.3246 / 0.3272).",
+   "notes": "BR arithmetic: 0.1071 + 0.1063 + 0.1138 = 0.3272; 10.32 × 0.3272 = 3.3767 pb. Card (evidence/cards/64635): 'decay t > w+ b, w+ > ell+ vl' with ell = e, μ, τ.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 67841,
+   "status": "unchanged from v1",
+   "decision": "plan (no decision changed it)",
+   "sentence": "Top-quark pairs with both W bosons decaying to quarks.",
+   "factors": [
+    [
+     "σ(tt̄), NNLO+NNLL, mt = 172.5 GeV",
+     833.9,
+     "TTBAR"
+    ],
+    [
+     "BR(W → hadrons)²",
+     0.45441081000000005,
+     "PDG_W"
+    ]
+   ],
+   "sigma_eff_pb": 378.93317445900004,
+   "order": "NNLO+NNLL",
+   "kfactor": "",
+   "look": "TtbarNNLO: the 13 TeV block of the first table, 'Central value' = 833.9. pdglive S043: the four W decay fractions.",
+   "convention": "Settled convention (833.9 pb × 0.6741², as in the hint).",
+   "alternatives": [],
+   "atlas": "ATLAS 410471 (all-hadronic): 379.4 pb → ATLAS/CMS = 1.001.",
+   "notes": "With the individual PDG values the three tt̄ samples add up to 0.10706 + 0.44113 + 0.45441 = 1.0026 of tt̄ (the PDG W fractions sum to 1.0013). A +0.26 % overcount of tt̄ that follows from the settled convention; reported, not changed.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 72742,
+   "status": "unchanged from v1",
+   "decision": "D9",
+   "sentence": "W → quarks plus a lepton pair (e, μ, τ; Z or virtual photon, m(ℓℓ) > 4 GeV), NLO, 0-1 extra parton.",
+   "factors": [
+    [
+     "generator σ (portal)",
+     6.429,
+     "portal"
+    ],
+    [
+     "k = 51.11 / 46.068 (WZ NNLO/NLO)",
+     1.1094469045758444,
+     "WZ"
+    ]
+   ],
+   "sigma_eff_pb": 7.132634149518104,
+   "order": "NLO generator × NNLO/NLO k-factor",
+   "kfactor": "",
+   "look": "arXiv:1604.08576 Table 1, row 13: σNLO 46.068, σNNLO 51.11. The portal value on the MiniAOD record.",
+   "convention": "Phase space (γ* included, m(ℓℓ) > 4) matches no published total → generator × k-factor, exactly as our WZTo3LNu 72752.",
+   "alternatives": [
+    [
+     "on-shell WZ instead: 51.11 × 0.6741 × 0.10099",
+     -0.5121810896854877
+    ]
+   ],
+   "atlas": "ATLAS 700492 = 3.305 pb → ATLAS/CMS = 0.463: different phase space (CMS includes γ* → ℓℓ down to m(ℓℓ) = 4 GeV). E1 applies: ATLAS uses Sherpa generator values with kFactor = 1 and has no gg → VV samples; the CMS NNLO total includes the loop-induced gg part.",
+   "notes": "Approximation as for 72752: an on-shell k-factor applied to a sample that also contains γ* → ℓℓ. Card: 'p p > V ell+ ell-', V = W, 'decay w+ > q q'.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 75573,
+   "status": "unchanged from v1",
+   "decision": "D9",
+   "sentence": "Z → quarks plus a lepton pair (e, μ, τ; m(ℓℓ) > 4 GeV), NLO, 0-1 extra parton.",
+   "factors": [
+    [
+     "generator σ (portal)",
+     3.699,
+     "portal"
+    ],
+    [
+     "k = 16.91 / 14.51 (ZZ NNLO/NLO, includes gg → ZZ)",
+     1.1654031702274295,
+     "ZZ"
+    ]
+   ],
+   "sigma_eff_pb": 4.310826326671261,
+   "order": "NLO generator × NNLO/NLO k-factor",
+   "kfactor": "",
+   "look": "arXiv:1405.2219 Table 1, row 13: 14.51 and 16.91. The portal value on the MiniAOD record.",
+   "convention": "Same as our ZZTo4L 75589.",
+   "alternatives": [
+    [
+     "on-shell ZZ instead: 16.91 × 2 × 0.10099 × 0.69911",
+     -0.4460928601032711
+    ]
+   ],
+   "atlas": "ATLAS 700493 + 700494 = 2.127 pb → ATLAS/CMS = 0.493: different phase space (γ* down to 4 GeV on the CMS side). E1 applies: ATLAS uses Sherpa generator values with kFactor = 1 and has no gg → VV samples; the CMS NNLO total includes the loop-induced gg part.",
+   "notes": "The k-factor includes gg → ZZ; no gg → ZZ → 2ℓ2q sample is proposed, so nothing is counted twice.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 72738,
+   "status": "unchanged from v1",
+   "decision": "D9",
+   "sentence": "W → ℓν (e, μ, τ) with Z → quarks, NLO, 0-1 extra parton.",
+   "factors": [
+    [
+     "generator σ (portal)",
+     9.159,
+     "portal"
+    ],
+    [
+     "k = 51.11 / 46.068",
+     1.1094469045758444,
+     "WZ"
+    ]
+   ],
+   "sigma_eff_pb": 10.16142419901016,
+   "order": "NLO generator × NNLO/NLO k-factor",
+   "kfactor": "",
+   "look": "arXiv:1604.08576 Table 1, row 13: σNLO 46.068, σNNLO 51.11. The portal value on the MiniAOD record.",
+   "convention": "Generator × k-factor, as 72752.",
+   "alternatives": [
+    [
+     "on-shell WZ instead: 51.11 × 0.3272 × 0.69911",
+     0.1505622174752701
+    ]
+   ],
+   "atlas": "ATLAS 700489 + 700490 = 10.995 pb → ATLAS/CMS = 1.082. E1 applies: ATLAS uses Sherpa generator values with kFactor = 1 and has no gg → VV samples; the CMS NNLO total includes the loop-induced gg part.",
+   "notes": "Here the boson decaying to quarks is an on-shell Z, so the on-shell construction is also defensible; a choice for Matan.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 72658,
+   "status": "unchanged from v1",
+   "decision": "D9",
+   "sentence": "One W → ℓν (e, μ, τ) and the other W → quarks, NLO, 0-1 extra parton.",
+   "factors": [
+    [
+     "σ(WW), NNLO, includes gg → WW",
+     118.7,
+     "WW"
+    ],
+    [
+     "BR = 2 × 0.3272 × 0.6741",
+     0.44113104000000003,
+     "PDG_W"
+    ]
+   ],
+   "sigma_eff_pb": 52.362254448,
+   "order": "NNLO",
+   "kfactor": "",
+   "look": "arXiv:1408.5243 Table I, row 13, σNNLO = 118.7. pdglive S043.",
+   "convention": "Same construction as our WWTo2L2Nu 72676 (118.7 pb × BR).",
+   "alternatives": [
+    [
+     "generator value instead",
+     -0.02811671238223845
+    ]
+   ],
+   "atlas": "ATLAS 700488 = 47.918 pb → ATLAS/CMS = 0.915. E1 applies: ATLAS uses Sherpa generator values with kFactor = 1 and has no gg → VV samples; the CMS NNLO total includes the loop-induced gg part.",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 72740,
+   "status": "unchanged from v1",
+   "decision": "D9",
+   "sentence": "W → ℓν (e, μ, τ) with Z → νν, NLO, 0-1 extra parton.",
+   "factors": [
+    [
+     "generator σ (portal)",
+     3.415,
+     "portal"
+    ],
+    [
+     "k = 51.11 / 46.068",
+     1.1094469045758444,
+     "WZ"
+    ]
+   ],
+   "sigma_eff_pb": 3.788761179126509,
+   "order": "NLO generator × NNLO/NLO k-factor",
+   "kfactor": "",
+   "look": "arXiv:1604.08576 Table 1, row 13: σNLO 46.068, σNNLO 51.11. The portal value on the MiniAOD record.",
+   "convention": "Generator × k-factor, as 72752 (the sample is the full ℓννν final state).",
+   "alternatives": [
+    [
+     "on-shell WZ instead: 51.11 × 0.3272 × 0.20000",
+     -0.11722110688140552
+    ]
+   ],
+   "atlas": "ATLAS 700604 = 3.1081 pb → ATLAS/CMS = 0.820. E1 applies: ATLAS uses Sherpa generator values with kFactor = 1 and has no gg → VV samples; the CMS NNLO total includes the loop-induced gg part.",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 75567,
+   "status": "NEW (D14)",
+   "decision": "D14 (conditional), D9",
+   "sentence": "ZZ → ℓℓνν: one Z/γ* → ℓℓ (m(ℓℓ) > 4 GeV) and one Z → νν, POWHEG NLO (qq̄ only).",
+   "factors": [
+    [
+     "generator σ (portal, MiniAOD 75566)",
+     0.9738,
+     "portal"
+    ],
+    [
+     "k = 16.91 / 14.51 (ZZ NNLO/NLO, includes gg → ZZ)",
+     1.1654031702274295,
+     "ZZ"
+    ]
+   ],
+   "sigma_eff_pb": 1.1348696071674709,
+   "order": "NLO generator × NNLO/NLO k-factor",
+   "kfactor": "k = 1.16540 (arXiv:1405.2219 Table 1, row 13)",
+   "look": "First the card check above. Then arXiv:1405.2219 Table 1, row 13: 14.51 and 16.91 pb; the portal value 9.738e-01 on MiniAOD record 75566; pdglive S044 Γ1-Γ3, Γ7 for the fallback.",
+   "convention": "D9 convention (generator × NNLO/NLO k), as our ZZTo4L 75589 and ZZTo2Q2L 75573. CONDITIONAL (D14): proposed only if Matan accepts the card check as verifying the low-m(ℓℓ) explanation; otherwise the fallback below.",
+   "alternatives": [
+    [
+     "FALLBACK (D14): on-shell 16.91 × 2 × 0.10099 × 0.2000 = 0.6831 pb",
+     -0.3980838365167386
+    ],
+    [
+     "generator value alone (0.9738 pb)",
+     -0.14192785334121827
+    ]
+   ],
+   "atlas": "ATLAS has no ZZ → ℓℓνν on its own: 700602 'VV → ℓℓνν, opposite sign' (12.079 pb, m(ℓℓ) > 4 GeV) holds WW and ZZ together. CMS WW → 2ℓ2ν 12.71 pb (delivered) + this card 1.135 pb = 13.84 pb → ATLAS/CMS = 0.873; with the fallback: 0.902. E1 applies (no gg on the ATLAS side). Not decisive.",
+   "notes": "Probe 31 Oct (file 0, 750,000 events): all 42 branches present, negative-weight fraction 0.0011 (portal 0.0011), Σw = Runs Σw to 5e-9. No overlap with WWTo2L2Nu: the POWHEG ZZ code has no W+W− diagrams (arXiv:1311.1365 §1).",
+   "options": null,
+   "first": [
+    "**Generator-card check first (D14 condition).** Cards: `evidence/cards/75567/powheg.input` and, for comparison, the delivered ZZTo4L `evidence/cards/75589/powheg.input` (both fetched 31 Oct from <https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/75567/powheg.input> and `.../75589/powheg.input`).",
+    "  - 75567 line 2: `mllmin 4d0         ! default 0.1 GeV this is minimum invar mass for Z leptons`; line 31: `leptons-nu 1`. No Z-mass window, no `zerowidth`, no other m(ℓℓ) setting in the file.",
+    "  - 75589 (delivered ZZTo4L): **the same file** except the PDF set (306000 vs 325300) and the decay flag (`leptonic 1` vs `leptons-nu 1`); the same `mllmin 4d0` line.",
+    "  - The POWHEG-BOX-V2 ZZ code includes 'all diagrams relevant to the production of four leptons … with the exception of interference effects between W+W− and ZZ' (arXiv:1311.1365 §1; singly-resonant and interference terms included). So the charged pair is **Z/γ* down to m(ℓℓ) = 4 GeV**, not an on-shell Z; the νν pair has no photon.",
+    "  - **Verdict: the card supports the low-m(ℓℓ) / γ* explanation qualitatively** — the sample is not on-shell ZZ, and the generator setting that inflates it is exactly the one already accepted for our ZZTo4L (whose portal value 1.325 pb is 9.0 × its on-shell NLO expectation 14.51 × 0.10099² = 0.1480 pb, because there both pairs can be γ*). **It does not prove the size**: the card cannot say how much of the +42.6 % (vs on-shell NNLO; +66 % vs on-shell NLO 0.5861 pb) sits at low m(ℓℓ).",
+    "  - Not verified from the card: that `leptons-nu` means ℓ = e, μ, τ and all three ν flavours (the POWHEG-BOX ZZ manual/`alloweddec` was not opened; UNVERIFIED). If τ were excluded, the on-shell expectation would be 2/3 as large and the ratio larger.",
+    "  - A quantitative check is possible (not done: outside this task): one PBS job reading `LHEPart_*` of file 0 to measure the fraction of the generator σ with 60 < m(ℓℓ) < 120 GeV. If generator σ × that fraction ≈ the on-shell NLO 0.5861 pb, the 42 % is explained."
+   ]
+  },
+  {
+   "recid": 72701,
+   "status": "unchanged from v1",
+   "decision": "D10",
+   "sentence": "WWW production at NLO, all decays.",
+   "factors": [
+    [
+     "generator σ (portal), NLO",
+     0.2158,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 0.2158,
+   "order": "NLO",
+   "kfactor": "",
+   "look": "The MiniAOD record 72699: metadata.cross_section.total_value.",
+   "convention": "No NNLO exists → generator value at NLO (settled convention, as ttZ/ttW).",
+   "alternatives": [],
+   "atlas": "ATLAS has leptonic channels only (MAPPING.md table A, ratios 0.02-0.17): no like-for-like ATLAS value.",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 72711,
+   "status": "unchanged from v1",
+   "decision": "D10",
+   "sentence": "WWZ production at NLO, all decays.",
+   "factors": [
+    [
+     "generator σ (portal), NLO",
+     0.1707,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 0.1707,
+   "order": "NLO",
+   "kfactor": "",
+   "look": "The MiniAOD record 72709: metadata.cross_section.total_value.",
+   "convention": "No NNLO exists → generator value at NLO (settled convention, as ttZ/ttW).",
+   "alternatives": [],
+   "atlas": "ATLAS has leptonic channels only (MAPPING.md table A, ratios 0.02-0.17): no like-for-like ATLAS value.",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 72761,
+   "status": "unchanged from v1",
+   "decision": "D10",
+   "sentence": "WZZ production at NLO, all decays.",
+   "factors": [
+    [
+     "generator σ (portal), NLO",
+     0.05709,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 0.05709,
+   "order": "NLO",
+   "kfactor": "",
+   "look": "The MiniAOD record 72759: metadata.cross_section.total_value.",
+   "convention": "No NNLO exists → generator value at NLO (settled convention, as ttZ/ttW).",
+   "alternatives": [],
+   "atlas": "ATLAS has leptonic channels only (MAPPING.md table A, ratios 0.02-0.17): no like-for-like ATLAS value.",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 75600,
+   "status": "unchanged from v1",
+   "decision": "D10",
+   "sentence": "ZZZ production at NLO, all decays.",
+   "factors": [
+    [
+     "generator σ (portal), NLO",
+     0.01476,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 0.01476,
+   "order": "NLO",
+   "kfactor": "",
+   "look": "The MiniAOD record 75598: metadata.cross_section.total_value.",
+   "convention": "No NNLO exists → generator value at NLO (settled convention, as ttZ/ttW).",
+   "alternatives": [],
+   "atlas": "ATLAS has leptonic channels only (MAPPING.md table A, ratios 0.02-0.17): no like-for-like ATLAS value.",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 35999,
+   "status": "NEW (D12) — DECISION NEEDED on the value",
+   "decision": "D12",
+   "sentence": "Z/γ* → ℓℓ (e, μ, τ) + 2 jets, purely electroweak (QED = 4, QCD = 0).",
+   "factors": [
+    [
+     "generator σ (portal), LO",
+     6.206,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 6.206,
+   "order": "LO (MadGraph, no extra partons)",
+   "kfactor": "none in option (a); option (b) applies a measured/LO ratio",
+   "look": "Card `evidence/cards/35999/*proc_card.dat` and `*run_card.dat`; the portal value on MiniAOD 35998; https://arxiv.org/abs/1712.09814 for option (b).",
+   "convention": "No settled convention: no NNLO exists, and the published NLO (VBFNLO) and the measurement are in a narrower phase space (m(jj) > 120, pT(j) > 25 GeV) than the sample (m(jj) > 10, pT(j) > 10 GeV). The table shows (a) as the placeholder only.",
+   "alternatives": [
+    [
+     "option (b) 534 / 543 (measured / LO, m(ℓℓ) > 50, pT(j) > 25, m(jj) > 120 GeV, ℓ = e, μ)",
+     -0.016574585635359074
+    ]
+   ],
+   "atlas": "ATLAS 700358-700360 (Sherpa LO, 'Min_N_TChannels', per flavour ≈ 0.779 pb): 2.338 pb for 3 flavours (Z) vs CMS 6.21 pb → ATLAS/CMS = 0.377 (per flavour CMS 2.07 pb). NOT like-for-like, see the note.",
+   "notes": "Generator-level cuts (card): `generate p p > l+ l- j j / t t~ h QED=4 QCD=0` (ℓ = e, μ, τ); run card: mmll = 50 (m(ℓℓ) > 50 GeV), ptj = 10, etaj = 6.5, mmjj = 10 (m(jj) > 10 GeV), deltaeta = 0 (no Δη cut), drjj = 0, ptl = 0, etal = −1 (none). **Why CMS ≈ 2.7-2.8 × ATLAS:** (1) `QED=4 QCD=0` keeps every purely electroweak diagram, including s-channel diboson/triboson-like ones (WZ/ZZ/WW with V → qq); ATLAS's names say 'Min_N_TChannels', which in Sherpa 'limits the minimum number of t-channel propagators' (Sherpa 2.2.11 manual §5.6.14), i.e. removes pure s-channel diagrams; (2) the CMS cuts are very loose (m(jj) > 10, pT(j) > 10 GeV); ATLAS's generator cuts are not in the public metadata (UNKNOWN; job options not opened, rule: metadata only). **Overlap flag (physics choice, not decided):** the s-channel diboson part of this sample (V → qq with m(jj) ≈ mW/mZ) is the same process as tier-2 WZTo2Q2L 72742 / ZZTo2Q2L 75573; using both counts it twice in that region. Options: keep both and accept it (CMS SMP-16-018 calls the diboson contribution 'small' in its m(jj) > 120 region; our histograms have no m(jj) cut); remove events with LHE m(jj) near mW/mZ from this sample (new builder code); its size can be measured from LHEPart (not done). Probe 31 Oct: all 42 branches present, no negative weights.",
+   "options": [
+    [
+     "(a) generator LO value (portal)",
+     6.206,
+     "portal record https://opendata.cern.ch/api/records/35998"
+    ],
+    [
+     "(b) generator × 534 / 543 (measured / LO, m(ℓℓ) > 50, pT(j) > 25, m(jj) > 120 GeV, ℓ = e, μ) = × 0.9834",
+     6.103138121546962,
+     "SMP16018"
+    ]
+   ],
+   "first": null
+  },
+  {
+   "recid": 35987,
+   "status": "NEW (D12) — DECISION NEEDED on the value",
+   "decision": "D12",
+   "sentence": "W⁻ → ℓ⁻ν̄ (e, μ, τ) + 2 jets, purely electroweak (QCD = 0).",
+   "factors": [
+    [
+     "generator σ (portal), LO",
+     32.1,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 32.1,
+   "order": "LO (MadGraph, no extra partons)",
+   "kfactor": "none in option (a); option (b) applies a measured/LO ratio",
+   "look": "Card `evidence/cards/35987/*proc_card.dat` and `*run_card.dat`; the portal value on MiniAOD 35986; https://arxiv.org/abs/1903.04040 for option (b).",
+   "convention": "No settled convention: no NNLO exists, and the published NLO (VBFNLO) and the measurement are in a narrower phase space (m(jj) > 120, pT(j) > 25 GeV) than the sample (m(jj) > 10, pT(j) > 10 GeV). The table shows (a) as the placeholder only.",
+   "alternatives": [
+    [
+     "option (b) 6.23 / 6.81 (measured / LO, pT(j) > 25, m(jj) > 120 GeV)",
+     -0.08516886930983836
+    ]
+   ],
+   "atlas": "ATLAS 700362-700364 (Sherpa LO, 'Min_N_TChannels', per flavour ≈ 8.502 pb): 25.506 pb for 3 flavours (W⁺ + W⁻ together) vs CMS 71.18 pb → ATLAS/CMS = 0.358 (per flavour CMS 23.73 pb). NOT like-for-like, see the note.",
+   "notes": "Generator-level cuts (card): `generate p p > l- vl~ j j / t t~ h QCD=0` (ℓ = e, μ, τ); run card: mmnl = 50 (m(ℓν) > 50 GeV), ptj = 10, etaj = 6.5, mmjj = 10, deltaeta = 0, ptl = 0. **Why CMS ≈ 2.7-2.8 × ATLAS:** (1) `QED=4 QCD=0` keeps every purely electroweak diagram, including s-channel diboson/triboson-like ones (WZ/ZZ/WW with V → qq); ATLAS's names say 'Min_N_TChannels', which in Sherpa 'limits the minimum number of t-channel propagators' (Sherpa 2.2.11 manual §5.6.14), i.e. removes pure s-channel diagrams; (2) the CMS cuts are very loose (m(jj) > 10, pT(j) > 10 GeV); ATLAS's generator cuts are not in the public metadata (UNKNOWN; job options not opened, rule: metadata only). **Overlap flag (physics choice, not decided):** the s-channel diboson part of this sample (V → qq with m(jj) ≈ mW/mZ) is the same process as tier-2 WZTo1L1Nu2Q 72738 / WWTo1L1Nu2Q 72658; using both counts it twice in that region. Options: keep both and accept it (CMS SMP-16-018 calls the diboson contribution 'small' in its m(jj) > 120 region; our histograms have no m(jj) cut); remove events with LHE m(jj) near mW/mZ from this sample (new builder code); its size can be measured from LHEPart (not done). Probe 31 Oct: all 42 branches present, no negative weights.",
+   "options": [
+    [
+     "(a) generator LO value (portal)",
+     32.1,
+     "portal record https://opendata.cern.ch/api/records/35986"
+    ],
+    [
+     "(b) generator × 6.23 / 6.81 (measured / LO, pT(j) > 25, m(jj) > 120 GeV) = × 0.9148",
+     29.36607929515419,
+     "SMP17011"
+    ]
+   ],
+   "first": null
+  },
+  {
+   "recid": 35993,
+   "status": "NEW (D12) — DECISION NEEDED on the value",
+   "decision": "D12",
+   "sentence": "W⁺ → ℓ⁺ν (e, μ, τ) + 2 jets, purely electroweak (QCD = 0).",
+   "factors": [
+    [
+     "generator σ (portal), LO",
+     39.08,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 39.08,
+   "order": "LO (MadGraph, no extra partons)",
+   "kfactor": "none in option (a); option (b) applies a measured/LO ratio",
+   "look": "Card `evidence/cards/35993/*proc_card.dat` and `*run_card.dat`; the portal value on MiniAOD 35992; https://arxiv.org/abs/1903.04040 for option (b).",
+   "convention": "No settled convention: no NNLO exists, and the published NLO (VBFNLO) and the measurement are in a narrower phase space (m(jj) > 120, pT(j) > 25 GeV) than the sample (m(jj) > 10, pT(j) > 10 GeV). The table shows (a) as the placeholder only.",
+   "alternatives": [
+    [
+     "option (b) 6.23 / 6.81 (measured / LO, pT(j) > 25, m(jj) > 120 GeV)",
+     -0.08516886930983836
+    ]
+   ],
+   "atlas": "ATLAS 700362-700364 (Sherpa LO, 'Min_N_TChannels', per flavour ≈ 8.502 pb): 25.506 pb for 3 flavours (W⁺ + W⁻ together) vs CMS 71.18 pb → ATLAS/CMS = 0.358 (per flavour CMS 23.73 pb). NOT like-for-like, see the note.",
+   "notes": "Generator-level cuts (card): `generate p p > l+ vl j j / t t~ h QCD=0` (ℓ = e, μ, τ); run card: mmnl = 50, ptj = 10, etaj = 6.5, mmjj = 10, deltaeta = 0, ptl = 0. **Why CMS ≈ 2.7-2.8 × ATLAS:** (1) `QED=4 QCD=0` keeps every purely electroweak diagram, including s-channel diboson/triboson-like ones (WZ/ZZ/WW with V → qq); ATLAS's names say 'Min_N_TChannels', which in Sherpa 'limits the minimum number of t-channel propagators' (Sherpa 2.2.11 manual §5.6.14), i.e. removes pure s-channel diagrams; (2) the CMS cuts are very loose (m(jj) > 10, pT(j) > 10 GeV); ATLAS's generator cuts are not in the public metadata (UNKNOWN; job options not opened, rule: metadata only). **Overlap flag (physics choice, not decided):** the s-channel diboson part of this sample (V → qq with m(jj) ≈ mW/mZ) is the same process as tier-2 WZTo1L1Nu2Q 72738 / WWTo1L1Nu2Q 72658; using both counts it twice in that region. Options: keep both and accept it (CMS SMP-16-018 calls the diboson contribution 'small' in its m(jj) > 120 region; our histograms have no m(jj) cut); remove events with LHE m(jj) near mW/mZ from this sample (new builder code); its size can be measured from LHEPart (not done). Probe 31 Oct: all 42 branches present, no negative weights.",
+   "options": [
+    [
+     "(a) generator LO value (portal)",
+     39.08,
+     "portal record https://opendata.cern.ch/api/records/35992"
+    ],
+    [
+     "(b) generator × 6.23 / 6.81 (measured / LO, pT(j) > 25, m(jj) > 120 GeV) = × 0.9148",
+     35.75160058737151,
+     "SMP17011"
+    ]
+   ],
+   "first": null
+  },
+  {
+   "recid": 67645,
+   "status": "unchanged from v1",
+   "decision": "plan",
+   "sentence": "tt̄H with H → bb̄ (all top decays).",
+   "factors": [
+    [
+     "σ(ttH), NLO QCD + NLO EW, mH = 125.00",
+     0.5071,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → bb), mH = 125.00",
+     0.5824,
+     "YR4_BR"
+    ]
+   ],
+   "sigma_eff_pb": 0.29533504,
+   "order": "NLO QCD + NLO EW",
+   "kfactor": "",
+   "look": "CERNYellowReportPageAt13TeV, ttH table, 125.00 → 5.071E-01. CERNYellowReportPageBR, 'Higgs → 2 fermions', 125.00, H → bb = 5.824E-01.",
+   "convention": "LHC Higgs WG YR4 at 125.00 GeV (settled).",
+   "alternatives": [],
+   "atlas": "ATLAS tt̄H 346343-346345 (all decays) = 0.5071 pb vs CMS bb + non-bb = 0.5071 → 1.00 (MAPPING.md).",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 67691,
+   "status": "unchanged from v1",
+   "decision": "plan",
+   "sentence": "tt̄H with every Higgs decay except H → bb̄.",
+   "factors": [
+    [
+     "σ(ttH)",
+     0.5071,
+     "YR4_XS"
+    ],
+    [
+     "1 − BR(H → bb)",
+     0.41759999999999997,
+     "YR4_BR"
+    ]
+   ],
+   "sigma_eff_pb": 0.21176495999999997,
+   "order": "NLO QCD + NLO EW",
+   "kfactor": "",
+   "look": "As 67645. Pythia setting in the record: '25:offIfAny = 5 -5'.",
+   "convention": "YR4 at 125.00 GeV.",
+   "alternatives": [],
+   "atlas": "As 67645 (ATLAS/CMS 1.00 for tt̄H as a whole).",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 68083,
+   "status": "unchanged from v1",
+   "decision": "plan",
+   "sentence": "tt̄W with W → quarks, NLO, 0-1 extra parton.",
+   "factors": [
+    [
+     "generator σ (portal), NLO",
+     0.4375,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 0.4375,
+   "order": "NLO",
+   "kfactor": "",
+   "look": "MiniAOD record 68082, total_value (matching efficiency 0.6 shown, not applied -- the same open point as 68073).",
+   "convention": "No NNLO → generator NLO, as our ttW 68073.",
+   "alternatives": [],
+   "atlas": "ATLAS tt̄W inclusive 410155 = 0.6008 pb vs CMS ℓν (delivered 0.2151) + qq (this card 0.4375) = 0.6526 → 0.921.",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 68045,
+   "status": "CHANGED (D7)",
+   "decision": "D7",
+   "sentence": "Four top quarks, all decays, NLO (aMC@NLO).",
+   "factors": [
+    [
+     "σ(tt̄tt̄), complete NLO QCD+EW, µ = HT/4 [11.97 fb]",
+     0.011970000000000001,
+     "TTTT_NLO"
+    ]
+   ],
+   "sigma_eff_pb": 0.011970000000000001,
+   "order": "complete NLO QCD + EW",
+   "kfactor": "none (the sample is normalised to the published total)",
+   "look": "arXiv:1711.02116 Table 5, row µ = HT/4, column 'LO + NLO' = 11.97 fb.",
+   "convention": "D7: the published complete-NLO value, matching ATLAS.",
+   "alternatives": [
+    [
+     "generator NLO value 8.091 fb (portal, MiniAOD 68044)",
+     -0.32406015037594005
+    ],
+    [
+     "NLO(QCD+EW)+NLL′ 14.65 fb (arXiv:2212.03259 Table I)",
+     0.22389306599832914
+    ]
+   ],
+   "atlas": "ATLAS 412043: 10.673 fb × k 1.1267 = 12.025 fb → ATLAS/CMS = 1.005.",
+   "notes": "Proposed / generator = 1.479.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 68325,
+   "status": "ON HOLD — card kept unchanged from v1, not for review now",
+   "decision": "ON HOLD (D8 / no ATLAS nominal counterpart; waiting for Maryna)",
+   "sentence": "Single top + Z/γ* → ℓℓ (e, μ, τ; same-flavour m(ℓℓ) > 30 GeV) + a light quark, NLO.",
+   "factors": [
+    [
+     "generator σ (portal), NLO",
+     0.07561,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 0.07561,
+   "order": "NLO",
+   "kfactor": "",
+   "look": "MiniAOD record 68324, total_value.",
+   "convention": "No NNLO → generator NLO.",
+   "alternatives": [],
+   "atlas": "",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 64873,
+   "status": "ON HOLD — card kept unchanged from v1, not for review now",
+   "decision": "ON HOLD (D8 / no ATLAS nominal counterpart; waiting for Maryna)",
+   "sentence": "Single top + W + a lepton pair (e, μ, τ), LO (no Higgs diagrams).",
+   "factors": [
+    [
+     "generator σ (portal), LO",
+     0.01105,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 0.01105,
+   "order": "LO",
+   "kfactor": "",
+   "look": "MiniAOD record 64872, total_value.",
+   "convention": "CANNOT follow the convention: only an LO generator value exists (no NLO sample, no published total for this phase space). Decision for Matan.",
+   "alternatives": [],
+   "atlas": "",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 68206,
+   "status": "ON HOLD — card kept unchanged from v1, not for review now",
+   "decision": "ON HOLD (D8 / no ATLAS nominal counterpart; waiting for Maryna)",
+   "sentence": "tt̄Z with Z → quarks (u, d, s, c, b), NLO.",
+   "factors": [
+    [
+     "generator σ (portal), NLO",
+     0.5113,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 0.5113,
+   "order": "NLO",
+   "kfactor": "",
+   "look": "MiniAOD record 68204, total_value.",
+   "convention": "No NNLO → generator NLO, as our ttZ 68187.",
+   "alternatives": [],
+   "atlas": "",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 68185,
+   "status": "ON HOLD — card kept unchanged from v1, not for review now",
+   "decision": "ON HOLD (D8 / no ATLAS nominal counterpart; waiting for Maryna)",
+   "sentence": "tt̄ + lepton pair (e, μ, τ) with 1 < m(ℓℓ) < 10 GeV (virtual photon), NLO -- fills the gap below our TTZToLLNuNu_M-10.",
+   "factors": [
+    [
+     "generator σ (portal), NLO",
+     0.0537,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 0.0537,
+   "order": "NLO",
+   "kfactor": "",
+   "look": "MiniAOD record 68184, total_value.",
+   "convention": "No NNLO → generator NLO.",
+   "alternatives": [],
+   "atlas": "",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 37474,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "Gluon-fusion Higgs, H → WW → ℓνℓν (ℓ = e, μ, τ).",
+   "factors": [
+    [
+     "σ(ggF), N3LO QCD + NLO EW",
+     48.58,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → WW)",
+     0.2137,
+     "YR4_BR"
+    ],
+    [
+     "BR(W → ℓν)² = 0.3272²",
+     0.10705983999999999,
+     "PDG_W"
+    ]
+   ],
+   "sigma_eff_pb": 1.11144665371264,
+   "order": "N3LO QCD + NLO EW",
+   "kfactor": "",
+   "look": "YR4 13 TeV ggF table, 125.00 → 4.858E+01; BR page 'Higgs → 2 gauge bosons', 125.00, WW = 2.137E-01.",
+   "convention": "YR4 × YR4 BR × PDG W BRs (settled).",
+   "alternatives": [],
+   "atlas": "ATLAS 345324 (H → WW → ℓνℓν): ATLAS/CMS 1.02 (MAPPING.md).",
+   "notes": "Pythia: '25:onIfMatch = 24 -24', '24:onIfMatch = 11 12 / 13 14 / 15 16'.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 68601,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "Vector-boson-fusion Higgs, H → WW → ℓνℓν (ℓ = e, μ, τ).",
+   "factors": [
+    [
+     "σ(VBF), approx. NNLO QCD + NLO EW",
+     3.782,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → WW)",
+     0.2137,
+     "YR4_BR"
+    ],
+    [
+     "BR(W → ℓν)²",
+     0.10705983999999999,
+     "PDG_W"
+    ]
+   ],
+   "sigma_eff_pb": 0.08652719728985599,
+   "order": "approx. NNLO QCD + NLO EW",
+   "kfactor": "",
+   "look": "YR4 VBF table, 125.00 → 3.782E+00; BR WW 2.137E-01.",
+   "convention": "YR4 (settled).",
+   "alternatives": [],
+   "atlas": "ATLAS 345948: ATLAS/CMS 1.02 (MAPPING.md).",
+   "notes": "JHUGen card: DecayMode1=10 DecayMode2=10 (W → ℓν, ℓ = e, μ, τ).",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 41877,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "W+H production, W decaying any way, H → WW (any decay).",
+   "factors": [
+    [
+     "σ(W+H), NNLO QCD + NLO EW",
+     0.84,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → WW)",
+     0.2137,
+     "YR4_BR"
+    ]
+   ],
+   "sigma_eff_pb": 0.179508,
+   "order": "NNLO QCD + NLO EW",
+   "kfactor": "",
+   "look": "YR4 WH table, 125.00, column 'W+H (pb)' = 8.400E-01; BR WW.",
+   "convention": "YR4 (settled).",
+   "alternatives": [],
+   "atlas": "ATLAS W±H → WW has W → qq and H → ℓνℓν only (0.07, different channels): no like-for-like value.",
+   "notes": "Cards: vdecaymode 10 (W inclusive), JHUGen DecayMode 11/11 (W → anything).",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 41873,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "W−H production, W decaying any way, H → WW (any decay).",
+   "factors": [
+    [
+     "σ(W−H), NNLO QCD + NLO EW",
+     0.5328,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → WW)",
+     0.2137,
+     "YR4_BR"
+    ]
+   ],
+   "sigma_eff_pb": 0.11385936,
+   "order": "NNLO QCD + NLO EW",
+   "kfactor": "",
+   "look": "YR4 WH table, 125.00, column 'W−H (pb)' = 5.328E-01; BR WW.",
+   "convention": "YR4 (settled).",
+   "alternatives": [],
+   "atlas": "As 41877.",
+   "notes": "Cards: vdecaymode 10 (W inclusive), JHUGen DecayMode 11/11 (W → anything).",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 41914,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "qq̄ → ZH, Z decaying any way, H → WW (any decay).",
+   "factors": [
+    [
+     "σ(ZH, all but gg → ZH)",
+     0.7612,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → WW)",
+     0.2137,
+     "YR4_BR"
+    ]
+   ],
+   "sigma_eff_pb": 0.16266844,
+   "order": "NNLO QCD + NLO EW",
+   "kfactor": "",
+   "look": "YR4 ZH process table: 'qq/qg→ZH, gg→HZ+qqbar (all but gg→ZH)' = 0.7612.",
+   "convention": "YR4 'all but gg→ZH' value, the page's own recommendation for an NLO qq̄ → ZH sample.",
+   "alternatives": [
+    [
+     "total pp → ZH 0.8839 instead (would double-count gg → ZH)",
+     0.16119285338938516
+    ]
+   ],
+   "atlas": "ATLAS qq̄ → ZH → WW is Z → νν only (0.05, different channels): no like-for-like value.",
+   "notes": "Portal shows no matching efficiency for this record (None).",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 40095,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "gg → ZH, Z → ℓℓ (e, μ, τ), H → WW (any decay).",
+   "factors": [
+    [
+     "σ(gg → ZH), NLO+NLL",
+     0.1227,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → WW)",
+     0.2137,
+     "YR4_BR"
+    ],
+    [
+     "BR(Z → ℓℓ) = 0.033632 + 0.033662 + 0.033696",
+     0.10099,
+     "PDG_Z"
+    ]
+   ],
+   "sigma_eff_pb": 0.0026480577801,
+   "order": "NLO+NLL QCD",
+   "kfactor": "",
+   "look": "YR4 ZH process table: 'gg→ZH' = 0.1227. pdglive S044: Γ1, Γ2, Γ3.",
+   "convention": "YR4 gg → ZH; Z branching ratios from PDG individually measured values (by analogy with the W convention -- NOT settled, see Decisions).",
+   "alternatives": [],
+   "atlas": "ATLAS 346524 is Z-inclusive (ATLAS/CMS 1.08 is not like-for-like).",
+   "notes": "POWHEG card: vdecaymode 11 ('inclusive leptons'); Pythia '25:onIfMatch = 24 -24'. The Z branching ratios here are now the settled D6 values (pdglive S044, re-checked 31 Oct, unchanged), so the number is unchanged.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 37446,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "gluon-fusion Higgs, H → ττ.",
+   "factors": [
+    [
+     "σ(production), YR4",
+     48.58,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → ττ)",
+     0.06272,
+     "YR4_BR"
+    ]
+   ],
+   "sigma_eff_pb": 3.0469375999999997,
+   "order": "YR4 order of the production mode",
+   "kfactor": "",
+   "look": "YR4 ggF table 4.858E+01; BR page 'Higgs → 2 fermions', 125.00, ττ = 6.272E-02.",
+   "convention": "YR4 (settled).",
+   "alternatives": [],
+   "atlas": "ATLAS ggF → ττ pieces carry ττ-decay and pT filters (0.32): no like-for-like value.",
+   "notes": "Pythia: '25:onIfMatch = 15 -15'.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 68591,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "VBF Higgs, H → ττ.",
+   "factors": [
+    [
+     "σ(production), YR4",
+     3.782,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → ττ)",
+     0.06272,
+     "YR4_BR"
+    ]
+   ],
+   "sigma_eff_pb": 0.23720704,
+   "order": "YR4 order of the production mode",
+   "kfactor": "",
+   "look": "YR4 VBF table 3.782E+00; BR page 'Higgs → 2 fermions', 125.00, ττ = 6.272E-02.",
+   "convention": "YR4 (settled).",
+   "alternatives": [],
+   "atlas": "ATLAS VBF → ττ pieces sum to more than σ × BR (1.29; looks like an ATLAS-side issue, MAPPING.md).",
+   "notes": "Pythia: '25:onIfMatch = 15 -15'.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 71297,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "W+H (W any decay) Higgs, H → ττ.",
+   "factors": [
+    [
+     "σ(production), YR4",
+     0.84,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → ττ)",
+     0.06272,
+     "YR4_BR"
+    ]
+   ],
+   "sigma_eff_pb": 0.0526848,
+   "order": "YR4 order of the production mode",
+   "kfactor": "",
+   "look": "YR4 WH table, W+H 8.400E-01; BR page 'Higgs → 2 fermions', 125.00, ττ = 6.272E-02.",
+   "convention": "YR4 (settled).",
+   "alternatives": [],
+   "atlas": "ATLAS 345211/345212 (W±H → ττ): 1.00 (same YR4 inputs).",
+   "notes": "Pythia: '25:onIfMatch = 15 -15'.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 70453,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "W−H (W any decay) Higgs, H → ττ.",
+   "factors": [
+    [
+     "σ(production), YR4",
+     0.5328,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → ττ)",
+     0.06272,
+     "YR4_BR"
+    ]
+   ],
+   "sigma_eff_pb": 0.033417216,
+   "order": "YR4 order of the production mode",
+   "kfactor": "",
+   "look": "YR4 WH table, W−H 5.328E-01; BR page 'Higgs → 2 fermions', 125.00, ττ = 6.272E-02.",
+   "convention": "YR4 (settled).",
+   "alternatives": [],
+   "atlas": "As 71297.",
+   "notes": "Pythia: '25:onIfMatch = 15 -15'.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 74684,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "qq̄ → ZH (Z any decay) Higgs, H → ττ.",
+   "factors": [
+    [
+     "σ(production), YR4",
+     0.7612,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → ττ)",
+     0.06272,
+     "YR4_BR"
+    ]
+   ],
+   "sigma_eff_pb": 0.047742464,
+   "order": "YR4 order of the production mode",
+   "kfactor": "",
+   "look": "YR4 ZH process table, all but gg→ZH 0.7612; BR page 'Higgs → 2 fermions', 125.00, ττ = 6.272E-02.",
+   "convention": "YR4 (settled).",
+   "alternatives": [],
+   "atlas": "ATLAS 345217: 1.00.",
+   "notes": "Pythia: '25:onIfMatch = 15 -15'.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 37616,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "Gluon-fusion Higgs, H → ZZ → ℓℓνν with ℓ = e or μ only (no τ).",
+   "factors": [
+    [
+     "σ(production), YR4",
+     48.58,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → ZZ)",
+     0.02619,
+     "YR4_BR"
+    ],
+    [
+     "2 × BR(Z → ee + μμ) × BR(Z → νν) = 2 × 0.067294 × 0.20000",
+     0.0269176,
+     "PDG_Z"
+    ]
+   ],
+   "sigma_eff_pb": 0.03424753703952,
+   "order": "YR4 order of the production mode",
+   "kfactor": "",
+   "look": "YR4 tables; BR ZZ 2.619E-02. JHUGen card DecayMode1=3 (Z → νν), DecayMode2=0 (Z → ee, μμ; no τ).",
+   "convention": "YR4 × PDG Z BRs (Z convention not settled, see Decisions).",
+   "alternatives": [
+    [
+     "YR4 4-fermion column 'H → l+ l- νl νl, l = e or μ' 1.055E-02 instead (WRONG here: it also contains H → WW → ℓνℓν)",
+     13.965134555766095
+    ]
+   ],
+   "atlas": "No ATLAS counterpart (reverse check, MAPPING.md D).",
+   "notes": "The Z branching ratios here are now the settled D6 values (pdglive S044, re-checked 31 Oct, unchanged), so the number is unchanged.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 68741,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "VBF Higgs, H → ZZ → ℓℓνν with ℓ = e or μ only (no τ).",
+   "factors": [
+    [
+     "σ(production), YR4",
+     3.782,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → ZZ)",
+     0.02619,
+     "YR4_BR"
+    ],
+    [
+     "2 × BR(Z → ee + μμ) × BR(Z → νν) = 2 × 0.067294 × 0.20000",
+     0.0269176,
+     "PDG_Z"
+    ]
+   ],
+   "sigma_eff_pb": 0.0026662038922080004,
+   "order": "YR4 order of the production mode",
+   "kfactor": "",
+   "look": "YR4 tables; BR ZZ 2.619E-02. JHUGen card DecayMode1=3 (Z → νν), DecayMode2=0 (Z → ee, μμ; no τ).",
+   "convention": "YR4 × PDG Z BRs (Z convention not settled, see Decisions).",
+   "alternatives": [
+    [
+     "YR4 4-fermion column 'H → l+ l- νl νl, l = e or μ' 1.055E-02 instead (WRONG here: it also contains H → WW → ℓνℓν)",
+     13.965134555766095
+    ]
+   ],
+   "atlas": "No ATLAS counterpart.",
+   "notes": "The Z branching ratios here are now the settled D6 values (pdglive S044, re-checked 31 Oct, unchanged), so the number is unchanged.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 71227,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "W+H production (W any decay), H → ZZ → 4ℓ (ℓ = e, μ, τ).",
+   "factors": [
+    [
+     "σ(W+H)",
+     0.84,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → ZZ → 4ℓ, ℓ = e, μ, τ)",
+     0.0002745,
+     "YR4_BR"
+    ]
+   ],
+   "sigma_eff_pb": 0.00023058,
+   "order": "NNLO QCD + NLO EW",
+   "kfactor": "",
+   "look": "YR4 WH table; BR page 'Higgs → 4 fermions', H → llll (l = e,μ,τ) = 2.745E-04. JHUGen card DecayMode 8/8.",
+   "convention": "Same BR as our ggH/VBF → 4ℓ (2.745e-4).",
+   "alternatives": [],
+   "atlas": "ATLAS 346449/346450: 1.00.",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 70383,
+   "status": "unchanged from v1",
+   "decision": "D13 (planned 15)",
+   "sentence": "W−H production (W any decay), H → ZZ → 4ℓ (ℓ = e, μ, τ).",
+   "factors": [
+    [
+     "σ(W−H)",
+     0.5328,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → ZZ → 4ℓ, ℓ = e, μ, τ)",
+     0.0002745,
+     "YR4_BR"
+    ]
+   ],
+   "sigma_eff_pb": 0.0001462536,
+   "order": "NNLO QCD + NLO EW",
+   "kfactor": "",
+   "look": "YR4 WH table; BR page 'Higgs → 4 fermions', H → llll (l = e,μ,τ) = 2.745E-04. JHUGen card DecayMode 8/8.",
+   "convention": "Same BR as our ggH/VBF → 4ℓ (2.745e-4).",
+   "alternatives": [],
+   "atlas": "As 71227.",
+   "notes": "",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 37432,
+   "status": "NEW (D13)",
+   "decision": "D13",
+   "sentence": "Gluon-fusion Higgs, H → μμ.",
+   "factors": [
+    [
+     "σ(ggF), N3LO",
+     48.58,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → μμ)",
+     0.0002176,
+     "YR4_BR2"
+    ]
+   ],
+   "sigma_eff_pb": 0.010571008,
+   "order": "N3LO QCD + NLO EW",
+   "kfactor": "none (YR4 total × YR4 BR)",
+   "look": "YR4 ggF table, 125.00 → 4.858E+01; BR page, table 'H → bb, ττ, μμ, cc', 125.00, H → μμ = 2.176E-04.",
+   "convention": "YR4 at 125.00 GeV × YR4 BR (settled Higgs convention).",
+   "alternatives": [
+    [
+     "generator value (portal)",
+     2029.0807642941904
+    ]
+   ],
+   "atlas": "ATLAS 345097: 0.01057 pb → ATLAS/CMS = 1.000.",
+   "notes": "Pythia: '25:onIfMatch = 13 -13'. Probe 31 Oct: all 42 branches present.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 68571,
+   "status": "NEW (D13)",
+   "decision": "D13",
+   "sentence": "VBF Higgs, H → μμ.",
+   "factors": [
+    [
+     "σ(VBF)",
+     3.782,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → μμ)",
+     0.0002176,
+     "YR4_BR2"
+    ]
+   ],
+   "sigma_eff_pb": 0.0008229632,
+   "order": "approx. NNLO QCD + NLO EW",
+   "kfactor": "none (YR4 total × YR4 BR)",
+   "look": "YR4 VBF table, 125.00 → 3.782E+00; BR H → μμ = 2.176E-04.",
+   "convention": "YR4 at 125.00 GeV × YR4 BR (settled Higgs convention).",
+   "alternatives": [
+    [
+     "generator value (portal)",
+     4690.582807104863
+    ]
+   ],
+   "atlas": "ATLAS 345106: 0.001038 pb → ATLAS/CMS = 1.261. ATLAS's genFiltEff for these H → μμ samples is 0.0002745 = the YR4 H → 4ℓ BR, not the H → μμ BR 2.176E-04 (2.176/2.745 = 0.793): an ATLAS-side metadata slip (its ggF H → μμ 345097 uses 0.0002176 and agrees to 1.000). Cross-check only.",
+   "notes": "Pythia: '25:onIfMatch = 13 -13'. Probe 31 Oct: all 42 branches present.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 71295,
+   "status": "NEW (D13)",
+   "decision": "D13",
+   "sentence": "W⁺H (W any decay, POWHEG MiNLO HWJ), H → μμ.",
+   "factors": [
+    [
+     "σ(W⁺H)",
+     0.84,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → μμ)",
+     0.0002176,
+     "YR4_BR2"
+    ]
+   ],
+   "sigma_eff_pb": 0.000182784,
+   "order": "NNLO QCD + NLO EW",
+   "kfactor": "none (YR4 total × YR4 BR)",
+   "look": "YR4 WH table, 125.00, column W⁺H = 8.400E-01; BR H → μμ.",
+   "convention": "YR4 at 125.00 GeV × YR4 BR (settled Higgs convention).",
+   "alternatives": [
+    [
+     "generator value (portal)",
+     4742.303571428572
+    ]
+   ],
+   "atlas": "ATLAS 345104: 0.0002306 pb → ATLAS/CMS = 1.261. ATLAS's genFiltEff for these H → μμ samples is 0.0002745 = the YR4 H → 4ℓ BR, not the H → μμ BR 2.176E-04 (2.176/2.745 = 0.793): an ATLAS-side metadata slip (its ggF H → μμ 345097 uses 0.0002176 and agrees to 1.000). Cross-check only.",
+   "notes": "POWHEG card: idvecbos 24, vdecaymode 10 (inclusive); Pythia '25:onIfMatch = 13 -13'. Probe 31 Oct: all 42 branches present.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 70451,
+   "status": "NEW (D13)",
+   "decision": "D13",
+   "sentence": "W⁻H (W any decay), H → μμ.",
+   "factors": [
+    [
+     "σ(W⁻H)",
+     0.5328,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → μμ)",
+     0.0002176,
+     "YR4_BR2"
+    ]
+   ],
+   "sigma_eff_pb": 0.00011593728000000002,
+   "order": "NNLO QCD + NLO EW",
+   "kfactor": "none (YR4 total × YR4 BR)",
+   "look": "YR4 WH table, column W⁻H = 5.328E-01; BR H → μμ.",
+   "convention": "YR4 at 125.00 GeV × YR4 BR (settled Higgs convention).",
+   "alternatives": [
+    [
+     "generator value (portal)",
+     4667.041202967673
+    ]
+   ],
+   "atlas": "ATLAS 345105: 0.0001463 pb → ATLAS/CMS = 1.261. ATLAS's genFiltEff for these H → μμ samples is 0.0002745 = the YR4 H → 4ℓ BR, not the H → μμ BR 2.176E-04 (2.176/2.745 = 0.793): an ATLAS-side metadata slip (its ggF H → μμ 345097 uses 0.0002176 and agrees to 1.000). Cross-check only.",
+   "notes": "POWHEG card: idvecbos −24, vdecaymode 10; Pythia '25:onIfMatch = 13 -13'. Probe 31 Oct: all 42 branches present.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 74682,
+   "status": "NEW (D13)",
+   "decision": "D13",
+   "sentence": "qq̄ → ZH (Z any decay, POWHEG MiNLO HZJ), H → μμ.",
+   "factors": [
+    [
+     "σ(ZH, all but gg → ZH)",
+     0.7612,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → μμ)",
+     0.0002176,
+     "YR4_BR2"
+    ]
+   ],
+   "sigma_eff_pb": 0.00016563712,
+   "order": "NNLO QCD + NLO EW",
+   "kfactor": "none (YR4 total × YR4 BR)",
+   "look": "YR4 ZH process table: 'all but gg→ZH' = 0.7612; BR H → μμ.",
+   "convention": "YR4 at 125.00 GeV × YR4 BR (settled Higgs convention).",
+   "alternatives": [
+    [
+     "generator value (portal)",
+     4763.02873945164
+    ]
+   ],
+   "atlas": "ATLAS 345103: 0.0002089 pb → ATLAS/CMS = 1.261. ATLAS's genFiltEff for these H → μμ samples is 0.0002745 = the YR4 H → 4ℓ BR, not the H → μμ BR 2.176E-04 (2.176/2.745 = 0.793): an ATLAS-side metadata slip (its ggF H → μμ 345097 uses 0.0002176 and agrees to 1.000). Cross-check only.",
+   "notes": "POWHEG card: vdecaymode 10 (Z inclusive), minlo 1; Pythia '25:onIfMatch = 13 -13'. Normalised to 'all but gg → ZH' as 74684 (no gg → ZH → μμ sample exists). Probe 31 Oct: all 42 branches present.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 37604,
+   "status": "NEW (D13)",
+   "decision": "D13",
+   "sentence": "Gluon-fusion Higgs, H → Zγ with Z → ℓℓ (e, μ, τ).",
+   "factors": [
+    [
+     "σ(ggF)",
+     48.58,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → Zγ)",
+     0.001533,
+     "YR4_BR2"
+    ],
+    [
+     "BR(Z → ℓℓ) = 0.033632 + 0.033662 + 0.033696 (D6)",
+     0.10099,
+     "PDG_Z"
+    ]
+   ],
+   "sigma_eff_pb": 0.0075210424086000005,
+   "order": "N3LO QCD + NLO EW",
+   "kfactor": "none (YR4 total × YR4 BR)",
+   "look": "YR4 ggF 4.858E+01; BR page table 'H → gg, γγ, Zγ', 125.00, H → Zγ = 1.533E-03; pdglive S044 Γ1-Γ3.",
+   "convention": "YR4 at 125.00 GeV × YR4 BR × PDG Z → ℓℓ (D6) (settled Higgs convention).",
+   "alternatives": [
+    [
+     "generator value (portal)",
+     3905.37339930502
+    ]
+   ],
+   "atlas": "ATLAS 345316: 0.007449 pb → ATLAS/CMS = 0.990.",
+   "notes": "Pythia: '25:onIfMatch = 23 22', '23:onIfAny = 11 13 15', '23:mMin = 50.0' (the Z is cut at m > 50 GeV; the small loss below 50 GeV is not corrected for). Probe 31 Oct: all 42 branches present.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 68731,
+   "status": "NEW (D13)",
+   "decision": "D13",
+   "sentence": "VBF Higgs, H → Zγ with Z → ℓℓ (e, μ, τ).",
+   "factors": [
+    [
+     "σ(VBF)",
+     3.782,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → Zγ)",
+     0.001533,
+     "YR4_BR2"
+    ],
+    [
+     "BR(Z → ℓℓ) (D6)",
+     0.10099,
+     "PDG_Z"
+    ]
+   ],
+   "sigma_eff_pb": 0.00058552042794,
+   "order": "approx. NNLO QCD + NLO EW",
+   "kfactor": "none (YR4 total × YR4 BR)",
+   "look": "YR4 VBF 3.782E+00; BR H → Zγ 1.533E-03; pdglive S044.",
+   "convention": "YR4 at 125.00 GeV × YR4 BR × PDG Z → ℓℓ (D6) (settled Higgs convention).",
+   "alternatives": [
+    [
+     "generator value (portal)",
+     6593.133724051124
+    ]
+   ],
+   "atlas": "ATLAS 345833: 0.0005856 pb → ATLAS/CMS = 1.000.",
+   "notes": "Pythia: '25:onIfMatch = 23 22', '23:onIfAny = 11 13 15', '23:mMin = 50.0'. Probe 31 Oct: all 42 branches present.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 71145,
+   "status": "NEW (D13)",
+   "decision": "D13",
+   "sentence": "W⁺H (W any decay), H → Zγ (Z any decay).",
+   "factors": [
+    [
+     "σ(W⁺H)",
+     0.84,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → Zγ)",
+     0.001533,
+     "YR4_BR2"
+    ]
+   ],
+   "sigma_eff_pb": 0.00128772,
+   "order": "NNLO QCD + NLO EW",
+   "kfactor": "none (YR4 total × YR4 BR)",
+   "look": "YR4 WH W⁺H 8.400E-01; BR H → Zγ 1.533E-03.",
+   "convention": "YR4 at 125.00 GeV × YR4 BR (settled Higgs convention).",
+   "alternatives": [
+    [
+     "generator value (portal)",
+     672.1276985680117
+    ]
+   ],
+   "atlas": "ATLAS 345321: 0.001288 pb → ATLAS/CMS = 1.000.",
+   "notes": "POWHEG card: vdecaymode 10; Pythia only '25:onIfMatch = 23 22' (no Z-decay restriction, so the Z from H decays inclusively, consistent with the name 'WToAll'). No Z BR applied. Probe 31 Oct: all 42 branches present.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 70301,
+   "status": "NEW (D13)",
+   "decision": "D13",
+   "sentence": "W⁻H (W any decay), H → Zγ (Z any decay).",
+   "factors": [
+    [
+     "σ(W⁻H)",
+     0.5328,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → Zγ)",
+     0.001533,
+     "YR4_BR2"
+    ]
+   ],
+   "sigma_eff_pb": 0.0008167824000000001,
+   "order": "NNLO QCD + NLO EW",
+   "kfactor": "none (YR4 total × YR4 BR)",
+   "look": "YR4 WH W⁻H 5.328E-01; BR H → Zγ.",
+   "convention": "YR4 at 125.00 GeV × YR4 BR (settled Higgs convention).",
+   "alternatives": [
+    [
+     "generator value (portal)",
+     661.7224092977517
+    ]
+   ],
+   "atlas": "ATLAS 345320: 0.0008168 pb → ATLAS/CMS = 1.000.",
+   "notes": "As 71145 (idvecbos −24). Probe 31 Oct: all 42 branches present.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 74292,
+   "status": "NEW (D13)",
+   "decision": "D13",
+   "sentence": "qq̄ → ZH (Z any decay), H → Zγ (Z any decay).",
+   "factors": [
+    [
+     "σ(ZH, all but gg → ZH)",
+     0.7612,
+     "YR4_XS"
+    ],
+    [
+     "BR(H → Zγ)",
+     0.001533,
+     "YR4_BR2"
+    ]
+   ],
+   "sigma_eff_pb": 0.0011669196,
+   "order": "NNLO QCD + NLO EW",
+   "kfactor": "none (YR4 total × YR4 BR)",
+   "look": "YR4 ZH 'all but gg→ZH' 0.7612; BR H → Zγ.",
+   "convention": "YR4 at 125.00 GeV × YR4 BR (settled Higgs convention).",
+   "alternatives": [
+    [
+     "generator value (portal)",
+     675.2248230297957
+    ]
+   ],
+   "atlas": "ATLAS 345322: 0.001167 pb → ATLAS/CMS = 1.000.",
+   "notes": "POWHEG card: vdecaymode 10, minlo 1; Pythia only '25:onIfMatch = 23 22'. No Z BR applied. Probe 31 Oct: all 42 branches present.",
+   "options": null,
+   "first": null
+  },
+  {
+   "recid": 40062,
+   "status": "NEW (D13) — DECISION NEEDED on the value",
+   "decision": "D13",
+   "sentence": "gg → ZH (associated Z any decay), H → ZZ → ℓℓ + anything (ℓ = e, μ, τ), JHUGen, with a JHUGen 4-lepton filter.",
+   "factors": [
+    [
+     "generator σ (portal, MiniAOD 40061) — placeholder only",
+     0.000233,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 0.000233,
+   "order": "LO (JHUGen gg → ZH)",
+   "kfactor": "see options",
+   "look": "The two JHUGen cards (fetched 31 Oct from the genproductions links in the record, because the portal copies return HTTP 404): `evidence/cards/40062/ggZH_NNPDF31_13TeV_M125.input` ('Process=51 VH_PC=gg DecayMode1=9': associated Z → anything) and `ZZ2l2any_withtaus_filter4l.input` ('DecayMode1=8 DecayMode2=9 FilterNLept=4 WriteFailedEvents=2': H → Z(→ ℓℓ, ℓ = e, μ, τ) Z(→ anything), keep events with 4 leptons).",
+   "convention": "No settled convention: the sample is not 'H → 4ℓ'. Its σ needs the efficiency of the 4-lepton filter, which is not published.",
+   "alternatives": [],
+   "atlas": "ATLAS 345066 (gg → ZH, Z inclusive, H → ZZ → 4ℓ): 3.37e-05 pb — a different selection (no filter), not like-for-like.",
+   "notes": "The portal record is odd: total_value 2.330e-04 pb, 'matching efficiency' 0.2 on a JHUGen sample (the same pattern as the ZH → ZZ filtered samples left out on 26 Oct), total_value_uncertainty 2.330e+10. Probe 31 Oct: every genWeight = 1.0, no zero weights, so failed events are not in the NanoAOD and the filter efficiency cannot be measured from it. The sample is tiny: any option gives ≲ 4 events in 16.4 fb⁻¹ before selection.",
+   "options": [
+    [
+     "(a) portal total_value as is",
+     0.000233,
+     "portal record https://opendata.cern.ch/api/records/40061 (UNVERIFIED whether the filter is included)"
+    ],
+    [
+     "(b) portal total_value × portal 'matching efficiency' 0.2 (read as the filter efficiency)",
+     4.66e-05,
+     "portal (interpretation UNVERIFIED)"
+    ],
+    [
+     "(c) YR4 0.1227 × BR(H → ZZ) 0.02619 × BR(Z → ℓℓ) 0.10099 × ε(4ℓ) with ε ESTIMATED as P(at least one of the two other Zs → ℓℓ) = 1 − (1 − 0.10099)² = 0.1918",
+     6.223920795278678e-05,
+     "YR4_XS, YR4_BR2, PDG_Z; ε is an ESTIMATE (ignores the filter's lepton definition, e.g. whether τ count)"
+    ]
+   ],
+   "first": null
+  },
+  {
+   "recid": 74894,
+   "status": "NEW (D11) — DECISION NEEDED on the value",
+   "decision": "D11",
+   "sentence": "Z → νν (3 flavours) + 0-4 partons, LO MadGraph MLM, generator-level jet HT 100-200 GeV.",
+   "factors": [
+    [
+     "generator σ (portal), LO",
+     266.3,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 266.3,
+   "order": "LO (MLM-merged, 0-4 partons)",
+   "kfactor": "options (b), (c)",
+   "look": "Card `evidence/cards/74894/*run_card.dat`: htjmin = 100, htjmax = 200; RazorAnalyzer line 96 for (b); RazorAnalyzer line 90 and the portal record 35670 for (c).",
+   "convention": "No settled convention for an LO HT-binned V+jets set (our W and DY are NLO). The bins are used as they are (no stitching, D11). D6 BRs do not enter: the generator produces Z → νν directly; in (c) only the ratio NNLO/LO of the same boson enters.",
+   "alternatives": [
+    [
+     "option (b) × 1.23",
+     0.22999999999999998
+    ],
+    [
+     "option (c) × 1.0685",
+     0.06845811712379524
+    ]
+   ],
+   "atlas": "ATLAS Z → νν (700335-700337, Sherpa NLO, kFactor 1, b/c/light filters summed) = 446.8 pb, sliced differently ('pTV2' in the name; the slicing is not explained in the metadata): no like-for-like ATLAS value for an HT bin. The sum of the 7 CMS bins at option (a) is 353.0 pb.",
+   "notes": "The RazorAnalyzer LO value for the older CUETP8M1 sample of this bin was 280.35 pb (vs 266.3 pb here, CP5). Probe 31 Oct: all 42 branches present, no negative weights; LHE_HT in file 0 lies inside 100-200 GeV (min/max in PLAN_v2_summary.md). Bins contiguous and exclusive from 100 GeV (cards).",
+   "options": [
+    [
+     "(a) generator LO value (portal)",
+     266.3,
+     "portal record https://opendata.cern.ch/api/records/74893"
+    ],
+    [
+     "(b) generator × 1.23 (the k the RazorAnalyzer table applies to these HT bins)",
+     327.54900000000004,
+     "RAZOR_ZNN (SECONDARY; origin of 1.23 not stated)"
+    ],
+    [
+     "(c) generator × k_DY = 5765.4 / 5396 = 1.0685 (our DY NNLO normalisation ÷ the CP5 LO inclusive DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+     284.5303965900667,
+     "RAZOR_DY + portal 35670; assumes the Z → νν and Z → ℓℓ LO/NNLO ratios are equal"
+    ]
+   ],
+   "first": null
+  },
+  {
+   "recid": 74898,
+   "status": "NEW (D11) — DECISION NEEDED on the value",
+   "decision": "D11",
+   "sentence": "Z → νν (3 flavours) + 0-4 partons, LO MadGraph MLM, generator-level jet HT 200-400 GeV.",
+   "factors": [
+    [
+     "generator σ (portal), LO",
+     73.02,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 73.02,
+   "order": "LO (MLM-merged, 0-4 partons)",
+   "kfactor": "options (b), (c)",
+   "look": "Card `evidence/cards/74898/*run_card.dat`: htjmin = 200, htjmax = 400; RazorAnalyzer line 97 for (b); RazorAnalyzer line 90 and the portal record 35670 for (c).",
+   "convention": "No settled convention for an LO HT-binned V+jets set (our W and DY are NLO). The bins are used as they are (no stitching, D11). D6 BRs do not enter: the generator produces Z → νν directly; in (c) only the ratio NNLO/LO of the same boson enters.",
+   "alternatives": [
+    [
+     "option (b) × 1.23",
+     0.22999999999999998
+    ],
+    [
+     "option (c) × 1.0685",
+     0.06845811712379524
+    ]
+   ],
+   "atlas": "ATLAS Z → νν (700335-700337, Sherpa NLO, kFactor 1, b/c/light filters summed) = 446.8 pb, sliced differently ('pTV2' in the name; the slicing is not explained in the metadata): no like-for-like ATLAS value for an HT bin. The sum of the 7 CMS bins at option (a) is 353.0 pb.",
+   "notes": "The RazorAnalyzer LO value for the older CUETP8M1 sample of this bin was 77.67 pb (vs 73.02 pb here, CP5). Probe 31 Oct: all 42 branches present, no negative weights; LHE_HT in file 0 lies inside 200-400 GeV (min/max in PLAN_v2_summary.md). Bins contiguous and exclusive from 100 GeV (cards).",
+   "options": [
+    [
+     "(a) generator LO value (portal)",
+     73.02,
+     "portal record https://opendata.cern.ch/api/records/74897"
+    ],
+    [
+     "(b) generator × 1.23 (the k the RazorAnalyzer table applies to these HT bins)",
+     89.8146,
+     "RAZOR_ZNN (SECONDARY; origin of 1.23 not stated)"
+    ],
+    [
+     "(c) generator × k_DY = 5765.4 / 5396 = 1.0685 (our DY NNLO normalisation ÷ the CP5 LO inclusive DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+     78.01881171237953,
+     "RAZOR_DY + portal 35670; assumes the Z → νν and Z → ℓℓ LO/NNLO ratios are equal"
+    ]
+   ],
+   "first": null
+  },
+  {
+   "recid": 74902,
+   "status": "NEW (D11) — DECISION NEEDED on the value",
+   "decision": "D11",
+   "sentence": "Z → νν (3 flavours) + 0-4 partons, LO MadGraph MLM, generator-level jet HT 400-600 GeV.",
+   "factors": [
+    [
+     "generator σ (portal), LO",
+     9.914,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 9.914,
+   "order": "LO (MLM-merged, 0-4 partons)",
+   "kfactor": "options (b), (c)",
+   "look": "Card `evidence/cards/74902/*run_card.dat`: htjmin = 400, htjmax = 600; RazorAnalyzer line 98 for (b); RazorAnalyzer line 90 and the portal record 35670 for (c).",
+   "convention": "No settled convention for an LO HT-binned V+jets set (our W and DY are NLO). The bins are used as they are (no stitching, D11). D6 BRs do not enter: the generator produces Z → νν directly; in (c) only the ratio NNLO/LO of the same boson enters.",
+   "alternatives": [
+    [
+     "option (b) × 1.23",
+     0.22999999999999998
+    ],
+    [
+     "option (c) × 1.0685",
+     0.06845811712379524
+    ]
+   ],
+   "atlas": "ATLAS Z → νν (700335-700337, Sherpa NLO, kFactor 1, b/c/light filters summed) = 446.8 pb, sliced differently ('pTV2' in the name; the slicing is not explained in the metadata): no like-for-like ATLAS value for an HT bin. The sum of the 7 CMS bins at option (a) is 353.0 pb.",
+   "notes": "The RazorAnalyzer LO value for the older CUETP8M1 sample of this bin was 10.73 pb (vs 9.914 pb here, CP5). Probe 31 Oct: all 42 branches present, no negative weights; LHE_HT in file 0 lies inside 400-600 GeV (min/max in PLAN_v2_summary.md). Bins contiguous and exclusive from 100 GeV (cards).",
+   "options": [
+    [
+     "(a) generator LO value (portal)",
+     9.914,
+     "portal record https://opendata.cern.ch/api/records/74901"
+    ],
+    [
+     "(b) generator × 1.23 (the k the RazorAnalyzer table applies to these HT bins)",
+     12.19422,
+     "RAZOR_ZNN (SECONDARY; origin of 1.23 not stated)"
+    ],
+    [
+     "(c) generator × k_DY = 5765.4 / 5396 = 1.0685 (our DY NNLO normalisation ÷ the CP5 LO inclusive DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+     10.592693773165305,
+     "RAZOR_DY + portal 35670; assumes the Z → νν and Z → ℓℓ LO/NNLO ratios are equal"
+    ]
+   ],
+   "first": null
+  },
+  {
+   "recid": 74904,
+   "status": "NEW (D11) — DECISION NEEDED on the value",
+   "decision": "D11",
+   "sentence": "Z → νν (3 flavours) + 0-4 partons, LO MadGraph MLM, generator-level jet HT 600-800 GeV.",
+   "factors": [
+    [
+     "generator σ (portal), LO",
+     2.409,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 2.409,
+   "order": "LO (MLM-merged, 0-4 partons)",
+   "kfactor": "options (b), (c)",
+   "look": "Card `evidence/cards/74904/*run_card.dat`: htjmin = 600, htjmax = 800; RazorAnalyzer line 100 for (b); RazorAnalyzer line 90 and the portal record 35670 for (c).",
+   "convention": "No settled convention for an LO HT-binned V+jets set (our W and DY are NLO). The bins are used as they are (no stitching, D11). D6 BRs do not enter: the generator produces Z → νν directly; in (c) only the ratio NNLO/LO of the same boson enters.",
+   "alternatives": [
+    [
+     "option (b) × 1.23",
+     0.22999999999999998
+    ],
+    [
+     "option (c) × 1.0685",
+     0.06845811712379524
+    ]
+   ],
+   "atlas": "ATLAS Z → νν (700335-700337, Sherpa NLO, kFactor 1, b/c/light filters summed) = 446.8 pb, sliced differently ('pTV2' in the name; the slicing is not explained in the metadata): no like-for-like ATLAS value for an HT bin. The sum of the 7 CMS bins at option (a) is 353.0 pb.",
+   "notes": "The RazorAnalyzer LO value for the older CUETP8M1 sample of this bin was 2.559 pb (vs 2.409 pb here, CP5). Probe 31 Oct: all 42 branches present, no negative weights; LHE_HT in file 0 lies inside 600-800 GeV (min/max in PLAN_v2_summary.md). Bins contiguous and exclusive from 100 GeV (cards).",
+   "options": [
+    [
+     "(a) generator LO value (portal)",
+     2.409,
+     "portal record https://opendata.cern.ch/api/records/74903"
+    ],
+    [
+     "(b) generator × 1.23 (the k the RazorAnalyzer table applies to these HT bins)",
+     2.9630699999999996,
+     "RAZOR_ZNN (SECONDARY; origin of 1.23 not stated)"
+    ],
+    [
+     "(c) generator × k_DY = 5765.4 / 5396 = 1.0685 (our DY NNLO normalisation ÷ the CP5 LO inclusive DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+     2.5739156041512223,
+     "RAZOR_DY + portal 35670; assumes the Z → νν and Z → ℓℓ LO/NNLO ratios are equal"
+    ]
+   ],
+   "first": null
+  },
+  {
+   "recid": 74906,
+   "status": "NEW (D11) — DECISION NEEDED on the value",
+   "decision": "D11",
+   "sentence": "Z → νν (3 flavours) + 0-4 partons, LO MadGraph MLM, generator-level jet HT 800-1200 GeV.",
+   "factors": [
+    [
+     "generator σ (portal), LO",
+     1.077,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 1.077,
+   "order": "LO (MLM-merged, 0-4 partons)",
+   "kfactor": "options (b), (c)",
+   "look": "Card `evidence/cards/74906/*run_card.dat`: htjmin = 800, htjmax = 1200; RazorAnalyzer line 101 for (b); RazorAnalyzer line 90 and the portal record 35670 for (c).",
+   "convention": "No settled convention for an LO HT-binned V+jets set (our W and DY are NLO). The bins are used as they are (no stitching, D11). D6 BRs do not enter: the generator produces Z → νν directly; in (c) only the ratio NNLO/LO of the same boson enters.",
+   "alternatives": [
+    [
+     "option (b) × 1.23",
+     0.22999999999999998
+    ],
+    [
+     "option (c) × 1.0685",
+     0.06845811712379524
+    ]
+   ],
+   "atlas": "ATLAS Z → νν (700335-700337, Sherpa NLO, kFactor 1, b/c/light filters summed) = 446.8 pb, sliced differently ('pTV2' in the name; the slicing is not explained in the metadata): no like-for-like ATLAS value for an HT bin. The sum of the 7 CMS bins at option (a) is 353.0 pb.",
+   "notes": "The RazorAnalyzer LO value for the older CUETP8M1 sample of this bin was 1.1796 pb (vs 1.077 pb here, CP5). Probe 31 Oct: all 42 branches present, no negative weights; LHE_HT in file 0 lies inside 800-1200 GeV (min/max in PLAN_v2_summary.md). Bins contiguous and exclusive from 100 GeV (cards).",
+   "options": [
+    [
+     "(a) generator LO value (portal)",
+     1.077,
+     "portal record https://opendata.cern.ch/api/records/74905"
+    ],
+    [
+     "(b) generator × 1.23 (the k the RazorAnalyzer table applies to these HT bins)",
+     1.3247099999999998,
+     "RAZOR_ZNN (SECONDARY; origin of 1.23 not stated)"
+    ],
+    [
+     "(c) generator × k_DY = 5765.4 / 5396 = 1.0685 (our DY NNLO normalisation ÷ the CP5 LO inclusive DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+     1.1507293921423274,
+     "RAZOR_DY + portal 35670; assumes the Z → νν and Z → ℓℓ LO/NNLO ratios are equal"
+    ]
+   ],
+   "first": null
+  },
+  {
+   "recid": 74896,
+   "status": "NEW (D11) — DECISION NEEDED on the value",
+   "decision": "D11",
+   "sentence": "Z → νν (3 flavours) + 0-4 partons, LO MadGraph MLM, generator-level jet HT 1200-2500 GeV.",
+   "factors": [
+    [
+     "generator σ (portal), LO",
+     0.2495,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 0.2495,
+   "order": "LO (MLM-merged, 0-4 partons)",
+   "kfactor": "options (b), (c)",
+   "look": "Card `evidence/cards/74896/*run_card.dat`: htjmin = 1200, htjmax = 2500; RazorAnalyzer line 102 for (b); RazorAnalyzer line 90 and the portal record 35670 for (c).",
+   "convention": "No settled convention for an LO HT-binned V+jets set (our W and DY are NLO). The bins are used as they are (no stitching, D11). D6 BRs do not enter: the generator produces Z → νν directly; in (c) only the ratio NNLO/LO of the same boson enters.",
+   "alternatives": [
+    [
+     "option (b) × 1.23",
+     0.22999999999999998
+    ],
+    [
+     "option (c) × 1.0685",
+     0.06845811712379524
+    ]
+   ],
+   "atlas": "ATLAS Z → νν (700335-700337, Sherpa NLO, kFactor 1, b/c/light filters summed) = 446.8 pb, sliced differently ('pTV2' in the name; the slicing is not explained in the metadata): no like-for-like ATLAS value for an HT bin. The sum of the 7 CMS bins at option (a) is 353.0 pb.",
+   "notes": "The RazorAnalyzer LO value for the older CUETP8M1 sample of this bin was 0.28833 pb (vs 0.2495 pb here, CP5). Probe 31 Oct: all 42 branches present, no negative weights; LHE_HT in file 0 lies inside 1200-2500 GeV (min/max in PLAN_v2_summary.md). Bins contiguous and exclusive from 100 GeV (cards).",
+   "options": [
+    [
+     "(a) generator LO value (portal)",
+     0.2495,
+     "portal record https://opendata.cern.ch/api/records/74895"
+    ],
+    [
+     "(b) generator × 1.23 (the k the RazorAnalyzer table applies to these HT bins)",
+     0.306885,
+     "RAZOR_ZNN (SECONDARY; origin of 1.23 not stated)"
+    ],
+    [
+     "(c) generator × k_DY = 5765.4 / 5396 = 1.0685 (our DY NNLO normalisation ÷ the CP5 LO inclusive DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+     0.26658030022238693,
+     "RAZOR_DY + portal 35670; assumes the Z → νν and Z → ℓℓ LO/NNLO ratios are equal"
+    ]
+   ],
+   "first": null
+  },
+  {
+   "recid": 74900,
+   "status": "NEW (D11) — DECISION NEEDED on the value",
+   "decision": "D11",
+   "sentence": "Z → νν (3 flavours) + 0-4 partons, LO MadGraph MLM, generator-level jet HT 2500-Inf GeV.",
+   "factors": [
+    [
+     "generator σ (portal), LO",
+     0.005614,
+     "portal"
+    ]
+   ],
+   "sigma_eff_pb": 0.005614,
+   "order": "LO (MLM-merged, 0-4 partons)",
+   "kfactor": "options (b), (c)",
+   "look": "Card `evidence/cards/74900/*run_card.dat`: htjmin = 2500, htjmax = 1d5; RazorAnalyzer line 103 for (b); RazorAnalyzer line 90 and the portal record 35670 for (c).",
+   "convention": "No settled convention for an LO HT-binned V+jets set (our W and DY are NLO). The bins are used as they are (no stitching, D11). D6 BRs do not enter: the generator produces Z → νν directly; in (c) only the ratio NNLO/LO of the same boson enters.",
+   "alternatives": [
+    [
+     "option (b) × 1.23",
+     0.22999999999999998
+    ],
+    [
+     "option (c) × 1.0685",
+     0.06845811712379524
+    ]
+   ],
+   "atlas": "ATLAS Z → νν (700335-700337, Sherpa NLO, kFactor 1, b/c/light filters summed) = 446.8 pb, sliced differently ('pTV2' in the name; the slicing is not explained in the metadata): no like-for-like ATLAS value for an HT bin. The sum of the 7 CMS bins at option (a) is 353.0 pb.",
+   "notes": "The RazorAnalyzer LO value for the older CUETP8M1 sample of this bin was 0.006945 pb (vs 0.005614 pb here, CP5). Probe 31 Oct: all 42 branches present, no negative weights; LHE_HT in file 0 lies inside 2500-Inf GeV (min/max in PLAN_v2_summary.md). Bins contiguous and exclusive from 100 GeV (cards).",
+   "options": [
+    [
+     "(a) generator LO value (portal)",
+     0.005614,
+     "portal record https://opendata.cern.ch/api/records/74899"
+    ],
+    [
+     "(b) generator × 1.23 (the k the RazorAnalyzer table applies to these HT bins)",
+     0.00690522,
+     "RAZOR_ZNN (SECONDARY; origin of 1.23 not stated)"
+    ],
+    [
+     "(c) generator × k_DY = 5765.4 / 5396 = 1.0685 (our DY NNLO normalisation ÷ the CP5 LO inclusive DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+     0.005998323869532986,
+     "RAZOR_DY + portal 35670; assumes the Z → νν and Z → ℓℓ LO/NNLO ratios are equal"
+    ]
+   ],
+   "first": null
+  }
+ ]
+}

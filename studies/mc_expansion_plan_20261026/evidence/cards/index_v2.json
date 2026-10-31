@@ -1,0 +1,303 @@
+{
+ "75567": {
+  "name": "ZZTo2L2Nu",
+  "mini_recid": 75566,
+  "cards": [
+   "powheg.input"
+  ],
+  "pythia_decay_settings": [],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/75567/powheg.input",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/75567/runcmsgrid.sh"
+  ]
+ },
+ "35999": {
+  "name": "EWKZ2Jets_ZToLL_M-50",
+  "mini_recid": 35998,
+  "cards": [
+   "ewkzlljj_5f_LO_proc_card.dat",
+   "ewkzlljj_5f_LO_run_card.dat"
+  ],
+  "pythia_decay_settings": [],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/35999/InputCards/ewkzlljj_5f_LO_proc_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/35999/InputCards/ewkzlljj_5f_LO_run_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/35999/runcmsgrid.sh"
+  ]
+ },
+ "35987": {
+  "name": "EWKWMinus2Jets_WToLNu_M-50",
+  "mini_recid": 35986,
+  "cards": [
+   "ewkwmlvjj_5f_LO_proc_card.dat",
+   "ewkwmlvjj_5f_LO_run_card.dat"
+  ],
+  "pythia_decay_settings": [],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/35987/InputCards/ewkwmlvjj_5f_LO_proc_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/35987/InputCards/ewkwmlvjj_5f_LO_run_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/35987/runcmsgrid.sh"
+  ]
+ },
+ "35993": {
+  "name": "EWKWPlus2Jets_WToLNu_M-50",
+  "mini_recid": 35992,
+  "cards": [
+   "ewkwplvjj_5f_LO_proc_card.dat",
+   "ewkwplvjj_5f_LO_run_card.dat"
+  ],
+  "pythia_decay_settings": [],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/35993/InputCards/ewkwplvjj_5f_LO_proc_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/35993/InputCards/ewkwplvjj_5f_LO_run_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/35993/runcmsgrid.sh"
+  ]
+ },
+ "71295": {
+  "name": "WplusHToMuMu_M125",
+  "mini_recid": 71294,
+  "cards": [
+   "powheg.input"
+  ],
+  "pythia_decay_settings": [
+   "25:onIfMatch = 13 -13",
+   "25:onMode = off"
+  ],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/71295/powheg.input",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/71295/runcmsgrid.sh"
+  ]
+ },
+ "70451": {
+  "name": "WminusHToMuMu_M125",
+  "mini_recid": 70450,
+  "cards": [
+   "powheg.input"
+  ],
+  "pythia_decay_settings": [
+   "25:onIfMatch = 13 -13",
+   "25:onMode = off"
+  ],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/70451/powheg.input",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/70451/runcmsgrid.sh"
+  ]
+ },
+ "74682": {
+  "name": "ZHToMuMu_M125",
+  "mini_recid": 74681,
+  "cards": [
+   "powheg.input"
+  ],
+  "pythia_decay_settings": [
+   "25:onIfMatch = 13 -13",
+   "25:onMode = off"
+  ],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74682/powheg.input",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74682/runcmsgrid.sh"
+  ]
+ },
+ "37604": {
+  "name": "GluGluHToZG_ZToLL_M-125",
+  "mini_recid": 37602,
+  "cards": [
+   "powheg.input"
+  ],
+  "pythia_decay_settings": [
+   "23:mMin = 50.0",
+   "23:onIfAny = 11 13 15",
+   "23:onMode = off",
+   "25:onIfMatch = 23 22",
+   "25:onMode = off"
+  ],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/37603/powheg.input",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/37603/runcmsgrid.sh"
+  ]
+ },
+ "68731": {
+  "name": "VBFHToZG_ZToLL_M-125",
+  "mini_recid": 68729,
+  "cards": [
+   "powheg.input"
+  ],
+  "pythia_decay_settings": [
+   "23:mMin = 50.0",
+   "23:onIfAny = 11 13 15",
+   "23:onMode = off",
+   "25:onIfMatch = 23 22",
+   "25:onMode = off"
+  ],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/68730/powheg.input",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/68730/runcmsgrid.sh"
+  ]
+ },
+ "71145": {
+  "name": "WplusH_HToZG_WToAll_M-125",
+  "mini_recid": 71144,
+  "cards": [
+   "powheg.input"
+  ],
+  "pythia_decay_settings": [
+   "25:onIfMatch = 23 22",
+   "25:onMode = off"
+  ],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/71145/powheg.input",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/71145/runcmsgrid.sh"
+  ]
+ },
+ "70301": {
+  "name": "WminusH_HToZG_WToAll_M-125",
+  "mini_recid": 70300,
+  "cards": [
+   "powheg.input"
+  ],
+  "pythia_decay_settings": [
+   "25:onIfMatch = 23 22",
+   "25:onMode = off"
+  ],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/70301/powheg.input",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/70301/runcmsgrid.sh"
+  ]
+ },
+ "74292": {
+  "name": "ZH_HToZG_ZToAll_M-125",
+  "mini_recid": 74291,
+  "cards": [
+   "powheg.input"
+  ],
+  "pythia_decay_settings": [
+   "25:onIfMatch = 23 22",
+   "25:onMode = off"
+  ],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74292/powheg.input",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74292/runcmsgrid.sh"
+  ]
+ },
+ "40062": {
+  "name": "GluGluToZH_HToZZTo4L_M125",
+  "mini_recid": 40061,
+  "cards": [],
+  "pythia_decay_settings": [],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/40062/JHUGen.input",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/40062/JHUGen_decay.input",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/40062/runcmsgrid.sh"
+  ]
+ },
+ "74894": {
+  "name": "ZJetsToNuNu_HT-100To200",
+  "mini_recid": 74893,
+  "cards": [
+   "ZJetsToNuNu_HT100to200_proc_card.dat",
+   "ZJetsToNuNu_HT100to200_run_card.dat"
+  ],
+  "pythia_decay_settings": [],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74894/InputCards/ZJetsToNuNu_HT100to200_proc_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74894/InputCards/ZJetsToNuNu_HT100to200_run_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74894/runcmsgrid.sh"
+  ]
+ },
+ "74898": {
+  "name": "ZJetsToNuNu_HT-200To400",
+  "mini_recid": 74897,
+  "cards": [
+   "ZJetsToNuNu_HT200to400_proc_card.dat",
+   "ZJetsToNuNu_HT200to400_run_card.dat"
+  ],
+  "pythia_decay_settings": [],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74898/InputCards/ZJetsToNuNu_HT200to400_proc_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74898/InputCards/ZJetsToNuNu_HT200to400_run_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74898/runcmsgrid.sh"
+  ]
+ },
+ "74902": {
+  "name": "ZJetsToNuNu_HT-400To600",
+  "mini_recid": 74901,
+  "cards": [
+   "ZJetsToNuNu_HT400to600_proc_card.dat",
+   "ZJetsToNuNu_HT400to600_run_card.dat"
+  ],
+  "pythia_decay_settings": [],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74902/InputCards/ZJetsToNuNu_HT400to600_proc_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74902/InputCards/ZJetsToNuNu_HT400to600_run_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74902/runcmsgrid.sh"
+  ]
+ },
+ "74904": {
+  "name": "ZJetsToNuNu_HT-600To800",
+  "mini_recid": 74903,
+  "cards": [
+   "ZJetsToNuNu_HT600to800_proc_card.dat",
+   "ZJetsToNuNu_HT600to800_run_card.dat"
+  ],
+  "pythia_decay_settings": [],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74904/InputCards/ZJetsToNuNu_HT600to800_proc_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74904/InputCards/ZJetsToNuNu_HT600to800_run_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74904/runcmsgrid.sh"
+  ]
+ },
+ "74906": {
+  "name": "ZJetsToNuNu_HT-800To1200",
+  "mini_recid": 74905,
+  "cards": [
+   "ZJetsToNuNu_HT800to1200_proc_card.dat",
+   "ZJetsToNuNu_HT800to1200_run_card.dat"
+  ],
+  "pythia_decay_settings": [],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74906/InputCards/ZJetsToNuNu_HT800to1200_proc_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74906/InputCards/ZJetsToNuNu_HT800to1200_run_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74906/runcmsgrid.sh"
+  ]
+ },
+ "74896": {
+  "name": "ZJetsToNuNu_HT-1200To2500",
+  "mini_recid": 74895,
+  "cards": [
+   "ZJetsToNuNu_HT1200to2500_proc_card.dat",
+   "ZJetsToNuNu_HT1200to2500_run_card.dat"
+  ],
+  "pythia_decay_settings": [],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74896/InputCards/ZJetsToNuNu_HT1200to2500_proc_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74896/InputCards/ZJetsToNuNu_HT1200to2500_run_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74896/runcmsgrid.sh"
+  ]
+ },
+ "74900": {
+  "name": "ZJetsToNuNu_HT-2500ToInf",
+  "mini_recid": 74899,
+  "cards": [
+   "ZJetsToNuNu_HT2500toInf_proc_card.dat",
+   "ZJetsToNuNu_HT2500toInf_run_card.dat"
+  ],
+  "pythia_decay_settings": [],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74900/InputCards/ZJetsToNuNu_HT2500toInf_proc_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74900/InputCards/ZJetsToNuNu_HT2500toInf_run_card.dat",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/74900/runcmsgrid.sh"
+  ]
+ },
+ "75589": {
+  "name": "ZZTo4L (delivered; comparison for D14)",
+  "mini_recid": 75588,
+  "cards": [
+   "powheg.input"
+  ],
+  "pythia_decay_settings": [],
+  "card_urls": [
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/75589/powheg.input",
+   "https://opendata.cern.ch/eos/opendata/cms/lhe_generators/2016-sim/gridpacks/75589/runcmsgrid.sh"
+  ]
+ }
+}

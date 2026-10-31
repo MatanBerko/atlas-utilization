@@ -1,5 +1,7 @@
 # Plan: closing the MC background gap with CMS 2016 Open Data (26 Oct 2026)
 
+> **31 Oct 2026: superseded for the sample list and normalisation by `DECISIONS.md` / `XSEC_PROPOSALS_v2.md` (summary: `PLAN_v2_summary.md`).**
+
 Branch `plan/mc-expansion-20261026` (fork only). **Research and planning only:** no production
 was run, no sample was added to any config, mapping or registry, and no existing file was edited.
 Every number is VERIFIED BY RUNNING (read from the CERN Open Data API, a public page or paper, or
