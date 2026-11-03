@@ -347,3 +347,82 @@ Matan's decisions (3 Nov 18:49):
 - Walltimes are unchanged: 24 h 68045; 6 h 64635, 67645, 68083, 40062; 3 h 67691, 37446; 2 h the rest.
 
 **Data coverage (`DATA_COVERAGE.md`): all 541 files of the 10 data records were used on 25 Oct; nothing missed.**
+
+## A2 submitted (3 Nov 2026, 19:05 IST)
+
+VERIFIED BY RUNNING (submission log `evidence/submit_A2_batch1.txt`).
+- Pinned sha: **`6de9d3e605900a628bae372bdba4ea3308e9750f`**, checkout
+  `/storage/agrp/berkom/atlas-utilization/checkouts/mcexp_20261103/repo_6de9d3e605900a628bae372bdba4ea3308e9750f`
+  (HEAD asserted).
+- Work dir: `W=/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/full`. It holds `mappings/` (54 files,
+  1,206 lines), `runs/`, `logs/<record>/`, `jobids.txt`, `timing/`, `timing_jobid.txt`.
+- Held jobs 5433388 and 5433389 deleted (`qdel`, Matan's approval). Both were still in state H with names
+  mcexp_cmpb / mcexp_chk.
+- **Four-top timing job: 5434328** (68045 file index 18 = mapping line 19, 2.53 GB, 24 h, io=25). Outputs go to
+  `$W/timing/runs/record68045/job_18/`, log `$W/logs/t68045.{out,err}`. Its id is in `$W/timing_jobid.txt`. It is NOT
+  in `jobids.txt` and NOT part of the audit.
+- **Batch 1 = tiers 1-3: 17 arrays, 675 subjobs**, all written to `$W/jobids.txt` (format `<record> <job> <n> <walltime>`):
+
+| record | job | files | walltime | | record | job | files | walltime |
+|---|---|---:|---|---|---|---|---:|---|
+| 64635 | 5434329[] | 19 | 06:00:00 | | 72738 | 5434337[] | 23 | 02:00:00 |
+| 64659 | 5434330[] | 35 | 02:00:00 | | 72740 | 5434338[] | 21 | 02:00:00 |
+| 64759 | 5434331[] | 86 | 02:00:00 | | 72742 | 5434339[] | 39 | 02:00:00 |
+| 67841 | 5434332[] | 146 | 02:00:00 | | 75567 | 5434340[] | 15 | 02:00:00 |
+| 69715 | 5434333[] | 97 | 02:00:00 | | 75573 | 5434341[] | 14 | 02:00:00 |
+| 69717 | 5434334[] | 30 | 02:00:00 | | 72701 | 5434342[] | 24 | 02:00:00 |
+| 69719 | 5434335[] | 63 | 02:00:00 | | 72711 | 5434343[] | 7 | 02:00:00 |
+| 72658 | 5434336[] | 30 | 02:00:00 | | 72761 | 5434344[] | 6 | 02:00:00 |
+| | | | | | 75600 | 5434345[] | 20 | 02:00:00 |
+
+- Queued subjobs: 0 before, 649 right after submission.
+- **File count (`lfs quota`): 98,821 before, 99,726 after** submission (the clone + the work layout). Projection after
+  all six tiers + build ≈ 119,600 (ESTIMATE, table above).
+- Not submitted (by design): batch 2 (tiers 4-6, 531 subjobs) and the post chain. Everything submitted runs on its
+  own; nothing needs the laptop.
+
+### What the follow-up prompt A2b must do
+
+0. **Preflight.**
+   - `git fetch`; the branch head is the commit that holds this section (it only adds documentation on top of
+     `6de9d3e`).
+   - **Use the same pin `6de9d3e…` and the same `R`, `W` as above.** Do NOT clone again, and do NOT change the code
+     between the batches: the audit and build must see one code version.
+   - Measure the quota.
+1. **When to run it:** when fewer than **469** (= 1,000 − 531) of berkom's subjobs are queued, ideally < 450. Check:
+
+       ssh wipp-home 'bash -l -c "/opt/pbs/bin/qstat -u berkom -t | awk \"\\\$10==\\\"Q\\\"\" | wc -l"'
+
+   (on 3 Nov this printed 649 right after batch 1). If it is still too high, stop and try later.
+2. **Four-top walltime.** Look at the timing job: `/opt/pbs/bin/qstat -x 5434328`.
+   - If finished: read `Elapsed (wall clock)` in `$W/logs/t68045.err` (and `elapsed_sec` in
+     `$W/timing/runs/record68045/job_18/job_metadata.json`). Set the 68045 walltime to the smallest of
+     03/06/12/24/48 h that is ≥ 1.5 × that elapsed time; this file is the largest of the record.
+   - If it failed on walltime: use 48 h (longE allows ≤ 72 h) and report.
+   - If still running: keep 24 h.
+3. **Batch 2.** In bash on wipp-home, define `B, C, CK, W, R, Q, PY, PLAN` and the `submit_tier` function exactly as in
+   the "Ready to submit" block (they are also in `evidence/submit_A2_batch1.txt`'s script), then:
+   - `submit_tier 4; submit_tier 5; submit_tier 6`, appending to `$W/jobids.txt`;
+   - for 68045, replace the walltime from step 2 (e.g. submit 68045 by hand with that walltime and skip it in the loop);
+   - check: 54 lines in `jobids.txt`, subjobs summing to 1,206.
+4. **Post chain, immediately after batch 2, while its arrays are still queued or running.** Use the "Ready to
+   submit" chain (audit → gate → build → checks; gate → rule_builds → rulecheck), with ONE change: build the
+   dependency list only from jobs still in state Q, R or H:
+
+       ARR=""; while read rid job n wt; do st=$(/opt/pbs/bin/qstat -x "$job" 2>/dev/null | tail -1 | awk '{print $5}'); \
+         case "$st" in Q|R|H|B) ARR="$ARR:$job";; esac; done < $W/jobids.txt; echo "$ARR"
+
+   Reason (seen 3 Nov): a single-job `afterok`/`afterany` on a job that has already finished, or is exiting, stays
+   held forever. Six tier-5 samples are single files and are submitted as plain jobs, not arrays: 37432, 68571,
+   70451, 71145, 71295, 74682. PBS dropped finished ARRAYS from dependencies on 25 Oct, but do not rely on it for
+   single jobs. The audit itself still checks every line of every mapping, so nothing is skipped.
+   - Audit: `pbs_fullrun.sh WHAT=audit` with `WORK_DIR=$W,EXPECTED_SW_FAILURES=` (no expected Σw failure).
+   - Gate, checks, rule builds: `studies/mc_expansion_20261103/cluster/pbs_mcexp_post.sh`.
+   - Build: `pbs_fullrun.sh WHAT=build` with
+     `REGISTRY=studies/cms_mc_weights_v3/cms_mc_normalisation_v4.json` and
+     `EXTRA_RUNS_DIR=/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/runs` (read only), 64 GB, 8 h.
+   - Record every id in `$W/post_jobids.txt` and in this file.
+5. **If batch-1 jobs failed** (exit ≠ 0, e.g. walltime): do NOT resubmit in A2b without reporting. The audit will
+   list them and the gate will stop the build, as designed. Report the failures (record, file index, reason) for a
+   decision.
+6. Commit the job ids to this file, gate, push, switch to master, finish without waiting.
