@@ -198,8 +198,8 @@ def assert_in_full_run(record_id: str, record: dict) -> None:
     record and the registry's reason."""
     if record.get("in_full_run") is True:
         return
-    reason = ((record.get("decision_2026_10_15") or {})
-              .get("not_in_full_run_reason")
+    reason = ((record.get("decision_2026_10_15") or {}).get("not_in_full_run_reason")
+              or (record.get("decision_2026_11_03") or {}).get("not_in_full_run_reason")
               or "no reason recorded in the registry")
     raise SystemExit(
         f"STOP: record {record_id} ({record.get('physics_short', '?')}) has "
@@ -639,6 +639,16 @@ def build(args) -> dict:
     only_files = ({int(r) for r in args.file_indices.split(",") if r.strip()}
                   if args.file_indices else None)
     jobs_by_record = discover_jobs(runs_dir, only_records, only_files)
+    # MC expansion (3 Nov 2026): optional additional run directories, read
+    # only (their shards are copied to scratch like every other shard), so a
+    # build can combine earlier production with new production. A record
+    # found in two directories is a hard error (it would be counted twice).
+    for extra in (getattr(args, "extra_runs_dir", None) or []):
+        extra_jobs = discover_jobs(pathlib.Path(extra), only_records, only_files)
+        both = sorted(set(extra_jobs) & set(jobs_by_record), key=int)
+        if both:
+            raise SystemExit(f"STOP: record(s) {both} found in both {runs_dir} and {extra}")
+        jobs_by_record.update(extra_jobs)
 
     # Callers that build their own args (the tests) predate the option.
     multiplicity_rule = getattr(args, "multiplicity_rule", DEFAULT_MULTIPLICITY_RULE)
@@ -647,6 +657,8 @@ def build(args) -> dict:
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "git_commit": git_commit_hash(REPO_ROOT),
         "runs_dir": str(runs_dir),
+        "extra_runs_dirs": [str(x) for x in (getattr(args, "extra_runs_dir", None) or [])],
+        "registry": str(REGISTRY_PATH),
         "out_dir": str(out_dir),
         "is_smoke_test": bool(args.smoke_test),
         "options": {
@@ -1066,7 +1078,17 @@ def main() -> int:
                    help="label the report as a SMOKE TEST, not a physics result "
                         "(use whenever Sigma-w comes from fewer files than the "
                         "sample has)")
+    p.add_argument("--registry", default=None,
+                   help="registry JSON to normalise with (default: the v3 registry, "
+                        "cms_mc_normalisation_v3.json). MC expansion, 3 Nov 2026.")
+    p.add_argument("--extra-runs-dir", action="append", default=None,
+                   help="additional --is-mc run directory, read only; may be given "
+                        "more than once. A record present in two directories is a "
+                        "hard error. MC expansion, 3 Nov 2026.")
     args = p.parse_args()
+    if args.registry:
+        global REGISTRY_PATH
+        REGISTRY_PATH = pathlib.Path(args.registry).resolve()
     build(args)
     return 0
 

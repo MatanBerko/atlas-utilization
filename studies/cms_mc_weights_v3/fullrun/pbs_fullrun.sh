@@ -20,6 +20,9 @@ set -euo pipefail
 WORK_DIR="${WORK_DIR:?WORK_DIR not set}"
 REPO_DIR="${REPO_DIR:?REPO_DIR not set}"
 WHAT="${WHAT:?WHAT not set}"
+# MC expansion (3 Nov 2026): optional; unset = exactly the 25 Oct behaviour (v3 registry, one runs dir).
+REGISTRY="${REGISTRY:-}"
+EXTRA_RUNS_DIR="${EXTRA_RUNS_DIR:-}"
 CONDA_PROFILE="/usr/wipp/conda/24.5.0/etc/profile.d/conda.sh"
 CONDA_ENV="/storage/agrp/berkom/atlas-utilization/envs/atlas-pipeline"
 
@@ -51,7 +54,8 @@ case "$WHAT" in
     /usr/bin/time -v python -u studies/cms_mc_weights_v3/deliver/build_mc_delivery.py \
         --runs-dir "$WORK_DIR/runs" \
         --out-dir "$WORK_DIR/build_default" --out-prefix fullrun \
-        --scratch-dir "$WORK_DIR/scratch_default" --keep-scratch
+        --scratch-dir "$WORK_DIR/scratch_default" --keep-scratch \
+        ${REGISTRY:+--registry "$REGISTRY"} ${EXTRA_RUNS_DIR:+--extra-runs-dir "$EXTRA_RUNS_DIR"}
     ;;
   reproduce)
     PILOT_RUNS="${PILOT_RUNS:?PILOT_RUNS not set}"

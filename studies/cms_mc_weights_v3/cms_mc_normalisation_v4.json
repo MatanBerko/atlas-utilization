@@ -1,0 +1,3807 @@
+{
+  "what": "CMS MC normalisation registry, v4 (MC expansion). Keyed by CERN Open Data record ID.",
+  "generated_by": "studies/cms_mc_weights_v3/build_registry_v4.py",
+  "previous_version": "studies/cms_mc_weights_v3/cms_mc_normalisation_v3.json (its 15 records are carried over unchanged)",
+  "decisions": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json (Matan, 3 Nov 2026) for the added records; studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json for the v3 ones",
+  "HOW_TO_READ_cross_section_pb": "cross_section_pb is sigma_eff: the theory production cross section at the stated order, TIMES the decay branching ratio where the decay is a separate generator step, TIMES any generator-level selection factor. k_factor and gen_filt_eff are PINNED TO 1.0 and must NEVER be set from the provenance block -- every ingredient is already inside cross_section_pb, so setting them again applies the correction twice. This is a deliberate semantic difference from PR #35, where the three fields are independent ATLAS metadata values. See studies/cms_mc_weights_v3/DESIGN.md D4.",
+  "pileup_weights": "Pileup weights NOT applied (Matan, 15 Oct 2026), to align with ATLAS: upstream PR #35 (aesenc, head fa63544, unmerged as of 15 Oct) computes w = genWeight x sigma x 1000 x k x eps x L / Sigma-w with no pileup weight; upstream master uses RandomRunNumber only for trigger-year assignment. Pileup_nTrueInt remains stored (_mcraw_puntrue) so this can be revisited without re-processing; revisit if ATLAS adds pileup weighting. The CMS L1 prefiring weight stays applied (CMS-specific). See DESIGN.md D11.",
+  "target_luminosity_fb": 16.393,
+  "target_luminosity_note": "Run2016G 7.653 + Run2016H 8.740 fb^-1; the post-golden-JSON data luminosity, so the MC normalisation matches the filtered data.",
+  "campaign_required": "RunIISummer20UL16NanoAODv9 postVFP; any APV/preVFP record is a hard error (DESIGN.md D5).",
+  "sum_of_weights_note": "null for every record by design: it is MEASURED at build time as the sum of the Runs-tree genEventSumw over exactly the files that processed successfully and passed the per-file Sigma-w check (DESIGN.md D4).",
+  "unknown_record_policy": "HARD ERROR. A record absent from this registry aborts the build; nothing is ever stored unweighted.",
+  "estimates": {
+    "40062": "ESTIMATE (filter efficiency not published; the portal value 2.330e-4 pb of MiniAOD 40061 is NOT used)"
+  },
+  "full_run_records": [
+    "35631",
+    "35669",
+    "37432",
+    "37446",
+    "37474",
+    "37604",
+    "37616",
+    "37728",
+    "40062",
+    "40095",
+    "41873",
+    "41877",
+    "41914",
+    "64635",
+    "64659",
+    "64759",
+    "64839",
+    "64895",
+    "67645",
+    "67691",
+    "67801",
+    "67841",
+    "67993",
+    "68045",
+    "68073",
+    "68083",
+    "68187",
+    "68571",
+    "68591",
+    "68601",
+    "68731",
+    "68741",
+    "68847",
+    "69715",
+    "69717",
+    "69719",
+    "70301",
+    "70383",
+    "70451",
+    "70453",
+    "71145",
+    "71227",
+    "71295",
+    "71297",
+    "72658",
+    "72676",
+    "72701",
+    "72711",
+    "72738",
+    "72740",
+    "72742",
+    "72752",
+    "72761",
+    "74292",
+    "74682",
+    "74684",
+    "74894",
+    "74896",
+    "74898",
+    "74900",
+    "74902",
+    "74904",
+    "74906",
+    "75567",
+    "75573",
+    "75589",
+    "75600"
+  ],
+  "not_in_full_run_records": {
+    "35671": "would double-count Drell-Yan with 35669; cross-check only",
+    "42407": "BSM signal, not SM background",
+    "64873": "ON HOLD (Matan, 31 Oct 2026): no ATLAS nominal counterpart; waiting for Maryna.",
+    "68185": "ON HOLD (Matan, 31 Oct 2026): no ATLAS nominal counterpart; waiting for Maryna.",
+    "68206": "ON HOLD (Matan, 31 Oct 2026): no ATLAS nominal counterpart; waiting for Maryna.",
+    "68325": "ON HOLD (Matan, 31 Oct 2026): no ATLAS nominal counterpart; waiting for Maryna."
+  },
+  "deliberately_excluded_records": {
+    "records": [
+      "35633",
+      "35987",
+      "35993",
+      "35999",
+      "37276",
+      "37420",
+      "38428",
+      "38430",
+      "38432",
+      "38434",
+      "38436",
+      "38438",
+      "38440",
+      "38442",
+      "64693",
+      "64793",
+      "68459",
+      "68559",
+      "68833",
+      "69745",
+      "69747",
+      "74314",
+      "74652",
+      "74670"
+    ],
+    "why": {
+      "35633": "DYJetsToLL_M-10to50 madgraphMLM (LO): would double-count Drell-Yan with 35631.",
+      "35987": "E2: EW W-+2 jets dropped -- double counting with the tier-2 dibosons",
+      "35993": "E2: EW W++2 jets dropped -- double counting with the tier-2 dibosons",
+      "35999": "E2 (Matan, 3 Nov 2026): EW Z+2 jets dropped -- double counting with the tier-2 dibosons",
+      "37276": "D13: deferred Higgs Dalitz sample",
+      "37420": "D13: deferred Higgs Dalitz sample",
+      "38428": "gg -> ZZ family: portal values ~1000x too large; gg -> ZZ is already inside the ZZTo4L k-factor.",
+      "38430": "gg -> ZZ family (as 38428).",
+      "38432": "gg -> ZZ family (as 38428).",
+      "38434": "gg -> ZZ family (as 38428).",
+      "38436": "gg -> ZZ family (as 38428).",
+      "38438": "gg -> ZZ family (as 38428).",
+      "38440": "gg -> ZZ family (as 38428).",
+      "38442": "gg -> ZZ family (as 38428).",
+      "64693": "D4: 5-flavour t-channel antitop not used (4-flavour 64659 instead)",
+      "64793": "D4: 5-flavour t-channel top not used (4-flavour 64759 instead)",
+      "68459": "D13: deferred Higgs Dalitz sample",
+      "68559": "D13: deferred Higgs Dalitz sample",
+      "68833": "D13: deferred Higgs extra (VBF H -> ZZ -> 2l2X)",
+      "69745": "D1: inclusive NLO W+jets not used (would double count the 0J/1J/2J pieces)",
+      "69747": "D1: inclusive LO W+jets not used (would double count the 0J/1J/2J pieces)",
+      "74314": "D13: deferred Higgs extra (ZH -> ZZ 4l-filtered)",
+      "74652": "D13: deferred Higgs Dalitz sample",
+      "74670": "D13: deferred Higgs Dalitz sample"
+    }
+  },
+  "n_records": 73,
+  "records": {
+    "35631": {
+      "dataset_number": 35631,
+      "record_id": 35631,
+      "mini_recid": 35630,
+      "cross_section_pb": 18610.0,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "DYJetsToLL_M-10to50_amcatnloFXFX",
+      "generator": "amcatnloFXFX",
+      "portal_dataset_title": "/DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "table value, 18610.0 pb",
+        "sources": [
+          {
+            "citation": "RazorAnalyzer public cross-section table (SECONDARY source)",
+            "location": "line \"DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8 18610.0\" under \"#13 TeV Spring 15 MC\"",
+            "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"
+          }
+        ],
+        "order": "secondary-table",
+        "previous_cross_section_pb": null,
+        "decision_note": "NEW in the full run (was excluded). Chosen for consistency with 35669 (same table), so there is no artificial step at m(ll) = 50 GeV."
+      },
+      "provenance": {
+        "label": "DYJetsToLL_M-10to50_amcatnloFXFX",
+        "portal_total_value_pb": 20480.0,
+        "matching_filter_already_included": "yes (R1)",
+        "br_applied_description": "none needed (decay in ME)",
+        "br_value": null,
+        "generator_level_sigma_pb": 20480.0,
+        "reference_sigma_pb": 18610.0,
+        "reference_order": "RazorAnalyzer xSections.dat (generator-independent theory value)",
+        "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+        "k_factor_from_table_DO_NOT_APPLY": 0.909,
+        "sigma_eff_pb_from_table": 18610.0,
+        "n_events_record": 49267069.0,
+        "neg_weight_fraction_from_table": 0.1251,
+        "mc_equivalent_luminosity_fb": 1.48833681689859,
+        "mc_equiv_lumi_over_L": 0.09079099718773806,
+        "note": "",
+        "decision": "M-10to50: 18610 pb (RazorAnalyzer, generator-independent theory value) confirmed; no competing figure raised, unchanged.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "35669": {
+      "dataset_number": 35669,
+      "record_id": 35669,
+      "mini_recid": 35668,
+      "cross_section_pb": 5765.4,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "DYJetsToLL_M-50_amcatnloFXFX",
+      "generator": "amcatnloFXFX",
+      "portal_dataset_title": "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v2",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "3 x 1921.8 pb",
+        "sources": [
+          {
+            "citation": "RazorAnalyzer public cross-section table (SECONDARY source)",
+            "location": "line \"DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8 1921.8*3\" under \"#13 TeV Spring 15 MC\"",
+            "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"
+          }
+        ],
+        "order": "secondary-table",
+        "previous_cross_section_pb": 5765.4,
+        "decision_note": "Value unchanged. Citation CORRECTED: the old citation arXiv:1712.09814 (an electroweak Z+2-jets paper) is replaced by the RazorAnalyzer table. 2015-era value; a newer CMS-internal 6077.22 pb (not public) is ~5% higher; the generator NLO value is 6422 pb.",
+        "replaced_citation": "arXiv:1712.09814"
+      },
+      "provenance": {
+        "label": "DYJetsToLL_M-50_amcatnloFXFX",
+        "portal_total_value_pb": 6422.0,
+        "matching_filter_already_included": "yes (R1)",
+        "br_applied_description": "none needed (decay in ME; tau included, confirmed x3 factor in RazorAnalyzer)",
+        "br_value": null,
+        "generator_level_sigma_pb": 6422.0,
+        "reference_sigma_pb": 5765.4,
+        "reference_order": "NNLO FEWZ v3.1 (paper) / RazorAnalyzer 1921.8*3",
+        "reference_url": "https://arxiv.org/html/1712.09814",
+        "k_factor_from_table_DO_NOT_APPLY": 0.898,
+        "sigma_eff_pb_from_table": 5765.4,
+        "n_events_record": 71839442.0,
+        "neg_weight_fraction_from_table": 0.1635,
+        "mc_equivalent_luminosity_fb": 5.643696296114408,
+        "mc_equiv_lumi_over_L": 0.3442747694817549,
+        "note": "gridpack process name 'dyellell...FXFX' confirms decay in the ME.",
+        "decision": "KEPT 5765.4 pb (NNLO FEWZ, opened directly). Lead's 6077.22 pb (2025.74*3) NOT independently sourced this session -- searched CMS wiki/XSDB (XSDB requires CERN SSO, blocked)/general search; found a 5558-6077 pb spread across different tune/PDF choices in secondary search snippets only, none opened directly. UNVERIFIED, not adopted.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "v2_registry_provenance": {
+          "label": "DYJetsToLL_M-50_amcatnloFXFX",
+          "portal_total_value_pb": 6422.0,
+          "portal_record_url": null,
+          "matching_filter_already_included": "yes (R1)",
+          "br_applied_description": "none needed (decay in ME; tau included, confirmed x3 factor in RazorAnalyzer)",
+          "br_value": null,
+          "generator_level_sigma_pb": 6422.0,
+          "reference_sigma_pb": "5765.4",
+          "reference_order": "NNLO FEWZ v3.1 (paper) / RazorAnalyzer 1921.8*3",
+          "reference_url": "https://arxiv.org/html/1712.09814",
+          "k_factor_from_table": "0.898",
+          "decision": "KEPT 5765.4 pb (NNLO FEWZ, opened directly). Lead's 6077.22 pb (2025.74*3) NOT independently sourced this session -- searched CMS wiki/XSDB (XSDB requires CERN SSO, blocked)/general search; found a 5558-6077 pb spread across different tune/PDF choices in secondary search snippets only, none opened directly. UNVERIFIED, not adopted.",
+          "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+        },
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "35671": {
+      "dataset_number": 35671,
+      "record_id": 35671,
+      "mini_recid": 35670,
+      "cross_section_pb": 5765.4,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "DYJetsToLL_M-50_madgraphMLM",
+      "generator": "madgraphMLM",
+      "portal_dataset_title": "/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": false,
+      "added_in": "v2",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "unchanged from the previous registry (3 x 1921.8 pb)",
+        "sources": [
+          {
+            "citation": "RazorAnalyzer public cross-section table (SECONDARY source)",
+            "location": "same line as 35669",
+            "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"
+          }
+        ],
+        "order": "secondary-table",
+        "previous_cross_section_pb": 5765.4,
+        "decision_note": "NOT in the full run: LO sample that would double-count Drell-Yan with 35669. Kept in the registry as a cross-check only.",
+        "not_in_full_run_reason": "would double-count Drell-Yan with 35669; cross-check only"
+      },
+      "provenance": {
+        "label": "DYJetsToLL_M-50_madgraphMLM",
+        "portal_total_value_pb": 5396.0,
+        "matching_filter_already_included": "yes (R1)",
+        "br_applied_description": "none needed (decay in ME, DYJetsToLL convention, tau included)",
+        "br_value": null,
+        "generator_level_sigma_pb": 5396.0,
+        "reference_sigma_pb": 5765.4,
+        "reference_order": "NNLO FEWZ v3.1 / RazorAnalyzer",
+        "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+        "k_factor_from_table_DO_NOT_APPLY": 1.068,
+        "sigma_eff_pb_from_table": 5765.4,
+        "n_events_record": 82448537.0,
+        "neg_weight_fraction_from_table": 0.0,
+        "mc_equivalent_luminosity_fb": 14.300575328684914,
+        "mc_equiv_lumi_over_L": 0.8723586487332955,
+        "note": "",
+        "decision": "KEPT 5765.4 pb (NNLO FEWZ, opened directly). Lead's 6077.22 pb (2025.74*3) NOT independently sourced this session -- searched CMS wiki/XSDB (XSDB requires CERN SSO, blocked)/general search; found a 5558-6077 pb spread across different tune/PDF choices in secondary search snippets only, none opened directly. UNVERIFIED, not adopted.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "v2_registry_provenance": {
+          "label": "DYJetsToLL_M-50_madgraphMLM",
+          "portal_total_value_pb": 5396.0,
+          "portal_record_url": "https://opendata.cern.ch/record/35670",
+          "matching_filter_already_included": "yes (R1)",
+          "br_applied_description": "none needed (decay in ME, DYJetsToLL convention, tau included)",
+          "br_value": null,
+          "generator_level_sigma_pb": 5396.0,
+          "reference_sigma_pb": "5765.4",
+          "reference_order": "NNLO FEWZ v3.1 / RazorAnalyzer",
+          "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+          "k_factor_from_table": "1.068",
+          "decision": "KEPT 5765.4 pb (NNLO FEWZ, opened directly). Lead's 6077.22 pb (2025.74*3) NOT independently sourced this session -- searched CMS wiki/XSDB (XSDB requires CERN SSO, blocked)/general search; found a 5558-6077 pb spread across different tune/PDF choices in secondary search snippets only, none opened directly. UNVERIFIED, not adopted.",
+          "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+        },
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "37432": {
+      "dataset_number": 37432,
+      "record_id": 37432,
+      "mini_recid": 37431,
+      "cross_section_pb": 0.010571,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "GluGluHToMuMu_M125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/GluGluHToMuMu_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "48.58 x 0.0002176",
+        "factors": [
+          {
+            "name": "sigma(ggF)",
+            "value": 48.58,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> mumu)",
+            "value": 0.0002176,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.010571008
+      }
+    },
+    "37446": {
+      "dataset_number": 37446,
+      "record_id": 37446,
+      "mini_recid": 37445,
+      "cross_section_pb": 3.04694,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "GluGluHToTauTau_M125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/GluGluHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "48.58 x 0.06272",
+        "factors": [
+          {
+            "name": "sigma(ggF)",
+            "value": 48.58,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> tautau)",
+            "value": 0.06272,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 3.0469375999999997
+      }
+    },
+    "37474": {
+      "dataset_number": 37474,
+      "record_id": 37474,
+      "mini_recid": 37473,
+      "cross_section_pb": 1.11145,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "GluGluHToWWTo2L2Nu_M-125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/GluGluHToWWTo2L2Nu_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "48.58 x 0.2137 x 0.10706",
+        "factors": [
+          {
+            "name": "sigma(ggF)",
+            "value": 48.58,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> WW)",
+            "value": 0.2137,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(W -> l nu)^2, l = e, mu, tau",
+            "value": 0.10705983999999999,
+            "source": {
+              "citation": "PDG live, W boson",
+              "location": "W DECAY MODES: e nu 10.71 %, mu nu 10.63 %, tau nu 11.38 %, hadrons 67.41 %",
+              "url": "https://pdglive.lbl.gov/Particle.action?node=S043"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 1.11144665371264
+      }
+    },
+    "37604": {
+      "dataset_number": 37604,
+      "record_id": 37604,
+      "mini_recid": 37602,
+      "cross_section_pb": 0.00752104,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "GluGluHToZG_ZToLL_M-125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/GluGluHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "48.58 x 0.001533 x 0.10099",
+        "factors": [
+          {
+            "name": "sigma(ggF)",
+            "value": 48.58,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> Zgamma)",
+            "value": 0.001533,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(Z -> ll), l = e, mu, tau",
+            "value": 0.10099,
+            "source": {
+              "citation": "PDG live, Z boson",
+              "location": "Z DECAY MODES: ee 3.3632 %, mumu 3.3662 %, tautau 3.3696 %, invisible 20.000 %",
+              "url": "https://pdglive.lbl.gov/Particle.action?node=S044"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.0075210424086000005
+      }
+    },
+    "37616": {
+      "dataset_number": 37616,
+      "record_id": 37616,
+      "mini_recid": 37615,
+      "cross_section_pb": 0.0342475,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "GluGluHToZZTo2L2Nu_M125_powheg2_JHUGenV735_pythia8",
+      "generator": "powheg2",
+      "portal_dataset_title": "/GluGluHToZZTo2L2Nu_M125_TuneCP5_13TeV_powheg2_JHUGenV735_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "48.58 x 0.02619 x 0.0269176",
+        "factors": [
+          {
+            "name": "sigma(ggF)",
+            "value": 48.58,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> ZZ)",
+            "value": 0.02619,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "2 x BR(Z -> ee + mumu) x BR(Z -> nunu)",
+            "value": 0.026917600000000003,
+            "source": {
+              "citation": "PDG live, Z boson",
+              "location": "Z DECAY MODES: ee 3.3632 %, mumu 3.3662 %, tautau 3.3696 %, invisible 20.000 %",
+              "url": "https://pdglive.lbl.gov/Particle.action?node=S044"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.03424753703952
+      }
+    },
+    "37728": {
+      "dataset_number": 37728,
+      "record_id": 37728,
+      "mini_recid": 37727,
+      "cross_section_pb": 0.013335,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "GluGluHToZZTo4L_M125",
+      "generator": null,
+      "portal_dataset_title": "/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v3",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "48.58 pb x 2.745e-4",
+        "inputs": {
+          "production_sigma_pb": 48.58,
+          "branching_ratio": 0.0002745
+        },
+        "sources": [
+          {
+            "citation": "LHC Higgs WG twiki CERNYellowReportPageAt13TeV",
+            "location": "ggF, mH = 125.00 GeV, N3LO QCD + NLO EW",
+            "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+          },
+          {
+            "citation": "LHC Higgs WG twiki CERNYellowReportPageBR",
+            "location": "H -> ZZ -> 4l, l = e, mu, tau, mH = 125.00 GeV",
+            "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+          }
+        ],
+        "order": "N3LO QCD + NLO EW",
+        "previous_cross_section_pb": 0.013447,
+        "decision_note": "FIX: the previous 0.013447 used the branching ratio at mH = 125.09 GeV (2.768e-4) while the production cross section is at 125.00 GeV, a mass mix-up. Both are now at 125.00 GeV."
+      },
+      "provenance": {
+        "label": "GluGluHToZZTo4L_M125",
+        "portal_total_value_pb": 28.87,
+        "matching_filter_already_included": "yes (R1, w.r.t. matching/filter -- NOT w.r.t. decay BR)",
+        "br_applied_description": "BR(H->llll, l=e/mu/tau), LHC Higgs WG BR table",
+        "br_value": 0.0002768,
+        "generator_level_sigma_pb": 28.87,
+        "reference_sigma_pb": 48.58,
+        "reference_order": "N3LO QCD+NLO EW ggH production, LHC HiggsWG YR4, mH=125.00 GeV (opened directly: twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV)",
+        "reference_url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV",
+        "k_factor_from_table_DO_NOT_APPLY": 1.683,
+        "sigma_eff_pb_from_table": 0.013447,
+        "n_events_record": 1000000.0,
+        "neg_weight_fraction_from_table": 0.005184,
+        "mc_equivalent_luminosity_fb": 72831.96961582509,
+        "mc_equiv_lumi_over_L": 4442.87010405814,
+        "note": "Portal sigma is PRODUCTION-ONLY (confirmed: JHUGen decay card 'ZZ4l_withtaus.input' is a SEPARATE step from the gg_H_quark-mass-effects POWHEG production gridpack). k-factor(1.527) corrects production only; sigma_eff additionally applies BR(H->llll)=2.768e-4 (LHC HiggsWG YR BR page) to get the actual per-event-final-state cross section. Production-level k-factor of 1.527 vs the other Higgs check (VBF, k=0.96) is notably larger -- not fully explained in this session (possibly the 'quark-mass-effects' POWHEG implementation's own order differs from the heavy-top-limit N3LO/NNLO+NNLL YR4 number); flagged, not resolved.",
+        "decision": "CHANGED from 44.08 pb (NNLO+NNLL, mH=125.09) to 48.58 pb (N3LO QCD+NLO EW, mH=125.00 -- matches this sample's gridpack name 'M125' exactly; 125.09 row on the same table gives 48.52 pb, a 0.1% difference, confirming the mass-point choice barely matters here). k-factor now 1.683 (was 1.527) -- larger, not smaller; the residual gap vs this specific POWHEG 'quark-mass-effects' implementation is still NOT explained, flagged as before.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "40062": {
+      "dataset_number": 40062,
+      "record_id": 40062,
+      "mini_recid": 40061,
+      "cross_section_pb": 6.22392e-05,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "GluGluToZH_HToZZTo4L_M125-jhugenv723-pythia8",
+      "generator": "jhugen",
+      "portal_dataset_title": "/GluGluToZH_HToZZTo4L_M125_TuneCP5_13TeV-jhugenv723-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": true,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.1227 x 0.02619 x 0.10099 x eps, eps = 1 - (1 - 0.10099)^2 = 0.19178",
+        "factors": [
+          {
+            "name": "sigma(gg->ZH)",
+            "value": 0.1227,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> ZZ)",
+            "value": 0.02619,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(Z -> ll), l = e, mu, tau",
+            "value": 0.10099,
+            "source": {
+              "citation": "PDG live, Z boson",
+              "location": "Z DECAY MODES: ee 3.3632 %, mumu 3.3662 %, tautau 3.3696 %, invisible 20.000 %",
+              "url": "https://pdglive.lbl.gov/Particle.action?node=S044"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "eps(4-lepton filter), ESTIMATED",
+            "value": 0.19178101990000007,
+            "source": {
+              "citation": "plan XSEC_PROPOSALS_v2.md card 54, option (c) (ESTIMATE)",
+              "location": "plan branch commit 25d64230c9375c5403b88c1c8afa15e991e87a97: eps = 1 - (1 - 0.10099)^2, P(at least one of the two other Zs -> ll); filter efficiency not published",
+              "url": "studies/mc_expansion_plan_20261026/XSEC_PROPOSALS_v2.md"
+            },
+            "verification": "ESTIMATE"
+          }
+        ],
+        "order": "LO (JHUGen gg->ZH) normalised to YR4 x BR x estimated filter efficiency",
+        "verification": "ESTIMATE (filter efficiency not published; the portal value 2.330e-4 pb of MiniAOD 40061 is NOT used)",
+        "note": "4-lepton-filtered sample (JHUGen FilterNLept=4). The delivery README must state this ESTIMATE.",
+        "product_of_factors": 6.223920795278678e-05
+      }
+    },
+    "40095": {
+      "dataset_number": 40095,
+      "record_id": 40095,
+      "mini_recid": 40093,
+      "cross_section_pb": 0.00264806,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "GluGluZH_HToWW_ZTo2L_M-125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/GluGluZH_HToWW_ZTo2L_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.1227 x 0.2137 x 0.10099",
+        "factors": [
+          {
+            "name": "sigma(gg->ZH)",
+            "value": 0.1227,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> WW)",
+            "value": 0.2137,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(Z -> ll), l = e, mu, tau",
+            "value": 0.10099,
+            "source": {
+              "citation": "PDG live, Z boson",
+              "location": "Z DECAY MODES: ee 3.3632 %, mumu 3.3662 %, tautau 3.3696 %, invisible 20.000 %",
+              "url": "https://pdglive.lbl.gov/Particle.action?node=S044"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.0026480577801
+      }
+    },
+    "41873": {
+      "dataset_number": 41873,
+      "record_id": 41873,
+      "mini_recid": 41872,
+      "cross_section_pb": 0.113859,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "HWminusJ_HToWW_M-125-powheg-jhugen727-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/HWminusJ_HToWW_M-125_TuneCP5_13TeV-powheg-jhugen727-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.5328 x 0.2137",
+        "factors": [
+          {
+            "name": "sigma(W-H)",
+            "value": 0.5328,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> WW)",
+            "value": 0.2137,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.11385936
+      }
+    },
+    "41877": {
+      "dataset_number": 41877,
+      "record_id": 41877,
+      "mini_recid": 41876,
+      "cross_section_pb": 0.179508,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "HWplusJ_HToWW_M-125-powheg-jhugen727-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/HWplusJ_HToWW_M-125_TuneCP5_13TeV-powheg-jhugen727-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.84 x 0.2137",
+        "factors": [
+          {
+            "name": "sigma(W+H)",
+            "value": 0.84,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> WW)",
+            "value": 0.2137,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.179508
+      }
+    },
+    "41914": {
+      "dataset_number": 41914,
+      "record_id": 41914,
+      "mini_recid": 41912,
+      "cross_section_pb": 0.162668,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "HZJ_HToWW_M-125-powheg-jhugen727-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/HZJ_HToWW_M-125_TuneCP5_13TeV-powheg-jhugen727-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.7612 x 0.2137",
+        "factors": [
+          {
+            "name": "sigma(ZH, all but gg->ZH)",
+            "value": 0.7612,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> WW)",
+            "value": 0.2137,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.16266844
+      }
+    },
+    "42407": {
+      "dataset_number": 42407,
+      "record_id": 42407,
+      "mini_recid": 42406,
+      "cross_section_pb": 2.276,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "LQToBMu_M-400_pair",
+      "generator": "madgraph (LO, pair production)",
+      "portal_dataset_title": "/LQToBMu_M-400_pair_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": false,
+      "added_in": "v2",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "unchanged from the previous registry",
+        "sources": [
+          {
+            "citation": "previous registry provenance (LHC SUSY WG stop-pair proxy)",
+            "location": "see provenance block",
+            "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SUSYCrossSections13TeVstopsbottom"
+          }
+        ],
+        "order": "unchanged (previous: NNLOapprox+NNLL stop-pair proxy)",
+        "previous_cross_section_pb": 2.276,
+        "decision_note": "NOT in the full run: BSM signal, not a Standard Model background. Kept in the registry because existing code and tests use it.",
+        "not_in_full_run_reason": "BSM signal, not SM background"
+      },
+      "provenance": {
+        "label": "LQToBMu_M-400_pair (Tier0, no portal xsec)",
+        "portal_total_value_pb": null,
+        "matching_filter_already_included": "N/A - no portal cross_section block",
+        "br_applied_description": "100% by construction (CMS sample decays only to b+mu)",
+        "br_value": 1.0,
+        "generator_level_sigma_pb": null,
+        "reference_sigma_pb": 2.276,
+        "reference_order": "NNLOapprox+NNLL stop-pair proxy (LHC SUSY WG), scalar-only + small-coupling caveat",
+        "reference_url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SUSYCrossSections13TeVstopsbottom",
+        "k_factor_from_table_DO_NOT_APPLY": "N/A (no generator-level sigma to compare)",
+        "sigma_eff_pb_from_table": 2.276,
+        "n_events_record": 50000.0,
+        "neg_weight_fraction_from_table": 0.0,
+        "mc_equivalent_luminosity_fb": 21.968365553602812,
+        "mc_equiv_lumi_over_L": 1.3401064816447759,
+        "note": "ATLAS aMC@NLO LO value for the same mass (312117/312159, beta=0.5, electron decay) is 2.15 pb -- same order as the stop-pair proxy, but NOT the same physical sample (different decay flavor+beta). See Task 5.",
+        "decision": "Unchanged from v1.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "v2_registry_provenance": {
+          "label": "LQToBMu_M-400_pair (Tier0, no portal xsec)",
+          "portal_total_value_pb": null,
+          "portal_record_url": null,
+          "matching_filter_already_included": "N/A - no portal cross_section block",
+          "br_applied_description": "100% by construction (CMS sample decays only to b+mu)",
+          "br_value": "1.0",
+          "generator_level_sigma_pb": null,
+          "reference_sigma_pb": "2.276",
+          "reference_order": "NNLOapprox+NNLL stop-pair proxy (LHC SUSY WG), scalar-only + small-coupling caveat",
+          "reference_url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SUSYCrossSections13TeVstopsbottom",
+          "k_factor_from_table": "N/A (no generator-level sigma to compare)",
+          "decision": "Unchanged from v1.",
+          "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+        },
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "64635": {
+      "dataset_number": 64635,
+      "record_id": 64635,
+      "mini_recid": 64634,
+      "cross_section_pb": 3.3767,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ST_s-channel_4f_leptonDecays-amcatnlo-pythia8",
+      "generator": "amcatnlo",
+      "portal_dataset_title": "/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 1,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "10.32 x 0.3272",
+        "factors": [
+          {
+            "name": "sigma(s-channel, top + antitop)",
+            "value": 10.32,
+            "source": {
+              "citation": "LHC Top WG SingleTopRefXsec (Hathor NLO)",
+              "location": "section 'Single-top s channel cross sections', 13 TeV, row top + anti-top 10.32",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(W -> l nu), l = e, mu, tau",
+            "value": 0.3272,
+            "source": {
+              "citation": "PDG live, W boson",
+              "location": "W DECAY MODES: e nu 10.71 %, mu nu 10.63 %, tau nu 11.38 %, hadrons 67.41 %",
+              "url": "https://pdglive.lbl.gov/Particle.action?node=S043"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO (Hathor) x BR",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 3.376704
+      }
+    },
+    "64659": {
+      "dataset_number": 64659,
+      "record_id": 64659,
+      "mini_recid": 64658,
+      "cross_section_pb": 80.95,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ST_t-channel_antitop_4f_InclusiveDecays-powheg-madspin-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 1,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "80.95 (Hathor NLO, t-channel antitop)",
+        "factors": [
+          {
+            "name": "sigma(t-channel antitop)",
+            "value": 80.95,
+            "source": {
+              "citation": "LHC Top WG SingleTopRefXsec (Hathor NLO)",
+              "location": "section 'Single-top t channel cross sections (superseded)', 13 TeV, rows top 136.02 / anti-top 80.95",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO (Hathor)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 80.95
+      }
+    },
+    "64759": {
+      "dataset_number": 64759,
+      "record_id": 64759,
+      "mini_recid": 64758,
+      "cross_section_pb": 136.02,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ST_t-channel_top_4f_InclusiveDecays-powheg-madspin-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 1,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "136.02 (Hathor NLO, t-channel top)",
+        "factors": [
+          {
+            "name": "sigma(t-channel top)",
+            "value": 136.02,
+            "source": {
+              "citation": "LHC Top WG SingleTopRefXsec (Hathor NLO)",
+              "location": "section 'Single-top t channel cross sections (superseded)', 13 TeV, rows top 136.02 / anti-top 80.95",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO (Hathor)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 136.02
+      }
+    },
+    "64839": {
+      "dataset_number": 64839,
+      "record_id": 64839,
+      "mini_recid": 64838,
+      "cross_section_pb": 19.56,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ST_tW_antitop_5f_NoFullyHadronicDecays",
+      "generator": "powheg",
+      "portal_dataset_title": "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v2",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "71.7 pb / 2 x (1 - 0.6741^2) (antitop half)",
+        "sources": [
+          {
+            "citation": "LHC Top WG twiki SingleTopRefXsec",
+            "location": "tW, 13 TeV, mt = 172.5 GeV, approx. NNLO",
+            "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec"
+          }
+        ],
+        "order": "approx. NNLO",
+        "previous_cross_section_pb": 19.56,
+        "decision_note": "Same as 64895 (antitop half). Value unchanged; old citation arXiv:2208.00924 replaced.",
+        "replaced_citation": "arXiv:2208.00924",
+        "alternative_not_used": "aN3LO 79.5 pb, arXiv:2106.12910 Sect. 2 (would give 21.69 pb)"
+      },
+      "provenance": {
+        "label": "ST_tW_antitop_5f_NoFullyHadronicDecays",
+        "portal_total_value_pb": 32.51,
+        "matching_filter_already_included": "yes (R1)",
+        "br_applied_description": "selection factor 1-BR(Whad)^2 (same as top)",
+        "br_value": 0.5456,
+        "generator_level_sigma_pb": 17.74,
+        "reference_sigma_pb": 19.56,
+        "reference_order": "NNLO tW=71.7pb/2 x selection factor",
+        "reference_url": "https://arxiv.org/abs/2208.00924",
+        "k_factor_from_table_DO_NOT_APPLY": 1.103,
+        "sigma_eff_pb_from_table": 19.56,
+        "n_events_record": 3654510.0,
+        "neg_weight_fraction_from_table": 2.46e-05,
+        "mc_equivalent_luminosity_fb": 186.81750537128084,
+        "mc_equiv_lumi_over_L": 11.396175524387289,
+        "note": "",
+        "decision": "Unchanged from v1.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "v2_registry_provenance": {
+          "label": "ST_tW_antitop_5f_NoFullyHadronicDecays",
+          "portal_total_value_pb": 32.51,
+          "portal_record_url": null,
+          "matching_filter_already_included": "yes (R1)",
+          "br_applied_description": "selection factor 1-BR(Whad)^2 (same as top)",
+          "br_value": "0.5456",
+          "generator_level_sigma_pb": 17.74,
+          "reference_sigma_pb": "19.56",
+          "reference_order": "NNLO tW=71.7pb/2 x selection factor",
+          "reference_url": "https://arxiv.org/abs/2208.00924",
+          "k_factor_from_table": "1.103",
+          "decision": "Unchanged from v1.",
+          "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+        },
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "64873": {
+      "dataset_number": 64873,
+      "record_id": 64873,
+      "mini_recid": 64872,
+      "cross_section_pb": 0.01105,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ST_tWll_5f-madgraph-pythia8",
+      "generator": "madgraph",
+      "portal_dataset_title": "/ST_tWll_5f_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": false,
+      "added_in": "v4",
+      "tier": 4,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.01105 (generator, as proposed 26 Oct; NOT reviewed for use)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 0.01105,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 64872 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/64872"
+            },
+            "verification": "ON HOLD: not reviewed for use"
+          }
+        ],
+        "order": "generator",
+        "verification": "ON HOLD (no ATLAS nominal counterpart; waiting for Maryna) -- value not for use",
+        "not_in_full_run_reason": "ON HOLD (Matan, 31 Oct 2026): no ATLAS nominal counterpart; waiting for Maryna.",
+        "product_of_factors": 0.01105
+      }
+    },
+    "64895": {
+      "dataset_number": 64895,
+      "record_id": 64895,
+      "mini_recid": 64894,
+      "cross_section_pb": 19.56,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ST_tW_top_5f_NoFullyHadronicDecays",
+      "generator": "powheg",
+      "portal_dataset_title": "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v2",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "71.7 pb / 2 x (1 - 0.6741^2)",
+        "sources": [
+          {
+            "citation": "LHC Top WG twiki SingleTopRefXsec",
+            "location": "tW, 13 TeV, mt = 172.5 GeV, approx. NNLO",
+            "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec"
+          }
+        ],
+        "order": "approx. NNLO",
+        "previous_cross_section_pb": 19.56,
+        "decision_note": "Value unchanged. Citation CORRECTED: the old citation arXiv:2208.00924 (a CMS tW measurement) is replaced by the LHC Top WG twiki.",
+        "replaced_citation": "arXiv:2208.00924",
+        "alternative_not_used": "aN3LO 79.5 pb, arXiv:2106.12910 Sect. 2 (would give 21.69 pb)"
+      },
+      "provenance": {
+        "label": "ST_tW_top_5f_NoFullyHadronicDecays",
+        "portal_total_value_pb": 32.45,
+        "matching_filter_already_included": "yes (R1)",
+        "br_applied_description": "selection factor 1-BR(Whad)^2 (NOT a simple BR; explicit LHEGenericFilter confirmed in fragment, but filter_efficiency field shows 1.000)",
+        "br_value": 0.5456,
+        "generator_level_sigma_pb": 17.7,
+        "reference_sigma_pb": 19.56,
+        "reference_order": "NNLO tW=71.7pb/2 (arXiv:2208.00924) x selection factor",
+        "reference_url": "https://arxiv.org/abs/2208.00924",
+        "k_factor_from_table_DO_NOT_APPLY": 1.105,
+        "sigma_eff_pb_from_table": 19.56,
+        "n_events_record": 3368375.0,
+        "neg_weight_fraction_from_table": 2.05e-05,
+        "mc_equivalent_luminosity_fb": 172.19319012843758,
+        "mc_equiv_lumi_over_L": 10.5040682076763,
+        "note": "RazorAnalyzer explicitly lists the SAME formula '35.85*0.546' -- 0.546 matches 1-BR(Whad)^2 to 3 sig figs, confirming this selection is NOT baked into filter_efficiency=1.000 shown on the portal.",
+        "decision": "Unchanged from v1.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "v2_registry_provenance": {
+          "label": "ST_tW_top_5f_NoFullyHadronicDecays",
+          "portal_total_value_pb": 32.45,
+          "portal_record_url": null,
+          "matching_filter_already_included": "yes (R1)",
+          "br_applied_description": "selection factor 1-BR(Whad)^2 (NOT a simple BR; explicit LHEGenericFilter confirmed in fragment, but filter_efficiency field shows 1.000)",
+          "br_value": "0.5456",
+          "generator_level_sigma_pb": 17.7,
+          "reference_sigma_pb": "19.56",
+          "reference_order": "NNLO tW=71.7pb/2 (arXiv:2208.00924) x selection factor",
+          "reference_url": "https://arxiv.org/abs/2208.00924",
+          "k_factor_from_table": "1.105",
+          "decision": "Unchanged from v1.",
+          "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+        },
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "67645": {
+      "dataset_number": 67645,
+      "record_id": 67645,
+      "mini_recid": 67644,
+      "cross_section_pb": 0.29534,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ttHTobb_M125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 4,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.5071 x 0.5824",
+        "factors": [
+          {
+            "name": "sigma(ttH)",
+            "value": 0.5071,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> bb)",
+            "value": 0.5824,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO QCD + NLO EW (YR4) x BR",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.29533504
+      }
+    },
+    "67691": {
+      "dataset_number": 67691,
+      "record_id": 67691,
+      "mini_recid": 67690,
+      "cross_section_pb": 0.21176,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ttHToNonbb_M125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 4,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.5071 x (1 - 0.5824)",
+        "factors": [
+          {
+            "name": "sigma(ttH)",
+            "value": 0.5071,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "1 - BR(H -> bb)",
+            "value": 0.41759999999999997,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO QCD + NLO EW (YR4) x BR",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.21176495999999997
+      }
+    },
+    "67801": {
+      "dataset_number": 67801,
+      "record_id": 67801,
+      "mini_recid": 67800,
+      "cross_section_pb": 89.28,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "TTTo2L2Nu",
+      "generator": "powheg",
+      "portal_dataset_title": "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v2",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "833.9 pb x 0.10706, where 0.10706 = (0.1071 + 0.1063 + 0.1138)^2",
+        "sources": [
+          {
+            "citation": "LHC Top WG twiki TtbarNNLO",
+            "location": "13 TeV, mt = 172.5 GeV, NNLO+NNLL",
+            "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO"
+          },
+          {
+            "citation": "PDG W branching ratios",
+            "location": "pdglive node S043, individually measured values (e, mu, tau)",
+            "url": "https://pdglive.lbl.gov/Particle.action?node=S043"
+          }
+        ],
+        "order": "NNLO+NNLL",
+        "previous_cross_section_pb": 89.28,
+        "decision_note": "Value unchanged; sources re-checked."
+      },
+      "provenance": {
+        "label": "TTTo2L2Nu",
+        "portal_total_value_pb": 687.1,
+        "matching_filter_already_included": "yes (R1)",
+        "br_applied_description": "BR(dilepton, e/mu/tau)=BR(Wlep)^2, PDG",
+        "br_value": 0.10706,
+        "generator_level_sigma_pb": 73.56,
+        "reference_sigma_pb": 89.28,
+        "reference_order": "NNLO+NNLL (TopWG) x BR(dilep)",
+        "reference_url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO",
+        "k_factor_from_table_DO_NOT_APPLY": 1.214,
+        "sigma_eff_pb_from_table": 89.28,
+        "n_events_record": 43546000.0,
+        "neg_weight_fraction_from_table": 0.00401,
+        "mc_equivalent_luminosity_fb": 479.95433530620966,
+        "mc_equiv_lumi_over_L": 29.2780049598127,
+        "note": "portal 687.1pb is the SHARED INCLUSIVE ttbar xsec (identical on TTToSemiLeptonic sibling); production-only, BR applied by hand. xSections.dat (RazorCMS) lists 87.31 pb for the decay-exclusive TTTo2L2Nu directly, consistent (older tune).",
+        "decision": "Unchanged from v1.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "v2_registry_provenance": {
+          "label": "TTTo2L2Nu",
+          "portal_total_value_pb": 687.1,
+          "portal_record_url": "https://opendata.cern.ch/record/67800",
+          "matching_filter_already_included": "yes (R1)",
+          "br_applied_description": "BR(dilepton, e/mu/tau)=BR(Wlep)^2, PDG",
+          "br_value": "0.10706",
+          "generator_level_sigma_pb": 73.56,
+          "reference_sigma_pb": "89.28",
+          "reference_order": "NNLO+NNLL (TopWG) x BR(dilep)",
+          "reference_url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO",
+          "k_factor_from_table": "1.214",
+          "decision": "Unchanged from v1.",
+          "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+        },
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "67841": {
+      "dataset_number": 67841,
+      "record_id": 67841,
+      "mini_recid": 67840,
+      "cross_section_pb": 378.93,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "TTToHadronic-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 1,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "833.9 x 0.6741^2",
+        "factors": [
+          {
+            "name": "sigma(ttbar) NNLO+NNLL",
+            "value": 833.9,
+            "source": {
+              "citation": "LHC Top WG TtbarNNLO",
+              "location": "table 'Updated reference cross sections' (July 2022), 13 TeV, central value 833.9",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(W -> hadrons)^2",
+            "value": 0.45441081000000005,
+            "source": {
+              "citation": "PDG live, W boson",
+              "location": "W DECAY MODES: e nu 10.71 %, mu nu 10.63 %, tau nu 11.38 %, hadrons 67.41 %",
+              "url": "https://pdglive.lbl.gov/Particle.action?node=S043"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NNLO+NNLL x BR",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 378.93317445900004
+      }
+    },
+    "67993": {
+      "dataset_number": 67993,
+      "record_id": 67993,
+      "mini_recid": 67992,
+      "cross_section_pb": 367.86,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "TTToSemiLeptonic",
+      "generator": "powheg",
+      "portal_dataset_title": "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v2",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "833.9 pb x 0.44113, where 0.44113 = 2 x 0.3272 x 0.6741",
+        "sources": [
+          {
+            "citation": "LHC Top WG twiki TtbarNNLO",
+            "location": "13 TeV, mt = 172.5 GeV, NNLO+NNLL",
+            "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO"
+          },
+          {
+            "citation": "PDG W branching ratios",
+            "location": "pdglive node S043, individually measured leptonic values; BR(W -> hadrons) = 0.6741",
+            "url": "https://pdglive.lbl.gov/Particle.action?node=S043"
+          }
+        ],
+        "order": "NNLO+NNLL",
+        "previous_cross_section_pb": 367.86,
+        "decision_note": "Value unchanged; sources re-checked."
+      },
+      "provenance": {
+        "label": "TTToSemiLeptonic",
+        "portal_total_value_pb": 687.1,
+        "matching_filter_already_included": "yes (R1)",
+        "br_applied_description": "BR(semileptonic)=2*BR(Whad)*BR(Wlep), PDG",
+        "br_value": 0.44113,
+        "generator_level_sigma_pb": 303.1,
+        "reference_sigma_pb": 367.86,
+        "reference_order": "NNLO+NNLL (TopWG) x BR(semilep)",
+        "reference_url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO",
+        "k_factor_from_table_DO_NOT_APPLY": 1.214,
+        "sigma_eff_pb_from_table": 367.86,
+        "n_events_record": 144722000.0,
+        "neg_weight_fraction_from_table": 0.00401,
+        "mc_equivalent_luminosity_fb": 387.1308859265177,
+        "mc_equiv_lumi_over_L": 23.615621663302488,
+        "note": "Portal 687.1pb identical to TTTo2L2Nu (shared inclusive value). f is NOT independently Task-B-measured for this sample; the TTTo2L2Nu Task-B value is used as a same-gridpack-family proxy (flagged). xSections.dat lists 320.1 pb directly for the decay-exclusive channel (older tune) -- consistent order with our own BR-scaled number.",
+        "decision": "Unchanged from v1.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "v2_registry_provenance": {
+          "label": "TTToSemiLeptonic",
+          "portal_total_value_pb": 687.1,
+          "portal_record_url": null,
+          "matching_filter_already_included": "yes (R1)",
+          "br_applied_description": "BR(semileptonic)=2*BR(Whad)*BR(Wlep), PDG",
+          "br_value": "0.44113",
+          "generator_level_sigma_pb": 303.1,
+          "reference_sigma_pb": "367.86",
+          "reference_order": "NNLO+NNLL (TopWG) x BR(semilep)",
+          "reference_url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO",
+          "k_factor_from_table": "1.214",
+          "decision": "Unchanged from v1.",
+          "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+        },
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "68045": {
+      "dataset_number": 68045,
+      "record_id": 68045,
+      "mini_recid": 68044,
+      "cross_section_pb": 0.01197,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "TTTT-amcatnlo-pythia8",
+      "generator": "amcatnlo",
+      "portal_dataset_title": "/TTTT_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 4,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "11.97 fb (complete NLO QCD+EW)",
+        "factors": [
+          {
+            "name": "sigma(tttt) [11.97 fb]",
+            "value": 0.01197,
+            "source": {
+              "citation": "arXiv:1711.02116",
+              "location": "Table 5, mu = HT/4, column 'LO + NLO': 11.97 fb",
+              "url": "https://arxiv.org/abs/1711.02116"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "complete NLO QCD+EW",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "D7; ATLAS 412043 = 12.03 fb.",
+        "product_of_factors": 0.01197
+      }
+    },
+    "68073": {
+      "dataset_number": 68073,
+      "record_id": 68073,
+      "mini_recid": 68072,
+      "cross_section_pb": 0.2151,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "TTWJetsToLNu",
+      "generator": "madgraphMLM (aMC@NLO ME + Pythia8 shower)",
+      "portal_dataset_title": "/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v2",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "generator value",
+        "sources": [
+          {
+            "citation": "CERN Open Data record 68072 (generator cross section)",
+            "location": "metadata.cross_section.total_value",
+            "url": "https://opendata.cern.ch/record/68072"
+          }
+        ],
+        "order": "NLO",
+        "previous_cross_section_pb": 0.2043,
+        "decision_note": "ORDER: NLO (no NNLO exists for ttW)."
+      },
+      "provenance": {
+        "label": "TTWJetsToLNu",
+        "portal_total_value_pb": 0.2151,
+        "matching_filter_already_included": "yes (R1)",
+        "br_applied_description": "none needed (decay in ME, MadGraph process name ToLNu)",
+        "br_value": null,
+        "generator_level_sigma_pb": 0.2151,
+        "reference_sigma_pb": 0.2043,
+        "reference_order": "RazorAnalyzer xSections.dat",
+        "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+        "k_factor_from_table_DO_NOT_APPLY": 0.95,
+        "sigma_eff_pb_from_table": 0.2043,
+        "n_events_record": 3322643.0,
+        "neg_weight_fraction_from_table": 0.2281,
+        "mc_equivalent_luminosity_fb": 4809.431251282037,
+        "mc_equiv_lumi_over_L": 293.38322767535146,
+        "note": "",
+        "decision": "Unchanged from v1. Provenance note (Task 4f): the reference value comes from RazorAnalyzer/xSections.dat, a third-party CMS analysis group's internal cross-section table -- NOT a primary theory source (not an LHC WG page, not a published paper). Treat its agreement as corroborating, not as an independent theory confirmation.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "v2_registry_provenance": {
+          "label": "TTWJetsToLNu",
+          "portal_total_value_pb": 0.2151,
+          "portal_record_url": null,
+          "matching_filter_already_included": "yes (R1)",
+          "br_applied_description": "none needed (decay in ME, MadGraph process name ToLNu)",
+          "br_value": null,
+          "generator_level_sigma_pb": 0.2151,
+          "reference_sigma_pb": "0.2043",
+          "reference_order": "RazorAnalyzer xSections.dat",
+          "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+          "k_factor_from_table": "0.95",
+          "decision": "Unchanged from v1. Provenance note (Task 4f): the reference value comes from RazorAnalyzer/xSections.dat, a third-party CMS analysis group's internal cross-section table -- NOT a primary theory source (not an LHC WG page, not a published paper). Treat its agreement as corroborating, not as an independent theory confirmation.",
+          "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+        },
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "68083": {
+      "dataset_number": 68083,
+      "record_id": 68083,
+      "mini_recid": 68082,
+      "cross_section_pb": 0.4375,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "TTWJetsToQQ-amcatnloFXFX-madspin-pythia8",
+      "generator": "amcatnloFXFX",
+      "portal_dataset_title": "/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 4,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.4375 (generator NLO)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 0.4375,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 68082 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/68082"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO (generator)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "Portal matching efficiency 0.6 shown, not applied.",
+        "product_of_factors": 0.4375
+      }
+    },
+    "68185": {
+      "dataset_number": 68185,
+      "record_id": 68185,
+      "mini_recid": 68184,
+      "cross_section_pb": 0.0537,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "TTZToLL_M-1to10-amcatnlo-pythia8",
+      "generator": "amcatnlo",
+      "portal_dataset_title": "/TTZToLL_M-1to10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": false,
+      "added_in": "v4",
+      "tier": 4,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.0537 (generator, as proposed 26 Oct; NOT reviewed for use)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 0.0537,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 68184 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/68184"
+            },
+            "verification": "ON HOLD: not reviewed for use"
+          }
+        ],
+        "order": "generator",
+        "verification": "ON HOLD (no ATLAS nominal counterpart; waiting for Maryna) -- value not for use",
+        "not_in_full_run_reason": "ON HOLD (Matan, 31 Oct 2026): no ATLAS nominal counterpart; waiting for Maryna.",
+        "product_of_factors": 0.0537
+      }
+    },
+    "68187": {
+      "dataset_number": 68187,
+      "record_id": 68187,
+      "mini_recid": 68186,
+      "cross_section_pb": 0.2439,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "TTZToLLNuNu_M-10",
+      "generator": "madgraphMLM (aMC@NLO ME + Pythia8 shower)",
+      "portal_dataset_title": "/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v2",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "generator value",
+        "sources": [
+          {
+            "citation": "CERN Open Data record 68186 (generator cross section)",
+            "location": "metadata.cross_section.total_value",
+            "url": "https://opendata.cern.ch/record/68186"
+          }
+        ],
+        "order": "NLO",
+        "previous_cross_section_pb": 0.2529,
+        "decision_note": "ORDER: NLO (no NNLO exists for ttZ)."
+      },
+      "provenance": {
+        "label": "TTZToLLNuNu_M-10",
+        "portal_total_value_pb": 0.2439,
+        "matching_filter_already_included": "yes (R1)",
+        "br_applied_description": "none needed (decay in ME, MadGraph process name ToLLNuNu)",
+        "br_value": null,
+        "generator_level_sigma_pb": 0.2439,
+        "reference_sigma_pb": 0.2529,
+        "reference_order": "RazorAnalyzer xSections.dat",
+        "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+        "k_factor_from_table_DO_NOT_APPLY": 1.037,
+        "sigma_eff_pb_from_table": 0.2529,
+        "n_events_record": 6017000.0,
+        "neg_weight_fraction_from_table": 0.2538,
+        "mc_equivalent_luminosity_fb": 5768.55809379201,
+        "mc_equiv_lumi_over_L": 351.89154479302204,
+        "note": "",
+        "decision": "Unchanged from v1. Provenance note (Task 4f): the reference value comes from RazorAnalyzer/xSections.dat, a third-party CMS analysis group's internal cross-section table -- NOT a primary theory source (not an LHC WG page, not a published paper). Treat its agreement as corroborating, not as an independent theory confirmation.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "v2_registry_provenance": {
+          "label": "TTZToLLNuNu_M-10",
+          "portal_total_value_pb": 0.2439,
+          "portal_record_url": null,
+          "matching_filter_already_included": "yes (R1)",
+          "br_applied_description": "none needed (decay in ME, MadGraph process name ToLLNuNu)",
+          "br_value": null,
+          "generator_level_sigma_pb": 0.2439,
+          "reference_sigma_pb": "0.2529",
+          "reference_order": "RazorAnalyzer xSections.dat",
+          "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+          "k_factor_from_table": "1.037",
+          "decision": "Unchanged from v1. Provenance note (Task 4f): the reference value comes from RazorAnalyzer/xSections.dat, a third-party CMS analysis group's internal cross-section table -- NOT a primary theory source (not an LHC WG page, not a published paper). Treat its agreement as corroborating, not as an independent theory confirmation.",
+          "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+        },
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "68206": {
+      "dataset_number": 68206,
+      "record_id": 68206,
+      "mini_recid": 68204,
+      "cross_section_pb": 0.5113,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "TTZToQQ-amcatnlo-pythia8",
+      "generator": "amcatnlo",
+      "portal_dataset_title": "/TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": false,
+      "added_in": "v4",
+      "tier": 4,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.5113 (generator, as proposed 26 Oct; NOT reviewed for use)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 0.5113,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 68204 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/68204"
+            },
+            "verification": "ON HOLD: not reviewed for use"
+          }
+        ],
+        "order": "generator",
+        "verification": "ON HOLD (no ATLAS nominal counterpart; waiting for Maryna) -- value not for use",
+        "not_in_full_run_reason": "ON HOLD (Matan, 31 Oct 2026): no ATLAS nominal counterpart; waiting for Maryna.",
+        "product_of_factors": 0.5113
+      }
+    },
+    "68325": {
+      "dataset_number": 68325,
+      "record_id": 68325,
+      "mini_recid": 68324,
+      "cross_section_pb": 0.07561,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "tZq_ll_4f_ckm_NLO-amcatnlo-pythia8",
+      "generator": "amcatnlo",
+      "portal_dataset_title": "/tZq_ll_4f_ckm_NLO_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": false,
+      "added_in": "v4",
+      "tier": 4,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.07561 (generator, as proposed 26 Oct; NOT reviewed for use)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 0.07561,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 68324 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/68324"
+            },
+            "verification": "ON HOLD: not reviewed for use"
+          }
+        ],
+        "order": "generator",
+        "verification": "ON HOLD (no ATLAS nominal counterpart; waiting for Maryna) -- value not for use",
+        "not_in_full_run_reason": "ON HOLD (Matan, 31 Oct 2026): no ATLAS nominal counterpart; waiting for Maryna.",
+        "product_of_factors": 0.07561
+      }
+    },
+    "68571": {
+      "dataset_number": 68571,
+      "record_id": 68571,
+      "mini_recid": 68570,
+      "cross_section_pb": 0.000822963,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "VBFHToMuMu_M125_withDipoleRecoil-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/VBFHToMuMu_M125_TuneCP5_withDipoleRecoil_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "3.782 x 0.0002176",
+        "factors": [
+          {
+            "name": "sigma(VBF)",
+            "value": 3.782,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> mumu)",
+            "value": 0.0002176,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.0008229632
+      }
+    },
+    "68591": {
+      "dataset_number": 68591,
+      "record_id": 68591,
+      "mini_recid": 68590,
+      "cross_section_pb": 0.237207,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "VBFHToTauTau_M125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/VBFHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "3.782 x 0.06272",
+        "factors": [
+          {
+            "name": "sigma(VBF)",
+            "value": 3.782,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> tautau)",
+            "value": 0.06272,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.23720704
+      }
+    },
+    "68601": {
+      "dataset_number": 68601,
+      "record_id": 68601,
+      "mini_recid": 68600,
+      "cross_section_pb": 0.0865272,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "VBFHToWWTo2L2Nu_M125_powheg2_JHUGenV714_pythia8",
+      "generator": "powheg2",
+      "portal_dataset_title": "/VBFHToWWTo2L2Nu_M125_TuneCP5_13TeV_powheg2_JHUGenV714_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "3.782 x 0.2137 x 0.10706",
+        "factors": [
+          {
+            "name": "sigma(VBF)",
+            "value": 3.782,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> WW)",
+            "value": 0.2137,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(W -> l nu)^2, l = e, mu, tau",
+            "value": 0.10705983999999999,
+            "source": {
+              "citation": "PDG live, W boson",
+              "location": "W DECAY MODES: e nu 10.71 %, mu nu 10.63 %, tau nu 11.38 %, hadrons 67.41 %",
+              "url": "https://pdglive.lbl.gov/Particle.action?node=S043"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.08652719728985599
+      }
+    },
+    "68731": {
+      "dataset_number": 68731,
+      "record_id": 68731,
+      "mini_recid": 68729,
+      "cross_section_pb": 0.00058552,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "VBFHToZG_ZToLL_M-125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "3.782 x 0.001533 x 0.10099",
+        "factors": [
+          {
+            "name": "sigma(VBF)",
+            "value": 3.782,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> Zgamma)",
+            "value": 0.001533,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(Z -> ll), l = e, mu, tau",
+            "value": 0.10099,
+            "source": {
+              "citation": "PDG live, Z boson",
+              "location": "Z DECAY MODES: ee 3.3632 %, mumu 3.3662 %, tautau 3.3696 %, invisible 20.000 %",
+              "url": "https://pdglive.lbl.gov/Particle.action?node=S044"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.00058552042794
+      }
+    },
+    "68741": {
+      "dataset_number": 68741,
+      "record_id": 68741,
+      "mini_recid": 68740,
+      "cross_section_pb": 0.0026662,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "VBF_HToZZTo2L2Nu_M125_powheg2_JHUGenV735_pythia8",
+      "generator": "powheg2",
+      "portal_dataset_title": "/VBF_HToZZTo2L2Nu_M125_TuneCP5_13TeV_powheg2_JHUGenV735_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v3/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "3.782 x 0.02619 x 0.0269176",
+        "factors": [
+          {
+            "name": "sigma(VBF)",
+            "value": 3.782,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> ZZ)",
+            "value": 0.02619,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "2 x BR(Z -> ee + mumu) x BR(Z -> nunu)",
+            "value": 0.026917600000000003,
+            "source": {
+              "citation": "PDG live, Z boson",
+              "location": "Z DECAY MODES: ee 3.3632 %, mumu 3.3662 %, tautau 3.3696 %, invisible 20.000 %",
+              "url": "https://pdglive.lbl.gov/Particle.action?node=S044"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.002666203892208001
+      }
+    },
+    "68847": {
+      "dataset_number": 68847,
+      "record_id": 68847,
+      "mini_recid": 68846,
+      "cross_section_pb": 0.0010382,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "VBF_HToZZTo4L_M125",
+      "generator": "powheg2_JHUGenV7011",
+      "portal_dataset_title": "/VBF_HToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "3.782 pb x 2.745e-4",
+        "inputs": {
+          "production_sigma_pb": 3.782,
+          "branching_ratio": 0.0002745
+        },
+        "sources": [
+          {
+            "citation": "LHC Higgs WG twiki CERNYellowReportPageAt13TeV",
+            "location": "VBF, mH = 125.00 GeV",
+            "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+          },
+          {
+            "citation": "LHC Higgs WG twiki CERNYellowReportPageBR",
+            "location": "H -> ZZ -> 4l, l = e, mu, tau, mH = 125.00 GeV",
+            "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+          }
+        ],
+        "order": "not stated in the decision list (the earlier v2 table recorded NNLO QCD + NLO EW for this page; UNVERIFIED here, for Matan to confirm)",
+        "previous_cross_section_pb": null,
+        "decision_note": "NEW in the full run (was excluded). Uses the same Higgs WG pages as 37728 (mH = 125.00 GeV)."
+      },
+      "provenance": {
+        "label": "VBF_HToZZTo4L_M125",
+        "portal_total_value_pb": 3.935,
+        "matching_filter_already_included": "yes (R1, w.r.t. matching/filter -- NOT w.r.t. decay BR)",
+        "br_applied_description": "BR(H->llll, l=e/mu/tau), LHC Higgs WG BR table",
+        "br_value": 0.0002768,
+        "generator_level_sigma_pb": 3.935,
+        "reference_sigma_pb": 3.782,
+        "reference_order": "NNLO QCD+NLO EW VBF production, LHC HiggsWG YR4, mH=125.00 GeV (opened directly)",
+        "reference_url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV",
+        "k_factor_from_table_DO_NOT_APPLY": 0.961,
+        "sigma_eff_pb_from_table": 0.001047,
+        "n_events_record": 498000.0,
+        "neg_weight_fraction_from_table": 0.0006888,
+        "mc_equivalent_luminosity_fb": 474335.10553516384,
+        "mc_equiv_lumi_over_L": 28935.222688657588,
+        "note": "Production-only portal sigma (3.935 pb) already matches the bare VBF production reference (3.779 pb) to ~4% -- the cleanest production-level match in this table. sigma_eff additionally applies BR(H->llll)=2.768e-4.",
+        "decision": "mH=125.00 row used (3.782 pb) instead of 125.09 (3.779 pb) -- 0.08% difference, negligible. k-factor now 0.961 (was 0.96) -- essentially unchanged.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "69715": {
+      "dataset_number": 69715,
+      "record_id": 69715,
+      "mini_recid": 69714,
+      "cross_section_pb": 49999.6,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WJetsToLNu_0J-amcatnloFXFX-pythia8",
+      "generator": "amcatnloFXFX",
+      "portal_dataset_title": "/WJetsToLNu_0J_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 1,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "53300 x 61526.7 / (53300 + 8958 + 3330)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 53300.0,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 69714 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/69714"
+            },
+            "verification": "technical-lead saved copy, live check pending"
+          },
+          {
+            "name": "k = 61526.7 / (53300 + 8958 + 3330) (W NNLO inclusive / sum of the three NLO pieces)",
+            "value": 0.9380786119412087,
+            "source": {
+              "citation": "RazorAnalyzer data/xSections.dat (SECONDARY source)",
+              "location": "line 64: WJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8 61526.7",
+              "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO generator x NNLO/NLO k-factor",
+        "verification": "technical-lead saved copy, live check pending for the three portal values (5.330e+04 / 8.958e+03 / 3.330e+03); 61526.7 VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "Each jet piece used alone, no stitching (D1). k uses all three portal values, so all three carry the live-check-pending note.",
+        "product_of_factors": 49999.59001646642
+      }
+    },
+    "69717": {
+      "dataset_number": 69717,
+      "record_id": 69717,
+      "mini_recid": 69716,
+      "cross_section_pb": 8403.3,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WJetsToLNu_1J-amcatnloFXFX-pythia8",
+      "generator": "amcatnloFXFX",
+      "portal_dataset_title": "/WJetsToLNu_1J_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 1,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "8958 x 61526.7 / (53300 + 8958 + 3330)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 8958.0,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 69716 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/69716"
+            },
+            "verification": "technical-lead saved copy, live check pending"
+          },
+          {
+            "name": "k = 61526.7 / (53300 + 8958 + 3330) (W NNLO inclusive / sum of the three NLO pieces)",
+            "value": 0.9380786119412087,
+            "source": {
+              "citation": "RazorAnalyzer data/xSections.dat (SECONDARY source)",
+              "location": "line 64: WJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8 61526.7",
+              "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO generator x NNLO/NLO k-factor",
+        "verification": "technical-lead saved copy, live check pending for the three portal values (5.330e+04 / 8.958e+03 / 3.330e+03); 61526.7 VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "Each jet piece used alone, no stitching (D1). k uses all three portal values, so all three carry the live-check-pending note.",
+        "product_of_factors": 8403.308205769346
+      }
+    },
+    "69719": {
+      "dataset_number": 69719,
+      "record_id": 69719,
+      "mini_recid": 69718,
+      "cross_section_pb": 3123.8,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WJetsToLNu_2J-amcatnloFXFX-pythia8",
+      "generator": "amcatnloFXFX",
+      "portal_dataset_title": "/WJetsToLNu_2J_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 1,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "3330 x 61526.7 / (53300 + 8958 + 3330)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 3330.0,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 69718 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/69718"
+            },
+            "verification": "technical-lead saved copy, live check pending"
+          },
+          {
+            "name": "k = 61526.7 / (53300 + 8958 + 3330) (W NNLO inclusive / sum of the three NLO pieces)",
+            "value": 0.9380786119412087,
+            "source": {
+              "citation": "RazorAnalyzer data/xSections.dat (SECONDARY source)",
+              "location": "line 64: WJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8 61526.7",
+              "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO generator x NNLO/NLO k-factor",
+        "verification": "technical-lead saved copy, live check pending for the three portal values (5.330e+04 / 8.958e+03 / 3.330e+03); 61526.7 VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "Each jet piece used alone, no stitching (D1). k uses all three portal values, so all three carry the live-check-pending note.",
+        "product_of_factors": 3123.801777764225
+      }
+    },
+    "70301": {
+      "dataset_number": 70301,
+      "record_id": 70301,
+      "mini_recid": 70300,
+      "cross_section_pb": 0.000816782,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WminusH_HToZG_WToAll_M-125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/WminusH_HToZG_WToAll_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.5328 x 0.001533",
+        "factors": [
+          {
+            "name": "sigma(W-H)",
+            "value": 0.5328,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> Zgamma)",
+            "value": 0.001533,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.0008167824000000001
+      }
+    },
+    "70383": {
+      "dataset_number": 70383,
+      "record_id": 70383,
+      "mini_recid": 70382,
+      "cross_section_pb": 0.000146254,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WminusH_HToZZTo4L_M125_powheg2-minlo-HWJ_JHUGenV7011_pythia8",
+      "generator": "powheg2",
+      "portal_dataset_title": "/WminusH_HToZZTo4L_M125_TuneCP5_13TeV_powheg2-minlo-HWJ_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.5328 x 0.0002745",
+        "factors": [
+          {
+            "name": "sigma(W-H)",
+            "value": 0.5328,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> ZZ -> 4l), l = e, mu, tau",
+            "value": 0.0002745,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.0001462536
+      }
+    },
+    "70451": {
+      "dataset_number": 70451,
+      "record_id": 70451,
+      "mini_recid": 70450,
+      "cross_section_pb": 0.000115937,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WminusHToMuMu_M125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/WminusHToMuMu_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.5328 x 0.0002176",
+        "factors": [
+          {
+            "name": "sigma(W-H)",
+            "value": 0.5328,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> mumu)",
+            "value": 0.0002176,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.00011593728000000002
+      }
+    },
+    "70453": {
+      "dataset_number": 70453,
+      "record_id": 70453,
+      "mini_recid": 70452,
+      "cross_section_pb": 0.0334172,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WminusHToTauTau_M125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/WminusHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.5328 x 0.06272",
+        "factors": [
+          {
+            "name": "sigma(W-H)",
+            "value": 0.5328,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> tautau)",
+            "value": 0.06272,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.033417216
+      }
+    },
+    "71145": {
+      "dataset_number": 71145,
+      "record_id": 71145,
+      "mini_recid": 71144,
+      "cross_section_pb": 0.00128772,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WplusH_HToZG_WToAll_M-125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/WplusH_HToZG_WToAll_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.84 x 0.001533",
+        "factors": [
+          {
+            "name": "sigma(W+H)",
+            "value": 0.84,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> Zgamma)",
+            "value": 0.001533,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.00128772
+      }
+    },
+    "71227": {
+      "dataset_number": 71227,
+      "record_id": 71227,
+      "mini_recid": 71226,
+      "cross_section_pb": 0.00023058,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WplusH_HToZZTo4L_M125_powheg2-minlo-HWJ_JHUGenV7011_pythia8",
+      "generator": "powheg2",
+      "portal_dataset_title": "/WplusH_HToZZTo4L_M125_TuneCP5_13TeV_powheg2-minlo-HWJ_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.84 x 0.0002745",
+        "factors": [
+          {
+            "name": "sigma(W+H)",
+            "value": 0.84,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> ZZ -> 4l), l = e, mu, tau",
+            "value": 0.0002745,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.00023058
+      }
+    },
+    "71295": {
+      "dataset_number": 71295,
+      "record_id": 71295,
+      "mini_recid": 71294,
+      "cross_section_pb": 0.000182784,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WplusHToMuMu_M125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/WplusHToMuMu_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.84 x 0.0002176",
+        "factors": [
+          {
+            "name": "sigma(W+H)",
+            "value": 0.84,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> mumu)",
+            "value": 0.0002176,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.000182784
+      }
+    },
+    "71297": {
+      "dataset_number": 71297,
+      "record_id": 71297,
+      "mini_recid": 71296,
+      "cross_section_pb": 0.0526848,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WplusHToTauTau_M125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/WplusHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.84 x 0.06272",
+        "factors": [
+          {
+            "name": "sigma(W+H)",
+            "value": 0.84,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> tautau)",
+            "value": 0.06272,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.0526848
+      }
+    },
+    "72658": {
+      "dataset_number": 72658,
+      "record_id": 72658,
+      "mini_recid": 72657,
+      "cross_section_pb": 52.362,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WWTo1L1Nu2Q_4f-amcatnloFXFX-pythia8",
+      "generator": "amcatnloFXFX",
+      "portal_dataset_title": "/WWTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 2,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "118.7 x 2 x 0.3272 x 0.6741",
+        "factors": [
+          {
+            "name": "sigma(WW) NNLO",
+            "value": 118.7,
+            "source": {
+              "citation": "arXiv:1408.5243",
+              "location": "Table I, 13 TeV: sigma_NNLO 118.7 pb",
+              "url": "https://arxiv.org/abs/1408.5243"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "2 x BR(W -> l nu) x BR(W -> hadrons)",
+            "value": 0.44113104000000003,
+            "source": {
+              "citation": "PDG live, W boson",
+              "location": "W DECAY MODES: e nu 10.71 %, mu nu 10.63 %, tau nu 11.38 %, hadrons 67.41 %",
+              "url": "https://pdglive.lbl.gov/Particle.action?node=S043"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NNLO x BR",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "E1.",
+        "product_of_factors": 52.362254448
+      }
+    },
+    "72676": {
+      "dataset_number": 72676,
+      "record_id": 72676,
+      "mini_recid": 72675,
+      "cross_section_pb": 12.708,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WWTo2L2Nu",
+      "generator": "powheg",
+      "portal_dataset_title": "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v2",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "118.7 pb x 0.10706",
+        "sources": [
+          {
+            "citation": "arXiv:1408.5243",
+            "location": "Table 1, 13 TeV, NNLO (includes gg -> WW; 4FNS)",
+            "url": "https://arxiv.org/abs/1408.5243"
+          }
+        ],
+        "order": "NNLO",
+        "previous_cross_section_pb": 12.178,
+        "decision_note": "Previous 12.178 pb came from the RazorAnalyzer table and could not be traced to a theory source; replaced by the NNLO value."
+      },
+      "provenance": {
+        "label": "WWTo2L2Nu",
+        "portal_total_value_pb": 11.09,
+        "matching_filter_already_included": "yes (R1)",
+        "br_applied_description": "none needed (decay in ME -- native powheg WW2L2Nu box process, no separate decay card)",
+        "br_value": null,
+        "generator_level_sigma_pb": 11.09,
+        "reference_sigma_pb": 12.178,
+        "reference_order": "RazorAnalyzer xSections.dat",
+        "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+        "k_factor_from_table_DO_NOT_APPLY": 1.098,
+        "sigma_eff_pb_from_table": 12.178,
+        "n_events_record": 2900000.0,
+        "neg_weight_fraction_from_table": 0.00191,
+        "mc_equivalent_luminosity_fb": 236.31846920348167,
+        "mc_equiv_lumi_over_L": 14.415815848440289,
+        "note": "",
+        "decision": "Unchanged from v1. Provenance note (Task 4f): the reference value comes from RazorAnalyzer/xSections.dat, a third-party CMS analysis group's internal cross-section table -- NOT a primary theory source (not an LHC WG page, not a published paper). Treat its agreement as corroborating, not as an independent theory confirmation.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "v2_registry_provenance": {
+          "label": "WWTo2L2Nu",
+          "portal_total_value_pb": 11.09,
+          "portal_record_url": null,
+          "matching_filter_already_included": "yes (R1)",
+          "br_applied_description": "none needed (decay in ME -- native powheg WW2L2Nu box process, no separate decay card)",
+          "br_value": null,
+          "generator_level_sigma_pb": 11.09,
+          "reference_sigma_pb": "12.178",
+          "reference_order": "RazorAnalyzer xSections.dat",
+          "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+          "k_factor_from_table": "1.098",
+          "decision": "Unchanged from v1. Provenance note (Task 4f): the reference value comes from RazorAnalyzer/xSections.dat, a third-party CMS analysis group's internal cross-section table -- NOT a primary theory source (not an LHC WG page, not a published paper). Treat its agreement as corroborating, not as an independent theory confirmation.",
+          "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+        },
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "72701": {
+      "dataset_number": 72701,
+      "record_id": 72701,
+      "mini_recid": 72699,
+      "cross_section_pb": 0.2158,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WWW_4F-amcatnlo-pythia8",
+      "generator": "amcatnlo",
+      "portal_dataset_title": "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 3,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.2158 (generator NLO)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 0.2158,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 72699 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/72699"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO (generator)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "D10: ext1 record only.",
+        "product_of_factors": 0.2158
+      }
+    },
+    "72711": {
+      "dataset_number": 72711,
+      "record_id": 72711,
+      "mini_recid": 72709,
+      "cross_section_pb": 0.1707,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WWZ_4F-amcatnlo-pythia8",
+      "generator": "amcatnlo",
+      "portal_dataset_title": "/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 3,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.1707 (generator NLO)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 0.1707,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 72709 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/72709"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO (generator)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "D10: ext1 record only.",
+        "product_of_factors": 0.1707
+      }
+    },
+    "72738": {
+      "dataset_number": 72738,
+      "record_id": 72738,
+      "mini_recid": 72737,
+      "cross_section_pb": 10.161,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WZTo1L1Nu2Q_4f-amcatnloFXFX-pythia8",
+      "generator": "amcatnloFXFX",
+      "portal_dataset_title": "/WZTo1L1Nu2Q_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 2,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "9.159 x (51.11 / 46.068)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 9.159,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 72737 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/72737"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "k = 51.11 / 46.068 (WZ NNLO/NLO)",
+            "value": 1.1094469045758444,
+            "source": {
+              "citation": "arXiv:1604.08576",
+              "location": "Table 1, 13 TeV: sigma_NLO 46.068, sigma_NNLO 51.11 pb",
+              "url": "https://arxiv.org/abs/1604.08576"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO generator x NNLO/NLO k-factor",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "E1: ATLAS uses Sherpa generator values with kFactor 1 (no gg -> VV samples).",
+        "product_of_factors": 10.16142419901016
+      }
+    },
+    "72740": {
+      "dataset_number": 72740,
+      "record_id": 72740,
+      "mini_recid": 72739,
+      "cross_section_pb": 3.7888,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WZTo1L3Nu_4f-amcatnloFXFX-pythia8",
+      "generator": "amcatnloFXFX",
+      "portal_dataset_title": "/WZTo1L3Nu_4f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 2,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "3.415 x (51.11 / 46.068)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 3.415,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 72739 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/72739"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "k = 51.11 / 46.068 (WZ NNLO/NLO)",
+            "value": 1.1094469045758444,
+            "source": {
+              "citation": "arXiv:1604.08576",
+              "location": "Table 1, 13 TeV: sigma_NLO 46.068, sigma_NNLO 51.11 pb",
+              "url": "https://arxiv.org/abs/1604.08576"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO generator x NNLO/NLO k-factor",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "E1: ATLAS uses Sherpa generator values with kFactor 1 (no gg -> VV samples).",
+        "product_of_factors": 3.788761179126509
+      }
+    },
+    "72742": {
+      "dataset_number": 72742,
+      "record_id": 72742,
+      "mini_recid": 72741,
+      "cross_section_pb": 7.1326,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WZTo2Q2L_mllmin4p0-amcatnloFXFX-pythia8",
+      "generator": "amcatnloFXFX",
+      "portal_dataset_title": "/WZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 2,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "6.429 x (51.11 / 46.068)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 6.429,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 72741 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/72741"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "k = 51.11 / 46.068 (WZ NNLO/NLO)",
+            "value": 1.1094469045758444,
+            "source": {
+              "citation": "arXiv:1604.08576",
+              "location": "Table 1, 13 TeV: sigma_NLO 46.068, sigma_NNLO 51.11 pb",
+              "url": "https://arxiv.org/abs/1604.08576"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO generator x NNLO/NLO k-factor",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "E1: ATLAS uses Sherpa generator values with kFactor 1 (no gg -> VV samples).",
+        "product_of_factors": 7.132634149518104
+      }
+    },
+    "72752": {
+      "dataset_number": 72752,
+      "record_id": 72752,
+      "mini_recid": 72751,
+      "cross_section_pb": 5.789,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WZTo3LNu_amcatnloFXFX",
+      "generator": "amcatnloFXFX",
+      "portal_dataset_title": "/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v2",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "generator 5.218 pb x (51.11 / 46.068)",
+        "sources": [
+          {
+            "citation": "CERN Open Data record 72751 (generator cross section)",
+            "location": "metadata.cross_section.total_value",
+            "url": "https://opendata.cern.ch/record/72751"
+          },
+          {
+            "citation": "arXiv:1604.08576",
+            "location": "Table 1, 13 TeV, on-shell NNLO/NLO (k-factor)",
+            "url": "https://arxiv.org/abs/1604.08576"
+          }
+        ],
+        "order": "NLO generator x NNLO/NLO k-factor",
+        "previous_cross_section_pb": 5.218,
+        "decision_note": "Approximation: an on-shell k-factor is applied to a sample that also contains gamma*/low-mass pairs.",
+        "arithmetic_note": "5.218 x 51.11 / 46.068 = 5.78909 -> 5.789 pb (exact k-factor). The value 5.787 used until 17 Oct equalled 5.218 x 1.109 (k rounded to 4 significant figures); corrected to the exact formula by Matan's decision of 15 Oct 2026, applied 17 Oct 2026.",
+        "note": "corrected 17 Oct: exact k-factor 51.11/46.068, was 5.787"
+      },
+      "provenance": {
+        "label": "WZTo3LNu_amcatnloFXFX",
+        "portal_total_value_pb": 5.218,
+        "matching_filter_already_included": "yes (R1)",
+        "br_applied_description": "none needed (decay in ME, MadGraph process name)",
+        "br_value": null,
+        "generator_level_sigma_pb": 5.218,
+        "reference_sigma_pb": null,
+        "reference_order": "NONE MATCHING -- see decision",
+        "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+        "k_factor_from_table_DO_NOT_APPLY": "1.0 (flagged)",
+        "sigma_eff_pb_from_table": 5.218,
+        "n_events_record": 10441724.0,
+        "neg_weight_fraction_from_table": 0.1701,
+        "mc_equivalent_luminosity_fb": 871.1496314551474,
+        "mc_equiv_lumi_over_L": 53.141562340947196,
+        "note": "",
+        "decision": "CHANGED: RazorAnalyzer's 4.42965 pb is listed IDENTICALLY for BOTH 'WZTo3LNu_...-powheg-pythia8' AND 'WZTo3LNu_...-amcatnloFXFX-pythia8' in the same file (evidence/razor_xsections.dat lines 155-156) -- i.e. a single externally-adopted recommended number applied regardless of generator, NOT amcatnloFXFX's own computed value. Does NOT satisfy 'same generator/configuration'. A candidate same-generator-family number WAS found (4.924 pb NLO x 1.08 NLO-EW k-factor = 5.318 pb, attributed in search results to the CMS WZ Run3 paper, arXiv:2412.02477) but that is a 13.6 TeV number, not 13 TeV -- a real energy mismatch, and the primary paper itself was not opened directly (only found via search synthesis). Falls back to k=1.0, FLAGGED: sigma_eff = this sample's own generator-level portal value (5.218 pb), no external correction applied.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "v2_registry_provenance": {
+          "label": "WZTo3LNu_amcatnloFXFX",
+          "portal_total_value_pb": 5.218,
+          "portal_record_url": null,
+          "matching_filter_already_included": "yes (R1)",
+          "br_applied_description": "none needed (decay in ME, MadGraph process name)",
+          "br_value": null,
+          "generator_level_sigma_pb": 5.218,
+          "reference_sigma_pb": null,
+          "reference_order": "NONE MATCHING -- see decision",
+          "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+          "k_factor_from_table": "1.0 (flagged)",
+          "decision": "CHANGED: RazorAnalyzer's 4.42965 pb is listed IDENTICALLY for BOTH 'WZTo3LNu_...-powheg-pythia8' AND 'WZTo3LNu_...-amcatnloFXFX-pythia8' in the same file (evidence/razor_xsections.dat lines 155-156) -- i.e. a single externally-adopted recommended number applied regardless of generator, NOT amcatnloFXFX's own computed value. Does NOT satisfy 'same generator/configuration'. A candidate same-generator-family number WAS found (4.924 pb NLO x 1.08 NLO-EW k-factor = 5.318 pb, attributed in search results to the CMS WZ Run3 paper, arXiv:2412.02477) but that is a 13.6 TeV number, not 13 TeV -- a real energy mismatch, and the primary paper itself was not opened directly (only found via search synthesis). Falls back to k=1.0, FLAGGED: sigma_eff = this sample's own generator-level portal value (5.218 pb), no external correction applied.",
+          "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+        },
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "72761": {
+      "dataset_number": 72761,
+      "record_id": 72761,
+      "mini_recid": 72759,
+      "cross_section_pb": 0.05709,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "WZZ-amcatnlo-pythia8",
+      "generator": "amcatnlo",
+      "portal_dataset_title": "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 3,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.05709 (generator NLO)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 0.05709,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 72759 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/72759"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO (generator)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "D10: ext1 record only.",
+        "product_of_factors": 0.05709
+      }
+    },
+    "74292": {
+      "dataset_number": 74292,
+      "record_id": 74292,
+      "mini_recid": 74291,
+      "cross_section_pb": 0.00116692,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZH_HToZG_ZToAll_M-125-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/ZH_HToZG_ZToAll_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.7612 x 0.001533",
+        "factors": [
+          {
+            "name": "sigma(ZH, all but gg->ZH)",
+            "value": 0.7612,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> Zgamma)",
+            "value": 0.001533,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.0011669196
+      }
+    },
+    "74682": {
+      "dataset_number": 74682,
+      "record_id": 74682,
+      "mini_recid": 74681,
+      "cross_section_pb": 0.000165637,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZHToMuMu_M125_CP5-powheg-pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/ZHToMuMu_M125_CP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.7612 x 0.0002176",
+        "factors": [
+          {
+            "name": "sigma(ZH, all but gg->ZH)",
+            "value": 0.7612,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> mumu)",
+            "value": 0.0002176,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.00016563712
+      }
+    },
+    "74684": {
+      "dataset_number": 74684,
+      "record_id": 74684,
+      "mini_recid": 74683,
+      "cross_section_pb": 0.0477425,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZHToTauTau_M125_CP5-powheg-pythia8_ext1",
+      "generator": "powheg",
+      "portal_dataset_title": "/ZHToTauTau_M125_CP5_13TeV-powheg-pythia8_ext1/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 5,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.7612 x 0.06272",
+        "factors": [
+          {
+            "name": "sigma(ZH, all but gg->ZH)",
+            "value": 0.7612,
+            "source": {
+              "citation": "LHC Higgs WG YR4, 13 TeV",
+              "location": "mH = 125.00: ggF 48.58, VBF 3.782, W+H 0.8400, W-H 0.5328, ZH 'all but gg->ZH' 0.7612, gg->ZH 0.1227 pb",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "BR(H -> tautau)",
+            "value": 0.06272,
+            "source": {
+              "citation": "LHC Higgs WG YR4 branching ratios",
+              "location": "MH = 125.00: bb 0.5824, tautau 0.06272, mumu 2.176e-4, WW 0.2137, ZZ 0.02619, Zgamma 1.533e-3, H->4l (l=e,mu,tau) 2.745e-4",
+              "url": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "YR4 production x YR4 BR (x PDG W/Z BR)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "product_of_factors": 0.047742464
+      }
+    },
+    "74894": {
+      "dataset_number": 74894,
+      "record_id": 74894,
+      "mini_recid": 74893,
+      "cross_section_pb": 284.53,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZJetsToNuNu_HT-100To200-madgraphMLM-pythia8",
+      "generator": "madgraphMLM",
+      "portal_dataset_title": "/ZJetsToNuNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 6,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "266.3 x 5765.4 / 5396",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 266.3,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 74893 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/74893"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "k = 5765.4 / 5396 (our DY NNLO normalisation, 3 x 1921.8, / LO DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+            "value": 1.0684581171237952,
+            "source": {
+              "citation": "RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)",
+              "location": "line 90: DYJetsToLL_M-50 ... 1921.8*3",
+              "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "LO generator x NNLO/LO k-factor (from DY)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "Z -> nunu option (c) (Matan). The 5396 is the portal value of MiniAOD 35670 (saved copy in sources/mcexp_20261103/records/35670.json.gz).",
+        "product_of_factors": 284.5303965900667
+      }
+    },
+    "74896": {
+      "dataset_number": 74896,
+      "record_id": 74896,
+      "mini_recid": 74895,
+      "cross_section_pb": 0.26658,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZJetsToNuNu_HT-1200To2500-madgraphMLM-pythia8",
+      "generator": "madgraphMLM",
+      "portal_dataset_title": "/ZJetsToNuNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 6,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.2495 x 5765.4 / 5396",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 0.2495,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 74895 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/74895"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "k = 5765.4 / 5396 (our DY NNLO normalisation, 3 x 1921.8, / LO DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+            "value": 1.0684581171237952,
+            "source": {
+              "citation": "RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)",
+              "location": "line 90: DYJetsToLL_M-50 ... 1921.8*3",
+              "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "LO generator x NNLO/LO k-factor (from DY)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "Z -> nunu option (c) (Matan). The 5396 is the portal value of MiniAOD 35670 (saved copy in sources/mcexp_20261103/records/35670.json.gz).",
+        "product_of_factors": 0.26658030022238693
+      }
+    },
+    "74898": {
+      "dataset_number": 74898,
+      "record_id": 74898,
+      "mini_recid": 74897,
+      "cross_section_pb": 78.019,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZJetsToNuNu_HT-200To400-madgraphMLM-pythia8",
+      "generator": "madgraphMLM",
+      "portal_dataset_title": "/ZJetsToNuNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 6,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "73.02 x 5765.4 / 5396",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 73.02,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 74897 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/74897"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "k = 5765.4 / 5396 (our DY NNLO normalisation, 3 x 1921.8, / LO DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+            "value": 1.0684581171237952,
+            "source": {
+              "citation": "RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)",
+              "location": "line 90: DYJetsToLL_M-50 ... 1921.8*3",
+              "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "LO generator x NNLO/LO k-factor (from DY)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "Z -> nunu option (c) (Matan). The 5396 is the portal value of MiniAOD 35670 (saved copy in sources/mcexp_20261103/records/35670.json.gz).",
+        "product_of_factors": 78.01881171237953
+      }
+    },
+    "74900": {
+      "dataset_number": 74900,
+      "record_id": 74900,
+      "mini_recid": 74899,
+      "cross_section_pb": 0.0059985,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZJetsToNuNu_HT-2500ToInf-madgraphMLM-pythia8",
+      "generator": "madgraphMLM",
+      "portal_dataset_title": "/ZJetsToNuNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 6,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.005614 x 5765.4 / 5396",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 0.005614,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 74899 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/74899"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "k = 5765.4 / 5396 (our DY NNLO normalisation, 3 x 1921.8, / LO DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+            "value": 1.0684581171237952,
+            "source": {
+              "citation": "RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)",
+              "location": "line 90: DYJetsToLL_M-50 ... 1921.8*3",
+              "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "LO generator x NNLO/LO k-factor (from DY)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "Z -> nunu option (c) (Matan). The 5396 is the portal value of MiniAOD 35670 (saved copy in sources/mcexp_20261103/records/35670.json.gz).",
+        "product_of_factors": 0.005998323869532986
+      }
+    },
+    "74902": {
+      "dataset_number": 74902,
+      "record_id": 74902,
+      "mini_recid": 74901,
+      "cross_section_pb": 10.593,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZJetsToNuNu_HT-400To600-madgraphMLM-pythia8",
+      "generator": "madgraphMLM",
+      "portal_dataset_title": "/ZJetsToNuNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 6,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "9.914 x 5765.4 / 5396",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 9.914,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 74901 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/74901"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "k = 5765.4 / 5396 (our DY NNLO normalisation, 3 x 1921.8, / LO DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+            "value": 1.0684581171237952,
+            "source": {
+              "citation": "RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)",
+              "location": "line 90: DYJetsToLL_M-50 ... 1921.8*3",
+              "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "LO generator x NNLO/LO k-factor (from DY)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "Z -> nunu option (c) (Matan). The 5396 is the portal value of MiniAOD 35670 (saved copy in sources/mcexp_20261103/records/35670.json.gz).",
+        "product_of_factors": 10.592693773165305
+      }
+    },
+    "74904": {
+      "dataset_number": 74904,
+      "record_id": 74904,
+      "mini_recid": 74903,
+      "cross_section_pb": 2.5739,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZJetsToNuNu_HT-600To800-madgraphMLM-pythia8",
+      "generator": "madgraphMLM",
+      "portal_dataset_title": "/ZJetsToNuNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 6,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "2.409 x 5765.4 / 5396",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 2.409,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 74903 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/74903"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "k = 5765.4 / 5396 (our DY NNLO normalisation, 3 x 1921.8, / LO DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+            "value": 1.0684581171237952,
+            "source": {
+              "citation": "RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)",
+              "location": "line 90: DYJetsToLL_M-50 ... 1921.8*3",
+              "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "LO generator x NNLO/LO k-factor (from DY)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "Z -> nunu option (c) (Matan). The 5396 is the portal value of MiniAOD 35670 (saved copy in sources/mcexp_20261103/records/35670.json.gz).",
+        "product_of_factors": 2.5739156041512223
+      }
+    },
+    "74906": {
+      "dataset_number": 74906,
+      "record_id": 74906,
+      "mini_recid": 74905,
+      "cross_section_pb": 1.1507,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZJetsToNuNu_HT-800To1200-madgraphMLM-pythia8",
+      "generator": "madgraphMLM",
+      "portal_dataset_title": "/ZJetsToNuNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 6,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "1.077 x 5765.4 / 5396",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 1.077,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 74905 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/74905"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "k = 5765.4 / 5396 (our DY NNLO normalisation, 3 x 1921.8, / LO DY M-50 madgraphMLM portal value, MiniAOD 35670)",
+            "value": 1.0684581171237952,
+            "source": {
+              "citation": "RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)",
+              "location": "line 90: DYJetsToLL_M-50 ... 1921.8*3",
+              "url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "LO generator x NNLO/LO k-factor (from DY)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "Z -> nunu option (c) (Matan). The 5396 is the portal value of MiniAOD 35670 (saved copy in sources/mcexp_20261103/records/35670.json.gz).",
+        "product_of_factors": 1.1507293921423274
+      }
+    },
+    "75567": {
+      "dataset_number": 75567,
+      "record_id": 75567,
+      "mini_recid": 75566,
+      "cross_section_pb": 1.1349,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZZTo2L2Nu_powheg_pythia8",
+      "generator": "powheg",
+      "portal_dataset_title": "/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 2,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.9738 x (16.91 / 14.51)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 0.9738,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 75566 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/75566"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "k = 16.91 / 14.51 (ZZ NNLO/NLO)",
+            "value": 1.1654031702274295,
+            "source": {
+              "citation": "arXiv:1405.2219",
+              "location": "Table 1, 13 TeV: sigma_NLO 14.51, sigma_NNLO 16.91 pb",
+              "url": "https://arxiv.org/abs/1405.2219"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO generator x NNLO/NLO k-factor",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "D14, confirmed by the 3 Nov LHE check (R2 = 0.967; studies/mc_expansion_plan_20261026/zz2l2nu_check/RESULT.md, plan commit 25d64230c9375c5403b88c1c8afa15e991e87a97). Was in v3's deliberately_excluded_records (15 Oct); moved into the registry by D14. E1.",
+        "product_of_factors": 1.1348696071674709
+      }
+    },
+    "75573": {
+      "dataset_number": 75573,
+      "record_id": 75573,
+      "mini_recid": 75572,
+      "cross_section_pb": 4.3108,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZZTo2Q2L_mllmin4p0-amcatnloFXFX-pythia8",
+      "generator": "amcatnloFXFX",
+      "portal_dataset_title": "/ZZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 2,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "3.699 x (16.91 / 14.51)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 3.699,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 75572 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/75572"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          },
+          {
+            "name": "k = 16.91 / 14.51 (ZZ NNLO/NLO, includes gg -> ZZ)",
+            "value": 1.1654031702274295,
+            "source": {
+              "citation": "arXiv:1405.2219",
+              "location": "Table 1, 13 TeV: sigma_NLO 14.51, sigma_NNLO 16.91 pb",
+              "url": "https://arxiv.org/abs/1405.2219"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO generator x NNLO/NLO k-factor",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "E1.",
+        "product_of_factors": 4.310826326671261
+      }
+    },
+    "75589": {
+      "dataset_number": 75589,
+      "record_id": 75589,
+      "mini_recid": 75588,
+      "cross_section_pb": 1.544,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZZTo4L",
+      "generator": "powheg",
+      "portal_dataset_title": "/ZZTo4L_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v2",
+      "decision_2026_10_15": {
+        "decided": "Matan, 15 Oct 2026",
+        "source_file": "studies/cms_mc_weights_v3/sources/v4_decisions_2026-10-15.json",
+        "construction": "generator 1.325 pb x (16.91 / 14.51)",
+        "sources": [
+          {
+            "citation": "CERN Open Data record 75588 (generator cross section)",
+            "location": "metadata.cross_section.total_value",
+            "url": "https://opendata.cern.ch/record/75588"
+          },
+          {
+            "citation": "arXiv:1405.2219",
+            "location": "Table 1, 13 TeV NNLO/NLO (includes gg -> ZZ) (k-factor)",
+            "url": "https://arxiv.org/abs/1405.2219"
+          }
+        ],
+        "order": "NLO generator x NNLO/NLO k-factor",
+        "previous_cross_section_pb": 1.256,
+        "decision_note": "If gg -> ZZ samples are ever added, switch to a qqbar-only k-factor to avoid double counting."
+      },
+      "provenance": {
+        "label": "ZZTo4L",
+        "portal_total_value_pb": 1.325,
+        "matching_filter_already_included": "yes (R1)",
+        "br_applied_description": "none needed (decay in ME, native powheg ZZTo4L box)",
+        "br_value": null,
+        "generator_level_sigma_pb": 1.325,
+        "reference_sigma_pb": 1.256,
+        "reference_order": "RazorAnalyzer xSections.dat (powheg-specific line)",
+        "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+        "k_factor_from_table_DO_NOT_APPLY": 0.948,
+        "sigma_eff_pb_from_table": 1.256,
+        "n_events_record": 52104000.0,
+        "neg_weight_fraction_from_table": 0.005057,
+        "mc_equivalent_luminosity_fb": 40649.18006549649,
+        "mc_equiv_lumi_over_L": 2479.666935002531,
+        "note": "",
+        "decision": "Unchanged from v1. Provenance note (Task 4f): the reference value comes from RazorAnalyzer/xSections.dat, a third-party CMS analysis group's internal cross-section table -- NOT a primary theory source (not an LHC WG page, not a published paper). Treat its agreement as corroborating, not as an independent theory confirmation.",
+        "table_row_source": "studies/cms_mc_weights_v3/sources/v2_normalisation_table_v2.csv",
+        "values_are": "UNVERIFIED by the v3 round -- carried forward from the v2 normalisation research with its provenance, not re-derived",
+        "v2_registry_provenance": {
+          "label": "ZZTo4L",
+          "portal_total_value_pb": 1.325,
+          "portal_record_url": null,
+          "matching_filter_already_included": "yes (R1)",
+          "br_applied_description": "none needed (decay in ME, native powheg ZZTo4L box)",
+          "br_value": null,
+          "generator_level_sigma_pb": 1.325,
+          "reference_sigma_pb": "1.256",
+          "reference_order": "RazorAnalyzer xSections.dat (powheg-specific line)",
+          "reference_url": "https://raw.githubusercontent.com/RazorCMS/RazorAnalyzer/master/data/xSections.dat",
+          "k_factor_from_table": "0.948",
+          "decision": "Unchanged from v1. Provenance note (Task 4f): the reference value comes from RazorAnalyzer/xSections.dat, a third-party CMS analysis group's internal cross-section table -- NOT a primary theory source (not an LHC WG page, not a published paper). Treat its agreement as corroborating, not as an independent theory confirmation.",
+          "table_row_source": "studies\\cms_mc_weights\\normalisation_table_v2.csv"
+        },
+        "status": "SUPERSEDED for cross_section_pb, citation and order by `decision_2026_10_15` (sources/v4_decisions_2026-10-15.json). Kept unchanged as history."
+      }
+    },
+    "75600": {
+      "dataset_number": 75600,
+      "record_id": 75600,
+      "mini_recid": 75598,
+      "cross_section_pb": 0.01476,
+      "k_factor": 1.0,
+      "gen_filt_eff": 1.0,
+      "sum_of_weights": null,
+      "physics_short": "ZZZ-amcatnlo-pythia8",
+      "generator": "amcatnlo",
+      "portal_dataset_title": "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM",
+      "in_full_run": true,
+      "added_in": "v4",
+      "tier": 3,
+      "estimate": false,
+      "decision_2026_11_03": {
+        "decided": "Matan, review completed 3 Nov 2026 (XSEC_PROPOSALS_v2.md card by card + later decisions E2, Z->nunu (c), 40062 estimate)",
+        "source_file": "studies/cms_mc_weights_v3/sources/v5_decisions_2026-11-03.json",
+        "construction": "0.01476 (generator NLO)",
+        "factors": [
+          {
+            "name": "generator cross section (portal)",
+            "value": 0.01476,
+            "source": {
+              "citation": "CERN Open Data MiniAOD record 75598 (generator cross section)",
+              "location": "metadata.cross_section.total_value",
+              "url": "https://opendata.cern.ch/record/75598"
+            },
+            "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)"
+          }
+        ],
+        "order": "NLO (generator)",
+        "verification": "VERIFIED BY MATAN (review completed 3 Nov 2026)",
+        "note": "D10: ext1 record only.",
+        "product_of_factors": 0.01476
+      }
+    }
+  }
+}
