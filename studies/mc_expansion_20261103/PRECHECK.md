@@ -138,6 +138,11 @@ Things to note:
 | 3ℓ (ee + μ, 0j), m(ee) | 79.0 | 93.5 | 0 | 0.02 | 0.88 | 1.09 | 0 |
 | 3ℓ (e + μμ, 0j), m(μμ) | 192.6 | 206.8 | 0 | 0.17 | 0.52 | 0.94 | 0 |
 
+Plots are from the report re-run 5433447 (`report_v2`: stacks cropped to the filled range; typical-weight plot).
+In `stack_emu_0j.png` the W+jets contribution shows isolated single-event spikes up to ~570 GeV. In the smoke build a
+W+jets event weighs ~(number of files) × its full-run weight, so the spikes are exaggerated, but this is exactly what
+the D3 check counts in the full build.
+
 Two findings for the technical lead:
 1. **W+jets roughly doubles the eμ 0-jet MC** (smoke; it is the open data/MC = 2.19 question in that final state).
 2. **The 13 delivered samples' histograms change in the new build even though their inputs and weights are
@@ -161,5 +166,7 @@ Per-sample typical event weight: `precheck_plots/weight_scale.png`.
   names are rare 4-lepton categories absent from the data delivery (fewer than 100 events in data).
 - D3: the script runs. Its count (144 histograms) is meaningless on a smoke build, where a W+jets event's weight is
   ≈ (number of files) × its full-run weight.
-- The Z-peak part was changed after this test to use the 25 Oct analysis function on the build's kept scratch (the
+- The two `zpeak_*.png` files in that folder are NOT Z peaks: they are the delivered ee/μμ 0j histograms, which start
+  at 110 GeV (the builder's Z cut). That is why
+- the Z-peak part was changed after this test to use the 25 Oct analysis function on the build's kept scratch (the
   delivered histograms have the Z region cut away). **That part has not been exercised yet**; A2/B must check it.
