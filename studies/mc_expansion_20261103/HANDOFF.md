@@ -401,7 +401,7 @@ VERIFIED BY RUNNING (submission log `evidence/submit_A2_batch1.txt`).
    - If it failed on walltime: use 48 h (longE allows ≤ 72 h) and report.
    - If still running: keep 24 h.
 3. **Batch 2.** In bash on wipp-home, define `B, C, CK, W, R, Q, PY, PLAN` and the `submit_tier` function exactly as in
-   the "Ready to submit" block (they are also in `evidence/submit_A2_batch1.txt`'s script), then:
+   the script that submitted batch 1, `evidence/submit_A2_batch1.sh` (definitions and `submit_tier` only; not its clone, mkdir, cp or timing-job lines), then:
    - `submit_tier 4; submit_tier 5; submit_tier 6`, appending to `$W/jobids.txt`;
    - for 68045, replace the walltime from step 2 (e.g. submit 68045 by hand with that walltime and skip it in the loop);
    - check: 54 lines in `jobids.txt`, subjobs summing to 1,206.
