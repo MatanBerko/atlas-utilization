@@ -23,7 +23,9 @@ unbiased but noisy; nothing here is a result. All numbers VERIFIED BY RUNNING (j
     - D = 54 new + **the 25 Oct outputs read through `--extra-runs-dir`** (read only; the 25 Oct `job_0` files
       have identical name, size and mtime before and after);
   - `compare_builds` (5433397, then 5433883): **A vs B IDENTICAL** (14 ROOT files, every histogram; same σ_eff, Σw,
-    normalisation). C vs D: see "Reuse" below;
+    normalisation). **C vs D IDENTICAL** (68 ROOT files: a build reading the 25 Oct outputs equals one reading
+    the re-runs). The first attempt (5433397) was killed at its 1 h walltime after A vs B (slow storage reads);
+    5433883 (4 h) completed;
   - `report` (5433283; plots re-made as `report_v2`, 5433447): the table and the plots below;
   - `checks_test` (5433398): the B-step checks run once on build C (see below).
 - Two jobs (5433388, 5433389) stayed held on a dependency that PBS never released. They were resubmitted without

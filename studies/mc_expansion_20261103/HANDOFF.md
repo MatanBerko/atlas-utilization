@@ -128,8 +128,9 @@ The mappings in `mappings/` implement **option A** (what the unchanged code can 
    shards, and the job metadata apart from time and commit (`evidence/precheck/compare_reruns.json`).
 3. The smoke build with registry v4 equals the one with v3 for the 13 (A vs B, every histogram).
 4. A build can read the 25 Oct runs read only (`--extra-runs-dir`): build D did. The 25 Oct `job_0` files were
-   unchanged before and after (`old_job0_listing_*`). C vs D (from the re-runs vs from the 25 Oct files) is being
-   compared by job 5433883; result in this file once it has run.
+   unchanged before and after (`old_job0_listing_*`). **C vs D (from the re-runs vs from the 25 Oct files) are
+   IDENTICAL**: all 68 ROOT files, every histogram, the same σ_eff, Σw and normalisation (job 5433883,
+   `evidence/precheck/compare_builds.json`).
 5. The builder excludes 75589 file 98 by its Σw check, exactly as on 25 Oct.
 
 Re-running the 13 instead would cost 497 files, ~66 CPU h and ~6,000 cluster files (25 Oct audit). Not needed.
@@ -286,4 +287,4 @@ The build is `pbs_fullrun.sh WHAT=build`: `build_mc_delivery.py --runs-dir $W/ru
 - `checkouts/mcexp_20261103/repo_{e04121d…,29fcf43…,0a335f3…}`.
 - `work/mcexp_20261103/precheck/` (runs, builds A-D, logs, evidence).
 - Two held jobs 5433388 / 5433389 (dependency never released). They hold no resources; deleting them needs Matan's OK.
-- File count 98,809 (95,324 before A1).
+- File count **98,821** at the end of A1 (95,324 before A1; `lfs quota`, 3 Nov 18:42).
