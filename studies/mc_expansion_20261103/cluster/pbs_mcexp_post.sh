@@ -38,7 +38,8 @@ PYEOF
   checks)
     test ! -e "$W/evidence/checks_v4"
     python -u studies/mc_expansion_20261103/post/checks_v4.py --build-dir "$W/build_default" --prefix fullrun \
-        --runs "$W/runs" --data-root "$DATA" --out "$W/evidence/checks_v4"
+        --runs "$W/runs" --data-root "$DATA" --out "$W/evidence/checks_v4" \
+        --data-runs /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/data/runs --mc-scratch "$W/scratch_default"
     ;;
   rule_builds)
     for rid in $RULE_RECORDS; do

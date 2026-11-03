@@ -8,7 +8,12 @@ Inputs:
         CPU seconds per event read, stored events per event read
   * evidence/precheck/files_per_job.json   -- measured cluster files per job (outputs + 2 logs)
 Estimates (labelled ESTIMATE): events in a file = file size x number_events / record size;
-CPU of a file = its events x (file-0 elapsed / file-0 events read). Writes evidence/full_production_plan.json.
+CPU of a file = its events x rate. rate = file-0 elapsed / events when file 0 has >= 100k events; for smaller
+file 0s the fixed start-up time dominates (calibrated on the 13 delivered samples, whose 25 Oct full-run rates are
+known: implied overhead 60-170 s, 419 s for ttZ), so rate = max(elapsed - 150 s, 0.3 x elapsed) / events.
+Walltime = the smallest of 2/3/6/12/24 h above 1.5 x the largest estimated file (tier 4: at least 3 h, as on
+25 Oct). Queue N routes <= 2 h to shortE, <= 12 h to normE, <= 72 h to longE (qstat -Qf, 3 Nov).
+Writes evidence/full_production_plan.json.
 """
 from __future__ import annotations
 
@@ -19,7 +24,8 @@ import requests
 
 HERE = pathlib.Path(__file__).resolve().parent
 API = "https://opendata.cern.ch/api/records/{}"
-WALL = {2: "02:00:00", 3: "03:00:00"}
+WALLS = (2, 3, 6, 12, 24)
+OVERHEAD_S = 150.0
 BUILD_FILES_PER_SAMPLE = 2240 / 13      # 17 Oct MC build + post incl. kept scratch (PLAN §4)
 
 
@@ -35,17 +41,20 @@ def main():
         d = meta["distribution"]
         ev_per_byte = d["number_events"] / d["size"]
         p = pre[rid]
-        s_per_ev = p["elapsed_sec"] / p["events_read"]
+        el, n0 = p["elapsed_sec"], p["events_read"]
+        s_per_ev = el / n0 if n0 >= 100_000 else max(el - OVERHEAD_S, 0.3 * el) / n0
         ev = [size_of[u] * ev_per_byte for u in v["files"]]
         cpu = [e * s_per_ev for e in ev]
         tier = v["tier"]
-        wall = 3 if (tier == 4 or max(cpu) > 0.6 * 7200) else 2
+        need_h = 1.5 * max(cpu) / 3600
+        wall = next(w for w in WALLS if w >= need_h and (tier != 4 or w >= 3))
         rows[rid] = {"tier": tier, "name": p["name"], "files": len(v["files"]), "files_full_index": v["n_files_full_index"],
                      "portal_number_files": v["portal_number_files"],
                      "events_estimate": sum(ev), "events_portal": d["number_events"],
                      "fraction_of_events_reachable_estimate": sum(ev) / d["number_events"],
                      "cpu_s_per_event_file0": s_per_ev, "cpu_hours": sum(cpu) / 3600,
-                     "max_cpu_s_per_file": max(cpu), "walltime": WALL[wall],
+                     "max_cpu_s_per_file": max(cpu), "walltime": f"{wall:02d}:00:00",
+                     "rate_from": "file 0" if n0 >= 100_000 else "file 0 minus 150 s start-up",
                      "cluster_files": len(v["files"]) * per_job_files}
     tiers = {}
     for r in rows.values():

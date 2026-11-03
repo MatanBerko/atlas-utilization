@@ -8,8 +8,11 @@ max|genWeight| of the stored events), and the data delivery (uncropped).
   1. every histogram of every MC file: no NaN/inf in contents or variances, no negative variance;
   2. data/MC names: the set of MC summed-SM histogram names vs the data delivery's names
      (same format; lists names only in MC / only in data);
-  3. Z peaks: ee 0j and mumu 0j, 60-120 GeV, MC stacked by process group + data points, and the
-     fitted-free check: MC/data yield in 81-101 GeV;
+  3. Z peaks: the delivered histograms have the Z region removed (the builder's Z cut), so the Z
+     peaks are made BEFORE peak removal, from the data run outputs and the MC build's kept scratch
+     shards, with the 25 Oct analysis function (studies/fullrun_20261025/analysis/analyze_fullrun.py
+     zpeak(); it sums every MC record found; only its colour groups are replaced by the v4 groups):
+     data/MC in 76-106 and 60-120 GeV, 0 jets, ee and mumu, + plots (given --data-runs, --mc-scratch);
   4. stacked plots of mumu 0j, emu 0j, ee+1j, ee+2j, 3l, mumu near 125 GeV, with data;
   5. D3 (Matan): count the histograms where ONE W+jets event makes up > 50 % of a bin's MC
      content; list the worst 20 and plot 5. The single-event weight is not stored per bin, so an
@@ -38,8 +41,7 @@ from precheck_report import GROUPS, INK, SURF, style  # noqa: E402
 
 NAME = re.compile(r"(mass_[a-z0-9]+_cat_\d+ex_\d+mx_\d+jx_\d+bx)")
 WJETS = (69715, 69717, 69719)
-PLOTS = [("zpeak_ee_0j", "mass_e0e1_cat_2ex_0mx_0jx_0bx", (60, 120)), ("zpeak_mumu_0j", "mass_m0m1_cat_0ex_2mx_0jx_0bx", (60, 120)),
-         ("mumu_0j", "mass_m0m1_cat_0ex_2mx_0jx_0bx", None), ("emu_0j", "mass_e0m0_cat_1ex_1mx_0jx_0bx", None),
+PLOTS = [("mumu_0j", "mass_m0m1_cat_0ex_2mx_0jx_0bx", None), ("emu_0j", "mass_e0m0_cat_1ex_1mx_0jx_0bx", None),
          ("ee_1j", "mass_e0e1_cat_2ex_0mx_1jx_0bx", None), ("ee_2j", "mass_e0e1_cat_2ex_0mx_2jx_0bx", None),
          ("3l_eem", "mass_e0e1_cat_2ex_1mx_0jx_0bx", None), ("mumu_0j_125", "mass_m0m1_cat_0ex_2mx_0jx_0bx", (100, 150))]
 
@@ -86,6 +88,8 @@ def main():
     ap.add_argument("--runs", required=True, help="production runs dir holding record<W+jets>/job_*/job_metadata.json")
     ap.add_argument("--data-root", required=True, help="data delivery, uncropped")
     ap.add_argument("--out", required=True)
+    ap.add_argument("--data-runs", default=None, help="data run outputs (for the Z peaks)")
+    ap.add_argument("--mc-scratch", default=None, help="the v4 build's kept scratch (for the Z peaks)")
     a = ap.parse_args()
     out = Path(a.out)
     (out / "plots").mkdir(parents=True, exist_ok=True)
@@ -119,11 +123,17 @@ def main():
         fig.tight_layout()
         fig.savefig(out / "plots" / f"{key}.png", dpi=120, facecolor=SURF)
         plt.close(fig)
-        info = {"mc_total": float(mc.sum())}
-        if key.startswith("zpeak") and name in data:
-            sel = (edges[:-1] >= 81) & (edges[1:] <= 101)
-            info["mc_over_data_81_101"] = float(mc[sel].sum() / data[name]["v"][sel].sum()) if data[name]["v"][sel].sum() else None
-        res["plots"][key] = info
+        res["plots"][key] = {"mc_total": float(mc.sum())}
+    if a.data_runs and a.mc_scratch:
+        sys.path.insert(0, str(REPO))
+        sys.path.insert(0, str(REPO / "studies" / "fullrun_20261025" / "analysis"))
+        import analyze_fullrun as AF
+        AF.GROUPS = GROUPS
+        AF.MISSING_MC = ("Not in the MC: QCD multijet, photon samples, the on-hold rare top "
+                         "(tZq, tWll, ttZ->qq, tt+ll 1-10 GeV)")
+        res["check3_zpeak"] = AF.zpeak(Path(a.data_runs), Path(a.mc_scratch), out / "plots")
+    else:
+        res["check3_zpeak"] = "not run (needs --data-runs and --mc-scratch)"
     # 5  D3
     w1 = {}
     for rid in WJETS:
