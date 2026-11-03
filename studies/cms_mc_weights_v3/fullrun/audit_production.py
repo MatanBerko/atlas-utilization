@@ -31,7 +31,11 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--work", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--expected-sw-failures", default="75589:98",
+                    help="R:F[,R:F...] Sigma-w failures that are expected (default: the 25 Oct "
+                         "full run's 75589:98); '' = none. MC expansion, 3 Nov 2026.")
     args = ap.parse_args()
+    expected_sw = {tuple(int(x) for x in s.split(":")) for s in args.expected_sw_failures.split(",") if s}
     w = Path(args.work)
     jobids = {}
     for line in (w / "jobids.txt").read_text().splitlines():
@@ -97,8 +101,8 @@ def main() -> int:
             if agg[k]:
                 problems.append({"record": rid, k: agg[k]})
 
-    unexpected_sw = sorted(set(sw_fail) - EXPECTED_SIGMA_W_FAILURES)
-    missing_expected_sw = sorted(EXPECTED_SIGMA_W_FAILURES - set(sw_fail))
+    unexpected_sw = sorted(set(sw_fail) - expected_sw)
+    missing_expected_sw = sorted(expected_sw - set(sw_fail))
     out = {
         "records": records,
         "totals": {

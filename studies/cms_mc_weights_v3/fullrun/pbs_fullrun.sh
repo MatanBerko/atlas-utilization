@@ -47,7 +47,8 @@ ulimit -n || true
 case "$WHAT" in
   audit)
     python -u studies/cms_mc_weights_v3/fullrun/audit_production.py \
-        --work "$WORK_DIR" --out "$WORK_DIR/evidence/production_audit.json"
+        --work "$WORK_DIR" --out "$WORK_DIR/evidence/production_audit.json" \
+        ${EXPECTED_SW_FAILURES+--expected-sw-failures "$EXPECTED_SW_FAILURES"}
     ;;
   build)
     test ! -e "$WORK_DIR/build_default"   # never overwrite an existing output
