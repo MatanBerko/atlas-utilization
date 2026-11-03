@@ -110,6 +110,7 @@ def main():
                 "sigma_w_file0": sw_file, "sigma_w_check_passes": m["mc_sigma_w_self_check"]["passes"],
                 "portal_events": n_portal, "sigma_w_sample_estimate": sw_sample,
                 "weight_scale_full_sample_estimate": reg["cross_section_pb"] * L_PB / sw_sample if sw_sample else None,
+                "typical_event_weight_full_sample": reg["cross_section_pb"] * L_PB / n_portal if n_portal else None,
                 "weight_scale_smoke_file0": sc.get("normalisation_factor"),
                 "genweight_stored": mc["genweight_stored_events"],
                 "top3_final_states_raw": top3, "git_commit": m["git_commit"], "elapsed_sec": m["elapsed_sec"],
@@ -148,6 +149,11 @@ def main():
         ax.set_ylim(bottom=max(1e-3, bottom[bottom > 0].min() * 0.3) if (bottom > 0).any() else 1e-3)
         if xr:
             ax.set_xlim(*xr)
+        else:  # crop to the filled range (the histograms are booked far beyond it)
+            nz = np.nonzero(bottom)[0]
+            if len(nz):
+                lo, hi = edges[nz[0]], edges[nz[-1] + 1]
+                ax.set_xlim(lo - 0.05 * (hi - lo), hi + 0.05 * (hi - lo))
         ax.set_xlabel(name.replace("mass_", "m(").split("_cat")[0] + ") [GeV]", color=INK, fontsize=9)
         ax.set_ylabel("weighted events / bin (SMOKE: file 0 only)", color=INK, fontsize=8)
         ax.set_title(f"{title} — {name}\nbuild C (13 + 54, registry v4) stacked; line = build A", fontsize=9, color=INK, loc="left")
@@ -156,16 +162,17 @@ def main():
         fig.savefig(out / "plots" / f"stack_{key}.png", dpi=120, facecolor=SURF)
         plt.close(fig)
         plotted[key] = yields
-    rows = sorted((s for s in samples.values() if s["weight_scale_full_sample_estimate"]), key=lambda s: (s["tier"], s["name"]))
+    rows = sorted((s for s in samples.values() if s["typical_event_weight_full_sample"]), key=lambda s: (s["tier"], s["name"]))
     fig, ax = plt.subplots(figsize=(8, 0.2 * len(rows) + 1.2), facecolor=SURF)
     style(ax)
     ax.grid(axis="x", color=GRID, lw=0.6)
     y = np.arange(len(rows))[::-1]
-    ax.barh(y, [s["weight_scale_full_sample_estimate"] for s in rows], color="#2a78d6", height=0.6)
+    ax.barh(y, [s["typical_event_weight_full_sample"] for s in rows], color="#2a78d6", height=0.6)
+    ax.axvline(1, color=INK, lw=0.8)
     ax.set_xscale("log")
     ax.set_yticks(y, [f"T{s['tier']} {s['name'][:38]}" for s in rows], fontsize=6.5)
-    ax.set_xlabel("event weight scale σ_eff × 16.393 fb⁻¹ / Σw (Σw = file 0 scaled to the sample; × genWeight)", fontsize=8)
-    ax.set_title("Per-sample weight scale (tier 0 = delivered 13)", fontsize=9, loc="left")
+    ax.set_xlabel("typical event weight σ_eff × 16.393 fb⁻¹ / N_events(sample) = data events per MC event (line: 1)", fontsize=8)
+    ax.set_title("Per-sample typical event weight, full sample (tier 0 = delivered 13)", fontsize=9, loc="left")
     fig.tight_layout()
     fig.savefig(out / "plots" / "weight_scale.png", dpi=120, facecolor=SURF)
     plt.close(fig)

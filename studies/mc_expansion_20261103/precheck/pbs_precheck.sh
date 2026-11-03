@@ -46,7 +46,7 @@ case "$WHAT" in
              --runs "$W/runs_new" --out "$W/evidence/checks_v4_on_C" \
              --data-root /storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/deliver/data/CMS_Run2016GH_DoubleMuon-SingleMuon-DoubleEG-MuonEG-SingleElectron_16p393invfb_prod2026-10-25_data_bumpnet_uncropped.root ;;
   report)  python -u studies/mc_expansion_20261103/precheck/precheck_report.py --runs "$W/runs_new" "$W/runs_old13" \
-             --build-a "$W/builds/A" --build-c "$W/builds/C" --out "$W/evidence/report" ;;
+             --build-a "$W/builds/A" --build-c "$W/builds/C" --out "$W/evidence/report${REPORT_SUFFIX:-}" ;;
   *) echo "unknown WHAT=$WHAT" >&2; exit 1 ;;
 esac
 rm -rf "$TMPDIR"
