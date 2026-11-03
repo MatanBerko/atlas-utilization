@@ -22,18 +22,18 @@
   "64659": {
    "tier": 1,
    "name": "ST_t-channel_antitop_4f_InclusiveDecays-powheg-madspin-pythia8",
-   "files": 27,
+   "files": 35,
    "files_full_index": 35,
    "portal_number_files": 35,
-   "events_estimate": 23802390.046558157,
+   "events_estimate": 30608999.999999996,
    "events_portal": 30609000,
-   "fraction_of_events_reachable_estimate": 0.7776271700009199,
+   "fraction_of_events_reachable_estimate": 0.9999999999999999,
    "cpu_s_per_event_file0": 0.00021411433025848034,
-   "cpu_hours": 1.4156757787138665,
+   "cpu_hours": 1.8205070930227294,
    "max_cpu_s_per_file": 307.9618802118525,
    "walltime": "02:00:00",
    "rate_from": "file 0",
-   "cluster_files": 324
+   "cluster_files": 420
   },
   "64759": {
    "tier": 1,
@@ -358,18 +358,18 @@
   "37446": {
    "tier": 5,
    "name": "GluGluHToTauTau_M125-powheg-pythia8",
-   "files": 35,
+   "files": 40,
    "files_full_index": 40,
    "portal_number_files": 40,
-   "events_estimate": 6321288.46879747,
+   "events_estimate": 6439000.0,
    "events_portal": 6439000,
-   "fraction_of_events_reachable_estimate": 0.9817189732563241,
+   "fraction_of_events_reachable_estimate": 1.0,
    "cpu_s_per_event_file0": 0.00442439374923706,
-   "cpu_hours": 7.768852552353287,
+   "cpu_hours": 7.913519819815954,
    "max_cpu_s_per_file": 5954.883113788113,
    "walltime": "03:00:00",
    "rate_from": "file 0 minus 150 s start-up",
-   "cluster_files": 420
+   "cluster_files": 480
   },
   "37474": {
    "tier": 5,
@@ -518,34 +518,34 @@
   "68591": {
    "tier": 5,
    "name": "VBFHToTauTau_M125-powheg-pythia8",
-   "files": 5,
+   "files": 7,
    "files_full_index": 7,
    "portal_number_files": 7,
-   "events_estimate": 720408.4428047559,
+   "events_estimate": 1500000.0,
    "events_portal": 1500000,
-   "fraction_of_events_reachable_estimate": 0.4802722952031706,
+   "fraction_of_events_reachable_estimate": 1.0,
    "cpu_s_per_event_file0": 0.002642201425168461,
-   "cpu_hours": 0.5287400595228106,
-   "max_cpu_s_per_file": 995.3076400288113,
+   "cpu_hours": 1.1009172604868587,
+   "max_cpu_s_per_file": 1900.7774189000666,
    "walltime": "02:00:00",
    "rate_from": "file 0 minus 150 s start-up",
-   "cluster_files": 60
+   "cluster_files": 84
   },
   "68601": {
    "tier": 5,
    "name": "VBFHToWWTo2L2Nu_M125_powheg2_JHUGenV714_pythia8",
-   "files": 23,
+   "files": 30,
    "files_full_index": 30,
    "portal_number_files": 30,
-   "events_estimate": 3198750.291819272,
+   "events_estimate": 3596630.0,
    "events_portal": 3596630,
-   "fraction_of_events_reachable_estimate": 0.8893743008925779,
+   "fraction_of_events_reachable_estimate": 1.0,
    "cpu_s_per_event_file0": 0.0007556591184775771,
-   "cpu_hours": 0.6714346738183453,
+   "cpu_hours": 0.7549517375805579,
    "max_cpu_s_per_file": 541.153368694996,
    "walltime": "02:00:00",
    "rate_from": "file 0",
-   "cluster_files": 276
+   "cluster_files": 360
   },
   "68731": {
    "tier": 5,
@@ -694,18 +694,18 @@
   "71297": {
    "tier": 5,
    "name": "WplusHToTauTau_M125-powheg-pythia8",
-   "files": 6,
+   "files": 7,
    "files_full_index": 7,
    "portal_number_files": 7,
-   "events_estimate": 1797731.4817325973,
+   "events_estimate": 1999999.9999999998,
    "events_portal": 2000000,
-   "fraction_of_events_reachable_estimate": 0.8988657408662987,
+   "fraction_of_events_reachable_estimate": 0.9999999999999999,
    "cpu_s_per_event_file0": 0.000784201762848647,
-   "cpu_hours": 0.39160672141755926,
+   "cpu_hours": 0.4356676460270261,
    "max_cpu_s_per_file": 591.4404191338467,
    "walltime": "02:00:00",
    "rate_from": "file 0 minus 150 s start-up",
-   "cluster_files": 72
+   "cluster_files": 84
   },
   "74292": {
    "tier": 5,
@@ -854,27 +854,27 @@
   "74906": {
    "tier": 6,
    "name": "ZJetsToNuNu_HT-800To1200-madgraphMLM-pythia8",
-   "files": 21,
+   "files": 22,
    "files_full_index": 22,
    "portal_number_files": 22,
-   "events_estimate": 604179.1334107412,
+   "events_estimate": 633499.9999999998,
    "events_portal": 633500,
-   "fraction_of_events_reachable_estimate": 0.9537160748393705,
+   "fraction_of_events_reachable_estimate": 0.9999999999999997,
    "cpu_s_per_event_file0": 6.183615966032037e-05,
-   "cpu_hours": 0.010377810376950172,
+   "cpu_hours": 0.010881446429114712,
    "max_cpu_s_per_file": 12.93378043424646,
    "walltime": "02:00:00",
    "rate_from": "file 0 minus 150 s start-up",
-   "cluster_files": 252
+   "cluster_files": 264
   }
  },
  "tiers": {
   "1": {
    "samples": 7,
-   "files": 468,
-   "events": 490493633.0002372,
-   "cpu_hours": 30.004279886123086,
-   "cluster_files": 5616.0
+   "files": 476,
+   "events": 497300242.953679,
+   "cpu_hours": 30.40911120043195,
+   "cluster_files": 5712.0
   },
   "2": {
    "samples": 6,
@@ -899,17 +899,17 @@
   },
   "5": {
    "samples": 26,
-   "files": 332,
-   "events": 40114129.6851541,
-   "cpu_hours": 21.80466733742488,
-   "cluster_files": 3984.0
+   "files": 347,
+   "events": 41611581.0,
+   "cpu_hours": 22.649089794223276,
+   "cluster_files": 4164.0
   },
   "6": {
    "samples": 7,
-   "files": 106,
-   "events": 22723288.13341074,
-   "cpu_hours": 0.4829637956160292,
-   "cluster_files": 1272.0
+   "files": 107,
+   "events": 22752609.0,
+   "cpu_hours": 0.4834674316681937,
+   "cluster_files": 1284.0
   }
  }
 }

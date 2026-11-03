@@ -50,7 +50,7 @@ Tests: `studies/cms_mc_weights_v3/tests/test_registry_v4.py` (6/6 pass). Report:
   - qq → ZH uses 0.7612 and gg → ZH 0.1227;
   - dropped and deferred records are excluded.
 - (e) all 17 CMS test files (`tests/`, `studies/cms_datasets/tests/`, `studies/cms_mc_weights_v3/tests/`) exit 0
-  (`evidence/cms_tests_step2.log`). Three of the old tests write by-product files into the tree; they were moved
+  (`evidence/cms_tests_step2.txt`). Three of the old tests write by-product files into the tree; they were moved
   out, not committed.
 
 ## Code changes (CMS files only; v3 stays the default)
@@ -79,7 +79,7 @@ Findings for the technical lead:
 - Adding samples moves the builder's combined peak/split cuts, so the 13 delivered histograms change shape in the new
   build. Example: eμ 0j lower edge 60 → 80 GeV.
 
-## Step 4 — Ready to submit: PREPARED, **BLOCKED on one decision (P1)**
+## Step 4 — Ready to submit: PREPARED (P1 decided 3 Nov 18:49: **option B**, implemented in A2, see below)
 
 ### P1 — the portal file page reaches only part of 8 new records (NOT decided here; options for Matan)
 
@@ -288,3 +288,62 @@ The build is `pbs_fullrun.sh WHAT=build`: `build_mc_delivery.py --runs-dir $W/ru
 - `work/mcexp_20261103/precheck/` (runs, builds A-D, logs, evidence).
 - Two held jobs 5433388 / 5433389 (dependency never released). They hold no resources; deleting them needs Matan's OK.
 - File count **98,821** at the end of A1 (95,324 before A1; `lfs quota`, 3 Nov 18:42).
+
+
+## A2 (3 Nov 2026): P1 option B implemented, data coverage checked
+
+Matan's decisions (3 Nov 18:49):
+- P1 = option B;
+- the files CERN does not publish (69717: 30 of 117; 72761: 6 of 9) stay missing and go in the README;
+- delete the held jobs 5433388 / 5433389.
+
+**Code (CMS files only; upstream files untouched, `services/consts.py` unchanged):**
+- `studies/m0m1j0_cms/design_checks/common.py`: new `fetch_file_list_complete(record_id)`. It reads every index file
+  listed in the record API's `_file_indices`, in that order, and fetches an index file directly if its entry lists
+  fewer files than its `number_files`. `fetch_file_list` itself is unchanged.
+- `studies/cms_datasets/cluster/run_dataset_on_file.py`:
+  - `resolve_file_url(record_id, file_index, complete=False)`;
+  - `main()` calls it with `complete=bool(args.is_mc)`;
+  - so **MC uses the complete list and data keeps the page-1 list**. Data behaviour is unchanged.
+- `studies/mc_expansion_20261103/make_mcexp_mappings.py` now writes the mappings from the complete list.
+
+**Tests (VERIFIED BY RUNNING; `studies/cms_mc_weights_v3/tests/test_file_list_complete.py`, network):**
+- **13 delivered MC records:** the complete list is identical (same files, same order) to the 25 Oct input lists.
+  This is the 17 Oct sweep that the 25 Oct mappings were checked against.
+- **54 new records:** page 1 is always a prefix of the complete list (only appends). **Total 1,206 files.** Per
+  affected record (page 1 → complete):
+
+  | record | sample | before | after |
+  |---|---|---:|---:|
+  | 64659 | t-channel antitop | 27 | 35 |
+  | 37446 | ggF H → ττ | 35 | 40 |
+  | 68591 | VBF H → ττ | 5 | 7 |
+  | 68601 | VBF H → WW | 23 | 30 |
+  | 71297 | W⁺H → ττ | 6 | 7 |
+  | 74906 | Z → νν HT 800-1200 | 21 | 22 |
+  | 69717 | W+jets 1J (unpublished files) | 30 | 30 |
+  | 72761 | WZZ (unpublished files) | 6 | 6 |
+
+- The data path still calls `resolve_file_url` without `complete` (asserted).
+- **All 18 CMS test files pass** (`evidence/cms_tests_A2.txt`).
+- **Reuse of the 13 delivered samples still holds:**
+  - their complete file lists equal the 25 Oct lists, so every (record, file index) resolves to the same URL;
+  - the only code change is in how the URL list is obtained;
+  - selection, weights and outputs are untouched.
+
+**Mappings and cost (option B; ESTIMATES as before, `evidence/full_production_plan.json`):**
+
+| tier | samples | files | events | CPU h | cluster files added | cumulative (from 98,821, 3 Nov) |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 7 | 476 | 497.3 M | 30 | 5,726 | 104,547 |
+| 2 | 6 | 142 | 68.1 M | 9 | 1,716 | 106,263 |
+| 3 | 4 | 57 | 17.5 M | 10 | 692 | 106,955 |
+| 4 | 4 | 77 | 12.0 M | 116 | 932 | 107,887 |
+| 5 | 26 | 347 | 41.6 M | 23 | 4,216 | 112,103 |
+| 6 | 7 | 107 | 22.8 M | 0.5 | 1,298 | 113,401 |
+| build + post | | | | | ~6,200 | **~119,600** (< 125,000) |
+
+- Batch 1 (tiers 1-3) = 675 subjobs; batch 2 (tiers 4-6) = 531 subjobs.
+- Walltimes are unchanged: 24 h 68045; 6 h 64635, 67645, 68083, 40062; 3 h 67691, 37446; 2 h the rest.
+
+**Data coverage (`DATA_COVERAGE.md`): all 541 files of the 10 data records were used on 25 Oct; nothing missed.**

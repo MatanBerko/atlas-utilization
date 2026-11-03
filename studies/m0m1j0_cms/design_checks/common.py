@@ -90,6 +90,43 @@ def fetch_file_list(record_id: int) -> list[str]:
     return files
 
 
+CMS_RECID_API_FILE_INDEX_URL = "https://opendata.cern.ch/record/{0}/file_index/{1}"
+
+
+def fetch_file_list_complete(record_id: int) -> list[str]:
+    """MC expansion (3 Nov 2026, Matan's P1 option B): the record's COMPLETE
+    file list. `fetch_file_list` reads page 1 of the portal file page, which
+    shows at most 5 index files, so records with more index files lose the
+    rest. This reads every index file listed in the record API's
+    `_file_indices`, in the order given there (for every record checked on
+    3 Nov, the page-1 list is an exact prefix of this list, so existing file
+    indices are unchanged; tests/... test_file_list_complete). If an index
+    entry carries fewer file entries than its `number_files`, that index file
+    is read directly. Files that the portal does not publish in any index
+    file cannot be listed. Used only by the MC production path."""
+    last = None
+    for attempt in range(3):
+        try:
+            r = requests.get(CMS_RECID_API_URL.format(record_id), timeout=60)
+            r.raise_for_status()
+            break
+        except Exception as e:  # noqa: BLE001 -- transient HTTP failure
+            last = e
+    else:
+        raise RuntimeError(f"record {record_id}: record API not reachable") from last
+    files = []
+    for index_file in r.json()["metadata"]["_file_indices"]:
+        entries = index_file.get("files") or []
+        if len(entries) != index_file.get("number_files", len(entries)):
+            ri = requests.get(CMS_RECID_API_FILE_INDEX_URL.format(record_id, index_file["key"]), timeout=60)
+            ri.raise_for_status()
+            entries = ri.json()["files"]
+        files.extend(f["uri"] for f in entries)
+    if len(set(files)) != len(files):
+        raise RuntimeError(f"record {record_id}: duplicate file URIs in the record's index files")
+    return files
+
+
 CMS_RECID_API_URL = "https://opendata.cern.ch/api/records/{0}"
 
 

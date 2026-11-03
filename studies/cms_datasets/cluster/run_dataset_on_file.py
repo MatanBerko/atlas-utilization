@@ -186,7 +186,7 @@ from services.pipelines.im_pipeline import (  # noqa: E402
 )
 from services.storage.sqlite_shards import SqliteArrayShardWriter  # noqa: E402
 from studies.m0m1j0_cms import selection  # noqa: E402
-from studies.m0m1j0_cms.design_checks.common import fetch_file_list  # noqa: E402
+from studies.m0m1j0_cms.design_checks.common import fetch_file_list, fetch_file_list_complete  # noqa: E402
 from studies.cms_datasets.cluster.datasets_records import DATASETS, VETO_ORDER  # noqa: E402
 
 DEFAULT_VALIDATED_RUNS_JSON = (
@@ -546,8 +546,10 @@ def git_commit_hash(repo_root) -> str:
         return f"UNKNOWN ({type(e).__name__}: {e})"
 
 
-def resolve_file_url(record_id: int, file_index: int) -> str:
-    urls = fetch_file_list(record_id)
+def resolve_file_url(record_id: int, file_index: int, complete: bool = False) -> str:
+    # complete=True (MC only, P1 option B, 3 Nov 2026): every index file of the
+    # record, not just the portal file page 1. Data keeps the page-1 list.
+    urls = fetch_file_list_complete(record_id) if complete else fetch_file_list(record_id)
     if file_index < 0 or file_index >= len(urls):
         raise ValueError(
             f"record {record_id}'s portal file list currently has {len(urls)} "
@@ -2232,7 +2234,7 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    file_url = resolve_file_url(args.record_id, args.file_index)
+    file_url = resolve_file_url(args.record_id, args.file_index, complete=bool(args.is_mc))
     print(f"[{dataset_label}] resolved record {args.record_id} file index {args.file_index} -> {file_url}", flush=True)
 
     branch_titles = {}
