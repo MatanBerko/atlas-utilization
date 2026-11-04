@@ -426,3 +426,104 @@ VERIFIED BY RUNNING (submission log `evidence/submit_A2_batch1.txt`).
    list them and the gate will stop the build, as designed. Report the failures (record, file index, reason) for a
    decision.
 6. Commit the job ids to this file, gate, push, switch to master, finish without waiting.
+
+## Status check (4 Nov 2026, 19:41; read-only)
+
+VERIFIED BY RUNNING:
+- Batch 1 (tiers 1-3) finished: **675 of 675 jobs exit 0**, 675 job directories with 8 shards each (5,400), no Σw
+  self-check failure. The longest job took 1,070 s.
+- Timing job 5434328: exit 0. 68045 file 18 (682,000 events) took **45 min wall** (2,719 s in the driver), 2.3 GB.
+- 0 jobs queued; file count 107,898.
+
+## A2b-1 submitted (4 Nov 2026, 19:47 IST): tiers 4 and 5
+
+Matan's decision (4 Nov 19:44): submit tiers 4 and 5 now. **Tier 6 (Z → νν) and the post chain wait for Maryna's
+answer on QCD multijet**, which may require dropping tier 6 for file space.
+
+VERIFIED BY RUNNING (log `evidence/submit_A2b1_tiers45.txt`):
+- Same pinned checkout `repo_6de9d3e605900a628bae372bdba4ea3308e9750f` (HEAD asserted, `git status` clean), same work
+  dir `W=/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/full`. Before submitting, the script checked that
+  no output directory or `jobids.txt` line existed for any of the 30 records.
+- No code, registry, mapping or selection change.
+- **Walltimes:** 68045 four-top **03:00:00** (timing job: 45 min for the largest file; × 1.5 rounds up to the tier-4
+  standard 3 h). All others as in `full_production_plan.json`.
+- **Tier 4: 4 arrays, 77 subjobs.** The 4 ON-HOLD samples (68325, 64873, 68206, 68185) are not submitted.
+- **Tier 5: 26 samples, 347 subjobs** (20 arrays + 6 single-file plain jobs).
+- **Total 424 subjobs**, appended to `$W/jobids.txt`, which now holds **47 lines, 1,099 subjobs** (tiers 1-5).
+
+| record | job | files | walltime | | record | job | files | walltime |
+|---|---|---:|---|---|---|---|---:|---|
+| 67645 | 5439038[] | 26 | 06:00:00 | | 68571 | 5439052 (single) | 1 | 02:00:00 |
+| 67691 | 5439039[] | 20 | 03:00:00 | | 68591 | 5439053[] | 7 | 02:00:00 |
+| 68045 | 5439040[] | 23 | 03:00:00 | | 68601 | 5439054[] | 30 | 02:00:00 |
+| 68083 | 5439041[] | 8 | 06:00:00 | | 68731 | 5439055[] | 4 | 02:00:00 |
+| 37432 | 5439042 (single) | 1 | 02:00:00 | | 68741 | 5439056[] | 21 | 02:00:00 |
+| 37446 | 5439043[] | 40 | 03:00:00 | | 70301 | 5439057[] | 9 | 02:00:00 |
+| 37474 | 5439044[] | 10 | 02:00:00 | | 70383 | 5439058[] | 7 | 02:00:00 |
+| 37604 | 5439045[] | 19 | 02:00:00 | | 70451 | 5439059 (single) | 1 | 02:00:00 |
+| 37616 | 5439046[] | 2 | 02:00:00 | | 70453 | 5439060[] | 3 | 02:00:00 |
+| 40062 | 5439047[] | 21 | 06:00:00 | | 71145 | 5439061 (single) | 1 | 02:00:00 |
+| 40095 | 5439048[] | 5 | 02:00:00 | | 71227 | 5439062[] | 12 | 02:00:00 |
+| 41873 | 5439049[] | 66 | 02:00:00 | | 71295 | 5439063 (single) | 1 | 02:00:00 |
+| 41877 | 5439050[] | 58 | 02:00:00 | | 71297 | 5439064[] | 7 | 02:00:00 |
+| 41914 | 5439051[] | 6 | 02:00:00 | | 74292 | 5439065[] | 8 | 02:00:00 |
+| | | | | | 74682 | 5439066 (single) | 1 | 02:00:00 |
+| | | | | | 74684 | 5439067[] | 6 | 02:00:00 |
+
+- Queue right after submission: 397 queued, 27 running (berkom).
+- **File count: 107,898 before, 107,928 right after submission.** Outputs appear as the jobs run.
+- **Projection (ESTIMATE, 12 files per input file + 2 per record):**
+  - tiers 4-5 add ~5,150 → ~113,050;
+  - tier 6 would add ~1,300 → ~114,350;
+  - the build + kept scratch (≈ 1,518 × 1,703 / 497 ≈ 5,200, scaled from the 25 Oct build) + checks (~200) bring the
+    total to **~119,750 with tier 6, ~118,450 without**;
+  - both under 125,000.
+
+### What remains (the final prompt, after Maryna's QCD answer)
+
+1. **Status check first.** Every line of `$W/jobids.txt` finished; count exit codes in `$W/logs/<record>/f_*.err`
+   (tier 4/5 failures: report, do not resubmit without a decision).
+2. **Tier 6: submit or drop (Matan / Maryna).**
+   - If submitted: use the same definitions and `submit_tier` as in `evidence/submit_A2_batch1.sh` (pin 6de9d3e, same
+     `R`, `W`), then `submit_tier 6` (7 arrays, 107 subjobs, 2 h).
+   - If dropped: no new production. The post chain must not expect it: the audit reads only `jobids.txt`, so do not add
+     tier 6 there. The v4 registry still lists the 7 records with `in_full_run: true`. That is harmless for the build,
+     which only builds records it finds, but the delivery README must then say Z → νν is not included.
+3. **Post chain**, submitted right after tier 6 (or right away if tier 6 is dropped).
+   - Dependencies: `afterany` only on jobs still in state Q, R, H or B. If everything has finished, submit the audit
+     with NO dependency, then use `afterok` on the audit job id, which will still be queued.
+   - Commands, in bash on wipp-home, from the same pinned checkout:
+
+```bash
+B=/storage/agrp/berkom/atlas-utilization; C=6de9d3e605900a628bae372bdba4ea3308e9750f
+R=$B/checkouts/mcexp_20261103/repo_$C; W=$B/work/mcexp_20261103/full; Q=/opt/pbs/bin/qsub
+OLD=$B/work/fullrun_20261025/mc/runs
+ARR=""; while read rid job n wt; do st=$(/opt/pbs/bin/qstat -x "$job" 2>/dev/null | tail -1 | awk '{print $5}'); \
+  case "$st" in Q|R|H|B) ARR="$ARR:$job";; esac; done < $W/jobids.txt
+DEP=(); [ -n "$ARR" ] && DEP=(-W depend=afterany$ARR)
+F=$R/studies/cms_mc_weights_v3/fullrun/pbs_fullrun.sh; P=$R/studies/mc_expansion_20261103/cluster/pbs_mcexp_post.sh
+MA=$($Q -N mcexp_audit -l select=1:ncpus=1:mem=4gb,walltime=01:00:00,io=25 -o $W/logs/post/audit.out -e $W/logs/post/audit.err \
+     -v WORK_DIR=$W,REPO_DIR=$R,WHAT=audit,EXPECTED_SW_FAILURES= "${DEP[@]}" $F)
+MG=$($Q -N mcexp_gate -l select=1:ncpus=1:mem=1gb,walltime=00:10:00,io=1 -o $W/logs/post/gate.out -e $W/logs/post/gate.err \
+     -v WORK_DIR=$W,REPO_DIR=$R,WHAT=gate -W depend=afterok:$MA $P)
+MB=$($Q -N mcexp_build -l select=1:ncpus=1:mem=64gb,walltime=08:00:00,io=25 -o $W/logs/post/build.out -e $W/logs/post/build.err \
+     -v WORK_DIR=$W,REPO_DIR=$R,WHAT=build,REGISTRY=studies/cms_mc_weights_v3/cms_mc_normalisation_v4.json,EXTRA_RUNS_DIR=$OLD \
+     -W depend=afterok:$MG $F)
+MC=$($Q -N mcexp_checks -l select=1:ncpus=1:mem=32gb,walltime=04:00:00,io=25 -o $W/logs/post/checks.out -e $W/logs/post/checks.err \
+     -v WORK_DIR=$W,REPO_DIR=$R,WHAT=checks -W depend=afterok:$MB $P)
+MR=$($Q -N mcexp_rulebld -l select=1:ncpus=1:mem=32gb,walltime=06:00:00,io=25 -o $W/logs/post/rule_builds.out -e $W/logs/post/rule_builds.err \
+     -v WORK_DIR=$W,REPO_DIR=$R,WHAT=rule_builds -W depend=afterok:$MG $P)
+MK=$($Q -N mcexp_rulechk -l select=1:ncpus=1:mem=16gb,walltime=02:00:00,io=25 -o $W/logs/post/rulecheck.out -e $W/logs/post/rulecheck.err \
+     -v WORK_DIR=$W,REPO_DIR=$R,WHAT=rulecheck -W depend=afterok:$MR $P)
+printf "%s\n" "audit $MA" "gate $MG" "build $MB" "checks $MC" "rule_builds $MR" "rulecheck $MK" | tee $W/post_jobids.txt
+```
+
+   - What the chain does:
+     - audit: every mapping line of tiers 1-5 (+6), exit 0, Σw self-check, no expected failures;
+     - gate: stops the chain unless the audit says OK;
+     - build: v4 registry, the new runs + the 25 Oct runs read only, summed + per-process files, kept scratch;
+     - checks: `post/checks_v4.py`, including D3 and the Z peaks, whose code has NOT yet been exercised (check its output
+       first);
+     - rule builds and checks R1-R7.
+   - The build writes `$W/build_default`. `pbs_fullrun.sh` refuses to overwrite it.
+4. Then the checks review and the delivery (separate prompts). The README items are listed under "README items" above.
