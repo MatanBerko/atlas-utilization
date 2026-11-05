@@ -527,3 +527,54 @@ printf "%s\n" "audit $MA" "gate $MG" "build $MB" "checks $MC" "rule_builds $MR" 
      - rule builds and checks R1-R7.
    - The build writes `$W/build_default`. `pbs_fullrun.sh` refuses to overwrite it.
 4. Then the checks review and the delivery (separate prompts). The README items are listed under "README items" above.
+
+## Status check (5 Nov 2026, 20:05; read-only)
+
+VERIFIED BY RUNNING: of the 424 tier-4/5 subjobs (5439038-5439067), **331 exit 0** (8 shards + metadata each, no Σw
+self-check failure) and **93 failed**, 0 queued/running. Longest OK jobs: tier 4 20 min (67691, 3 h limit), tier 5
+25 min (40095, 2 h); 40062 11.5 min (6 h); no walltime/memory kill. File count 112,209.
+
+## Retry of 93 portal-504 failures (5 Nov 2026, 20:12 IST)
+
+Matan's decision (5 Nov): re-run exactly the 93 failed subjobs with the same pin, settings and walltimes; the 93
+empty output folders may be MOVED (not deleted) out of `runs/`.
+
+VERIFIED BY RUNNING (exact commands: `evidence/retry_20261105_submit.sh`):
+- **Cause.** All 93 failed within ~1.5 min, before reading any data, with
+  `requests.exceptions.HTTPError: 504 Server Error: Gateway Time-out for url: https://opendata.cern.ch/api/records/<recid>`
+  → `RuntimeError: record <recid>: record API not reachable` (`fetch_file_list_complete`). The CERN portal was down
+  4 Nov 20:03-20:33 IST; jobs starting before/after ran normally. Not a code or physics problem.
+- **Preflight.** Branch head bc6b12d, upstream 29291ae; pinned checkout at 6de9d3e and clean; 0 jobs of mine; file
+  count 112,209. Portal reachable on 5 Nov from wipp-an1: `fetch_file_list_complete` succeeded for all 12 affected
+  records and each file count equals its mapping's line count.
+- **The 93 pairs** (`evidence/retry_20261105_list.txt`: record, array index, file index, files in folder), from the logs
+  (exit ≠ 0 AND the 504 message; no other failure type exists). Every folder existed and was empty (0 entries,
+  recursively). Per record: 68045 23, 68083 7, 67691 15, 71295 1, 71297 7, 74292 8, 74682 1, 74684 6, 37446 17,
+  71227 5, 40062 2, 41877 1 = 93, identical to the status check.
+- **Moved, not deleted:** the 93 empty folders `runs/record<r>/job_<f>` → `$W/failed_20261104_portal504/<r>/job_<f>`
+  (`evidence/retry_20261105_moved_folders.txt`; 93 folders, 0 files there).
+- **Submitted 93 single jobs, 5449537-5449629** (contiguous), `pbs_mc_pilot.sh` with `PILOT_ARRAY_INDEX=<array index>`
+  and the record's own mapping file, so each output lands at the original `runs/record<r>/job_<f>`. Walltimes from the
+  A2b-1 lines of `jobids.txt`: 55 × 3 h (68045, 67691, 37446), 9 × 6 h (68083, 40062), 29 × 2 h; mem 6 gb, io=25.
+  Logs: `$W/logs/<r>/f_<idx>_retry1.{out,err}`; the failed attempts' `f_<idx>.{out,err}` are untouched.
+- **Job ids** in `$W/jobids_retry1.txt` and `evidence/retry_20261105_submitted.txt`, format
+  `<record> <job> 1 <walltime> retry1 array_index=<i> file_index=<f>`. **Deliberately NOT appended to `jobids.txt`:**
+  the pinned `audit_production.py` does `rid, jid, n, wt = line.split()` (a 5-field line crashes it) and keeps one
+  entry per record (a 4-field retry line would replace the array's entry and its expected count).
+- Right after submission: 76 queued, 17 running. **File count 112,209 before, 112,226 after.** Projection
+  (ESTIMATE): +~1,050 for the 93 outputs/logs → ~113,300; + build/checks ~5,400 → ~118,700 without tier 6, ~120,000
+  with it; under 125,000.
+
+### Before the post chain (decision needed; not done)
+
+The pinned audit reads `logs/<r>/f_<idx>.err` for every mapping line, so for the 93 it would still see the failed
+attempt (exit 1) and the gate would stop the build. With no code change, one option is: after all 93 retries are
+OK, MOVE the 93 failed `f_<idx>.{out,err}` into `$W/failed_20261104_portal504/logs/<r>/` and COPY each
+`f_<idx>_retry1.{out,err}` to `f_<idx>.{out,err}` (needs Matan's approval: it moves logs). Also, the dependency loop in
+"What remains" reads only `jobids.txt`; if the post chain is submitted while retries still run, add the Q/R/H
+retry jobs from `jobids_retry1.txt` to `ARR`.
+
+Idea only (not implemented, no code change now): a retry with back-off in `fetch_file_list_complete` for HTTP 5xx.
+
+**Next status check must confirm 424/424 tier-4/5 outputs:** all 93 retry jobs exit 0 (`f_<idx>_retry1.err`), and
+every `runs/record<r>/job_<f>` for the 30 records has 8 shards + `job_metadata.json` with a passing Σw self-check.
