@@ -578,3 +578,18 @@ Idea only (not implemented, no code change now): a retry with back-off in `fetch
 
 **Next status check must confirm 424/424 tier-4/5 outputs:** all 93 retry jobs exit 0 (`f_<idx>_retry1.err`), and
 every `runs/record<r>/job_<f>` for the 30 records has 8 shards + `job_metadata.json` with a passing Σw self-check.
+
+## Status check 7 Nov 2026 (read-only)
+
+VERIFIED BY RUNNING (7 Nov 09:52 IST, wipp-home; per-record table `evidence/status_20261107_tiers45.txt`):
+- Branch head 3d0800a, upstream 29291ae. 0 jobs of mine queued or running.
+- **The 93 retries (5449537-5449629): 93/93 exit 0** (PBS history and `_retry1.err`), all `_retry1.out` end normally,
+  each `runs/record<r>/job_<f>` has the standard 9 files (8 shards + `job_metadata.json`) and a passing Σw self-check.
+- **Tiers 4-5: 424/424 OK** (331 original + 93 retry), 0 failed, 0 missing outputs, 0 Σw failures, against the
+  mapping line counts (30 records).
+- **Tiers 1-3 intact:** 675/675 folders with the standard 9 files. **So tiers 1-5 = 1,099/1,099 complete.**
+- Longest job: four-top 68045 file 18 (retry), 2,434 s = 23 % of 3 h. Highest memory: 40095, 3.67 GB = 61 % of 6 GB.
+  No job above 80 % of walltime or memory.
+- `failed_20261104_portal504/`: 93 empty folders, untouched (same set as the moved list).
+- File count 113,342 (112,226 on 5 Nov; estimate ~113,300).
+- Still to do before the audit: the log swap from "Before the post chain" (needs Matan's OK); not done here.
