@@ -1,0 +1,20 @@
+# D15 precheck, 7 Nov 2026 (VERIFIED BY RUNNING). File 0 of the 4 released rare-top samples, pinned code 6de9d3e
+# (studies/cms_mc_weights_v3/cluster/pbs_mc_pilot.sh unchanged; mem 6 GB, 3 h, io=25), array 5469519[],
+# into /storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/d15_precheck_20261107/ (NOT the production runs tree).
+# wall = "Elapsed (wall clock)" (/usr/bin/time); files = entries in runs/record<r>/job_0 (8 shards + job_metadata.json).
+record exit wall_s rss_GB files events_read stored in_delivery_union sigma_w_check event_count_matches Sum_genWeight(file0) commit 3_largest_final_states(raw)
+68325 0 499 0.22 9 46000 27617 27218 pass yes 3598.795 6de9d3e 0e_1m_2j_1b:1177,0e_2m_2j_1b:999,1e_0m_2j_1b:975
+64873 0 615 0.13 9 11000 7674 7595 pass yes 11000.0 6de9d3e 0e_1m_2j_1b:245,0e_1m_3j_1b:243,1e_0m_3j_1b:230
+68206 0 391 0.19 9 46000 9866 9616 pass yes 23768.774 6de9d3e 0e_1m_3j_2b:511,0e_1m_4j_1b:505,0e_1m_3j_1b:495
+68185 0 334 0.11 9 6000 1645 1602 pass yes 323.987 6de9d3e 0e_1m_2j_1b:91,0e_1m_2j_2b:83,1e_0m_2j_1b:82
+#
+# File lists (make_d15_mappings.py, complete list = page 1 for all 4; no file listed but unpublished):
+#   68325 52 files 3,967,000 events | 64873 2 files 320,000 | 68206 20 files 5,401,000 | 68185 9 files 320,000
+#   total 83 files, 10,008,000 events (plan: 83 files).
+# Walltime (ESTIMATE): 4 x (wall of file 0 x size(largest file) / size(file 0)), rounded up on 2/3/6/12/24 h:
+#   68325 499 s x 5.99 = 0.83 h -> 3.3 h -> 06:00:00
+#   64873 615 s x 25.43 = 4.34 h -> 17.4 h -> 24:00:00
+#   68206 391 s x 14.26 = 1.55 h -> 6.2 h -> 12:00:00
+#   68185 334 s x 36.33 = 3.37 h -> 13.5 h -> 24:00:00
+#   (file sizes from the record API _file_indices, 7 Nov; a literal "4 x the file-0 time" would give 2 h for all,
+#    too short for the larger files.)

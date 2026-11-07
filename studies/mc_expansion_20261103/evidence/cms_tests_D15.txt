@@ -1,0 +1,766 @@
+CMS tests Sat  7 Nov 2026 23:09:58 IST on 1b09cd2 + working tree (D15: registry v5, test_registry_v5.py)
+===== tests/test_trigger_requirements.py
+...........sss
+----------------------------------------------------------------------
+Ran 14 tests in 0.009s
+
+OK (skipped=3)
+exit=0 tests/test_trigger_requirements.py
+===== tests/test_validated_runs.py
+..................ss....
+----------------------------------------------------------------------
+Ran 24 tests in 0.010s
+
+OK (skipped=2)
+exit=0 tests/test_validated_runs.py
+===== studies/cms_datasets/tests/test_btag_singleelectron.py
+20 Oct 2026 decisions: b-tag 0.2489 + SingleElectron (T = 32 GeV)
+========================================================================
+
+--- B1. b-tag working point ---
+[PASS] BTAG_DEEPFLAVB_MEDIUM_WP is 0.2489 (official CMS DeepJet medium, UL2016 postVFP)
+[PASS] select_and_split_jets tags exactly the jets with score > 0.2489 (0.2489 itself is light: the cut is strict '>')
+[PASS] every jet is either b or light (none lost)
+[PASS] jets with 0.2489 < score <= 0.2598 are now b-tagged (they were light at 0.2598)
+[PASS] select_and_split_jets reads the constant (a different value moves the cut)
+
+--- S1. SingleElectron acceptance (T = 32 GeV) ---
+[PASS] constants: Ele27 path, bit 2, online >= 27, offline > 32
+[PASS] offline pT 31.9 (just below 32) -> rejected
+[PASS] offline pT exactly 32.0 -> rejected (the cut is strict '>', as in the study)
+[PASS] offline pT 32.1 (just above 32) -> accepted
+[PASS] unmatched electron (no trigger object at all) -> rejected
+[PASS] unmatched electron (bit-2 object at dR ~ 0.5) -> rejected
+[PASS] matched online TrigObj_pt 26.9 (< 27) -> rejected
+[PASS] matched online TrigObj_pt exactly 27.0 -> accepted (>=)
+[PASS] trigger object with the wrong bit (16 = 2e, not 2) -> rejected
+[PASS] id guard: an id-13 object with bit 2 on top of the electron -> rejected
+[PASS] trigger not fired -> rejected, even with a perfect match
+[PASS] electron within dR 0.05 < 0.12 of a muon is removed first -> rejected
+[PASS] same electron with the muon at dR 0.20 is kept -> accepted
+[PASS] the SAME electron must pass both: A (offline 40, online 25) + B (offline 30, online 30) -> rejected
+[PASS] best match per electron is the highest online pT (25 and 33 near A) -> accepted
+[PASS] identical to the study's Step D formula on 3000 random events (429 accepted)
+[PASS] trigger-guard violations on the random events: 0
+[PASS] assert_trigobj_bit_meanings_se accepts a title with '2 = 1e (WPTight)'
+[PASS] assert_trigobj_bit_meanings_se STOPS when bit 2's meaning differs
+
+--- P1. priority order / de-duplication (five datasets) ---
+[PASS] the delivery order is DoubleMuon > SingleMuon > DoubleEG > MuonEG > SingleElectron
+[PASS] DoubleMuon acceptance matches the recipe for all 96 synthetic events
+[PASS] SingleMuon acceptance matches the recipe for all 96 synthetic events
+[PASS] DoubleEG acceptance matches the recipe for all 96 synthetic events
+[PASS] MuonEG acceptance matches the recipe for all 96 synthetic events
+[PASS] SingleElectron acceptance matches the recipe for all 96 synthetic events
+[PASS] SingleElectron last: every accepted event is pooled exactly once
+[PASS] SingleElectron first: every accepted event is pooled exactly once
+[PASS] the union of pooled events is identical for the two orders
+[PASS] the combined histogram is identical for the two orders (93 entries)
+[PASS] SingleElectron LAST receives only events no other dataset accepts
+[PASS] SingleElectron FIRST receives every event it accepts (inclusive)
+[PASS] the per-dataset assignment DOES change between the orders
+[PASS] attribute_to_exclusive_dataset(order_5) agrees with the SingleElectron-last pooling
+[PASS] DoubleMuon's exclusive set is unchanged by adding SingleElectron last
+[PASS] SingleMuon's exclusive set is unchanged by adding SingleElectron last
+[PASS] DoubleEG's exclusive set is unchanged by adding SingleElectron last
+[PASS] MuonEG's exclusive set is unchanged by adding SingleElectron last
+
+--- P2. data builder priority-order guard ---
+[PASS] five datasets in delivery order are accepted
+[PASS] the four-dataset default is accepted
+[PASS] a subset in order is accepted (DoubleMuon,DoubleEG,SingleElectron)
+[PASS] SingleElectron first is REFUSED
+[PASS] a swapped pair is REFUSED
+[PASS] an unknown dataset is REFUSED
+[PASS] a duplicate is REFUSED
+
+--- M4. --population matched4 unchanged ---
+[PASS] DELIVERY_VETO_ORDER_4 is still the four datasets
+[PASS] matched4 still uses the four-dataset order and trigger sets
+[PASS] matched5's first four trigger sets are matched4's
+[PASS] the matched4 title assertion does not require the SingleElectron bit
+[PASS] evaluate_five_acceptances' first four acceptances equal matched4's
+[PASS] attribute_to_exclusive_dataset's default order is still the four datasets
+========================================================================
+55 checks, 0 failure(s)
+exit=0 studies/cms_datasets/tests/test_btag_singleelectron.py
+===== studies/cms_datasets/tests/test_electron_datasets.py
+electron-datasets task: Step C self-checks (C1-C8)
+========================================================================
+
+--- C1. multi-digit final-state labels and the one-digit parser ---
+[PASS] 12 light jets -> label '0e_2m_12j_0b'
+[PASS] bumpnet name keeps the two-digit count
+[PASS] full ROI name round-trips the two-digit count
+[PASS] counts recovered from the label
+[PASS] CURRENT behaviour: the one-digit parser reads '1' of '12j', fails to map letter '2', and silently treats the Jets requirement as satisfied
+[PASS] CURRENT behaviour: the skip means even a 4-jet requirement is treated as satisfied by the unparsed '12j' field
+[PASS] the correct answer for that requirement is also True (12 >= 4), so the skip changes nothing
+[PASS] the combination set is still 186
+[PASS] no combination needs more than 4 of any type, so a true count >= 10 satisfies every requirement anyway and the skip returns the same answer
+[PASS] a one-digit count is still parsed correctly (3j does not satisfy 4 jets)
+
+--- C2. electron-muon overlap removal (D3) ---
+[PASS] the approved radius is 0.12 (was 0.05)
+[PASS] dR = 0.11 electron is removed
+[PASS] dR = 0.13 electron is kept
+[PASS] dR = 0.06 electron is NOW REMOVED (the old 0.05 radius kept it)
+[PASS] dR exactly 0.12 is kept -- the comparison is strict '<'
+[PASS] phi wrap-around (+3.13 vs -3.13, dphi = 0.0232) is handled: removed
+[PASS] no muon in the event -> nothing removed
+[PASS] only the overlapping one of two electrons is removed
+[PASS] the kept electron in the mixed event is the non-overlapping one
+[PASS] wrapped dPhi gives dR ~ 0.02319, not ~ 6.26
+[PASS] muons are never removed (the function returns no muon collection and leaves its input untouched)
+[PASS] with the option OFF nothing is removed
+[PASS] passing the old radius 0.05 explicitly keeps the dR 0.06 and 0.11 electrons (only the wrap case and the dR = 0 one are removed)
+[PASS] the old radius removes strictly fewer electrons than the new one
+[PASS] the explicit dR formula agrees with vector's deltaR on 200 random pairs
+
+--- C3. trigger-object guard (D6) ---
+[PASS] an electron sitting exactly on an id-13 object does NOT match it
+[PASS] a muon sitting exactly on an id-11 object does NOT match it
+[PASS] the electron matches the id-11 object (index 1)
+[PASS] the muon matches the id-13 object (index 0)
+[PASS] guard-violation counter is 0 for electron/id11
+[PASS] guard-violation counter is 0 for muon/id13
+[PASS] guard-violation counter is 0 for electron/wrong-id-only
+[PASS] guard-violation counter is 0 for muon/wrong-id-only
+[PASS] guard counter handles an event with zero trigger objects
+[PASS] assert_trigobj_bit_meanings accepts the real branch titles
+[PASS] assert_trigobj_bit_meanings STOPS when bit 16's meaning differs
+
+--- C4. de-duplication order (D2) ---
+[PASS] the new order constant is [DoubleMuon, SingleMuon, DoubleEG, MuonEG]
+[PASS] the generic VETO_ORDER is untouched and is a DIFFERENT order
+[PASS] DoubleMuon acceptance matches the recipe for all 13 synthetic events
+[PASS] SingleMuon acceptance matches the recipe for all 13 synthetic events
+[PASS] DoubleEG acceptance matches the recipe for all 13 synthetic events
+[PASS] MuonEG acceptance matches the recipe for all 13 synthetic events
+[PASS] event 0 accepted by nothing is attributed to no dataset
+[PASS] event 1 accepted by ['DoubleMuon'] is attributed to DoubleMuon
+[PASS] event 2 accepted by ['SingleMuon'] is attributed to SingleMuon
+[PASS] event 3 accepted by ['DoubleEG'] is attributed to DoubleEG
+[PASS] event 4 accepted by ['MuonEG'] is attributed to MuonEG
+[PASS] event 5 accepted by ['DoubleMuon', 'SingleMuon'] is attributed to DoubleMuon
+[PASS] event 6 accepted by ['DoubleEG', 'DoubleMuon'] is attributed to DoubleMuon
+[PASS] event 7 accepted by ['DoubleEG', 'SingleMuon'] is attributed to SingleMuon
+[PASS] event 8 accepted by ['MuonEG', 'SingleMuon'] is attributed to SingleMuon
+[PASS] event 9 accepted by ['DoubleEG', 'MuonEG'] is attributed to DoubleEG
+[PASS] event 10 accepted by ['DoubleMuon', 'MuonEG'] is attributed to DoubleMuon
+[PASS] event 11 accepted by ['DoubleEG', 'DoubleMuon', 'MuonEG', 'SingleMuon'] is attributed to DoubleMuon
+[PASS] event 12 accepted by ['DoubleEG', 'MuonEG', 'SingleMuon'] is attributed to SingleMuon
+[PASS] DoubleMuon's own exclusive set equals 'attributed to DoubleMuon'
+[PASS] SingleMuon's own exclusive set equals 'attributed to SingleMuon'
+[PASS] DoubleEG's own exclusive set equals 'attributed to DoubleEG'
+[PASS] MuonEG's own exclusive set equals 'attributed to MuonEG'
+[PASS] every accepted event is in exactly one exclusive set
+[PASS] no event accepted by nothing lands in any exclusive set
+
+--- C5. DoubleEG offline-pT modes at the 25/30 GeV boundaries (D4) ---
+[PASS] mode=leading_only both well above 30: accepted=True
+[PASS] mode=both         both well above 30: accepted=True
+[PASS] mode=leading_only leading 30.5, subleading 25.5: accepted=True
+[PASS] mode=both         leading 30.5, subleading 25.5: accepted=False
+[PASS] mode=leading_only leading exactly 30.0 (strict >): accepted=False
+[PASS] mode=both         leading exactly 30.0 (strict >): accepted=False
+[PASS] mode=leading_only leading 30.01, subleading exactly 30.0: accepted=True
+[PASS] mode=both         leading 30.01, subleading exactly 30.0: accepted=False
+[PASS] mode=leading_only both just above 30: accepted=True
+[PASS] mode=both         both just above 30: accepted=True
+[PASS] mode=leading_only both just below 30: accepted=False
+[PASS] mode=both         both just below 30: accepted=False
+[PASS] mode=leading_only both just above the 25 GeV object cut: accepted=False
+[PASS] mode=both         both just above the 25 GeV object cut: accepted=False
+[PASS] mode=leading_only only one electron (needs 2 matched): accepted=False
+[PASS] mode=both         only one electron (needs 2 matched): accepted=False
+[PASS] online leading TrigObj_pt 22.9 < 23 -> rejected
+[PASS] online leading TrigObj_pt exactly 23.0 -> accepted (>=), second leg only ~12
+[PASS] only one of two electrons matched -> rejected (needs 2 matched)
+[PASS] path not fired -> rejected
+[PASS] 'leading_only' accepts a superset of 'both' (60 random pT pairs)
+[PASS] an unknown threshold mode raises
+
+--- C6. MuonEG swapped legs (D5) ---
+[PASS] matched electron with TrigObj_pt 15: ACCEPTED when Mu23_Ele12 fired
+[PASS] matched electron with TrigObj_pt 15: REJECTED when only Mu8_Ele23 fired
+[PASS] matched electron with TrigObj_pt 25: accepted when only Mu8_Ele23 fired
+[PASS] TrigObj_pt exactly 12.0 with Mu23_Ele12 fired: accepted (>=)
+[PASS] TrigObj_pt 11.9 with Mu23_Ele12 fired: rejected
+[PASS] TrigObj_pt exactly 23.0 with only Mu8_Ele23 fired: accepted (>=)
+[PASS] no selected muon -> rejected
+[PASS] no matched electron -> rejected
+[PASS] neither path fired -> rejected
+[PASS] both paths fired, TrigObj_pt 15 -> accepted via the Mu23_Ele12 branch
+
+--- C7. histogram names vs UPSTREAM's own naming code ---
+      final states under test: built-in list (pilot list not supplied)
+      upstream master = 29291aeb9701a03c413013d03558f42bf315812d
+      upstream's own ROI f-string = f"ROI_{hist_name_base}_width_{bin_width}"
+[PASS] all 63 names (every pilot final state x 7 combinations) match upstream string-for-string
+[PASS] every name ends with upstream's own _width_10.0 suffix
+[PASS] our final-state label format equals upstream's own group_by_final_state output wherever #40's slot-aware cap leaves the label as it is (['1e_1m_0j_0b', '0e_0m_0j_0b', '0e_1m_3j_0b', '2e_0m_1j_1b'])
+[PASS] upstream's own grouping applies #40's slot-aware cap to the other three (0e_2m_4j_1b -> 0e_2m_1j_1b, 2e_0m_3j_2b -> 2e_0m_0j_2b, 4e_0m_4j_4b -> 4e_0m_0j_4b)
+[PASS] DOCUMENTED DIVERGENCE at 5 light jets: upstream's own grouping caps the label with #40's slot-aware rule (2 muons + 1 b-jet leave one jet slot: 1j) while ours keeps 5j -- the group's decision
+[PASS] DOCUMENTED DIVERGENCE at 12 light jets too: upstream's own grouping caps the label at 1j (#40; the whole count is read, as since PR #34) while ours keeps 12j -- the group's decision
+[PASS] the NAMING code itself agrees on both labels (it is the grouping, not the naming, that differs)
+
+--- C8. old invocations keep their old behaviour ---
+[PASS] delivery per-histogram minimum defaults to 100 with no new flags
+[PASS] --no-hist-min-entries gives the upstream floor of 1
+[PASS] the legacy width suffix is still the default
+[PASS] the upstream width suffix is opt-in
+[PASS] trigobj_best_match_pt returns exactly the pre-change values on 300 random events, for every muon bit the muon production uses
+[PASS] matched_acceptance_mask is unchanged for DoubleMuon and SingleMuon
+[PASS] the SingleMuon matched-mode trigger set is still HLT_IsoMu24 alone
+[PASS] matched4's own SingleMuon trigger set is the same one
+[PASS] the new options default to: overlap removal ON, debug dump OFF
+[PASS] the approved DoubleEG threshold mode default is 'both' (7 Oct 2026)
+========================================================================
+110 checks, 0 failure(s)
+exit=0 studies/cms_datasets/tests/test_electron_datasets.py
+===== studies/cms_datasets/tests/test_exact_jet_labels.py
+==========================================================================
+exact-jet-labels task (B1-B4): self-checks
+==========================================================================
+
+--- 1. B1: exact light-jet labels ---
+[PASS] 3 light jets -> label 0e_2m_3j_1b -- got labels ['0e_2m_11j_1b', '0e_2m_3j_1b', '0e_2m_4j_1b', '0e_2m_5j_1b', '0e_2m_6j_1b']
+[PASS] 4 light jets -> label 0e_2m_4j_1b -- got labels ['0e_2m_11j_1b', '0e_2m_3j_1b', '0e_2m_4j_1b', '0e_2m_5j_1b', '0e_2m_6j_1b']
+[PASS] 5 light jets -> label 0e_2m_5j_1b -- got labels ['0e_2m_11j_1b', '0e_2m_3j_1b', '0e_2m_4j_1b', '0e_2m_5j_1b', '0e_2m_6j_1b']
+[PASS] 6 light jets -> label 0e_2m_6j_1b -- got labels ['0e_2m_11j_1b', '0e_2m_3j_1b', '0e_2m_4j_1b', '0e_2m_5j_1b', '0e_2m_6j_1b']
+[PASS] 11 light jets -> label 0e_2m_11j_1b -- got labels ['0e_2m_11j_1b', '0e_2m_3j_1b', '0e_2m_4j_1b', '0e_2m_5j_1b', '0e_2m_6j_1b']
+[PASS] exactly 5 distinct labels (one per multiplicity, none merged) -- got 5: ['0e_2m_11j_1b', '0e_2m_3j_1b', '0e_2m_4j_1b', '0e_2m_5j_1b', '0e_2m_6j_1b']
+[PASS] capped grouping merges 3j, 4j, 5j, 6j and 11j into 1j (5 events under one 1j label: 2 muons + 1 b-jet leave one jet slot) -- capped grouping = {'0e_2m_1j_1b': 5}
+[PASS] capped grouping no longer leaves 11j as its own label (two-digit quirk fixed upstream) -- capped grouping = {'0e_2m_1j_1b': 5}
+[PASS] capped grouping produces 1 label where the exact one produces 5 -- capped labels = ['0e_2m_1j_1b']
+[PASS] upstream name format (configured types only, e m j b): 0e_2m_11j_1b
+[PASS] upstream name format (configured types only, e m j b): 0e_2m_3j_1b
+[PASS] upstream name format (configured types only, e m j b): 0e_2m_4j_1b
+[PASS] upstream name format (configured types only, e m j b): 0e_2m_5j_1b
+[PASS] upstream name format (configured types only, e m j b): 0e_2m_6j_1b
+[PASS] two-digit counts render as two digits (11j, not 1j or 4j) -- got ['0e_2m_11j_1b', '0e_2m_3j_1b', '0e_2m_4j_1b', '0e_2m_5j_1b', '0e_2m_6j_1b']
+
+--- 2. B1: event conservation vs the old capped grouping ---
+[PASS] new grouping total events == input events (28) -- got 28
+[PASS] old grouping total events == input events (28) -- got 28
+[PASS] EVENT CONSERVATION: new total == old total -- new=28 old=28
+[PASS] every input event belongs to exactly one new label (masks partition) -- counts per event = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+[PASS] every old label is reproduced by folding the new labels -- folded=['0e_1m_0j_0b', '0e_2m_0j_0b', '0e_2m_1j_1b', '0e_4m_0j_2b', '1e_1m_0j_4b'] old=['0e_1m_0j_0b', '0e_2m_0j_0b', '0e_2m_1j_1b', '0e_4m_0j_2b', '1e_1m_0j_4b']
+[PASS] old 0e_1m_0j_0b (1 events) == sum of new labels ['0e_1m_0j_0b'] -- got 1
+[PASS] old 0e_2m_0j_0b (7 events) == sum of new labels ['0e_2m_0j_0b'] -- got 7
+[PASS] old 0e_2m_1j_1b (15 events) == sum of new labels ['0e_2m_11j_1b', '0e_2m_3j_1b', '0e_2m_4j_1b', '0e_2m_5j_1b', '0e_2m_6j_1b'] -- got 15
+[PASS] old 0e_4m_0j_2b (2 events) == sum of new labels ['0e_5m_7j_2b'] -- got 2
+[PASS] old 1e_1m_0j_4b (3 events) == sum of new labels ['1e_1m_12j_6b'] -- got 3
+[PASS] final state the cap leaves unchanged: 0e_1m_0j_0b (1 events) -- old had 1
+[PASS] final state the cap leaves unchanged: 0e_2m_0j_0b (7 events) -- old had 7
+
+--- 2b. B1: the shared capping after upstream PRs #34 and #40 ---
+[PASS] CURRENT: 1 light jets with 2 muons + 1 b-jet IS capped to 1j (one free slot; #34 gave min(n, 4)j) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 2 light jets with 2 muons + 1 b-jet IS capped to 1j (one free slot; #34 gave min(n, 4)j) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 3 light jets with 2 muons + 1 b-jet IS capped to 1j (one free slot; #34 gave min(n, 4)j) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 4 light jets with 2 muons + 1 b-jet IS capped to 1j (one free slot; #34 gave min(n, 4)j) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 5 light jets with 2 muons + 1 b-jet IS capped to 1j (one free slot; #34 gave min(n, 4)j) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 6 light jets with 2 muons + 1 b-jet IS capped to 1j (one free slot; #34 gave min(n, 4)j) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 7 light jets with 2 muons + 1 b-jet IS capped to 1j (one free slot; #34 gave min(n, 4)j) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 8 light jets with 2 muons + 1 b-jet IS capped to 1j (one free slot; #34 gave min(n, 4)j) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 9 light jets with 2 muons + 1 b-jet IS capped to 1j (one free slot; #34 gave min(n, 4)j) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 10 light jets with 2 muons + 1 b-jet IS capped to 1j (multi-digit count read whole, as since #34) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 11 light jets with 2 muons + 1 b-jet IS capped to 1j (multi-digit count read whole, as since #34) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 12 light jets with 2 muons + 1 b-jet IS capped to 1j (multi-digit count read whole, as since #34) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 13 light jets with 2 muons + 1 b-jet IS capped to 1j (multi-digit count read whole, as since #34) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 14 light jets with 2 muons + 1 b-jet IS capped to 1j (multi-digit count read whole, as since #34) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 20 light jets with 2 muons + 1 b-jet IS capped to 1j (multi-digit count read whole, as since #34) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 24 light jets with 2 muons + 1 b-jet IS capped to 1j (multi-digit count read whole, as since #34) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 40 light jets with 2 muons + 1 b-jet IS capped to 1j (multi-digit count read whole, as since #34) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 44 light jets with 2 muons + 1 b-jet IS capped to 1j (multi-digit count read whole, as since #34) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 50 light jets with 2 muons + 1 b-jet IS capped to 1j (multi-digit count read whole, as since #34) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 99 light jets with 2 muons + 1 b-jet IS capped to 1j (multi-digit count read whole, as since #34) -- got 0e_2m_1j_1b
+[PASS] CURRENT: 0e_1m_5j_0b -> 0e_1m_3j_0b (#40 slot-aware cap) -- got 0e_1m_3j_0b
+[PASS] CURRENT: 0e_1m_100j_0b -> 0e_1m_3j_0b (#40 slot-aware cap) -- got 0e_1m_3j_0b
+[PASS] CURRENT: 2e_0m_5j_1b -> 2e_0m_1j_1b (#40 slot-aware cap) -- got 2e_0m_1j_1b
+[PASS] CURRENT: 2e_0m_3j_2b -> 2e_0m_0j_2b (#40 slot-aware cap) -- got 2e_0m_0j_2b
+[PASS] CURRENT: 1e_1m_2j_0b -> 1e_1m_2j_0b (#40 slot-aware cap) -- got 1e_1m_2j_0b
+[PASS] CURRENT: 0e_0m_7j_0b -> 0e_0m_4j_0b (#40 slot-aware cap) -- got 0e_0m_4j_0b
+[PASS] CURRENT: 0e_5m_2j_0b -> 0e_4m_0j_0b (#40 slot-aware cap) -- got 0e_4m_0j_0b
+[PASS] NEW: 5 light jets -> exact label 5j, no capping, no mangling -- got ['0e_2m_10j_1b', '0e_2m_14j_1b', '0e_2m_20j_1b', '0e_2m_50j_1b', '0e_2m_5j_1b', '0e_2m_99j_1b', '0e_2m_9j_1b']
+[PASS] NEW: 9 light jets -> exact label 9j, no capping, no mangling -- got ['0e_2m_10j_1b', '0e_2m_14j_1b', '0e_2m_20j_1b', '0e_2m_50j_1b', '0e_2m_5j_1b', '0e_2m_99j_1b', '0e_2m_9j_1b']
+[PASS] NEW: 10 light jets -> exact label 10j, no capping, no mangling -- got ['0e_2m_10j_1b', '0e_2m_14j_1b', '0e_2m_20j_1b', '0e_2m_50j_1b', '0e_2m_5j_1b', '0e_2m_99j_1b', '0e_2m_9j_1b']
+[PASS] NEW: 14 light jets -> exact label 14j, no capping, no mangling -- got ['0e_2m_10j_1b', '0e_2m_14j_1b', '0e_2m_20j_1b', '0e_2m_50j_1b', '0e_2m_5j_1b', '0e_2m_99j_1b', '0e_2m_9j_1b']
+[PASS] NEW: 20 light jets -> exact label 20j, no capping, no mangling -- got ['0e_2m_10j_1b', '0e_2m_14j_1b', '0e_2m_20j_1b', '0e_2m_50j_1b', '0e_2m_5j_1b', '0e_2m_99j_1b', '0e_2m_9j_1b']
+[PASS] NEW: 50 light jets -> exact label 50j, no capping, no mangling -- got ['0e_2m_10j_1b', '0e_2m_14j_1b', '0e_2m_20j_1b', '0e_2m_50j_1b', '0e_2m_5j_1b', '0e_2m_99j_1b', '0e_2m_9j_1b']
+[PASS] NEW: 99 light jets -> exact label 99j, no capping, no mangling -- got ['0e_2m_10j_1b', '0e_2m_14j_1b', '0e_2m_20j_1b', '0e_2m_50j_1b', '0e_2m_5j_1b', '0e_2m_99j_1b', '0e_2m_9j_1b']
+
+--- 3. B1: multi-digit parsing of final-state labels ---
+[PASS] the delivery path uses exactly 186 combinations -- got 186
+[PASS] largest (start+count) requirement over all 186 combinations is 4 -- got 4
+[PASS] shared parser returns True for 11 jets vs a 4-jet requirement (correct answer, reached by skipping the check)
+[PASS] shared single-digit parser agrees with a correct multi-digit parse for all 2250 labels x 186 combinations -- 0 disagreements, first: []
+[PASS] any two-digit count (>=10) exceeds the largest requirement (4), so skipping the check and doing it correctly both give True
+[PASS] GUARD: max requirement <= 9, so single-digit parsing stays safe; if this ever fails, the shared parser must be replaced study-locally -- max requirement is 4
+
+--- 4. B2: Z-peak cut 115 -> 110 GeV ---
+[PASS] study constant Z_PEAK_CUTOFF is now 110.0 -- got 110.0
+[PASS] 110 lands exactly on a 10 GeV bin edge
+[PASS] 115 did NOT land on a 10 GeV bin edge (the reason for the change)
+[PASS] dilepton: values in [110, 115) are now KEPT where 115 removed them -- got [110.0, 112.5, 114.999]
+[PASS] dilepton: nothing below 110 is kept -- min kept = 110.0
+[PASS] dilepton: the 110 cut keeps a strict superset of what 115 kept
+[PASS] dilepton: 115 kept 2 values, 110 keeps 5 -- got (2, 5)
+[PASS] non-dilepton untouched by either cutoff: one muon + one jet (no same-flavour pair) -- 110 -> [80.0, 105.0, 109.999, 110.0, 112.5, 114.999, 115.0, 200.0], 115 -> [80.0, 105.0, 109.999, 110.0, 112.5, 114.999, 115.0, 200.0]
+[PASS] non-dilepton untouched by either cutoff: one electron + one muon (different flavours) -- 110 -> [80.0, 105.0, 109.999, 110.0, 112.5, 114.999, 115.0, 200.0], 115 -> [80.0, 105.0, 109.999, 110.0, 112.5, 114.999, 115.0, 200.0]
+[PASS] non-dilepton untouched by either cutoff: two light jets (no leptons at all) -- 110 -> [80.0, 105.0, 109.999, 110.0, 112.5, 114.999, 115.0, 200.0], 115 -> [80.0, 105.0, 109.999, 110.0, 112.5, 114.999, 115.0, 200.0]
+[PASS] non-dilepton untouched by either cutoff: two b-jets -- 110 -> [80.0, 105.0, 109.999, 110.0, 112.5, 114.999, 115.0, 200.0], 115 -> [80.0, 105.0, 109.999, 110.0, 112.5, 114.999, 115.0, 200.0]
+[PASS] same-flavour dielectron is cut too, at 110 -- got [110.0, 112.5, 114.999, 115.0, 200.0]
+[PASS] dilepton detection still works with a two-digit jet count in the label
+
+--- 5. B3: outlier split aligned to the fixed 10 GeV grid ---
+[PASS] test array is as described (42 values) -- got 42
+[PASS] OLD and NEW outlier split give DIFFERENT results on this array -- old main=41 new main=36
+       OLD: n_main=41 n_outliers=1 last kept=154.0
+       NEW: n_main=36 n_outliers=6 last kept=138.0
+[PASS] NEW grid starts at 100.0 (a multiple of 10), not at the data minimum 103.0 -- first edge = 100.0
+[PASS] NEW grid bins are exactly 10 GeV wide
+[PASS] NEW split mass is 140.0 GeV -- got 140.0
+[PASS] NEW split mass lands EXACTLY on a 10 GeV bin edge -- got 140.0
+[PASS] NEW keeps the 36 main-block values and calls the rest outliers (5 secondary + 1 far) = 6 -- got main=36 out=6
+[PASS] OLD grid bins were NOT 10 GeV wide -- old width = 9.9756 GeV
+[PASS] OLD split mass was NOT on a 10 GeV bin edge -- got 162.8537
+[PASS] OLD missed the 139-149 GeV gap entirely and kept the secondary cluster in the main array (41 values, 1 outlier) -- got main=41 out=1
+       OLD split mass = 162.8537 GeV (off-grid), old bin width = 9.9756 GeV
+       NEW split mass = 140.0 GeV (on-grid), new bin width = 10.0 GeV
+[PASS] empty array returns two empty arrays without crashing
+[PASS] single-value array keeps its one value, no outliers -- got main=[123.0] out=[]
+[PASS] 50 identical values keep all 50, no outliers, no crash -- got main=50 out=0
+
+==========================================================================
+ALL CHECKS PASSED
+exit=0 studies/cms_datasets/tests/test_exact_jet_labels.py
+===== studies/cms_datasets/tests/test_funnel_upstream35.py
+[PASS] 186 combinations -- 186
+[PASS] funnel wrote values -- n_values_written_incl=2968, n_fs_groups=53
+digest 5c43cbc0fa9bc7109b115af81ac6ef62f04449023976bbebe17a39d272fe4fb0
+[PASS] output identical to the pre-#35 code -- expected 5c43cbc0fa9bc7109b115af81ac6ef62f04449023976bbebe17a39d272fe4fb0
+ALL CHECKS PASSED
+exit=0 studies/cms_datasets/tests/test_funnel_upstream35.py
+===== studies/cms_datasets/tests/test_loose_lepton_ids.py
+
+--- L1. muons: Loose ID, isolation < 0.15 kept ---
+[PASS] MUON_ID_BRANCH is Muon_looseId
+[PASS] MUON_ISO_MAX is still 0.15
+[PASS] NEEDED_BRANCHES reads Muon_looseId and not Muon_mediumId
+[PASS] the driver's BASE_OBJECT_BRANCHES reads Muon_looseId and not Muon_mediumId
+[PASS] select_muons selects on looseId and pfRelIso04_all < 0.15
+[PASS] apply_iso=False drops only the isolation cut
+[PASS] select_muons carries a looseId field, not mediumId
+[PASS] select_muons works on events without Muon_mediumId
+
+--- L2. electrons: cutBased >= 2 (Loose) ---
+[PASS] ELECTRON_CUTBASED_MIN is 2 (Loose)
+[PASS] select_electrons keeps cutBased 2, 3, 4 and drops 0 (fail) and 1 (veto)
+[PASS] Electron_cutBased is still read
+
+--- L3. driver diagnostics mask uses the same constants ---
+[PASS] the driver's diagnostics mask reads selection.ELECTRON_CUTBASED_MIN
+[PASS] no Muon_mediumId left in the driver's code (comments aside)
+[PASS] diagnostics mask selects the same number of electrons per event
+
+--- L4. jets unchanged ---
+[PASS] BTAG_DEEPFLAVB_MEDIUM_WP is still 0.2489
+[PASS] JET_PT_MIN_GEV 30 and JET_ETA_MAX 2.5 unchanged
+[PASS] tight jet ID (bit 2) still required: jetId 0,1 dropped; 2,6 kept
+
+17/17 checks passed
+exit=0 studies/cms_datasets/tests/test_loose_lepton_ids.py
+===== studies/cms_datasets/tests/test_multiplicity40.py
+[PASS] grid: 455 labels 455
+[PASS] grid: cap_label == upstream limit_particles_in_fs(label, 4) []
+[PASS] grid: == the rule as written, <= 4 objects []
+[PASS] example 0e_1m_5j_0b 0e_1m_3j_0b
+[PASS] example 0e_1m_100j_0b 0e_1m_3j_0b
+[PASS] example 2e_0m_5j_1b 2e_0m_1j_1b
+[PASS] example 2e_0m_3j_2b 2e_0m_0j_2b
+[PASS] example 1e_1m_2j_0b 1e_1m_2j_0b
+[PASS] example 0e_0m_7j_0b 0e_0m_4j_0b
+[PASS] 186 driver combinations named 186
+[PASS] names are letter+rank 
+[PASS] pairs == upstream is_finalstate_contain_combination 84630 pairs, 3598 allowed; []
+[PASS] pairs == every rank below the capped count []
+[PASS] m0j0j1j2 in 0e_1m_3j_0b 
+[PASS] j0j1j2j3 not in 0e_1m_3j_0b 
+[PASS] e1b0 in 2e_0m_1j_1b 
+[PASS] e0j1 not in 2e_0m_1j_1b 
+[PASS] unknown combination is an error 
+[PASS] data: merged masses, 3j then 4j then 5j [300.0, 301.0, 200.0, 201.0, 202.0, 100.0, 101.0, 102.0, 103.0]
+[PASS] data: rank-3 combination dropped with siblings ['DoubleMuon_record30522_file0_FS_0e_1m_3j_0b_IM_m0j0', 'DoubleMuon_record30522_file0_FS_0e_2m_0j_0b_IM_m0m1']
+[PASS] data: counts summed, events conserved {'0e_1m_3j_0b': 9, '0e_2m_0j_0b': 5}
+[PASS] data: unchanged label untouched 
+[PASS] data: dropped rows {'n_rows_in': 6, 'n_rows_out': 4, 'n_rows_dropped_combination_not_in_capped_label': 2, 'n_mass_entries_dropped': 7, 'label_map': {'0e_1m_3j_0b': '0e_1m_3j_0b', '0e_1m_4j_0b': '0e_1m_3j_0b', '0e_1m_5j_0b': '0e_1m_3j_0b', '0e_2m_0j_0b': '0e_2m_0j_0b'}}
+[PASS] data: payload bytes unchanged 
+[PASS] data: capped merge refused 
+[PASS] data: capped signature that keeps its label accepted 
+[PASS] mc: merged masses, 3j then 4j then 5j [300.0, 301.0, 200.0, 201.0, 202.0, 100.0, 101.0, 102.0, 103.0]
+[PASS] mc: weights in the same order [3.0, 3.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0]
+[PASS] mc: rank-3 combination dropped with siblings ['MC_record67801_file0_FS_0e_1m_3j_0b_IM_m0j0', 'MC_record67801_file0_FS_0e_1m_3j_0b_IM_m0j0_mcraw_acc', 'MC_record67801_file0_FS_0e_1m_3j_0b_IM_m0j0_mcw', 'MC_record67801_file0_FS_0e_2m_0j_0b_IM_m0m1', 'MC_record67801_file0_FS_0e_2m_0j_0b_IM_m0m1_mcraw_acc', 'MC_record67801_file0_FS_0e_2m_0j_0b_IM_m0m1_mcw']
+[PASS] mc: counts summed, events conserved {'0e_1m_3j_0b': 9, '0e_2m_0j_0b': 5}
+[PASS] mc: unchanged label untouched 
+[PASS] mc: dropped rows {'n_rows_in': 18, 'n_rows_out': 12, 'n_rows_dropped_combination_not_in_capped_label': 6, 'n_mass_entries_dropped': 7, 'label_map': {'0e_1m_3j_0b': '0e_1m_3j_0b', '0e_1m_4j_0b': '0e_1m_3j_0b', '0e_1m_5j_0b': '0e_1m_3j_0b', '0e_2m_0j_0b': '0e_2m_0j_0b'}}
+[PASS] mc: payload bytes unchanged 
+[PASS] mc: capped merge refused 
+[PASS] mc: capped signature that keeps its label accepted 
+
+35/35 checks passed
+exit=0 studies/cms_datasets/tests/test_multiplicity40.py
+===== studies/cms_datasets/tests/test_upstream_names.py
+==========================================================================
+upstream-names task: self-checks
+==========================================================================
+
+--- 1. Label format: configured object types only ---
+[PASS] this study configures exactly Electrons, Muons, Jets, BJets
+[PASS] FINAL_STATE_OBJECTS is upstream's tuple, in upstream's order
+[PASS] 0 light jets -> 0e_2m_0j_1b
+[PASS] 1 light jets -> 0e_2m_1j_1b
+[PASS] 3 light jets -> 0e_2m_3j_1b
+[PASS] 4 light jets -> 0e_2m_4j_1b
+[PASS] 5 light jets -> 0e_2m_5j_1b
+[PASS] 6 light jets -> 0e_2m_6j_1b
+[PASS] 11 light jets -> 0e_2m_11j_1b
+[PASS] no label contains a photon field
+[PASS] no label contains a tau field
+[PASS] exactly four <count><letter> fields in order e, m, j, b: 0e_2m_0j_1b
+[PASS] exactly four <count><letter> fields in order e, m, j, b: 0e_2m_11j_1b
+[PASS] exactly four <count><letter> fields in order e, m, j, b: 0e_2m_1j_1b
+[PASS] exactly four <count><letter> fields in order e, m, j, b: 0e_2m_3j_1b
+[PASS] exactly four <count><letter> fields in order e, m, j, b: 0e_2m_4j_1b
+[PASS] exactly four <count><letter> fields in order e, m, j, b: 0e_2m_5j_1b
+[PASS] exactly four <count><letter> fields in order e, m, j, b: 0e_2m_6j_1b
+[PASS] zero counts are kept as explicit 0 fields: 0e_2m_0j_0b
+
+--- 2. Labels agree with upstream's own code, event by event ---
+[PASS] our label == upstream's label for all 34 synthetic events
+       e.g. event 0 -> '0e_2m_0j_1b', event 5 -> '0e_2m_5j_1b', event 8 -> '0e_2m_11j_1b'
+
+--- 3. Legacy six-field -> upstream conversion ---
+[PASS] 0e_2m_5j_0g_0t_1b -> 0e_2m_5j_1b
+[PASS] 0e_2m_0j_0g_0t_0b -> 0e_2m_0j_0b
+[PASS] 0e_2m_11j_0g_0t_1b -> 0e_2m_11j_1b
+[PASS] 1e_1m_12j_0g_0t_4b -> 1e_1m_12j_4b
+[PASS] 2e_2m_0j_0g_0t_4b -> 2e_2m_0j_4b
+[PASS] 0e_1m_99j_0g_0t_0b -> 0e_1m_99j_0b
+[PASS] a label already in the new format is left unchanged
+[PASS] ABORTS on a non-zero g/t count: 0e_2m_5j_1g_0t_1b
+[PASS] ABORTS on a non-zero g/t count: 0e_2m_5j_0g_2t_1b
+[PASS] ABORTS on a non-zero g/t count: 0e_2m_5j_3g_4t_1b
+[PASS] rejects an unparsable label: '0e_2m_xj_0g_0t_1b'
+[PASS] rejects an unparsable label: '0e_2m__0g_0t_1b'
+[PASS] rejects an unparsable label: 'nonsense'
+[PASS] no-collision check passes for distinct labels (2 names in, 2 out)
+[PASS] no-collision check FAILS when two names collapse onto one
+
+--- 4. Histogram names match upstream's _convert_to_bumpnet_name ---
+[PASS] 0e_2m_5j_1b + m0m1 -> mass_m0m1_cat_0ex_2mx_5jx_1bx
+[PASS] 0e_2m_0j_0b + m0m1 -> mass_m0m1_cat_0ex_2mx_0jx_0bx
+[PASS] 0e_1m_11j_0b + j0j1j2j3 -> mass_j0j1j2j3_cat_0ex_1mx_11jx_0bx
+[PASS] 1e_1m_12j_4b + e0m0b0 -> mass_e0m0b0_cat_1ex_1mx_12jx_4bx
+[PASS] 0e_2m_4j_2b + m0m1j0b1 -> mass_m0m1j0b1_cat_0ex_2mx_4jx_2bx
+[PASS] 2e_0m_1j_0b + e0e1 -> mass_e0e1_cat_2ex_0mx_1jx_0bx
+[PASS] example from the task: 0e_2m_5j_1b + m0m1 -> mass_m0m1_cat_0ex_2mx_5jx_1bx
+[PASS] legacy name was mass_m0m1_cat_0ex_2mx_5jx_0gx_0tx_1bx
+[PASS] converted name drops exactly the 0gx and 0tx fields
+[PASS] name starts with mass_ and carries the _cat_ separator
+[PASS] every field in the cat part ends with the x suffix
+
+--- 5. Per-histogram minimum entries ---
+[PASS] upstream floor is 1 entry (upstream applies no minimum and only skips a signature with no data at all)
+[PASS] default (flag off) is unchanged at 100
+[PASS] with --no-hist-min-entries the floor becomes 1
+[PASS] default keeps only >=100-entry histograms
+[PASS] upstream mode keeps every histogram with at least one entry, and drops only the empty one
+
+==========================================================================
+ALL CHECKS PASSED
+exit=0 studies/cms_datasets/tests/test_upstream_names.py
+===== studies/cms_datasets/tests/test_width_suffix.py
+==========================================================================
+width-suffix task: self-checks
+==========================================================================
+
+--- 1. Our suffix vs upstream's f-string, for several bin widths ---
+[PASS] bin width 10.0 -> ROI_mass_m0m1_cat_0ex_2mx_5jx_1bx_width_10.0
+[PASS] bin width 5.0 -> ROI_mass_m0m1_cat_0ex_2mx_5jx_1bx_width_5.0
+[PASS] bin width 2.5 -> ROI_mass_m0m1_cat_0ex_2mx_5jx_1bx_width_2.5
+[PASS] the configured bin width is the float 10.0, as upstream holds it
+[PASS] with no bin width given, the configured one is used and gives _width_10.0
+[PASS] the suffix is derived from the bin width, not hard-coded
+[PASS] an integer-valued width still formats as upstream formats it (20.0)
+
+--- 2. Full name for a sample signature equals upstream's ---
+[PASS] 0e_2m_5j_1b + m0m1 -> ROI_mass_m0m1_cat_0ex_2mx_5jx_1bx_width_10.0
+[PASS] 0e_1m_11j_0b + j0j1j2j3 -> ROI_mass_j0j1j2j3_cat_0ex_1mx_11jx_0bx_width_10.0
+[PASS] 1e_1m_12j_4b + e0m0b0 -> ROI_mass_e0m0b0_cat_1ex_1mx_12jx_4bx_width_10.0
+[PASS] 0e_2m_0j_0b + m0m1 -> ROI_mass_m0m1_cat_0ex_2mx_0jx_0bx_width_10.0
+[PASS] the worked example is exactly ROI_mass_m0m1_cat_0ex_2mx_5jx_1bx_width_10.0
+
+--- 3. The default (pre-existing) suffix is unchanged ---
+[PASS] default suffix is still _width_10
+[PASS] default full key is still the pre-existing one
+[PASS] explicitly asking for the legacy form gives the same
+[PASS] the two forms differ only by the trailing '.0'
+
+==========================================================================
+ALL CHECKS PASSED
+exit=0 studies/cms_datasets/tests/test_width_suffix.py
+===== studies/cms_mc_weights_v3/tests/test_builder_end_to_end.py
+==========================================================================
+build_mc_delivery.py -- end-to-end on a synthetic MC job
+==========================================================================
+[37728] GluGluHToZZTo4L_M125: sigma_eff=0.013335 pb, Sigma-w=1.158132e+05 over 1 file(s) (1 excluded), norm=1.887527e-03
+[37728] 2 name(s) collected
+[37728] 2 histogram(s) after post-processing
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_e2e_o6wkqvxq/out/smoke_record37728_mc.root -- 2 TH1D histogram(s), all read-back assertions passed
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_e2e_o6wkqvxq/out/smoke_summedSM_mc.root -- 2 TH1D histogram(s), all read-back assertions passed
+
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_e2e_o6wkqvxq/out/smoke_build_report.json
+PASS  Sigma-w check includes exactly one file and excludes the skimmed one  -- included=1, excluded=1
+PASS  sample Sigma-w is the surviving file's Runs total alone  -- 1.15813237e+05 vs 1.15813237e+05
+PASS  the excluded file is reported with a reason mentioning a pre-skim  -- EXCLUDED: sum(genWeight) disagrees with Runs.genEventSumw (p
+PASS  normalisation factor equals sigma_eff*1000*L/Sigma-w  -- 1.887527373e-03 vs 1.887527373e-03
+PASS  the builder wrote exactly one _mcw sibling per mass signature  -- 1 uncapped signature(s)
+PASS  w_event == genWeight * L1prefire * norm, entry by entry (uncapped)  -- 400 entries, max rel diff 0
+PASS  negative genWeights survive into the weights with their sign  -- 44 negative of 400
+PASS  a capped signature's weights carry the true_size/kept scale factor  -- scale=3.0, 150 entries
+PASS  the build reports the cap incidence it applied  -- scaled=1
+PASS  the >=100-entries rule removed the 20-entry final state  -- removed=['_FS_0e_2m_9j_0b']
+PASS  no orphan sibling rows survived the prune
+PASS  per-sample output written  -- ['/var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_e2e_o6wkqvxq/out/smoke_record37728_mc.root']
+PASS  summed-SM output written  -- ['/var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_e2e_o6wkqvxq/out/smoke_summedSM_mc.root']
+PASS  every read-back assertion passed
+PASS  delivered histogram is TH1D  -- TH1D
+PASS  delivered histogram errors are sqrt(sum w^2) (non-trivial)
+PASS  delivered histogram names carry the data-side ROI_/width shape  -- ROI_mass_m0m1_cat_0ex_2mx_1jx_0bx_width_10.0
+[37728] GluGluHToZZTo4L_M125: sigma_eff=0.013335 pb, Sigma-w=1.158132e+05 over 1 file(s) (0 excluded), norm=1.887527e-03
+[37728] 0 name(s) collected
+[37728] 0 histogram(s) after post-processing
+
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_e2e_ele27_8do_pqpt/out/smoke_build_report.json
+PASS  entries accepted ONLY by the Ele27 candidate are dropped by the event union  -- dropped=400, kept=0
+PASS  an unknown record is a HARD ERROR  -- STOP: record 99999 is not in cms_mc_normalisation_v3.json. An unknown 
+PASS  registry marks 35671 in_full_run = false and 37728 true
+PASS  an in_full_run = true record (37728) is accepted and built  -- ['37728']
+PASS  an in_full_run = false record (35671) is REFUSED, naming the record and the reason  -- STOP: record 35671 (DYJetsToLL_M-50_madgraphMLM) has in_full_run = False in cms_mc_normali
+PASS  the refused build wrote no output and no scratch copy
+PASS  a missing genWeight sibling is a HARD ERROR (no unweighted fallback)  -- /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_e2e_nosib_0urdsj8a
+
+==========================================================================
+24 pass, 0 fail, 24 checks total
+==========================================================================
+wrote /Users/matan/Research/atlas-utilization/studies/cms_mc_weights_v3/evidence/builder_end_to_end.json
+exit=0 studies/cms_mc_weights_v3/tests/test_builder_end_to_end.py
+===== studies/cms_mc_weights_v3/tests/test_cms_shard_pruning_drift.py
+[PASS] test_copy_differs_only_in_d3_lines
+[PASS] test_data_shard_behaviour_identical
+[PASS] test_mc_shard_no_orphans_with_cms_copy
+[PASS] test_upstream_function_unchanged
+ALL PASSED
+exit=0 studies/cms_mc_weights_v3/tests/test_cms_shard_pruning_drift.py
+===== studies/cms_mc_weights_v3/tests/test_file_list_complete.py
+PASS test_data_path_unchanged
+PASS test_delivered_identical
+PASS test_new_prefix_and_counts
+{"delivered_identical": {"35631": 25, "35669": 41, "37728": 8, "64839": 10, "64895": 11, "67801": 49, "67993": 138, "68073": 12, "68187": 42, "68847": 24, "72676": 7, "72752": 31, "75589": 99}, "new_page1_vs_complete": {"37432": [1, 1], "37446": [35, 40], "37474": [10, 10], "37604": [19, 19], "37616": [2, 2], "40062": [21, 21], "40095": [5, 5], "41873": [66, 66], "41877": [58, 58], "41914": [6, 6], "64635": [19, 19], "64659": [27, 35], "64759": [86, 86], "67645": [26, 26], "67691": [20, 20], "67841": [146, 146], "68045": [23, 23], "68083": [8, 8], "68571": [1, 1], "68591": [5, 7], "68601": [23, 30], "68731": [4, 4], "68741": [21, 21], "69715": [97, 97], "69717": [30, 30], "69719": [63, 63], "70301": [9, 9], "70383": [7, 7], "70451": [1, 1], "70453": [3, 3], "71145": [1, 1], "71227": [12, 12], "71295": [1, 1], "71297": [6, 7], "72658": [30, 30], "72701": [24, 24], "72711": [7, 7], "72738": [23, 23], "72740": [21, 21], "72742": [39, 39], "72761": [6, 6], "74292": [8, 8], "74682": [1, 1], "74684": [6, 6], "74894": [18, 18], "74896": [21, 21], "74898": [10, 10], "74900": [2, 2], "74902": [13, 13], "74904": [21, 21], "74906": [21, 22], "75567": [15, 15], "75573": [14, 14], "75600": [20, 20]}, "new_total_files": 1206}
+3/3 passed
+exit=0 studies/cms_mc_weights_v3/tests/test_file_list_complete.py
+===== studies/cms_mc_weights_v3/tests/test_mc_singleelectron_flag.py
+MC side of the 20 Oct 2026 decisions: SingleElectron flag and five-flag union
+========================================================================
+
+--- F1. MC driver: SingleElectron acceptance bit ---
+[PASS] bit 6 = 64 is the SingleElectron acceptance; bits 0-5 unchanged
+[PASS] the delivery union is bits 0-3 and 6 (= 79)
+[PASS] bit 6 is set exactly for the events whose recipe includes SingleElectron
+[PASS] bit value 1 (DoubleMuon) unchanged: equals the data acceptance
+[PASS] bit value 2 (SingleMuon) unchanged: equals the data acceptance
+[PASS] bit value 4 (DoubleEG) unchanged: equals the data acceptance
+[PASS] bit value 8 (MuonEG) unchanged: equals the data acceptance
+[PASS] bit 6 equals singleelectron_acceptance on 3000 random events (429 set)
+[PASS] bit 6 implies bit 4 (the T = 32 rule is a subset of the candidate)
+[PASS] bit 4 has events bit 6 does not (offline pT <= 32, or a different electron) -- so the two are really different conditions
+[PASS] the store rule keeps exactly the events the old rule kept
+
+--- F2. MC builder: five-flag event union ---
+[PASS] event union: DoubleMuon only -> kept
+[PASS] event union: MuonEG only -> kept
+[PASS] event union: SingleElectron (bit 6, with bits 4 and 5) -> kept
+[PASS] event union: Ele27 candidate only (bit 4, offline <= 32) -> dropped
+[PASS] event union: Ele27 fired only (bit 5) -> dropped
+[PASS] event union: nothing -> dropped
+[PASS] the builder REFUSES per-file outputs made before bit 6 existed
+[PASS] the builder accepts per-file outputs that carry bit 6
+[PASS] metadata without mc_diagnostics (test fixtures) is still accepted
+========================================================================
+20 checks, 0 failure(s)
+exit=0 studies/cms_mc_weights_v3/tests/test_mc_singleelectron_flag.py
+===== studies/cms_mc_weights_v3/tests/test_mc_weights_v3.py
+==========================================================================
+CMS MC weighting v3 -- self-checks (DESIGN.md Tests)
+==========================================================================
+
+-- 1. alignment property tests --
+PASS  alignment property: 200 random mask chains preserve pairing  -- 0 broken; stages exercised={'group': 200, 'combo': 200, 'nan': 200, 'cap': 199, 'z': 200, 'peak': 200, 'split': 200}
+PASS  length mismatch is a hard error (no unweighted fallback)  -- IM m0m1: 2 masses but 1 weights -- alignment lost. This builder never 
+PASS  event union excludes an Ele27-only event  -- bitmask=48, four-bit mask=15
+PASS  event union includes a DoubleMuon event
+PASS  event union includes an event accepted by both
+PASS  event union includes a SingleElectron-only event (bit 6)
+
+-- 2. orphan-sibling regression --
+PASS  prune removes the below-threshold final state  -- removed=['_FS_0e_2m_5j_1b']
+PASS  prune leaves ZERO orphan sibling rows  -- orphans=[]
+PASS  prune keeps every row of the surviving final state  -- 7 of 14 signatures kept
+PASS  prune fix is data-neutral: same final state removed  -- removed=['_FS_0e_2m_5j_1b']
+PASS  prune fix is data-neutral: every data signature was classified by the old regex too  -- 2 of 2
+PASS  prune fix is data-neutral: survivors are exactly the big final state's signatures  -- after=['job_FS_0e_2m_1j_0b_IM_m0m1']
+PASS  v3 builder's mass-signature regex matches a plain data signature
+PASS  v3 builder's mass-signature regex REJECTS every sibling
+
+-- 3. Sumw2 read-back --
+PASS  Sumw2 read-back: classname is TH1D
+PASS  Sumw2 read-back: len(fSumw2) == n_bins + 2  -- 1002 vs 1002
+PASS  Sumw2 read-back: sum of contents equals sum of weights  -- 9.0 vs 9.0
+PASS  Sumw2 read-back: sum of w^2 matches
+PASS  a negative weight lowers its bin's content  -- bin 11 content=-1.0
+PASS  a negative weight still RAISES its bin's error  -- bin 11 error=1.0
+PASS  a TH1D without Sumw2 FAILS the read-back assertion  -- /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/tmprw76o4l_/bad.root:
+PASS  negative-bin inventory separates a FILLED cancelling bin from the never-filled gap  -- n_filled_bins_eq_zero=1, n_filled_bins_le_zero=1
+PASS  negative-bin inventory spans first..last FILLED bin  -- 12..30
+PASS  negative-bin inventory counts every bin <= 0 in the filled range  -- 17 of 19 bins (2 populated)
+PASS  negative-bin inventory counts the never-filled gap bins  -- got 16
+PASS  negative-bin inventory: no bin is strictly negative here
+
+-- 4. registry closure --
+PASS  registry has the 12 v2 records plus 37728, 35631, 68847  -- 15 records
+PASS  registry pins k_factor and gen_filt_eff to 1.0 everywhere  -- offenders=[]
+PASS  registry leaves sum_of_weights null everywhere (measured at build)
+PASS  registry carries a portal dataset title for every record
+PASS  registry header forbids setting k from provenance
+PASS  registry target luminosity is 16.393 fb^-1
+PASS  37728 sigma_eff == reference sigma x BR(H->4l incl. tau)  -- 0.013335 vs 48.58 x 0.0002745 = 0.01333521
+PASS  37728 carries its k-factor in provenance only, marked DO NOT APPLY
+PASS  normalisation_factor closes: sigma_eff*1000*k*eps*L/Sigma-w  -- 1.887527373e-03 vs 1.887527373e-03
+PASS  a registry record with k_factor != 1.0 is refused  -- record 37728: k_factor=1.683 gen_filt_eff=1.0. Both must be 
+PASS  committed registry matches build_registry.py output  -- OK: /Users/matan/Research/atlas-utilization/studies/cms_mc_weights_v3/cms_mc_normalisation
+
+-- 5. campaign guard --
+PASS  campaign guard ACCEPTS a UL16 postVFP title
+PASS  campaign guard REJECTS an APV/preVFP title  -- STOP: record 67801 is an APV/preVFP sample (['APV', 'preVFP'] in its p
+PASS  campaign guard REJECTS a non-UL16-NanoAODv9 title  -- STOP: record 99999's portal title does not identify it as Ru
+PASS  every committed registry record passes the campaign guard  -- failures=[]
+
+-- 6. v3 mirrors vs the shared data-side functions --
+PASS  weighted fill with unit weights == the data-side fixed-grid fill  -- max diff 0
+PASS  with unit weights, sum w^2 == the counts
+PASS  find_peak_mass(weights=None) == the shared _find_rightmost_highest_peak
+PASS  main_split_mask reproduces the shared _split_by_first_empty_bin  -- 400 main / 0 outliers vs 400 / 0
+PASS  z_peak_keep_mask reproduces the shared _apply_z_peak_cut (dilepton)  -- 397 kept vs 397
+PASS  z_peak_keep_mask keeps everything for a non-dilepton channel  -- 400 of 400
+
+==========================================================================
+47 pass, 0 fail, 47 checks total
+==========================================================================
+wrote /Users/matan/Research/atlas-utilization/studies/cms_mc_weights_v3/evidence/selfchecks_v3.json
+exit=0 studies/cms_mc_weights_v3/tests/test_mc_weights_v3.py
+===== studies/cms_mc_weights_v3/tests/test_peak_scope.py
+==========================================================================
+build_mc_delivery.py --peak-scope
+==========================================================================
+[64839] ST_tW_antitop_5f_NoFullyHadronicDecays: sigma_eff=19.56 pb, Sigma-w=1.158132e+05 over 1 file(s) (0 excluded), norm=2.768657e+00
+[64895] ST_tW_top_5f_NoFullyHadronicDecays: sigma_eff=19.56 pb, Sigma-w=1.158132e+05 over 1 file(s) (0 excluded), norm=2.768657e+00
+[72752] WZTo3LNu_amcatnloFXFX: sigma_eff=5.789 pb, Sigma-w=1.158132e+05 over 1 file(s) (0 excluded), norm=8.194148e-01
+[64839] 1 name(s) collected
+[64895] 1 name(s) collected
+[72752] 1 name(s) collected
+[64839] 1 histogram(s) after post-processing
+[64895] 1 histogram(s) after post-processing
+[72752] 1 histogram(s) after post-processing
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/multi/out_combined/t_record64839_mc.root -- 1 TH1D histogram(s), all read-back assertions passed
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/multi/out_combined/t_record64895_mc.root -- 1 TH1D histogram(s), all read-back assertions passed
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/multi/out_combined/t_record72752_mc.root -- 1 TH1D histogram(s), all read-back assertions passed
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/multi/out_combined/t_summedSM_mc.root -- 1 TH1D histogram(s), all read-back assertions passed
+
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/multi/out_combined/t_build_report.json
+[64839] ST_tW_antitop_5f_NoFullyHadronicDecays: sigma_eff=19.56 pb, Sigma-w=1.158132e+05 over 1 file(s) (0 excluded), norm=2.768657e+00
+[64895] ST_tW_top_5f_NoFullyHadronicDecays: sigma_eff=19.56 pb, Sigma-w=1.158132e+05 over 1 file(s) (0 excluded), norm=2.768657e+00
+[72752] WZTo3LNu_amcatnloFXFX: sigma_eff=5.789 pb, Sigma-w=1.158132e+05 over 1 file(s) (0 excluded), norm=8.194148e-01
+[64839] 1 histogram(s) after post-processing
+[64895] 1 histogram(s) after post-processing
+[72752] 1 histogram(s) after post-processing
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/multi/out_per-sample/t_record64839_mc.root -- 1 TH1D histogram(s), all read-back assertions passed
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/multi/out_per-sample/t_record64895_mc.root -- 1 TH1D histogram(s), all read-back assertions passed
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/multi/out_per-sample/t_record72752_mc.root -- 1 TH1D histogram(s), all read-back assertions passed
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/multi/out_per-sample/t_summedSM_mc.root -- 1 TH1D histogram(s), all read-back assertions passed
+
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/multi/out_per-sample/t_build_report.json
+PASS  combined build: every sample has the histogram  -- ['64839', '64895', '72752']
+PASS  CLOSURE: sum of per-sample == summed SM bin by bin (contents and sumw2)  -- max relative difference 0.000e+00
+PASS  ONE CUT: every sample's peak mass == the combined peak mass  -- {'64839': 260.0, '64895': 260.0, '72752': 260.0} vs 260.0
+PASS  ONE CUT: every sample's split mass == the combined split mass  -- {'64839': 900.0, '64895': 900.0, '72752': 900.0} vs 900.0
+PASS  ONE CUT: no sample has content below the combined peak  -- {'64839': 260.0, '64895': 260.0, '72752': 260.0}
+PASS  ONE CUT: the summed SM starts exactly at the combined peak  -- 260.0 vs 260.0
+PASS  ONE CUT: no sample has content at or above the combined split  -- split 900.0
+PASS  the combined peak is the rightmost-highest weighted bin of the concatenated spectrum  -- 260.0 vs 260.0
+PASS  CONTROL: --peak-scope per-sample cuts the samples at different peaks  -- {'64839': 110.0, '64895': 260.0, '72752': 700.0}
+[64839] ST_tW_antitop_5f_NoFullyHadronicDecays: sigma_eff=19.56 pb, Sigma-w=1.158132e+05 over 1 file(s) (0 excluded), norm=2.768657e+00
+[64839] 1 name(s) collected
+[64839] 1 histogram(s) after post-processing
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/one/out_combined/t_record64839_mc.root -- 1 TH1D histogram(s), all read-back assertions passed
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/one/out_combined/t_summedSM_mc.root -- 1 TH1D histogram(s), all read-back assertions passed
+
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/one/out_combined/t_build_report.json
+[64839] ST_tW_antitop_5f_NoFullyHadronicDecays: sigma_eff=19.56 pb, Sigma-w=1.158132e+05 over 1 file(s) (0 excluded), norm=2.768657e+00
+[64839] 1 histogram(s) after post-processing
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/one/out_per-sample/t_record64839_mc.root -- 1 TH1D histogram(s), all read-back assertions passed
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/one/out_per-sample/t_summedSM_mc.root -- 1 TH1D histogram(s), all read-back assertions passed
+
+wrote /var/folders/wl/wp92xp_j2kv42ff6z7hrkz_40000gn/T/mc_peakscope_ga4i3yzh/one/out_per-sample/t_build_report.json
+PASS  ONE SAMPLE: combined == per-sample, ROOT contents and variances bit-identical
+PASS  ONE SAMPLE: identical peak masses and entry counts in the report
+PASS  ONE SAMPLE (property): postprocess with the combined cuts of a single sample == per-sample, 600 random spectra  -- 0 mismatches
+==========================================================================
+12 pass, 0 fail, 12 checks total
+wrote /Users/matan/Research/atlas-utilization/studies/cms_mc_weights_v3/peakfix/evidence/peak_scope_tests.json
+exit=0 studies/cms_mc_weights_v3/tests/test_peak_scope.py
+===== studies/cms_mc_weights_v3/tests/test_registry_v4.py
+PASS test_a_mini_from_relations
+PASS test_a_sigma_matches_matan_and_factors
+PASS test_b_portal_values_equal_saved_copies
+PASS test_c_tau_inclusion
+PASS test_d_no_duplicates_and_overlaps
+PASS test_registry_reproducible_and_builder_default
+6/6 passed
+exit=0 studies/cms_mc_weights_v3/tests/test_registry_v4.py
+===== studies/cms_mc_weights_v3/tests/test_upstream35_drift.py
+[PASS] 13 full-run records in the registry -- 13
+[PASS] builder normalisation_factor unchanged (65 values) -- ca5e601bdd148dda62c7cc615f8e2d5a492c84dd0c9535a09df9b93db8a3abbc
+[PASS] upstream compute_normalization unchanged (65 values) -- ca5e601bdd148dda62c7cc615f8e2d5a492c84dd0c9535a09df9b93db8a3abbc
+[PASS] builder find_peak_mass unchanged (400 spectra) -- 5e69d153287a469a5ec9e63ff2f8e835142ab094a294e498126447f833869873
+[PASS] upstream _find_rightmost_highest_peak unchanged (400 spectra) -- 5e69d153287a469a5ec9e63ff2f8e835142ab094a294e498126447f833869873
+[PASS] literal norm_35631_sw1e9 -- got 0.30507373, expected 0.30507373
+[PASS] literal norm_67801_sw2.5e9 -- got 0.000585426816, expected 0.000585426816
+[PASS] literal peak_empty -- got None, expected None
+[PASS] literal peak_tie_rightmost -- got 210.0, expected 210.0
+[PASS] literal peak_weighted_moves -- got 90.0, expected 90.0
+[PASS] literal peak_negative_weights -- got 10.0, expected 10.0
+[PASS] k != 1 is still refused (CMS guard kept)
+ALL CHECKS PASSED
+exit=0 studies/cms_mc_weights_v3/tests/test_upstream35_drift.py
+===== studies/cms_mc_weights_v3/tests/test_registry_v5.py
+PASS test_a_sigma_matches_d15_and_factors
+PASS test_b_live_portal_values
+PASS test_b_saved_portal_values
+PASS test_c_tau_inclusion
+PASS test_d_only_d15_changes
+PASS test_e3_note_on_all_ttz
+PASS test_registry_reproducible_and_builder_default
+7/7 passed
+exit=0 studies/cms_mc_weights_v3/tests/test_registry_v5.py

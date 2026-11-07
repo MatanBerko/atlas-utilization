@@ -1,0 +1,184 @@
+{
+ "fetched": "2026-11-07",
+ "sources": {
+  "api": "https://opendata.cern.ch/api/records/<id> metadata._file_indices",
+  "page1": "https://opendata.cern.ch/record/<id>/filepage/1?group=1 index_files"
+ },
+ "dsid_list": "origin/plan/mc-expansion-20261026:studies/mc_expansion_plan_20261026/atlas_mapping/atlas_bkg_metadata.csv (337 DSIDs)",
+ "atom_vs_portal_nfiles_mismatches": 3,
+ "records": [
+  {
+   "recid": 80010,
+   "title": "ATLAS DAOD_PHYSLITE format MC simulation electroweak boson nominal samples",
+   "api_index_files": 97,
+   "api_files_sum_number_files": 11272,
+   "api_files_listed": 11272,
+   "distribution_number_files": 11272,
+   "page1_index_files": 5,
+   "page1_index_total_field": 97,
+   "page1_root_files": 5,
+   "dsids_in_bkg_list": 97,
+   "bkg_files_in_record": 11272,
+   "bkg_files_on_page1": 5,
+   "bkg_dsids_on_page1": 5,
+   "page1_complete": false
+  },
+  {
+   "recid": 80011,
+   "title": "ATLAS DAOD_PHYSLITE format MC simulation exotic signal samples",
+   "api_index_files": 14,
+   "api_files_sum_number_files": 15,
+   "api_files_listed": 15,
+   "distribution_number_files": 15,
+   "page1_index_files": 5,
+   "page1_index_total_field": 14,
+   "page1_root_files": 6,
+   "dsids_in_bkg_list": 2,
+   "bkg_files_in_record": 3,
+   "bkg_files_on_page1": 3,
+   "bkg_dsids_on_page1": 2,
+   "page1_complete": false
+  },
+  {
+   "recid": 80012,
+   "title": "ATLAS DAOD_PHYSLITE format MC simulation Higgs nominal samples",
+   "api_index_files": 94,
+   "api_files_sum_number_files": 179,
+   "api_files_listed": 179,
+   "distribution_number_files": 179,
+   "page1_index_files": 5,
+   "page1_index_total_field": 94,
+   "page1_root_files": 5,
+   "dsids_in_bkg_list": 94,
+   "bkg_files_in_record": 179,
+   "bkg_files_on_page1": 5,
+   "bkg_dsids_on_page1": 5,
+   "page1_complete": false
+  },
+  {
+   "recid": 80013,
+   "title": "ATLAS DAOD_PHYSLITE format MC simulation Higgs systematic variation samples",
+   "api_index_files": 55,
+   "api_files_sum_number_files": 144,
+   "api_files_listed": 144,
+   "distribution_number_files": 144,
+   "page1_index_files": 5,
+   "page1_index_total_field": 55,
+   "page1_root_files": 5,
+   "dsids_in_bkg_list": 42,
+   "bkg_files_in_record": 112,
+   "bkg_files_on_page1": 3,
+   "bkg_dsids_on_page1": 3,
+   "page1_complete": false
+  },
+  {
+   "recid": 80014,
+   "title": "ATLAS DAOD_PHYSLITE format MC simulation QCD jet nominal samples",
+   "api_index_files": 27,
+   "api_files_sum_number_files": 2097,
+   "api_files_listed": 2097,
+   "distribution_number_files": 2097,
+   "page1_index_files": 5,
+   "page1_index_total_field": 27,
+   "page1_root_files": 82,
+   "dsids_in_bkg_list": 27,
+   "bkg_files_in_record": 2097,
+   "bkg_files_on_page1": 82,
+   "bkg_dsids_on_page1": 5,
+   "page1_complete": false
+  },
+  {
+   "recid": 80015,
+   "title": "ATLAS DAOD_PHYSLITE format MC simulation QCD jet systematic variation samples",
+   "api_index_files": 29,
+   "api_files_sum_number_files": 205,
+   "api_files_listed": 205,
+   "distribution_number_files": 205,
+   "page1_index_files": 5,
+   "page1_index_total_field": 29,
+   "page1_root_files": 25,
+   "dsids_in_bkg_list": 29,
+   "bkg_files_in_record": 205,
+   "bkg_files_on_page1": 25,
+   "bkg_dsids_on_page1": 5,
+   "page1_complete": false
+  },
+  {
+   "recid": 80017,
+   "title": "ATLAS DAOD_PHYSLITE format MC simulation top nominal samples",
+   "api_index_files": 23,
+   "api_files_sum_number_files": 437,
+   "api_files_listed": 437,
+   "distribution_number_files": 437,
+   "page1_index_files": 5,
+   "page1_index_total_field": 23,
+   "page1_root_files": 5,
+   "dsids_in_bkg_list": 23,
+   "bkg_files_in_record": 437,
+   "bkg_files_on_page1": 5,
+   "bkg_dsids_on_page1": 5,
+   "page1_complete": false
+  },
+  {
+   "recid": 80018,
+   "title": "ATLAS DAOD_PHYSLITE format MC simulation top systematic variation samples",
+   "api_index_files": 23,
+   "api_files_sum_number_files": 631,
+   "api_files_listed": 631,
+   "distribution_number_files": 631,
+   "page1_index_files": 5,
+   "page1_index_total_field": 23,
+   "page1_root_files": 116,
+   "dsids_in_bkg_list": 23,
+   "bkg_files_in_record": 631,
+   "bkg_files_on_page1": 116,
+   "bkg_dsids_on_page1": 5,
+   "page1_complete": false
+  }
+ ],
+ "upstream_cms_config_records": [
+  {
+   "recid": 30529,
+   "api_index_files": 3,
+   "files": 71,
+   "page1_index_files": 3
+  },
+  {
+   "recid": 30562,
+   "api_index_files": 4,
+   "files": 80,
+   "page1_index_files": 4
+  },
+  {
+   "recid": 30530,
+   "api_index_files": 2,
+   "files": 70,
+   "page1_index_files": 2
+  },
+  {
+   "recid": 30563,
+   "api_index_files": 5,
+   "files": 82,
+   "page1_index_files": 5
+  }
+ ],
+ "atom_vs_portal_nfiles_mismatch_detail": [
+  {
+   "dsid": "700792",
+   "atom_get_urls": 26,
+   "portal_number_files": 21
+  },
+  {
+   "dsid": "700793",
+   "atom_get_urls": 166,
+   "portal_number_files": 124
+  },
+  {
+   "dsid": "700794",
+   "atom_get_urls": 379,
+   "portal_number_files": 836
+  }
+ ],
+ "pagination_probe": "record/80010 filepage/2?group=1, filepage/20?group=1, filepage/1?group=1&page=2, filepage/2?group=1&page=2, filepage/1?group=1&size=200, filepage/2?group=2 all returned the same first 5 index files (total=97)",
+ "upstream_master_commit": "29291ae"
+}

@@ -1,0 +1,35 @@
+{
+  "what": "Matan's decisions of 7 Nov 2026 (after Maryna's answers of 7 Nov), recorded verbatim. Read by studies/cms_mc_weights_v3/build_registry_v5.py.",
+  "decided": "Matan, 7 Nov 2026",
+  "maryna_answers_2026_11_07": [
+    "(1) ATLAS nominal background DOES include the Pythia8 QCD dijet slices JZ0-JZ12 (364700-364712), but she expects them to \"contribute essentially nothing after selection\" because of the single-lepton trigger;",
+    "(2) ttZ/tZq/tWZ were misclassified on her side -> keep the CMS ttZ and rare-top samples;",
+    "(3) Pythia/Herwig duplicates fixed on her side (no CMS impact);",
+    "(4) she wants the portal page-1 file-list issue reported in the group channel."
+  ],
+  "D15": {
+    "text": "D15: release the 4 on-hold tier-4 samples, with these values, VERIFIED BY MATAN by hand on the portal (MiniAOD record, metadata.cross_section.total_value), k_factor = 1.0, gen_filt_eff = 1.0:\n    68325 / 68324 tZq_ll_4f_ckm_NLO: 0.07561 pb (generator NLO)\n    64873 / 64872 ST_tWll_5f (madgraph): 0.01105 pb (generator LO — the only value available; no NLO sample or published total for this phase space; document as such)\n    68206 / 68204 TTZToQQ: 0.5113 pb (generator NLO)\n    68185 / 68184 TTZToLL_M-1to10: 0.0537 pb (generator NLO)\n  The delivered TTZToLLNuNu_M-10 (68187, 0.2439 pb) stays as decided 15 Oct.",
+    "records": [
+      {"nano_recid": 68325, "mini_recid": 68324, "physics_short": "tZq_ll_4f_ckm_NLO", "cross_section_pb": 0.07561,
+       "order": "generator NLO", "note": null},
+      {"nano_recid": 64873, "mini_recid": 64872, "physics_short": "ST_tWll_5f (madgraph)", "cross_section_pb": 0.01105,
+       "order": "generator LO",
+       "note": "generator LO — the only value available; no NLO sample or published total for this phase space; document as such"},
+      {"nano_recid": 68206, "mini_recid": 68204, "physics_short": "TTZToQQ", "cross_section_pb": 0.5113,
+       "order": "generator NLO", "note": null},
+      {"nano_recid": 68185, "mini_recid": 68184, "physics_short": "TTZToLL_M-1to10", "cross_section_pb": 0.0537,
+       "order": "generator NLO", "note": null}
+    ],
+    "k_factor": 1.0,
+    "gen_filt_eff": 1.0,
+    "verification": "VERIFIED BY MATAN by hand on the portal (MiniAOD record, metadata.cross_section.total_value), 7 Nov 2026",
+    "unchanged": {"68187": "The delivered TTZToLLNuNu_M-10 (68187, 0.2439 pb) stays as decided 15 Oct."}
+  },
+  "E3": {
+    "text": "E3 (exception to \"match ATLAS\", Matan 7 Nov): ATLAS applies kFactor 1.11 to ttZ→νν/qq (410156/410157) and 1.12 to tt+ℓℓ (410218–410220); CMS keeps the generator NLO values (k = 1) for all ttZ samples. Reason: about 11 % on a background below 0.1 % of the total, smooth shape; avoids changing a delivered value. Goes into the README.",
+    "applies_to_cms_records": ["68185", "68187", "68206"],
+    "readme": true
+  },
+  "QCD": "QCD: probe first (below), no QCD production in this task. Decision after the probe.",
+  "bug_report": "Bug report: a channel post (the technical lead drafts it); NO Pull Request now. You only collect facts (Part C)."
+}

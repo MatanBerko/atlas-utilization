@@ -593,3 +593,120 @@ VERIFIED BY RUNNING (7 Nov 09:52 IST, wipp-home; per-record table `evidence/stat
 - `failed_20261104_portal504/`: 93 empty folders, untouched (same set as the moved list).
 - File count 113,342 (112,226 on 5 Nov; estimate ~113,300).
 - Still to do before the audit: the log swap from "Before the post chain" (needs Matan's OK); not done here.
+
+## D15 rare-top release, E3, QCD probe (7 Nov 2026)
+
+### Decisions (Matan, 7 Nov; verbatim in `studies/cms_mc_weights_v3/sources/v6_decisions_2026-11-07.json`)
+
+Maryna answered on 7 Nov. **(1)** The ATLAS nominal background includes the Pythia8 QCD dijet slices JZ0-JZ12
+(364700-364712); she expects them to "contribute essentially nothing after selection" (single-lepton trigger).
+**(2)** ttZ/tZq/tWZ were misclassified on her side, so the CMS ttZ and rare-top samples stay. **(3)** Pythia/Herwig
+duplicates were fixed on her side (no CMS impact). **(4)** She wants the portal page-1 issue reported in the group
+channel.
+- **D15:** release the 4 on-hold tier-4 samples. Values are VERIFIED BY MATAN by hand on the portal (MiniAOD
+  `metadata.cross_section.total_value`), with k_factor = gen_filt_eff = 1.0:
+  - 68325 / 68324 tZq_ll_4f_ckm_NLO: 0.07561 pb (generator NLO);
+  - 64873 / 64872 ST_tWll_5f: 0.01105 pb (generator LO — the only value available; no NLO sample or published
+    total for this phase space; documented as such);
+  - 68206 / 68204 TTZToQQ: 0.5113 pb (generator NLO);
+  - 68185 / 68184 TTZToLL_M-1to10: 0.0537 pb (generator NLO).
+
+  68187 TTZToLLNuNu_M-10 stays at 0.2439 pb (15 Oct).
+- **E3 (exception to "match ATLAS"):** ATLAS applies kFactor 1.11 (ttZ → νν/qq, 410156/410157) and 1.12 (tt + ℓℓ,
+  410218-410220); CMS keeps the generator NLO values (k = 1) for all ttZ samples (68185, 68187, 68206). Reason: about
+  11 % on a background below 0.1 % of the total, smooth shape, and no change to a delivered value. **README item.**
+- **QCD:** probe only (below); the decision comes after the probe. **Bug report:** facts only; the technical lead writes
+  the channel post. No Pull Request.
+
+### Registry v5 (VERIFIED BY RUNNING)
+
+- `studies/cms_mc_weights_v3/build_registry_v5.py` (ADDED) → `cms_mc_normalisation_v5.json`. v3, v4 and their
+  builders are untouched (`--check` OK for all three). The builder default is still v3.
+- **Diff v4 → v5:**
+  - exactly 4 records change status: 68325, 64873, 68206, 68185 get `in_full_run` true + a `decision_2026_11_07`
+    block (the value, order, source, "supersedes the ON HOLD status"; 64873 carries the LO note);
+  - the E3 note `exception_E3_2026_11_07` is added on 68185, 68187, 68206;
+  - **no σ, k, ε or MiniAOD id changes anywhere.** Their `decision_2026_11_03` history is kept;
+  - header: 71 in the full run (was 67), not in the full run only 35671 and 42407.
+- Checks: `tests/test_registry_v5.py` **7/7 pass**:
+  - σ_eff = Matan's list = product of factors;
+  - saved portal copy AND live API equal, filter = matching = 1.0;
+  - τ: ℓ = e μ τ in the tZq / tWℓℓ / tt̄ℓℓ cards; no BR applied by hand (Z → qq̄ by MadSpin, inside the portal value);
+  - only the D15 changes; no title twice; the ttZ pieces split by Z decay / m(ℓℓ).
+
+  **All 19 CMS test files exit 0** (`evidence/cms_tests_D15.txt`; three by-product files the old tests write were
+  moved out, not committed).
+
+### Part A: the 4 samples (VERIFIED BY RUNNING)
+
+- **File lists** (`make_d15_mappings.py`, `fetch_file_list_complete`; `mappings/mapping_{68325,64873,68206,68185}.txt`,
+  `mappings/inputs_D15_20261107.json`):
+
+  | record | files | events |
+  |---|---:|---:|
+  | 68325 | 52 | 3,967,000 |
+  | 64873 | 2 | 320,000 |
+  | 68206 | 20 | 5,401,000 |
+  | 68185 | 9 | 320,000 |
+  | **total** | **83** (plan: 83) | **10,008,000** |
+
+  The complete lists equal page 1 for all 4, and every file the portal lists is published.
+- **Precheck** (file 0, array 5469519[], into `work/mcexp_20261103/d15_precheck_20261107/`; `evidence/d15_precheck_20261107.txt`):
+  - 4/4 exit 0, each with 9 files, Σw self-check passes, commit 6de9d3e;
+  - walls 499 / 615 / 391 / 334 s, ≤ 0.22 GB;
+  - stored 27,617 / 7,674 / 9,866 / 1,645 of 46k / 11k / 46k / 6k events.
+- **Submitted** (`evidence/submit_D15_raretop.{sh,txt}`; same pin 6de9d3e, checkout clean; same `W`; mem 6 GB, io=25):
+
+  | record | job | files | walltime |
+  |---|---|---:|---|
+  | 68325 | 5469581[] | 52 | 06:00:00 |
+  | 64873 | 5469582[] | 2 | 24:00:00 |
+  | 68206 | 5469583[] | 20 | 12:00:00 |
+  | 68185 | 5469584[] | 9 | 24:00:00 |
+
+  - Walltime = 4 × (file-0 wall × size(largest file) / size(file 0)), rounded up on 2/3/6/12/24 h (ESTIMATE). The
+    largest files are 6-36 × file 0, so a plain 4 × file-0 time (2 h) would be too short.
+  - Appended to `$W/jobids.txt` in its format: **51 lines, 1,182 subjobs**.
+  - At 23:19: 6 of 52 for 68325 already exit 0, 45 queued, 32 running.
+  - Expected done within ~6 h (ESTIMATE; the io limit lets 32 run at once).
+- **File count:** 113,342 (7 Nov morning) → 113,581 before the submission (the precheck and QCD probe outputs) →
+  113,597 right after → 113,970 at 23:19 (outputs arriving).
+
+### Part B: QCD probe → `QCD_PROBE.md`
+
+- **Code (VERIFIED BY READING):** MC events must pass a lepton trigger (7 paths) with a matched, identified lepton, and
+  the builder's five-dataset union. Single-lepton + jets final states ARE histogrammed. So Maryna's argument holds for
+  two-lepton categories, not for single-lepton + jets.
+- **Probe:** file 0 of 9 HT-binned + flat 63168, array 5469520[] → `work/mcexp_20261103/qcd_probe_20261107/`; 10/10 exit 0
+  (11-116 s each). Analysis job 5469585, `qcd_probe/analyze_qcd_probe.py` → `evidence/qcd_probe_analysis.json`.
+- **Results** (counts VERIFIED; yields UNREVIEWED ESTIMATE):
+  - 1,395 of 5.17 M events enter a histogram, almost all one lepton + jets;
+  - weighted ~3.2e7 (HT) / ~7.7e7 (flat), the scale of the single-lepton data excess over the 25 Oct MC;
+  - two leptons: ~216 / ~1.1e5 weighted;
+  - eμ 0j: 0 events in all 10 files;
+  - spikes: flat 11 of its 20 heaviest events > 50 % of a bin (up to 1.9e6 data events per MC event); HT 10 of 153.
+- **Cost (ESTIMATE):** HT ~5,800 cluster files (does not fit, with or without tier 6); flat ~400 (fits).
+- Options listed, no recommendation.
+
+### Part C: bug facts → `BUG_PORTAL_PAGE1_FACTS.md` (+ `evidence/bug_portal_page1_facts.json`)
+
+- Upstream `services/consts.py:1` + `services/metadata/fetcher.py:286-296` read page 1 only (≤ 5 index files, no
+  warning). Only the record-ID path uses it (CMS configs).
+- The ATLAS production path takes the atlasopenmagic branch (`config.yaml:110-112`, `fetcher.py:224-225, 252-262`),
+  so it is not affected today.
+- All 8 ATLAS MC records holding our 337 background DSIDs have 14-97 index files, so they would be cut if fetched by
+  record ID.
+- Nothing was posted.
+
+### What remains
+
+1. **Status check of the 4 samples** (83 subjobs 5469581-5469584): exit 0, 9 files each, Σw self-check.
+2. **Matan decides QCD** (HT / flat / skip, `QCD_PROBE.md`) **and tier 6** (Z → νν). These two interact through the
+   file quota.
+3. **The final prompt:**
+   - the log swap of the 93 retried indices (with Matan's OK; "Before the post chain");
+   - tier 6 if kept; QCD if chosen (a registry v6 would then be needed for any QCD σ);
+   - audit → gate → build with `REGISTRY=studies/cms_mc_weights_v3/cms_mc_normalisation_v5.json` and
+     `EXTRA_RUNS_DIR=/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/runs` → checks → delivery drafts.
+   - The audit reads `jobids.txt` (now incl. the 4 D15 arrays).
+   - The README gets E3, the 64873 LO note, the missing-QCD note if skipped, and the earlier items.
