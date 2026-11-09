@@ -710,3 +710,75 @@ channel.
      `EXTRA_RUNS_DIR=/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/runs` → checks → delivery drafts.
    - The audit reads `jobids.txt` (now incl. the 4 D15 arrays).
    - The README gets E3, the 64873 LO note, the missing-QCD note if skipped, and the earlier items.
+
+## Rare-top status, log swap, tier 6 submitted (9 Nov 2026)
+
+Matan's decisions (9 Nov): the log swap is APPROVED (move, never delete; no code change). Tier 6: submit now (D11 a
+stands). File space is not a constraint (Matan can free space or raise the ceiling to 140,000); it is still measured.
+
+VERIFIED BY RUNNING (9 Nov, wipp-home):
+- **Preflight:** branch head 68bf8ed, upstream 29291ae. 0 jobs of mine queued or running. File count 114,593.
+- **D15 rare top: 83/83 OK.** Every subjob has exit 0 (PBS history and log), the normal "finished at" line, the
+  standard 9 files and a passing Σw self-check.
+
+  | record | job | files | OK | longest wall | limit | % | max memory (of 6 GB) |
+  |---|---|---:|---:|---:|---|---:|---:|
+  | 68325 tZq_ll | 5469581[] | 52 | 52 | 863 s (file 51) | 06:00:00 | 4.0 % | 0.89 GB (15 %) |
+  | 64873 ST_tWll | 5469582[] | 2 | 2 | 1,338 s (file 1) | 24:00:00 | 1.5 % | 1.32 GB (22 %) |
+  | 68206 TTZToQQ | 5469583[] | 20 | 20 | 765 s (file 12) | 12:00:00 | 1.8 % | 1.54 GB (26 %) |
+  | 68185 TTZToLL_M-1to10 | 5469584[] | 9 | 9 | 841 s (file 6) | 24:00:00 | 1.0 % | 0.60 GB (10 %) |
+
+  The size-scaled walltime estimates of 7 Nov were 2-15 × too high: the run time does not grow with the file size as
+  much as assumed.
+- **Log swap (exact commands `evidence/logswap_20261109.sh`, every move and copy in `evidence/logswap_20261109.txt`).**
+  - The 93 (record, array index) pairs come from `$W/evidence/retry_20261105_submitted.txt`.
+  - Checks before any change:
+    - all 93 `f_<i>_retry1.err` have exit 0;
+    - all 93 `_retry1.out` end normally;
+    - all 93 original `f_<i>.err` are the failed 504 attempt.
+  - **Moved 93 attempts (186 files: `f_<i>.out` + `f_<i>.err`)** to
+    `$W/logs_failed_20261104_portal504/<record>/f_<i>.{out,err}`. The failed attempts wrote nothing else; their empty
+    output folders were moved on 5 Nov.
+  - **Copied 93 attempts (186 files)** `f_<i>_retry1.{out,err}` → `f_<i>.{out,err}` (`cp -p -n`, checked with `cmp`).
+    The 186 `_retry1` files are still in place. Nothing was deleted.
+- **Audit (read only; the pinned `audit_production.py`, job 5487245, `--expected-sw-failures ""`, output
+  `$W/evidence/audit_preview_20261109/production_audit_preview.json`, copied to
+  `evidence/production_audit_preview_20261109.json`).**
+  - **Verdict OK: 1,182/1,182 jobs OK over 51 records** (tiers 1-5 + D15).
+  - Problems [], Σw failures [], max wall 2,432 s, max memory 3.67 GB.
+  - It ran just before tier 6 was submitted, so tier 6 was not yet in `jobids.txt` and is not counted (expected).
+  - The final chain still writes its own `$W/evidence/production_audit.json` (that name was not used here).
+- **Tier 6 submitted** (`evidence/submit_tier6_20261109.{sh,txt}`; pin 6de9d3e asserted clean; same `W`; existing
+  mappings, identical to the repo; mem 6 GB, io=25).
+
+  | record | job | files | walltime |
+  |---|---|---:|---|
+  | 74894 | 5487246[] | 18 | 02:00:00 |
+  | 74896 | 5487247[] | 21 | 02:00:00 |
+  | 74898 | 5487248[] | 10 | 02:00:00 |
+  | 74900 | 5487249[] | 2 | 02:00:00 |
+  | 74902 | 5487250[] | 13 | 02:00:00 |
+  | 74904 | 5487251[] | 21 | 02:00:00 |
+  | 74906 | 5487252[] | 22 | 02:00:00 |
+
+  - Walltime = 4 × (A1 precheck file-0 wall × largest/file-0 size). The largest is 74904: 9.3 s × 60.2 = 558 s, so
+    0.62 h, and 2 h for all.
+  - **107 subjobs**; `jobids.txt` now 58 lines, 1,289 subjobs.
+  - Right after submission: 75 queued, 32 running.
+  - **Expected done within ~1 h of submission (ESTIMATE**: file-0 times 6-50 s, ≤ 32 at once).
+- **File count:** 114,593 before the work → 114,798 before tier 6 (audit preview job) → 114,826 right after.
+  - Projection (ESTIMATE): tier 6 outputs +~1,300, so ~116,100.
+  - The final build + kept scratch + checks +~5,650 (1,786 input files × 1,518/497 + ~200), so **~121,800**.
+  - QCD is not included.
+
+### What remains
+
+1. **Short status check of tier 6** (107 subjobs 5487246-5487252): exit 0, 9 files, Σw self-check.
+2. **The final build prompt** (all of `jobids.txt`, 58 lines, 1,289 subjobs):
+   - audit → gate → build with `REGISTRY=studies/cms_mc_weights_v3/cms_mc_normalisation_v5.json` and
+     `EXTRA_RUNS_DIR=/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/mc/runs` → checks → rule builds →
+     delivery drafts;
+   - commands as in "A2b-1 submitted / What remains", with the registry changed to v5;
+   - submit the audit with no dependency once tier 6 is finished;
+   - note that `pbs_mcexp_post.sh` rule builds read v4: their 4 reference records are identical in v4 and v5.
+3. **QCD multijet: decision still open** (`QCD_PROBE.md`). It is NOT in the MC total; if skipped, the README says so.
