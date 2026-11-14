@@ -106,6 +106,7 @@ def main():
     chk = json.loads((EV / "checks_final.json").read_text())
     bsum = json.loads((EV / "build_report_summary.json").read_text())
     sm = json.loads((EV / "start_masses_20261114.json").read_text())
+    psum = json.loads((EV / "per_sample_sumcheck_20261114.json").read_text())
     rows = {s["record"]: s for s in chk["samples"]}
     recs = REG["records"]
     n_hist = bsum["summed_sm"]["n_histograms"]
@@ -192,6 +193,23 @@ COMPARING THESE MC HISTOGRAMS WITH THE CMS DATA HISTOGRAMS (START MASSES)
   * {len(sm['mc_only'])} MC histograms have no data counterpart (four-lepton final states
     not in the data file):
 {mc_only}
+
+PER-SAMPLE FILES (folder per_sample/)
+  * One file per sample, {psum['n_per_sample_files']} files, named
+    CMS_Run2016GH_MC-<dataset short>-rec<record>_16p393invfb_build2026-11-14_mc.root,
+    each with a short README (sample, record, dataset, sigma_eff and its
+    source and status, Sigma_w, normalisation, files used and published).
+    Each holds only the histograms its sample fills ({psum['n_histogram_entries_per_sample_total']:,} histograms in all).
+  * They come from the same build as the summed file and add up to it: for
+    every one of the {psum['n_histograms_summed']} histograms, the sum of the per-sample histograms
+    equals the summed histogram to {psum['largest_relative_difference']['value']:.1e} (relative; floating-point
+    rounding), bin errors (Sumw2) to {psum['largest_relative_difference_sumw2']['value']:.1e}.
+  * Start masses: every per-sample histogram is cut at the SAME peak-removal
+    and split masses as the summed histogram of the same name (found once on
+    the weighted sum of all {len(rows)} samples and applied to each sample), so the
+    per-sample files are slices of the summed file. A sample can be empty in
+    the lowest bins, so its own first filled bin can lie later; compare with
+    data only from the common start in the CSV (rule above).
 
 SAMPLES ({len(rows)}; registry studies/cms_mc_weights_v3/cms_mc_normalisation_v5.json)
 {chr(10).join(table)}
@@ -282,7 +300,8 @@ PRODUCTION
   with registry v5; README finalised 14 Nov 2026 (decisions:
   studies/cms_mc_weights_v3/sources/v7_decisions_2026-11-14.json).
   Files: this README, the ROOT file, {csv_name},
-  MANIFEST.md (sources of every value) and SHA256SUMS.txt (checksums).
+  per_sample/ ({psum['n_per_sample_files']} ROOT files + {psum['n_per_sample_files']} READMEs), MANIFEST.md (sources of every
+  value) and SHA256SUMS.txt (checksums of every file in the package).
 """
     out = HERE / f"{FNAME}.README.txt"
     out.write_text(txt)

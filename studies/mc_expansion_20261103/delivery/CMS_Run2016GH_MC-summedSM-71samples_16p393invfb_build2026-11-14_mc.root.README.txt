@@ -57,6 +57,23 @@ COMPARING THESE MC HISTOGRAMS WITH THE CMS DATA HISTOGRAMS (START MASSES)
     mass_m0m1_cat_1ex_3mx_0jx_0bx, mass_m0m1m2_cat_0ex_4mx_0jx_0bx,
     mass_m0m1m2_cat_1ex_3mx_0jx_0bx, mass_m0m1m2m3_cat_0ex_4mx_0jx_0bx
 
+PER-SAMPLE FILES (folder per_sample/)
+  * One file per sample, 71 files, named
+    CMS_Run2016GH_MC-<dataset short>-rec<record>_16p393invfb_build2026-11-14_mc.root,
+    each with a short README (sample, record, dataset, sigma_eff and its
+    source and status, Sigma_w, normalisation, files used and published).
+    Each holds only the histograms its sample fills (19,587 histograms in all).
+  * They come from the same build as the summed file and add up to it: for
+    every one of the 331 histograms, the sum of the per-sample histograms
+    equals the summed histogram to 4.8e-16 (relative; floating-point
+    rounding), bin errors (Sumw2) to 5.8e-16.
+  * Start masses: every per-sample histogram is cut at the SAME peak-removal
+    and split masses as the summed histogram of the same name (found once on
+    the weighted sum of all 71 samples and applied to each sample), so the
+    per-sample files are slices of the summed file. A sample can be empty in
+    the lowest bins, so its own first filled bin can lie later; compare with
+    data only from the common start in the CSV (rule above).
+
 SAMPLES (71; registry studies/cms_mc_weights_v3/cms_mc_normalisation_v5.json)
   record  dataset (short)                                   process group             sigma_eff [pb]  order / construction / source  |  status
   35631   DYJetsToLL_M-10to50_amcatnloFXFX                  delivered 13 (25 Oct)            18610  secondary-table: table value, 18610.0 pb  [RazorAnalyzer public cross-section table (SECONDARY source)]  |  decided by Matan 15 Oct (25 Oct delivery)
@@ -261,4 +278,5 @@ PRODUCTION
   with registry v5; README finalised 14 Nov 2026 (decisions:
   studies/cms_mc_weights_v3/sources/v7_decisions_2026-11-14.json).
   Files: this README, the ROOT file, CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root.start_masses.csv,
-  MANIFEST.md (sources of every value) and SHA256SUMS.txt (checksums).
+  per_sample/ (71 ROOT files + 71 READMEs), MANIFEST.md (sources of every
+  value) and SHA256SUMS.txt (checksums of every file in the package).

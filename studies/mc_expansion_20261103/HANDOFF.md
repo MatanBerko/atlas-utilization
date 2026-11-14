@@ -922,3 +922,60 @@ So ATLAS data and MC can also start at different masses. Two new upstream commit
 **File count:** 121,763 → 121,861 (ceiling 125,000).
 
 **Next:** the technical lead verifies; then Matan hands over the package and emails Maryna. Nothing has been sent.
+
+## Package complete and copied to Matan's Mac (14–15 Nov 2026)
+
+**A. Per-sample files** (as on 25 Oct: the summed file plus one file per sample, each with a README).
+- **Copies:** PBS job 5541835 (`full/build_jobs/pbs_persample_20261114.sh`; started 23:16, done 00:11) COPIED the 71
+  `full/build_20261109/fullrun_record<r>_mc.root` into `deliver_20261109/per_sample/` as
+  `CMS_Run2016GH_MC-<physics_short>-rec<r>_16p393invfb_build2026-11-14_mc.root`.
+  - Method: `cp -p`, then `cmp` for each file, with `set -e`. All 71 are byte-identical (VERIFIED BY RUNNING).
+  - Nothing in the build folder was moved or changed.
+  - The job spent most of its 54 minutes waiting on storage (43 s of CPU).
+- **Sum check** (`delivery/per_sample_sumcheck.py` at bac88d7, same job; `evidence/final_build/per_sample_sumcheck_20261114.json`;
+  VERIFIED BY RUNNING):
+  - the 71 files add up to the summed file in all 331 histograms;
+  - largest relative difference 4.8e-16 in the contents and 5.8e-16 in Sumw2 (rounding);
+  - 19,587 per-sample histograms in all;
+  - no name is missing either way;
+  - the summed file's sha256 is still 91beacdf…bd03.
+- **Start masses of the per-sample files:** every per-sample histogram is cut at the SAME peak and split masses as the
+  summed histogram, found once on the weighted sum of all samples (pin `build_mc_delivery.py:826-837,566,580`). So the
+  files are slices of the summed file. This is in the README and the MANIFEST.
+- **Per-sample READMEs:** `delivery/make_per_sample_readmes.py` writes 71 short READMEs into `delivery/per_sample/`
+  (copied into `per_sample/` on the cluster). The main README has a new section "PER-SAMPLE FILES"; the MANIFEST has a
+  new section "Per-sample files".
+
+**Slip, repaired.** When I replaced the main README and MANIFEST on the cluster, the remote command that should first
+have moved the old versions to `.draft2` stopped without moving anything, and the upload then overwrote the two files.
+- Both previous versions were committed in git (386bd1d), byte-identical to the cluster copies.
+- I restored them from git as `….README.txt.draft2` and `MANIFEST.md.draft2`, and their sha256 equals the previous
+  `SHA256SUMS.txt` (87011f3b…, 1346adf1…).
+- The previous checksum file was then moved to `SHA256SUMS.txt.draft2`.
+- No other file was affected.
+
+**Checksums:** the new `SHA256SUMS.txt` covers all 146 package files:
+- the summed ROOT file, its README, the CSV and the MANIFEST;
+- 71 per-sample ROOT files and 71 per-sample READMEs.
+
+The `.draft1` / `.draft2` files are excluded. Package total 79,136,877 bytes (VERIFIED BY RUNNING).
+
+**B. Copy on Matan's Mac:** `~/Desktop/CMS_MC_delivery_2026-11-14/` (new folder) holds 147 files, no `.draft` files and
+79,136,877 bytes. It was made with `rsync -a` from the Mac, and `shasum -a 256 -c SHA256SUMS.txt` gives 146/146 OK
+(VERIFIED BY RUNNING).
+
+**C. Upstream on 14 Nov** (VERIFIED BY READING; nothing synced or changed). Neither commit changes this delivery.
+- **83aa24f (#45)** replaces the ATLAS histogram step's display-range trim with an OPTIONAL real slicing of each
+  histogram to its first..last filled bin (`trim_empty_bins`, default false, `config.yaml:205`).
+  - Our builder writes its own histograms and does not use that step.
+  - If ATLAS switched it on, their files would look like our cropped data file (axis = filled range).
+- **0f4c614** makes the ATLAS data post-processing run per batch (2 lines in `_process_im_sqlite`, plus `submit_data.sh`).
+  - Our builder imports only `_aligned_bin_edges`, `_dilepton_flavor` and `_find_rightmost_highest_peak`
+    (`build_mc_delivery.py:94-98`), which are unchanged.
+  - Side note for the technical lead (UNVERIFIED): ATLAS data batches now find their peaks separately, so a merged ATLAS
+    data histogram may mix start masses.
+
+**File count:** 121,861 → 122,104 (ceiling 125,000).
+
+**Next:** the technical lead verifies; then Matan uploads the folder the same way as on 25 Oct and emails Maryna.
+Nothing has been sent.

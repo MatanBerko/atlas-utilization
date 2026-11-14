@@ -91,3 +91,13 @@ equal to the git blob (VERIFIED BY RUNNING). It was passed explicitly with `--re
 | W+jets portal values VERIFIED BY MATAN on the live portal (14 Nov 2026) | `v7_decisions_2026-11-14.json` `wjets_portal_values` |
 | 68847 order "NNLO QCD + NLO EW (LHC Higgs WG YR4, mH = 125.00 GeV)" | `v7_decisions_2026-11-14.json` `68847` (value unchanged; registry v5 untouched) |
 | binning decided: option C | `v7_decisions_2026-11-14.json` `binning` |
+
+## Per-sample files (README "PER-SAMPLE FILES"; added 15 Nov 2026)
+
+| README value | source |
+|---|---|
+| 71 per-sample files = byte copies of `full/build_20261109/fullrun_record<r>_mc.root` | PBS job 5541835 (`full/build_jobs/pbs_persample_20261114.sh`): `cp -p` then `cmp` for each file, `set -e` (VERIFIED BY RUNNING); names from `full/build_jobs/per_sample_names_20261114.txt` (registry `physics_short`, as the 25 Oct names) |
+| per-sample files add up to the summed file; largest relative difference 4.8e-16 (contents), 5.8e-16 (Sumw2); 19,587 histograms in all; no name missing either way | `evidence/final_build/per_sample_sumcheck_20261114.json` (`delivery/per_sample_sumcheck.py` at bac88d7, same job) |
+| each per-sample histogram cut at the SAME peak and split masses as the summed histogram (found once on the weighted sum of all samples) | pin 6de9d3e `studies/cms_mc_weights_v3/deliver/build_mc_delivery.py:36-46` (docstring), `:826-831` (`cuts_by_name = combined_cuts(...)` per name over all records), `:832-837` (each record post-processed with those cuts), `:566` (`peak_mass = cuts["peak_mass"]`), `:580` (`split = cuts["split_mass"]`), `:842-847` (per-sample files written), `:849-853` + `:1003` (`sum_histograms`: summed file = sum of the per-sample histograms); build report `options.peak_scope` = combined |
+| per-sample README values (σ_eff, order, construction, source, status, Σw, normalisation, files used, negative-weight fraction, share) | registry v5 + `v7_decisions_2026-11-14.json` (via `make_readme.py` helpers); `checks_final.json` `samples`; generator `delivery/make_per_sample_readmes.py` |
+| files in the record (published / listed) | `mappings/inputs_20261103.json` and `mappings/inputs_D15_20261107.json` (`portal_number_files`, read live 3 and 7 Nov); the 13 samples reused from 25 Oct: every file of the record's complete file index (`studies/mc_expansion_20261103/HANDOFF.md:102,311`: their complete lists equal the 25 Oct input lists; the portal `number_files` of these 13 was not re-read here) |

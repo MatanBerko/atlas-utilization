@@ -1,0 +1,40 @@
+CMS_Run2016GH_MC-DYJetsToLL_M-50_amcatnloFXFX-rec35669_16p393invfb_build2026-11-14_mc.root
+==========================================================================================
+
+CMS 2016 SIMULATION (MC), ONE sample: DYJetsToLL_M-50_amcatnloFXFX (CMS Open Data record 35669),
+normalised to 16.393 fb^-1 (Run2016G+H), RunIISummer20UL16 NanoAODv9 (postVFP).
+Part of the final MC delivery of 14 Nov 2026; the summed file
+CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root
+is the sum of this file and the other 70 per-sample files.
+
+SAMPLE
+  Record:          35669 (NanoAOD; MiniAOD record 35668)
+  Dataset:         /DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM
+  Process group:   delivered 13 (25 Oct)
+  sigma_eff:       5765.4 pb (k_factor = gen_filt_eff = 1; all factors inside)
+  Order:           secondary-table
+  Construction:    3 x 1921.8 pb
+  Source:          RazorAnalyzer public cross-section table (SECONDARY source)
+  Status:          decided by Matan 15 Oct (25 Oct delivery)
+
+NORMALISATION
+  Sigma_w (sum of genWeight, files used): 1.22093e+12
+  Normalisation factor sigma_eff x 1000 x 16.393 / Sigma_w: 7.74097e-05
+  Each event: genWeight x L1PreFiringWeight_Nom x normalisation factor.
+  Files used: 41; files in the record: 41 (every file of the record's complete file index; reused unchanged from the 25 Oct production).
+  Fraction of stored events with a negative generator weight: 0.166
+
+CONTENTS
+  314 histograms (TH1D with Sumw2), weighted events; only the histograms
+  this sample fills. Share of the summed MC yield: 20.7 %.
+  Start masses: each histogram is cut at the SAME peak and split masses as the
+  summed file (found once on the sum of all samples), so this file is a slice
+  of the summed histogram; its own first filled bin can lie later where this
+  sample is empty. Compare with data only from the common start given in
+  CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root.start_masses.csv.
+
+SEE THE MAIN README
+  CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root.README.txt
+  for the object selection, triggers, final states, post-processing, start
+  masses (how to compare with data), single-event dominance, and the MISSING
+  list (QCD multijet and photon processes are NOT in the MC).

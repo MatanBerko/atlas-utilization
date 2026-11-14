@@ -1,0 +1,40 @@
+CMS_Run2016GH_MC-WminusH_HToZZTo4L_M125_powheg2-minlo-HWJ_JHUGenV7011_pythia8-rec70383_16p393invfb_build2026-11-14_mc.root
+==========================================================================================================================
+
+CMS 2016 SIMULATION (MC), ONE sample: WminusH_HToZZTo4L_M125_powheg2-minlo-HWJ_JHUGenV7011_pythia8 (CMS Open Data record 70383),
+normalised to 16.393 fb^-1 (Run2016G+H), RunIISummer20UL16 NanoAODv9 (postVFP).
+Part of the final MC delivery of 14 Nov 2026; the summed file
+CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root
+is the sum of this file and the other 70 per-sample files.
+
+SAMPLE
+  Record:          70383 (NanoAOD; MiniAOD record 70382)
+  Dataset:         /WminusH_HToZZTo4L_M125_TuneCP5_13TeV_powheg2-minlo-HWJ_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM
+  Process group:   Higgs (new)
+  sigma_eff:       0.000146254 pb (k_factor = gen_filt_eff = 1; all factors inside)
+  Order:           YR4 production x YR4 BR (x PDG W/Z BR)
+  Construction:    0.5328 x 0.0002745
+  Source:          LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios
+  Status:          VERIFIED BY MATAN
+
+NORMALISATION
+  Sigma_w (sum of genWeight, files used): 104770
+  Normalisation factor sigma_eff x 1000 x 16.393 / Sigma_w: 2.28839e-05
+  Each event: genWeight x L1PreFiringWeight_Nom x normalisation factor.
+  Files used: 7; files in the record: 7.
+  Fraction of stored events with a negative generator weight: 0.022
+
+CONTENTS
+  329 histograms (TH1D with Sumw2), weighted events; only the histograms
+  this sample fills. Share of the summed MC yield: 2.15e-06 %.
+  Start masses: each histogram is cut at the SAME peak and split masses as the
+  summed file (found once on the sum of all samples), so this file is a slice
+  of the summed histogram; its own first filled bin can lie later where this
+  sample is empty. Compare with data only from the common start given in
+  CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root.start_masses.csv.
+
+SEE THE MAIN README
+  CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root.README.txt
+  for the object selection, triggers, final states, post-processing, start
+  masses (how to compare with data), single-event dominance, and the MISSING
+  list (QCD multijet and photon processes are NOT in the MC).
