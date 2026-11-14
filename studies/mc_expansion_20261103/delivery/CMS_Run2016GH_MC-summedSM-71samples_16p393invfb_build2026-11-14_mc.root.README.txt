@@ -1,0 +1,214 @@
+CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root
+=======================================================================
+
+CMS 2016 SIMULATION (MC), summed Standard Model: the sum of the 71 samples below,
+normalised to 16.393 fb^-1 (Run2016G+H), RunIISummer20UL16 NanoAODv9 (postVFP).
+DRAFT, built 14 Nov 2026; not yet reviewed for release.
+
+CONTENTS
+  331 histograms (TH1D with Sumw2), weighted events, in 53 final states.
+  Data: the 25 Oct 2026 data delivery (CMS_Run2016GH_DoubleMuon-SingleMuon-DoubleEG-
+  MuonEG-SingleElectron_16p393invfb_prod2026-10-25_data_bumpnet_*.root) is unchanged
+  and is the data to compare with. Names in both: 313; MC-only: 18;
+  data-only: 0.
+
+SAMPLES (71; registry studies/cms_mc_weights_v3/cms_mc_normalisation_v5.json)
+  record  dataset (short)                                   process group             sigma_eff [pb]  order / construction / source  |  status
+  35631   DYJetsToLL_M-10to50_amcatnloFXFX                  delivered 13 (25 Oct)            18610  secondary-table: table value, 18610.0 pb  [RazorAnalyzer public cross-section table (SECONDARY source)]  |  decided by Matan 15 Oct (25 Oct delivery)
+  35669   DYJetsToLL_M-50_amcatnloFXFX                      delivered 13 (25 Oct)           5765.4  secondary-table: 3 x 1921.8 pb  [RazorAnalyzer public cross-section table (SECONDARY source)]  |  decided by Matan 15 Oct (25 Oct delivery)
+  37432   GluGluHToMuMu_M125-powheg-pythia8                 Higgs (new)                   0.010571  YR4 production x YR4 BR (x PDG W/Z BR): 48.58 x 0.0002176  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  37446   GluGluHToTauTau_M125-powheg-pythia8               Higgs (new)                    3.04694  YR4 production x YR4 BR (x PDG W/Z BR): 48.58 x 0.06272  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  37474   GluGluHToWWTo2L2Nu_M-125-powheg-pythia8           Higgs (new)                    1.11145  YR4 production x YR4 BR (x PDG W/Z BR): 48.58 x 0.2137 x 0.10706  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios; PDG live, W boson]  |  VERIFIED BY MATAN
+  37604   GluGluHToZG_ZToLL_M-125-powheg-pythia8            Higgs (new)                 0.00752104  YR4 production x YR4 BR (x PDG W/Z BR): 48.58 x 0.001533 x 0.10099  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios; PDG live, Z boson]  |  VERIFIED BY MATAN
+  37616   GluGluHToZZTo2L2Nu_M125_powheg2_JHUGenV735_pythi  Higgs (new)                  0.0342475  YR4 production x YR4 BR (x PDG W/Z BR): 48.58 x 0.02619 x 0.0269176  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios; PDG live, Z boson]  |  VERIFIED BY MATAN
+  37728   GluGluHToZZTo4L_M125                              delivered 13 (25 Oct)         0.013335  N3LO QCD + NLO EW: 48.58 pb x 2.745e-4  [LHC Higgs WG twiki CERNYellowReportPageAt13TeV; LHC Higgs WG twiki CERNYellowReportPageBR]  |  decided by Matan 15 Oct (25 Oct delivery)
+  40062   GluGluToZH_HToZZTo4L_M125-jhugenv723-pythia8      Higgs (new)                6.22392e-05  LO (JHUGen gg->ZH) normalised to YR4 x BR x estimated filter efficiency: 0.1227 x 0.02619 x 0.10099 x eps, eps = 1 - (1 - 0.10099)^2 = 0.19178  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios; PDG live, Z boson; plan XSEC_PROPOSALS_v2.md card 54, option (c) (ESTIMATE)]  |  ESTIMATE
+  40095   GluGluZH_HToWW_ZTo2L_M-125-powheg-pythia8         Higgs (new)                 0.00264806  YR4 production x YR4 BR (x PDG W/Z BR): 0.1227 x 0.2137 x 0.10099  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios; PDG live, Z boson]  |  VERIFIED BY MATAN
+  41873   HWminusJ_HToWW_M-125-powheg-jhugen727-pythia8     Higgs (new)                   0.113859  YR4 production x YR4 BR (x PDG W/Z BR): 0.5328 x 0.2137  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  41877   HWplusJ_HToWW_M-125-powheg-jhugen727-pythia8      Higgs (new)                   0.179508  YR4 production x YR4 BR (x PDG W/Z BR): 0.84 x 0.2137  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  41914   HZJ_HToWW_M-125-powheg-jhugen727-pythia8          Higgs (new)                   0.162668  YR4 production x YR4 BR (x PDG W/Z BR): 0.7612 x 0.2137  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  64635   ST_s-channel_4f_leptonDecays-amcatnlo-pythia8     single top t/s                  3.3767  NLO (Hathor) x BR: 10.32 x 0.3272  [LHC Top WG SingleTopRefXsec (Hathor NLO); PDG live, W boson]  |  VERIFIED BY MATAN
+  64659   ST_t-channel_antitop_4f_InclusiveDecays-powheg-m  single top t/s                   80.95  NLO (Hathor): 80.95 (Hathor NLO, t-channel antitop)  [LHC Top WG SingleTopRefXsec (Hathor NLO)]  |  VERIFIED BY MATAN
+  64759   ST_t-channel_top_4f_InclusiveDecays-powheg-madsp  single top t/s                  136.02  NLO (Hathor): 136.02 (Hathor NLO, t-channel top)  [LHC Top WG SingleTopRefXsec (Hathor NLO)]  |  VERIFIED BY MATAN
+  64839   ST_tW_antitop_5f_NoFullyHadronicDecays            delivered 13 (25 Oct)            19.56  approx. NNLO: 71.7 pb / 2 x (1 - 0.6741^2) (antitop half)  [LHC Top WG twiki SingleTopRefXsec]  |  decided by Matan 15 Oct (25 Oct delivery)
+  64873   ST_tWll_5f-madgraph-pythia8                       VVV, tt̄X, 4t, rare top        0.01105  generator LO: 0.01105 (generator LO, portal total_value; k_factor = gen_filt_eff = 1.0)  [CERN Open Data MiniAOD record 64872 (generator cross section)]  |  VERIFIED BY MATAN; generator LO only
+  64895   ST_tW_top_5f_NoFullyHadronicDecays                delivered 13 (25 Oct)            19.56  approx. NNLO: 71.7 pb / 2 x (1 - 0.6741^2)  [LHC Top WG twiki SingleTopRefXsec]  |  decided by Matan 15 Oct (25 Oct delivery)
+  67645   ttHTobb_M125-powheg-pythia8                       VVV, tt̄X, 4t, rare top        0.29534  NLO QCD + NLO EW (YR4) x BR: 0.5071 x 0.5824  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  67691   ttHToNonbb_M125-powheg-pythia8                    VVV, tt̄X, 4t, rare top        0.21176  NLO QCD + NLO EW (YR4) x BR: 0.5071 x (1 - 0.5824)  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  67801   TTTo2L2Nu                                         delivered 13 (25 Oct)            89.28  NNLO+NNLL: 833.9 pb x 0.10706, where 0.10706 = (0.1071 + 0.1063 + 0.1138)^2  [LHC Top WG twiki TtbarNNLO; PDG W branching ratios]  |  decided by Matan 15 Oct (25 Oct delivery)
+  67841   TTToHadronic-powheg-pythia8                       tt̄ hadronic                    378.93  NNLO+NNLL x BR: 833.9 x 0.6741^2  [LHC Top WG TtbarNNLO; PDG live, W boson]  |  VERIFIED BY MATAN
+  67993   TTToSemiLeptonic                                  delivered 13 (25 Oct)           367.86  NNLO+NNLL: 833.9 pb x 0.44113, where 0.44113 = 2 x 0.3272 x 0.6741  [LHC Top WG twiki TtbarNNLO; PDG W branching ratios]  |  decided by Matan 15 Oct (25 Oct delivery)
+  68045   TTTT-amcatnlo-pythia8                             VVV, tt̄X, 4t, rare top        0.01197  complete NLO QCD+EW: 11.97 fb (complete NLO QCD+EW)  [arXiv:1711.02116]  |  VERIFIED BY MATAN
+  68073   TTWJetsToLNu                                      delivered 13 (25 Oct)           0.2151  NLO: generator value  [CERN Open Data record 68072 (generator cross section)]  |  decided by Matan 15 Oct (25 Oct delivery)
+  68083   TTWJetsToQQ-amcatnloFXFX-madspin-pythia8          VVV, tt̄X, 4t, rare top         0.4375  NLO (generator): 0.4375 (generator NLO)  [CERN Open Data MiniAOD record 68082 (generator cross section)]  |  VERIFIED BY MATAN
+  68185   TTZToLL_M-1to10-amcatnlo-pythia8                  VVV, tt̄X, 4t, rare top         0.0537  generator NLO: 0.0537 (generator NLO, portal total_value; k_factor = gen_filt_eff = 1.0)  [CERN Open Data MiniAOD record 68184 (generator cross section)]  |  VERIFIED BY MATAN
+  68187   TTZToLLNuNu_M-10                                  delivered 13 (25 Oct)           0.2439  NLO: generator value  [CERN Open Data record 68186 (generator cross section)]  |  decided by Matan 15 Oct (25 Oct delivery)
+  68206   TTZToQQ-amcatnlo-pythia8                          VVV, tt̄X, 4t, rare top         0.5113  generator NLO: 0.5113 (generator NLO, portal total_value; k_factor = gen_filt_eff = 1.0)  [CERN Open Data MiniAOD record 68204 (generator cross section)]  |  VERIFIED BY MATAN
+  68325   tZq_ll_4f_ckm_NLO-amcatnlo-pythia8                VVV, tt̄X, 4t, rare top        0.07561  generator NLO: 0.07561 (generator NLO, portal total_value; k_factor = gen_filt_eff = 1.0)  [CERN Open Data MiniAOD record 68324 (generator cross section)]  |  VERIFIED BY MATAN
+  68571   VBFHToMuMu_M125_withDipoleRecoil-powheg-pythia8   Higgs (new)                0.000822963  YR4 production x YR4 BR (x PDG W/Z BR): 3.782 x 0.0002176  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  68591   VBFHToTauTau_M125-powheg-pythia8                  Higgs (new)                   0.237207  YR4 production x YR4 BR (x PDG W/Z BR): 3.782 x 0.06272  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  68601   VBFHToWWTo2L2Nu_M125_powheg2_JHUGenV714_pythia8   Higgs (new)                  0.0865272  YR4 production x YR4 BR (x PDG W/Z BR): 3.782 x 0.2137 x 0.10706  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios; PDG live, W boson]  |  VERIFIED BY MATAN
+  68731   VBFHToZG_ZToLL_M-125-powheg-pythia8               Higgs (new)                 0.00058552  YR4 production x YR4 BR (x PDG W/Z BR): 3.782 x 0.001533 x 0.10099  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios; PDG live, Z boson]  |  VERIFIED BY MATAN
+  68741   VBF_HToZZTo2L2Nu_M125_powheg2_JHUGenV735_pythia8  Higgs (new)                  0.0026662  YR4 production x YR4 BR (x PDG W/Z BR): 3.782 x 0.02619 x 0.0269176  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios; PDG live, Z boson]  |  VERIFIED BY MATAN
+  68847   VBF_HToZZTo4L_M125                                delivered 13 (25 Oct)        0.0010382  not stated in the decision list (the earlier v2 table recorded NNLO QCD + NLO EW for this page; UNVERIFIED here, for Matan to confirm): 3.782 pb x 2.745e-4  [LHC Higgs WG twiki CERNYellowReportPageAt13TeV; LHC Higgs WG twiki CERNYellowReportPageBR]  |  decided by Matan 15 Oct (25 Oct delivery)
+  69715   WJetsToLNu_0J-amcatnloFXFX-pythia8                W+jets                         49999.6  NLO generator x NNLO/NLO k-factor: 53300 x 61526.7 / (53300 + 8958 + 3330)  [CERN Open Data MiniAOD record 69714 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source)]  |  portal values: technical-lead saved copy, Matan's live check pending; 61526.7 VERIFIED BY MATAN
+  69717   WJetsToLNu_1J-amcatnloFXFX-pythia8                W+jets                          8403.3  NLO generator x NNLO/NLO k-factor: 8958 x 61526.7 / (53300 + 8958 + 3330)  [CERN Open Data MiniAOD record 69716 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source)]  |  portal values: technical-lead saved copy, Matan's live check pending; 61526.7 VERIFIED BY MATAN
+  69719   WJetsToLNu_2J-amcatnloFXFX-pythia8                W+jets                          3123.8  NLO generator x NNLO/NLO k-factor: 3330 x 61526.7 / (53300 + 8958 + 3330)  [CERN Open Data MiniAOD record 69718 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source)]  |  portal values: technical-lead saved copy, Matan's live check pending; 61526.7 VERIFIED BY MATAN
+  70301   WminusH_HToZG_WToAll_M-125-powheg-pythia8         Higgs (new)                0.000816782  YR4 production x YR4 BR (x PDG W/Z BR): 0.5328 x 0.001533  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  70383   WminusH_HToZZTo4L_M125_powheg2-minlo-HWJ_JHUGenV  Higgs (new)                0.000146254  YR4 production x YR4 BR (x PDG W/Z BR): 0.5328 x 0.0002745  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  70451   WminusHToMuMu_M125-powheg-pythia8                 Higgs (new)                0.000115937  YR4 production x YR4 BR (x PDG W/Z BR): 0.5328 x 0.0002176  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  70453   WminusHToTauTau_M125-powheg-pythia8               Higgs (new)                  0.0334172  YR4 production x YR4 BR (x PDG W/Z BR): 0.5328 x 0.06272  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  71145   WplusH_HToZG_WToAll_M-125-powheg-pythia8          Higgs (new)                 0.00128772  YR4 production x YR4 BR (x PDG W/Z BR): 0.84 x 0.001533  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  71227   WplusH_HToZZTo4L_M125_powheg2-minlo-HWJ_JHUGenV7  Higgs (new)                 0.00023058  YR4 production x YR4 BR (x PDG W/Z BR): 0.84 x 0.0002745  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  71295   WplusHToMuMu_M125-powheg-pythia8                  Higgs (new)                0.000182784  YR4 production x YR4 BR (x PDG W/Z BR): 0.84 x 0.0002176  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  71297   WplusHToTauTau_M125-powheg-pythia8                Higgs (new)                  0.0526848  YR4 production x YR4 BR (x PDG W/Z BR): 0.84 x 0.06272  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  72658   WWTo1L1Nu2Q_4f-amcatnloFXFX-pythia8               dibosons (new)                  52.362  NNLO x BR: 118.7 x 2 x 0.3272 x 0.6741  [arXiv:1408.5243; PDG live, W boson]  |  VERIFIED BY MATAN
+  72676   WWTo2L2Nu                                         delivered 13 (25 Oct)           12.708  NNLO: 118.7 pb x 0.10706  [arXiv:1408.5243]  |  decided by Matan 15 Oct (25 Oct delivery)
+  72701   WWW_4F-amcatnlo-pythia8                           VVV, tt̄X, 4t, rare top         0.2158  NLO (generator): 0.2158 (generator NLO)  [CERN Open Data MiniAOD record 72699 (generator cross section)]  |  VERIFIED BY MATAN
+  72711   WWZ_4F-amcatnlo-pythia8                           VVV, tt̄X, 4t, rare top         0.1707  NLO (generator): 0.1707 (generator NLO)  [CERN Open Data MiniAOD record 72709 (generator cross section)]  |  VERIFIED BY MATAN
+  72738   WZTo1L1Nu2Q_4f-amcatnloFXFX-pythia8               dibosons (new)                  10.161  NLO generator x NNLO/NLO k-factor: 9.159 x (51.11 / 46.068)  [CERN Open Data MiniAOD record 72737 (generator cross section); arXiv:1604.08576]  |  VERIFIED BY MATAN
+  72740   WZTo1L3Nu_4f-amcatnloFXFX-pythia8                 dibosons (new)                  3.7888  NLO generator x NNLO/NLO k-factor: 3.415 x (51.11 / 46.068)  [CERN Open Data MiniAOD record 72739 (generator cross section); arXiv:1604.08576]  |  VERIFIED BY MATAN
+  72742   WZTo2Q2L_mllmin4p0-amcatnloFXFX-pythia8           dibosons (new)                  7.1326  NLO generator x NNLO/NLO k-factor: 6.429 x (51.11 / 46.068)  [CERN Open Data MiniAOD record 72741 (generator cross section); arXiv:1604.08576]  |  VERIFIED BY MATAN
+  72752   WZTo3LNu_amcatnloFXFX                             delivered 13 (25 Oct)            5.789  NLO generator x NNLO/NLO k-factor: generator 5.218 pb x (51.11 / 46.068)  [CERN Open Data record 72751 (generator cross section); arXiv:1604.08576]  |  decided by Matan 15 Oct (25 Oct delivery)
+  72761   WZZ-amcatnlo-pythia8                              VVV, tt̄X, 4t, rare top        0.05709  NLO (generator): 0.05709 (generator NLO)  [CERN Open Data MiniAOD record 72759 (generator cross section)]  |  VERIFIED BY MATAN
+  74292   ZH_HToZG_ZToAll_M-125-powheg-pythia8              Higgs (new)                 0.00116692  YR4 production x YR4 BR (x PDG W/Z BR): 0.7612 x 0.001533  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  74682   ZHToMuMu_M125_CP5-powheg-pythia8                  Higgs (new)                0.000165637  YR4 production x YR4 BR (x PDG W/Z BR): 0.7612 x 0.0002176  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  74684   ZHToTauTau_M125_CP5-powheg-pythia8_ext1           Higgs (new)                  0.0477425  YR4 production x YR4 BR (x PDG W/Z BR): 0.7612 x 0.06272  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
+  74894   ZJetsToNuNu_HT-100To200-madgraphMLM-pythia8       Z → νν                          284.53  LO generator x NNLO/LO k-factor (from DY): 266.3 x 5765.4 / 5396  [CERN Open Data MiniAOD record 74893 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)]  |  VERIFIED BY MATAN
+  74896   ZJetsToNuNu_HT-1200To2500-madgraphMLM-pythia8     Z → νν                         0.26658  LO generator x NNLO/LO k-factor (from DY): 0.2495 x 5765.4 / 5396  [CERN Open Data MiniAOD record 74895 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)]  |  VERIFIED BY MATAN
+  74898   ZJetsToNuNu_HT-200To400-madgraphMLM-pythia8       Z → νν                          78.019  LO generator x NNLO/LO k-factor (from DY): 73.02 x 5765.4 / 5396  [CERN Open Data MiniAOD record 74897 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)]  |  VERIFIED BY MATAN
+  74900   ZJetsToNuNu_HT-2500ToInf-madgraphMLM-pythia8      Z → νν                       0.0059985  LO generator x NNLO/LO k-factor (from DY): 0.005614 x 5765.4 / 5396  [CERN Open Data MiniAOD record 74899 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)]  |  VERIFIED BY MATAN
+  74902   ZJetsToNuNu_HT-400To600-madgraphMLM-pythia8       Z → νν                          10.593  LO generator x NNLO/LO k-factor (from DY): 9.914 x 5765.4 / 5396  [CERN Open Data MiniAOD record 74901 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)]  |  VERIFIED BY MATAN
+  74904   ZJetsToNuNu_HT-600To800-madgraphMLM-pythia8       Z → νν                          2.5739  LO generator x NNLO/LO k-factor (from DY): 2.409 x 5765.4 / 5396  [CERN Open Data MiniAOD record 74903 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)]  |  VERIFIED BY MATAN
+  74906   ZJetsToNuNu_HT-800To1200-madgraphMLM-pythia8      Z → νν                          1.1507  LO generator x NNLO/LO k-factor (from DY): 1.077 x 5765.4 / 5396  [CERN Open Data MiniAOD record 74905 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source; the value our delivered DY M-50 uses)]  |  VERIFIED BY MATAN
+  75567   ZZTo2L2Nu_powheg_pythia8                          dibosons (new)                  1.1349  NLO generator x NNLO/NLO k-factor: 0.9738 x (16.91 / 14.51)  [CERN Open Data MiniAOD record 75566 (generator cross section); arXiv:1405.2219]  |  VERIFIED BY MATAN
+  75573   ZZTo2Q2L_mllmin4p0-amcatnloFXFX-pythia8           dibosons (new)                  4.3108  NLO generator x NNLO/NLO k-factor: 3.699 x (16.91 / 14.51)  [CERN Open Data MiniAOD record 75572 (generator cross section); arXiv:1405.2219]  |  VERIFIED BY MATAN
+  75589   ZZTo4L                                            delivered 13 (25 Oct)            1.544  NLO generator x NNLO/NLO k-factor: generator 1.325 pb x (16.91 / 14.51)  [CERN Open Data record 75588 (generator cross section); arXiv:1405.2219]  |  decided by Matan 15 Oct (25 Oct delivery)
+  75600   ZZZ-amcatnlo-pythia8                              VVV, tt̄X, 4t, rare top        0.01476  NLO (generator): 0.01476 (generator NLO)  [CERN Open Data MiniAOD record 75598 (generator cross section)]  |  VERIFIED BY MATAN
+
+EXCEPTIONS TO "MATCH ATLAS" (decided by Matan)
+  E1  Dibosons: CMS uses NNLO k-factors (incl. gg -> VV) on the generator
+      values; ATLAS uses its Sherpa samples with kFactor 1. CMS / ATLAS
+      normalisation 0.92-1.24 by process.
+  E2  Electroweak V + 2 jets samples are NOT included: they would double count
+      with the diboson samples.
+  E3  ttZ: ATLAS applies kFactor 1.11 (ttZ -> nunu/qq) and 1.12 (tt + ll); CMS
+      keeps the generator NLO values (k = 1) for all ttZ samples (68185, 68187,
+      68206): about 11 % on a background below 0.1 % of the total, smooth shape,
+      and no change to a delivered value.
+
+ESTIMATES, LO-ONLY AND SECONDARY SOURCES
+  * 40062 (gg -> ZH, H -> ZZ -> 4l): sigma_eff = 6.22392e-05 pb is an ESTIMATE:
+    the generator filter efficiency is not published; estimated as
+    1 - (1 - BR(Z -> ll))^2 = 0.19178.
+  * 64873 (ST_tWll): generator LO value 0.01105 pb, the only value
+    available (no NLO sample or published total for this phase space).
+  * Secondary source RazorAnalyzer data/xSections.dat (a CMS analysis group's
+    public table, not a primary theory source): DY M-10to50 18,610 pb and
+    M-50 3 x 1921.8 pb; the W+jets NNLO total 61,526.7 pb used for the W+jets
+    k-factor; the Z -> nunu NNLO/LO k-factor 5765.4 / 5396 (from DY).
+  * W+jets (69715, 69717, 69719): the registry records the portal values as
+    the technical lead's saved copy with Matan's own live check pending.
+
+FILES LISTED BY CERN BUT NOT PUBLISHED (cannot be processed)
+  * 69717 W+jets 1 jet: 30 of 117 files published -> this piece's MC
+    luminosity is about 0.08 x the data luminosity (ESTIMATE).
+  * 72761 WZZ: 6 of 9 files published.
+  Normalisation is still correct (Sigma_w over the files used); the effect is
+  fewer MC events, i.e. larger single-event weights. 69717 is nevertheless the
+  largest single sample in the sum (40 % of the summed weighted yield).
+
+SINGLE-EVENT DOMINANCE (decision D3)
+  Bins where ONE MC event can carry more than 50 % of the bin's MC content
+  (upper bound on the single-event weight, per sample and bin):
+  14,431 bins in 331 of 331 histograms.
+  Samples causing most of them: 35669 (3,550), 69719 (2,589), 67801 (1,747), 72752 (1,722), 67993 (858), 72742 (502).
+  W+jets 1 jet (69717): 112 bins in 33 histograms;
+  WZZ (72761): 80 bins in 59 histograms.
+  The bound is an upper bound (it uses the sample's largest |genWeight|), so
+  the true count is lower. Most flagged bins are in the far tails, where the
+  MC content is small; 3,184 of them have a summed MC content <= 0
+  (negative generator weights). The samples flagged most are the high-cross-
+  section NLO samples (Drell-Yan, W+jets, ttbar, WZ), including samples
+  already in the 25 Oct delivery. Such bins can show isolated spikes; treat
+  them with care. Details: REPORT.md (D3) and checks_final.json.
+
+MISSING FROM THE MC (important when comparing data with MC)
+  * QCD multijet: NOT included (Matan, 14 Nov 2026; the question to Maryna is
+    open; it may follow as a separate component). A one-file probe
+    (QCD_PROBE.md) shows it matters in the single-lepton + jets final states
+    (fake or non-prompt leptons; estimated at the scale of the data excess
+    there, with huge single-event weights), is negligible in two-lepton final
+    states and was not seen in e-mu 0 jets.
+  * Photon processes (gamma + jets, V gamma, tt gamma).
+  * BSM signals (none is part of the SM background).
+  * Electroweak V + 2 jets (E2).
+  * Deferred Higgs extras (further production modes / decays not in the list).
+  * 5-flavour t-channel single top: the 4-flavour samples are used (D4, as ATLAS).
+
+MC WEIGHTS
+  Each event: genWeight x L1PreFiringWeight_Nom x sigma_eff[pb] x 1000 x
+  16.393 / Sigma_w. sigma_eff already contains every factor (k_factor =
+  gen_filt_eff = 1.0 in the registry). Sigma_w = sum of genWeight over all
+  files of the sample that pass the per-file check |sum genWeight -
+  Runs.genEventSumw| / genEventSumw <= 1e-6 (a failing file is excluded).
+  Excluded by that check: 75589 (ZZTo4L): 1 file(s).
+  L = 16.393 fb^-1 (Run2016G 7.653 + Run2016H 8.740, golden JSON).
+  No pileup reweighting (as ATLAS; Pileup_nTrueInt is stored).
+  Histograms are TH1D with Sumw2 (bin errors = sqrt(sum w^2)). Negative bin
+  contents can occur (negative generator weights of the NLO samples).
+
+OBJECT SELECTION (identical for data and MC; unchanged since the 25 Oct delivery)
+  Muons:     pT > 25 GeV, |eta| < 2.4, CMS Loose ID (Muon_looseId),
+             isolation pfRelIso04_all < 0.15
+  Electrons: pT > 25 GeV, |eta| < 2.5, cut-based ID >= 2 (Loose or tighter,
+             Fall17 V2: 0 fail, 1 veto, 2 loose, 3 medium, 4 tight)
+  Jets:      pT > 30 GeV, |eta| < 2.5, tight jet ID, removed within dR < 0.4
+             of a selected lepton
+  b-jets:    DeepJet Jet_btagDeepFlavB > 0.2489 (UL2016 postVFP medium WP)
+  e-mu overlap removal: every selected electron within dR < 0.12 of a
+             selected muon is removed, before trigger matching and before the
+             final state is decided.
+
+TRIGGERS AND OFFLINE THRESHOLDS (trigger-object match dR < 0.1)
+  DoubleMuon     HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ OR ..._TkMu8_..._DZ;
+                 >= 2 matched muons, leading > 17 GeV
+  SingleMuon     HLT_IsoMu24 (matching); >= 1 matched muon > 24 GeV
+  DoubleEG       HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ; 2 matched
+                 electrons, BOTH offline > 30 GeV
+  MuonEG         HLT_Mu23_TrkIsoVVL_Ele12_..._DZ OR HLT_Mu8_TrkIsoVVL_Ele23_..._DZ;
+                 >= 1 selected muon, electron leg 12 / 23 GeV by path
+  SingleElectron HLT_Ele27_WPTight_Gsf; matched electron, online >= 27,
+                 offline > 32 GeV
+  MC: no de-duplication; an MC event is kept if ANY of the five dataset
+  acceptances above holds (the same functions as the data; the data use the
+  priority DoubleMuon > SingleMuon > DoubleEG > MuonEG > SingleElectron).
+
+FINAL STATES AND POST-PROCESSING (as the 25 Oct delivery)
+  * Multiplicity rule of upstream #40 (5fbf1ef): at most 4 objects per final
+    state; light jets fill the free slots; masses use the kept leading jets.
+  * >= 100 raw MC events per final state, applied once over all samples.
+  * Same-flavour dilepton masses below 110 GeV are removed (Z-peak cut);
+    masses above 10,000 GeV are removed.
+  * Peak removal: entries below the rightmost highest peak are removed and the
+    outlier tail is split off at the first empty bin (upstream
+    post-processing). MC: on the WEIGHTED distribution of ALL samples combined
+    (--peak-on weighted --peak-scope combined), so the cut masses depend on the
+    set of samples (see OPEN ITEMS: binning vs data).
+  * Fixed binning: 0-10,000 GeV in 10 GeV bins (1000 bins), uncropped.
+  Names: ROI_mass_<combination>_cat_<n>ex_<n>mx_<n>jx_<n>bx_width_10.0
+
+OPEN ITEMS (for the analysis team)
+  * Binning vs the delivered data: the first filled bin of 165 of
+    313 histograms present in both files differs from the data delivery (the
+    MC peak removal runs on all 71 samples combined, so its cut masses moved
+    when samples were added). Both use the same 0-10,000 GeV, 10 GeV axis; the
+    data were not rebuilt. Options are listed in REPORT.md (decision open).
+  * QCD multijet (see MISSING).
+
+PRODUCTION
+  Produced 3-9 Nov 2026 (new samples) and 25-26 Oct 2026 (the 13 delivered
+  samples, reused unchanged) on the Weizmann WIPP cluster from the code at
+  commit 6de9d3e605900a628bae372bdba4ea3308e9750f (github.com/MatanBerko/atlas-utilization); built 14 Nov 2026
+  with registry v5. Checksums: SHA256SUMS.txt. Sources of every value:
+  MANIFEST.md.

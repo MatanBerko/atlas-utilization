@@ -782,3 +782,67 @@ VERIFIED BY RUNNING (9 Nov, wipp-home):
    - submit the audit with no dependency once tier 6 is finished;
    - note that `pbs_mcexp_post.sh` rule builds read v4: their 4 reference records are identical in v4 and v5.
 3. **QCD multijet: decision still open** (`QCD_PROBE.md`). It is NOT in the MC total; if skipped, the README says so.
+
+## Final MC build (14 Nov 2026)
+
+**Decision (Matan, 14 Nov 2026):** build now and EXCLUDE QCD multijet. The question to Maryna is still open, and QCD may
+follow later as a separate component. Photons are not part of this delivery. The README, REPORT and every stack say
+that QCD and photons are missing.
+
+Full write-up: `REPORT.md`. Every number is VERIFIED BY RUNNING unless labelled.
+
+- **Preflight:**
+  - wipp-campus "No route to host", so wipp-home was used;
+  - branch at 5493d0f, upstream 29291ae, gate OK.
+- **Tier 6:** 107/107 OK.
+- **Audit:**
+  - `full/evidence/production_audit.json`: verdict OK, 1,289/1,289 over 58 records, no problems;
+  - 25 Oct audit: OK, 497/497 (only 75589:98).
+- **Build** (PBS 5537436, 09:11 to 10:25, 33 GB, exit 0):
+  - command: `full/build_jobs/pbs_build_20261109.sh` = the 25 Oct command with
+    `--registry full/registry/cms_mc_normalisation_v5.json` (sha256 6d193c44…f01e0 = git blob at 5493d0f) and
+    `--extra-runs-dir fullrun_20261025/mc/runs`;
+  - code: pin 6de9d3e;
+  - output in `full/build_20261109/`; scratch kept in `full/scratch_20261109/`.
+- **Build report:**
+  - registry v5, 71 samples = exactly the v5 `in_full_run` set;
+  - 331 histograms;
+  - 0 capped signatures;
+  - 1 file excluded (75589:98);
+  - read-back assertions all pass.
+- **Rule checks** (PBS 5537451, `full/build_jobs/pbs_rules_20261109.sh`; own wrapper with v5, because
+  `pbs_mcexp_post.sh` hard-codes v4): R1–R7 `all_rules_pass` for 67801, 69715, 67841 and 64759.
+- **Checks** (PBS 5537708, `full/build_jobs/pbs_checks_20261109.sh`; 1 h 09 min + 57 min, both exit 0):
+  - `checks_v4.py` from the pin → `full/evidence/checks_v4_20261109/`;
+  - `checks_final.py` from the sparse report checkout at d7fc115 → `full/evidence/checks_final_20261109/`;
+  - copies of both outputs are in `evidence/final_build/`; plots are in `plots/`.
+- **Headline numbers:**
+  - NaN/inf/negative variance: 0;
+  - Z peak 76–106 GeV, 0 jets: μμ 1.0439 (25 Oct 1.0453), ee 0.9757 (0.9766);
+  - eμ 0j: 2.187 → 1.290;
+  - e + 1j: 11.87 → 1.731; μ + 1j: 11.99 → 1.604; μ + 2j: 6.83 → 1.185;
+  - D3: 14,431 flagged bins (upper bound) in all 331 histograms; the worst 20 are all 35631;
+  - names: 313 in both, 18 MC-only;
+  - first filled bin same as the data in 148 of 313 (25 Oct: 128).
+- **Delivery draft (NOT uploaded):** `full/deliver_20261109/` holds
+  - `CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root` (copy, `cmp` OK, sha256 91beacdf…bd03);
+  - its README;
+  - `SHA256SUMS.txt`.
+
+  In git: `delivery/` (README, MANIFEST, SHA256SUMS, make_readme.py).
+- **Extra cluster file:** `full/evidence/build_report_summary_20261109.json` (a new file).
+- **File count:**
+  - 116,096 at the start;
+  - 116,102 before the build;
+  - 121,715 after the build;
+  - **121,763 at the end** (ceiling 125,000).
+
+### Open for Matan
+
+1. **Binning vs the 25 Oct data:** options A–D in `REPORT.md` section 5. Nothing was rebuilt or forced.
+2. **QCD multijet:** later, as a separate component, if decided.
+3. **Registry follow-ups:**
+   - the W+jets portal values (live check);
+   - the order label of 68847 (UNVERIFIED);
+   - whether to report the unpublished 69717/72761 files to CERN.
+4. **Next step:** the technical lead verifies; Matan decides the open points, reviews and sends. Nothing has been sent.
