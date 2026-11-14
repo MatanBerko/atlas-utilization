@@ -1,0 +1,93 @@
+{
+ "what": "start masses, final MC vs 25 Oct data (report only)",
+ "data_root": "/storage/agrp/berkom/atlas-utilization/work/fullrun_20261025/deliver/data/CMS_Run2016GH_DoubleMuon-SingleMuon-DoubleEG-MuonEG-SingleElectron_16p393invfb_prod2026-10-25_data_bumpnet_uncropped.root",
+ "mc_root": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/full/deliver_20261109/CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root",
+ "n_mc": 331,
+ "n_data": 313,
+ "n_both": 313,
+ "mc_only": [
+  "ROI_mass_e0e1_cat_3ex_1mx_0jx_0bx_width_10.0",
+  "ROI_mass_e0e1_cat_4ex_0mx_0jx_0bx_width_10.0",
+  "ROI_mass_e0e1e2_cat_3ex_1mx_0jx_0bx_width_10.0",
+  "ROI_mass_e0e1e2_cat_4ex_0mx_0jx_0bx_width_10.0",
+  "ROI_mass_e0e1e2e3_cat_4ex_0mx_0jx_0bx_width_10.0",
+  "ROI_mass_e0e1e2m0_cat_3ex_1mx_0jx_0bx_width_10.0",
+  "ROI_mass_e0e1m0_cat_3ex_1mx_0jx_0bx_width_10.0",
+  "ROI_mass_e0m0_cat_1ex_3mx_0jx_0bx_width_10.0",
+  "ROI_mass_e0m0_cat_3ex_1mx_0jx_0bx_width_10.0",
+  "ROI_mass_e0m0m1_cat_1ex_3mx_0jx_0bx_width_10.0",
+  "ROI_mass_e0m0m1m2_cat_1ex_3mx_0jx_0bx_width_10.0",
+  "ROI_mass_e0m1_cat_1ex_3mx_0jx_0bx_width_10.0",
+  "ROI_mass_e1m0_cat_3ex_1mx_0jx_0bx_width_10.0",
+  "ROI_mass_m0m1_cat_0ex_4mx_0jx_0bx_width_10.0",
+  "ROI_mass_m0m1_cat_1ex_3mx_0jx_0bx_width_10.0",
+  "ROI_mass_m0m1m2_cat_0ex_4mx_0jx_0bx_width_10.0",
+  "ROI_mass_m0m1m2_cat_1ex_3mx_0jx_0bx_width_10.0",
+  "ROI_mass_m0m1m2m3_cat_0ex_4mx_0jx_0bx_width_10.0"
+ ],
+ "data_only": [],
+ "n_first_filled_same": 148,
+ "shift_mc_minus_data_gev": {
+  "-170.0": 1,
+  "-120.0": 1,
+  "-50.0": 1,
+  "-40.0": 1,
+  "-30.0": 4,
+  "-20.0": 13,
+  "-10.0": 33,
+  "0.0": 148,
+  "10.0": 76,
+  "20.0": 22,
+  "30.0": 9,
+  "40.0": 2,
+  "50.0": 2
+ },
+ "n_mismatch_by_n_leptons": {
+  "1": {
+   "n_hist": 96,
+   "n_mismatch": 47
+  },
+  "2": {
+   "n_hist": 126,
+   "n_mismatch": 52
+  },
+  "3": {
+   "n_hist": 80,
+   "n_mismatch": 57
+  },
+  "4": {
+   "n_hist": 11,
+   "n_mismatch": 9
+  }
+ },
+ "examples": {
+  "ROI_mass_e0j0_cat_1ex_0mx_1jx_0bx_width_10.0": {
+   "data_first_filled_gev": 90.0,
+   "mc_first_filled_gev": 90.0,
+   "common_start_gev": 90.0,
+   "data_over_mc_own_range": 1.7310217965789922,
+   "data_over_mc_from_common_start": 1.7310217965789925
+  },
+  "ROI_mass_e0m0_cat_1ex_1mx_0jx_0bx_width_10.0": {
+   "data_first_filled_gev": 60.0,
+   "mc_first_filled_gev": 60.0,
+   "common_start_gev": 60.0,
+   "data_over_mc_own_range": 1.289550565727043,
+   "data_over_mc_from_common_start": 1.289550565727043
+  },
+  "ROI_mass_m0j0_cat_0ex_1mx_1jx_0bx_width_10.0": {
+   "data_first_filled_gev": 70.0,
+   "mc_first_filled_gev": 90.0,
+   "common_start_gev": 90.0,
+   "data_over_mc_own_range": 1.603979641246092,
+   "data_over_mc_from_common_start": 1.1905199108734255
+  },
+  "ROI_mass_m0j0j1_cat_0ex_1mx_2jx_0bx_width_10.0": {
+   "data_first_filled_gev": 160.0,
+   "mc_first_filled_gev": 170.0,
+   "common_start_gev": 170.0,
+   "data_over_mc_own_range": 1.1849080501332572,
+   "data_over_mc_from_common_start": 1.1059822656343465
+  }
+ }
+}

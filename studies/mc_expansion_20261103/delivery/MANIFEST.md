@@ -1,6 +1,6 @@
 # MANIFEST: sources of every value in the final MC delivery README (14 Nov 2026)
 
-Delivery draft (NOT uploaded, NOT sent): `CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root`
+Delivery package (NOT uploaded, NOT sent; README finalised 14 Nov 2026): `CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root`
 on the cluster at `/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/full/deliver_20261109/`. It is a byte copy
 (`cp -p`, then `cmp` OK) of `full/build_20261109/fullrun_summedSM_mc.root`.
 
@@ -13,7 +13,11 @@ equal to the git blob (VERIFIED BY RUNNING). It was passed explicitly with `--re
 
 ## How the README was made
 
-`delivery/make_readme.py` reads three inputs:
+`delivery/make_readme.py` reads five inputs:
+- `studies/cms_mc_weights_v3/sources/v7_decisions_2026-11-14.json` (Matan's decisions of 14 Nov 2026: binning option C,
+  W+jets portal values VERIFIED BY MATAN, 68847 order label, QCD excluded), documentation only;
+- `evidence/final_build/start_masses_20261114.json` (output of `delivery/start_masses.py` at 070a569, PBS job 5541770;
+  the per-histogram table is `<ROOT file>.start_masses.csv`);
 - the registry v5 (sample table, σ_eff, construction, order, source, status);
 - `evidence/final_build/checks_final.json` (output of `post/checks_final.py` at d7fc115, run in PBS job 5537708);
 - `evidence/final_build/build_report_summary.json` (extracted from `full/build_20261109/fullrun_build_report.json`).
@@ -68,3 +72,22 @@ equal to the git blob (VERIFIED BY RUNNING). It was passed explicitly with `--re
 | 69717: 30 of 117 files; 72761: 6 of 9 files; 69717 MC luminosity ≈ 0.08 × data (ESTIMATE) | `HANDOFF.md:94,107,258,297`; `evidence/file_index_coverage.json` |
 | D3 counts, 69717 share of the summed yield, per-sample table, names/edges, data/MC | `evidence/final_build/checks_final.json` (`post/checks_final.py` at d7fc115) |
 | R1–R7 all pass (67801, 69715, 67841, 64759) | cluster `full/evidence/rule_check_mc_<rid>_20261109.json` (`all_rules_pass: true`) |
+
+## Start masses section (README "COMPARING THESE MC HISTOGRAMS WITH THE CMS DATA HISTOGRAMS")
+
+| README value | source |
+|---|---|
+| peak = the rightmost highest 10 GeV bin; masses below its low edge removed | pin 6de9d3e `services/pipelines/post_processing_pipeline.py:370-394` (`_find_rightmost_highest_peak`), grid `:359-367` |
+| tail split at the first empty bin above the peak | pin `post_processing_pipeline.py:397-431` (`_main_array_mask`), `:434-438` (`_split_by_first_empty_bin`) |
+| data cut found from the data alone | pin `studies/cms_coverage/cluster/merge_and_count.py:220-225` (data via `build_four_dataset_delivery.py`, 25 Oct MANIFEST row "Peak removal") |
+| MC cut found from the weighted sum of all samples | pin `studies/cms_mc_weights_v3/deliver/build_mc_delivery.py:456-462` (`find_peak_mass`), `:505-534` (`combined_cuts`), options `:1044,1049`; build report `options` (weighted, combined) |
+| ATLAS pipeline also cuts data and MC separately | upstream/master 0f4c614 (VERIFIED BY READING, 14 Nov 2026): separate runs `submit_data.sh:32` (`RUN_DIR=..._data_...`) and `submit_mc.sh:32` (`..._mc_...`); post-processing reads only its run's `im_arrays/` (`utils/paths.py:89-92`); the peak is found per FS_IM key on the arrays of that input dir (`services/pipelines/post_processing_pipeline.py:209,268-270`); no step re-aligns data and MC start masses (`git grep` for align/start mass: none). Since 0f4c614 (14 Nov) the ATLAS data post-processing even runs per batch (`post_processing_pipeline.py:177-179`, `submit_data.sh:79`) |
+| same axis 0-10,000 GeV, 10 GeV, 313 shared names equal | `start_masses.py` asserts equal edges for every shared histogram; `checks_final.json` `names_binning.edges.n_axis_equal` = 313 |
+| 165 of 313 differ; shift distribution; 109 by one bin; 111 MC later | `evidence/final_build/start_masses_20261114.json` (`n_first_filled_same` 148, `shift_mc_minus_data_gev`) |
+| cropped data axis = the data's first..last filled bin (all 313) | `checks_final.json` `names_binning.edges.per_histogram` (`cropped_data_lo_gev` = `data_first_gev`, `cropped_data_hi_gev` = `data_last_gev`) |
+| mu + 1 jet example: 70 / 90 GeV, 1.60 own range, 1.19 from the common start | `start_masses_20261114.json` `examples` |
+| 18 MC-only names | `start_masses_20261114.json` `mc_only` |
+| single lepton + jets data/MC 1.1-1.9 | `checks_final.json` `data_mc_categories` (e/mu + 1-3 jets, own and common range) |
+| W+jets portal values VERIFIED BY MATAN on the live portal (14 Nov 2026) | `v7_decisions_2026-11-14.json` `wjets_portal_values` |
+| 68847 order "NNLO QCD + NLO EW (LHC Higgs WG YR4, mH = 125.00 GeV)" | `v7_decisions_2026-11-14.json` `68847` (value unchanged; registry v5 untouched) |
+| binning decided: option C | `v7_decisions_2026-11-14.json` `binning` |

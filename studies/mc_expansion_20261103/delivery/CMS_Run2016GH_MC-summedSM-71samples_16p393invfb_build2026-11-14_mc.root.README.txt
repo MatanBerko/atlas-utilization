@@ -3,7 +3,8 @@ CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root
 
 CMS 2016 SIMULATION (MC), summed Standard Model: the sum of the 71 samples below,
 normalised to 16.393 fb^-1 (Run2016G+H), RunIISummer20UL16 NanoAODv9 (postVFP).
-DRAFT, built 14 Nov 2026; not yet reviewed for release.
+Built 14 Nov 2026; README finalised 14 Nov 2026 (to be verified by the
+technical lead before hand-over).
 
 CONTENTS
   331 histograms (TH1D with Sumw2), weighted events, in 53 final states.
@@ -11,6 +12,50 @@ CONTENTS
   MuonEG-SingleElectron_16p393invfb_prod2026-10-25_data_bumpnet_*.root) is unchanged
   and is the data to compare with. Names in both: 313; MC-only: 18;
   data-only: 0.
+
+COMPARING THESE MC HISTOGRAMS WITH THE CMS DATA HISTOGRAMS (START MASSES)
+  Read this before comparing data and MC.
+  * What peak removal does: in each histogram the masses below the highest
+    10 GeV bin of the spectrum (the rightmost one if several are equally
+    high) are removed, so every histogram starts at its peak; the tail is cut
+    at the first empty bin above it (the upstream ATLAS post-processing
+    functions). This is done SEPARATELY for data and MC: the data are cut at a
+    mass found from the data, the MC at a mass found from the sum of all
+    71 MC samples (weighted). The two cuts can land in different bins.
+  * The ATLAS pipeline works the same way: data and MC are separate pipeline
+    runs and each finds its own peak, so ATLAS data and MC histograms can also
+    start at different masses.
+  * This MC file and the UNCROPPED data file use the same axis: 0-10,000 GeV
+    in 10 GeV bins (1000 bins), so bin i of the data is bin i of the MC
+    (one-to-one). The CROPPED data file (the one for BumpNet) keeps only the
+    data's filled range (its axis runs from the data's first to its last
+    filled bin, on the same 10 GeV grid), so to use it, match bins by their
+    mass edges, not by bin number.
+  * In 165 of the 313 histograms present in both files the first filled
+    bin differs (MC minus data, in GeV: number of histograms):
+      -170: 1, -120: 1, -50: 1, -40: 1, -30: 4, -20: 13, -10: 33, +0: 148, +10: 76, +20: 22, +30: 9, +40: 2, +50: 2
+    109 of the 165 differ by one bin (10 GeV); in 111 the MC starts
+    later than the data.
+  * RULE: before comparing shapes or computing data/MC, crop BOTH histograms
+    to the common start = the later of the two first filled bins. The common
+    start of every histogram is in the file
+      CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root.start_masses.csv
+    (column common_start_gev), with the data and MC integrals from there.
+  * Worked example, mu + 1 jet (ROI_mass_m0j0_cat_0ex_1mx_1jx_0bx_width_10.0):
+    data start 70 GeV, MC start 90 GeV. data/MC over each file's own range =
+    1.60; from the common start (90 GeV) = 1.19. The low-mass bins hold
+    most of the events, so a one-bin offset changes the ratio a lot.
+  * 18 MC histograms have no data counterpart (four-lepton final states
+    not in the data file):
+    mass_e0e1_cat_3ex_1mx_0jx_0bx, mass_e0e1_cat_4ex_0mx_0jx_0bx,
+    mass_e0e1e2_cat_3ex_1mx_0jx_0bx, mass_e0e1e2_cat_4ex_0mx_0jx_0bx,
+    mass_e0e1e2e3_cat_4ex_0mx_0jx_0bx, mass_e0e1e2m0_cat_3ex_1mx_0jx_0bx,
+    mass_e0e1m0_cat_3ex_1mx_0jx_0bx, mass_e0m0_cat_1ex_3mx_0jx_0bx,
+    mass_e0m0_cat_3ex_1mx_0jx_0bx, mass_e0m0m1_cat_1ex_3mx_0jx_0bx,
+    mass_e0m0m1m2_cat_1ex_3mx_0jx_0bx, mass_e0m1_cat_1ex_3mx_0jx_0bx,
+    mass_e1m0_cat_3ex_1mx_0jx_0bx, mass_m0m1_cat_0ex_4mx_0jx_0bx,
+    mass_m0m1_cat_1ex_3mx_0jx_0bx, mass_m0m1m2_cat_0ex_4mx_0jx_0bx,
+    mass_m0m1m2_cat_1ex_3mx_0jx_0bx, mass_m0m1m2m3_cat_0ex_4mx_0jx_0bx
 
 SAMPLES (71; registry studies/cms_mc_weights_v3/cms_mc_normalisation_v5.json)
   record  dataset (short)                                   process group             sigma_eff [pb]  order / construction / source  |  status
@@ -50,10 +95,10 @@ SAMPLES (71; registry studies/cms_mc_weights_v3/cms_mc_normalisation_v5.json)
   68601   VBFHToWWTo2L2Nu_M125_powheg2_JHUGenV714_pythia8   Higgs (new)                  0.0865272  YR4 production x YR4 BR (x PDG W/Z BR): 3.782 x 0.2137 x 0.10706  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios; PDG live, W boson]  |  VERIFIED BY MATAN
   68731   VBFHToZG_ZToLL_M-125-powheg-pythia8               Higgs (new)                 0.00058552  YR4 production x YR4 BR (x PDG W/Z BR): 3.782 x 0.001533 x 0.10099  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios; PDG live, Z boson]  |  VERIFIED BY MATAN
   68741   VBF_HToZZTo2L2Nu_M125_powheg2_JHUGenV735_pythia8  Higgs (new)                  0.0026662  YR4 production x YR4 BR (x PDG W/Z BR): 3.782 x 0.02619 x 0.0269176  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios; PDG live, Z boson]  |  VERIFIED BY MATAN
-  68847   VBF_HToZZTo4L_M125                                delivered 13 (25 Oct)        0.0010382  not stated in the decision list (the earlier v2 table recorded NNLO QCD + NLO EW for this page; UNVERIFIED here, for Matan to confirm): 3.782 pb x 2.745e-4  [LHC Higgs WG twiki CERNYellowReportPageAt13TeV; LHC Higgs WG twiki CERNYellowReportPageBR]  |  decided by Matan 15 Oct (25 Oct delivery)
-  69715   WJetsToLNu_0J-amcatnloFXFX-pythia8                W+jets                         49999.6  NLO generator x NNLO/NLO k-factor: 53300 x 61526.7 / (53300 + 8958 + 3330)  [CERN Open Data MiniAOD record 69714 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source)]  |  portal values: technical-lead saved copy, Matan's live check pending; 61526.7 VERIFIED BY MATAN
-  69717   WJetsToLNu_1J-amcatnloFXFX-pythia8                W+jets                          8403.3  NLO generator x NNLO/NLO k-factor: 8958 x 61526.7 / (53300 + 8958 + 3330)  [CERN Open Data MiniAOD record 69716 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source)]  |  portal values: technical-lead saved copy, Matan's live check pending; 61526.7 VERIFIED BY MATAN
-  69719   WJetsToLNu_2J-amcatnloFXFX-pythia8                W+jets                          3123.8  NLO generator x NNLO/NLO k-factor: 3330 x 61526.7 / (53300 + 8958 + 3330)  [CERN Open Data MiniAOD record 69718 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source)]  |  portal values: technical-lead saved copy, Matan's live check pending; 61526.7 VERIFIED BY MATAN
+  68847   VBF_HToZZTo4L_M125                                delivered 13 (25 Oct)        0.0010382  NNLO QCD + NLO EW (LHC Higgs WG YR4, mH = 125.00 GeV): 3.782 pb x 2.745e-4  [LHC Higgs WG twiki CERNYellowReportPageAt13TeV; LHC Higgs WG twiki CERNYellowReportPageBR]  |  decided by Matan 15 Oct (25 Oct delivery)
+  69715   WJetsToLNu_0J-amcatnloFXFX-pythia8                W+jets                         49999.6  NLO generator x NNLO/NLO k-factor: 53300 x 61526.7 / (53300 + 8958 + 3330)  [CERN Open Data MiniAOD record 69714 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source)]  |  portal value VERIFIED BY MATAN on the live portal, 14 Nov 2026; 61526.7 VERIFIED BY MATAN (RazorAnalyzer stays SECONDARY)
+  69717   WJetsToLNu_1J-amcatnloFXFX-pythia8                W+jets                          8403.3  NLO generator x NNLO/NLO k-factor: 8958 x 61526.7 / (53300 + 8958 + 3330)  [CERN Open Data MiniAOD record 69716 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source)]  |  portal value VERIFIED BY MATAN on the live portal, 14 Nov 2026; 61526.7 VERIFIED BY MATAN (RazorAnalyzer stays SECONDARY)
+  69719   WJetsToLNu_2J-amcatnloFXFX-pythia8                W+jets                          3123.8  NLO generator x NNLO/NLO k-factor: 3330 x 61526.7 / (53300 + 8958 + 3330)  [CERN Open Data MiniAOD record 69718 (generator cross section); RazorAnalyzer data/xSections.dat (SECONDARY source)]  |  portal value VERIFIED BY MATAN on the live portal, 14 Nov 2026; 61526.7 VERIFIED BY MATAN (RazorAnalyzer stays SECONDARY)
   70301   WminusH_HToZG_WToAll_M-125-powheg-pythia8         Higgs (new)                0.000816782  YR4 production x YR4 BR (x PDG W/Z BR): 0.5328 x 0.001533  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
   70383   WminusH_HToZZTo4L_M125_powheg2-minlo-HWJ_JHUGenV  Higgs (new)                0.000146254  YR4 production x YR4 BR (x PDG W/Z BR): 0.5328 x 0.0002745  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
   70451   WminusHToMuMu_M125-powheg-pythia8                 Higgs (new)                0.000115937  YR4 production x YR4 BR (x PDG W/Z BR): 0.5328 x 0.0002176  [LHC Higgs WG YR4, 13 TeV; LHC Higgs WG YR4 branching ratios]  |  VERIFIED BY MATAN
@@ -107,8 +152,10 @@ ESTIMATES, LO-ONLY AND SECONDARY SOURCES
     public table, not a primary theory source): DY M-10to50 18,610 pb and
     M-50 3 x 1921.8 pb; the W+jets NNLO total 61,526.7 pb used for the W+jets
     k-factor; the Z -> nunu NNLO/LO k-factor 5765.4 / 5396 (from DY).
-  * W+jets (69715, 69717, 69719): the registry records the portal values as
-    the technical lead's saved copy with Matan's own live check pending.
+  * W+jets (69715, 69717, 69719): the portal generator values (MiniAOD 69714
+    5.330e+04 pb, 69716 8.958e+03 pb, 69718 3.330e+03 pb) are VERIFIED BY
+    MATAN on the live portal (14 Nov 2026); the NNLO total 61,526.7 pb is
+    VERIFIED BY MATAN; its source RazorAnalyzer stays a SECONDARY source.
 
 FILES LISTED BY CERN BUT NOT PUBLISHED (cannot be processed)
   * 69717 W+jets 1 jet: 30 of 117 files published -> this piece's MC
@@ -116,7 +163,9 @@ FILES LISTED BY CERN BUT NOT PUBLISHED (cannot be processed)
   * 72761 WZZ: 6 of 9 files published.
   Normalisation is still correct (Sigma_w over the files used); the effect is
   fewer MC events, i.e. larger single-event weights. 69717 is nevertheless the
-  largest single sample in the sum (40 % of the summed weighted yield).
+  largest single sample in the sum (40 % of the summed weighted yield,
+  from 30 of 117 files), and its few heavy events give isolated spikes,
+  e.g. in e-mu 0 jets at high mass (data/MC there 1.29 overall).
 
 SINGLE-EVENT DOMINANCE (decision D3)
   Bins where ONE MC event can carry more than 50 % of the bin's MC content
@@ -134,12 +183,13 @@ SINGLE-EVENT DOMINANCE (decision D3)
   them with care. Details: REPORT.md (D3) and checks_final.json.
 
 MISSING FROM THE MC (important when comparing data with MC)
-  * QCD multijet: NOT included (Matan, 14 Nov 2026; the question to Maryna is
-    open; it may follow as a separate component). A one-file probe
-    (QCD_PROBE.md) shows it matters in the single-lepton + jets final states
-    (fake or non-prompt leptons; estimated at the scale of the data excess
-    there, with huge single-event weights), is negligible in two-lepton final
-    states and was not seen in e-mu 0 jets.
+  * QCD multijet: NOT included (Matan, 14 Nov 2026: deliver now; the question
+    to Maryna is open; it may follow as a separate component). Where it
+    matters: the single-lepton + jets final states, where data/MC is still
+    1.1-1.9 with this MC (e or mu + 1-3 jets, own or common range). A
+    one-file probe (QCD_PROBE.md, ESTIMATE) puts QCD (jets faking a lepton)
+    at the scale of that excess, with huge single-event weights; it is
+    negligible in two-lepton final states and was not seen in e-mu 0 jets.
   * Photon processes (gamma + jets, V gamma, tt gamma).
   * BSM signals (none is part of the SM background).
   * Electroweak V + 2 jets (E2).
@@ -199,16 +249,16 @@ FINAL STATES AND POST-PROCESSING (as the 25 Oct delivery)
   Names: ROI_mass_<combination>_cat_<n>ex_<n>mx_<n>jx_<n>bx_width_10.0
 
 OPEN ITEMS (for the analysis team)
-  * Binning vs the delivered data: the first filled bin of 165 of
-    313 histograms present in both files differs from the data delivery (the
-    MC peak removal runs on all 71 samples combined, so its cut masses moved
-    when samples were added). Both use the same 0-10,000 GeV, 10 GeV axis; the
-    data were not rebuilt. Options are listed in REPORT.md (decision open).
   * QCD multijet (see MISSING).
+  Decided (Matan, 14 Nov 2026): the binning is delivered as is (same axis;
+  start masses differ in 165 of 313 histograms); compare data and MC
+  only from the common start (see "COMPARING ... (START MASSES)" above).
 
 PRODUCTION
   Produced 3-9 Nov 2026 (new samples) and 25-26 Oct 2026 (the 13 delivered
   samples, reused unchanged) on the Weizmann WIPP cluster from the code at
   commit 6de9d3e605900a628bae372bdba4ea3308e9750f (github.com/MatanBerko/atlas-utilization); built 14 Nov 2026
-  with registry v5. Checksums: SHA256SUMS.txt. Sources of every value:
-  MANIFEST.md.
+  with registry v5; README finalised 14 Nov 2026 (decisions:
+  studies/cms_mc_weights_v3/sources/v7_decisions_2026-11-14.json).
+  Files: this README, the ROOT file, CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root.start_masses.csv,
+  MANIFEST.md (sources of every value) and SHA256SUMS.txt (checksums).

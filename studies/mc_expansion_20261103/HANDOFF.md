@@ -846,3 +846,79 @@ Full write-up: `REPORT.md`. Every number is VERIFIED BY RUNNING unless labelled.
    - the order label of 68847 (UNVERIFIED);
    - whether to report the unpublished 69717/72761 files to CERN.
 4. **Next step:** the technical lead verifies; Matan decides the open points, reviews and sends. Nothing has been sent.
+
+## README finalised (14 Nov 2026)
+
+**Matan's decisions (14 Nov 2026), verbatim; also in `studies/cms_mc_weights_v3/sources/v7_decisions_2026-11-14.json`:**
+- "Binning vs the delivered 25 Oct data: option C — deliver as is (same axis in both files: 0–10,000 GeV, 10 GeV bins;
+  the start masses differ because peak removal cuts the MC at a mass from the summed MC and the data at a mass from the
+  data), and explain it CLEARLY in the README, with what a user must do to compare data and MC."
+- "The three W+jets portal values (MiniAOD 69714 total_value 5.330e+04 pb, 69716 8.958e+03 pb, 69718 3.330e+03 pb) are
+  now VERIFIED BY MATAN on the live portal (14 Nov 2026). The README must say so (no more "live check pending")."
+- "68847 VBF_HToZZTo4L_M125: order label "NNLO QCD + NLO EW (LHC Higgs WG YR4, mH = 125.00 GeV)"; value unchanged
+  (0.0010382 pb = 3.782 × 2.745e-4)."
+- "QCD multijet stays excluded (14 Nov); the question to Maryna is still open."
+
+These are documentation only. The ROOT file, the build and the registries v3–v5 are unchanged.
+
+**Step 1: does the ATLAS pipeline also cut data and MC separately?** Yes (VERIFIED BY READING, upstream/master 0f4c614).
+- Data and MC are separate pipeline runs with their own run folders (`submit_data.sh:32`, `submit_mc.sh:32`).
+- Post-processing reads only its own run's `im_arrays/` (`utils/paths.py:89-92`).
+- It finds the peak per FS_IM key on those arrays (`services/pipelines/post_processing_pipeline.py:209,268-270`).
+- No step aligns data and MC start masses.
+
+So ATLAS data and MC can also start at different masses. Two new upstream commits arrived today (83aa24f #45, optional
+`trim_empty_bins`, default false at `config.yaml:205`; 0f4c614, ATLAS data post-processing per batch,
+`post_processing_pipeline.py:177-179`). Neither changes this.
+
+**Step 2: start-mass table** (VERIFIED BY RUNNING):
+- script: `delivery/start_masses.py`, committed 070a569, run from the sparse checkout
+  `checkouts/mcexp_20261103/report_070a569…` in PBS job 5541770 (io=25, about 2 min, exit 0);
+- inputs: the 25 Oct uncropped data file and the final MC file (its sha256 was checked before and after:
+  91beacdf…bd03);
+- output: `deliver_20261109/<ROOT>.start_masses.csv`, 331 rows = 313 shared + 18 `mc_only`. A copy is in `delivery/`,
+  and the summary is in `evidence/final_build/start_masses_20261114.json`;
+- results:
+  - the first filled bin is the same in 148 of 313 histograms and differs in 165;
+  - 109 of the 165 differ by one bin, and in 111 the MC starts later;
+  - μ + 1 jet: data start 70 GeV, MC start 90 GeV; data/MC is 1.60 over each file's own range and 1.19 from the
+    common start;
+  - the cropped data axis equals the data's first..last filled bin in all 313 histograms.
+
+**Step 3: README** (`delivery/make_readme.py` → `<ROOT>.README.txt`):
+- a new section near the top, "COMPARING THESE MC HISTOGRAMS WITH THE CMS DATA HISTOGRAMS (START MASSES)": what peak
+  removal does, that data and MC are cut separately as in ATLAS, the shared axis (with the cropped-file caveat), the
+  165/313 shift distribution, the rule (crop both to the common start, given in the CSV), the μ + 1 jet example and the
+  18 MC-only names;
+- W+jets portal values marked VERIFIED BY MATAN on the live portal (14 Nov 2026); RazorAnalyzer stays SECONDARY;
+- 68847 order label set to the decided text;
+- the QCD wording now says data/MC is 1.1–1.9 in single lepton + jets, why QCD is excluded, and that it may follow;
+- 69717 described as 40 % of the summed MC from 30 of 117 files, with isolated spikes (eμ 0j at high mass);
+- the binning is moved from "open" to "decided (option C)";
+- everything else unchanged (E1–E3, 40062 ESTIMATE, tWℓℓ LO only, D3 as an upper bound).
+
+**Step 4: the package on the cluster** (`work/mcexp_20261103/full/deliver_20261109/`; VERIFIED BY RUNNING, `ls -la`,
+`sha256sum`):
+
+| file | bytes | sha256 |
+|---|---:|---|
+| `CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root` | 1,893,067 | 91beacdf…bd03 (unchanged) |
+| `…_mc.root.README.txt` | 30,958 | 87011f3b…4213 |
+| `…_mc.root.start_masses.csv` | 45,619 | 1d217bd0…2614 |
+| `MANIFEST.md` | 9,075 | 1346adf1…8273 |
+| `SHA256SUMS.txt` | 520 | covers the four files above |
+
+- The earlier README and checksums were MOVED, not deleted, to `….README.txt.draft1` and `SHA256SUMS.txt.draft1`.
+  They are not part of the package.
+- The ROOT file and the CSV have owner-only permissions (`-rw-------`); I made no permission changes.
+- The data to compare with is the 25 Oct data delivery (`work/fullrun_20261025/deliver/data/`), which is unchanged.
+
+**25 Oct hand-over** (VERIFIED BY READING):
+- `studies/fullrun_20261025/REPORT.md:25-28` and `HANDOFF.md:466-467` say only "the technical lead verifies; then Matan
+  uploads the files in `deliver/` and writes to Maryna";
+- the 25 Oct package was `deliver/{data,mc,docs}/` + `SHA256SUMS.txt`, with the READMEs and MANIFEST in `docs/`;
+- the repo does not record where the files were uploaded or who did it (UNVERIFIED: not written anywhere in git).
+
+**File count:** 121,763 → 121,861 (ceiling 125,000).
+
+**Next:** the technical lead verifies; then Matan hands over the package and emails Maryna. Nothing has been sent.

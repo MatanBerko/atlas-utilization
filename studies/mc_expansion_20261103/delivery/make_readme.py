@@ -7,6 +7,7 @@ checks (evidence/final_build/). Every value's file:line source: MANIFEST.md (cod
 from __future__ import annotations
 
 import json
+import textwrap
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -14,6 +15,7 @@ STUDY = HERE.parent
 REPO = STUDY.parents[1]
 EV = STUDY / "evidence" / "final_build"
 REG = json.loads((REPO / "studies/cms_mc_weights_v3/cms_mc_normalisation_v5.json").read_text())
+V7 = json.loads((REPO / "studies/cms_mc_weights_v3/sources/v7_decisions_2026-11-14.json").read_text())
 PIN = "6de9d3e605900a628bae372bdba4ea3308e9750f"
 FNAME = "CMS_Run2016GH_MC-summedSM-71samples_16p393invfb_build2026-11-14_mc.root"
 
@@ -81,7 +83,9 @@ def status(rid, r):
         if v.startswith("VERIFIED BY MATAN"):
             return "VERIFIED BY MATAN"
         if v.startswith("technical-lead saved copy"):
-            return "portal values: technical-lead saved copy, Matan's live check pending; 61526.7 VERIFIED BY MATAN"
+            # v7 (14 Nov 2026): the three portal values were checked by Matan on the live portal
+            return ("portal value " + V7["wjets_portal_values"]["verification"]
+                    + "; 61526.7 VERIFIED BY MATAN (RazorAnalyzer stays SECONDARY)")
         return v.split(" (")[0]
     return "decided by Matan 15 Oct (25 Oct delivery)"
 
@@ -92,12 +96,16 @@ def construction(r):
         src = "; ".join(f["source"]["citation"] for f in d["factors"] if f.get("source"))
     else:
         src = "; ".join(s.get("citation", "") for s in d.get("sources", []))
-    return d.get("construction", ""), d.get("order", ""), src
+    order = d.get("order", "")
+    if r.get("physics_short") == V7["68847"]["physics_short"]:
+        order = V7["68847"]["order"]   # v7 (14 Nov 2026): order label only, value unchanged
+    return d.get("construction", ""), order, src
 
 
 def main():
     chk = json.loads((EV / "checks_final.json").read_text())
     bsum = json.loads((EV / "build_report_summary.json").read_text())
+    sm = json.loads((EV / "start_masses_20261114.json").read_text())
     rows = {s["record"]: s for s in chk["samples"]}
     recs = REG["records"]
     n_hist = bsum["summed_sm"]["n_histograms"]
@@ -120,12 +128,27 @@ def main():
     nb = chk["names_binning"]
     ed = nb["edges"]
     same = ed["first_filled_same_as_data"]
+    n_both = sm["n_both"]
+    n_diff = n_both - sm["n_first_filled_same"]
+    shifts = sm["shift_mc_minus_data_gev"]
+    n_one_bin = shifts.get("10.0", 0) + shifts.get("-10.0", 0)
+    n_later = sum(v for k, v in shifts.items() if float(k) > 0)
+    shift_txt = ", ".join(f"{float(k):+.0f}: {v}" for k, v in sorted(shifts.items(), key=lambda kv: float(kv[0])))
+    mu1j = sm["examples"]["ROI_mass_m0j0_cat_0ex_1mx_1jx_0bx_width_10.0"]
+    emu = next(c for c in chk["data_mc_categories"] if c["key"] == "emu_0j")
+    sl = [c for c in chk["data_mc_categories"] if c["key"] in ("e_1j", "mu_1j", "e_2j", "mu_2j", "e_3j", "mu_3j")]
+    sl_lo = min(min(c["data_over_mc_new"], c["data_over_mc_new_common"]) for c in sl)
+    sl_hi = max(max(c["data_over_mc_new"], c["data_over_mc_new_common"]) for c in sl)
+    csv_name = f"{FNAME}.start_masses.csv"
+    mc_only = textwrap.fill(", ".join(n.replace("ROI_mass_", "mass_").replace("_width_10.0", "") for n in sm["mc_only"]),
+                            width=76, initial_indent="    ", subsequent_indent="    ")
     txt = f"""{FNAME}
 {'=' * len(FNAME)}
 
 CMS 2016 SIMULATION (MC), summed Standard Model: the sum of the {len(rows)} samples below,
 normalised to 16.393 fb^-1 (Run2016G+H), RunIISummer20UL16 NanoAODv9 (postVFP).
-DRAFT, built 14 Nov 2026; not yet reviewed for release.
+Built 14 Nov 2026; README finalised 14 Nov 2026 (to be verified by the
+technical lead before hand-over).
 
 CONTENTS
   {n_hist} histograms (TH1D with Sumw2), weighted events, in {n_fs} final states.
@@ -133,6 +156,42 @@ CONTENTS
   MuonEG-SingleElectron_16p393invfb_prod2026-10-25_data_bumpnet_*.root) is unchanged
   and is the data to compare with. Names in both: {nb['n_both']}; MC-only: {len(nb['mc_only'])};
   data-only: {len(nb['data_only'])}.
+
+COMPARING THESE MC HISTOGRAMS WITH THE CMS DATA HISTOGRAMS (START MASSES)
+  Read this before comparing data and MC.
+  * What peak removal does: in each histogram the masses below the highest
+    10 GeV bin of the spectrum (the rightmost one if several are equally
+    high) are removed, so every histogram starts at its peak; the tail is cut
+    at the first empty bin above it (the upstream ATLAS post-processing
+    functions). This is done SEPARATELY for data and MC: the data are cut at a
+    mass found from the data, the MC at a mass found from the sum of all
+    {len(rows)} MC samples (weighted). The two cuts can land in different bins.
+  * The ATLAS pipeline works the same way: data and MC are separate pipeline
+    runs and each finds its own peak, so ATLAS data and MC histograms can also
+    start at different masses.
+  * This MC file and the UNCROPPED data file use the same axis: 0-10,000 GeV
+    in 10 GeV bins (1000 bins), so bin i of the data is bin i of the MC
+    (one-to-one). The CROPPED data file (the one for BumpNet) keeps only the
+    data's filled range (its axis runs from the data's first to its last
+    filled bin, on the same 10 GeV grid), so to use it, match bins by their
+    mass edges, not by bin number.
+  * In {n_diff} of the {n_both} histograms present in both files the first filled
+    bin differs (MC minus data, in GeV: number of histograms):
+      {shift_txt}
+    {n_one_bin} of the {n_diff} differ by one bin (10 GeV); in {n_later} the MC starts
+    later than the data.
+  * RULE: before comparing shapes or computing data/MC, crop BOTH histograms
+    to the common start = the later of the two first filled bins. The common
+    start of every histogram is in the file
+      {csv_name}
+    (column common_start_gev), with the data and MC integrals from there.
+  * Worked example, mu + 1 jet (ROI_mass_m0j0_cat_0ex_1mx_1jx_0bx_width_10.0):
+    data start {mu1j['data_first_filled_gev']:.0f} GeV, MC start {mu1j['mc_first_filled_gev']:.0f} GeV. data/MC over each file's own range =
+    {mu1j['data_over_mc_own_range']:.2f}; from the common start ({mu1j['common_start_gev']:.0f} GeV) = {mu1j['data_over_mc_from_common_start']:.2f}. The low-mass bins hold
+    most of the events, so a one-bin offset changes the ratio a lot.
+  * {len(sm['mc_only'])} MC histograms have no data counterpart (four-lepton final states
+    not in the data file):
+{mc_only}
 
 SAMPLES ({len(rows)}; registry studies/cms_mc_weights_v3/cms_mc_normalisation_v5.json)
 {chr(10).join(table)}
@@ -158,8 +217,10 @@ ESTIMATES, LO-ONLY AND SECONDARY SOURCES
     public table, not a primary theory source): DY M-10to50 18,610 pb and
     M-50 3 x 1921.8 pb; the W+jets NNLO total 61,526.7 pb used for the W+jets
     k-factor; the Z -> nunu NNLO/LO k-factor 5765.4 / 5396 (from DY).
-  * W+jets (69715, 69717, 69719): the registry records the portal values as
-    the technical lead's saved copy with Matan's own live check pending.
+  * W+jets (69715, 69717, 69719): the portal generator values (MiniAOD 69714
+    5.330e+04 pb, 69716 8.958e+03 pb, 69718 3.330e+03 pb) are VERIFIED BY
+    MATAN on the live portal (14 Nov 2026); the NNLO total 61,526.7 pb is
+    VERIFIED BY MATAN; its source RazorAnalyzer stays a SECONDARY source.
 
 FILES LISTED BY CERN BUT NOT PUBLISHED (cannot be processed)
   * 69717 W+jets 1 jet: 30 of 117 files published -> this piece's MC
@@ -167,7 +228,9 @@ FILES LISTED BY CERN BUT NOT PUBLISHED (cannot be processed)
   * 72761 WZZ: 6 of 9 files published.
   Normalisation is still correct (Sigma_w over the files used); the effect is
   fewer MC events, i.e. larger single-event weights. 69717 is nevertheless the
-  largest single sample in the sum ({100*rows['69717']['share_of_total']:.0f} % of the summed weighted yield).
+  largest single sample in the sum ({100*rows['69717']['share_of_total']:.0f} % of the summed weighted yield,
+  from {rows['69717']['n_files_included']} of 117 files), and its few heavy events give isolated spikes,
+  e.g. in e-mu 0 jets at high mass (data/MC there {emu['data_over_mc_new']:.2f} overall).
 
 SINGLE-EVENT DOMINANCE (decision D3)
   Bins where ONE MC event can carry more than 50 % of the bin's MC content
@@ -185,12 +248,13 @@ SINGLE-EVENT DOMINANCE (decision D3)
   them with care. Details: REPORT.md (D3) and checks_final.json.
 
 MISSING FROM THE MC (important when comparing data with MC)
-  * QCD multijet: NOT included (Matan, 14 Nov 2026; the question to Maryna is
-    open; it may follow as a separate component). A one-file probe
-    (QCD_PROBE.md) shows it matters in the single-lepton + jets final states
-    (fake or non-prompt leptons; estimated at the scale of the data excess
-    there, with huge single-event weights), is negligible in two-lepton final
-    states and was not seen in e-mu 0 jets.
+  * QCD multijet: NOT included (Matan, 14 Nov 2026: deliver now; the question
+    to Maryna is open; it may follow as a separate component). Where it
+    matters: the single-lepton + jets final states, where data/MC is still
+    {sl_lo:.1f}-{sl_hi:.1f} with this MC (e or mu + 1-3 jets, own or common range). A
+    one-file probe (QCD_PROBE.md, ESTIMATE) puts QCD (jets faking a lepton)
+    at the scale of that excess, with huge single-event weights; it is
+    negligible in two-lepton final states and was not seen in e-mu 0 jets.
   * Photon processes (gamma + jets, V gamma, tt gamma).
   * BSM signals (none is part of the SM background).
   * Electroweak V + 2 jets (E2).
@@ -206,19 +270,19 @@ MISSING FROM THE MC (important when comparing data with MC)
 {BUILD}
 
 OPEN ITEMS (for the analysis team)
-  * Binning vs the delivered data: the first filled bin of {len(ed['per_histogram']) - same} of
-    {len(ed['per_histogram'])} histograms present in both files differs from the data delivery (the
-    MC peak removal runs on all {len(rows)} samples combined, so its cut masses moved
-    when samples were added). Both use the same 0-10,000 GeV, 10 GeV axis; the
-    data were not rebuilt. Options are listed in REPORT.md (decision open).
   * QCD multijet (see MISSING).
+  Decided (Matan, 14 Nov 2026): the binning is delivered as is (same axis;
+  start masses differ in {n_diff} of {n_both} histograms); compare data and MC
+  only from the common start (see "COMPARING ... (START MASSES)" above).
 
 PRODUCTION
   Produced 3-9 Nov 2026 (new samples) and 25-26 Oct 2026 (the 13 delivered
   samples, reused unchanged) on the Weizmann WIPP cluster from the code at
   commit {PIN} (github.com/MatanBerko/atlas-utilization); built 14 Nov 2026
-  with registry v5. Checksums: SHA256SUMS.txt. Sources of every value:
-  MANIFEST.md.
+  with registry v5; README finalised 14 Nov 2026 (decisions:
+  studies/cms_mc_weights_v3/sources/v7_decisions_2026-11-14.json).
+  Files: this README, the ROOT file, {csv_name},
+  MANIFEST.md (sources of every value) and SHA256SUMS.txt (checksums).
 """
     out = HERE / f"{FNAME}.README.txt"
     out.write_text(txt)

@@ -1,0 +1,45 @@
+{
+ "what": "Matan's decisions of 14 Nov 2026 on the final MC delivery (README only), recorded verbatim. DOCUMENTATION ONLY: no registry (v3-v5), no build and no ROOT file changes. Read by studies/mc_expansion_20261103/delivery/make_readme.py.",
+ "decided": "Matan, 14 Nov 2026",
+ "binning": {
+  "text": "Binning vs the delivered 25 Oct data: option C — deliver as is (same axis in both files: 0–10,000 GeV, 10 GeV bins; the start masses differ because peak removal cuts the MC at a mass from the summed MC and the data at a mass from the data), and explain it CLEARLY in the README, with what a user must do to compare data and MC.",
+  "option": "C",
+  "options_offered": "studies/mc_expansion_20261103/REPORT.md section 5 (A rebuild data, B rebuild MC on data edges, C deliver as is, D MC without peak removal)",
+  "assumption": "Matan agreed to option C on the assumption that the ATLAS pipeline also cuts data and MC separately; checked 14 Nov against upstream/master (see HANDOFF 'README finalised (14 Nov 2026)')."
+ },
+ "wjets_portal_values": {
+  "text": "The three W+jets portal values (MiniAOD 69714 total_value 5.330e+04 pb, 69716 8.958e+03 pb, 69718 3.330e+03 pb) are now VERIFIED BY MATAN on the live portal (14 Nov 2026). The README must say so (no more \"live check pending\").",
+  "records": [
+   {
+    "nano_recid": 69715,
+    "mini_recid": 69714,
+    "portal_total_value_pb": 53300.0
+   },
+   {
+    "nano_recid": 69717,
+    "mini_recid": 69716,
+    "portal_total_value_pb": 8958.0
+   },
+   {
+    "nano_recid": 69719,
+    "mini_recid": 69718,
+    "portal_total_value_pb": 3330.0
+   }
+  ],
+  "verification": "VERIFIED BY MATAN on the live portal, 14 Nov 2026",
+  "unchanged": "61526.7 pb (W+jets NNLO total, RazorAnalyzer, SECONDARY source) stays VERIFIED BY MATAN (3 Nov 2026); sigma_eff values unchanged."
+ },
+ "68847": {
+  "text": "68847 VBF_HToZZTo4L_M125: order label \"NNLO QCD + NLO EW (LHC Higgs WG YR4, mH = 125.00 GeV)\"; value unchanged (0.0010382 pb = 3.782 × 2.745e-4).",
+  "nano_recid": 68847,
+  "physics_short": "VBF_HToZZTo4L_M125",
+  "order": "NNLO QCD + NLO EW (LHC Higgs WG YR4, mH = 125.00 GeV)",
+  "cross_section_pb": 0.0010382,
+  "construction": "3.782 x 2.745e-4",
+  "value_changed": false
+ },
+ "QCD": {
+  "text": "QCD multijet stays excluded (14 Nov); the question to Maryna is still open.",
+  "included": false
+ }
+}
