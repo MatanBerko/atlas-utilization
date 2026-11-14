@@ -979,3 +979,72 @@ The `.draft1` / `.draft2` files are excluded. Package total 79,136,877 bytes (VE
 
 **Next:** the technical lead verifies; then Matan uploads the folder the same way as on 25 Oct and emails Maryna.
 Nothing has been sent.
+
+## Data delivery copied to Matan's Mac (15 Nov 2026)
+
+The five-dataset data delivery of 25 Oct (branch run/cms-fullrun-20261025) was **never uploaded**. Maryna's drive
+still holds the 13 Oct upload (branch deliver/onedrive-upload-20261013). The 14 Nov MC is meant to be compared with
+this 25 Oct data. The cluster was read-only in this task.
+
+**1. Check on the cluster** (`work/fullrun_20261025/deliver/`; VERIFIED BY RUNNING):
+- **Layout:** `data/` 2 files, `mc/` 14 files, `docs/` 16 READMEs + `MANIFEST.md`, and `SHA256SUMS.txt`, which
+  covers the 16 ROOT files only.
+- **Checksums:** `sha256sum -c` gives 16/16 OK, including both data files:
+  - cropped: 379,108 bytes, 08b0be76…9136;
+  - uncropped: 905,161 bytes, fc954519…dbaf.
+
+  Both were last modified 26 Oct 11:23.
+- **Docs:** the two data READMEs and `MANIFEST.md` on the cluster are byte-identical to the copies committed in
+  `studies/fullrun_20261025/delivery/` on run/cms-fullrun-20261025.
+- **25 Oct checks** (VERIFIED BY READING, `studies/fullrun_20261025/REPORT.md` sections 1–2 on that branch):
+  - production: 541/541 data files exit 0;
+  - data R1–R7 `all_rules_pass: true` with 0 violations;
+  - NaN/inf 0, negative variances 0, negative bins 0;
+  - 500k cap 0;
+  - delivered data: 313 histograms in 49 final states, 137,641,202 histogram entries;
+  - events pooled after de-duplication (data README): DoubleMuon 9,627,969, SingleMuon 155,900,821, DoubleEG
+    6,157,959, MuonEG 19,547 and SingleElectron 96,293,946. Their sum, 268,000,242, equals R6's event count.
+
+**2. Copy on the Mac:** `~/Desktop/CMS_data_delivery_2026-10-25/` (new folder; `scp -p` from the Mac). It holds 6 files
+and 1,301,118 bytes:
+
+| file | bytes | sha256 |
+|---|---:|---|
+| `CMS_Run2016GH_DoubleMuon-SingleMuon-DoubleEG-MuonEG-SingleElectron_16p393invfb_prod2026-10-25_data_bumpnet_cropped.root` (for BumpNet) | 379,108 | 08b0be76…9136 |
+| `…_data_bumpnet_uncropped.root` | 905,161 | fc954519…dbaf |
+| `…_data_bumpnet_cropped.root.README.txt` | 4,111 | 20c799e0…370e |
+| `…_data_bumpnet_uncropped.root.README.txt` | 4,103 | df3899fb…faf5 |
+| `MANIFEST.md` (25 Oct; it also covers the superseded 25 Oct MC) | 7,787 | 8b932f8e…0450 |
+| `SHA256SUMS.txt` (the five files above; hashes computed on the cluster) | 848 | |
+
+`shasum -a 256 -c` gives 5/5 OK. The 25 Oct MC files were NOT copied; they are superseded by the 14 Nov MC.
+
+**3. Do the 14 Nov MC README and start-mass table point to these data files?**
+- **MC README:** YES. It names `CMS_Run2016GH_DoubleMuon-SingleMuon-DoubleEG-MuonEG-SingleElectron_16p393invfb_prod2026-10-25_data_bumpnet_*.root`
+  as the data to compare with (README lines 11–12).
+- **start_masses.csv:** YES for the uncropped file. `start_masses.py` read exactly
+  `work/fullrun_20261025/deliver/data/…_uncropped.root` (`start_masses_20261114.json` `data_root`). The cropped file was
+  not an input to the CSV; `checks_final.py` read both files.
+- **Same bytes?** The data file's sha256 was not logged by the 14 Nov job (UNVERIFIED as a logged fact). The path is
+  the same, the file has not been modified since 26 Oct, and it still matches the 25 Oct checksum today, so the bytes
+  read on 14 Nov are these.
+
+**4. 25 Oct data vs the 13 Oct upload on Maryna's drive** (VERIFIED BY READING: 25 Oct `REPORT.md` section 4 and the
+data README; 13 Oct `studies/onedrive_upload_20261013/CHECKSUMS.txt` and its README).
+- **What the 13 Oct upload holds:** (1) the DoubleMuon-only file of 27 Sep, with 340 histograms; (2) the four-dataset
+  file of 7 Oct, `CMS_OpenData_Run2016GH_13TeV_Data_DoubleMuon-SingleMuon-DoubleEG-MuonEG_16p4fb_1975hists_cropped_2026-10-07.root`,
+  with 1,975 histograms in 103 final states and 82,956,881 entries. Both are cropped only.
+- **What the 25 Oct data adds or changes:**
+  - a fifth dataset, SingleElectron;
+  - loose muon and electron IDs (Maryna, 24 Oct; medium before);
+  - b-tag cut 0.2489 (was 0.2598);
+  - the upstream #40 rule (at most 4 objects per final state);
+  - both cropped (for BumpNet) and uncropped files;
+  - the same 16.393 fb⁻¹.
+- **Histograms:** 1,975 (7 Oct) → 2,779 when built the old way (all 1,975 old names still present; +561 from
+  SingleElectron, +243 from loose IDs and b-tag together) → **313** in 49 final states after the #40 rule, which merges
+  them (same events, R6).
+- **What to tell Maryna:** use the 25 Oct data files together with the 14 Nov MC. Both 13 Oct files are superseded.
+
+**Next:** the technical lead verifies; then Matan uploads BOTH Desktop folders (`CMS_data_delivery_2026-10-25`,
+`CMS_MC_delivery_2026-11-14`) to Maryna's drive as new subfolders and emails her. Nothing has been sent.
