@@ -1048,3 +1048,66 @@ data README; 13 Oct `studies/onedrive_upload_20261013/CHECKSUMS.txt` and its REA
 
 **Next:** the technical lead verifies; then Matan uploads BOTH Desktop folders (`CMS_data_delivery_2026-10-25`,
 `CMS_MC_delivery_2026-11-14`) to Maryna's drive as new subfolders and emails her. Nothing has been sent.
+
+## Histogram plots (17 Nov 2026)
+
+One picture per delivered MC histogram, with the 25 Oct data overlaid. Nothing in the deliveries was changed.
+
+**Script:** `delivery/plots_20261117/make_histogram_plots.py`, committed 115a5f4.
+- It ran from the sparse checkout `checkouts/mcexp_20261103/report_115a5f4…` in PBS job 5554688 (io=25; 58 min wall,
+  3 min 41 s CPU; exit 0).
+- Inputs (read-only; sha256 in `README_plots.txt`):
+  - the uncropped 25 Oct data file (fc954519…dbaf);
+  - the summed MC file (91beacdf…bd03);
+  - the 71 per-sample files;
+  - the start-mass CSV (1d217bd0…2614).
+- Output: the new folder `full/deliver_plots_20261117/`, holding `pngs/` (331 PNGs, 1600×1200), the PDF
+  `CMS_Run2016GH_MC-summedSM-71samples_vs_data_16p393invfb_plots_2026-11-17.pdf` (7 contents pages + 331 plot pages),
+  `README_plots.txt` and `SHA256SUMS.txt` (333 files).
+- The checks are in `full/evidence/plots_check_20261117.json` and the page list in
+  `full/evidence/plots_index_20261117.csv` (copied to git).
+
+**What one picture shows.**
+- Top panel:
+  - the MC stacked in 8 process groups. The groups are Drell-Yan, W+jets, tt̄, single top, dibosons,
+    tribosons/tt̄X/four top/rare top, Z→νν and Higgs. Their colours are the dataviz reference palette, which passes the
+    colour-vision checks (adjacent CVD ΔE ≥ 9.1, normal ≥ 19.6) and is named in the legend on every picture;
+  - the MC statistical uncertainty as a hatched band;
+  - the data as black points with Garwood Poisson errors;
+  - log y, "Events / 10 GeV"; the y axis starts at 0.1 when there is data, and spans at most 5 decades when there is not.
+- Bottom panel: data/MC from 0 to 2.5, with points above that range shown as triangles. There is no ratio panel for the
+  18 MC-only names.
+- x range: `common_start_gev` (MC-only names: the MC's first filled bin) up to the last bin filled in data or MC.
+- Text:
+  - the name, the final state in words and the dataset label (no CMS label);
+  - the data and MC integrals from the common start and their ratio;
+  - "MC missing: QCD multijet, photon processes".
+
+**Checks** (VERIFIED BY RUNNING):
+- 331 PNGs; the PDF has 338 pages = 7 contents + 331 plot pages (`/Type /Page` objects: 338).
+- The stacked MC total equals the summed file in every histogram (largest relative difference 1.1e-15).
+- 10 random histograms (9 with data, 1 MC-only): the integrals on the picture equal the CSV. Data agree exactly; MC
+  agrees to 3.3e-6 relative, which is the CSV's 6-significant-figure rounding.
+- I LOOKED at 9 pictures and both contents pages (trial and official):
+  - μμ 0j, ee 0j, eμ 0j;
+  - μ + 1j, μ + 2j;
+  - eμμ + 1j, 2e2μ;
+  - MC-only 4μ and 3e1μ.
+- **Fixed after the local trial:** too much headroom, and tiny MC tails squashing the data in 3-lepton plots. After
+  the fix there is no overlapping text and no empty plot.
+- The local trial used a scratch approximation in place of scipy for the error bars only. The delivered plots use real
+  scipy on the cluster.
+
+**Copy on Matan's Mac:** `~/Desktop/CMS_delivery_plots_2026-11-17/` (new folder; `rsync -a` from the Mac).
+- `shasum -c` gives 333/333 OK.
+- 334 files and 76,435,640 bytes (≈ 76 MB); the PDF is 11.8 MB.
+- Matan has meanwhile moved the 15 Nov folders to `~/Desktop/CMS_delivary/{MC,data}`. I read from there for the local
+  trial and changed nothing.
+
+**In git:** `delivery/plots_20261117/` holds the script, `README_plots.txt`, `SHA256SUMS.txt` and
+`plots_index_20261117.csv` (331 names with final state and PDF page). No PNGs or PDF are in git.
+
+**File count:** 122,104 → 122,540 (ceiling 125,000).
+
+**Next:** the technical lead verifies; then Matan uploads `~/Desktop/CMS_delivery_plots_2026-11-17` into the same
+OneDrive delivery folder as a third subfolder and tells Maryna. Nothing has been sent.
