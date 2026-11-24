@@ -1,0 +1,278 @@
+{
+ "what": "Nominal-6 vs CMS 71 samples: numbered differences (technical lead's list, 24 Nov 2026). Research only; nothing here is adopted.",
+ "items": [
+  {
+   "id": "N1",
+   "class": "ATLAS nominal, not CMS",
+   "description": "Electroweak VV+2 jets / vector-boson scattering, Sherpa 2.2.12 (lllljj, lllvjj, llvvjj os, llvvjj same-sign) and QCD-EW interference terms; total ~0.32 pb",
+   "atlas_dsids": [
+    700587,
+    700588,
+    700589,
+    700590,
+    700591,
+    700592,
+    700593,
+    700594
+   ],
+   "cms_records": []
+  },
+  {
+   "id": "N2",
+   "class": "ATLAS nominal, not CMS",
+   "description": "QCD same-sign llvv (2 same-charged leptons + 2 neutrinos, 0,1j@LO), 0.0222 pb",
+   "atlas_dsids": [
+    700603
+   ],
+   "cms_records": []
+  },
+  {
+   "id": "N3",
+   "class": "ATLAS nominal, not CMS",
+   "description": "Higgs Dalitz H->gamma* gamma->ll gamma: ggF, VBF, W-H, W+H, ZH",
+   "atlas_dsids": [
+    345961,
+    345834,
+    345963,
+    345964,
+    345965
+   ],
+   "cms_records": [
+    37420,
+    37276,
+    68559,
+    68459,
+    74670,
+    74652
+   ]
+  },
+  {
+   "id": "N4",
+   "class": "ATLAS nominal, not CMS",
+   "description": "qq->ZH, H->ZZ->4l",
+   "atlas_dsids": [
+    346645
+   ],
+   "cms_records": [
+    74314
+   ]
+  },
+  {
+   "id": "N5",
+   "class": "ATLAS nominal, not CMS",
+   "description": "VBF H->ZZ->llbb",
+   "atlas_dsids": [
+    450576
+   ],
+   "cms_records": [
+    68833
+   ]
+  },
+  {
+   "id": "N6",
+   "class": "ATLAS nominal, not CMS",
+   "description": "gg->ZH with H->tautau and H->mumu",
+   "atlas_dsids": [
+    600686,
+    345098
+   ],
+   "cms_records": []
+  },
+  {
+   "id": "N7",
+   "class": "ATLAS nominal, not CMS",
+   "description": "SM three-top production (0.0016 pb)",
+   "atlas_dsids": [
+    304014
+   ],
+   "cms_records": []
+  },
+  {
+   "id": "N8",
+   "class": "ATLAS nominal, not CMS",
+   "description": "VH with H->invisible (lepton from the W/Z) and gg->ZH H->ZZ->4nu",
+   "atlas_dsids": [
+    346605,
+    346606,
+    346607,
+    345596
+   ],
+   "cms_records": []
+  },
+  {
+   "id": "N9",
+   "class": "ATLAS nominal, not CMS",
+   "description": "tZq: ATLAS 410560 tZ_4fl_tchan_noAllHad 0.2404 pb vs CMS 68325 tZq_ll 0.0756 pb",
+   "atlas_dsids": [
+    410560
+   ],
+   "cms_records": [
+    68325
+   ]
+  },
+  {
+   "id": "N10",
+   "class": "ATLAS nominal, not CMS",
+   "description": "Inclusive-decay Higgs samples (VBF H->all, W+H, W-H, ZH) listed on top of the exclusive decays",
+   "atlas_dsids": [
+    346317,
+    346311,
+    346312,
+    346310
+   ],
+   "cms_records": []
+  },
+  {
+   "id": "N11",
+   "class": "ATLAS, photon + lepton",
+   "description": "V+gamma Sherpa 2.2.11 (pT_gamma > 7 GeV): mumu/ee/tautau/nunu/munu/enu/taunu + gamma",
+   "atlas_dsids": [
+    700398,
+    700399,
+    700400,
+    700401,
+    700402,
+    700403,
+    700404
+   ],
+   "cms_records": []
+  },
+  {
+   "id": "N12",
+   "class": "ATLAS, photon + lepton",
+   "description": "V+2 photons, EW l nu gamma jj, ll gamma jj, three photons",
+   "atlas_dsids": [
+    700195,
+    700196,
+    700197,
+    700198,
+    700199,
+    700200,
+    700201,
+    700709,
+    700710,
+    700007
+   ],
+   "cms_records": []
+  },
+  {
+   "id": "N13",
+   "class": "ATLAS, no prompt lepton",
+   "description": "Hadronic W/Z at high pT (pTV>200) and hadronic V+gamma",
+   "atlas_dsids": [
+    700843,
+    700849,
+    700855,
+    700352,
+    700353,
+    700507
+   ],
+   "cms_records": []
+  },
+  {
+   "id": "N14",
+   "class": "ATLAS, no prompt lepton",
+   "description": "WZ->qq nunu, ZZ->qq nunu, ZZ->bb nunu, ZZ->4nu",
+   "atlas_dsids": [
+    700491,
+    700495,
+    700496,
+    700605
+   ],
+   "cms_records": []
+  },
+  {
+   "id": "N15",
+   "class": "ATLAS, no prompt lepton",
+   "description": "tW with inclusive decays (ATLAS) vs CMS NoFullyHadronic",
+   "atlas_dsids": [
+    601352,
+    601355
+   ],
+   "cms_records": [
+    64839,
+    64895
+   ]
+  },
+  {
+   "id": "C1",
+   "class": "CMS, not ATLAS",
+   "description": "t-channel: CMS InclusiveDecays vs ATLAS leptonic top decays only",
+   "atlas_dsids": [
+    410658,
+    410659
+   ],
+   "cms_records": [
+    64659,
+    64759
+   ]
+  },
+  {
+   "id": "C2",
+   "class": "CMS, not ATLAS",
+   "description": "Tribosons: CMS inclusive decays vs ATLAS lepton-filtered Sherpa",
+   "atlas_dsids": [
+    364242,
+    364243,
+    364244,
+    364245,
+    364246,
+    364247,
+    364248,
+    364249,
+    364336,
+    364337,
+    364338,
+    364339
+   ],
+   "cms_records": [
+    72701,
+    72711,
+    72761,
+    75600
+   ]
+  },
+  {
+   "id": "C3",
+   "class": "CMS, not ATLAS",
+   "description": "gg->H and VBF H->ZZ->2l2nu: no exclusive ATLAS sample (no search; confirm in v5)",
+   "atlas_dsids": [],
+   "cms_records": [
+    37616,
+    68741
+   ]
+  },
+  {
+   "id": "C4",
+   "class": "CMS, not ATLAS",
+   "description": "VH H->WW: CMS inclusive W/Z and H->WW, gg->ZH Z->ll only; ATLAS slices (no search)",
+   "atlas_dsids": [
+    341456,
+    341458,
+    341460,
+    345325,
+    345433,
+    345445,
+    346524
+   ],
+   "cms_records": [
+    41873,
+    41877,
+    41914,
+    40095
+   ]
+  }
+ ],
+ "documented_exceptions_not_researched": [
+  "QCD multijet (absent on both sides now)",
+  "E2 EW V+2 jets (700358-700364)",
+  "photons / H->gamma gamma / gamma+jets / diphoton",
+  "tH (D13)",
+  "LFV H->e tau / mu tau (D13)",
+  "H->ee (D13)",
+  "lepton-free Higgs decays (D13)",
+  "Z->nunu HT<100 (D11)",
+  "E1 diboson k-factors",
+  "E3 ttZ k"
+ ]
+}

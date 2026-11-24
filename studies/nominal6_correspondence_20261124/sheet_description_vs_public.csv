@@ -1,0 +1,65 @@
+dsid,category_sheet,physics_short_public,description_sheet,description_public
+410471,ttbar,PhPy8EG_A14_ttbar_hdamp258p75_allhad,"POWHEG+Pythia8 ttbar production with Powheg hdamp equal 1.5*top mass, A14 tune, veto the at least one lepton filter, ME NNPDF30 NLO, A14 NNPDF23 LO from DSID 410450 LHE files with Shower Weights added","POWHEG+Pythia8 ttbar production with Powheg hdamp equal 1.5*top mass, A14 tune, veto the at least one lepton filter, ME NNPDF30 NLO, A14 NNPDF23 LO from DSID 410450 LHE files with Shower Weights added '"
+700348,W+jets,Sh_2211_Wtaunu_H_maxHTpTV2_CFilterBVeto,"Sherpa W+/W- -> tau nu + 0,1,2j@NLO + 3,4,5j@LO with hadronic tau decays c-jet filter taking input from existing unfiltered input file.","Sherpa W+/W- -> tau nu + 0,1,2j@NLO + 3,4,5j@LO with hadronic tau decays and c-jet filter taking input from an existing unfiltered input file"
+700349,W+jets,Sh_2211_Wtaunu_H_maxHTpTV2_CVetoBVeto,"Sherpa W+/W- -> tau nu + 0,1,2j@NLO + 3,4,5j@LO with hadronic tau decaus and light-jet filter taking input from existing unfiltered input file.","Sherpa W+/W- -> tau nu + 0,1,2j@NLO + 3,4,5j@LO with hadronic tau decays and light-jet filter taking input from an existing unfiltered input file"
+410644,Single top,PowhegPythia8EvtGen_A14_singletop_schan_lept_top,"POWHEG+Pythia8+EvtGen single-top-quark s-channel production (top), inclusive, A14 tune, ME NNPDF30 NLO, A14 NNPDF23 LO'","POWHEG+Pythia8+EvtGen single-top-quark s-channel production (top), inclusive, A14 tune, ME NNPDF30 NLO, A14 NNPDF23 LO"
+410645,Single top,PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop,"POWHEG+Pythia8+EvtGen single-top-quark s-channel production (anti-top), inclusive, A14 tune, ME NNPDF30 NLO, A14 NNPDF23 LO'","POWHEG+Pythia8+EvtGen single-top-quark s-channel production (anti-top), inclusive, A14 tune, ME NNPDF30 NLO, A14 NNPDF23 LO"
+410658,Single top,PhPy8EG_A14_tchan_BW50_lept_top,"POWHEG+Pythia8+EvtGen single-top-quark t-channel (2->3) production (top),MadSpin, A14 tune, ME NNPDF3.04f NLO, A14 NNPDF23 LO'","POWHEG+Pythia8+EvtGen single-top-quark t-channel (2->3) production (top),MadSpin, A14 tune, ME NNPDF3.04f NLO, A14 NNPDF23 LO"
+410659,Single top,PhPy8EG_A14_tchan_BW50_lept_antitop,"POWHEG+Pythia8+EvtGen single-top-quark t-channel (2->3) production (top),MadSpin, A14 tune, ME NNPDF3.04f NLO, A14 NNPDF23 LO'","POWHEG+Pythia8+EvtGen single-antitop t-channel (2->3) production, MadSpin, A14 tune, ME NNPDF3.0 four-flavour NLO, A14 NNPDF23 LO"
+601352,Single top,PhPy8EG_tW_dyn_DR_incl_antitop,"POWHEG+Pythia8+EvtGen tW production (antitop), DR scheme, dynamic scale, inclusive, hdamp equal 1.5*top mass, A14 tune, ME NNPDF30 NLO, A14 NNPDF23 LO'","POWHEG+Pythia8+EvtGen tW production (antitop), DR scheme, dynamic scale, inclusive, hdamp equal 1.5*top mass, A14 tune, ME NNPDF30 NLO, A14 NNPDF23 LO"
+601355,Single top,PhPy8EG_tW_dyn_DR_incl_top,"POWHEG+Pythia8+EvtGen tW production (antitop), DR scheme, dynamic scale, inclusive, hdamp equal 1.5*top mass, A14 tune, ME NNPDF30 NLO, A14 NNPDF23 LO'","POWHEG+Pythia8+EvtGen tW production (top), DR scheme, dynamic scale, inclusive, hdamp equal to 1.5*top mass, A14 tune, ME NNPDF30 NLO, A14 NNPDF23 LO"
+410408,tWZ,aMcAtNloPythia8EvtGen_tWZ_Ztoll_minDR1,MG5aMCatNLO/Pythia8 tWZ minDR1,"MadGraph5_aMC@NLO+Pythia8+EvtGen tWZ production with Z->l+l- and minimum DeltaR(l,l)=1"
+410560,tZq,MadGraphPythia8EvtGen_A14_tZ_4fl_tchan_noAllHad,MG+Pythia8 single top + Z production with A14 tune',"MadGraph+Pythia8+EvtGen t-channel single-top plus Z production in the four-flavour scheme, excluding all-hadronic decays, A14 tune"
+410156,ttZ,aMcAtNloPythia8EvtGen_MEN30NLO_A14N23LO_ttZnunu,aMcAtNlo_ttZqq_NLO,"aMCatNLO+Pythia8+EvtGen NLO ttZ production, Z->nunu"
+410157,ttZ,aMcAtNloPythia8EvtGen_MEN30NLO_A14N23LO_ttZqq,aMcAtNlo_ttZnunu_NLO,"aMCatNLO+Pythia8+EvtGen NLO ttZ production, Z->qq"
+410218,ttZ,aMcAtNloPythia8EvtGen_MEN30NLO_A14N23LO_ttee,aMcAtNlo_ttee_NLO,"aMCatNLO+Pythia8+EvtGen NLO ttZ/gamma* production, Z/gamma*->e+e-"
+410219,ttZ,aMcAtNloPythia8EvtGen_MEN30NLO_A14N23LO_ttmumu,aMcAtNlo_ttmumu_NLO,"aMCatNLO+Pythia8+EvtGen NLO ttZ/gamma* production, Z/gamma*->mu+mu-"
+410220,ttZ,aMcAtNloPythia8EvtGen_MEN30NLO_A14N23LO_tttautau,aMcAtNlo_tttautau_NLO,"aMCatNLO+Pythia8+EvtGen NLO ttZ/gamma* production, Z/gamma*->tau+tau-"
+346189,ttH,aMcAtNloPythia8EvtGen_ttH_gamgam,aMcAtNlo_ttH,"aMCatNLO+Pythia8+EvtGen ttH associated production, H->gammagamma"
+346198,ttH,PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_Zgam,POWHEG+Pythia8.230 ttH (semilep) H->Zy production with A14 NNPDF2.3 tune',POWHEG+Pythia8.230 ttH (semilep) H->Zy production with A14 NNPDF2.3 tune
+346340,ttH,PowhegPy8EG_A14NNPDF23_NNPDF30ME_ttH125_ZZ4l_allhad,POWHEG+Pythia8 ttH (allhad) production with A14 NNPDF2.3 tune',POWHEG+Pythia8 ttH (allhad) production with A14 NNPDF2.3 tune
+346341,ttH,PowhegPy8EG_A14NNPDF23_NNPDF30ME_ttH125_ZZ4l_semilep,POWHEG+Pythia8 ttH (semilep) production with A14 NNPDF2.3 tune',POWHEG+Pythia8 ttH (semilep) production with A14 NNPDF2.3 tune
+346342,ttH,PowhegPy8EG_A14NNPDF23_NNPDF30ME_ttH125_ZZ4l_dilep,POWHEG+Pythia8 ttH (dilep) production with A14 NNPDF2.3 tune',POWHEG+Pythia8 ttH (dilep) production with A14 NNPDF2.3 tune
+346343,ttH,PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_allhad,POWHEG+Pythia8.230 ttH (allhad) production with A14 NNPDF2.3 tune',POWHEG+Pythia8.230 ttH (allhad) production with A14 NNPDF2.3 tune
+346344,ttH,PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_semilep,POWHEG+Pythia8.230 ttH (semilep) production with A14 NNPDF2.3 tune',POWHEG+Pythia8.230 ttH (semilep) production with A14 NNPDF2.3 tune
+346345,ttH,PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep,POWHEG+Pythia8.230 ttH (dilep) production with A14 NNPDF2.3 tune',POWHEG+Pythia8.230 ttH (dilep) production with A14 NNPDF2.3 tune
+346525,ttH,PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam,"POWHEG+Pythia8 ttH production with A14 NNPDF2.3 tune, H->yy'","POWHEG+Pythia8 ttH production with A14 NNPDF2.3 tune, H->yy"
+346526,ttH,PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam,POWHEG+Herwig7 ttH production with H7UE tune',POWHEG+Herwig7 ttH production with H7UE tune
+346632,ttH,PowhegPy8EG_A14NNPDF23_NNPDF30ME_ttH125_ZZ4nu_semilep,POWHEG+Pythia8 ttH (l+jets) production with A14 NNPDF2.3 tune',POWHEG+Pythia8 ttH (l+jets) production with A14 NNPDF2.3 tune
+346633,ttH,PowhegPy8EG_A14NNPDF23_NNPDF30ME_ttH125_ZZ4nu_allhad,POWHEG+Pythia8 ttH (allhad) production with A14 NNPDF2.3 tune',POWHEG+Pythia8 ttH (allhad) production with A14 NNPDF2.3 tune
+346634,ttH,PowhegPy8EG_A14NNPDF23_NNPDF30ME_ttH125_ZZ4nu_dilep,POWHEG+Pythia8 ttH (dil) production with A14 NNPDF2.3 tune',POWHEG+Pythia8 ttH (dil) production with A14 NNPDF2.3 tune
+346919,ttH,PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_allhad_tautau_unpol,POWHEG+Pythia8.230 ttH (allhad) production with A14 NNPDF2.3 tune',POWHEG+Pythia8.230 ttH (allhad) production with A14 NNPDF2.3 tune
+346923,ttH,PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_semilep_tautau_unpol,POWHEG+Pythia8.230 ttH (semilep) production with A14 NNPDF2.3 tune',POWHEG+Pythia8.230 ttH (semilep) production with A14 NNPDF2.3 tune
+346927,ttH,PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep_tautau_unpol,POWHEG+Pythia8.230 ttH (dilep) production with A14 NNPDF2.3 tune',POWHEG+Pythia8.230 ttH (dilep) production with A14 NNPDF2.3 tune
+343981,Higgs,PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam,POWHEG+Pythia8 H+jet production with NNLOPS and the A14 tune',"POWHEG+Pythia8+EvtGen NNLOPS ggF H+jet production, H->gammagamma, AZNLO tune"
+345060,Higgs,PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_ZZ4l,125 GeV,"POWHEG+Pythia8+EvtGen NNLOPS ggF H->ZZ->4l production, AZNLO tune"
+345066,Higgs,PowhegPythia8EvtGen_NNPDF3_AZNLO_ggZH125_ZZ4lepZinc,125 GeV CPS,"POWHEG+PYTHIA8+EVTGEN, gg->H+Z, H->ZZ->llll mh equals 125 GeV CPS"
+345097,Higgs,PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_mumu,125 GeV,"POWHEG+Pythia8+EvtGen NNLOPS ggF H->mumu production, AZNLO tune"
+345316,Higgs,PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_Zy_Zll,125 GeV CPS,"POWHEG+PYTHIA8+EVTGEN, ggH H->Zy, Z->ll mh equals 125 GeV CPS"
+345948,Higgs,PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_WWlvlv,"125 GeV CPS, Dipole ON","POWHEG+Pythia8+EvtGen VBF Higgs (125 GeV, CPS scheme, Dipole recoil ON), H->WW*->lvlv"
+345961,Higgs,PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamstargam,125 GeV CPS,"POWHEG+PYTHIA8+EVTGEN, ggH H->gam*gam, gam*->ll mh equals 125 GeV CPS"
+346214,Higgs,PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam,125 GeV,"POWHEG+PYTHIA8+EVTGEN, VBF H->gamgam mh equals 125 GeV"
+346228,Higgs,PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_ZZ4lep_notau,125 GeV,"POWHEG+Pythia8+EvtGen Higgs (125 GeV) production, H->ZZ*->4 leptons"
+346310,Higgs,PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Zincl_H_incl_MINLO,125 GeV,"POWHEG+Pythia8+EvtGen ZH associated production (125 GeV), Z inclusive, H inclusive"
+346311,Higgs,PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Wincl_H_incl_MINLO,125 GeV,"POWHEG+Pythia8+EvtGen W+H associated production (125 GeV), H inclusive"
+346312,Higgs,PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Wincl_H_incl_MINLO,125 GeV,"POWHEG+Pythia8+EvtGen W-H associated production (125 GeV), H inclusive"
+346317,Higgs,PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_incl,125 GeV,POWHEG+Pythia8+EvtGen VBF Higgs (125 GeV) production with inclusive Higgs decays
+346588,Higgs,PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_ZZ4nu_MET75,125 GeV,POWHEG+Pythia8+EvtGen NNLOPS ggF H->ZZ->4nu production at mH=125 GeV with MET > 75 GeV filter
+346802,Higgs,PhH7EG_NNLOPS_nnlo_30_ggH125_WWlvlv_noTau,Powheg+Herwig7 H+jet production with NNLOPS and with H7UE tune',"POWHEG+Herwig7 NNLOPS ggF H->WW->lnulnu production, H7.1-Default tune"
+346880,Higgs,PhH7EG_H7UE_NNPDF30_WmH125J_Wincl_MINLO_gammagamma,125 GeV',"POWHEG+Herwig7 W-H+jet production, W inclusive and H->gammagamma, at mH=125 GeV"
+346881,Higgs,PhH7EG_H7UE_NNPDF30_WpH125J_Wincl_MINLO_gammagamma,125 GeV',"POWHEG+Herwig7 W+H+jet production, W inclusive and H->gammagamma, at mH=125 GeV"
+346882,Higgs,PhH7EG_H7UE_NNPDF30_ggZH125_gammagamma,125 GeV',"POWHEG+Herwig7 gg->ZH production, Z inclusive and H->gammagamma, at mH=125 GeV"
+450576,Higgs,PowhegPythia8EvtGen_NNLOPS_nnlo_30_VBFH125_ZZllbb,125 GeV,"POWHEG+Pythia8+EvtGen NNLOPS H+jet production, H->ZZ->llbb, AZNLO tune"
+346188,tH,aMcAtNloPythia8EvtGen_tHjb125_4fl_gamgam,aMcAtNlo tHjb,"aMCatNLO+Pythia8+EvtGen associated tHjb production (4-flavour scheme), H->gammagamma"
+346414,tH,aMcAtNloPythia8EvtGen_tHjb125_4fl_ZZ4l,aMcAtNlo tHjb 4F with H4l decay,"aMCatNLO+Pythia8+EvtGen associated tHjb production (four-flavour scheme), H->ZZ*->4 leptons"
+346486,tH,aMcAtNloPythia8EvtGen_tWH125_yy,aMcAtNlo tHW,"aMCatNLO+Pythia8+EvtGen associated tWH production, H->gammagamma"
+346511,tH,aMcAtNloPythia8EvtGen_tWH125_ZZ4l,aMcAtNlo tWH H4l decay,"aMCatNLO+Pythia8+EvtGen associated tWH production, H->ZZ*->4 leptons"
+346602,tH,aMcAtNloHerwig7EvtGen_MEN30NLO_tHjb125_gamgam,aMcAtNlo tHjb,"aMCatNLO+Herwig7+EvtGen associated tHjb production, H->gammagamma (parton-shower systematic)"
+700600,Diboson / triboson,Sh_2212_llll,"4 charged leptons with 0,1j@NLO + 2,3j@LO and mll>4GeV, pTl1>5 GeV, pTl2>5 GeV.","Sherpa 4-lepton EW production (ZZ/Zgamma*/gammagamma* -> 4l), 0-1j@NLO + 2-3j@LO merged, mll > 4 GeV, pT(l) > 5 GeV; for diboson/ZZ measurements"
+700601,Diboson / triboson,Sh_2212_lllv,"3 charged leptons + neutrino with 0,1j@NLO + 2,3j@LO and mll>4GeV, pTl1>5 GeV, pTl2>5 GeV.","Sherpa WZ/Wgamma* production -> 3l+nu, 0-1j@NLO + 2-3j@LO merged, mll > 4 GeV, pT(l) > 5 GeV"
+700602,Diboson / triboson,Sh_2212_llvv_os,"2 oppositely charged leptons + 2 neutrinos with 0,1j@NLO + 2,3j@LO and mll>4GeV, pTl1>5 GeV, pTl2>5 GeV.","Sherpa WW production -> 2 opposite-sign leptons + 2nu, 0-1j@NLO + 2-3j@LO merged, mll > 4 GeV"
+700603,Diboson / triboson,Sh_2212_llvv_ss,"2 same-charged leptons + 2 neutrinos with 0,1j@LO and pTl1>5 GeV, pTl2>5 GeV.","Sherpa W+W+ same-sign production -> 2 same-sign leptons + 2nu, 0-1j@LO"
+700604,Diboson / triboson,Sh_2212_lvvv,"1 charged lepton + 3 neutrinos with 0,1j@NLO + 2,3j@LO and pTl1>5 GeV, pTl2>5 GeV.","Sherpa WZ production -> 1 charged lepton + 3nu, 0-1j@NLO + 2-3j@LO merged"
+700605,Diboson / triboson,Sh_2212_vvvv,"4 neutrinos with 0,1j@NLO + 2,3j@LO.","Sherpa ZZ production -> 4nu (invisible), 0-1j@NLO + 2-3j@LO merged"
+304014,3-top / 4-top,MadGraphPythia8EvtGen_A14NNPDF23_3top_SM,MadGraph_3topSM,MadGraph5+Pythia8+EvtGen SM three-top-quark production (pp->ttt)
+412043,3-top / 4-top,aMcAtNloPythia8EvtGen_A14NNPDF31_SM4topsNLO,aMcAtNlo_SM4topsNLO,"aMCatNLO+Pythia8+EvtGen NLO SM four-top-quark production (pp->tttt), A14 NNPDF3.1 tune"

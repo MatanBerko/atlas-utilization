@@ -1,0 +1,1894 @@
+{
+ "read": [
+  "2026-11-24 17:10 IST",
+  "2026-11-24 17:14 IST",
+  "2026-11-24 17:16 IST",
+  "2026-11-24 17:17 IST"
+ ],
+ "records": {
+  "36929": {
+   "abstract": "<p>Simulated dataset ggZH_ZToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 500000,
+   "files_complete_index": 2,
+   "files_distribution": 2,
+   "files_flag": null,
+   "files_listed_in_index_entries": 2,
+   "generators": [
+    "Powheg+Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/36929",
+   "mini_link": "https://opendata.cern.ch/record/36928",
+   "mini_recid": 36928,
+   "mini_title": "/ggZH_ZToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 36929,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "4.319e-02",
+    "total_value_uncertainty": "4.725e-05"
+   },
+   "size_bytes": 714602852,
+   "title": "/ggZH_ZToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "37276": {
+   "abstract": "<p>Simulated dataset GluGluHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 1855064,
+   "files_complete_index": 16,
+   "files_distribution": 16,
+   "files_flag": null,
+   "files_listed_in_index_entries": 16,
+   "generators": [
+    "MG5_aMC FXFX",
+    "Pytha8"
+   ],
+   "link": "https://opendata.cern.ch/record/37276",
+   "mini_link": "https://opendata.cern.ch/record/37275",
+   "mini_recid": 37275,
+   "mini_title": "/GluGluHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 37276,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "2.151e-01",
+    "total_value": "2.816e-03",
+    "total_value_uncertainty": "3.055e-06"
+   },
+   "size_bytes": 3015830926,
+   "title": "/GluGluHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "37410": {
+   "abstract": "<p>Simulated dataset GluGlu_HToInvisible_M125_HiggspTgt190_TuneCP5_13TeV_powheg_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 1202594,
+   "files_complete_index": 56,
+   "files_distribution": 56,
+   "files_flag": null,
+   "files_listed_in_index_entries": 56,
+   "generators": [
+    "Powheg+Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/37410",
+   "mini_link": "https://opendata.cern.ch/record/37409",
+   "mini_recid": 37409,
+   "mini_title": "/GluGlu_HToInvisible_M125_HiggspTgt190_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 37410,
+   "portal_cross_section": {
+    "filter_efficiency": "4.770e-01",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "1.663e-06",
+    "total_value": "1.024e+01",
+    "total_value_uncertainty": "8.362e-03"
+   },
+   "size_bytes": 1918788508,
+   "title": "/GluGlu_HToInvisible_M125_HiggspTgt190_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "37412": {
+   "abstract": "<p>Simulated dataset GluGlu_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 1210000,
+   "files_complete_index": 8,
+   "files_distribution": 8,
+   "files_flag": null,
+   "files_listed_in_index_entries": 8,
+   "generators": [
+    "Powheg+Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/37412",
+   "mini_link": "https://opendata.cern.ch/record/37411",
+   "mini_recid": 37411,
+   "mini_title": "/GluGlu_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 37412,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "3.802e-05",
+    "total_value": "2.147e+01",
+    "total_value_uncertainty": "1.033e-02"
+   },
+   "size_bytes": 1071533876,
+   "title": "/GluGlu_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "37420": {
+   "abstract": "<p>Simulated dataset GluGluHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 1825052,
+   "files_complete_index": 4,
+   "files_distribution": 4,
+   "files_flag": null,
+   "files_listed_in_index_entries": 4,
+   "generators": [
+    "MG5_aMC FXFX",
+    "Pytha8"
+   ],
+   "link": "https://opendata.cern.ch/record/37420",
+   "mini_link": "https://opendata.cern.ch/record/37419",
+   "mini_recid": 37419,
+   "mini_title": "/GluGluHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 37420,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "2.151e-01",
+    "total_value": "1.858e-03",
+    "total_value_uncertainty": "2.031e-06"
+   },
+   "size_bytes": 2772640075,
+   "title": "/GluGluHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "42137": {
+   "abstract": "<p>Simulated dataset LLGJJ_EWKnotop_MLL-50_MJJ-120_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 170000,
+   "files_complete_index": 3,
+   "files_distribution": 3,
+   "files_flag": null,
+   "files_listed_in_index_entries": 3,
+   "generators": [
+    "Madgraph",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/42137",
+   "mini_link": "https://opendata.cern.ch/record/42136",
+   "mini_recid": 42136,
+   "mini_title": "/LLGJJ_EWKnotop_MLL-50_MJJ-120_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 42137,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.453e+02",
+    "total_value_uncertainty": "1.606e-01"
+   },
+   "size_bytes": 305389922,
+   "title": "/LLGJJ_EWKnotop_MLL-50_MJJ-120_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "42145": {
+   "abstract": "<p>Simulated dataset LNuGJJ_EWKnotop_MJJ-120_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 199107,
+   "files_complete_index": 2,
+   "files_distribution": 2,
+   "files_flag": null,
+   "files_listed_in_index_entries": 2,
+   "generators": [
+    "Madgraph",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/42145",
+   "mini_link": "https://opendata.cern.ch/record/42144",
+   "mini_recid": 42144,
+   "mini_title": "/LNuGJJ_EWKnotop_MJJ-120_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 42145,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "6.668e+04",
+    "total_value_uncertainty": "2.895e+01"
+   },
+   "size_bytes": 322696809,
+   "title": "/LNuGJJ_EWKnotop_MJJ-120_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "64365": {
+   "abstract": "<p>Simulated dataset SSWW_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 975000,
+   "files_complete_index": 23,
+   "files_distribution": 23,
+   "files_flag": null,
+   "files_listed_in_index_entries": 23,
+   "generators": [
+    "MadGraph",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/64365",
+   "mini_link": "https://opendata.cern.ch/record/64364",
+   "mini_recid": 64364,
+   "mini_title": "/SSWW_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 64365,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.792e-02",
+    "total_value_uncertainty": "1.099e-05"
+   },
+   "size_bytes": 2047329111,
+   "title": "/SSWW_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "64659": {
+   "abstract": "<p>Simulated dataset ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 30609000,
+   "files_complete_index": 35,
+   "files_distribution": 35,
+   "files_flag": null,
+   "files_listed_in_index_entries": 35,
+   "generators": [
+    "MadSpin",
+    "Powheg V2",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/64659",
+   "mini_link": "https://opendata.cern.ch/record/64658",
+   "mini_recid": 64658,
+   "mini_title": "/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v3/MINIAODSIM",
+   "nano_recid": 64659,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.929e-02",
+    "total_value": "6.793e+01",
+    "total_value_uncertainty": "4.479e-01"
+   },
+   "size_bytes": 50855485124,
+   "title": "/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "64711": {
+   "abstract": "<p>Simulated dataset ST_t-channel_eleDecays_TuneCP5_13TeV-comphep-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 532959,
+   "files_complete_index": 1,
+   "files_distribution": 1,
+   "files_flag": null,
+   "files_listed_in_index_entries": 1,
+   "generators": [
+    "CompHEP"
+   ],
+   "link": "https://opendata.cern.ch/record/64711",
+   "mini_link": "https://opendata.cern.ch/record/64710",
+   "mini_recid": 64710,
+   "mini_title": "/ST_t-channel_eleDecays_TuneCP5_13TeV-comphep-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 64711,
+   "portal_cross_section": {
+    "filter_efficiency": "6.255e-01",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.476e+01",
+    "total_value_uncertainty": "2.208e-02"
+   },
+   "size_bytes": 790938626,
+   "title": "/ST_t-channel_eleDecays_TuneCP5_13TeV-comphep-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "64745": {
+   "abstract": "<p>Simulated dataset ST_t-channel_tauDecays_TuneCP5_13TeV-comphep-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 520069,
+   "files_complete_index": 1,
+   "files_distribution": 1,
+   "files_flag": null,
+   "files_listed_in_index_entries": 1,
+   "generators": [
+    "CompHEP"
+   ],
+   "link": "https://opendata.cern.ch/record/64745",
+   "mini_link": "https://opendata.cern.ch/record/64744",
+   "mini_recid": 64744,
+   "mini_title": "/ST_t-channel_tauDecays_TuneCP5_13TeV-comphep-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 64745,
+   "portal_cross_section": {
+    "filter_efficiency": "6.260e-01",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.473e+01",
+    "total_value_uncertainty": "2.680e-02"
+   },
+   "size_bytes": 697103467,
+   "title": "/ST_t-channel_tauDecays_TuneCP5_13TeV-comphep-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "64759": {
+   "abstract": "<p>Simulated dataset ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 63073000,
+   "files_complete_index": 86,
+   "files_distribution": 86,
+   "files_flag": null,
+   "files_listed_in_index_entries": 86,
+   "generators": [
+    "MadSpin",
+    "Powheg V2",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/64759",
+   "mini_link": "https://opendata.cern.ch/record/64758",
+   "mini_recid": 64758,
+   "mini_title": "/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v3/MINIAODSIM",
+   "nano_recid": 64759,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "3.161e-02",
+    "total_value": "1.134e+02",
+    "total_value_uncertainty": "8.831e-01"
+   },
+   "size_bytes": 104561850145,
+   "title": "/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "64825": {
+   "abstract": "<p>Simulated dataset ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 2554000,
+   "files_complete_index": 23,
+   "files_distribution": 23,
+   "files_flag": null,
+   "files_listed_in_index_entries": 23,
+   "generators": [
+    "Powheg V2",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/64825",
+   "mini_link": "https://opendata.cern.ch/record/64824",
+   "mini_recid": 64824,
+   "mini_title": "/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 64825,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.310e-05",
+    "total_value": "3.251e+01",
+    "total_value_uncertainty": "2.346e-02"
+   },
+   "size_bytes": 4970623035,
+   "title": "/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "64839": {
+   "abstract": "<p>Simulated dataset ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 3654510,
+   "files_complete_index": 10,
+   "files_distribution": 10,
+   "files_flag": null,
+   "files_listed_in_index_entries": 10,
+   "generators": [
+    "Powheg V2",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/64839",
+   "mini_link": "https://opendata.cern.ch/record/64838",
+   "mini_recid": 64838,
+   "mini_title": "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 64839,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.463e-05",
+    "total_value": "3.251e+01",
+    "total_value_uncertainty": "2.346e-02"
+   },
+   "size_bytes": 7246892319,
+   "title": "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "64881": {
+   "abstract": "<p>Simulated dataset ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 2491000,
+   "files_complete_index": 24,
+   "files_distribution": 24,
+   "files_flag": null,
+   "files_listed_in_index_entries": 24,
+   "generators": [
+    "Powheg V2",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/64881",
+   "mini_link": "https://opendata.cern.ch/record/64880",
+   "mini_recid": 64880,
+   "mini_title": "/ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 64881,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "3.691e-05",
+    "total_value": "3.245e+01",
+    "total_value_uncertainty": "2.338e-02"
+   },
+   "size_bytes": 4849808718,
+   "title": "/ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "64895": {
+   "abstract": "<p>Simulated dataset ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 3368375,
+   "files_complete_index": 11,
+   "files_distribution": 11,
+   "files_flag": null,
+   "files_listed_in_index_entries": 11,
+   "generators": [
+    "Powheg V2",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/64895",
+   "mini_link": "https://opendata.cern.ch/record/64894",
+   "mini_recid": 64894,
+   "mini_title": "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 64895,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.048e-05",
+    "total_value": "3.245e+01",
+    "total_value_uncertainty": "2.338e-02"
+   },
+   "size_bytes": 6688088464,
+   "title": "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "67511": {
+   "abstract": "<p>Simulated dataset ttH_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 3000000,
+   "files_complete_index": 11,
+   "files_distribution": 11,
+   "files_flag": null,
+   "files_listed_in_index_entries": 11,
+   "generators": [
+    "Powheg+Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/67511",
+   "mini_link": "https://opendata.cern.ch/record/67510",
+   "mini_recid": 67510,
+   "mini_title": "/ttH_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 67511,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "1.054e-02",
+    "total_value": "4.916e-01",
+    "total_value_uncertainty": "1.773e-03"
+   },
+   "size_bytes": 7188563992,
+   "title": "/ttH_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "67771": {
+   "abstract": "<p>Simulated dataset TTTJ_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 160000,
+   "files_complete_index": 3,
+   "files_distribution": 3,
+   "files_flag": null,
+   "files_listed_in_index_entries": 3,
+   "generators": [
+    "Madgraph_aMC@NLO",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/67771",
+   "mini_link": "https://opendata.cern.ch/record/67770",
+   "mini_recid": 67770,
+   "mini_title": "/TTTJ_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 67771,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "4.004e-04",
+    "total_value_uncertainty": "2.301e-07"
+   },
+   "size_bytes": 501184714,
+   "title": "/TTTJ_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "68067": {
+   "abstract": "<p>Simulated dataset TTTW_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 159000,
+   "files_complete_index": 18,
+   "files_distribution": 18,
+   "files_flag": null,
+   "files_listed_in_index_entries": 18,
+   "generators": [
+    "Madgraph_aMC@NLO",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/68067",
+   "mini_link": "https://opendata.cern.ch/record/68066",
+   "mini_recid": 68066,
+   "mini_title": "/TTTW_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 68067,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "7.288e-04",
+    "total_value_uncertainty": "4.828e-07"
+   },
+   "size_bytes": 577414870,
+   "title": "/TTTW_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "68325": {
+   "abstract": "<p>Simulated dataset tZq_ll_4f_ckm_NLO_TuneCP5_13TeV-amcatnlo-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 3967000,
+   "files_complete_index": 52,
+   "files_distribution": 52,
+   "files_flag": null,
+   "files_listed_in_index_entries": 52,
+   "generators": [
+    "Pythia8",
+    "aMCatNLO"
+   ],
+   "link": "https://opendata.cern.ch/record/68325",
+   "mini_link": "https://opendata.cern.ch/record/68324",
+   "mini_recid": 68324,
+   "mini_title": "/tZq_ll_4f_ckm_NLO_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 68325,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "3.647e-01",
+    "total_value": "7.561e-02",
+    "total_value_uncertainty": "2.088e-04"
+   },
+   "size_bytes": 9562744033,
+   "title": "/tZq_ll_4f_ckm_NLO_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "68459": {
+   "abstract": "<p>Simulated dataset VBFHToEEG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 1840000,
+   "files_complete_index": 29,
+   "files_distribution": 29,
+   "files_flag": null,
+   "files_listed_in_index_entries": 29,
+   "generators": [
+    "Madgraph5_aMC@NLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/68459",
+   "mini_link": "https://opendata.cern.ch/record/68458",
+   "mini_recid": 68458,
+   "mini_title": "/VBFHToEEG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v3/MINIAODSIM",
+   "nano_recid": 68459,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "3.429e-01",
+    "total_value": "3.150e-04",
+    "total_value_uncertainty": "6.441e-08"
+   },
+   "size_bytes": 3396592561,
+   "title": "/VBFHToEEG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "68549": {
+   "abstract": "<p>Simulated dataset VBF_HToInvisible_M125_TuneCP5_withDipoleRecoil_13TeV_powheg_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 496000,
+   "files_complete_index": 19,
+   "files_distribution": 19,
+   "files_flag": null,
+   "files_listed_in_index_entries": 19,
+   "generators": [
+    "Powheg+Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/68549",
+   "mini_link": "https://opendata.cern.ch/record/68548",
+   "mini_recid": 68548,
+   "mini_title": "/VBF_HToInvisible_M125_TuneCP5_withDipoleRecoil_13TeV_powheg_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 68549,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "5.703e-04",
+    "total_value": "3.873e+00",
+    "total_value_uncertainty": "1.787e-02"
+   },
+   "size_bytes": 610109568,
+   "title": "/VBF_HToInvisible_M125_TuneCP5_withDipoleRecoil_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "68559": {
+   "abstract": "<p>Simulated dataset VBFHToMuMuG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 1754000,
+   "files_complete_index": 4,
+   "files_distribution": 4,
+   "files_flag": null,
+   "files_listed_in_index_entries": 4,
+   "generators": [
+    "Madgraph5_aMC@NLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/68559",
+   "mini_link": "https://opendata.cern.ch/record/68558",
+   "mini_recid": 68558,
+   "mini_title": "/VBFHToMuMuG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 68559,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "3.435e-01",
+    "total_value": "2.080e-04",
+    "total_value_uncertainty": "1.061e-08"
+   },
+   "size_bytes": 3002656587,
+   "title": "/VBFHToMuMuG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "68833": {
+   "abstract": "<p>Simulated dataset VBF_HToZZTo2L2X_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8_withDipoleRecoil in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 270000,
+   "files_complete_index": 1,
+   "files_distribution": 1,
+   "files_flag": null,
+   "files_listed_in_index_entries": 1,
+   "generators": [
+    "JHUGen v7.0.11",
+    "powheg VBF_H"
+   ],
+   "link": "https://opendata.cern.ch/record/68833",
+   "mini_link": "https://opendata.cern.ch/record/68832",
+   "mini_recid": 68832,
+   "mini_title": "/VBF_HToZZTo2L2X_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8_withDipoleRecoil/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 68833,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "6.667e-04",
+    "total_value": "3.935e+00",
+    "total_value_uncertainty": "8.872e-03"
+   },
+   "size_bytes": 482113432,
+   "title": "/VBF_HToZZTo2L2X_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8_withDipoleRecoil/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "69389": {
+   "abstract": "<p>Simulated dataset VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 330462,
+   "files_complete_index": 14,
+   "files_distribution": 14,
+   "files_flag": null,
+   "files_listed_in_index_entries": 14,
+   "generators": [
+    "Madgraph5_aMC@NLO"
+   ],
+   "link": "https://opendata.cern.ch/record/69389",
+   "mini_link": "https://opendata.cern.ch/record/69388",
+   "mini_recid": 69388,
+   "mini_title": "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 69389,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.4",
+    "neg_weight_fraction": "2.544e-01",
+    "total_value": "2.516e+00",
+    "total_value_uncertainty": "7.851e-03"
+   },
+   "size_bytes": 615160334,
+   "title": "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "69559": {
+   "abstract": "<p>Simulated dataset WGammaToJJGamma_TuneCP5_13TeV-amcatnloFXFX-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 5102027,
+   "files_complete_index": 10,
+   "files_distribution": 10,
+   "files_flag": null,
+   "files_listed_in_index_entries": 10,
+   "generators": [
+    "amcatnlo"
+   ],
+   "link": "https://opendata.cern.ch/record/69559",
+   "mini_link": "https://opendata.cern.ch/record/69558",
+   "mini_recid": 69558,
+   "mini_title": "/WGammaToJJGamma_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 69559,
+   "portal_cross_section": {
+    "filter_efficiency": "4.343e-01",
+    "matching_efficiency": "0.5",
+    "neg_weight_fraction": "2.120e-01",
+    "total_value": "8.650e+00",
+    "total_value_uncertainty": "9.004e-03"
+   },
+   "size_bytes": 8576894041,
+   "title": "/WGammaToJJGamma_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "69565": {
+   "abstract": "<p>Simulated dataset WGJJToLNu_EWKnotop_QCD_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 290000,
+   "files_complete_index": 73,
+   "files_distribution": 73,
+   "files_flag": null,
+   "files_listed_in_index_entries": 73,
+   "generators": [
+    "madgraph",
+    "pythia 8"
+   ],
+   "link": "https://opendata.cern.ch/record/69565",
+   "mini_link": "https://opendata.cern.ch/record/69564",
+   "mini_recid": 69564,
+   "mini_title": "/WGJJToLNu_EWKnotop_QCD_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 69565,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "6.657e+04",
+    "total_value_uncertainty": "2.553e+01"
+   },
+   "size_bytes": 669017101,
+   "title": "/WGJJToLNu_EWKnotop_QCD_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "69569": {
+   "abstract": "<p>Simulated dataset WGToLNuG_01J_5f_PtG_130_TuneCP5_13TeV-amcatnloFXFX-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 21115580,
+   "files_complete_index": 43,
+   "files_distribution": 43,
+   "files_flag": null,
+   "files_listed_in_index_entries": 43,
+   "generators": [
+    "aMCatNLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/69569",
+   "mini_link": "https://opendata.cern.ch/record/69568",
+   "mini_recid": 69568,
+   "mini_title": "/WGToLNuG_01J_5f_PtG_130_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 69569,
+   "portal_cross_section": {
+    "filter_efficiency": "8.116e-01",
+    "matching_efficiency": "0.6",
+    "neg_weight_fraction": "2.221e-01",
+    "total_value": "1.030e+00",
+    "total_value_uncertainty": "1.674e-03"
+   },
+   "size_bytes": 39992197015,
+   "title": "/WGToLNuG_01J_5f_PtG_130_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "69571": {
+   "abstract": "<p>Simulated dataset WGToLNuG_01J_5f_PtG_300_TuneCP5_13TeV-amcatnloFXFX-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 3983405,
+   "files_complete_index": 23,
+   "files_distribution": 23,
+   "files_flag": null,
+   "files_listed_in_index_entries": 23,
+   "generators": [
+    "aMCatNLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/69571",
+   "mini_link": "https://opendata.cern.ch/record/69570",
+   "mini_recid": 69570,
+   "mini_title": "/WGToLNuG_01J_5f_PtG_300_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 69571,
+   "portal_cross_section": {
+    "filter_efficiency": "9.138e-01",
+    "matching_efficiency": "0.6",
+    "neg_weight_fraction": "2.182e-01",
+    "total_value": "7.092e-02",
+    "total_value_uncertainty": "1.171e-04"
+   },
+   "size_bytes": 8508826587,
+   "title": "/WGToLNuG_01J_5f_PtG_300_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "69573": {
+   "abstract": "<p>Simulated dataset WGToLNuG_01J_5f_PtG_500_TuneCP5_13TeV-amcatnloFXFX-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 5319241,
+   "files_complete_index": 31,
+   "files_distribution": 31,
+   "files_flag": null,
+   "files_listed_in_index_entries": 31,
+   "generators": [
+    "aMCatNLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/69573",
+   "mini_link": "https://opendata.cern.ch/record/69572",
+   "mini_recid": 69572,
+   "mini_title": "/WGToLNuG_01J_5f_PtG_500_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 69573,
+   "portal_cross_section": {
+    "filter_efficiency": "9.565e-01",
+    "matching_efficiency": "0.7",
+    "neg_weight_fraction": "2.078e-01",
+    "total_value": "9.449e-03",
+    "total_value_uncertainty": "1.589e-05"
+   },
+   "size_bytes": 11969694642,
+   "title": "/WGToLNuG_01J_5f_PtG_500_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "69575": {
+   "abstract": "<p>Simulated dataset WGToLNuG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 55939475,
+   "files_complete_index": 43,
+   "files_distribution": 43,
+   "files_flag": null,
+   "files_listed_in_index_entries": 43,
+   "generators": [
+    "aMCatNLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/69575",
+   "mini_link": "https://opendata.cern.ch/record/69574",
+   "mini_recid": 69574,
+   "mini_title": "/WGToLNuG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 69575,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.5",
+    "neg_weight_fraction": "1.999e-01",
+    "total_value": "1.912e+02",
+    "total_value_uncertainty": "2.845e-01"
+   },
+   "size_bytes": 73869061211,
+   "title": "/WGToLNuG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "69681": {
+   "abstract": "<p>Simulated dataset WHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 883393,
+   "files_complete_index": 5,
+   "files_distribution": 5,
+   "files_flag": null,
+   "files_listed_in_index_entries": 5,
+   "generators": [
+    "Madgraph5_aMC@NLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/69681",
+   "mini_link": "https://opendata.cern.ch/record/69680",
+   "mini_recid": 69680,
+   "mini_title": "/WHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 69681,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "1.937e-01",
+    "total_value": "1.238e-04",
+    "total_value_uncertainty": "1.824e-07"
+   },
+   "size_bytes": 1746616499,
+   "title": "/WHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "69699": {
+   "abstract": "<p>Simulated dataset WHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 910746,
+   "files_complete_index": 25,
+   "files_distribution": 25,
+   "files_flag": null,
+   "files_listed_in_index_entries": 25,
+   "generators": [
+    "Madgraph5_aMC@NLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/69699",
+   "mini_link": "https://opendata.cern.ch/record/69698",
+   "mini_recid": 69698,
+   "mini_title": "/WHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v3/MINIAODSIM",
+   "nano_recid": 69699,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "1.933e-01",
+    "total_value": "8.169e-05",
+    "total_value_uncertainty": "1.184e-07"
+   },
+   "size_bytes": 1771506625,
+   "title": "/WHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "69751": {
+   "abstract": "<p>Simulated dataset WJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 7065076,
+   "files_complete_index": 12,
+   "files_distribution": 12,
+   "files_flag": null,
+   "files_listed_in_index_entries": 12,
+   "generators": [
+    "madgraph",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/69751",
+   "mini_link": "https://opendata.cern.ch/record/69750",
+   "mini_recid": 69750,
+   "mini_title": "/WJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 69751,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.2",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.564e+03",
+    "total_value_uncertainty": "8.675e-01"
+   },
+   "size_bytes": 10257378223,
+   "title": "/WJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "69753": {
+   "abstract": "<p>Simulated dataset WJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 4455853,
+   "files_complete_index": 26,
+   "files_distribution": 26,
+   "files_flag": null,
+   "files_listed_in_index_entries": 26,
+   "generators": [
+    "madgraph",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/69753",
+   "mini_link": "https://opendata.cern.ch/record/69752",
+   "mini_recid": 69752,
+   "mini_title": "/WJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 69753,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.2",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.772e+02",
+    "total_value_uncertainty": "1.184e-01"
+   },
+   "size_bytes": 8695849459,
+   "title": "/WJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "69755": {
+   "abstract": "<p>Simulated dataset WJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 6804490,
+   "files_complete_index": 52,
+   "files_distribution": 52,
+   "files_flag": null,
+   "files_listed_in_index_entries": 52,
+   "generators": [
+    "madgraph",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/69755",
+   "mini_link": "https://opendata.cern.ch/record/69754",
+   "mini_recid": 69754,
+   "mini_title": "/WJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 69755,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.2",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "5.911e+01",
+    "total_value_uncertainty": "2.047e-02"
+   },
+   "size_bytes": 15002406669,
+   "title": "/WJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "69757": {
+   "abstract": "<p>Simulated dataset WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 6769101,
+   "files_complete_index": 32,
+   "files_distribution": 32,
+   "files_flag": null,
+   "files_listed_in_index_entries": 32,
+   "generators": [
+    "madgraph",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/69757",
+   "mini_link": "https://opendata.cern.ch/record/69756",
+   "mini_recid": 69756,
+   "mini_title": "/WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 69757,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.2",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.876e+01",
+    "total_value_uncertainty": "9.970e-03"
+   },
+   "size_bytes": 16160573193,
+   "title": "/WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "69771": {
+   "abstract": "<p>Simulated dataset WLLJJ_WToLNu_EWK_TuneCP5_13TeV_madgraph-madspin-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 500000,
+   "files_complete_index": 34,
+   "files_distribution": 34,
+   "files_flag": null,
+   "files_listed_in_index_entries": 34,
+   "generators": [
+    "madgraph",
+    "pyhia8"
+   ],
+   "link": "https://opendata.cern.ch/record/69771",
+   "mini_link": "https://opendata.cern.ch/record/69770",
+   "mini_recid": 69770,
+   "mini_title": "/WLLJJ_WToLNu_EWK_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 69771,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "3.566e-02",
+    "total_value_uncertainty": "8.524e-06"
+   },
+   "size_bytes": 1218028776,
+   "title": "/WLLJJ_WToLNu_EWK_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "70515": {
+   "abstract": "<p>Simulated dataset WminusH_WToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 499985,
+   "files_complete_index": 2,
+   "files_distribution": 2,
+   "files_flag": null,
+   "files_listed_in_index_entries": 2,
+   "generators": [
+    "Powheg+Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/70515",
+   "mini_link": "https://opendata.cern.ch/record/70514",
+   "mini_recid": 70514,
+   "mini_title": "/WminusH_WToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 70515,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.692e-02",
+    "total_value": "3.674e-01",
+    "total_value_uncertainty": "7.676e-04"
+   },
+   "size_bytes": 654055104,
+   "title": "/WminusH_WToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "71359": {
+   "abstract": "<p>Simulated dataset WplusH_WToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 499989,
+   "files_complete_index": 4,
+   "files_distribution": 4,
+   "files_flag": null,
+   "files_listed_in_index_entries": 4,
+   "generators": [
+    "Powheg+Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/71359",
+   "mini_link": "https://opendata.cern.ch/record/71358",
+   "mini_recid": 71358,
+   "mini_title": "/WplusH_WToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 71359,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.824e-02",
+    "total_value": "5.884e-01",
+    "total_value_uncertainty": "1.368e-03"
+   },
+   "size_bytes": 659931422,
+   "title": "/WplusH_WToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "71636": {
+   "abstract": "<p>Simulated dataset WpWpJJ_EWKnotop_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 1498134,
+   "files_complete_index": 22,
+   "files_distribution": 22,
+   "files_flag": null,
+   "files_listed_in_index_entries": 22,
+   "generators": [
+    "aMCatNLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/71636",
+   "mini_link": "https://opendata.cern.ch/record/71635",
+   "mini_recid": 71635,
+   "mini_title": "/WpWpJJ_EWKnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 71636,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.694e-02",
+    "total_value_uncertainty": "4.622e-06"
+   },
+   "size_bytes": 3028622016,
+   "title": "/WpWpJJ_EWKnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "71638": {
+   "abstract": "<p>Simulated dataset WpWpJJ_EWK_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 75000,
+   "files_complete_index": 22,
+   "files_distribution": 22,
+   "files_flag": null,
+   "files_listed_in_index_entries": 22,
+   "generators": [
+    "aMCatNLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/71638",
+   "mini_link": "https://opendata.cern.ch/record/71637",
+   "mini_recid": 71637,
+   "mini_title": "/WpWpJJ_EWK_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 71638,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.824e-02",
+    "total_value_uncertainty": "2.173e-05"
+   },
+   "size_bytes": 209107774,
+   "title": "/WpWpJJ_EWK_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "71640": {
+   "abstract": "<p>Simulated dataset WpWpJJ_QCDnotop_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 463652,
+   "files_complete_index": 22,
+   "files_distribution": 22,
+   "files_flag": null,
+   "files_listed_in_index_entries": 22,
+   "generators": [
+    "madgraph",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/71640",
+   "mini_link": "https://opendata.cern.ch/record/71639",
+   "mini_recid": 71639,
+   "mini_title": "/WpWpJJ_QCDnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 71640,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.037e-02",
+    "total_value_uncertainty": "6.913e-06"
+   },
+   "size_bytes": 1052247672,
+   "title": "/WpWpJJ_QCDnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "71642": {
+   "abstract": "<p>Simulated dataset WpWpJJ_QCD_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 75000,
+   "files_complete_index": 17,
+   "files_distribution": 17,
+   "files_flag": null,
+   "files_listed_in_index_entries": 17,
+   "generators": [
+    "madgraph",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/71642",
+   "mini_link": "https://opendata.cern.ch/record/71641",
+   "mini_recid": 71641,
+   "mini_title": "/WpWpJJ_QCD_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 71642,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.377e-02",
+    "total_value_uncertainty": "1.962e-05"
+   },
+   "size_bytes": 203272018,
+   "title": "/WpWpJJ_QCD_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "72648": {
+   "abstract": "<p>Simulated dataset WWJJToLNuLNu_EWK_noTop_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 500000,
+   "files_complete_index": 5,
+   "files_distribution": 5,
+   "files_flag": null,
+   "files_listed_in_index_entries": 5,
+   "generators": [
+    "madgraph",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/72648",
+   "mini_link": "https://opendata.cern.ch/record/72647",
+   "mini_recid": 72647,
+   "mini_title": "/WWJJToLNuLNu_EWK_noTop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 72648,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "9.219e-02",
+    "total_value_uncertainty": "2.809e-05"
+   },
+   "size_bytes": 953720316,
+   "title": "/WWJJToLNuLNu_EWK_noTop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "72652": {
+   "abstract": "<p>Simulated dataset WWJJToLNuLNu_OS_EWK_QCD_noTop_TuneCP5_13TeV_madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 249064,
+   "files_complete_index": 1,
+   "files_distribution": 1,
+   "files_flag": null,
+   "files_listed_in_index_entries": 1,
+   "generators": [
+    "Madgraph  V5 2.6.5",
+    "pythia 8"
+   ],
+   "link": "https://opendata.cern.ch/record/72652",
+   "mini_link": "https://opendata.cern.ch/record/72651",
+   "mini_recid": 72651,
+   "mini_title": "/WWJJToLNuLNu_OS_EWK_QCD_noTop_TuneCP5_13TeV_madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 72652,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.297e+00",
+    "total_value_uncertainty": "1.428e-03"
+   },
+   "size_bytes": 478989169,
+   "title": "/WWJJToLNuLNu_OS_EWK_QCD_noTop_TuneCP5_13TeV_madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "72654": {
+   "abstract": "<p>Simulated dataset WWJJToLNuLNu_OS_EWK_TuneCP5_13TeV_madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 249061,
+   "files_complete_index": 2,
+   "files_distribution": 2,
+   "files_flag": null,
+   "files_listed_in_index_entries": 2,
+   "generators": [
+    "Madgraph  V5 2.6.5",
+    "pythia 8"
+   ],
+   "link": "https://opendata.cern.ch/record/72654",
+   "mini_link": "https://opendata.cern.ch/record/72653",
+   "mini_recid": 72653,
+   "mini_title": "/WWJJToLNuLNu_OS_EWK_TuneCP5_13TeV_madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 72654,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "4.378e-01",
+    "total_value_uncertainty": "1.798e-04"
+   },
+   "size_bytes": 483470004,
+   "title": "/WWJJToLNuLNu_OS_EWK_TuneCP5_13TeV_madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "72678": {
+   "abstract": "<p>Simulated dataset WWTo2L2Nu_TuneCP5_DoubleScattering_13TeV-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 500000,
+   "files_complete_index": 29,
+   "files_distribution": 29,
+   "files_flag": null,
+   "files_listed_in_index_entries": 29,
+   "generators": [
+    "Pytha8"
+   ],
+   "link": "https://opendata.cern.ch/record/72678",
+   "mini_link": "https://opendata.cern.ch/record/72677",
+   "mini_recid": 72677,
+   "mini_title": "/WWTo2L2Nu_TuneCP5_DoubleScattering_13TeV-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 72678,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.088e-01",
+    "total_value_uncertainty": "4.184e-04"
+   },
+   "size_bytes": 633956293,
+   "title": "/WWTo2L2Nu_TuneCP5_DoubleScattering_13TeV-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "72698": {
+   "abstract": "<p>Simulated dataset WWW_4F_DiLeptonFilter_TuneCP5_13TeV-amcatnlo-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 1785796,
+   "files_complete_index": 24,
+   "files_distribution": 24,
+   "files_flag": null,
+   "files_listed_in_index_entries": 24,
+   "generators": [
+    "Pythia 8",
+    "aMCatNLO"
+   ],
+   "link": "https://opendata.cern.ch/record/72698",
+   "mini_link": "https://opendata.cern.ch/record/72697",
+   "mini_recid": 72697,
+   "mini_title": "/WWW_4F_DiLeptonFilter_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 72698,
+   "portal_cross_section": {
+    "filter_efficiency": "3.183e-02",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "4.674e-02",
+    "total_value": "6.870e-03",
+    "total_value_uncertainty": "9.664e-06"
+   },
+   "size_bytes": 3477860570,
+   "title": "/WWW_4F_DiLeptonFilter_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "72701": {
+   "abstract": "<p>Simulated dataset WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 4159000,
+   "files_complete_index": 24,
+   "files_distribution": 24,
+   "files_flag": null,
+   "files_listed_in_index_entries": 24,
+   "generators": [
+    "aMCatNLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/72701",
+   "mini_link": "https://opendata.cern.ch/record/72699",
+   "mini_recid": 72699,
+   "mini_title": "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17_ext1-v1/MINIAODSIM",
+   "nano_recid": 72701,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "4.672e-02",
+    "total_value": "2.158e-01",
+    "total_value_uncertainty": "2.479e-04"
+   },
+   "size_bytes": 7923223607,
+   "title": "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
+  },
+  "72711": {
+   "abstract": "<p>Simulated dataset WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 4595000,
+   "files_complete_index": 7,
+   "files_distribution": 7,
+   "files_flag": null,
+   "files_listed_in_index_entries": 7,
+   "generators": [
+    "aMCatNLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/72711",
+   "mini_link": "https://opendata.cern.ch/record/72709",
+   "mini_recid": 72709,
+   "mini_title": "/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17_ext1-v1/MINIAODSIM",
+   "nano_recid": 72711,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "4.649e-02",
+    "total_value": "1.707e-01",
+    "total_value_uncertainty": "1.757e-04"
+   },
+   "size_bytes": 9213176039,
+   "title": "/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
+  },
+  "72718": {
+   "abstract": "<p>Simulated dataset WWZJetsTo4L2Nu_4F_TuneCP5_13TeV-amcatnlo-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 1840000,
+   "files_complete_index": 14,
+   "files_distribution": 14,
+   "files_flag": null,
+   "files_listed_in_index_entries": 14,
+   "generators": [
+    "aMCatNLO",
+    "pythia 8"
+   ],
+   "link": "https://opendata.cern.ch/record/72718",
+   "mini_link": "https://opendata.cern.ch/record/72717",
+   "mini_recid": 72717,
+   "mini_title": "/WWZJetsTo4L2Nu_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 72718,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "4.948e-02",
+    "total_value": "2.067e-03",
+    "total_value_uncertainty": "1.939e-06"
+   },
+   "size_bytes": 4025880569,
+   "title": "/WWZJetsTo4L2Nu_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "72728": {
+   "abstract": "<p>Simulated dataset WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 1858000,
+   "files_complete_index": 14,
+   "files_distribution": 14,
+   "files_flag": null,
+   "files_listed_in_index_entries": 14,
+   "generators": [
+    "madgraph",
+    "pyhia8"
+   ],
+   "link": "https://opendata.cern.ch/record/72728",
+   "mini_link": "https://opendata.cern.ch/record/72727",
+   "mini_recid": 72727,
+   "mini_title": "/WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 72728,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.630e-02",
+    "total_value_uncertainty": "2.326e-06"
+   },
+   "size_bytes": 4253712574,
+   "title": "/WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "72761": {
+   "abstract": "<p>Simulated dataset WZZ_TuneCP5_13TeV-amcatnlo-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 4554000,
+   "files_complete_index": 6,
+   "files_distribution": 9,
+   "files_flag": "distribution 9 / index sum 6 / listed 6",
+   "files_listed_in_index_entries": 6,
+   "generators": [
+    "aMCatNLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/72761",
+   "mini_link": "https://opendata.cern.ch/record/72759",
+   "mini_recid": 72759,
+   "mini_title": "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17_ext1-v1/MINIAODSIM",
+   "nano_recid": 72761,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "4.614e-02",
+    "total_value": "5.709e-02",
+    "total_value_uncertainty": "6.213e-05"
+   },
+   "size_bytes": 9215279506,
+   "title": "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
+  },
+  "73892": {
+   "abstract": "<p>Simulated dataset ZGamma2JToGamma2L2J_EWK_MLL-50_MJJ-120_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 230000,
+   "files_complete_index": 24,
+   "files_distribution": 24,
+   "files_flag": null,
+   "files_listed_in_index_entries": 24,
+   "generators": [
+    "Madgraph  V5 2.6.5",
+    "pythia 8"
+   ],
+   "link": "https://opendata.cern.ch/record/73892",
+   "mini_link": "https://opendata.cern.ch/record/73891",
+   "mini_recid": 73891,
+   "mini_title": "/ZGamma2JToGamma2L2J_EWK_MLL-50_MJJ-120_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 73892,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.087e-03",
+    "total_value": "1.146e-01",
+    "total_value_uncertainty": "4.639e-05"
+   },
+   "size_bytes": 527561960,
+   "title": "/ZGamma2JToGamma2L2J_EWK_MLL-50_MJJ-120_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "73898": {
+   "abstract": "<p>Simulated dataset ZGTo2MuG_mll_2to15_LO_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 3995305,
+   "files_complete_index": 3,
+   "files_distribution": 3,
+   "files_flag": null,
+   "files_listed_in_index_entries": 3,
+   "generators": [
+    "Madgraph",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/73898",
+   "mini_link": "https://opendata.cern.ch/record/73897",
+   "mini_recid": 73897,
+   "mini_title": "/ZGTo2MuG_mll_2to15_LO_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v4/MINIAODSIM",
+   "nano_recid": 73898,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "9.304e-02",
+    "total_value_uncertainty": "2.644e-05"
+   },
+   "size_bytes": 4921835974,
+   "title": "/ZGTo2MuG_mll_2to15_LO_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "73900": {
+   "abstract": "<p>Simulated dataset ZGTo2NuG_TuneCP5_13TeV-amcatnloFXFX-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 1183548,
+   "files_complete_index": 28,
+   "files_distribution": 28,
+   "files_flag": null,
+   "files_listed_in_index_entries": 28,
+   "generators": [
+    "Madgraph v5 2.6.5"
+   ],
+   "link": "https://opendata.cern.ch/record/73900",
+   "mini_link": "https://opendata.cern.ch/record/73899",
+   "mini_recid": 73899,
+   "mini_title": "/ZGTo2NuG_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 73900,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.5",
+    "neg_weight_fraction": "1.809e-01",
+    "total_value": "3.022e+01",
+    "total_value_uncertainty": "4.005e-02"
+   },
+   "size_bytes": 1340428132,
+   "title": "/ZGTo2NuG_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "73902": {
+   "abstract": "<p>Simulated dataset ZGToLLG_01J_5f_lowMLL_lowGPt_TuneCP5_13TeV-amcatnloFXFX-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 39041586,
+   "files_complete_index": 27,
+   "files_distribution": 27,
+   "files_flag": null,
+   "files_listed_in_index_entries": 27,
+   "generators": [
+    "madgraph"
+   ],
+   "link": "https://opendata.cern.ch/record/73902",
+   "mini_link": "https://opendata.cern.ch/record/73901",
+   "mini_recid": 73901,
+   "mini_title": "/ZGToLLG_01J_5f_lowMLL_lowGPt_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 73902,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.5",
+    "neg_weight_fraction": "1.588e-01",
+    "total_value": "1.739e+02",
+    "total_value_uncertainty": "1.421e-01"
+   },
+   "size_bytes": 55256007954,
+   "title": "/ZGToLLG_01J_5f_lowMLL_lowGPt_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "73904": {
+   "abstract": "<p>Simulated dataset ZGToLLG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 31562465,
+   "files_complete_index": 26,
+   "files_distribution": 26,
+   "files_flag": null,
+   "files_listed_in_index_entries": 26,
+   "generators": [
+    "amcatnlo",
+    "pyhia8"
+   ],
+   "link": "https://opendata.cern.ch/record/73904",
+   "mini_link": "https://opendata.cern.ch/record/73903",
+   "mini_recid": 73903,
+   "mini_title": "/ZGToLLG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 73904,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.5",
+    "neg_weight_fraction": "1.868e-01",
+    "total_value": "5.144e+01",
+    "total_value_uncertainty": "1.047e-01"
+   },
+   "size_bytes": 47719858721,
+   "title": "/ZGToLLG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "74300": {
+   "abstract": "<p>Simulated dataset ZH_HToZZ_2LFilter_M125_TuneCP5_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 549260,
+   "files_complete_index": 1,
+   "files_distribution": 1,
+   "files_flag": null,
+   "files_listed_in_index_entries": 1,
+   "generators": [
+    "JHUGen v7.0.11",
+    "powheg HZJ"
+   ],
+   "link": "https://opendata.cern.ch/record/74300",
+   "mini_link": "https://opendata.cern.ch/record/74299",
+   "mini_recid": 74299,
+   "mini_title": "/ZH_HToZZ_2LFilter_M125_TuneCP5_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v6/MINIAODSIM",
+   "nano_recid": 74300,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "2.915e-02",
+    "total_value": "7.935e-01",
+    "total_value_uncertainty": "1.753e-03"
+   },
+   "size_bytes": 1051477511,
+   "title": "/ZH_HToZZ_2LFilter_M125_TuneCP5_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "74314": {
+   "abstract": "<p>Simulated dataset ZH_HToZZ_4LFilter_M125_TuneCP5_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 486281,
+   "files_complete_index": 4,
+   "files_distribution": 4,
+   "files_flag": null,
+   "files_listed_in_index_entries": 4,
+   "generators": [
+    "JHUGen v7.0.11",
+    "powheg HZJ"
+   ],
+   "link": "https://opendata.cern.ch/record/74314",
+   "mini_link": "https://opendata.cern.ch/record/74313",
+   "mini_recid": 74313,
+   "mini_title": "/ZH_HToZZ_4LFilter_M125_TuneCP5_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 74314,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.2",
+    "neg_weight_fraction": "2.914e-02",
+    "total_value": "7.935e-01",
+    "total_value_uncertainty": "3.505e-03"
+   },
+   "size_bytes": 1032818080,
+   "title": "/ZH_HToZZ_4LFilter_M125_TuneCP5_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "74652": {
+   "abstract": "<p>Simulated dataset ZHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 905541,
+   "files_complete_index": 5,
+   "files_distribution": 5,
+   "files_flag": null,
+   "files_listed_in_index_entries": 5,
+   "generators": [
+    "Madgraph5_aMC@NLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/74652",
+   "mini_link": "https://opendata.cern.ch/record/74651",
+   "mini_recid": 74651,
+   "mini_title": "/ZHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 74652,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "1.988e-01",
+    "total_value": "6.762e-05",
+    "total_value_uncertainty": "1.002e-07"
+   },
+   "size_bytes": 1803644469,
+   "title": "/ZHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "74670": {
+   "abstract": "<p>Simulated dataset ZHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 924063,
+   "files_complete_index": 3,
+   "files_distribution": 3,
+   "files_flag": null,
+   "files_listed_in_index_entries": 3,
+   "generators": [
+    "Madgraph5_aMC@NLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/74670",
+   "mini_link": "https://opendata.cern.ch/record/74669",
+   "mini_recid": 74669,
+   "mini_title": "/ZHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+   "nano_recid": 74670,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "1.992e-01",
+    "total_value": "4.459e-05",
+    "total_value_uncertainty": "6.552e-08"
+   },
+   "size_bytes": 1746080510,
+   "title": "/ZHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "74892": {
+   "abstract": "<p>Simulated dataset ZH_ZToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 497466,
+   "files_complete_index": 10,
+   "files_distribution": 10,
+   "files_flag": null,
+   "files_listed_in_index_entries": 10,
+   "generators": [
+    "Powheg+Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/74892",
+   "mini_link": "https://opendata.cern.ch/record/74891",
+   "mini_recid": 74891,
+   "mini_title": "/ZH_ZToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 74892,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.999e-02",
+    "total_value": "5.561e-01",
+    "total_value_uncertainty": "2.166e-03"
+   },
+   "size_bytes": 693210039,
+   "title": "/ZH_ZToQQ_HToInvisible_M125_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "74912": {
+   "abstract": "<p>Simulated dataset ZJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 7285673,
+   "files_complete_index": 21,
+   "files_distribution": 21,
+   "files_flag": null,
+   "files_listed_in_index_entries": 21,
+   "generators": [
+    "madgraph",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/74912",
+   "mini_link": "https://opendata.cern.ch/record/74911",
+   "mini_recid": 74911,
+   "mini_title": "/ZJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 74912,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.1",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.012e+03",
+    "total_value_uncertainty": "3.528e-01"
+   },
+   "size_bytes": 10776029079,
+   "title": "/ZJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "74914": {
+   "abstract": "<p>Simulated dataset ZJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 6942718,
+   "files_complete_index": 23,
+   "files_distribution": 23,
+   "files_flag": null,
+   "files_listed_in_index_entries": 23,
+   "generators": [
+    "madgraph",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/74914",
+   "mini_link": "https://opendata.cern.ch/record/74913",
+   "mini_recid": 74913,
+   "mini_title": "/ZJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 74914,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.1",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.145e+02",
+    "total_value_uncertainty": "4.145e-02"
+   },
+   "size_bytes": 13711453593,
+   "title": "/ZJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "74916": {
+   "abstract": "<p>Simulated dataset ZJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 5529896,
+   "files_complete_index": 29,
+   "files_distribution": 29,
+   "files_flag": null,
+   "files_listed_in_index_entries": 29,
+   "generators": [
+    "madgraph",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/74916",
+   "mini_link": "https://opendata.cern.ch/record/74915",
+   "mini_recid": 74915,
+   "mini_title": "/ZJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 74916,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.1",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.537e+01",
+    "total_value_uncertainty": "1.752e-02"
+   },
+   "size_bytes": 12494263824,
+   "title": "/ZJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "74918": {
+   "abstract": "<p>Simulated dataset ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 4388402,
+   "files_complete_index": 40,
+   "files_distribution": 40,
+   "files_flag": null,
+   "files_listed_in_index_entries": 40,
+   "generators": [
+    "madgraph",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/74918",
+   "mini_link": "https://opendata.cern.ch/record/74917",
+   "mini_recid": 74917,
+   "mini_title": "/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 74918,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.1",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.292e+01",
+    "total_value_uncertainty": "5.923e-03"
+   },
+   "size_bytes": 10961247575,
+   "title": "/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "75559": {
+   "abstract": "<p>Simulated dataset ZZGTo4L_TuneCP5_4f_NLO_13TeV-amcatnlo-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 500000,
+   "files_complete_index": 5,
+   "files_distribution": 5,
+   "files_flag": null,
+   "files_listed_in_index_entries": 5,
+   "generators": [
+    "madgraph",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/75559",
+   "mini_link": "https://opendata.cern.ch/record/75558",
+   "mini_recid": 75558,
+   "mini_title": "/ZZGTo4L_TuneCP5_4f_NLO_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 75559,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "8.903e-02",
+    "total_value": "2.202e-02",
+    "total_value_uncertainty": "1.923e-05"
+   },
+   "size_bytes": 884206320,
+   "title": "/ZZGTo4L_TuneCP5_4f_NLO_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "75561": {
+   "abstract": "<p>Simulated dataset ZZJJTo4L_EWKnotop_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 1149069,
+   "files_complete_index": 9,
+   "files_distribution": 9,
+   "files_flag": null,
+   "files_listed_in_index_entries": 9,
+   "generators": [
+    "Madgraph",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/75561",
+   "mini_link": "https://opendata.cern.ch/record/75560",
+   "mini_recid": 75560,
+   "mini_title": "/ZZJJTo4L_EWKnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 75561,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "9.928e-04",
+    "total_value_uncertainty": "2.144e-07"
+   },
+   "size_bytes": 3005663484,
+   "title": "/ZZJJTo4L_EWKnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "75563": {
+   "abstract": "<p>Simulated dataset ZZJJTo4L_TuneCP5_13TeV-madgraph-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 1991666,
+   "files_complete_index": 41,
+   "files_distribution": 41,
+   "files_flag": null,
+   "files_listed_in_index_entries": 41,
+   "generators": [
+    "Madgraph",
+    "Pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/75563",
+   "mini_link": "https://opendata.cern.ch/record/75562",
+   "mini_recid": 75562,
+   "mini_title": "/ZZJJTo4L_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 75563,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.011e-03",
+    "total_value_uncertainty": "1.694e-07"
+   },
+   "size_bytes": 5124969833,
+   "title": "/ZZJJTo4L_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "75571": {
+   "abstract": "<p>Simulated dataset ZZTo2Nu2Q_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 2468807,
+   "files_complete_index": 23,
+   "files_distribution": 23,
+   "files_flag": null,
+   "files_listed_in_index_entries": 23,
+   "generators": [
+    "amcatnlo"
+   ],
+   "link": "https://opendata.cern.ch/record/75571",
+   "mini_link": "https://opendata.cern.ch/record/75570",
+   "mini_recid": 75570,
+   "mini_title": "/ZZTo2Nu2Q_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
+   "nano_recid": 75571,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.6",
+    "neg_weight_fraction": "2.042e-01",
+    "total_value": "4.557e+00",
+    "total_value_uncertainty": "4.843e-03"
+   },
+   "size_bytes": 3208857056,
+   "title": "/ZZTo2Nu2Q_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "75600": {
+   "abstract": "<p>Simulated dataset ZZZ_TuneCP5_13TeV-amcatnlo-pythia8 in NANOAODSIM format for 2016 collision data.</p><p>See the description of the simulated dataset names in: <a href=\"/about/CMS-Simulated-Dataset-Names\">About CMS simulated dataset names</a>.</p><p>These simulated datasets correspond to the collision data collected by the CMS experiment in 2016.</p>",
+   "events": 4534000,
+   "files_complete_index": 20,
+   "files_distribution": 20,
+   "files_flag": null,
+   "files_listed_in_index_entries": 20,
+   "generators": [
+    "aMCatNLO",
+    "pythia8"
+   ],
+   "link": "https://opendata.cern.ch/record/75600",
+   "mini_link": "https://opendata.cern.ch/record/75598",
+   "mini_recid": 75598,
+   "mini_title": "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17_ext1-v1/MINIAODSIM",
+   "nano_recid": 75600,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "5.439e-02",
+    "total_value": "1.476e-02",
+    "total_value_uncertainty": "2.319e-06"
+   },
+   "size_bytes": 8319674751,
+   "title": "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
+  }
+ },
+ "what": "CMS candidate record details (tools/record_details.py, several runs merged)"
+}
