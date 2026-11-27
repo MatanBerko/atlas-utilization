@@ -1,0 +1,106 @@
+{
+ "what": "PRECHECK ONLY — NOT A CROSS SECTION DECISION. Temporary file for the 27 Nov 2026 one-file precheck of the 14 Nominal-6 additions. Values = CERN Open Data MiniAOD metadata.cross_section.total_value AS LISTED, used only to print illustrative weights in the precheck summary. NOT a registry version, never to be passed to the MC builder for a delivery, and NOT Matan's choice (his hand check is pending; options in studies/nominal6_additions_20261127/REPORT.md).",
+ "PRECHECK_ONLY": true,
+ "not_a_cross_section_decision": true,
+ "target_luminosity_fb": 16.393,
+ "records": {
+  "75561": {
+   "record_id": 75561,
+   "mini_recid": 75560,
+   "dataset": "ZZJJTo4L_EWKnotop_TuneCP5_13TeV-madgraph-pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 0.0009928,
+   "source": "https://opendata.cern.ch/record/75560 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  },
+  "69771": {
+   "record_id": 69771,
+   "mini_recid": 69770,
+   "dataset": "WLLJJ_WToLNu_EWK_TuneCP5_13TeV_madgraph-madspin-pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 0.03566,
+   "source": "https://opendata.cern.ch/record/69770 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  },
+  "72648": {
+   "record_id": 72648,
+   "mini_recid": 72647,
+   "dataset": "WWJJToLNuLNu_EWK_noTop_TuneCP5_13TeV-madgraph-pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 0.09219,
+   "source": "https://opendata.cern.ch/record/72647 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  },
+  "71636": {
+   "record_id": 71636,
+   "mini_recid": 71635,
+   "dataset": "WpWpJJ_EWKnotop_TuneCP5_13TeV-madgraph-pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 0.02694,
+   "source": "https://opendata.cern.ch/record/71635 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  },
+  "71640": {
+   "record_id": 71640,
+   "mini_recid": 71639,
+   "dataset": "WpWpJJ_QCDnotop_TuneCP5_13TeV-madgraph-pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 0.02037,
+   "source": "https://opendata.cern.ch/record/71639 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  },
+  "37276": {
+   "record_id": 37276,
+   "mini_recid": 37275,
+   "dataset": "GluGluHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 0.002816,
+   "source": "https://opendata.cern.ch/record/37275 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  },
+  "37420": {
+   "record_id": 37420,
+   "mini_recid": 37419,
+   "dataset": "GluGluHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 0.001858,
+   "source": "https://opendata.cern.ch/record/37419 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  },
+  "68459": {
+   "record_id": 68459,
+   "mini_recid": 68458,
+   "dataset": "VBFHToEEG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 0.000315,
+   "source": "https://opendata.cern.ch/record/68458 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  },
+  "68559": {
+   "record_id": 68559,
+   "mini_recid": 68558,
+   "dataset": "VBFHToMuMuG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 0.000208,
+   "source": "https://opendata.cern.ch/record/68558 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  },
+  "69681": {
+   "record_id": 69681,
+   "mini_recid": 69680,
+   "dataset": "WHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 0.0001238,
+   "source": "https://opendata.cern.ch/record/69680 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  },
+  "69699": {
+   "record_id": 69699,
+   "mini_recid": 69698,
+   "dataset": "WHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 8.169e-05,
+   "source": "https://opendata.cern.ch/record/69698 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  },
+  "74652": {
+   "record_id": 74652,
+   "mini_recid": 74651,
+   "dataset": "ZHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 6.762e-05,
+   "source": "https://opendata.cern.ch/record/74651 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  },
+  "74670": {
+   "record_id": 74670,
+   "mini_recid": 74669,
+   "dataset": "ZHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 4.459e-05,
+   "source": "https://opendata.cern.ch/record/74669 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  },
+  "74314": {
+   "record_id": 74314,
+   "mini_recid": 74313,
+   "dataset": "ZH_HToZZ_4LFilter_M125_TuneCP5_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8",
+   "cross_section_pb_PRECHECK_ONLY": 0.7935,
+   "source": "https://opendata.cern.ch/record/74313 metadata.cross_section.total_value (as listed; R1 caveats in REPORT.md)"
+  }
+ }
+}
