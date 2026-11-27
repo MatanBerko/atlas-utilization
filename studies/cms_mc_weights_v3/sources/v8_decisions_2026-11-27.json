@@ -1,0 +1,406 @@
+{
+ "what": "DECISION RECORD ONLY, no values adopted. Matan's decision of 27 Nov 2026 on the Nominal-6 comparison (studies/nominal6_correspondence_20261124/REPORT.md, commit 14cd426), recorded verbatim. No cross section, k-factor, filter efficiency or branching ratio is adopted, and no registry (v3-v5) is changed. The 14 records to add need Matan's hand check of every cross section first (options: studies/nominal6_additions_20261127/REPORT.md); only after that can a registry v6 be written.",
+ "decided": "Matan, 27 Nov 2026",
+ "name": "Option A",
+ "text_verbatim": "\"Option A\": ADD four items from the Nominal-6 comparison; DOCUMENT the rest; KEEP the CMS-only samples.\n- ADD (14 samples), subject to Matan's hand check of every cross section (NOT in this task):\n  N1 electroweak VV+2 jets: 75561 ZZJJTo4L_EWKnotop, 69771 WLLJJ_WToLNu_EWK, 72648 WWJJToLNuLNu_EWK_noTop, 71636 WpWpJJ_EWKnotop. No interference sample (CMS has none separately; ATLAS 700591–700594 ≈ 6 % of its EW VV+2j total) — documented. The partial overlap with our tribosons (triboson-like diagrams) is the same as on the ATLAS side — documented.\n  N2 QCD same-sign WW: 71640 WpWpJJ_QCDnotop.\n  N3 Higgs Dalitz H->gamma* gamma->ll gamma, ee and mumu: ggF 37276/37420, VBF 68459/68559, WH 69681/69699, ZH 74652/74670 — on condition that the overlap with our H->Z gamma samples is settled first (Part B2).\n  N4 qq->ZH, H->ZZ->4l: 74314 ZH_HToZZ_4LFilter.\n- DOCUMENTED, not added (reason in brackets): N5 VBF H->ZZ->llbb [the only CMS sample 68833 contains our 68741 and 68847]; N6 gg->ZH H->tautau/mumu [no CMS sample]; N7 three-top [~18 events before selection for ~320 cluster files; negligible]; N8 VH H->invisible with leptonic V [no CMS sample]; N9 tZq Z->nunu/qq part [no CMS sample; our 68325 covers Z->ll]; N10 inclusive VBF/VH Higgs [would double count every VH sample we have; ATLAS double counts here itself — question to Maryna]; N11 V+gamma [overlaps our W+jets and Drell–Yan photon radiation; no sample-level photon overlap removal exists in either pipeline; ATLAS double counts]; N12 V+2 photons / EW V gamma jj / 3 photons [partly no CMS sample; CMS portal cross sections wrong by orders of magnitude; same overlap as N11]; N13 hadronic W/Z at high pT and hadronic V+gamma [no prompt lepton: enters lepton-triggered data only via fake leptons, dominated by the QCD multijet absent on both sides; ~3,710 cluster files]; N14 WZ/ZZ -> quarks + neutrinos, ZZ->4nu [no prompt lepton; partly no CMS sample]; N15 tW fully hadronic part [our tW is NoFullyHadronic; difference has no prompt lepton].\n- KEPT, CMS-only, documented: C1 hadronic t-channel (ours inclusive, ATLAS leptonic top only); C2 hadronic triboson decays (ours inclusive, ATLAS lepton-filtered); C3 ggF/VBF H->ZZ->2l2nu (37616, 68741; no ATLAS exclusive sample); C4 VH H->WW with all decays (41873, 41877, 41914, 40095).\n- Cluster file ceiling: Matan accepts raising the planning ceiling from 125,000 to 140,000 for this addition (it is his planning figure, not a hard quota; still measure and report).",
+ "add": {
+  "N1": {
+   "description": "Electroweak VV+2 jets / vector-boson scattering, Sherpa 2.2.12 (lllljj, lllvjj, llvvjj os, llvvjj same-sign) and QCD-EW interference terms; total ~0.32 pb",
+   "atlas_dsids": [
+    700587,
+    700588,
+    700589,
+    700590,
+    700591,
+    700592,
+    700593,
+    700594
+   ],
+   "records": [
+    {
+     "nano_recid": 75561,
+     "mini_recid": 75560,
+     "dataset": "ZZJJTo4L_EWKnotop_TuneCP5_13TeV-madgraph-pythia8",
+     "gen_prepid": "SUS-RunIISummer20UL16wmLHEGEN-00134",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    },
+    {
+     "nano_recid": 69771,
+     "mini_recid": 69770,
+     "dataset": "WLLJJ_WToLNu_EWK_TuneCP5_13TeV_madgraph-madspin-pythia8",
+     "gen_prepid": "SMP-RunIISummer20UL16wmLHEGEN-00539",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    },
+    {
+     "nano_recid": 72648,
+     "mini_recid": 72647,
+     "dataset": "WWJJToLNuLNu_EWK_noTop_TuneCP5_13TeV-madgraph-pythia8",
+     "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-03478",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    },
+    {
+     "nano_recid": 71636,
+     "mini_recid": 71635,
+     "dataset": "WpWpJJ_EWKnotop_TuneCP5_13TeV-madgraph-pythia8",
+     "gen_prepid": "SUS-RunIISummer20UL16wmLHEGEN-00122",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    }
+   ]
+  },
+  "N2": {
+   "description": "QCD same-sign llvv (2 same-charged leptons + 2 neutrinos, 0,1j@LO), 0.0222 pb",
+   "atlas_dsids": [
+    700603
+   ],
+   "records": [
+    {
+     "nano_recid": 71640,
+     "mini_recid": 71639,
+     "dataset": "WpWpJJ_QCDnotop_TuneCP5_13TeV-madgraph-pythia8",
+     "gen_prepid": "SUS-RunIISummer20UL16wmLHEGEN-00123",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    }
+   ]
+  },
+  "N3": {
+   "description": "Higgs Dalitz H->gamma* gamma->ll gamma: ggF, VBF, W-H, W+H, ZH",
+   "atlas_dsids": [
+    345961,
+    345834,
+    345963,
+    345964,
+    345965
+   ],
+   "records": [
+    {
+     "nano_recid": 37276,
+     "mini_recid": 37275,
+     "dataset": "GluGluHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8",
+     "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-04069",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    },
+    {
+     "nano_recid": 37420,
+     "mini_recid": 37419,
+     "dataset": "GluGluHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8",
+     "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-04063",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    },
+    {
+     "nano_recid": 68459,
+     "mini_recid": 68458,
+     "dataset": "VBFHToEEG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8",
+     "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-04047",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    },
+    {
+     "nano_recid": 68559,
+     "mini_recid": 68558,
+     "dataset": "VBFHToMuMuG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8",
+     "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-04044",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    },
+    {
+     "nano_recid": 69681,
+     "mini_recid": 69680,
+     "dataset": "WHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+     "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-03857",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    },
+    {
+     "nano_recid": 69699,
+     "mini_recid": 69698,
+     "dataset": "WHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+     "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-03848",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    },
+    {
+     "nano_recid": 74652,
+     "mini_recid": 74651,
+     "dataset": "ZHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+     "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-03856",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    },
+    {
+     "nano_recid": 74670,
+     "mini_recid": 74669,
+     "dataset": "ZHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+     "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-03850",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    }
+   ]
+  },
+  "N4": {
+   "description": "qq->ZH, H->ZZ->4l",
+   "atlas_dsids": [
+    346645
+   ],
+   "records": [
+    {
+     "nano_recid": 74314,
+     "mini_recid": 74313,
+     "dataset": "ZH_HToZZ_4LFilter_M125_TuneCP5_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8",
+     "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-00239",
+     "cross_section_pb": null,
+     "cross_section_status": "NOT DECIDED (Matan's hand check pending)"
+    }
+   ]
+  }
+ },
+ "documented_not_added": [
+  {
+   "item": "N5",
+   "what": "VBF H->ZZ->llbb",
+   "reason": "the only CMS sample 68833 contains our 68741 and 68847",
+   "atlas_dsids": [
+    450576
+   ],
+   "cms_records_considered": [
+    68833
+   ]
+  },
+  {
+   "item": "N6",
+   "what": "gg->ZH H->tautau/mumu",
+   "reason": "no CMS sample",
+   "atlas_dsids": [
+    600686,
+    345098
+   ],
+   "cms_records_considered": []
+  },
+  {
+   "item": "N7",
+   "what": "three-top",
+   "reason": "~18 events before selection for ~320 cluster files; negligible",
+   "atlas_dsids": [
+    304014
+   ],
+   "cms_records_considered": [
+    67771,
+    68067
+   ]
+  },
+  {
+   "item": "N8",
+   "what": "VH H->invisible with leptonic V",
+   "reason": "no CMS sample",
+   "atlas_dsids": [
+    346605,
+    346606,
+    346607,
+    345596
+   ],
+   "cms_records_considered": []
+  },
+  {
+   "item": "N9",
+   "what": "tZq Z->nunu/qq part",
+   "reason": "no CMS sample; our 68325 covers Z->ll",
+   "atlas_dsids": [
+    410560
+   ],
+   "cms_records_considered": [
+    68325
+   ]
+  },
+  {
+   "item": "N10",
+   "what": "inclusive VBF/VH Higgs",
+   "reason": "would double count every VH sample we have; ATLAS double counts here itself — question to Maryna",
+   "atlas_dsids": [
+    346317,
+    346311,
+    346312,
+    346310
+   ],
+   "cms_records_considered": [
+    69389
+   ]
+  },
+  {
+   "item": "N11",
+   "what": "V+gamma",
+   "reason": "overlaps our W+jets and Drell–Yan photon radiation; no sample-level photon overlap removal exists in either pipeline; ATLAS double counts",
+   "atlas_dsids": [
+    700398,
+    700399,
+    700400,
+    700401,
+    700402,
+    700403,
+    700404
+   ],
+   "cms_records_considered": [
+    69575,
+    73904,
+    73900
+   ]
+  },
+  {
+   "item": "N12",
+   "what": "V+2 photons / EW V gamma jj / 3 photons",
+   "reason": "partly no CMS sample; CMS portal cross sections wrong by orders of magnitude; same overlap as N11",
+   "atlas_dsids": [
+    700195,
+    700196,
+    700197,
+    700198,
+    700199,
+    700200,
+    700201,
+    700709,
+    700710,
+    700007
+   ],
+   "cms_records_considered": [
+    42145,
+    42137
+   ]
+  },
+  {
+   "item": "N13",
+   "what": "hadronic W/Z at high pT and hadronic V+gamma",
+   "reason": "no prompt lepton: enters lepton-triggered data only via fake leptons, dominated by the QCD multijet absent on both sides; ~3,710 cluster files",
+   "atlas_dsids": [
+    700843,
+    700849,
+    700855,
+    700352,
+    700353,
+    700507
+   ],
+   "cms_records_considered": [
+    69751,
+    69753,
+    69755,
+    69757,
+    74912,
+    74914,
+    74916,
+    74918,
+    69559
+   ]
+  },
+  {
+   "item": "N14",
+   "what": "WZ/ZZ -> quarks + neutrinos, ZZ->4nu",
+   "reason": "no prompt lepton; partly no CMS sample",
+   "atlas_dsids": [
+    700491,
+    700495,
+    700496,
+    700605
+   ],
+   "cms_records_considered": [
+    75571
+   ]
+  },
+  {
+   "item": "N15",
+   "what": "tW fully hadronic part",
+   "reason": "our tW is NoFullyHadronic; difference has no prompt lepton",
+   "atlas_dsids": [
+    601352,
+    601355
+   ],
+   "cms_records_considered": [
+    64881,
+    64825
+   ]
+  }
+ ],
+ "kept_cms_only": [
+  {
+   "item": "C1",
+   "what": "hadronic t-channel",
+   "cms_records_in_v5": [
+    64759,
+    64659
+   ],
+   "atlas_dsids": [
+    410658,
+    410659
+   ],
+   "reason": "ours inclusive, ATLAS leptonic top only"
+  },
+  {
+   "item": "C2",
+   "what": "hadronic triboson decays",
+   "cms_records_in_v5": [
+    72701,
+    72711,
+    72761,
+    75600
+   ],
+   "atlas_dsids": [
+    364242,
+    364243,
+    364244,
+    364245,
+    364246,
+    364247,
+    364248,
+    364249,
+    364336,
+    364337,
+    364338,
+    364339
+   ],
+   "reason": "ours inclusive, ATLAS lepton-filtered"
+  },
+  {
+   "item": "C3",
+   "what": "ggF/VBF H->ZZ->2l2nu",
+   "cms_records_in_v5": [
+    37616,
+    68741
+   ],
+   "atlas_dsids": [],
+   "reason": "no ATLAS exclusive sample"
+  },
+  {
+   "item": "C4",
+   "what": "VH H->WW with all decays",
+   "cms_records_in_v5": [
+    41873,
+    41877,
+    41914,
+    40095
+   ],
+   "atlas_dsids": [
+    341456,
+    341458,
+    341460,
+    345325,
+    345433,
+    345445,
+    346524
+   ],
+   "reason": ""
+  }
+ ],
+ "interference_note": "N1: no CMS EW-QCD interference sample exists separately; ATLAS 700591-700594 are about 6 % of the ATLAS EW VV+2j total (documented, not added).",
+ "triboson_overlap_note": "N1: the partial overlap of EW VV+2j with our tribosons (triboson-like diagrams) is the same as on the ATLAS side (documented).",
+ "n3_condition": "N3 is added only once the overlap with our H->Z gamma samples (37604, 68731, 70301, 71145, 74292) is settled (REPORT.md section 2).",
+ "cross_section_status": "NOT DECIDED: Matan hand-checks every cross section of the 14 records (separate step).",
+ "cluster_file_ceiling": {
+  "text": "Matan accepts raising the planning ceiling from 125,000 to 140,000 for this addition (it is his planning figure, not a hard quota; still measure and report).",
+  "old": 125000,
+  "new": 140000,
+  "hard_quota": false
+ }
+}

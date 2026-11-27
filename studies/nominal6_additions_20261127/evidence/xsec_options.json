@@ -1,0 +1,873 @@
+{
+ "what": "Cross-section OPTIONS for the 14 Nominal-6 additions. NOTHING ADOPTED; for Matan's hand check.",
+ "yr4_production_pb": {
+  "ggF": 48.58,
+  "VBF": 3.782,
+  "W+H": 0.84,
+  "W-H": 0.5328,
+  "WH": 1.3728,
+  "qqZH": 0.7612,
+  "ZH_total": 0.8839,
+  "ggZH": 0.1227
+ },
+ "yr4_br": {
+  "ZZ": 0.02619,
+  "Zgam": 0.001533,
+  "gamgam": 0.00227,
+  "4l_emt": 0.0002745,
+  "4l_em": 0.000124
+ },
+ "pdg_z_br": {
+  "ee": 0.033632,
+  "mumu": 0.033662,
+  "tautau": 0.033696
+ },
+ "sources": {
+  "YR4": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV",
+  "YR4BR": "https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR",
+  "PDG_Z": "https://pdglive.lbl.gov/Particle.action?node=S044"
+ },
+ "samples": {
+  "75561": {
+   "item": "N1",
+   "label": "ZZjj -> 4l EW (no top)",
+   "mini_recid": 75560,
+   "dataset": "ZZJJTo4L_EWKnotop_TuneCP5_13TeV-madgraph-pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 1.0,
+    "neg_weight_fraction": 0.0,
+    "total_value": 0.0009928,
+    "total_value_uncertainty": 2.144e-07
+   },
+   "portal_url": "https://opendata.cern.ch/record/75560",
+   "r1": "Decay inside the MadGraph matrix element (process card decay chain `v > l v`); no separate decay step, no filter (fragment filterEfficiency 1.0), no matching (ickkw 0): R1 applies, the portal total_value is the complete generator cross section of the sample.",
+   "mcm": {
+    "cross_section_pb": 0.00071654,
+    "filter_efficiency": 1,
+    "match_efficiency": 1,
+    "prepid": "SUS-RunIISummer20UL16wmLHEGEN-00134",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/SUS-RunIISummer20UL16wmLHEGEN-00134"
+   },
+   "theory_options": [
+    {
+     "option": "none found for the generator phase space",
+     "note": "CMS measured EW VBS in fiducial regions with reconstruction-like cuts (e.g. EW ZZjj 0.33 fb, SM 0.275 fb, arXiv:2008.07013 abstract; EW W+W-jj 10.2 fb, SM 9.1 fb, arXiv:2205.05711 abstract). These are NOT the generator phase space of the samples (m_jj > 100 GeV, |eta_l| < 3 at generator level), so they cannot be used directly; no NLO calculation for the generator phase space was found."
+    }
+   ],
+   "v5_analogue": "Dibosons (E1): generator x NNLO/NLO k-factor (WZ, ZZ) or NNLO total x BR (WW); tribosons 72701/72711 and ttZ/ttW: generator NLO value as is. No EW VV+2j precedent: E2 dropped the EW V+2j samples (35999/35987/35993) before any value was chosen.",
+   "atlas": [
+    {
+     "dsid": 700587,
+     "physics_short": "Sh_2212_lllljj",
+     "sigma_pb": 0.01151,
+     "kFactor": 1.0,
+     "genFiltEff": 1.0,
+     "sigma_eff_pb": 0.01151
+    },
+    {
+     "dsid": 700591,
+     "physics_short": "Sh_2212_lllljj_Int",
+     "sigma_pb": 0.0023142,
+     "kFactor": 1.0,
+     "genFiltEff": 1.0,
+     "sigma_eff_pb": 0.0023142
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.0138242,
+   "cms_portal_over_atlas": 0.07181609062368889,
+   "notes": "CMS card: p p > z z j j $ t t~ QED=4 QCD=0, z > l+ l- (l = e mu tau), on-shell Z decay chain; m_jj > 100, |eta_l| < 3, |eta_j| < 5, pT_j > 10 GeV. ATLAS Sherpa: off-shell 4 charged leptons + 2 jets, m_ll > 0.25/0.46/3.8 GeV (ee/mumu/tautau), pT_l > 5, 2 jets pT > 15, NO m_jj cut, 0,1j@LO merged; incl. gamma* and triboson-like diagrams. McM 7.1654e-4 pb differs from the portal 9.928e-4 pb (factor 1.39; unexplained)."
+  },
+  "69771": {
+   "item": "N1",
+   "label": "WZjj EW, W -> l nu, Z -> ll",
+   "mini_recid": 69770,
+   "dataset": "WLLJJ_WToLNu_EWK_TuneCP5_13TeV_madgraph-madspin-pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 1.0,
+    "neg_weight_fraction": 0.0,
+    "total_value": 0.03566,
+    "total_value_uncertainty": 8.524e-06
+   },
+   "portal_url": "https://opendata.cern.ch/record/69770",
+   "r1": "Decay inside the MadGraph matrix element (process card decay chain `v > l v`); no separate decay step, no filter (fragment filterEfficiency 1.0), no matching (ickkw 0): R1 applies, the portal total_value is the complete generator cross section of the sample.",
+   "mcm": {
+    "cross_section_pb": 0.01654,
+    "filter_efficiency": 1,
+    "match_efficiency": 1,
+    "prepid": "SMP-RunIISummer20UL16wmLHEGEN-00539",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/SMP-RunIISummer20UL16wmLHEGEN-00539"
+   },
+   "theory_options": [
+    {
+     "option": "none found for the generator phase space",
+     "note": "CMS measured EW VBS in fiducial regions with reconstruction-like cuts (e.g. EW ZZjj 0.33 fb, SM 0.275 fb, arXiv:2008.07013 abstract; EW W+W-jj 10.2 fb, SM 9.1 fb, arXiv:2205.05711 abstract). These are NOT the generator phase space of the samples (m_jj > 100 GeV, |eta_l| < 3 at generator level), so they cannot be used directly; no NLO calculation for the generator phase space was found."
+    }
+   ],
+   "v5_analogue": "Dibosons (E1): generator x NNLO/NLO k-factor (WZ, ZZ) or NNLO total x BR (WW); tribosons 72701/72711 and ttZ/ttW: generator NLO value as is. No EW VV+2j precedent: E2 dropped the EW V+2j samples (35999/35987/35993) before any value was chosen.",
+   "atlas": [
+    {
+     "dsid": 700588,
+     "physics_short": "Sh_2212_lllvjj",
+     "sigma_pb": 0.048453,
+     "kFactor": 1.0,
+     "genFiltEff": 1.0,
+     "sigma_eff_pb": 0.048453
+    },
+    {
+     "dsid": 700592,
+     "physics_short": "Sh_2212_lllvjj_Int",
+     "sigma_pb": 0.0077437,
+     "kFactor": 1.0,
+     "genFiltEff": 1.0,
+     "sigma_eff_pb": 0.0077437
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.0561967,
+   "cms_portal_over_atlas": 0.6345568334083673,
+   "notes": "CMS card (nearest in genproductions, named ..._notop; the gridpack is named WZ3lnujj_ewk WITHOUT notop: match UNVERIFIED): p p > w+- z j j $ t t~ QED=4 QCD=0, on-shell decay chain, m_jj > 100, |eta_l| < 3. ATLAS lllvjj: off-shell, no m_jj cut. McM 0.01654 pb is 0.46 x the portal 0.03566 pb (unexplained; could be one W charge only - UNVERIFIED)."
+  },
+  "72648": {
+   "item": "N1",
+   "label": "W+W-jj EW (no top), both W -> l nu",
+   "mini_recid": 72647,
+   "dataset": "WWJJToLNuLNu_EWK_noTop_TuneCP5_13TeV-madgraph-pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 1.0,
+    "neg_weight_fraction": 0.0,
+    "total_value": 0.09219,
+    "total_value_uncertainty": 2.809e-05
+   },
+   "portal_url": "https://opendata.cern.ch/record/72647",
+   "r1": "Decay inside the MadGraph matrix element (process card decay chain `v > l v`); no separate decay step, no filter (fragment filterEfficiency 1.0), no matching (ickkw 0): R1 applies, the portal total_value is the complete generator cross section of the sample.",
+   "mcm": {
+    "cross_section_pb": 0.09283,
+    "filter_efficiency": 1,
+    "match_efficiency": 1,
+    "prepid": "HIG-RunIISummer20UL16wmLHEGEN-03478",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-03478"
+   },
+   "theory_options": [
+    {
+     "option": "none found for the generator phase space",
+     "note": "CMS measured EW VBS in fiducial regions with reconstruction-like cuts (e.g. EW ZZjj 0.33 fb, SM 0.275 fb, arXiv:2008.07013 abstract; EW W+W-jj 10.2 fb, SM 9.1 fb, arXiv:2205.05711 abstract). These are NOT the generator phase space of the samples (m_jj > 100 GeV, |eta_l| < 3 at generator level), so they cannot be used directly; no NLO calculation for the generator phase space was found."
+    }
+   ],
+   "v5_analogue": "Dibosons (E1): generator x NNLO/NLO k-factor (WZ, ZZ) or NNLO total x BR (WW); tribosons 72701/72711 and ttZ/ttW: generator NLO value as is. No EW VV+2j precedent: E2 dropped the EW V+2j samples (35999/35987/35993) before any value was chosen.",
+   "atlas": [
+    {
+     "dsid": 700589,
+     "physics_short": "Sh_2212_llvvjj_os",
+     "sigma_pb": 0.19336,
+     "kFactor": 1.0,
+     "genFiltEff": 1.0,
+     "sigma_eff_pb": 0.19336
+    },
+    {
+     "dsid": 700593,
+     "physics_short": "Sh_2212_llvvjj_os_Int",
+     "sigma_pb": 0.0063366,
+     "kFactor": 1.0,
+     "genFiltEff": 1.0,
+     "sigma_eff_pb": 0.0063366
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.1996966,
+   "cms_portal_over_atlas": 0.46165032354081137,
+   "notes": "CMS card (linked in the fragment): p p > w+ w- j j $ t t~ QED=4 QCD=0, w > l v; m_jj > 100, no eta cuts, dR(jj, ll, jl) > 0.4. ATLAS llvvjj_os: ALL opposite-sign l l nu nu (also ZZ -> ll nunu and non-resonant), no m_jj cut."
+  },
+  "71636": {
+   "item": "N1",
+   "label": "W+-W+-jj EW (no top), same sign",
+   "mini_recid": 71635,
+   "dataset": "WpWpJJ_EWKnotop_TuneCP5_13TeV-madgraph-pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 1.0,
+    "neg_weight_fraction": 0.0,
+    "total_value": 0.02694,
+    "total_value_uncertainty": 4.622e-06
+   },
+   "portal_url": "https://opendata.cern.ch/record/71635",
+   "r1": "Decay inside the MadGraph matrix element (process card decay chain `v > l v`); no separate decay step, no filter (fragment filterEfficiency 1.0), no matching (ickkw 0): R1 applies, the portal total_value is the complete generator cross section of the sample.",
+   "mcm": {
+    "cross_section_pb": 0.0287,
+    "filter_efficiency": 1,
+    "match_efficiency": 1,
+    "prepid": "SUS-RunIISummer20UL16wmLHEGEN-00122",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/SUS-RunIISummer20UL16wmLHEGEN-00122"
+   },
+   "theory_options": [
+    {
+     "option": "none found for the generator phase space",
+     "note": "CMS measured EW VBS in fiducial regions with reconstruction-like cuts (e.g. EW ZZjj 0.33 fb, SM 0.275 fb, arXiv:2008.07013 abstract; EW W+W-jj 10.2 fb, SM 9.1 fb, arXiv:2205.05711 abstract). These are NOT the generator phase space of the samples (m_jj > 100 GeV, |eta_l| < 3 at generator level), so they cannot be used directly; no NLO calculation for the generator phase space was found."
+    }
+   ],
+   "v5_analogue": "Dibosons (E1): generator x NNLO/NLO k-factor (WZ, ZZ) or NNLO total x BR (WW); tribosons 72701/72711 and ttZ/ttW: generator NLO value as is. No EW VV+2j precedent: E2 dropped the EW V+2j samples (35999/35987/35993) before any value was chosen.",
+   "atlas": [
+    {
+     "dsid": 700590,
+     "physics_short": "Sh_2212_llvvjj_ss",
+     "sigma_pb": 0.045598,
+     "kFactor": 1.0,
+     "genFiltEff": 1.0,
+     "sigma_eff_pb": 0.045598
+    },
+    {
+     "dsid": 700594,
+     "physics_short": "Sh_2212_llvvjj_ss_Int",
+     "sigma_pb": 0.0033375,
+     "kFactor": 1.0,
+     "genFiltEff": 1.0,
+     "sigma_eff_pb": 0.0033375
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.0489355,
+   "cms_portal_over_atlas": 0.5505205832166832,
+   "notes": "CMS card (nearest in genproductions WpWpJJ_EWK-QCD, name matches the gridpack): BOTH w+w+jj AND w-w-jj (so W-W- is inside, correcting the 24 Nov 'no separate W-W-'), m_jj > 100, |eta_l| < 3. ATLAS llvvjj_ss: off-shell, pT_l > 5, no m_jj cut."
+  },
+  "71640": {
+   "item": "N2",
+   "label": "W+-W+-jj QCD (no top), same sign",
+   "mini_recid": 71639,
+   "dataset": "WpWpJJ_QCDnotop_TuneCP5_13TeV-madgraph-pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 1.0,
+    "neg_weight_fraction": 0.0,
+    "total_value": 0.02037,
+    "total_value_uncertainty": 6.913e-06
+   },
+   "portal_url": "https://opendata.cern.ch/record/71639",
+   "r1": "Decay inside the MadGraph matrix element (process card decay chain `v > l v`); no separate decay step, no filter (fragment filterEfficiency 1.0), no matching (ickkw 0): R1 applies, the portal total_value is the complete generator cross section of the sample.",
+   "mcm": {
+    "cross_section_pb": 0.02227,
+    "filter_efficiency": 1,
+    "match_efficiency": 1,
+    "prepid": "SUS-RunIISummer20UL16wmLHEGEN-00123",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/SUS-RunIISummer20UL16wmLHEGEN-00123"
+   },
+   "theory_options": [
+    {
+     "option": "none found for the generator phase space",
+     "note": "no published QCD same-sign WWjj total for these cuts"
+    }
+   ],
+   "v5_analogue": "Dibosons (E1): generator x NNLO/NLO k-factor (WZ, ZZ) or NNLO total x BR (WW); tribosons 72701/72711 and ttZ/ttW: generator NLO value as is. No EW VV+2j precedent: E2 dropped the EW V+2j samples (35999/35987/35993) before any value was chosen.",
+   "atlas": [
+    {
+     "dsid": 700603,
+     "physics_short": "Sh_2212_llvv_ss",
+     "sigma_pb": 0.022206,
+     "kFactor": 1.0,
+     "genFiltEff": 1.0,
+     "sigma_eff_pb": 0.022206
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.022206,
+   "cms_portal_over_atlas": 0.9173196433396379,
+   "notes": "CMS card: p p > w+w+ j j and w-w- j j, QED=2 QCD=99, $ t t~, m_jj > 100, |eta_l| < 3. ATLAS 700603: Sherpa 0,1j@LO Order(*,4), pT_l > 5, >= 2 jets pT > 15, no m_jj cut. McM 0.02227 pb vs portal 0.02037 pb."
+  },
+  "37276": {
+   "item": "N3",
+   "label": "ggF H -> ee gamma (Dalitz, no m_ll cut)",
+   "mini_recid": 37275,
+   "dataset": "GluGluHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 0.3,
+    "neg_weight_fraction": 0.2151,
+    "total_value": 0.002816,
+    "total_value_uncertainty": 3.055e-06
+   },
+   "portal_url": "https://opendata.cern.ch/record/37275",
+   "r1": "Decay H -> l+ l- gamma done by MadSpin inside the gridpack (madspin_card `decay x0 > l+ l- a`, spinmode none). The decay IS inside the portal value: ee and mumu samples of the same production differ (e.g. ggF 2.816e-3 vs 1.858e-3 pb), which only the decay can cause. Not a separate Pythia/JHUGen step, so R1's 'decay not inside' does NOT apply. Whether the listed matching efficiency (FxFx) is inside is the general R1 assumption (UNVERIFIED for these records).",
+   "mcm": {
+    "cross_section_pb": 0.0008082,
+    "filter_efficiency": 1,
+    "match_efficiency": 0.308,
+    "prepid": "HIG-RunIISummer20UL16wmLHEGEN-04069",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-04069"
+   },
+   "theory_options": [
+    {
+     "option": "YR4 sigma x B(ATLAS Pythia8, m_ll < 30 GeV)",
+     "value_pb": 0.00349776,
+     "factors": "48.58 x 7.20e-5",
+     "source": "ATLAS arXiv:2103.10322 Sect. 3: B(H->eegamma) = 7.20e-5 estimated with Pythia 8 for m_ll < 30 GeV (an ATLAS MC estimate, not a theory calculation; agrees with Refs. [74,76] within 3 % 'when extrapolated to a common phase space')"
+    },
+    {
+     "option": "YR4 sigma x B(CMS MCFM)",
+     "value_pb": null,
+     "note": "CMS-HIG-17-007 gives no ee value (only mumu)"
+    },
+    {
+     "option": "Z-pole part, if the sample contains it (see REPORT section 2)",
+     "value_pb": 0.00250468064448,
+     "factors": "48.58 x 1.533e-3 x 0.033632",
+     "note": "YR4 BR(H->Zgamma) x PDG BR(Z->ll) per flavour: the H->Zgamma part with m_ll near m_Z"
+    },
+    {
+     "option": "no published value for the full m_ll range of the sample (no m_ll cut)",
+     "value_pb": null
+    },
+    {
+     "option": "implied B = portal / YR4 sigma (arithmetic only)",
+     "value": 5.796624125154385e-05,
+     "note": "the generator's own production sigma is not YR4, so this is not a measured BR"
+    }
+   ],
+   "v5_analogue": "Every Higgs sample in v5 = YR4 production (mH = 125.00) x YR4 BR (x PDG Z BR), e.g. 37604 ggF H->Zgamma 48.58 x 0.001533 x 0.10099; VERIFIED BY MATAN 3 Nov. No YR4 BR exists for H -> l l gamma (Dalitz).",
+   "atlas": [
+    {
+     "dsid": 345961,
+     "physics_short": "PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamstargam",
+     "sigma_pb": 28.3,
+     "kFactor": 1.717,
+     "genFiltEff": 0.000430619,
+     "sigma_eff_pb": 0.0209242508909
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.0209242508909,
+   "cms_portal_over_atlas": 0.13458068413931532,
+   "notes": "CMS cards (genproductions master, directory 'dalitz_no_mll_cut'): production MG5_aMC NLO HEFT ggH 0,1,2j FxFx (ptj 10, qCut 30); decay in MadSpin x0 > l+ l- a with model HC_NLO_X0_UFO-lepton_masses_no_lepton_yukawas; no m_ll or photon cut in the decay (run_card mll_sf 30 / ptgmin 20 act on production-level particles; there are none). Match of these master-branch cards to the gridpack: UNVERIFIED (see the gridpack check). ATLAS: the full sigma_eff of the listed ATLAS DSID(s) is shared by ee and mumu (ATLAS has one sample for both)."
+  },
+  "37420": {
+   "item": "N3",
+   "label": "ggF H -> mumu gamma (Dalitz, no m_ll cut)",
+   "mini_recid": 37419,
+   "dataset": "GluGluHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 0.3,
+    "neg_weight_fraction": 0.2151,
+    "total_value": 0.001858,
+    "total_value_uncertainty": 2.031e-06
+   },
+   "portal_url": "https://opendata.cern.ch/record/37419",
+   "r1": "Decay H -> l+ l- gamma done by MadSpin inside the gridpack (madspin_card `decay x0 > l+ l- a`, spinmode none). The decay IS inside the portal value: ee and mumu samples of the same production differ (e.g. ggF 2.816e-3 vs 1.858e-3 pb), which only the decay can cause. Not a separate Pythia/JHUGen step, so R1's 'decay not inside' does NOT apply. Whether the listed matching efficiency (FxFx) is inside is the general R1 assumption (UNVERIFIED for these records).",
+   "mcm": {
+    "cross_section_pb": 0.0008082,
+    "filter_efficiency": 1,
+    "match_efficiency": 0.308,
+    "prepid": "HIG-RunIISummer20UL16wmLHEGEN-04063",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-04063"
+   },
+   "theory_options": [
+    {
+     "option": "YR4 sigma x B(CMS MCFM, m_mumu < 50 GeV)",
+     "value_pb": 0.001860614,
+     "factors": "48.58 x 3.83e-5",
+     "source": "CMS-HIG-17-007, arXiv:1806.05996, Eq. (1) and text: B(H->gamma*gamma->mumugamma) = 3.83e-5 from MCFM 7.0.1; the paper separates H->gamma*gamma from H->Zgamma at m_ll = 50 GeV (the cut is stated in the text around Eq. (1), not next to the number: INTERPRETATION)"
+    },
+    {
+     "option": "YR4 sigma x B(ATLAS Pythia8, m_ll < 30 GeV)",
+     "value_pb": 0.0016614359999999999,
+     "factors": "48.58 x 3.42e-5",
+     "source": "ATLAS arXiv:2103.10322 Sect. 3: B(H->mumugamma) = 3.42e-5, Pythia 8, m_ll < 30 GeV"
+    },
+    {
+     "option": "Z-pole part, if the sample contains it (see REPORT section 2)",
+     "value_pb": 0.00250691483868,
+     "factors": "48.58 x 1.533e-3 x 0.033662",
+     "note": "YR4 BR(H->Zgamma) x PDG BR(Z->ll) per flavour: the H->Zgamma part with m_ll near m_Z"
+    },
+    {
+     "option": "no published value for the full m_ll range of the sample (no m_ll cut)",
+     "value_pb": null
+    },
+    {
+     "option": "implied B = portal / YR4 sigma (arithmetic only)",
+     "value": 3.824619184849733e-05,
+     "note": "the generator's own production sigma is not YR4, so this is not a measured BR"
+    }
+   ],
+   "v5_analogue": "Every Higgs sample in v5 = YR4 production (mH = 125.00) x YR4 BR (x PDG Z BR), e.g. 37604 ggF H->Zgamma 48.58 x 0.001533 x 0.10099; VERIFIED BY MATAN 3 Nov. No YR4 BR exists for H -> l l gamma (Dalitz).",
+   "atlas": [
+    {
+     "dsid": 345961,
+     "physics_short": "PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamstargam",
+     "sigma_pb": 28.3,
+     "kFactor": 1.717,
+     "genFiltEff": 0.000430619,
+     "sigma_eff_pb": 0.0209242508909
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.0209242508909,
+   "cms_portal_over_atlas": 0.08879648832771586,
+   "notes": "CMS cards (genproductions master, directory 'dalitz_no_mll_cut'): production MG5_aMC NLO HEFT ggH 0,1,2j FxFx (ptj 10, qCut 30); decay in MadSpin x0 > l+ l- a with model HC_NLO_X0_UFO-lepton_masses_no_lepton_yukawas; no m_ll or photon cut in the decay (run_card mll_sf 30 / ptgmin 20 act on production-level particles; there are none). Match of these master-branch cards to the gridpack: UNVERIFIED (see the gridpack check). ATLAS: the full sigma_eff of the listed ATLAS DSID(s) is shared by ee and mumu (ATLAS has one sample for both)."
+  },
+  "68459": {
+   "item": "N3",
+   "label": "VBF H -> ee gamma (Dalitz, no m_ll cut)",
+   "mini_recid": 68458,
+   "dataset": "VBFHToEEG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 1.0,
+    "neg_weight_fraction": 0.3429,
+    "total_value": 0.000315,
+    "total_value_uncertainty": 6.441e-08
+   },
+   "portal_url": "https://opendata.cern.ch/record/68458",
+   "r1": "Decay H -> l+ l- gamma done by MadSpin inside the gridpack (madspin_card `decay x0 > l+ l- a`, spinmode none). The decay IS inside the portal value: ee and mumu samples of the same production differ (e.g. ggF 2.816e-3 vs 1.858e-3 pb), which only the decay can cause. Not a separate Pythia/JHUGen step, so R1's 'decay not inside' does NOT apply. Whether the listed matching efficiency (FxFx) is inside is the general R1 assumption (UNVERIFIED for these records).",
+   "mcm": {
+    "cross_section_pb": 1,
+    "filter_efficiency": 1,
+    "match_efficiency": 1,
+    "prepid": "HIG-RunIISummer20UL16wmLHEGEN-04047",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-04047"
+   },
+   "theory_options": [
+    {
+     "option": "YR4 sigma x B(ATLAS Pythia8, m_ll < 30 GeV)",
+     "value_pb": 0.000272304,
+     "factors": "3.782 x 7.20e-5",
+     "source": "ATLAS arXiv:2103.10322 Sect. 3: B(H->eegamma) = 7.20e-5 estimated with Pythia 8 for m_ll < 30 GeV (an ATLAS MC estimate, not a theory calculation; agrees with Refs. [74,76] within 3 % 'when extrapolated to a common phase space')"
+    },
+    {
+     "option": "YR4 sigma x B(CMS MCFM)",
+     "value_pb": null,
+     "note": "CMS-HIG-17-007 gives no ee value (only mumu)"
+    },
+    {
+     "option": "Z-pole part, if the sample contains it (see REPORT section 2)",
+     "value_pb": 0.00019499181139200002,
+     "factors": "3.782 x 1.533e-3 x 0.033632",
+     "note": "YR4 BR(H->Zgamma) x PDG BR(Z->ll) per flavour: the H->Zgamma part with m_ll near m_Z"
+    },
+    {
+     "option": "no published value for the full m_ll range of the sample (no m_ll cut)",
+     "value_pb": null
+    },
+    {
+     "option": "implied B = portal / YR4 sigma (arithmetic only)",
+     "value": 8.328926493918562e-05,
+     "note": "the generator's own production sigma is not YR4, so this is not a measured BR"
+    }
+   ],
+   "v5_analogue": "Every Higgs sample in v5 = YR4 production (mH = 125.00) x YR4 BR (x PDG Z BR), e.g. 37604 ggF H->Zgamma 48.58 x 0.001533 x 0.10099; VERIFIED BY MATAN 3 Nov. No YR4 BR exists for H -> l l gamma (Dalitz).",
+   "atlas": [
+    {
+     "dsid": 345834,
+     "physics_short": "PowhegPythia8EvtGen_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamstargam",
+     "sigma_pb": 3.782,
+     "kFactor": 1.0,
+     "genFiltEff": 0.00227,
+     "sigma_eff_pb": 0.00858514
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.00858514,
+   "cms_portal_over_atlas": 0.036691306140610405,
+   "notes": "CMS cards (genproductions master, directory 'dalitz_no_mll_cut'): production MG5_aMC NLO VBF NLO; decay in MadSpin x0 > l+ l- a with model HC_NLO_X0_UFO-lepton_masses_no_lepton_yukawas; no m_ll or photon cut in the decay (run_card mll_sf 30 / ptgmin 20 act on production-level particles; there are none). Match of these master-branch cards to the gridpack: UNVERIFIED (see the gridpack check). ATLAS: the full sigma_eff of the listed ATLAS DSID(s) is shared by ee and mumu (ATLAS has one sample for both)."
+  },
+  "68559": {
+   "item": "N3",
+   "label": "VBF H -> mumu gamma (Dalitz, no m_ll cut)",
+   "mini_recid": 68558,
+   "dataset": "VBFHToMuMuG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 1.0,
+    "neg_weight_fraction": 0.3435,
+    "total_value": 0.000208,
+    "total_value_uncertainty": 1.061e-08
+   },
+   "portal_url": "https://opendata.cern.ch/record/68558",
+   "r1": "Decay H -> l+ l- gamma done by MadSpin inside the gridpack (madspin_card `decay x0 > l+ l- a`, spinmode none). The decay IS inside the portal value: ee and mumu samples of the same production differ (e.g. ggF 2.816e-3 vs 1.858e-3 pb), which only the decay can cause. Not a separate Pythia/JHUGen step, so R1's 'decay not inside' does NOT apply. Whether the listed matching efficiency (FxFx) is inside is the general R1 assumption (UNVERIFIED for these records).",
+   "mcm": {
+    "cross_section_pb": 1,
+    "filter_efficiency": 1,
+    "match_efficiency": 1,
+    "prepid": "HIG-RunIISummer20UL16wmLHEGEN-04044",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-04044"
+   },
+   "theory_options": [
+    {
+     "option": "YR4 sigma x B(CMS MCFM, m_mumu < 50 GeV)",
+     "value_pb": 0.0001448506,
+     "factors": "3.782 x 3.83e-5",
+     "source": "CMS-HIG-17-007, arXiv:1806.05996, Eq. (1) and text: B(H->gamma*gamma->mumugamma) = 3.83e-5 from MCFM 7.0.1; the paper separates H->gamma*gamma from H->Zgamma at m_ll = 50 GeV (the cut is stated in the text around Eq. (1), not next to the number: INTERPRETATION)"
+    },
+    {
+     "option": "YR4 sigma x B(ATLAS Pythia8, m_ll < 30 GeV)",
+     "value_pb": 0.0001293444,
+     "factors": "3.782 x 3.42e-5",
+     "source": "ATLAS arXiv:2103.10322 Sect. 3: B(H->mumugamma) = 3.42e-5, Pythia 8, m_ll < 30 GeV"
+    },
+    {
+     "option": "Z-pole part, if the sample contains it (see REPORT section 2)",
+     "value_pb": 0.000195165745572,
+     "factors": "3.782 x 1.533e-3 x 0.033662",
+     "note": "YR4 BR(H->Zgamma) x PDG BR(Z->ll) per flavour: the H->Zgamma part with m_ll near m_Z"
+    },
+    {
+     "option": "no published value for the full m_ll range of the sample (no m_ll cut)",
+     "value_pb": null
+    },
+    {
+     "option": "implied B = portal / YR4 sigma (arithmetic only)",
+     "value": 5.4997355896351136e-05,
+     "note": "the generator's own production sigma is not YR4, so this is not a measured BR"
+    }
+   ],
+   "v5_analogue": "Every Higgs sample in v5 = YR4 production (mH = 125.00) x YR4 BR (x PDG Z BR), e.g. 37604 ggF H->Zgamma 48.58 x 0.001533 x 0.10099; VERIFIED BY MATAN 3 Nov. No YR4 BR exists for H -> l l gamma (Dalitz).",
+   "atlas": [
+    {
+     "dsid": 345834,
+     "physics_short": "PowhegPythia8EvtGen_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamstargam",
+     "sigma_pb": 3.782,
+     "kFactor": 1.0,
+     "genFiltEff": 0.00227,
+     "sigma_eff_pb": 0.00858514
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.00858514,
+   "cms_portal_over_atlas": 0.024227910086498296,
+   "notes": "CMS cards (genproductions master, directory 'dalitz_no_mll_cut'): production MG5_aMC NLO VBF NLO; decay in MadSpin x0 > l+ l- a with model HC_NLO_X0_UFO-lepton_masses_no_lepton_yukawas; no m_ll or photon cut in the decay (run_card mll_sf 30 / ptgmin 20 act on production-level particles; there are none). Match of these master-branch cards to the gridpack: UNVERIFIED (see the gridpack check). ATLAS: the full sigma_eff of the listed ATLAS DSID(s) is shared by ee and mumu (ATLAS has one sample for both)."
+  },
+  "69681": {
+   "item": "N3",
+   "label": "WH H -> ee gamma (Dalitz, no m_ll cut)",
+   "mini_recid": 69680,
+   "dataset": "WHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 0.3,
+    "neg_weight_fraction": 0.1937,
+    "total_value": 0.0001238,
+    "total_value_uncertainty": 1.824e-07
+   },
+   "portal_url": "https://opendata.cern.ch/record/69680",
+   "r1": "Decay H -> l+ l- gamma done by MadSpin inside the gridpack (madspin_card `decay x0 > l+ l- a`, spinmode none). The decay IS inside the portal value: ee and mumu samples of the same production differ (e.g. ggF 2.816e-3 vs 1.858e-3 pb), which only the decay can cause. Not a separate Pythia/JHUGen step, so R1's 'decay not inside' does NOT apply. Whether the listed matching efficiency (FxFx) is inside is the general R1 assumption (UNVERIFIED for these records).",
+   "mcm": {
+    "cross_section_pb": 1,
+    "filter_efficiency": 1,
+    "match_efficiency": 0.318,
+    "prepid": "HIG-RunIISummer20UL16wmLHEGEN-03857",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-03857"
+   },
+   "theory_options": [
+    {
+     "option": "YR4 sigma x B(ATLAS Pythia8, m_ll < 30 GeV)",
+     "value_pb": 9.88416e-05,
+     "factors": "1.373 x 7.20e-5",
+     "source": "ATLAS arXiv:2103.10322 Sect. 3: B(H->eegamma) = 7.20e-5 estimated with Pythia 8 for m_ll < 30 GeV (an ATLAS MC estimate, not a theory calculation; agrees with Refs. [74,76] within 3 % 'when extrapolated to a common phase space')"
+    },
+    {
+     "option": "YR4 sigma x B(CMS MCFM)",
+     "value_pb": null,
+     "note": "CMS-HIG-17-007 gives no ee value (only mumu)"
+    },
+    {
+     "option": "Z-pole part, if the sample contains it (see REPORT section 2)",
+     "value_pb": 7.07786247168e-05,
+     "factors": "1.373 x 1.533e-3 x 0.033632",
+     "note": "YR4 BR(H->Zgamma) x PDG BR(Z->ll) per flavour: the H->Zgamma part with m_ll near m_Z"
+    },
+    {
+     "option": "no published value for the full m_ll range of the sample (no m_ll cut)",
+     "value_pb": null
+    },
+    {
+     "option": "implied B = portal / YR4 sigma (arithmetic only)",
+     "value": 9.018065268065268e-05,
+     "note": "the generator's own production sigma is not YR4, so this is not a measured BR"
+    }
+   ],
+   "v5_analogue": "Every Higgs sample in v5 = YR4 production (mH = 125.00) x YR4 BR (x PDG Z BR), e.g. 37604 ggF H->Zgamma 48.58 x 0.001533 x 0.10099; VERIFIED BY MATAN 3 Nov. No YR4 BR exists for H -> l l gamma (Dalitz).",
+   "atlas": [
+    {
+     "dsid": 345963,
+     "physics_short": "PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hgamstargam_MINLO",
+     "sigma_pb": 0.5328,
+     "kFactor": 1.0,
+     "genFiltEff": 0.00227,
+     "sigma_eff_pb": 0.001209456
+    },
+    {
+     "dsid": 345964,
+     "physics_short": "PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hgamstargam_MINLO",
+     "sigma_pb": 0.84,
+     "kFactor": 1.0,
+     "genFiltEff": 0.00227,
+     "sigma_eff_pb": 0.0019067999999999997
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.0031162559999999995,
+   "cms_portal_over_atlas": 0.03972715977121264,
+   "notes": "CMS cards (genproductions master, directory 'dalitz_no_mll_cut'): production MG5_aMC NLO WH 0,1,2j NLO FxFx; decay in MadSpin x0 > l+ l- a with model HC_NLO_X0_UFO-lepton_masses_no_lepton_yukawas; no m_ll or photon cut in the decay (run_card mll_sf 30 / ptgmin 20 act on production-level particles; there are none). Match of these master-branch cards to the gridpack: UNVERIFIED (see the gridpack check). ATLAS: the full sigma_eff of the listed ATLAS DSID(s) is shared by ee and mumu (ATLAS has one sample for both)."
+  },
+  "69699": {
+   "item": "N3",
+   "label": "WH H -> mumu gamma (Dalitz, no m_ll cut)",
+   "mini_recid": 69698,
+   "dataset": "WHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 0.3,
+    "neg_weight_fraction": 0.1933,
+    "total_value": 8.169e-05,
+    "total_value_uncertainty": 1.184e-07
+   },
+   "portal_url": "https://opendata.cern.ch/record/69698",
+   "r1": "Decay H -> l+ l- gamma done by MadSpin inside the gridpack (madspin_card `decay x0 > l+ l- a`, spinmode none). The decay IS inside the portal value: ee and mumu samples of the same production differ (e.g. ggF 2.816e-3 vs 1.858e-3 pb), which only the decay can cause. Not a separate Pythia/JHUGen step, so R1's 'decay not inside' does NOT apply. Whether the listed matching efficiency (FxFx) is inside is the general R1 assumption (UNVERIFIED for these records).",
+   "mcm": {
+    "cross_section_pb": 1,
+    "filter_efficiency": 1,
+    "match_efficiency": 0.318,
+    "prepid": "HIG-RunIISummer20UL16wmLHEGEN-03848",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-03848"
+   },
+   "theory_options": [
+    {
+     "option": "YR4 sigma x B(CMS MCFM, m_mumu < 50 GeV)",
+     "value_pb": 5.257824000000001e-05,
+     "factors": "1.373 x 3.83e-5",
+     "source": "CMS-HIG-17-007, arXiv:1806.05996, Eq. (1) and text: B(H->gamma*gamma->mumugamma) = 3.83e-5 from MCFM 7.0.1; the paper separates H->gamma*gamma from H->Zgamma at m_ll = 50 GeV (the cut is stated in the text around Eq. (1), not next to the number: INTERPRETATION)"
+    },
+    {
+     "option": "YR4 sigma x B(ATLAS Pythia8, m_ll < 30 GeV)",
+     "value_pb": 4.694976e-05,
+     "factors": "1.373 x 3.42e-5",
+     "source": "ATLAS arXiv:2103.10322 Sect. 3: B(H->mumugamma) = 3.42e-5, Pythia 8, m_ll < 30 GeV"
+    },
+    {
+     "option": "Z-pole part, if the sample contains it (see REPORT section 2)",
+     "value_pb": 7.08417597888e-05,
+     "factors": "1.373 x 1.533e-3 x 0.033662",
+     "note": "YR4 BR(H->Zgamma) x PDG BR(Z->ll) per flavour: the H->Zgamma part with m_ll near m_Z"
+    },
+    {
+     "option": "no published value for the full m_ll range of the sample (no m_ll cut)",
+     "value_pb": null
+    },
+    {
+     "option": "implied B = portal / YR4 sigma (arithmetic only)",
+     "value": 5.950611888111888e-05,
+     "note": "the generator's own production sigma is not YR4, so this is not a measured BR"
+    }
+   ],
+   "v5_analogue": "Every Higgs sample in v5 = YR4 production (mH = 125.00) x YR4 BR (x PDG Z BR), e.g. 37604 ggF H->Zgamma 48.58 x 0.001533 x 0.10099; VERIFIED BY MATAN 3 Nov. No YR4 BR exists for H -> l l gamma (Dalitz).",
+   "atlas": [
+    {
+     "dsid": 345963,
+     "physics_short": "PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hgamstargam_MINLO",
+     "sigma_pb": 0.5328,
+     "kFactor": 1.0,
+     "genFiltEff": 0.00227,
+     "sigma_eff_pb": 0.001209456
+    },
+    {
+     "dsid": 345964,
+     "physics_short": "PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hgamstargam_MINLO",
+     "sigma_pb": 0.84,
+     "kFactor": 1.0,
+     "genFiltEff": 0.00227,
+     "sigma_eff_pb": 0.0019067999999999997
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.0031162559999999995,
+   "cms_portal_over_atlas": 0.026214149286836515,
+   "notes": "CMS cards (genproductions master, directory 'dalitz_no_mll_cut'): production MG5_aMC NLO WH 0,1,2j NLO FxFx; decay in MadSpin x0 > l+ l- a with model HC_NLO_X0_UFO-lepton_masses_no_lepton_yukawas; no m_ll or photon cut in the decay (run_card mll_sf 30 / ptgmin 20 act on production-level particles; there are none). Match of these master-branch cards to the gridpack: UNVERIFIED (see the gridpack check). ATLAS: the full sigma_eff of the listed ATLAS DSID(s) is shared by ee and mumu (ATLAS has one sample for both)."
+  },
+  "74652": {
+   "item": "N3",
+   "label": "ZH H -> ee gamma (Dalitz, no m_ll cut)",
+   "mini_recid": 74651,
+   "dataset": "ZHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 0.3,
+    "neg_weight_fraction": 0.1988,
+    "total_value": 6.762e-05,
+    "total_value_uncertainty": 1.002e-07
+   },
+   "portal_url": "https://opendata.cern.ch/record/74651",
+   "r1": "Decay H -> l+ l- gamma done by MadSpin inside the gridpack (madspin_card `decay x0 > l+ l- a`, spinmode none). The decay IS inside the portal value: ee and mumu samples of the same production differ (e.g. ggF 2.816e-3 vs 1.858e-3 pb), which only the decay can cause. Not a separate Pythia/JHUGen step, so R1's 'decay not inside' does NOT apply. Whether the listed matching efficiency (FxFx) is inside is the general R1 assumption (UNVERIFIED for these records).",
+   "mcm": {
+    "cross_section_pb": 1,
+    "filter_efficiency": 1,
+    "match_efficiency": 0.4,
+    "prepid": "HIG-RunIISummer20UL16wmLHEGEN-03856",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-03856"
+   },
+   "theory_options": [
+    {
+     "option": "YR4 sigma x B(ATLAS Pythia8, m_ll < 30 GeV)",
+     "value_pb": 5.48064e-05,
+     "factors": "0.7612 x 7.20e-5",
+     "source": "ATLAS arXiv:2103.10322 Sect. 3: B(H->eegamma) = 7.20e-5 estimated with Pythia 8 for m_ll < 30 GeV (an ATLAS MC estimate, not a theory calculation; agrees with Refs. [74,76] within 3 % 'when extrapolated to a common phase space')"
+    },
+    {
+     "option": "YR4 sigma x B(CMS MCFM)",
+     "value_pb": null,
+     "note": "CMS-HIG-17-007 gives no ee value (only mumu)"
+    },
+    {
+     "option": "Z-pole part, if the sample contains it (see REPORT section 2)",
+     "value_pb": 3.92458399872e-05,
+     "factors": "0.7612 x 1.533e-3 x 0.033632",
+     "note": "YR4 BR(H->Zgamma) x PDG BR(Z->ll) per flavour: the H->Zgamma part with m_ll near m_Z"
+    },
+    {
+     "option": "no published value for the full m_ll range of the sample (no m_ll cut)",
+     "value_pb": null
+    },
+    {
+     "option": "implied B = portal / YR4 sigma (arithmetic only)",
+     "value": 8.883342091434579e-05,
+     "note": "the generator's own production sigma is not YR4, so this is not a measured BR"
+    }
+   ],
+   "v5_analogue": "Every Higgs sample in v5 = YR4 production (mH = 125.00) x YR4 BR (x PDG Z BR), e.g. 37604 ggF H->Zgamma 48.58 x 0.001533 x 0.10099; VERIFIED BY MATAN 3 Nov. No YR4 BR exists for H -> l l gamma (Dalitz).",
+   "atlas": [
+    {
+     "dsid": 345965,
+     "physics_short": "PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hgamstargam_MINLO",
+     "sigma_pb": 0.7612,
+     "kFactor": 1.0,
+     "genFiltEff": 0.00227,
+     "sigma_eff_pb": 0.0017279239999999998
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.0017279239999999998,
+   "cms_portal_over_atlas": 0.03913366560103339,
+   "notes": "CMS cards (genproductions master, directory 'dalitz_no_mll_cut'): production MG5_aMC NLO ZH 0,1,2j NLO FxFx; decay in MadSpin x0 > l+ l- a with model HC_NLO_X0_UFO-lepton_masses_no_lepton_yukawas; no m_ll or photon cut in the decay (run_card mll_sf 30 / ptgmin 20 act on production-level particles; there are none). Match of these master-branch cards to the gridpack: UNVERIFIED (see the gridpack check). ATLAS: the full sigma_eff of the listed ATLAS DSID(s) is shared by ee and mumu (ATLAS has one sample for both)."
+  },
+  "74670": {
+   "item": "N3",
+   "label": "ZH H -> mumu gamma (Dalitz, no m_ll cut)",
+   "mini_recid": 74669,
+   "dataset": "ZHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 0.3,
+    "neg_weight_fraction": 0.1992,
+    "total_value": 4.459e-05,
+    "total_value_uncertainty": 6.552e-08
+   },
+   "portal_url": "https://opendata.cern.ch/record/74669",
+   "r1": "Decay H -> l+ l- gamma done by MadSpin inside the gridpack (madspin_card `decay x0 > l+ l- a`, spinmode none). The decay IS inside the portal value: ee and mumu samples of the same production differ (e.g. ggF 2.816e-3 vs 1.858e-3 pb), which only the decay can cause. Not a separate Pythia/JHUGen step, so R1's 'decay not inside' does NOT apply. Whether the listed matching efficiency (FxFx) is inside is the general R1 assumption (UNVERIFIED for these records).",
+   "mcm": {
+    "cross_section_pb": 1,
+    "filter_efficiency": 1,
+    "match_efficiency": 0.4,
+    "prepid": "HIG-RunIISummer20UL16wmLHEGEN-03850",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-03850"
+   },
+   "theory_options": [
+    {
+     "option": "YR4 sigma x B(CMS MCFM, m_mumu < 50 GeV)",
+     "value_pb": 2.9153960000000003e-05,
+     "factors": "0.7612 x 3.83e-5",
+     "source": "CMS-HIG-17-007, arXiv:1806.05996, Eq. (1) and text: B(H->gamma*gamma->mumugamma) = 3.83e-5 from MCFM 7.0.1; the paper separates H->gamma*gamma from H->Zgamma at m_ll = 50 GeV (the cut is stated in the text around Eq. (1), not next to the number: INTERPRETATION)"
+    },
+    {
+     "option": "YR4 sigma x B(ATLAS Pythia8, m_ll < 30 GeV)",
+     "value_pb": 2.603304e-05,
+     "factors": "0.7612 x 3.42e-5",
+     "source": "ATLAS arXiv:2103.10322 Sect. 3: B(H->mumugamma) = 3.42e-5, Pythia 8, m_ll < 30 GeV"
+    },
+    {
+     "option": "Z-pole part, if the sample contains it (see REPORT section 2)",
+     "value_pb": 3.92808475752e-05,
+     "factors": "0.7612 x 1.533e-3 x 0.033662",
+     "note": "YR4 BR(H->Zgamma) x PDG BR(Z->ll) per flavour: the H->Zgamma part with m_ll near m_Z"
+    },
+    {
+     "option": "no published value for the full m_ll range of the sample (no m_ll cut)",
+     "value_pb": null
+    },
+    {
+     "option": "implied B = portal / YR4 sigma (arithmetic only)",
+     "value": 5.857856016815554e-05,
+     "note": "the generator's own production sigma is not YR4, so this is not a measured BR"
+    }
+   ],
+   "v5_analogue": "Every Higgs sample in v5 = YR4 production (mH = 125.00) x YR4 BR (x PDG Z BR), e.g. 37604 ggF H->Zgamma 48.58 x 0.001533 x 0.10099; VERIFIED BY MATAN 3 Nov. No YR4 BR exists for H -> l l gamma (Dalitz).",
+   "atlas": [
+    {
+     "dsid": 345965,
+     "physics_short": "PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hgamstargam_MINLO",
+     "sigma_pb": 0.7612,
+     "kFactor": 1.0,
+     "genFiltEff": 0.00227,
+     "sigma_eff_pb": 0.0017279239999999998
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.0017279239999999998,
+   "cms_portal_over_atlas": 0.02580553311372491,
+   "notes": "CMS cards (genproductions master, directory 'dalitz_no_mll_cut'): production MG5_aMC NLO ZH 0,1,2j NLO FxFx; decay in MadSpin x0 > l+ l- a with model HC_NLO_X0_UFO-lepton_masses_no_lepton_yukawas; no m_ll or photon cut in the decay (run_card mll_sf 30 / ptgmin 20 act on production-level particles; there are none). Match of these master-branch cards to the gridpack: UNVERIFIED (see the gridpack check). ATLAS: the full sigma_eff of the listed ATLAS DSID(s) is shared by ee and mumu (ATLAS has one sample for both)."
+  },
+  "74314": {
+   "item": "N4",
+   "label": "qq -> ZH, H -> ZZ (JHUGen, 4-lepton filter)",
+   "mini_recid": 74313,
+   "dataset": "ZH_HToZZ_4LFilter_M125_TuneCP5_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8",
+   "portal": {
+    "filter_efficiency": 1.0,
+    "matching_efficiency": 0.2,
+    "neg_weight_fraction": 0.02914,
+    "total_value": 0.7935,
+    "total_value_uncertainty": 0.003505
+   },
+   "portal_url": "https://opendata.cern.ch/record/74313",
+   "r1": "Production POWHEG HZJ MiNLO (Z -> all, vdecaymode 10, min_z_mass 10 GeV); H decay in a SEPARATE JHUGen step (DecayMode1=8 Z->2l incl. tau, DecayMode2=9 Z->anything, FilterNLept=4, WriteFailedEvents=2). R1: the decay BR is NOT inside the portal value; the portal value 0.7935 pb is close to the ZH production sigma (YR4 qq->ZH 0.7612, ZH total 0.8839), so the 4-lepton filter efficiency is NOT inside it either (if it were, the production sigma would be ~4-5 pb). The portal 'matching_efficiency' 0.2 (McM match_efficiency 0.1509, the validation efficiency) is therefore most likely the JHUGen filter efficiency, not a jet-matching efficiency (INTERPRETATION, open).",
+   "mcm": {
+    "cross_section_pb": 1,
+    "filter_efficiency": 1,
+    "match_efficiency": 0.150882730885,
+    "prepid": "HIG-RunIISummer20UL16wmLHEGEN-00239",
+    "url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-00239"
+   },
+   "theory_options": [
+    {
+     "option": "A: YR4 qq->ZH x BR(H->4l, l=e,mu,tau)",
+     "value_pb": 0.0002089494,
+     "factors": "0.7612 x 2.745e-4",
+     "note": "the convention of v5 71227/70383 (WH H->ZZ->4l) and of ATLAS 346645; counts only events with 4 leptons from the Higgs, so it misses the filtered events where the 4th/3rd lepton comes from the associated Z"
+    },
+    {
+     "option": "B: v5 40062 convention (estimate)",
+     "value_pb": 0.00038611642293122486,
+     "factors": "0.7612 x 0.02619 x 0.10099 x 0.19178",
+     "note": "eps = 1-(1-BR(Z->ll))^2: P(at least one of the other H-Z and the associated Z -> ll), as 40062; ESTIMATE; ignores tau decays and lepton counting details"
+    },
+    {
+     "option": "C: YR4 qq->ZH x BR(H->ZZ) x BR(Z->ll) x McM validation efficiency 0.1509",
+     "value_pb": 0.0003037751095587475,
+     "factors": "0.7612 x 0.02619 x 0.10099 x 0.15088",
+     "note": "only valid if 0.1509 is the filter efficiency relative to H->Z(ll)Z(any); what 0.1509 is relative to is NOT documented (open)"
+    },
+    {
+     "option": "D: portal 0.7935 x BR(H->ZZ) x BR(Z->ll) x 0.1509",
+     "value_pb": 0.00031666519894228343,
+     "factors": "0.7935 x 0.02619 x 0.10099 x 0.15088",
+     "note": "generator production sigma instead of YR4"
+    },
+    {
+     "option": "E: measure the filter content in file 0 (precheck, generator particles)",
+     "value_pb": null,
+     "note": "REPORT section 5: fraction of events by H->ZZ and associated-Z decay"
+    }
+   ],
+   "v5_analogue": "40062 ggZH 4l (ESTIMATE, 0.1227 x 0.02619 x 0.10099 x 0.19178); 71227/70383 WH 4l (YR4 x 2.745e-4); 37728/68847 ggF/VBF 4l (YR4 x 2.745e-4).",
+   "atlas": [
+    {
+     "dsid": 346645,
+     "physics_short": "PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Zincl_MINLO_shw",
+     "sigma_pb": 0.7612,
+     "kFactor": 1.0,
+     "genFiltEff": 0.0002745,
+     "sigma_eff_pb": 0.0002089494
+    }
+   ],
+   "atlas_sigma_eff_pb": 0.0002089494,
+   "cms_portal_over_atlas": 3797.570129418893,
+   "notes": "ATLAS 346645 = 0.7612 x 2.745e-4 (S2: the same 2.745e-4 is used as filter for H->mumu samples)."
+  }
+ }
+}

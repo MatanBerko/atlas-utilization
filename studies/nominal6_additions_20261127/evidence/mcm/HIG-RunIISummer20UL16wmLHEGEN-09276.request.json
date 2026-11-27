@@ -1,0 +1,604 @@
+{
+    "results": {
+        "_id": "HIG-RunIISummer20UL16wmLHEGEN-09276",
+        "_rev": "49-030e4e17d5060d6b31ef233ea9d6d1b6",
+        "prepid": "HIG-RunIISummer20UL16wmLHEGEN-09276",
+        "history": [
+            {
+                "action": "created",
+                "updater": {
+                    "submission_date": "2022-06-23-22-38",
+                    "author_email": "aakpinar@bu.edu",
+                    "author_username": "aakpinar",
+                    "author_name": "Alp Akpinar"
+                }
+            },
+            {
+                "action": "clone",
+                "step": "HIG-RunIISummer20UL16wmLHEGEN-02923",
+                "updater": {
+                    "submission_date": "2022-06-23-22-38",
+                    "author_email": "aakpinar@bu.edu",
+                    "author_username": "aakpinar",
+                    "author_name": "Alp Akpinar"
+                }
+            },
+            {
+                "action": "update",
+                "step": "extension",
+                "updater": {
+                    "submission_date": "2022-06-23-22-38",
+                    "author_email": "aakpinar@bu.edu",
+                    "author_username": "aakpinar",
+                    "author_name": "Alp Akpinar"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "validation",
+                "updater": {
+                    "submission_date": "2022-06-23-22-43",
+                    "author_email": "aakpinar@bu.edu",
+                    "author_username": "aakpinar",
+                    "author_name": "Alp Akpinar"
+                }
+            },
+            {
+                "action": "validation",
+                "step": "succeeded",
+                "updater": {
+                    "submission_date": "2022-06-24-08-02",
+                    "author_email": "",
+                    "author_username": "automatic",
+                    "author_name": ""
+                }
+            },
+            {
+                "action": "approve",
+                "step": "define",
+                "updater": {
+                    "submission_date": "2022-06-25-16-09",
+                    "author_email": "aakpinar@bu.edu",
+                    "author_username": "aakpinar",
+                    "author_name": "Alp Akpinar"
+                }
+            },
+            {
+                "action": "set status",
+                "step": "defined",
+                "updater": {
+                    "submission_date": "2022-06-25-16-09",
+                    "author_email": "aakpinar@bu.edu",
+                    "author_username": "aakpinar",
+                    "author_name": "Alp Akpinar"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "approve",
+                "updater": {
+                    "submission_date": "2022-07-13-04-59",
+                    "author_email": "meng.lu@cern.ch",
+                    "author_username": "melu",
+                    "author_name": "Meng Lu"
+                }
+            },
+            {
+                "action": "set status",
+                "step": "approved",
+                "updater": {
+                    "submission_date": "2022-07-13-04-59",
+                    "author_email": "meng.lu@cern.ch",
+                    "author_username": "melu",
+                    "author_name": "Meng Lu"
+                }
+            },
+            {
+                "action": "join chain",
+                "step": "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-07808",
+                "updater": {
+                    "submission_date": "2022-07-13-15-43",
+                    "author_email": "heng.yang@cern.ch",
+                    "author_username": "heyang",
+                    "author_name": "Heng Yang"
+                }
+            },
+            {
+                "action": "priority",
+                "step": 85000,
+                "updater": {
+                    "submission_date": "2022-07-13-15-43",
+                    "author_email": "heng.yang@cern.ch",
+                    "author_username": "heyang",
+                    "author_name": "Heng Yang"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "submit",
+                "updater": {
+                    "submission_date": "2022-07-13-15-45",
+                    "author_email": "heng.yang@cern.ch",
+                    "author_username": "heyang",
+                    "author_name": "Heng Yang"
+                }
+            },
+            {
+                "action": "inject",
+                "step": "Task_RunIISummer20UL16wmLHEGEN-01557",
+                "updater": {
+                    "submission_date": "2022-07-13-15-49",
+                    "author_email": "",
+                    "author_username": "automatic",
+                    "author_name": ""
+                }
+            },
+            {
+                "action": "set status",
+                "step": "submitted",
+                "updater": {
+                    "submission_date": "2022-07-13-15-49",
+                    "author_email": "",
+                    "author_username": "automatic",
+                    "author_name": ""
+                }
+            },
+            {
+                "action": "update",
+                "step": "notes, tags",
+                "updater": {
+                    "submission_date": "2022-08-15-03-53",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "update",
+                "step": "tags",
+                "updater": {
+                    "submission_date": "2022-09-29-22-22",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "update",
+                "step": "notes, tags",
+                "updater": {
+                    "submission_date": "2022-09-30-03-50",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "set status",
+                "step": "approved",
+                "updater": {
+                    "submission_date": "2022-11-17-10-59",
+                    "author_email": "Bugra.Bilin@cern.ch",
+                    "author_username": "bbilin",
+                    "author_name": "Bugra Bilin"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "submit",
+                "updater": {
+                    "submission_date": "2022-11-17-12-58",
+                    "author_email": "Bugra.Bilin@cern.ch",
+                    "author_username": "bbilin",
+                    "author_name": "Bugra Bilin"
+                }
+            },
+            {
+                "action": "inject",
+                "step": "Task_RunIISummer20UL16wmLHEGEN-02304",
+                "updater": {
+                    "submission_date": "2022-11-17-13-04",
+                    "author_email": "",
+                    "author_username": "automatic",
+                    "author_name": ""
+                }
+            },
+            {
+                "action": "set status",
+                "step": "submitted",
+                "updater": {
+                    "submission_date": "2022-11-17-13-04",
+                    "author_email": "",
+                    "author_username": "automatic",
+                    "author_name": ""
+                }
+            },
+            {
+                "action": "update",
+                "step": "tags",
+                "updater": {
+                    "submission_date": "2022-11-17-13-54",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85004,
+                "updater": {
+                    "submission_date": "2022-11-17-14-17",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "priority",
+                "step": 90000,
+                "updater": {
+                    "submission_date": "2022-11-17-15-31",
+                    "author_email": "Bugra.Bilin@cern.ch",
+                    "author_username": "bbilin",
+                    "author_name": "Bugra Bilin"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 90001,
+                "updater": {
+                    "submission_date": "2022-11-25-22-15",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 180002,
+                "updater": {
+                    "submission_date": "2022-12-01-13-58",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "set status",
+                "step": "done",
+                "updater": {
+                    "submission_date": "2022-12-07-03-32",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "update",
+                "step": "tags",
+                "updater": {
+                    "author_email": "pdmv.service@cern.ch",
+                    "submission_date": "2024-03-20-02-07",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "join chain",
+                "step": "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00566",
+                "updater": {
+                    "author_username": "sobarman",
+                    "author_name": "Soumyadip Barman",
+                    "author_email": "soumyadip.barman@cern.ch",
+                    "submission_date": "2026-09-08-21-55"
+                }
+            }
+        ],
+        "priority": 180002,
+        "cmssw_release": "CMSSW_10_6_30_patch1",
+        "input_dataset": "",
+        "output_dataset": [],
+        "pwg": "HIG",
+        "validation": {
+            "content": "all",
+            "valid": false,
+            "results": {
+                "1": [
+                    {
+                        "peak_value_rss": 361.977,
+                        "total_events": 715,
+                        "estimated_events_per_lumi": 1017.16416,
+                        "cpu_efficiency": 0.9970729781090353,
+                        "expected_events": 715,
+                        "cpu_name": "Intel(R) Xeon(R) CPU E5-2650 v4 @ 2.20GHz ()",
+                        "time_per_event": 28.314013737959463,
+                        "size_per_event": 105.69069202797203,
+                        "filter_efficiency": 1
+                    }
+                ],
+                "8": [
+                    {
+                        "peak_value_rss": 488.965,
+                        "total_events": 715,
+                        "estimated_events_per_lumi": 10046.851200000001,
+                        "cpu_efficiency": 0.9783398634984833,
+                        "expected_events": 715,
+                        "cpu_name": "Intel(R) Xeon(R) Silver 4216 CPU @ 2.10GHz ()",
+                        "time_per_event": 2.866569776608217,
+                        "size_per_event": 106.00247496503496,
+                        "filter_efficiency": 1
+                    }
+                ],
+                "2": [
+                    {
+                        "peak_value_rss": 387.223,
+                        "total_events": 715,
+                        "estimated_events_per_lumi": 2010.2774399999998,
+                        "cpu_efficiency": 0.9941719257517972,
+                        "expected_events": 715,
+                        "cpu_name": "Intel(R) Xeon(R) CPU E5-2650 v4 @ 2.20GHz ()",
+                        "time_per_event": 14.326380740759843,
+                        "size_per_event": 106.41708755244755,
+                        "filter_efficiency": 1
+                    }
+                ],
+                "4": [
+                    {
+                        "peak_value_rss": 401.078,
+                        "total_events": 715,
+                        "estimated_events_per_lumi": 5126.1696,
+                        "cpu_efficiency": 0.9933776480089458,
+                        "expected_events": 715,
+                        "cpu_name": "Intel(R) Xeon(R) Silver 4216 CPU @ 2.10GHz ()",
+                        "time_per_event": 5.618230032810463,
+                        "size_per_event": 106.00104279720279,
+                        "filter_efficiency": 1
+                    }
+                ]
+            }
+        },
+        "dataset_name": "VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8",
+        "pileup_dataset_name": "",
+        "process_string": "",
+        "extension": 1,
+        "block_black_list": [],
+        "block_white_list": [],
+        "fragment_tag": "",
+        "mcdb_id": 0,
+        "notes": "Request HIG-RunIISummer20UL16wmLHEGEN-09276 is pronounced dead at 2022-08-15 03:52:57 as last status of pdmvserv_task_HIG-RunIISummer20UL16wmLHEGEN-09276__v1_T_220713_154916_1432 is rejected-archived at 2022-07-15 22:59:03. Request was rejected or aborted. Threshold is 30 days.\n\nRequest HIG-RunIISummer20UL16wmLHEGEN-09276 is pronounced dead at 2022-09-30 03:50:50 as last status of pdmvserv_task_HIG-RunIISummer20UL16wmLHEGEN-09276__v1_T_220713_154916_1432 is rejected-archived at 2022-07-15 22:59:03. Request was rejected or aborted. Threshold is 30 days.",
+        "completed_events": 0,
+        "total_events": 108000,
+        "member_of_chain": [
+            "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00566",
+            "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-07808"
+        ],
+        "member_of_campaign": "RunIISummer20UL16wmLHEGEN",
+        "flown_with": "",
+        "time_event": [
+            28.162152148523894
+        ],
+        "size_event": [
+            109
+        ],
+        "memory": 1900,
+        "name_of_fragment": "",
+        "fragment": "import FWCore.ParameterSet.Config as cms\n\nexternalLHEProducer = cms.EDProducer(\"ExternalLHEProducer\",\n    args = cms.vstring('/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc630/13TeV/Powheg/V2/VBFH_NNPDF31_M-125_13TeV/v1/VBFH_NNPDF31_M-125_13TeV.tgz'),\n    nEvents = cms.untracked.uint32(5000),\n    numberOfParameters = cms.uint32(1),\n    outputFile = cms.string('cmsgrid_final.lhe'),\n    generateConcurrently = cms.untracked.bool(True),\n    scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh')\n)\n\n\nfrom Configuration.Generator.Pythia8CommonSettings_cfi import *\nfrom Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *\nfrom Configuration.Generator.Pythia8PowhegEmissionVetoSettings_cfi import *\nfrom Configuration.Generator.PSweightsPythia.PythiaPSweightsSettings_cfi import *\n\n\ngenerator = cms.EDFilter(\"Pythia8ConcurrentHadronizerFilter\",\n                         maxEventsToPrint = cms.untracked.int32(1),\n                         pythiaPylistVerbosity = cms.untracked.int32(1),\n                         filterEfficiency = cms.untracked.double(1.0),\n                         pythiaHepMCVerbosity = cms.untracked.bool(False),\n                         comEnergy = cms.double(13000.),\n                         PythiaParameters = cms.PSet(\n            pythia8CommonSettingsBlock,\n            pythia8CP5SettingsBlock,\n            pythia8PSweightsSettingsBlock,\n            pythia8PowhegEmissionVetoSettingsBlock,\n            processParameters = cms.vstring(\n                'POWHEG:nFinal = 3', ## Number of final state particles\n                                     ## (BEFORE THE DECAYS) in the LHE\n                                     ## other than emitted extra parton\n                '25:m0 = 125.0',\n                '25:onMode = off',\n                '25:onIfMatch = 23 22',\n                '23:mMin = 50.0',\n                '23:onMode = off',\n                '23:onIfAny = 11 13 15',\n                ),\n            parameterSets = cms.vstring('pythia8CommonSettings',\n\t\t\t\t\t'pythia8CP5Settings',\n                                        'pythia8PowhegEmissionVetoSettings',\n                                        'pythia8PSweightsSettings',\n                                        'processParameters'\n                                        )\n               )\n                          )\nProductionFilterSequence = cms.Sequence(generator)\n",
+        "config_id": [
+            "6ecc134f6acc33ca1e48d4364f07c4dc"
+        ],
+        "version": 1,
+        "status": "done",
+        "type": "LHE",
+        "keep_output": [
+            false
+        ],
+        "generators": [
+            "powheg V2"
+        ],
+        "sequences": [
+            {
+                "eventcontent": [
+                    "RAWSIM",
+                    "LHE"
+                ],
+                "runsScenarioForMC": "",
+                "donotDropOnInput": "",
+                "extra": "",
+                "inputEventContent": "",
+                "runsAndWeightsForMC": "",
+                "dropDescendant": false,
+                "pileup": "",
+                "hltProcess": "",
+                "index": -1,
+                "customise": "",
+                "custom_conditions": "",
+                "datatier": [
+                    "GEN",
+                    "LHE"
+                ],
+                "processName": "",
+                "inputCommands": "",
+                "particle_table": "",
+                "conditions": "106X_mcRun2_asymptotic_v13",
+                "harvesting": "",
+                "triggerResultsProcess": "",
+                "slhc": "",
+                "beamspot": "Realistic25ns13TeV2016Collision",
+                "restoreRNDSeeds": "",
+                "filtername": "",
+                "repacked": "",
+                "customise_commands": "",
+                "step": [
+                    "LHE",
+                    "GEN"
+                ],
+                "gflash": "",
+                "magField": "",
+                "himix": false,
+                "scenario": "",
+                "geometry": "DB:Extended",
+                "datamix": "",
+                "inline_custom": false,
+                "era": "Run2_2016",
+                "outputCommand": "",
+                "nThreads": "1",
+                "procModifiers": "",
+                "nStreams": 0
+            }
+        ],
+        "generator_parameters": [
+            {
+                "submission_details": {
+                    "submission_date": "2021-09-24-04-30",
+                    "author_email": "qianying.guo@cern.ch",
+                    "author_username": "qguo",
+                    "author_name": "Qianying Guo"
+                },
+                "match_efficiency_error": 0.1,
+                "match_efficiency": 1,
+                "filter_efficiency": 1,
+                "negative_weights_fraction": -1,
+                "version": 0,
+                "cross_section": 1,
+                "filter_efficiency_error": 0.1
+            },
+            {
+                "submission_details": {
+                    "submission_date": "2022-06-23-22-38",
+                    "author_email": "aakpinar@bu.edu",
+                    "author_username": "aakpinar",
+                    "author_name": "Alp Akpinar"
+                },
+                "match_efficiency_error": 0.1,
+                "match_efficiency": 1,
+                "filter_efficiency": 1,
+                "negative_weights_fraction": -1,
+                "version": 1,
+                "cross_section": 1,
+                "filter_efficiency_error": 0.1
+            }
+        ],
+        "reqmgr_name": [
+            {
+                "content": {},
+                "name": "pdmvserv_task_HIG-RunIISummer20UL16wmLHEGEN-09276__v1_T_220713_154916_1432"
+            },
+            {
+                "content": {},
+                "name": "cmsunified_task_HIG-RunIISummer20UL16wmLHEGEN-09276__v1_T_220713_161848_4966"
+            },
+            {
+                "content": {},
+                "name": "pdmvserv_task_HIG-RunIISummer20UL16wmLHEGEN-09276__v1_T_221117_130334_7083"
+            },
+            {
+                "content": {
+                    "pdmv_type": "StepChain",
+                    "pdmv_status_from_reqmngr": "normal-archived",
+                    "pdmv_prep_id": "task_HIG-RunIISummer20UL16wmLHEGEN-09276",
+                    "pdmv_dataset_statuses": {
+                        "/VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13_ext1-v3/AODSIM": {
+                            "pdmv_evts_in_DAS": 108000,
+                            "pdmv_status_in_DAS": "VALID",
+                            "pdmv_open_evts_in_DAS": 0
+                        },
+                        "/VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17_ext1-v3/MINIAODSIM": {
+                            "pdmv_evts_in_DAS": 108000,
+                            "pdmv_status_in_DAS": "VALID",
+                            "pdmv_open_evts_in_DAS": 0
+                        }
+                    },
+                    "pdmv_status_history_from_reqmngr": [
+                        "new",
+                        "assignment-approved",
+                        "assigned",
+                        "staging",
+                        "staged",
+                        "acquired",
+                        "running-open",
+                        "running-closed",
+                        "completed",
+                        "closed-out",
+                        "announced",
+                        "normal-archived"
+                    ],
+                    "pdmv_dataset_list": [
+                        "/VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13_ext1-v3/AODSIM",
+                        "/VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17_ext1-v3/MINIAODSIM"
+                    ],
+                    "pdmv_submission_date": "221118",
+                    "pdmv_evts_in_DAS": 108000,
+                    "pdmv_status_in_DAS": "VALID",
+                    "pdmv_dataset_name": "/VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13_ext1-v3/AODSIM",
+                    "pdmv_monitor_time": "Fri Dec 09 07:27:30 2022",
+                    "pdmv_present_priority": 90001,
+                    "pdmv_submission_time": "165200",
+                    "pdmv_open_evts_in_DAS": 0
+                },
+                "name": "cmsunified_task_HIG-RunIISummer20UL16wmLHEGEN-09276__v1_T_221118_175200_4815"
+            },
+            {
+                "content": {
+                    "pdmv_type": "Resubmission",
+                    "pdmv_status_from_reqmngr": "normal-archived",
+                    "pdmv_prep_id": "task_HIG-RunIISummer20UL16wmLHEGEN-09276",
+                    "pdmv_dataset_statuses": {
+                        "/VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13_ext1-v3/AODSIM": {
+                            "pdmv_evts_in_DAS": 108000,
+                            "pdmv_status_in_DAS": "VALID",
+                            "pdmv_open_evts_in_DAS": 0
+                        },
+                        "/VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17_ext1-v3/MINIAODSIM": {
+                            "pdmv_evts_in_DAS": 108000,
+                            "pdmv_status_in_DAS": "VALID",
+                            "pdmv_open_evts_in_DAS": 0
+                        }
+                    },
+                    "pdmv_status_history_from_reqmngr": [
+                        "new",
+                        "assignment-approved",
+                        "assigned",
+                        "staging",
+                        "staged",
+                        "acquired",
+                        "running-open",
+                        "running-closed",
+                        "completed",
+                        "closed-out",
+                        "announced",
+                        "normal-archived"
+                    ],
+                    "pdmv_dataset_list": [
+                        "/VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13_ext1-v3/AODSIM",
+                        "/VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17_ext1-v3/MINIAODSIM"
+                    ],
+                    "pdmv_submission_date": "221201",
+                    "pdmv_evts_in_DAS": 108000,
+                    "pdmv_status_in_DAS": "VALID",
+                    "pdmv_dataset_name": "/VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13_ext1-v3/AODSIM",
+                    "pdmv_monitor_time": "Fri Dec 09 09:26:25 2022",
+                    "pdmv_present_priority": 180002,
+                    "pdmv_submission_time": "054606",
+                    "pdmv_open_evts_in_DAS": 0
+                },
+                "name": "cmsunified_ACDC0_task_HIG-RunIISummer20UL16wmLHEGEN-09276__v1_T_221201_064606_7466"
+            }
+        ],
+        "approval": "submit",
+        "analysis_id": [],
+        "energy": 13.0,
+        "tags": [
+            "htozg"
+        ],
+        "transient_output_modules": [
+            []
+        ],
+        "cadi_line": "",
+        "interested_pwg": [
+            "HIG"
+        ],
+        "ppd_tags": [],
+        "events_per_lumi": 0,
+        "pilot": false
+    }
+}

@@ -1,0 +1,1425 @@
+{
+ "read": "2026-11-27 23:05 IST",
+ "records": {
+  "37276": {
+   "cards": [
+    {
+     "file": "ggH_012j_NLO_FXFX_HtoElElGamma_customizecards.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoElElGamma/ggH_012j_NLO_FXFX_HtoElElGamma_customizecards.dat"
+    },
+    {
+     "file": "ggH_012j_NLO_FXFX_HtoElElGamma_extramodels.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoElElGamma/ggH_012j_NLO_FXFX_HtoElElGamma_extramodels.dat"
+    },
+    {
+     "file": "ggH_012j_NLO_FXFX_HtoElElGamma_madspin_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoElElGamma/ggH_012j_NLO_FXFX_HtoElElGamma_madspin_card.dat"
+    },
+    {
+     "file": "ggH_012j_NLO_FXFX_HtoElElGamma_proc_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoElElGamma/ggH_012j_NLO_FXFX_HtoElElGamma_proc_card.dat"
+    },
+    {
+     "file": "ggH_012j_NLO_FXFX_HtoElElGamma_run_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoElElGamma/ggH_012j_NLO_FXFX_HtoElElGamma_run_card.dat"
+    }
+   ],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-04069",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-04069",
+   "mcm_cross_section_pb": 0.0008082,
+   "mcm_dataset_name": "GluGluHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 0.0008082,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 0.308,
+     "match_efficiency_error": 0.015,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-04-19-14-40"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 0.0008082,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 0.308,
+     "match_efficiency_error": 0.015,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-04-19-14-41"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "MG5_aMC FXFX",
+    "Pytha8"
+   ],
+   "mcm_match_efficiency": 0.308,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-03464"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "Request HIG-RunIIFall18wmLHEGS-01565 requires assistance because as of 2019-07-22 17:47:40 it was marked assistance-manual in cms-unified",
+   "mini_recid": 37275,
+   "nano_recid": 37276,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "2.151e-01",
+    "total_value": "2.816e-03",
+    "total_value_uncertainty": "3.055e-06"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-04069",
+   "title": "/GluGluHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "37420": {
+   "cards": [
+    {
+     "file": "ggH_012j_NLO_FXFX_HtoMuMuGamma_customizecards.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoMuMuGamma/ggH_012j_NLO_FXFX_HtoMuMuGamma_customizecards.dat"
+    },
+    {
+     "file": "ggH_012j_NLO_FXFX_HtoMuMuGamma_extramodels.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoMuMuGamma/ggH_012j_NLO_FXFX_HtoMuMuGamma_extramodels.dat"
+    },
+    {
+     "file": "ggH_012j_NLO_FXFX_HtoMuMuGamma_madspin_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoMuMuGamma/ggH_012j_NLO_FXFX_HtoMuMuGamma_madspin_card.dat"
+    },
+    {
+     "file": "ggH_012j_NLO_FXFX_HtoMuMuGamma_proc_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoMuMuGamma/ggH_012j_NLO_FXFX_HtoMuMuGamma_proc_card.dat"
+    },
+    {
+     "file": "ggH_012j_NLO_FXFX_HtoMuMuGamma_run_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ggH_012j_NLO_FXFX_HtoMuMuGamma/ggH_012j_NLO_FXFX_HtoMuMuGamma_run_card.dat"
+    }
+   ],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-04063",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-04063",
+   "mcm_cross_section_pb": 0.0008082,
+   "mcm_dataset_name": "GluGluHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 0.0008082,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 0.308,
+     "match_efficiency_error": 0.015,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-04-19-13-26"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 0.0008082,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 0.308,
+     "match_efficiency_error": 0.015,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-04-19-13-29"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "MG5_aMC FXFX",
+    "Pytha8"
+   ],
+   "mcm_match_efficiency": 0.308,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-03458"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "Request HIG-RunIIFall18wmLHEGS-01565 requires assistance because as of 2019-07-22 17:47:40 it was marked assistance-manual in cms-unified",
+   "mini_recid": 37419,
+   "nano_recid": 37420,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "2.151e-01",
+    "total_value": "1.858e-03",
+    "total_value_uncertainty": "2.031e-06"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-04063",
+   "title": "/GluGluHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnlo_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "37604": {
+   "cards": [],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-09275",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-09275",
+   "mcm_cross_section_pb": 1,
+   "mcm_dataset_name": "GluGluHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "qianying.guo@cern.ch",
+      "author_name": "Qianying Guo",
+      "author_username": "qguo",
+      "submission_date": "2021-09-24-04-29"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "aakpinar@bu.edu",
+      "author_name": "Alp Akpinar",
+      "author_username": "aakpinar",
+      "submission_date": "2022-06-23-22-35"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "powheg ggH with mass effects"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00565",
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-07807"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "Request HIG-RunIISummer20UL16wmLHEGEN-02922 is pronounced dead at 2022-04-25 12:20:19 as last status of pdmvserv_task_HIG-RunIISummer20UL16wmLHEGEN-02922__v1_T_220323_162022_4219 is aborted-archived at 2022-03-25 23:54:37. Request was rejected or aborted. Threshold is 30 days.\n\nRequest HIG-RunIISummer20UL16wmLHEGEN-09275 is pronounced dead at 2022-08-15 03:52:57 as last status of pdmvserv_task_HIG-RunIISummer20UL16wmLHEGEN-09275__v1_T_220713_154905_827 is rejected-archived at 2022-07-15 22:59:13. Request was rejected or aborted. Threshold is 30 days.\n\nRequest HIG-RunIISummer20UL16wmLHEGEN-09275 is pronounced dead at 2022-09-30 03:50:50 as last status of pdmvserv_task_HIG-RunIISummer20UL16wmLHEGEN-09275__v1_T_220713_154905_827 is rejected-archived at 2022-07-15 22:59:13. Request was rejected or aborted. Threshold is 30 days.",
+   "mini_recid": 37602,
+   "nano_recid": 37604,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "5.164e-03",
+    "total_value": "2.938e+01",
+    "total_value_uncertainty": "1.038e-02"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-09275",
+   "title": "/GluGluHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "68459": {
+   "cards": [
+    {
+     "file": "vbfH_NLO_HtoElElGamma_FKS_params.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoElElGamma/vbfH_NLO_HtoElElGamma_FKS_params.dat"
+    },
+    {
+     "file": "vbfH_NLO_HtoElElGamma_customizecards.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoElElGamma/vbfH_NLO_HtoElElGamma_customizecards.dat"
+    },
+    {
+     "file": "vbfH_NLO_HtoElElGamma_extramodels.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoElElGamma/vbfH_NLO_HtoElElGamma_extramodels.dat"
+    },
+    {
+     "file": "vbfH_NLO_HtoElElGamma_madspin_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoElElGamma/vbfH_NLO_HtoElElGamma_madspin_card.dat"
+    },
+    {
+     "file": "vbfH_NLO_HtoElElGamma_proc_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoElElGamma/vbfH_NLO_HtoElElGamma_proc_card.dat"
+    },
+    {
+     "file": "vbfH_NLO_HtoElElGamma_run_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoElElGamma/vbfH_NLO_HtoElElGamma_run_card.dat"
+    }
+   ],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-04047",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-04047",
+   "mcm_cross_section_pb": 1,
+   "mcm_dataset_name": "VBFHToEEG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-03-26-16-06"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-04-10-20-39"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "Madgraph5_aMC@NLO",
+    "pythia8"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-03442"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "",
+   "mini_recid": 68458,
+   "nano_recid": 68459,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "3.429e-01",
+    "total_value": "3.150e-04",
+    "total_value_uncertainty": "6.441e-08"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-04047",
+   "title": "/VBFHToEEG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "68559": {
+   "cards": [
+    {
+     "file": "vbfH_NLO_HtoMuMuGamma_FKS_params.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoMuMuGamma/vbfH_NLO_HtoMuMuGamma_FKS_params.dat"
+    },
+    {
+     "file": "vbfH_NLO_HtoMuMuGamma_customizecards.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoMuMuGamma/vbfH_NLO_HtoMuMuGamma_customizecards.dat"
+    },
+    {
+     "file": "vbfH_NLO_HtoMuMuGamma_extramodels.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoMuMuGamma/vbfH_NLO_HtoMuMuGamma_extramodels.dat"
+    },
+    {
+     "file": "vbfH_NLO_HtoMuMuGamma_madspin_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoMuMuGamma/vbfH_NLO_HtoMuMuGamma_madspin_card.dat"
+    },
+    {
+     "file": "vbfH_NLO_HtoMuMuGamma_proc_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoMuMuGamma/vbfH_NLO_HtoMuMuGamma_proc_card.dat"
+    },
+    {
+     "file": "vbfH_NLO_HtoMuMuGamma_run_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/vbfH_NLO_HtoMuMuGamma/vbfH_NLO_HtoMuMuGamma_run_card.dat"
+    }
+   ],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-04044",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-04044",
+   "mcm_cross_section_pb": 1,
+   "mcm_dataset_name": "VBFHToMuMuG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-03-25-19-51"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-04-10-20-39"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "Madgraph5_aMC@NLO",
+    "pythia8"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-03439"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "",
+   "mini_recid": 68558,
+   "nano_recid": 68559,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "3.435e-01",
+    "total_value": "2.080e-04",
+    "total_value_uncertainty": "1.061e-08"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-04044",
+   "title": "/VBFHToMuMuG_M125_Dalitz_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "68731": {
+   "cards": [],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-09276",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-09276",
+   "mcm_cross_section_pb": 1,
+   "mcm_dataset_name": "VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "qianying.guo@cern.ch",
+      "author_name": "Qianying Guo",
+      "author_username": "qguo",
+      "submission_date": "2021-09-24-04-30"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "aakpinar@bu.edu",
+      "author_name": "Alp Akpinar",
+      "author_username": "aakpinar",
+      "submission_date": "2022-06-23-22-38"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "powheg V2"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00566",
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-07808"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "Request HIG-RunIISummer20UL16wmLHEGEN-09276 is pronounced dead at 2022-08-15 03:52:57 as last status of pdmvserv_task_HIG-RunIISummer20UL16wmLHEGEN-09276__v1_T_220713_154916_1432 is rejected-archived at 2022-07-15 22:59:03. Request was rejected or aborted. Threshold is 30 days.\n\nRequest HIG-RunIISummer20UL16wmLHEGEN-09276 is pronounced dead at 2022-09-30 03:50:50 as last status of pdmvserv_task_HIG-RunIISummer20UL16wmLHEGEN-09276__v1_T_220713_154916_1432 is rejected-archived at 2022-07-15 22:59:03. Request was rejected or aborted. Threshold is 30 days.",
+   "mini_recid": 68729,
+   "nano_recid": 68731,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "5.926e-04",
+    "total_value": "3.861e+00",
+    "total_value_uncertainty": "8.948e-03"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-09276",
+   "title": "/VBFHToZG_ZToLL_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "69681": {
+   "cards": [
+    {
+     "file": "WH_012j_NLO_HtoElElGamma_customizecards.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoElElGamma/WH_012j_NLO_HtoElElGamma_customizecards.dat"
+    },
+    {
+     "file": "WH_012j_NLO_HtoElElGamma_extramodels.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoElElGamma/WH_012j_NLO_HtoElElGamma_extramodels.dat"
+    },
+    {
+     "file": "WH_012j_NLO_HtoElElGamma_madspin_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoElElGamma/WH_012j_NLO_HtoElElGamma_madspin_card.dat"
+    },
+    {
+     "file": "WH_012j_NLO_HtoElElGamma_proc_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoElElGamma/WH_012j_NLO_HtoElElGamma_proc_card.dat"
+    },
+    {
+     "file": "WH_012j_NLO_HtoElElGamma_run_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoElElGamma/WH_012j_NLO_HtoElElGamma_run_card.dat"
+    }
+   ],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-03857",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-03857",
+   "mcm_cross_section_pb": 1,
+   "mcm_dataset_name": "WHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 0.318,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-03-26-15-58"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 0.318,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-03-26-16-05"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "Madgraph5_aMC@NLO",
+    "pythia8"
+   ],
+   "mcm_match_efficiency": 0.318,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-03400"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "",
+   "mini_recid": 69680,
+   "nano_recid": 69681,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "1.937e-01",
+    "total_value": "1.238e-04",
+    "total_value_uncertainty": "1.824e-07"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-03857",
+   "title": "/WHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "69699": {
+   "cards": [
+    {
+     "file": "WH_012j_NLO_HtoMuMuGamma_customizecards.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoMuMuGamma/WH_012j_NLO_HtoMuMuGamma_customizecards.dat"
+    },
+    {
+     "file": "WH_012j_NLO_HtoMuMuGamma_extramodels.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoMuMuGamma/WH_012j_NLO_HtoMuMuGamma_extramodels.dat"
+    },
+    {
+     "file": "WH_012j_NLO_HtoMuMuGamma_madspin_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoMuMuGamma/WH_012j_NLO_HtoMuMuGamma_madspin_card.dat"
+    },
+    {
+     "file": "WH_012j_NLO_HtoMuMuGamma_proc_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoMuMuGamma/WH_012j_NLO_HtoMuMuGamma_proc_card.dat"
+    },
+    {
+     "file": "WH_012j_NLO_HtoMuMuGamma_run_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/WH_012j_NLO_HtoMuMuGamma/WH_012j_NLO_HtoMuMuGamma_run_card.dat"
+    }
+   ],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-03848",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-03848",
+   "mcm_cross_section_pb": 1,
+   "mcm_dataset_name": "WHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 0.318,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-03-23-15-19"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 0.318,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-03-25-19-51"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "Madgraph5_aMC@NLO",
+    "pythia8"
+   ],
+   "mcm_match_efficiency": 0.318,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-03393"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "",
+   "mini_recid": 69698,
+   "nano_recid": 69699,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "1.933e-01",
+    "total_value": "8.169e-05",
+    "total_value_uncertainty": "1.184e-07"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-03848",
+   "title": "/WHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "69771": {
+   "cards": [],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/SMP-RunIISummer20UL16wmLHEGEN-00539",
+   "gen_prepid": "SMP-RunIISummer20UL16wmLHEGEN-00539",
+   "mcm_cross_section_pb": 0.01654,
+   "mcm_dataset_name": "WLLJJ_WToLNu_EWK_TuneCP5_13TeV_madgraph-madspin-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 0.01654,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0,
+     "submission_details": {
+      "author_email": "meng.lu@cern.ch",
+      "author_name": "Meng Lu",
+      "author_username": "melu",
+      "submission_date": "2018-11-08-11-38"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 0.01654,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0,
+     "submission_details": {
+      "author_email": "tianyi.y@cern.ch",
+      "author_name": "Tianyi Yang",
+      "author_username": "tianyi",
+      "submission_date": "2022-07-19-06-53"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "pyhia8",
+    "madgraph"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "SMP-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00057",
+    "SMP-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-00221"
+   ],
+   "mcm_negative_weights_fraction": 0,
+   "mcm_notes": "",
+   "mini_recid": 69770,
+   "nano_recid": 69771,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "3.566e-02",
+    "total_value_uncertainty": "8.524e-06"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/SMP-RunIISummer20UL16wmLHEGEN-00539",
+   "title": "/WLLJJ_WToLNu_EWK_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "70301": {
+   "cards": [],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-02924",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-02924",
+   "mcm_cross_section_pb": 1,
+   "mcm_dataset_name": "WminusH_HToZG_WToAll_M-125_TuneCP5_13TeV-powheg-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "qianying.guo@cern.ch",
+      "author_name": "Qianying Guo",
+      "author_username": "qguo",
+      "submission_date": "2021-09-24-04-22"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "qianying.guo@cern.ch",
+      "author_name": "Qianying Guo",
+      "author_username": "qguo",
+      "submission_date": "2021-09-24-04-31"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "POWHEG V2"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00552",
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-03167"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "",
+   "mini_recid": 70300,
+   "nano_recid": 70301,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.572e-02",
+    "total_value": "5.413e-01",
+    "total_value_uncertainty": "5.712e-04"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-02924",
+   "title": "/WminusH_HToZG_WToAll_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "71145": {
+   "cards": [],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-02925",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-02925",
+   "mcm_cross_section_pb": 1,
+   "mcm_dataset_name": "WplusH_HToZG_WToAll_M-125_TuneCP5_13TeV-powheg-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "qianying.guo@cern.ch",
+      "author_name": "Qianying Guo",
+      "author_username": "qguo",
+      "submission_date": "2021-09-24-04-22"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "qianying.guo@cern.ch",
+      "author_name": "Qianying Guo",
+      "author_username": "qguo",
+      "submission_date": "2021-09-24-04-31"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "POWHEG V2"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00553",
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-03168"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "",
+   "mini_recid": 71144,
+   "nano_recid": 71145,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.993e-02",
+    "total_value": "8.668e-01",
+    "total_value_uncertainty": "1.030e-03"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-02925",
+   "title": "/WplusH_HToZG_WToAll_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "71636": {
+   "cards": [],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/SUS-RunIISummer20UL16wmLHEGEN-00122",
+   "gen_prepid": "SUS-RunIISummer20UL16wmLHEGEN-00122",
+   "mcm_cross_section_pb": 0.0287,
+   "mcm_dataset_name": "WpWpJJ_EWKnotop_TuneCP5_13TeV-madgraph-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 0.0287,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0,
+     "submission_details": {
+      "author_email": "meng.lu@cern.ch",
+      "author_name": "Meng Lu",
+      "author_username": "melu",
+      "submission_date": "2018-11-08-10-17"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 0.0287,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0,
+     "submission_details": {
+      "author_email": "andrea.trapote.fernandez@cern.ch",
+      "author_name": "Andrea Trapote Fernandez",
+      "author_username": "atrapote",
+      "submission_date": "2021-09-02-17-25"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "pythia8",
+    "aMCatNLO"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "SUS-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00026",
+    "SUS-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-00074"
+   ],
+   "mcm_negative_weights_fraction": 0,
+   "mcm_notes": "",
+   "mini_recid": 71635,
+   "nano_recid": 71636,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.694e-02",
+    "total_value_uncertainty": "4.622e-06"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/SUS-RunIISummer20UL16wmLHEGEN-00122",
+   "title": "/WpWpJJ_EWKnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "71640": {
+   "cards": [],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/SUS-RunIISummer20UL16wmLHEGEN-00123",
+   "gen_prepid": "SUS-RunIISummer20UL16wmLHEGEN-00123",
+   "mcm_cross_section_pb": 0.02227,
+   "mcm_dataset_name": "WpWpJJ_QCDnotop_TuneCP5_13TeV-madgraph-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 0.02227,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0.009,
+     "submission_details": {
+      "author_email": "meng.lu@cern.ch",
+      "author_name": "Meng Lu",
+      "author_username": "melu",
+      "submission_date": "2018-11-08-11-31"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 0.02227,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0.009,
+     "submission_details": {
+      "author_email": "andrea.trapote.fernandez@cern.ch",
+      "author_name": "Andrea Trapote Fernandez",
+      "author_username": "atrapote",
+      "submission_date": "2021-09-02-17-28"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "pythia8",
+    "madgraph"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "SUS-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00021",
+    "SUS-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-00075"
+   ],
+   "mcm_negative_weights_fraction": 0.009,
+   "mcm_notes": "",
+   "mini_recid": 71639,
+   "nano_recid": 71640,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.037e-02",
+    "total_value_uncertainty": "6.913e-06"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/SUS-RunIISummer20UL16wmLHEGEN-00123",
+   "title": "/WpWpJJ_QCDnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "72648": {
+   "cards": [
+    {
+     "file": "WWjj_OS_noTop_ewk_proc_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/13TeV/VBS/WWjj_OS/noTop",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/13TeV/VBS/WWjj_OS/noTop/WWjj_OS_noTop_ewk_proc_card.dat"
+    },
+    {
+     "file": "WWjj_OS_noTop_ewk_run_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/13TeV/VBS/WWjj_OS/noTop",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/13TeV/VBS/WWjj_OS/noTop/WWjj_OS_noTop_ewk_run_card.dat"
+    },
+    {
+     "file": "WWjj_OS_noTop_qcd_proc_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/13TeV/VBS/WWjj_OS/noTop",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/13TeV/VBS/WWjj_OS/noTop/WWjj_OS_noTop_qcd_proc_card.dat"
+    },
+    {
+     "file": "WWjj_OS_noTop_qcd_run_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/13TeV/VBS/WWjj_OS/noTop",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/13TeV/VBS/WWjj_OS/noTop/WWjj_OS_noTop_qcd_run_card.dat"
+    }
+   ],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-03478",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-03478",
+   "mcm_cross_section_pb": 0.09283,
+   "mcm_dataset_name": "WWJJToLNuLNu_EWK_noTop_TuneCP5_13TeV-madgraph-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 0.284,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0,
+     "submission_details": {
+      "author_email": "meng.lu@cern.ch",
+      "author_name": "Meng Lu",
+      "author_username": "melu",
+      "submission_date": "2018-09-02-17-14"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 0.09283,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0,
+     "submission_details": {
+      "author_email": "mattia.lizzo@cern.ch",
+      "author_name": "Mattia Lizzo",
+      "author_username": "mlizzo",
+      "submission_date": "2021-11-12-12-18"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "pythia8",
+    "madgraph"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00049",
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-03023"
+   ],
+   "mcm_negative_weights_fraction": 0,
+   "mcm_notes": "",
+   "mini_recid": 72647,
+   "nano_recid": 72648,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "9.219e-02",
+    "total_value_uncertainty": "2.809e-05"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-03478",
+   "title": "/WWJJToLNuLNu_EWK_noTop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "74292": {
+   "cards": [],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-01185",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-01185",
+   "mcm_cross_section_pb": 1,
+   "mcm_dataset_name": "ZH_HToZG_ZToAll_M-125_TuneCP5_13TeV-powheg-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "Paolo.Gunnellini@cern.ch",
+      "author_name": "Paolo Gunnellini",
+      "author_username": "pgunnell",
+      "submission_date": "2019-06-12-16-56"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "Jin.Wang@cern.ch",
+      "author_name": "Jin Wang",
+      "author_username": "wangjin",
+      "submission_date": "2021-01-27-11-45"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "POWHEG V2"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-02221"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "",
+   "mini_recid": 74291,
+   "nano_recid": 74292,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "2.864e-02",
+    "total_value": "7.891e-01",
+    "total_value_uncertainty": "3.041e-03"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-01185",
+   "title": "/ZH_HToZG_ZToAll_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "74314": {
+   "cards": [
+    {
+     "file": "makecards.py",
+     "link": "fd7d34a91c3160348fd0446ded445fa28f555e09/bin/Powheg/production/2017/13TeV/Higgs/HZJ_ZZ_NNPDF31_13TeV/makecards.py",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/fd7d34a91c3160348fd0446ded445fa28f555e09/bin/Powheg/production/2017/13TeV/Higgs/HZJ_ZZ_NNPDF31_13TeV/makecards.py"
+    },
+    {
+     "file": "ZZ2l2any_withtaus_filter4l.input",
+     "link": "fd7d34a91c3160348fd0446ded445fa28f555e09/bin/JHUGen/cards/decay/ZZ2l2any_withtaus_filter4l.input",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/fd7d34a91c3160348fd0446ded445fa28f555e09/bin/JHUGen/cards/decay/ZZ2l2any_withtaus_filter4l.input"
+    },
+    {
+     "file": "Hadronizer_TuneCP5_13TeV_powhegEmissionVeto_3p_LHE_pythia8_cff.py",
+     "link": "7d0525c9f6633a9ee00d4e79162d82e369250ccc/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_powhegEmissionVeto_3p_LHE_pythia8_cff.py",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/7d0525c9f6633a9ee00d4e79162d82e369250ccc/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_powhegEmissionVeto_3p_LHE_pythia8_cff.py"
+    }
+   ],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-00239",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-00239",
+   "mcm_cross_section_pb": 1,
+   "mcm_dataset_name": "ZH_HToZZ_4LFilter_M125_TuneCP5_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 0.151500269022,
+     "match_efficiency_error": 0.001,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "jroskes1@jhu.edu",
+      "author_name": "Heshy Roskes",
+      "author_username": "hroskes",
+      "submission_date": "2018-10-03-22-05"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 0.150882730885,
+     "match_efficiency_error": 0.001,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "qianying.guo@cern.ch",
+      "author_name": "Qianying Guo",
+      "author_username": "qguo",
+      "submission_date": "2020-11-11-11-55"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "powheg HZJ",
+    "JHUGen v7.0.11"
+   ],
+   "mcm_match_efficiency": 0.150882730885,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAOD_flowRunIISummer20UL16NanoAODv2-00791",
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00512",
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-00041"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "",
+   "mini_recid": 74313,
+   "nano_recid": 74314,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.2",
+    "neg_weight_fraction": "2.914e-02",
+    "total_value": "7.935e-01",
+    "total_value_uncertainty": "3.505e-03"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-00239",
+   "title": "/ZH_HToZZ_4LFilter_M125_TuneCP5_13TeV_powheg2-minlo-HZJ_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  },
+  "74652": {
+   "cards": [
+    {
+     "file": "ZH_012j_NLO_HtoElElGamma_customizecards.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoElElGamma/ZH_012j_NLO_HtoElElGamma_customizecards.dat"
+    },
+    {
+     "file": "ZH_012j_NLO_HtoElElGamma_extramodels.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoElElGamma/ZH_012j_NLO_HtoElElGamma_extramodels.dat"
+    },
+    {
+     "file": "ZH_012j_NLO_HtoElElGamma_madspin_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoElElGamma/ZH_012j_NLO_HtoElElGamma_madspin_card.dat"
+    },
+    {
+     "file": "ZH_012j_NLO_HtoElElGamma_proc_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoElElGamma/ZH_012j_NLO_HtoElElGamma_proc_card.dat"
+    },
+    {
+     "file": "ZH_012j_NLO_HtoElElGamma_run_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoElElGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoElElGamma/ZH_012j_NLO_HtoElElGamma_run_card.dat"
+    }
+   ],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-03856",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-03856",
+   "mcm_cross_section_pb": 1,
+   "mcm_dataset_name": "ZHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 0.4,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-03-26-16-00"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 0.4,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-03-26-16-04"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "Madgraph5_aMC@NLO",
+    "pythia8"
+   ],
+   "mcm_match_efficiency": 0.4,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-03399"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "",
+   "mini_recid": 74651,
+   "nano_recid": 74652,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "1.988e-01",
+    "total_value": "6.762e-05",
+    "total_value_uncertainty": "1.002e-07"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-03856",
+   "title": "/ZHToEEG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "74670": {
+   "cards": [
+    {
+     "file": "ZH_012j_NLO_HtoMuMuGamma_customizecards.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoMuMuGamma/ZH_012j_NLO_HtoMuMuGamma_customizecards.dat"
+    },
+    {
+     "file": "ZH_012j_NLO_HtoMuMuGamma_extramodels.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoMuMuGamma/ZH_012j_NLO_HtoMuMuGamma_extramodels.dat"
+    },
+    {
+     "file": "ZH_012j_NLO_HtoMuMuGamma_madspin_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoMuMuGamma/ZH_012j_NLO_HtoMuMuGamma_madspin_card.dat"
+    },
+    {
+     "file": "ZH_012j_NLO_HtoMuMuGamma_proc_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoMuMuGamma/ZH_012j_NLO_HtoMuMuGamma_proc_card.dat"
+    },
+    {
+     "file": "ZH_012j_NLO_HtoMuMuGamma_run_card.dat",
+     "link": "master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoMuMuGamma",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/Higgs/dalitz_no_mll_cut/ZH_012j_NLO_HtoMuMuGamma/ZH_012j_NLO_HtoMuMuGamma_run_card.dat"
+    }
+   ],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-03850",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-03850",
+   "mcm_cross_section_pb": 1,
+   "mcm_dataset_name": "ZHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 0.4,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-03-25-19-52"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 1,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0.1,
+     "match_efficiency": 0.4,
+     "match_efficiency_error": 0.1,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "chu.wang@cern.ch",
+      "author_name": "Chu Wang",
+      "author_username": "chuw",
+      "submission_date": "2022-03-25-19-55"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "Madgraph5_aMC@NLO",
+    "pythia8"
+   ],
+   "mcm_match_efficiency": 0.4,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-03395"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "",
+   "mini_recid": 74669,
+   "nano_recid": 74670,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.3",
+    "neg_weight_fraction": "1.992e-01",
+    "total_value": "4.459e-05",
+    "total_value_uncertainty": "6.552e-08"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-03850",
+   "title": "/ZHToMuMuG_M125_Dalitz_012j_TuneCP5_13TeV_amcatnloFXFX_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "75561": {
+   "cards": [],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/SUS-RunIISummer20UL16wmLHEGEN-00134",
+   "gen_prepid": "SUS-RunIISummer20UL16wmLHEGEN-00134",
+   "mcm_cross_section_pb": 0.00071654,
+   "mcm_dataset_name": "ZZJJTo4L_EWKnotop_TuneCP5_13TeV-madgraph-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 0.00071654,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0,
+     "submission_details": {
+      "author_email": "carlos.francisco.erice.cid@cern.ch",
+      "author_name": "Carlos Francisco Erice Cid",
+      "author_username": "cericeci",
+      "submission_date": "2021-04-04-02-29"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 0.00071654,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0,
+     "submission_details": {
+      "author_email": "andrea.trapote.fernandez@cern.ch",
+      "author_name": "Andrea Trapote Fernandez",
+      "author_username": "atrapote",
+      "submission_date": "2022-03-02-17-11"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "Pythia8",
+    "Madgraph"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "SUS-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00027",
+    "SUS-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-00077"
+   ],
+   "mcm_negative_weights_fraction": 0,
+   "mcm_notes": "",
+   "mini_recid": 75560,
+   "nano_recid": 75561,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "9.928e-04",
+    "total_value_uncertainty": "2.144e-07"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/SUS-RunIISummer20UL16wmLHEGEN-00134",
+   "title": "/ZZJJTo4L_EWKnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  }
+ }
+}
