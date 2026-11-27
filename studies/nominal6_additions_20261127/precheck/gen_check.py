@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """Generator-level facts from file 0 of each record (NanoAOD GenPart / genWeight), READ ONLY. Runs in a PBS job with
-the pinned repo on sys.path (for the file list and the HTTPS opener the production driver uses).
+the pinned repo on sys.path (for the file list the production driver uses); files are opened by their root:// URL.
 
 Per record:
   * genWeight over ALL events of file 0: number, fraction negative, sum;
@@ -136,14 +136,15 @@ def main():
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     sys.path.insert(0, a.repo)
-    from studies.m0m1j0_cms.design_checks.common import fetch_file_list_complete, open_root_https  # noqa: E402
+    from studies.m0m1j0_cms.design_checks.common import fetch_file_list_complete  # noqa: E402
+    import uproot  # noqa: E402  (root:// XRootD, as the production driver opens its files)
     out = {"what": "generator-level facts, file 0 per record (READ ONLY)", "max_events_genpart": a.max_events,
            "m_ll_edges_gev": EDGES.tolist(), "records": {}}
     Path(a.out).mkdir(parents=True, exist_ok=True)
     for rid in a.records:
         t0 = time.time()
         url = fetch_file_list_complete(rid)[0]
-        with open_root_https(url) as f:
+        with uproot.open(url) as f:
             t = f["Events"]
             gw_all = t["genWeight"].array(library="np")
             arr = t.arrays(BRANCHES, entry_stop=a.max_events, library="np")

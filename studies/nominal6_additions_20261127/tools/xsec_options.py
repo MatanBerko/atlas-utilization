@@ -60,6 +60,13 @@ def atlas(dsids):
 
 
 S = {}
+GEN = json.loads((HERE / "evidence" / "precheck" / "gen_check.json").read_text())["records"]
+
+
+def GEN_FRAC(rid):
+    f = GEN[str(rid)]["m_ll_fractions_weighted"]
+    fl = next(iter(f))
+    return f"{f[fl]['50-130'] + f[fl]['>130']:.3f} ({fl}; 80-100 GeV: {f[fl]['80-100']:.3f})"
 
 
 def add(rid, item, label, r1, theory, v5_analogue, atlas_dsids, notes):
@@ -87,20 +94,21 @@ NO_THEORY_VBS = [{"option": "none found for the generator phase space",
                           "|eta_l| < 3 at generator level), so they cannot be used directly; no NLO calculation for "
                           "the generator phase space was found."}]
 add(75561, "N1", "ZZjj -> 4l EW (no top)", R1_ME, NO_THEORY_VBS, V5_VV, [700587, 700591],
-    "CMS card: p p > z z j j $ t t~ QED=4 QCD=0, z > l+ l- (l = e mu tau), on-shell Z decay chain; m_jj > 100, "
+    "CMS card (gridpack): p p > z z j j $ t t~ QED=4 QCD=0, z > l+ l- (l = e mu tau), on-shell Z decay chain (bwcutoff 15); m_jj > 100, "
     "|eta_l| < 3, |eta_j| < 5, pT_j > 10 GeV. ATLAS Sherpa: off-shell 4 charged leptons + 2 jets, m_ll > 0.25/0.46/3.8 GeV "
     "(ee/mumu/tautau), pT_l > 5, 2 jets pT > 15, NO m_jj cut, 0,1j@LO merged; incl. gamma* and triboson-like diagrams. "
     "McM 7.1654e-4 pb differs from the portal 9.928e-4 pb (factor 1.39; unexplained).")
 add(69771, "N1", "WZjj EW, W -> l nu, Z -> ll", R1_ME, NO_THEORY_VBS, V5_VV, [700588, 700592],
-    "CMS card (nearest in genproductions, named ..._notop; the gridpack is named WZ3lnujj_ewk WITHOUT notop: match "
-    "UNVERIFIED): p p > w+- z j j $ t t~ QED=4 QCD=0, on-shell decay chain, m_jj > 100, |eta_l| < 3. ATLAS lllvjj: "
-    "off-shell, no m_jj cut. McM 0.01654 pb is 0.46 x the portal 0.03566 pb (unexplained; could be one W charge only - "
-    "UNVERIFIED).")
+    "CMS card READ FROM THE GRIDPACK (evidence/gridpack_cards/69771/InputCards): p p > w+- z j j QED=4 QCD=0, z > l+ l-, "
+    "w > l v, with NO '$ t t~' top exclusion (the genproductions master card is the _notop variant, NOT the one used); "
+    "file 0: a top quark in 2,304 of 3,712 events (62 %), i.e. tZq-like diagrams are inside (overlap with our tZq 68325). "
+    "m_jj > 100, |eta_l| < 3, bwcutoff 20. ATLAS lllvjj: off-shell, no m_jj cut, b quarks not in the jet container "
+    "(MASSIVE[5]). McM 0.01654 pb is 0.46 x the portal 0.03566 pb (unexplained).")
 add(72648, "N1", "W+W-jj EW (no top), both W -> l nu", R1_ME, NO_THEORY_VBS, V5_VV, [700589, 700593],
-    "CMS card (linked in the fragment): p p > w+ w- j j $ t t~ QED=4 QCD=0, w > l v; m_jj > 100, no eta cuts, "
-    "dR(jj, ll, jl) > 0.4. ATLAS llvvjj_os: ALL opposite-sign l l nu nu (also ZZ -> ll nunu and non-resonant), no m_jj cut.")
+    "CMS card (gridpack = linked card): p p > w+ w- j j $ t t~ QED=4 QCD=0, w > l v; m_jj > 100, no eta cuts, "
+    "dR(jj, ll, jl) > 0.4; file 0: a Higgs boson in 1,252 of 100,000 events (1.3 %, s-channel H->WW inside). ATLAS llvvjj_os: ALL opposite-sign l l nu nu (also ZZ -> ll nunu and non-resonant), no m_jj cut.")
 add(71636, "N1", "W+-W+-jj EW (no top), same sign", R1_ME, NO_THEORY_VBS, V5_VV, [700590, 700594],
-    "CMS card (nearest in genproductions WpWpJJ_EWK-QCD, name matches the gridpack): BOTH w+w+jj AND w-w-jj "
+    "CMS card (gridpack = genproductions card): BOTH w+w+jj AND w-w-jj "
     "(so W-W- is inside, correcting the 24 Nov 'no separate W-W-'), m_jj > 100, |eta_l| < 3. ATLAS llvvjj_ss: off-shell, "
     "pT_l > 5, no m_jj cut.")
 add(71640, "N2", "W+-W+-jj QCD (no top), same sign", R1_ME,
@@ -143,9 +151,11 @@ def dalitz(rid, mode, fl, prod_keys, atlas_dsids, atlas_share):
     add(rid, "N3", f"{mode} H -> {fl} gamma (Dalitz, no m_ll cut)", R1_MS, th, V5_HIGGS, atlas_dsids,
         "CMS cards (genproductions master, directory 'dalitz_no_mll_cut'): production MG5_aMC NLO "
         + ("HEFT ggH 0,1,2j FxFx (ptj 10, qCut 30)" if mode == "ggF" else "VBF NLO" if mode == "VBF" else f"{mode} 0,1,2j NLO FxFx")
-        + "; decay in MadSpin x0 > l+ l- a with model HC_NLO_X0_UFO-lepton_masses_no_lepton_yukawas; no m_ll or photon cut "
-          "in the decay (run_card mll_sf 30 / ptgmin 20 act on production-level particles; there are none). Match of "
-          "these master-branch cards to the gridpack: UNVERIFIED (see the gridpack check). "
+        + "; decay in MadSpin x0 > l+ l- a with model HC_NLO_X0_UFO-lepton_masses_no_lepton_yukawas, MadSpin param card "
+          "kHaa = kHza = 1, cosa = 1 (H-gamma-gamma AND H-Z-gamma couplings on: the Z pole is inside); no m_ll or photon "
+          "cut in the decay (run_card mll_sf 30 / ptgmin 20 act on production-level particles; there are none). Cards "
+          "read from the gridpack (evidence/gridpack_cards/). File 0: m_ll > 50 GeV in "
+          + GEN_FRAC(rid) + " of the weighted events. "
         + f"ATLAS: the {atlas_share} of the listed ATLAS DSID(s) is shared by ee and mumu (ATLAS has one sample for both).")
 
 
@@ -173,13 +183,20 @@ add(74314, "N4", "qq -> ZH, H -> ZZ (JHUGen, 4-lepton filter)",
       "associated Z"},
      {"option": "B: v5 40062 convention (estimate)", "value_pb": SIG["qqZH"] * BR["ZZ"] * BRZ_ll * eps_v5,
       "factors": f"0.7612 x 0.02619 x 0.10099 x {eps_v5:.5f}", "note": "eps = 1-(1-BR(Z->ll))^2: P(at least one of the "
-      "other H-Z and the associated Z -> ll), as 40062; ESTIMATE; ignores tau decays and lepton counting details"},
-     {"option": "C: YR4 qq->ZH x BR(H->ZZ) x BR(Z->ll) x McM validation efficiency 0.1509",
-      "value_pb": SIG["qqZH"] * BR["ZZ"] * BRZ_ll * 0.150882730885,
-      "factors": "0.7612 x 0.02619 x 0.10099 x 0.15088", "note": "only valid if 0.1509 is the filter efficiency relative "
-      "to H->Z(ll)Z(any); what 0.1509 is relative to is NOT documented (open)"},
-     {"option": "D: portal 0.7935 x BR(H->ZZ) x BR(Z->ll) x 0.1509", "value_pb": 0.7935 * BR["ZZ"] * BRZ_ll * 0.150882730885,
-      "factors": "0.7935 x 0.02619 x 0.10099 x 0.15088", "note": "generator production sigma instead of YR4"},
+      "other H-Z and the associated Z -> ll), as 40062; ESTIMATE. Under the reading of option C this construction "
+      "counts the H->Z(ll)Z(ll) events twice too few and differs from C by x0.67"},
+     {"option": "C: YR4 qq->ZH x BR(H->ZZ) x [1-(1-BR(Z->ll))^2] x McM filter efficiency 0.1509",
+      "value_pb": SIG["qqZH"] * BR["ZZ"] * eps_v5 * 0.150882730885,
+      "factors": f"0.7612 x 0.02619 x {eps_v5:.5f} x 0.15088", "note": "reading supported by the file-0 decay content "
+      "(REPORT section 3, N4): JHUGen DecayMode 8+9 gives H->ZZ with AT LEAST one Z->ll (e,mu,tau), fraction "
+      "1-(1-B)^2 = 2B-B^2; the FilterNLept=4 filter then keeps (B^2 + 2B(1-B) B)/(2B-B^2) = 0.149 of them, matching McM "
+      "0.1509; the predicted decay mix after the filter (llll 0.357 / llqq 0.499 / llnunu 0.143) matches file 0 "
+      "(0.367 / 0.489 / 0.143). INTERPRETATION, not documented by CMS"},
+     {"option": "C': as C with the filter efficiency computed from BRs, 0.1491", "value_pb": SIG["qqZH"] * BR["ZZ"] *
+      (BRZ_ll**2 + 2*BRZ_ll*(1-BRZ_ll)*BRZ_ll), "factors": "0.7612 x 0.02619 x [B^2 + 2B(1-B)B], B = 0.10099",
+      "note": "same reading; ESTIMATE (ignores tau-decay and lepton-counting details)"},
+     {"option": "D: portal 0.7935 x BR(H->ZZ) x [1-(1-B)^2] x 0.1509", "value_pb": 0.7935 * BR["ZZ"] * eps_v5 * 0.150882730885,
+      "factors": f"0.7935 x 0.02619 x {eps_v5:.5f} x 0.15088", "note": "generator production sigma instead of YR4"},
      {"option": "E: measure the filter content in file 0 (precheck, generator particles)", "value_pb": None,
       "note": "REPORT section 5: fraction of events by H->ZZ and associated-Z decay"}],
     "40062 ggZH 4l (ESTIMATE, 0.1227 x 0.02619 x 0.10099 x 0.19178); 71227/70383 WH 4l (YR4 x 2.745e-4); 37728/68847 "

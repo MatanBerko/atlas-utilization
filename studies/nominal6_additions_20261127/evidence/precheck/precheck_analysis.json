@@ -1,0 +1,1167 @@
+{
+ "what": "Nominal-6 additions precheck, file 0 per record (VERIFIED BY RUNNING). Weighted column uses the PRECHECK ONLY portal values: NOT a cross-section decision.",
+ "records": {
+  "75561": {
+   "array_index": 1,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record75561/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "12:35.68",
+    "max_rss_kb": "553868",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 106134,
+   "n_after_trigger": 95444,
+   "n_stored": 91533,
+   "n_stored_in_delivery_union": 91088,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 35631,
+    "SingleMuon": 58553,
+    "DoubleEG": 28844,
+    "MuonEG": 24775
+   },
+   "fraction_negative_genweight_stored": 0.0,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 106134.0,
+    "runs_gen_event_sumw": 106134.0,
+    "relative_difference": 0.0,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 106134,
+    "runs_gen_event_count": 106134,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 740.0978443622589,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 90813,
+   "n_final_states_entered": 335,
+   "top5_final_states": [
+    {
+     "final_state": "0e_2m_2j_0b",
+     "n_events_file0": 3970,
+     "weighted_full_sample_PRECHECK_ONLY": 0.6087741203384401
+    },
+    {
+     "final_state": "2e_0m_2j_0b",
+     "n_events_file0": 3555,
+     "weighted_full_sample_PRECHECK_ONLY": 0.5451365233761094
+    },
+    {
+     "final_state": "0e_2m_3j_0b",
+     "n_events_file0": 3453,
+     "weighted_full_sample_PRECHECK_ONLY": 0.5294954754480186
+    },
+    {
+     "final_state": "2e_0m_3j_0b",
+     "n_events_file0": 3068,
+     "weighted_full_sample_PRECHECK_ONLY": 0.4704581866998323
+    },
+    {
+     "final_state": "0e_1m_3j_0b",
+     "n_events_file0": 2446,
+     "weighted_full_sample_PRECHECK_ONLY": 0.3750784630599054
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 13.925592995036517,
+   "typical_event_weight_PRECHECK_ONLY": 1.416361454360008e-05
+  },
+  "69771": {
+   "array_index": 2,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record69771/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "4:26.60",
+    "max_rss_kb": "104960",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 3712,
+   "n_after_trigger": 3053,
+   "n_stored": 2856,
+   "n_stored_in_delivery_union": 2816,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 782,
+    "SingleMuon": 1754,
+    "DoubleEG": 559,
+    "MuonEG": 558
+   },
+   "fraction_negative_genweight_stored": 0.0,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 3712.0,
+    "runs_gen_event_sumw": 3712.0,
+    "relative_difference": 0.0,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 3712,
+    "runs_gen_event_count": 3712,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 251.208340883255,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 2769,
+   "n_final_states_entered": 133,
+   "top5_final_states": [
+    {
+     "final_state": "0e_1m_2j_0b",
+     "n_events_file0": 106,
+     "weighted_full_sample_PRECHECK_ONLY": 16.69312615301724
+    },
+    {
+     "final_state": "0e_2m_2j_0b",
+     "n_events_file0": 91,
+     "weighted_full_sample_PRECHECK_ONLY": 14.330891320043104
+    },
+    {
+     "final_state": "0e_2m_1j_0b",
+     "n_events_file0": 86,
+     "weighted_full_sample_PRECHECK_ONLY": 13.543479709051725
+    },
+    {
+     "final_state": "0e_1m_1j_1b",
+     "n_events_file0": 82,
+     "weighted_full_sample_PRECHECK_ONLY": 12.91355042025862
+    },
+    {
+     "final_state": "2e_0m_1j_0b",
+     "n_events_file0": 82,
+     "weighted_full_sample_PRECHECK_ONLY": 12.91355042025862
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 436.0685501670258,
+   "typical_event_weight_PRECHECK_ONLY": 0.00116914876
+  },
+  "72648": {
+   "array_index": 3,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record72648/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "3:59.45",
+    "max_rss_kb": "392540",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 124000,
+   "n_after_trigger": 84903,
+   "n_stored": 79269,
+   "n_stored_in_delivery_union": 77986,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 7057,
+    "SingleMuon": 48795,
+    "DoubleEG": 5347,
+    "MuonEG": 12670
+   },
+   "fraction_negative_genweight_stored": 0.0,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 124000.0,
+    "runs_gen_event_sumw": 124000.0,
+    "relative_difference": 0.0,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 124000,
+    "runs_gen_event_count": 124000,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 224.13537788391113,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 69900,
+   "n_final_states_entered": 129,
+   "top5_final_states": [
+    {
+     "final_state": "0e_1m_1j_0b",
+     "n_events_file0": 9500,
+     "weighted_full_sample_PRECHECK_ONLY": 115.78283358870968
+    },
+    {
+     "final_state": "1e_0m_1j_0b",
+     "n_events_file0": 7353,
+     "weighted_full_sample_PRECHECK_ONLY": 89.6159131976613
+    },
+    {
+     "final_state": "0e_1m_2j_0b",
+     "n_events_file0": 7162,
+     "weighted_full_sample_PRECHECK_ONLY": 87.28806885919354
+    },
+    {
+     "final_state": "1e_0m_2j_0b",
+     "n_events_file0": 5439,
+     "weighted_full_sample_PRECHECK_ONLY": 66.28871914620967
+    },
+    {
+     "final_state": "1e_1m_1j_0b",
+     "n_events_file0": 4589,
+     "weighted_full_sample_PRECHECK_ONLY": 55.92920245669355
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 851.9179018790319,
+   "typical_event_weight_PRECHECK_ONLY": 0.00302254134
+  },
+  "71636": {
+   "array_index": 4,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record71636/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "2:30.78",
+    "max_rss_kb": "150832",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 22392,
+   "n_after_trigger": 15631,
+   "n_stored": 14437,
+   "n_stored_in_delivery_union": 14202,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 1339,
+    "SingleMuon": 9029,
+    "DoubleEG": 959,
+    "MuonEG": 2366
+   },
+   "fraction_negative_genweight_stored": 0.0,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 22392.0,
+    "runs_gen_event_sumw": 22392.0,
+    "relative_difference": 0.0,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 22392,
+    "runs_gen_event_count": 22392,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 141.74293875694275,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 13401,
+   "n_final_states_entered": 86,
+   "top5_final_states": [
+    {
+     "final_state": "0e_1m_2j_0b",
+     "n_events_file0": 1721,
+     "weighted_full_sample_PRECHECK_ONLY": 33.94251472936763
+    },
+    {
+     "final_state": "0e_1m_1j_0b",
+     "n_events_file0": 1553,
+     "weighted_full_sample_PRECHECK_ONLY": 30.629125726152193
+    },
+    {
+     "final_state": "1e_0m_2j_0b",
+     "n_events_file0": 1208,
+     "weighted_full_sample_PRECHECK_ONLY": 23.824844737406217
+    },
+    {
+     "final_state": "1e_0m_1j_0b",
+     "n_events_file0": 1072,
+     "weighted_full_sample_PRECHECK_ONLY": 21.142577449088957
+    },
+    {
+     "final_state": "1e_1m_1j_0b",
+     "n_events_file0": 1020,
+     "weighted_full_sample_PRECHECK_ONLY": 20.11700466237942
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 264.30194066720225,
+   "typical_event_weight_PRECHECK_ONLY": 0.0002947849925307082
+  },
+  "71640": {
+   "array_index": 5,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record71640/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "2:43.45",
+    "max_rss_kb": "102196",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 3728,
+   "n_after_trigger": 2328,
+   "n_stored": 2072,
+   "n_stored_in_delivery_union": 2013,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 154,
+    "SingleMuon": 1285,
+    "DoubleEG": 120,
+    "MuonEG": 277
+   },
+   "fraction_negative_genweight_stored": 0.0,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 3728.0,
+    "runs_gen_event_sumw": 3728.0,
+    "relative_difference": 0.0,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 3728,
+    "runs_gen_event_count": 3728,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 154.42921352386475,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 1997,
+   "n_final_states_entered": 83,
+   "top5_final_states": [
+    {
+     "final_state": "0e_1m_2j_0b",
+     "n_events_file0": 242,
+     "weighted_full_sample_PRECHECK_ONLY": 21.67648852467811
+    },
+    {
+     "final_state": "0e_1m_3j_0b",
+     "n_events_file0": 203,
+     "weighted_full_sample_PRECHECK_ONLY": 18.183170126072962
+    },
+    {
+     "final_state": "1e_0m_2j_0b",
+     "n_events_file0": 168,
+     "weighted_full_sample_PRECHECK_ONLY": 15.048140793991417
+    },
+    {
+     "final_state": "1e_0m_3j_0b",
+     "n_events_file0": 154,
+     "weighted_full_sample_PRECHECK_ONLY": 13.794129061158799
+    },
+    {
+     "final_state": "0e_1m_4j_0b",
+     "n_events_file0": 122,
+     "weighted_full_sample_PRECHECK_ONLY": 10.927816528969958
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 178.87581646191003,
+   "typical_event_weight_PRECHECK_ONLY": 0.0007202069871369044
+  },
+  "37276": {
+   "array_index": 6,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record37276/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "2:14.17",
+    "max_rss_kb": "234488",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 81870,
+   "n_after_trigger": 42252,
+   "n_stored": 36069,
+   "n_stored_in_delivery_union": 34687,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 6,
+    "SingleMuon": 134,
+    "DoubleEG": 7954,
+    "MuonEG": 108
+   },
+   "fraction_negative_genweight_stored": 0.21364606725997393,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 702.8015046082437,
+    "runs_gen_event_sumw": 702.801502562,
+    "relative_difference": 2.911552835829295e-09,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 81870,
+    "runs_gen_event_count": 81870,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 125.14641642570496,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 26670,
+   "n_final_states_entered": 71,
+   "top5_final_states": [
+    {
+     "final_state": "1e_0m_1j_0b",
+     "n_events_file0": 8749,
+     "weighted_full_sample_PRECHECK_ONLY": 4.822341852196751
+    },
+    {
+     "final_state": "2e_0m_0j_0b",
+     "n_events_file0": 4376,
+     "weighted_full_sample_PRECHECK_ONLY": 3.011579998945754
+    },
+    {
+     "final_state": "1e_0m_2j_0b",
+     "n_events_file0": 4325,
+     "weighted_full_sample_PRECHECK_ONLY": 2.0198903021392103
+    },
+    {
+     "final_state": "2e_0m_1j_0b",
+     "n_events_file0": 3830,
+     "weighted_full_sample_PRECHECK_ONLY": 2.1550694456725323
+    },
+    {
+     "final_state": "2e_0m_2j_0b",
+     "n_events_file0": 1517,
+     "weighted_full_sample_PRECHECK_ONLY": 0.6739389599411016
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 14.363290472531029,
+   "typical_event_weight_PRECHECK_ONLY": 2.4884687536386884e-05
+  },
+  "37420": {
+   "array_index": 7,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record37420/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "2:23.42",
+    "max_rss_kb": "205712",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 50466,
+   "n_after_trigger": 38009,
+   "n_stored": 33075,
+   "n_stored_in_delivery_union": 33065,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 12004,
+    "SingleMuon": 32374,
+    "DoubleEG": 0,
+    "MuonEG": 650
+   },
+   "fraction_negative_genweight_stored": 0.2108843537414966,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 287.8282581716776,
+    "runs_gen_event_sumw": 287.8282580339,
+    "relative_difference": 4.786798598814748e-10,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 50466,
+    "runs_gen_event_count": 50466,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 134.37308049201965,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 26075,
+   "n_final_states_entered": 70,
+   "top5_final_states": [
+    {
+     "final_state": "0e_1m_1j_0b",
+     "n_events_file0": 7029,
+     "weighted_full_sample_PRECHECK_ONLY": 4.2400944255958155
+    },
+    {
+     "final_state": "0e_2m_0j_0b",
+     "n_events_file0": 5112,
+     "weighted_full_sample_PRECHECK_ONLY": 3.7225265641584677
+    },
+    {
+     "final_state": "0e_2m_1j_0b",
+     "n_events_file0": 4626,
+     "weighted_full_sample_PRECHECK_ONLY": 2.708411876893082
+    },
+    {
+     "final_state": "0e_1m_2j_0b",
+     "n_events_file0": 3323,
+     "weighted_full_sample_PRECHECK_ONLY": 1.6282035276086526
+    },
+    {
+     "final_state": "0e_2m_2j_0b",
+     "n_events_file0": 1934,
+     "weighted_full_sample_PRECHECK_ONLY": 0.831465401103698
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 15.084269391533368,
+   "typical_event_weight_PRECHECK_ONLY": 1.668894584921416e-05
+  },
+  "68459": {
+   "array_index": 8,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record68459/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "1:51.36",
+    "max_rss_kb": "172728",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 35378,
+   "n_after_trigger": 19758,
+   "n_stored": 16982,
+   "n_stored_in_delivery_union": 16502,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 14,
+    "SingleMuon": 63,
+    "DoubleEG": 3595,
+    "MuonEG": 58
+   },
+   "fraction_negative_genweight_stored": 0.34778000235543516,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 11.151918028714135,
+    "runs_gen_event_sumw": 11.151917990700001,
+    "relative_difference": 3.40875301401005e-09,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 35378,
+    "runs_gen_event_count": 35378,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 102.27723526954651,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 14328,
+   "n_final_states_entered": 62,
+   "top5_final_states": [
+    {
+     "final_state": "1e_0m_1j_0b",
+     "n_events_file0": 4850,
+     "weighted_full_sample_PRECHECK_ONLY": 0.7556204637241237
+    },
+    {
+     "final_state": "1e_0m_2j_0b",
+     "n_events_file0": 2816,
+     "weighted_full_sample_PRECHECK_ONLY": 0.39231925135964185
+    },
+    {
+     "final_state": "2e_0m_1j_0b",
+     "n_events_file0": 2052,
+     "weighted_full_sample_PRECHECK_ONLY": 0.28539171611227704
+    },
+    {
+     "final_state": "2e_0m_0j_0b",
+     "n_events_file0": 1083,
+     "weighted_full_sample_PRECHECK_ONLY": 0.1474057422592085
+    },
+    {
+     "final_state": "2e_0m_2j_0b",
+     "n_events_file0": 1028,
+     "weighted_full_sample_PRECHECK_ONLY": 0.152549310384255
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 2.0117195844391844,
+   "typical_event_weight_PRECHECK_ONLY": 2.8064103260869567e-06
+  },
+  "68559": {
+   "array_index": 9,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record68559/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "2:17.97",
+    "max_rss_kb": "211556",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 50000,
+   "n_after_trigger": 38780,
+   "n_stored": 34056,
+   "n_stored_in_delivery_union": 34048,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 12570,
+    "SingleMuon": 33202,
+    "DoubleEG": 0,
+    "MuonEG": 751
+   },
+   "fraction_negative_genweight_stored": 0.34546041813483674,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 10.482045011827722,
+    "runs_gen_event_sumw": 10.482045097630001,
+    "relative_difference": 8.185642998132243e-09,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 50000,
+    "runs_gen_event_count": 50000,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 128.9154191017151,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 30145,
+   "n_final_states_entered": 75,
+   "top5_final_states": [
+    {
+     "final_state": "0e_1m_1j_0b",
+     "n_events_file0": 7914,
+     "weighted_full_sample_PRECHECK_ONLY": 0.554772351491688
+    },
+    {
+     "final_state": "0e_2m_1j_0b",
+     "n_events_file0": 5819,
+     "weighted_full_sample_PRECHECK_ONLY": 0.37959925369190367
+    },
+    {
+     "final_state": "0e_1m_2j_0b",
+     "n_events_file0": 4765,
+     "weighted_full_sample_PRECHECK_ONLY": 0.30363235465969524
+    },
+    {
+     "final_state": "0e_2m_2j_0b",
+     "n_events_file0": 3065,
+     "weighted_full_sample_PRECHECK_ONLY": 0.19775421708746876
+    },
+    {
+     "final_state": "0e_2m_0j_0b",
+     "n_events_file0": 2922,
+     "weighted_full_sample_PRECHECK_ONLY": 0.19925002495301639
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 1.991819213233807,
+   "typical_event_weight_PRECHECK_ONLY": 1.943981755986317e-06
+  },
+  "69681": {
+   "array_index": 10,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record69681/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "7:03.99",
+    "max_rss_kb": "1649000",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 759742,
+   "n_after_trigger": 441141,
+   "n_stored": 377403,
+   "n_stored_in_delivery_union": 367662,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 376,
+    "SingleMuon": 48339,
+    "DoubleEG": 89767,
+    "MuonEG": 31980
+   },
+   "fraction_negative_genweight_stored": 0.19550718992694813,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 275.5451382022584,
+    "runs_gen_event_sumw": 275.54513862897,
+    "relative_difference": 1.5486087339203808e-09,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 759742,
+    "runs_gen_event_count": 759742,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 414.9400100708008,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 342197,
+   "n_final_states_entered": 192,
+   "top5_final_states": [
+    {
+     "final_state": "1e_0m_2j_0b",
+     "n_events_file0": 59227,
+     "weighted_full_sample_PRECHECK_ONLY": 0.15834471008870896
+    },
+    {
+     "final_state": "1e_0m_1j_0b",
+     "n_events_file0": 54095,
+     "weighted_full_sample_PRECHECK_ONLY": 0.16721589027784586
+    },
+    {
+     "final_state": "1e_0m_3j_0b",
+     "n_events_file0": 36411,
+     "weighted_full_sample_PRECHECK_ONLY": 0.07683579886395378
+    },
+    {
+     "final_state": "2e_0m_1j_0b",
+     "n_events_file0": 29349,
+     "weighted_full_sample_PRECHECK_ONLY": 0.08615241817945933
+    },
+    {
+     "final_state": "2e_0m_2j_0b",
+     "n_events_file0": 26321,
+     "weighted_full_sample_PRECHECK_ONLY": 0.06635105777401862
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 0.8881599628885704,
+   "typical_event_weight_PRECHECK_ONLY": 2.2973392363308295e-06
+  },
+  "69699": {
+   "array_index": 11,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record69699/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "3:17.18",
+    "max_rss_kb": "167428",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 27239,
+   "n_after_trigger": 20600,
+   "n_stored": 18037,
+   "n_stored_in_delivery_union": 18009,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 6805,
+    "SingleMuon": 17131,
+    "DoubleEG": 27,
+    "MuonEG": 1641
+   },
+   "fraction_negative_genweight_stored": 0.19132893496701225,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 6.539862347737653,
+    "runs_gen_event_sumw": 6.53986236337,
+    "relative_difference": 2.390317426249787e-09,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 27239,
+    "runs_gen_event_count": 27239,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 188.16932582855225,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 16902,
+   "n_final_states_entered": 104,
+   "top5_final_states": [
+    {
+     "final_state": "0e_1m_2j_0b",
+     "n_events_file0": 2541,
+     "weighted_full_sample_PRECHECK_ONLY": 0.125599973875068
+    },
+    {
+     "final_state": "0e_1m_1j_0b",
+     "n_events_file0": 2408,
+     "weighted_full_sample_PRECHECK_ONLY": 0.1360827179546041
+    },
+    {
+     "final_state": "0e_2m_1j_0b",
+     "n_events_file0": 1810,
+     "weighted_full_sample_PRECHECK_ONLY": 0.10167348046392602
+    },
+    {
+     "final_state": "0e_2m_2j_0b",
+     "n_events_file0": 1741,
+     "weighted_full_sample_PRECHECK_ONLY": 0.08574501656454485
+    },
+    {
+     "final_state": "0e_1m_3j_0b",
+     "n_events_file0": 1573,
+     "weighted_full_sample_PRECHECK_ONLY": 0.060136763903419266
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 0.8226626155017231,
+   "typical_event_weight_PRECHECK_ONLY": 1.4703816102403963e-06
+  },
+  "74652": {
+   "array_index": 12,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record74652/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "3:52.16",
+    "max_rss_kb": "156244",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 26042,
+   "n_after_trigger": 14467,
+   "n_stored": 12437,
+   "n_stored_in_delivery_union": 12115,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 370,
+    "SingleMuon": 863,
+    "DoubleEG": 2809,
+    "MuonEG": 560
+   },
+   "fraction_negative_genweight_stored": 0.19803811208490793,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 5.14752323742141,
+    "runs_gen_event_sumw": 5.1475232767,
+    "relative_difference": 7.630580387264794e-09,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 26042,
+    "runs_gen_event_count": 26042,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 223.14649105072021,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 11179,
+   "n_final_states_entered": 129,
+   "top5_final_states": [
+    {
+     "final_state": "1e_0m_1j_0b",
+     "n_events_file0": 1808,
+     "weighted_full_sample_PRECHECK_ONLY": 0.08698181402774845
+    },
+    {
+     "final_state": "1e_0m_2j_0b",
+     "n_events_file0": 1808,
+     "weighted_full_sample_PRECHECK_ONLY": 0.07875335384070437
+    },
+    {
+     "final_state": "1e_0m_3j_0b",
+     "n_events_file0": 1156,
+     "weighted_full_sample_PRECHECK_ONLY": 0.03958952461376992
+    },
+    {
+     "final_state": "2e_0m_1j_0b",
+     "n_events_file0": 823,
+     "weighted_full_sample_PRECHECK_ONLY": 0.03838277808537613
+    },
+    {
+     "final_state": "2e_0m_2j_0b",
+     "n_events_file0": 732,
+     "weighted_full_sample_PRECHECK_ONLY": 0.031356705870930604
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 0.4696064142180262,
+   "typical_event_weight_PRECHECK_ONLY": 1.2241242086222492e-06
+  },
+  "74670": {
+   "array_index": 13,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record74670/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "5:28.31",
+    "max_rss_kb": "251628",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 61990,
+   "n_after_trigger": 46218,
+   "n_stored": 40068,
+   "n_stored_in_delivery_union": 40043,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 14622,
+    "SingleMuon": 38421,
+    "DoubleEG": 567,
+    "MuonEG": 2149
+   },
+   "fraction_negative_genweight_stored": 0.19921134072077468,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 8.120762611884857,
+    "runs_gen_event_sumw": 8.120762587780002,
+    "relative_difference": 2.968299434981734e-09,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 61990,
+    "runs_gen_event_count": 61990,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 319.2943799495697,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 37308,
+   "n_final_states_entered": 181,
+   "top5_final_states": [
+    {
+     "final_state": "0e_1m_2j_0b",
+     "n_events_file0": 5159,
+     "weighted_full_sample_PRECHECK_ONLY": 0.061445429289794504
+    },
+    {
+     "final_state": "0e_1m_1j_0b",
+     "n_events_file0": 5005,
+     "weighted_full_sample_PRECHECK_ONLY": 0.0654777610734993
+    },
+    {
+     "final_state": "0e_2m_1j_0b",
+     "n_events_file0": 3474,
+     "weighted_full_sample_PRECHECK_ONLY": 0.04666697721728959
+    },
+    {
+     "final_state": "0e_2m_2j_0b",
+     "n_events_file0": 3449,
+     "weighted_full_sample_PRECHECK_ONLY": 0.039991359036426054
+    },
+    {
+     "final_state": "0e_1m_3j_0b",
+     "n_events_file0": 3234,
+     "weighted_full_sample_PRECHECK_ONLY": 0.03155675350370328
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 0.4291601830822139,
+   "typical_event_weight_PRECHECK_ONLY": 7.91032505359483e-07
+  },
+  "74314": {
+   "array_index": 14,
+   "file_index": 0,
+   "job_dir": "/storage/agrp/berkom/atlas-utilization/work/mcexp_20261103/nominal6_precheck_20261127/runs/record74314/job_0",
+   "files_in_job_dir": [
+    "dataset_shard_exclusive.sqlite",
+    "dataset_shard_inclusive.sqlite",
+    "dataset_shard_nonjet4_exclusive.sqlite",
+    "dataset_shard_nonjet4_inclusive.sqlite",
+    "dataset_shard_rare4_exclusive.sqlite",
+    "dataset_shard_rare4_inclusive.sqlite",
+    "dataset_shard_top4_exclusive.sqlite",
+    "dataset_shard_top4_inclusive.sqlite",
+    "job_metadata.json"
+   ],
+   "log": {
+    "exit_status": "0",
+    "wall_clock": "4:51.74",
+    "max_rss_kb": "111480",
+    "traceback": false,
+    "err_tail": [
+     "\tSignals delivered: 0",
+     "\tPage size (bytes): 4096",
+     "\tExit status: 0"
+    ]
+   },
+   "git_commit": "6de9d3e605900a628bae372bdba4ea3308e9750f",
+   "n_read": 6988,
+   "n_after_trigger": 4970,
+   "n_stored": 4324,
+   "n_stored_in_delivery_union": 4253,
+   "n_accepted_per_dataset": {
+    "DoubleMuon": 1244,
+    "SingleMuon": 2571,
+    "DoubleEG": 892,
+    "MuonEG": 643
+   },
+   "fraction_negative_genweight_stored": 0.029139685476410732,
+   "sigma_w_self_check": {
+    "file_sum_genweight": 5504.850314378738,
+    "runs_gen_event_sumw": 5504.850372000002,
+    "relative_difference": 1.0467362307991283e-08,
+    "tolerance": 1e-06,
+    "passes": true,
+    "n_events_read": 6988,
+    "runs_gen_event_count": 6988,
+    "event_count_matches": true
+   },
+   "elapsed_sec_driver": 282.7453091144562,
+   "n_capped_signatures": 0,
+   "skip_reason_totals": {},
+   "n_entering_a_histogram_file0": 3965,
+   "n_final_states_entered": 173,
+   "top5_final_states": [
+    {
+     "final_state": "0e_1m_1j_0b",
+     "n_events_file0": 238,
+     "weighted_full_sample_PRECHECK_ONLY": 435.72684680393365
+    },
+    {
+     "final_state": "0e_2m_1j_0b",
+     "n_events_file0": 211,
+     "weighted_full_sample_PRECHECK_ONLY": 401.74814774124155
+    },
+    {
+     "final_state": "2e_0m_1j_0b",
+     "n_events_file0": 205,
+     "weighted_full_sample_PRECHECK_ONLY": 377.7631836969884
+    },
+    {
+     "final_state": "0e_1m_2j_0b",
+     "n_events_file0": 198,
+     "weighted_full_sample_PRECHECK_ONLY": 387.7569187154272
+    },
+    {
+     "final_state": "0e_2m_2j_0b",
+     "n_events_file0": 178,
+     "weighted_full_sample_PRECHECK_ONLY": 339.7869906269207
+    }
+   ],
+   "weighted_full_sample_entering_PRECHECK_ONLY": 7505.294998847566,
+   "typical_event_weight_PRECHECK_ONLY": 0.02674964783736153
+  }
+ }
+}

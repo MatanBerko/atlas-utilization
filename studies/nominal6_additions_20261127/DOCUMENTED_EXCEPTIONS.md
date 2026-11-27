@@ -144,6 +144,12 @@ not measured:
 - CMS: the `sm-ckm_no_b_mass` model, with no `/ h` exclusion in the process cards;
 - ATLAS: `ACTIVE[25]=1` in 700588–700590.
 
-This would overlap our VBF/VH Higgs samples.
+This would overlap our VBF/VH Higgs samples. In file 0 of 72648 (EW W⁺W⁻jj), 1.3 % of the events contain a Higgs
+boson.
 
-**N3 – overlap with H→Zγ.** See `REPORT.md` section 2: it must be settled before N3 is produced.
+The CMS EW WZjj sample (69771) was generated without a top-quark exclusion: 62 % of its file-0 events contain a top
+quark. It therefore overlaps tZq-like production, including our 68325.
+
+**N3 – overlap with H→Zγ.** The CMS Dalitz samples contain the full H→ℓℓγ decay, including the Z peak: about 50 %
+(μμ) and 33 % (ee) of their events have m_ℓℓ > 50 GeV. Our H→Zγ samples (37604, 68731, 70301, 71145, 74292) contain
+the same region. The overlap must be settled before N3 is produced (`REPORT.md` section 2).
