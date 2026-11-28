@@ -36,8 +36,11 @@ Branch `prep/nominal6-additions-20261127` (fork only), made from `origin/analysi
   - Ids are in `$W/jobids.txt` and `$W/jobid_gen_retry1.txt`; copies are in `evidence/precheck/`.
 - **File count** (`lfs quota -u berkom /storage`, column 6): 122,540 before, 133,497 after. About 10,710 of that is
   `$W/gridpack_cards/` (the tar wildcards also matched card files in every MadGraph `SubProcesses/` folder). The
-  needed 143 files are copied to `evidence/gridpack_cards/`. **Deleting `$W/gridpack_cards/` needs Matan's OK** and
-  was not done.
+  needed 143 files are copied to `evidence/gridpack_cards/`.
+- **28 Nov 2026, Matan's OK** ("Yes, delete only .../nominal6_precheck_20261127/gridpack_cards/ and nothing else; measure
+  the file count before and after"): `$W/gridpack_cards/` (10,710 entries, a plain directory, not a link) deleted with
+  `rm -rf` on wipp-home; nothing else touched. File count **133,497 before, 122,787 after** (−10,710, VERIFIED BY
+  RUNNING).
 
 ## Commits
 
@@ -64,8 +67,8 @@ All are pushed to origin only; the upstream gate printed nothing before every pu
 3. **Matan hand-checks every cross section** of the 14 (`REPORT.md` section 3.5, decisions 1–6). Also for him:
    - 69771's top content;
    - the 40062 observation (×1.49 under the N4 reading; a delivered value).
-4. Matan's OK on removing `$W/gridpack_cards/` (~10,700 entries) before production. Without it, production + rebuild
-   is projected at ~142,000, above the 140,000 ceiling.
+4. Done 28 Nov: `$W/gridpack_cards/` removed (122,787 after). Projection production + rebuild ≈ 131,285 (ESTIMATE),
+   below 140,000.
 5. Registry v6 (new builder script; v3–v5 untouched) with Matan's values, and its tests.
 6. Production of the 14 (187 files, ~2,272 cluster files ESTIMATE), same pin unless the N3 veto needs new code.
 7. A full rebuild with v6 into a new directory (~6,226 cluster files ESTIMATE), then the checks (as on 14 Nov:

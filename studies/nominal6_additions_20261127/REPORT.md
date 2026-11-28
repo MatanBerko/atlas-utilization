@@ -484,7 +484,8 @@ The file lists come from `tools/make_mappings.py`, which uses `fetch_file_list_c
     `evidence/gridpack_cards/`);
   - 183 are the precheck runs;
   - the rest are logs and scripts.
-- Removing `gridpack_cards/` on the cluster needs Matan's OK; nothing was deleted.
+- **Update 28 Nov 2026:** with Matan's OK, `gridpack_cards/` was deleted (nothing else). File count 133,497 before,
+  **122,787 after** (VERIFIED BY RUNNING), so the projection is the "removed" row below: ~131,285, under 140,000.
 
 **Projection (ESTIMATE):**
 - production of the 14: +2,272;
