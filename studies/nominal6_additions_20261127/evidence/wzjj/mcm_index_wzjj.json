@@ -1,0 +1,130 @@
+{
+ "read": "2026-11-28 20:12 IST",
+ "records": {
+  "72720": {
+   "cards": [],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/SUS-RunIISummer20UL16wmLHEGEN-00133",
+   "gen_prepid": "SUS-RunIISummer20UL16wmLHEGEN-00133",
+   "mcm_cross_section_pb": 0.00926,
+   "mcm_dataset_name": "WZ2JetsTo3LNu_MJJ-100toInf_TuneCP5_EWKnotop_13TeV_madgraph-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 0.00926,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0,
+     "submission_details": {
+      "author_email": "carlos.francisco.erice.cid@cern.ch",
+      "author_name": "Carlos Francisco Erice Cid",
+      "author_username": "cericeci",
+      "submission_date": "2021-04-04-02-39"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 0.00926,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0,
+     "submission_details": {
+      "author_email": "andrea.trapote.fernandez@cern.ch",
+      "author_name": "Andrea Trapote Fernandez",
+      "author_username": "atrapote",
+      "submission_date": "2022-03-02-15-38"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "Pythia8",
+    "Madgraph"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "SUS-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00016",
+    "SUS-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-00076"
+   ],
+   "mcm_negative_weights_fraction": 0,
+   "mcm_notes": "",
+   "mini_recid": 72719,
+   "nano_recid": 72720,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.370e-02",
+    "total_value_uncertainty": "2.193e-06"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/SUS-RunIISummer20UL16wmLHEGEN-00133",
+   "title": "/WZ2JetsTo3LNu_MJJ-100toInf_TuneCP5_EWKnotop_13TeV_madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  },
+  "72728": {
+   "cards": [],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/SMP-RunIISummer20UL16wmLHEGEN-00002",
+   "gen_prepid": "SMP-RunIISummer20UL16wmLHEGEN-00002",
+   "mcm_cross_section_pb": 0.01701,
+   "mcm_dataset_name": "WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8",
+   "mcm_filter_efficiency": 1,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 0.01701,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0,
+     "submission_details": {
+      "author_email": "alessandro.da.rold@cern.ch",
+      "author_name": "Alessandro Da Rold",
+      "author_username": "adarold",
+      "submission_date": "2020-09-23-13-50"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 0.01701,
+     "filter_efficiency": 1,
+     "filter_efficiency_error": 0,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": 0,
+     "submission_details": {
+      "author_email": "alessandro.da.rold@cern.ch",
+      "author_name": "Alessandro Da Rold",
+      "author_username": "adarold",
+      "submission_date": "2020-09-24-09-38"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "pyhia8",
+    "madgraph"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "SMP-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAOD_flowRunIISummer20UL16NanoAODv2-00011",
+    "SMP-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00019",
+    "SMP-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-00016"
+   ],
+   "mcm_negative_weights_fraction": 0,
+   "mcm_notes": "",
+   "mini_recid": 72727,
+   "nano_recid": 72728,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.630e-02",
+    "total_value_uncertainty": "2.326e-06"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/SMP-RunIISummer20UL16wmLHEGEN-00002",
+   "title": "/WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+  }
+ }
+}

@@ -1,0 +1,848 @@
+{
+    "results": {
+        "_id": "SMP-RunIISummer20UL16wmLHEGEN-00002",
+        "_rev": "89-bbf288804d784eda1472fb72c0f559b6",
+        "prepid": "SMP-RunIISummer20UL16wmLHEGEN-00002",
+        "history": [
+            {
+                "action": "created",
+                "updater": {
+                    "submission_date": "2020-09-24-09-38",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "clone",
+                "step": "SMP-RunIISummer20UL17wmLHEGEN-00001",
+                "updater": {
+                    "submission_date": "2020-09-24-09-38",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "validation",
+                "updater": {
+                    "submission_date": "2020-09-24-09-39",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "none",
+                "updater": {
+                    "submission_date": "2020-09-24-10-39",
+                    "author_email": "",
+                    "author_username": "automatic",
+                    "author_name": ""
+                }
+            },
+            {
+                "action": "failed",
+                "updater": {
+                    "submission_date": "2020-09-24-10-39",
+                    "author_email": "",
+                    "author_username": "automatic",
+                    "author_name": ""
+                }
+            },
+            {
+                "action": "update",
+                "step": "memory, sequences[0].nThreads",
+                "updater": {
+                    "submission_date": "2020-09-24-10-40",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "validation",
+                "updater": {
+                    "submission_date": "2020-09-24-10-41",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "none",
+                "updater": {
+                    "submission_date": "2020-09-24-12-19",
+                    "author_email": "",
+                    "author_username": "automatic",
+                    "author_name": ""
+                }
+            },
+            {
+                "action": "failed",
+                "updater": {
+                    "submission_date": "2020-09-24-12-19",
+                    "author_email": "",
+                    "author_username": "automatic",
+                    "author_name": ""
+                }
+            },
+            {
+                "action": "update",
+                "step": "sequences[0].nThreads",
+                "updater": {
+                    "submission_date": "2020-09-24-12-23",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "validation",
+                "updater": {
+                    "submission_date": "2020-09-24-12-23",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "update",
+                "step": "perf",
+                "updater": {
+                    "submission_date": "2020-09-24-15-44",
+                    "author_email": "",
+                    "author_username": "automatic",
+                    "author_name": ""
+                }
+            },
+            {
+                "action": "set status",
+                "step": "validation",
+                "updater": {
+                    "submission_date": "2020-09-24-15-44",
+                    "author_email": "",
+                    "author_username": "automatic",
+                    "author_name": ""
+                }
+            },
+            {
+                "action": "approve",
+                "step": "define",
+                "updater": {
+                    "submission_date": "2020-09-24-16-07",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "set status",
+                "step": "defined",
+                "updater": {
+                    "submission_date": "2020-09-24-16-07",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "none",
+                "updater": {
+                    "submission_date": "2020-10-19-13-56",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "set status",
+                "step": "new",
+                "updater": {
+                    "submission_date": "2020-10-19-13-56",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "validation",
+                "updater": {
+                    "submission_date": "2020-10-19-13-56",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "define",
+                "updater": {
+                    "submission_date": "2020-10-19-18-04",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "set status",
+                "step": "defined",
+                "updater": {
+                    "submission_date": "2020-10-19-18-04",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "none",
+                "updater": {
+                    "submission_date": "2020-11-02-12-34",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "set status",
+                "step": "new",
+                "updater": {
+                    "submission_date": "2020-11-02-12-34",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "update",
+                "step": "fragment",
+                "updater": {
+                    "submission_date": "2020-11-02-12-35",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "validation",
+                "updater": {
+                    "submission_date": "2020-11-02-12-35",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "update",
+                "step": "time_event[0]",
+                "updater": {
+                    "submission_date": "2020-11-03-09-31",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "validation",
+                "updater": {
+                    "submission_date": "2020-11-03-09-31",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "validation",
+                "updater": {
+                    "submission_date": "2020-11-04-09-07",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "define",
+                "updater": {
+                    "submission_date": "2020-11-04-17-56",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "set status",
+                "step": "defined",
+                "updater": {
+                    "submission_date": "2020-11-04-17-56",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "approve",
+                "step": "approve",
+                "updater": {
+                    "submission_date": "2020-11-13-12-47",
+                    "author_email": "gurpreet.singh@cern.ch",
+                    "author_username": "gurpreet",
+                    "author_name": "Gurpreet Singh Chahal"
+                }
+            },
+            {
+                "action": "set status",
+                "step": "approved",
+                "updater": {
+                    "submission_date": "2020-11-13-12-47",
+                    "author_email": "gurpreet.singh@cern.ch",
+                    "author_username": "gurpreet",
+                    "author_name": "Gurpreet Singh Chahal"
+                }
+            },
+            {
+                "action": "update",
+                "step": "keep_output[0]",
+                "updater": {
+                    "submission_date": "2020-11-18-09-01",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                }
+            },
+            {
+                "action": "join chain",
+                "step": "SMP-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAOD_flowRunIISummer20UL16NanoAODv2-00011",
+                "updater": {
+                    "submission_date": "2020-12-11-10-56",
+                    "author_email": "raghunath.pradhan@cern.ch",
+                    "author_username": "rpradhan",
+                    "author_name": "Raghunath Pradhan"
+                }
+            },
+            {
+                "action": "priority",
+                "step": 85000,
+                "updater": {
+                    "submission_date": "2020-12-11-10-56",
+                    "author_email": "raghunath.pradhan@cern.ch",
+                    "author_username": "rpradhan",
+                    "author_name": "Raghunath Pradhan"
+                }
+            },
+            {
+                "action": "inject",
+                "step": "Task_RunIISummer20UL16wmLHEGEN-00022",
+                "updater": {
+                    "submission_date": "2020-12-11-11-00",
+                    "author_email": "",
+                    "author_username": "automatic",
+                    "author_name": ""
+                }
+            },
+            {
+                "action": "set status",
+                "step": "submitted",
+                "updater": {
+                    "submission_date": "2020-12-11-11-00",
+                    "author_email": "",
+                    "author_username": "automatic",
+                    "author_name": ""
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85001,
+                "updater": {
+                    "submission_date": "2020-12-19-22-27",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85002,
+                "updater": {
+                    "submission_date": "2020-12-27-22-42",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85003,
+                "updater": {
+                    "submission_date": "2021-01-03-22-33",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85004,
+                "updater": {
+                    "submission_date": "2021-01-11-22-14",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85005,
+                "updater": {
+                    "submission_date": "2021-01-19-00-30",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85006,
+                "updater": {
+                    "submission_date": "2021-01-26-01-50",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85007,
+                "updater": {
+                    "submission_date": "2021-02-03-01-04",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85008,
+                "updater": {
+                    "submission_date": "2021-02-11-00-28",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85009,
+                "updater": {
+                    "submission_date": "2021-02-18-06-14",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85010,
+                "updater": {
+                    "submission_date": "2021-02-25-23-09",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85011,
+                "updater": {
+                    "submission_date": "2021-03-05-06-12",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85012,
+                "updater": {
+                    "submission_date": "2021-03-13-08-38",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85013,
+                "updater": {
+                    "submission_date": "2021-03-21-06-38",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85014,
+                "updater": {
+                    "submission_date": "2021-03-29-08-48",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85015,
+                "updater": {
+                    "submission_date": "2021-04-06-04-34",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85016,
+                "updater": {
+                    "submission_date": "2021-04-13-08-09",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85017,
+                "updater": {
+                    "submission_date": "2021-04-22-06-23",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85018,
+                "updater": {
+                    "submission_date": "2021-04-30-04-42",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85019,
+                "updater": {
+                    "submission_date": "2021-05-07-06-13",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "wm priority",
+                "step": 85020,
+                "updater": {
+                    "submission_date": "2021-05-14-08-58",
+                    "author_email": "pdmv.service@cern.ch",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "set status",
+                "step": "done",
+                "updater": {
+                    "author_email": "pdmv.service@cern.ch",
+                    "submission_date": "2021-05-17-19-32",
+                    "author_username": "pdmvserv",
+                    "author_name": "PdmV Service"
+                }
+            },
+            {
+                "action": "join chain",
+                "step": "SMP-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2-00016",
+                "updater": {
+                    "author_email": "jordan.martins@cern.ch",
+                    "submission_date": "2021-05-31-18-42",
+                    "author_username": "jordanm",
+                    "author_name": "Jordan Martins"
+                }
+            },
+            {
+                "action": "join chain",
+                "step": "SMP-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-00016",
+                "updater": {
+                    "author_email": "jordan.martins@cern.ch",
+                    "submission_date": "2021-07-17-17-09",
+                    "author_username": "jordanm",
+                    "author_name": "Jordan Martins"
+                }
+            },
+            {
+                "action": "leave",
+                "step": "SMP-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2-00016",
+                "updater": {
+                    "author_email": "justinas.rumsevicius@cern.ch",
+                    "submission_date": "2022-02-10-22-44",
+                    "author_username": "jrumsevi",
+                    "author_name": "Justinas Rumsevicius"
+                }
+            },
+            {
+                "action": "join chain",
+                "step": "SMP-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00019",
+                "updater": {
+                    "author_username": "vlimant",
+                    "author_name": "Jean-Roch Vlimant",
+                    "author_email": "jean-roch.vlimant@cern.ch",
+                    "submission_date": "2025-10-16-13-46"
+                }
+            }
+        ],
+        "priority": 85020,
+        "cmssw_release": "CMSSW_10_6_17_patch1",
+        "input_dataset": "",
+        "output_dataset": [],
+        "pwg": "SMP",
+        "validation": {
+            "peak_value_rss": 417.422,
+            "content": "all",
+            "valid": false,
+            "validations_count": 0,
+            "results": {
+                "1": {
+                    "peak_value_rss": 416.414,
+                    "total_events": 4520,
+                    "cpu_efficiency": 0.9935980423113356,
+                    "filter_efficiency": 1,
+                    "time_per_event": 2.798596224133975,
+                    "size_per_event": 114.21541946902654
+                },
+                "8": {
+                    "peak_value_rss": 429.469,
+                    "total_events": 4520,
+                    "cpu_efficiency": 0.25362270243417784,
+                    "filter_efficiency": 1,
+                    "time_per_event": 2.2245604824626772,
+                    "size_per_event": 113.3851185840708
+                },
+                "2": {
+                    "peak_value_rss": 406.949,
+                    "total_events": 4520,
+                    "cpu_efficiency": 0.7900146348038743,
+                    "filter_efficiency": 1,
+                    "time_per_event": 2.2954733265999447,
+                    "size_per_event": 113.8937203539823
+                },
+                "4": {
+                    "peak_value_rss": 420.199,
+                    "total_events": 4520,
+                    "cpu_efficiency": 0.5015475117548015,
+                    "filter_efficiency": 1,
+                    "time_per_event": 3.163665929532505,
+                    "size_per_event": 113.83663008849558
+                }
+            }
+        },
+        "dataset_name": "WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8",
+        "pileup_dataset_name": "",
+        "process_string": "",
+        "extension": 0,
+        "block_black_list": [],
+        "block_white_list": [],
+        "fragment_tag": "",
+        "mcdb_id": 0,
+        "notes": "",
+        "completed_events": 0,
+        "total_events": 2000000,
+        "member_of_chain": [
+            "SMP-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAOD_flowRunIISummer20UL16NanoAODv2-00011",
+            "SMP-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00019",
+            "SMP-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-00016"
+        ],
+        "member_of_campaign": "RunIISummer20UL16wmLHEGEN",
+        "flown_with": "",
+        "time_event": [
+            2.548483002818239
+        ],
+        "size_event": [
+            111
+        ],
+        "memory": 4000,
+        "name_of_fragment": "",
+        "fragment": "import FWCore.ParameterSet.Config as cms\n\nexternalLHEProducer = cms.EDProducer(\"ExternalLHEProducer\",\n    args = cms.vstring('/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.7.3/VBS_WZ/VBS_WZ_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz'),\n    nEvents = cms.untracked.uint32(5000),\n    numberOfParameters = cms.uint32(1),\n    outputFile = cms.string('cmsgrid_final.lhe'),\n    scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh')\n)\n\n\nfrom Configuration.Generator.Pythia8CommonSettings_cfi import *\nfrom Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *\nfrom Configuration.Generator.PSweightsPythia.PythiaPSweightsSettings_cfi import *\n\ngenerator = cms.EDFilter(\"Pythia8HadronizerFilter\",\n    maxEventsToPrint = cms.untracked.int32(1),\n    pythiaPylistVerbosity = cms.untracked.int32(1),\n    filterEfficiency = cms.untracked.double(1.0),\n    pythiaHepMCVerbosity = cms.untracked.bool(False),\n    comEnergy = cms.double(13000.),\n    PythiaParameters = cms.PSet(\n        pythia8CommonSettingsBlock,\n        pythia8CP5SettingsBlock,\n        pythia8PSweightsSettingsBlock,\n        parameterSets = cms.vstring('pythia8CommonSettings',\n                                    'pythia8CP5Settings',\n                                    'pythia8PSweightsSettings',\n                                    )\n    )\n)\n\nProductionFilterSequence = cms.Sequence(generator)",
+        "config_id": [
+            "4d2d9bf43ad7af18d16d9b59da231b4d"
+        ],
+        "version": 0,
+        "status": "done",
+        "type": "LHE",
+        "keep_output": [
+            false
+        ],
+        "generators": [
+            "pyhia8",
+            "madgraph"
+        ],
+        "sequences": [
+            {
+                "eventcontent": [
+                    "RAWSIM",
+                    "LHE"
+                ],
+                "runsScenarioForMC": "",
+                "donotDropOnInput": "",
+                "extra": "",
+                "inputEventContent": "",
+                "runsAndWeightsForMC": "",
+                "dropDescendant": false,
+                "pileup": "",
+                "hltProcess": "",
+                "index": -1,
+                "customise": "",
+                "custom_conditions": "",
+                "datatier": [
+                    "GEN",
+                    "LHE"
+                ],
+                "processName": "",
+                "inputCommands": "",
+                "particle_table": "",
+                "conditions": "106X_mcRun2_asymptotic_v13",
+                "harvesting": "",
+                "triggerResultsProcess": "",
+                "slhc": "",
+                "beamspot": "Realistic25ns13TeV2016Collision",
+                "restoreRNDSeeds": "",
+                "filtername": "",
+                "repacked": "",
+                "customise_commands": "",
+                "step": [
+                    "LHE",
+                    "GEN"
+                ],
+                "gflash": "",
+                "magField": "",
+                "himix": false,
+                "scenario": "",
+                "geometry": "DB:Extended",
+                "datamix": "",
+                "inline_custom": false,
+                "era": "Run2_2016",
+                "outputCommand": "",
+                "nThreads": "2",
+                "procModifiers": "",
+                "nStreams": 0
+            }
+        ],
+        "generator_parameters": [
+            {
+                "submission_details": {
+                    "submission_date": "2020-09-23-13-50",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                },
+                "match_efficiency_error": 0,
+                "match_efficiency": 1,
+                "filter_efficiency": 1,
+                "negative_weights_fraction": 0,
+                "version": 0,
+                "cross_section": 0.01701,
+                "filter_efficiency_error": 0
+            },
+            {
+                "submission_details": {
+                    "submission_date": "2020-09-24-09-38",
+                    "author_email": "alessandro.da.rold@cern.ch",
+                    "author_username": "adarold",
+                    "author_name": "Alessandro Da Rold"
+                },
+                "match_efficiency_error": 0,
+                "match_efficiency": 1,
+                "filter_efficiency": 1,
+                "negative_weights_fraction": 0,
+                "version": 1,
+                "cross_section": 0.01701,
+                "filter_efficiency_error": 0
+            }
+        ],
+        "reqmgr_name": [
+            {
+                "content": {},
+                "name": "pdmvserv_task_SMP-RunIISummer20UL16wmLHEGEN-00002__v1_T_201211_110009_7059"
+            },
+            {
+                "content": {
+                    "pdmv_status_history_from_reqmngr": [
+                        "new",
+                        "assignment-approved",
+                        "assigned",
+                        "staging",
+                        "staged",
+                        "acquired",
+                        "running-open",
+                        "running-closed",
+                        "completed",
+                        "closed-out",
+                        "announced",
+                        "normal-archived"
+                    ],
+                    "pdmv_type": "StepChain",
+                    "pdmv_status_from_reqmngr": "normal-archived",
+                    "pdmv_dataset_name": "/WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13-v2/AODSIM",
+                    "pdmv_prep_id": "task_SMP-RunIISummer20UL16wmLHEGEN-00002",
+                    "pdmv_dataset_statuses": {
+                        "/WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16MiniAOD-106X_mcRun2_asymptotic_v13-v2/MINIAODSIM": {
+                            "pdmv_evts_in_DAS": 2000000,
+                            "pdmv_status_in_DAS": "VALID",
+                            "pdmv_open_evts_in_DAS": 0
+                        },
+                        "/WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13-v2/AODSIM": {
+                            "pdmv_evts_in_DAS": 2000000,
+                            "pdmv_status_in_DAS": "VALID",
+                            "pdmv_open_evts_in_DAS": 0
+                        }
+                    },
+                    "pdmv_evts_in_DAS": 2000000,
+                    "pdmv_dataset_list": [
+                        "/WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13-v2/AODSIM",
+                        "/WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16MiniAOD-106X_mcRun2_asymptotic_v13-v2/MINIAODSIM"
+                    ],
+                    "pdmv_submission_date": "201211",
+                    "pdmv_status_in_DAS": "VALID",
+                    "pdmv_monitor_time": "Wed Jul 28 21:59:33 2021",
+                    "pdmv_present_priority": 85020,
+                    "pdmv_submission_time": "102319",
+                    "pdmv_open_evts_in_DAS": 0
+                },
+                "name": "cmsunified_task_SMP-RunIISummer20UL16wmLHEGEN-00002__v1_T_201211_112319_117"
+            }
+        ],
+        "approval": "submit",
+        "analysis_id": [],
+        "energy": 13.0,
+        "tags": [],
+        "transient_output_modules": [
+            []
+        ],
+        "cadi_line": "",
+        "interested_pwg": [],
+        "ppd_tags": [],
+        "events_per_lumi": 0,
+        "pilot": false
+    }
+}
