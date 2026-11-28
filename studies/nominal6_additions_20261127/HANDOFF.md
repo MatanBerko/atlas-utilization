@@ -119,7 +119,7 @@ Decisions: Matan, 28 Nov 2026 ("approve all"), verbatim in `studies/cms_mc_weigh
   - **all 20 CMS test files exit 0** (`production_20261128/cms_tests_v6.txt`; three by-product files the old tests
     write were moved out, not committed).
 
-### Production (to be submitted from `production_20261128/submit_production_20261128.sh`)
+### Production (submitted 28 Nov 2026, 20:23 IST, `production_20261128/submit_production_20261128.sh`)
 - Mappings: `production_20261128/mappings/`, from `make_mappings_20261128.py` with `fetch_file_list_complete` (pin).
   - 75561: 9 files; 72648: 5; 71636: 22; 71640: 22; 74314: 4; 72720: 20.
   - **82 files**, 5,246,205 events (portal).
@@ -132,3 +132,50 @@ Decisions: Matan, 28 Nov 2026 ("approve all"), verbatim in `studies/cms_mc_weigh
   `jobids.txt` (`<record> <job> <n> <walltime>`).
 - Projection (ESTIMATE): +996 cluster files (82 × 12 + 2 × 6) → ~123,800 after production. Then ~+6,200 for the
   later full rebuild + checks → **~130,000** (ceiling 140,000).
+
+**Submitted (VERIFIED BY RUNNING).** The script asserted pin 6de9d3e, a clean checkout, and new `runs/` and
+`jobids.txt`. Job ids are in `production_20261128/jobids.txt`, a copy of `$W/jobids.txt`:
+
+| record | job | files | walltime |
+|---|---|---:|---|
+| 75561 ZZJJTo4L_EWKnotop | 5670109[] | 9 | 06:00:00 |
+| 72648 WWJJToLNuLNu_EWK_noTop | 5670110[] | 5 | 02:00:00 |
+| 71636 WpWpJJ_EWKnotop | 5670112[] | 22 | 06:00:00 |
+| 71640 WpWpJJ_QCDnotop | 5670113[] | 22 | 06:00:00 |
+| 74314 ZH_HToZZ_4LFilter | 5670114[] | 4 | 24:00:00 |
+| 72720 WZ2JetsTo3LNu_MJJ-100toInf_EWKnotop | 5670115[] | 20 | 48:00:00 |
+
+- 82 subjobs; right after submission 32 running and 50 queued (0 of mine queued before).
+- File count: 122,813 before, 122,830 right after.
+- Expected finish (ESTIMATE): most within a few hours (27 Nov file-0 walls were 2–13 min; on 9 Nov the size-scaled
+  estimates were 2–15 × too high). At the latest by the walltimes above (72720: 48 h).
+- Outputs go to `$W/runs/record<rid>/job_<file_index>/` (9 files each); logs to `$W/logs/<rid>/f_<i>.{out,err}`.
+
+**How to check the status** (read only):
+
+    ssh wipp-home 'bash -l -c "/opt/pbs/bin/qstat -u berkom -t | grep n6_ | awk \"{print \\\$10}\" | sort | uniq -c"'
+    # per subjob exit status after the end: qstat -xf <id>[<i>] | grep Exit_status; or grep "Exit status" $W/logs/*/f_*.err
+    # the pinned audit (as 9 Nov): studies/cms_mc_weights_v3/fullrun/audit_production.py on $W/jobids.txt, expected 82/82 OK
+
+### What remains (in order)
+1. **Status check of the six arrays**: 82/82 exit 0, 9 files per job, Σw self-check, no failures. 72720's real event
+   count is measured there (the portal's 1,149,069 is UNVERIFIED). If any job fails, report it; do not resubmit
+   without reporting.
+2. **Matan's hand check** of the 7 PENDING values (`production_20261128/HAND_CHECK_SHEET.md`), then **a separate
+   commit** setting `matan_hand_check` to "VERIFIED BY MATAN" in v6. Do it through a builder change and `--check`; never
+   edit the JSON by hand.
+3. **Full MC build** with `--registry studies/cms_mc_weights_v3/cms_mc_normalisation_v6.json` given explicitly, and
+   `--runs-dir work/mcexp_20261103/full/runs` (as on 14 Nov), `--extra-runs-dir work/fullrun_20261025/mc/runs` AND
+   `--extra-runs-dir work/mcexp_20261103/nominal6_runs_20261128/runs` (the option is repeatable). Into a NEW
+   directory.
+   ~6,200 cluster files (ESTIMATE).
+4. **Checks** as for the 14 Nov final build:
+   - audit;
+   - rule checks R1–R7;
+   - Z peaks;
+   - data/MC;
+   - D3 single-event dominance;
+   - names and edges vs the data delivery (start masses will shift).
+5. **README update**, including `DOCUMENTED_EXCEPTIONS.md` (N3 documented, 69771 → 72720, 40062 corrected) and the
+   new samples.
+6. **Delivery**, only after Matan's go.
