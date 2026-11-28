@@ -1,0 +1,15 @@
+v5 -> v6 diff (VERIFIED BY RUNNING, 28 Nov 2026)
+added records: ['71636', '71640', '72648', '72720', '74314', '75561']
+removed records: []
+changed records: ['40062']
+  40062: keys changed ['estimate', 'decision_2026_11_28', 'matan_hand_check', 'cross_section_pb']; cross_section_pb 6.22392e-05 -> 9.275176549058725e-05 (x1.4902)
+all other v5 records identical (whole dict): True (72 records)
+  new 71636 WpWpJJ_EWKnotop-madgraph-pythia8: 0.02694 pb = 0.02694 (generator LO, portal total_value, rule R1; k_factor = gen_filt_eff = 1.0)  [PENDING]
+  new 71640 WpWpJJ_QCDnotop-madgraph-pythia8: 0.02037 pb = 0.02037 (generator LO, portal total_value, rule R1; k_factor = gen_filt_eff = 1.0)  [PENDING]
+  new 72648 WWJJToLNuLNu_EWK_noTop-madgraph-pythia8: 0.09219 pb = 0.09219 (generator LO, portal total_value, rule R1; k_factor = gen_filt_eff = 1.0)  [PENDING]
+  new 72720 WZ2JetsTo3LNu_MJJ-100toInf_TuneCP5_EWKnotop_13TeV_madgraph-pythia8: 0.0137 pb = 0.0137 (generator LO, portal total_value, rule R1; k_factor = gen_filt_eff = 1.0)  [PENDING]
+  new 74314 ZH_HToZZ_4LFilter_M125_powheg2-minlo-HZJ_JHUGenV7011_pythia8: 0.000576938 pb = 0.7612 x 0.02619 x (2 x 0.10099 - 0.10099^2) x 0.1509  [PENDING]
+  new 75561 ZZJJTo4L_EWKnotop-madgraph-pythia8: 0.0009928 pb = 0.0009928 (generator LO, portal total_value, rule R1; k_factor = gen_filt_eff = 1.0)  [PENDING]
+header keys changed: ['previous_version', 'generated_by', 'what', 'n_records', 'full_run_records', 'estimates', 'deliberately_excluded_records', 'matan_hand_check_pending', 'decisions']
+excluded added: ['69681', '69699', '69771'] excluded removed: ['74314']
+estimates: {'40062': 'ESTIMATE (filter efficiency not published; the portal value 2.330e-4 pb of MiniAOD 40061 is NOT used)'} -> {}

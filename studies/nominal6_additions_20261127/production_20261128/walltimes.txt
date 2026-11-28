@@ -1,0 +1,13 @@
+Walltime per record (ESTIMATE): max(2 h, 4 x wall(file 0, 27 Nov precheck) x size(largest file)/size(file 0)), rounded up to 2/3/6/12/24 h
+75561: file0 wall 756 s (from 75561), size(file0) 278 MB, largest 1601 MB, 4x scaled 4.83 h -> 06:00:00
+72648: file0 wall 239 s (from 72648), size(file0) 236 MB, largest 683 MB, 4x scaled 0.77 h -> 02:00:00
+71636: file0 wall 151 s (from 71636), size(file0) 47 MB, largest 1373 MB, 4x scaled 4.85 h -> 06:00:00
+71640: file0 wall 163 s (from 71640), size(file0) 11 MB, largest 332 MB, 4x scaled 5.60 h -> 06:00:00
+74314: file0 wall 292 s (from 74314), size(file0) 18 MB, largest 660 MB, 4x scaled 12.19 h -> 24:00:00
+72720: no 27 Nov precheck of 72720 (only the D-WZ generator check). Two ESTIMATES:
+  (a) the rule above with its sister 69771 (same generator setup): file0 wall 267 s, size(file0 of 69771) 11.1 MB,
+      largest 72720 file 989 MB -> 4x scaled 26.3 h;
+  (b) 75561's rate (7.12 ms/event) x the average 72720 file (~57,453 events) x 4 = 0.45 h, x 7.2 (largest/average size) = 3.3 h.
+  Chosen 48:00:00 (covers (a); longE allows <= 72 h). Operational choice, not a physics convention.
+Memory 6 GB for all (as the precheck: max 0.55 GB on 27 Nov).
+Summary: 75561 06:00:00 | 72648 02:00:00 | 71636 06:00:00 | 71640 06:00:00 | 74314 24:00:00 | 72720 48:00:00

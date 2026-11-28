@@ -1,0 +1,54 @@
+{
+ "what": "D-WZ check (28 Nov 2026): is there a WZ+2 jets EW record WITH top exclusion? VERIFIED from the gridpack cards (/cvmfs) AND BY RUNNING (generator top quarks in file 0).",
+ "search": "evidence/wzjj/portal_search_wzjj.json (title patterns WZJJ, WZjj, WLLJJ, WZTo3LNu*JJ, WZ*EWK, WZ2jets, WZ*2J AND RunIISummer20UL16NanoAODv9). UL16 postVFP NanoAODv9 WZjj EW records: 69771 (no top excl.), 72728 inclusive polarization, 72730/72732/72734/72736 polarization slices (parts of 72728, not inclusive), 72722 dim8 EFT (BSM), 72720 EWKnotop.",
+ "job": "PBS 5669916, work/mcexp_20261103/nominal6_wzcheck_20261128/",
+ "candidates": {
+  "72728": {
+   "title": "/WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "mini_recid": 72727,
+   "gridpack_card": "cards/72728__InputCards__VBS_WZ_proc_card.dat: 'p p > w+ z j j QED=4 QCD=0, w+ > l+ vl, z > l+ l-' (+ w-), model sm-lepton_masses, 4-flavour proton (p = g u c d s), j = p b b~; NO '$ t t~'",
+   "file0_events": 240000,
+   "genpart_events_checked": 100000,
+   "events_with_top": 1575,
+   "top_excluded": false,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.630e-02",
+    "total_value_uncertainty": "2.326e-06"
+   },
+   "verdict": "NOT top-excluded (top quark in 1.6 % of events): not used"
+  },
+  "72720": {
+   "title": "/WZ2JetsTo3LNu_MJJ-100toInf_TuneCP5_EWKnotop_13TeV_madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+   "mini_recid": 72719,
+   "gridpack_card": "cards/72720__InputCards__WZ3lnujj_ewk_notop_proc_card.dat: 'p p > w+ z j j $ t t~ QED=4 QCD=0, z > l+ l-, w+ > l+ vl' (+ w-), l = e mu tau, model sm-ckm_no_b_mass (5 flavours)",
+   "run_card": "m_jj > 100, pT_j > 10, |eta_j| < 5, |eta_l| < 3, dR > 0.01, bwcutoff 15, no merging (identical cuts to the 69771 genproductions notop card)",
+   "file0_events": 5586,
+   "genpart_events_checked": 5586,
+   "events_with_top": 0,
+   "top_excluded": true,
+   "decays_file0": {
+    "W:lnu+Z:ll": 5558,
+    "W:lnu+Z:ll+Z:qq": 16,
+    "W:lnu+W:qq+Z:ll": 12
+   },
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "1.0",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "1.370e-02",
+    "total_value_uncertainty": "2.193e-06"
+   },
+   "mcm": {
+    "prepid": "SUS-RunIISummer20UL16wmLHEGEN-00133",
+    "cross_section_pb": 0.00926
+   },
+   "verdict": "top excluded (card '$ t t~' AND 0 of 5,586 file-0 events with a top quark); W -> l nu, Z -> ll (l = e, mu, tau): REPLACES 69771"
+  }
+ },
+ "replacement_nano_recid": 72720,
+ "replacement_mini_recid": 72719,
+ "replacement_note": "D-WZ: replaces 69771. EW WZjj -> l nu ll (l = e, mu, tau), top excluded ('$ t t~' in the gridpack card; 0 of 5,586 file-0 events with a top). m_jj > 100 GeV, on-shell W/Z, |eta_l| < 3. Portal 0.01370 pb = 0.38 x 69771's 0.03566 (the difference is the top part); vs ATLAS 700588 + 700592 (0.0562 pb): 0.24. McM lists 0.00926 pb (x0.68 of the portal, unexplained). PROPOSAL pending Matan's hand check."
+}

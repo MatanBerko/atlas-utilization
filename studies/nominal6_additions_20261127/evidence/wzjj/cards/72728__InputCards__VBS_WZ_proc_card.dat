@@ -1,0 +1,11 @@
+import model sm-lepton_masses
+define p = g u c d s u~ c~ d~ s~ 
+define j = p b b~
+define l+ = e+ mu+ ta+
+define l- = e- mu- ta-
+define vl = ve vm vt
+define vl~ = ve~ vm~ vt~
+
+generate p p > w+ z j j QED=4 QCD=0, w+ > l+ vl, z > l+ l- @ 1
+add process p p > w- z j j QED=4 QCD=0, w- > l- vl~, z > l+ l- @ 2
+output VBS_WZ -nojpeg

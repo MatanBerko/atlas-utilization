@@ -1,0 +1,83 @@
+{
+ "read": "2026-11-28 20:13 IST",
+ "records": {
+  "40062": {
+   "cards": [
+    {
+     "file": "ggZH_NNPDF31_13TeV_M125.input",
+     "link": "20ac197949817a9bc02aa346f3fe23d157371b74/bin/JHUGen/cards/2017/13TeV/ggZH_NNPDF31_13TeV/ggZH_NNPDF31_13TeV_M125.input",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/20ac197949817a9bc02aa346f3fe23d157371b74/bin/JHUGen/cards/2017/13TeV/ggZH_NNPDF31_13TeV/ggZH_NNPDF31_13TeV_M125.input"
+    },
+    {
+     "file": "ZZ2l2any_withtaus_filter4l.input",
+     "link": "20ac197949817a9bc02aa346f3fe23d157371b74/bin/JHUGen/cards/decay/ZZ2l2any_withtaus_filter4l.input",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/20ac197949817a9bc02aa346f3fe23d157371b74/bin/JHUGen/cards/decay/ZZ2l2any_withtaus_filter4l.input"
+    },
+    {
+     "file": "Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_half_LHE_pythia8_cff.py",
+     "link": "20ac197949817a9bc02aa346f3fe23d157371b74/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_half_LHE_pythia8_cff.py",
+     "url": "https://raw.githubusercontent.com/cms-sw/genproductions/20ac197949817a9bc02aa346f3fe23d157371b74/python/ThirteenTeV/Hadronizer/Hadronizer_TuneCP5_13TeV_pTmaxMatch_1_pTmaxFudge_half_LHE_pythia8_cff.py"
+    }
+   ],
+   "fragment_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIISummer20UL16wmLHEGEN-00294",
+   "gen_prepid": "HIG-RunIISummer20UL16wmLHEGEN-00294",
+   "mcm_cross_section_pb": 1,
+   "mcm_dataset_name": "GluGluToZH_HToZZTo4L_M125_TuneCP5_13TeV-jhugenv723-pythia8",
+   "mcm_filter_efficiency": 0.1505,
+   "mcm_generator_parameters_all": [
+    {
+     "cross_section": 1,
+     "filter_efficiency": 0.1505,
+     "filter_efficiency_error": 0.0011307066374617247,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "qianying.guo@cern.ch",
+      "author_name": "Qianying Guo",
+      "author_username": "qguo",
+      "submission_date": "2018-11-05-19-12"
+     },
+     "version": 0
+    },
+    {
+     "cross_section": 1,
+     "filter_efficiency": 0.1505,
+     "filter_efficiency_error": 0.0011307066374617247,
+     "match_efficiency": 1,
+     "match_efficiency_error": 0,
+     "negative_weights_fraction": -1,
+     "submission_details": {
+      "author_email": "qianying.guo@cern.ch",
+      "author_name": "Qianying Guo",
+      "author_username": "qguo",
+      "submission_date": "2020-11-11-12-19"
+     },
+     "version": 1
+    }
+   ],
+   "mcm_generators": [
+    "JHUGen v7.2.3"
+   ],
+   "mcm_match_efficiency": 1,
+   "mcm_member_of_chain": [
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAOD_flowRunIISummer20UL16NanoAODv2-00888",
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv15-00374",
+    "HIG-chain_RunIISummer20UL16wmLHEGEN_flowRunIISummer20UL16SIM_flowRunIISummer20UL16DIGIPremix_flowRunIISummer20UL16HLT_flowRunIISummer20UL16RECO_flowRunIISummer20UL16MiniAODv2_flowRunIISummer20UL16NanoAODv9-00916"
+   ],
+   "mcm_negative_weights_fraction": -1,
+   "mcm_notes": "",
+   "mini_recid": 40061,
+   "nano_recid": 40062,
+   "portal_cross_section": {
+    "filter_efficiency": "1.000e+00",
+    "matching_efficiency": "0.2",
+    "neg_weight_fraction": "0.000e+00",
+    "total_value": "2.330e-04",
+    "total_value_uncertainty": "2.330e+10"
+   },
+   "request_url": "https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get/HIG-RunIISummer20UL16wmLHEGEN-00294",
+   "title": "/GluGluToZH_HToZZTo4L_M125_TuneCP5_13TeV-jhugenv723-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+  }
+ }
+}

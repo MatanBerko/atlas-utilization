@@ -74,3 +74,61 @@ All are pushed to origin only; the upstream gate printed nothing before every pu
 7. A full rebuild with v6 into a new directory (~6,226 cluster files ESTIMATE), then the checks (as on 14 Nov:
    rule checks, `checks_v4.py`, `checks_final.py`).
 8. Delivery: README with `DOCUMENTED_EXCEPTIONS.md`, per-sample files, checksums. Nothing is sent before Matan's go.
+
+## Nominal-6 production (28 Nov 2026)
+
+Branch `feature/nominal6-additions-20261128` (fork only), made from `origin/prep/nominal6-additions-20261127` @ 5197b43.
+Decisions: Matan, 28 Nov 2026 ("approve all"), verbatim in `studies/cms_mc_weights_v3/sources/v9_decisions_2026-11-28.json`
+(written by `production_20261128/make_v9_decisions.py`).
+
+### Cleanup and quota (VERIFIED BY RUNNING)
+- D-clean: `nominal6_precheck_20261127/gridpack_cards/` is gone (`ls`: "No such file or directory", 28 Nov). Nothing
+  else was deleted.
+- File count (`lfs quota -u berkom /storage`, column 6):
+  - 122,787 at the start;
+  - 122,794 after the D-WZ check was submitted;
+  - 122,810 after it finished.
+
+### D-WZ: WZjj replacement found (`evidence/wzjj/`)
+- Portal search: `portal_search_wzjj.json`. Check job **5669916**, output in `work/mcexp_20261103/nominal6_wzcheck_20261128/`:
+  - cards are listed first, then only exact paths are streamed out with `tar -xO`, so no folders are created;
+  - `gen_check.py` runs on file 0.
+- **72728** WZJJ_EWK_InclusivePolarization: no `$ t t~`; a top quark in 1,575 of 100,000 file-0 events (1.6 %). Not used.
+- **72720** WZ2JetsTo3LNu_MJJ-100toInf_EWKnotop:
+  - `p p > w± z j j $ t t~ QED=4 QCD=0, z > l+ l-, w > l v` (ℓ = e μ τ);
+  - cuts m_jj > 100, |η_ℓ| < 3;
+  - **0 of 5,586** file-0 events with a top.
+  - It **replaces 69771**. Portal 0.01370 pb (MiniAOD 72719), a PROPOSAL pending Matan's hand check.
+  - The portal lists 1,149,069 events, the same number as 75561. Its 20 files (2.73 GB) differ from 75561's, so the
+    number is UNVERIFIED; production measures it.
+- Summary: `evidence/wzjj/wzjj_outcome.json`.
+
+### Registry v6 (no build)
+- `studies/cms_mc_weights_v3/build_registry_v6.py` → `cms_mc_normalisation_v6.json` (`--check` OK). v3/v4/v5 are
+  untouched and the builder default is still v3.
+- v5 → v6 (`production_20261128/v5_to_v6_diff.txt`):
+  - **+6 records**: 75561, 72648, 71636, 71640, 72720, 74314;
+  - **40062 changed**, 6.22392e-5 → 9.27518e-5 pb (×1.4902);
+  - every other record is identical;
+  - excluded: +69681, 69699, 69771 (the other 6 Dalitz records were already excluded; their reason is now D-N3);
+    74314 leaves the excluded list;
+  - 79 records, 77 in the full run.
+- 7 values carry `"matan_hand_check": "PENDING"`; see `production_20261128/HAND_CHECK_SHEET.md`.
+- Tests:
+  - `studies/cms_mc_weights_v3/tests/test_registry_v6.py`: 7/7 pass (incl. the live portal values);
+  - **all 20 CMS test files exit 0** (`production_20261128/cms_tests_v6.txt`; three by-product files the old tests
+    write were moved out, not committed).
+
+### Production (to be submitted from `production_20261128/submit_production_20261128.sh`)
+- Mappings: `production_20261128/mappings/`, from `make_mappings_20261128.py` with `fetch_file_list_complete` (pin).
+  - 75561: 9 files; 72648: 5; 71636: 22; 71640: 22; 74314: 4; 72720: 20.
+  - **82 files**, 5,246,205 events (portal).
+  - Page 1 equals the complete list for all six, and no file is listed but unpublished.
+- Pin 6de9d3e (HEAD and a clean status asserted); `pbs_mc_pilot.sh` unchanged; mem 6 GB, io=25.
+- Walltimes (`production_20261128/walltimes.txt`, ESTIMATE): ≥ 4 × the 27 Nov file-0 time scaled to the largest file.
+  - 75561 6 h; 72648 2 h; 71636 6 h; 71640 6 h; 74314 24 h;
+  - 72720 48 h (no precheck; scaled from 69771).
+- New work dir `work/mcexp_20261103/nominal6_runs_20261128/`, holding `mappings/`, `runs/`, `logs/<record>/` and
+  `jobids.txt` (`<record> <job> <n> <walltime>`).
+- Projection (ESTIMATE): +996 cluster files (82 × 12 + 2 × 6) → ~123,800 after production. Then ~+6,200 for the
+  later full rebuild + checks → **~130,000** (ceiling 140,000).

@@ -1,0 +1,102 @@
+{
+ "what": "DECISION RECORD. Matan's decisions of 28 Nov 2026 (\"approve all\" of the technical lead's recommendations on studies/nominal6_additions_20261127/REPORT.md), recorded verbatim in 'decisions_verbatim'. The values are entered in cms_mc_normalisation_v6.json with matan_hand_check = PENDING; the MC build may run only after Matan's hand check and a separate commit setting them to VERIFIED BY MATAN.",
+ "decided": "Matan, 28 Nov 2026",
+ "decisions_verbatim": {
+  "D-clean": "ALREADY DONE (28 Nov, commit 5197b43 on prep/nominal6-additions-20261127): only .../work/mcexp_20261103/nominal6_precheck_20261127/gridpack_cards/ was deleted, 10,710 entries, file count 133,497 → 122,787. Just confirm the folder is gone and record it in the decision file. Nothing else may be deleted.",
+  "D-N1": "Electroweak VV+2 jets: normalise with the CMS portal value (MiniAOD metadata.cross_section.total_value, rule R1; the v5 convention for generator samples such as the tribosons and ttW/ttZ): 75561 ZZJJTo4L_EWKnotop (MiniAOD 75560) 0.0009928 pb; 72648 WWJJToLNuLNu_EWK_noTop (72647) 0.09219 pb; 71636 WpWpJJ_EWKnotop (71635, contains W+W+ and W-W-) 0.02694 pb. Document: CMS generator cut m_jj > 100 GeV and on-shell W/Z (ATLAS: no m_jj cut, off-shell incl. low-mass gamma*), hence CMS/ATLAS ≈ 0.07–0.63 per channel; no interference sample; triboson-like region partly overlapping our tribosons (as on the ATLAS side); s-channel H->WW in 1.3 % of 72648 events (tiny overlap with our VBF H->WW) accepted.",
+  "D-WZ": "69771 WLLJJ_WToLNu_EWK is NOT used (no top exclusion: a top quark in 62 % of events, double counting our tZq 68325). Instead: check whether a WZ+2 jets EW record WITH top exclusion exists — first 72728 WZJJ_EWK_InclusivePolarization, then any other UL16 NanoAODv9 postVFP WZjj EW record. \"Top excluded\" must be VERIFIED from the gridpack process card ('$ t t~' or equivalent) AND by running: fraction of events with a generator top quark in file 0 (as gen_check did on 27 Nov). If one is found with top excluded and W->lnu, Z->ll (or a superset that you describe exactly), it replaces 69771: add it to production, with its portal value recorded as a PROPOSAL pending Matan's hand check. If none is found, WZjj is dropped and documented (reason: only CMS sample double counts tZq).",
+  "D-N2": "71640 WpWpJJ_QCDnotop (MiniAOD 71639): portal value 0.02037 pb. Document: 8 % below ATLAS 700603 (0.02221 pb).",
+  "D-N3": "Higgs Dalitz NOT added (documented; moves from \"add\" to \"documented\"). Reason: the CMS Dalitz samples contain the full H->ll gamma decay incl. the Z pole (MadSpin, kHza = 1); about half of the mumu and a third of the ee events overlap our H->Z gamma samples (m_ll > 50 GeV); avoiding it needs a new generator-level m_ll veto in the production code and an ee normalisation that is not published; gain ≈ 100 events before selection over all modes. ATLAS separates by amplitude (Pythia gamma* conversion, no Z interference).",
+  "D-N4": "74314 ZH_HToZZ_4LFilter: option C of the 27 Nov report = sigma(qq->ZH, YR4, mH = 125.00) × BR(H->ZZ*, YR4, mH = 125.00) × (2B − B²) × 0.1509, with B = BR(Z->ll), l = e, mu, tau (PDG, the same value v5 uses), 0.1509 = McM filter efficiency = the 4-lepton filter (INTERPRETATION supported by the file-0 decay mix; document it). Use EXACTLY the YR4 and PDG numbers already used in registry v5 (cite the v5 entries you take them from); show the arithmetic. Document: broader than ATLAS 346645 (H->4l only): it also contains Z(->ll) H(->ZZ->ll X); no overlap with our other ZH samples (none has H->ZZ).",
+  "D-40062": "Correct the delivered 40062 (gg->ZH, H->ZZ->4l, same JHUGen card ZZ2l2any_withtaus_filter4l) with the same construction as D-N4: sigma(gg->ZH, YR4) × BR(H->ZZ*) × (2B − B²) × the 4-lepton filter efficiency of 40062 (from its McM request; if McM gives none, use the 74314 value 0.1509 and label it ESTIMATE, same card). Show old value (v5) vs new and the ratio (expected ≈ 1.49).",
+  "D-ceiling": "Planning ceiling 140,000 cluster files (unchanged from 27 Nov).",
+  "HAND_CHECK_RULE": "Matan will hand-check every new value on the portal. Therefore registry v6 is written with each new/changed value carrying \"matan_hand_check\": \"PENDING\" (plus the full source block). Production does not use the registry (the driver reads no registry), so production can start now. The MC build (a later task) may only run after Matan has confirmed the values and the flags have been set to VERIFIED BY MATAN in a separate commit."
+ },
+ "facts_recorded_by_this_task": {
+  "D-clean": {
+   "folder_absent_28_nov": true,
+   "checked": "ls on wipp-home 28 Nov 2026: 'No such file or directory'",
+   "file_count_lfs_quota_col6": 122787,
+   "nothing_else_deleted": true
+  },
+  "D-WZ": {
+   "what": "D-WZ check (28 Nov 2026): is there a WZ+2 jets EW record WITH top exclusion? VERIFIED from the gridpack cards (/cvmfs) AND BY RUNNING (generator top quarks in file 0).",
+   "search": "evidence/wzjj/portal_search_wzjj.json (title patterns WZJJ, WZjj, WLLJJ, WZTo3LNu*JJ, WZ*EWK, WZ2jets, WZ*2J AND RunIISummer20UL16NanoAODv9). UL16 postVFP NanoAODv9 WZjj EW records: 69771 (no top excl.), 72728 inclusive polarization, 72730/72732/72734/72736 polarization slices (parts of 72728, not inclusive), 72722 dim8 EFT (BSM), 72720 EWKnotop.",
+   "job": "PBS 5669916, work/mcexp_20261103/nominal6_wzcheck_20261128/",
+   "candidates": {
+    "72728": {
+     "title": "/WZJJ_EWK_InclusivePolarization_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+     "mini_recid": 72727,
+     "gridpack_card": "cards/72728__InputCards__VBS_WZ_proc_card.dat: 'p p > w+ z j j QED=4 QCD=0, w+ > l+ vl, z > l+ l-' (+ w-), model sm-lepton_masses, 4-flavour proton (p = g u c d s), j = p b b~; NO '$ t t~'",
+     "file0_events": 240000,
+     "genpart_events_checked": 100000,
+     "events_with_top": 1575,
+     "top_excluded": false,
+     "portal_cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "1.630e-02",
+      "total_value_uncertainty": "2.326e-06"
+     },
+     "verdict": "NOT top-excluded (top quark in 1.6 % of events): not used"
+    },
+    "72720": {
+     "title": "/WZ2JetsTo3LNu_MJJ-100toInf_TuneCP5_EWKnotop_13TeV_madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
+     "mini_recid": 72719,
+     "gridpack_card": "cards/72720__InputCards__WZ3lnujj_ewk_notop_proc_card.dat: 'p p > w+ z j j $ t t~ QED=4 QCD=0, z > l+ l-, w+ > l+ vl' (+ w-), l = e mu tau, model sm-ckm_no_b_mass (5 flavours)",
+     "run_card": "m_jj > 100, pT_j > 10, |eta_j| < 5, |eta_l| < 3, dR > 0.01, bwcutoff 15, no merging (identical cuts to the 69771 genproductions notop card)",
+     "file0_events": 5586,
+     "genpart_events_checked": 5586,
+     "events_with_top": 0,
+     "top_excluded": true,
+     "decays_file0": {
+      "W:lnu+Z:ll": 5558,
+      "W:lnu+Z:ll+Z:qq": 16,
+      "W:lnu+W:qq+Z:ll": 12
+     },
+     "portal_cross_section": {
+      "filter_efficiency": "1.000e+00",
+      "matching_efficiency": "1.0",
+      "neg_weight_fraction": "0.000e+00",
+      "total_value": "1.370e-02",
+      "total_value_uncertainty": "2.193e-06"
+     },
+     "mcm": {
+      "prepid": "SUS-RunIISummer20UL16wmLHEGEN-00133",
+      "cross_section_pb": 0.00926
+     },
+     "verdict": "top excluded (card '$ t t~' AND 0 of 5,586 file-0 events with a top quark); W -> l nu, Z -> ll (l = e, mu, tau): REPLACES 69771"
+    }
+   },
+   "replacement_nano_recid": 72720,
+   "replacement_mini_recid": 72719,
+   "replacement_note": "D-WZ: replaces 69771. EW WZjj -> l nu ll (l = e, mu, tau), top excluded ('$ t t~' in the gridpack card; 0 of 5,586 file-0 events with a top). m_jj > 100 GeV, on-shell W/Z, |eta_l| < 3. Portal 0.01370 pb = 0.38 x 69771's 0.03566 (the difference is the top part); vs ATLAS 700588 + 700592 (0.0562 pb): 0.24. McM lists 0.00926 pb (x0.68 of the portal, unexplained). PROPOSAL pending Matan's hand check."
+  }
+ },
+ "add_to_production": [
+  75561,
+  72648,
+  71636,
+  71640,
+  74314,
+  72720
+ ],
+ "documented_not_added_new": {
+  "N3": [
+   37276,
+   37420,
+   68459,
+   68559,
+   69681,
+   69699,
+   74652,
+   74670
+  ],
+  "69771": "D-WZ: no top exclusion, double counts tZq 68325"
+ },
+ "changed_delivered_value": {
+  "40062": "D-40062 (PENDING Matan's hand check)"
+ },
+ "ceiling_cluster_files": 140000
+}

@@ -4,7 +4,8 @@ This text is meant for the README of the CMS MC delivery. It explains, for a rea
 every place where the CMS Monte Carlo (CMS Open Data, 2016 post-VFP, UL16 NanoAODv9) deliberately differs from the
 ATLAS nominal background list ("Nominal-6", 246 ATLAS DSIDs, ATLAS Open Data release 2024r-pp). All decisions are
 Matan's. Sources:
-- `studies/cms_mc_weights_v3/sources/v8_decisions_2026-11-27.json` (27 Nov 2026, items N/C);
+- `studies/cms_mc_weights_v3/sources/v8_decisions_2026-11-27.json` (27 Nov 2026, items N/C) and
+  `v9_decisions_2026-11-28.json` (28 Nov 2026: N3 not added, WZjj replacement, normalisations);
 - `v5_decisions_2026-11-03.json`, `v6_decisions_2026-11-07.json` and `v7_decisions_2026-11-14.json` (earlier items);
 - the comparison itself, `studies/nominal6_correspondence_20261124/REPORT.md`.
 
@@ -12,10 +13,20 @@ ATLAS numbers are DSIDs, and CMS numbers are CERN Open Data NanoAOD record ids. 
 muon from a W/Z/H/τ decay. The analysis uses lepton-triggered data only, so a process without a prompt lepton can
 enter only through a jet faking a lepton.
 
-The four items that *are* being added (N1–N4: electroweak VV+2 jets, QCD same-sign WW, Higgs Dalitz, qq→ZH H→4ℓ)
-are not exceptions and are not listed here, except for the caveats on them in the last section.
+The items that *are* added (N1 electroweak VV+2 jets, N2 QCD same-sign WW, N4 qq→ZH H→ZZ 4-lepton filtered) are not
+exceptions and are not listed here, except for the caveats on them in the last section. The Higgs Dalitz item N3,
+first chosen for addition, is documented below (decision of 28 Nov 2026).
 
-## ATLAS processes that are documented, not added (decision of 27 Nov 2026)
+## ATLAS processes that are documented, not added (decisions of 27 Nov 2026; N3 of 28 Nov 2026)
+
+**N3 – Higgs Dalitz H→γ*γ→ℓℓγ (ATLAS 345961, 345834, 345963–345965) – not added (decision of 28 Nov 2026).**
+CMS samples exist for every mode and for ee and μμ separately (ggF 37276/37420, VBF 68459/68559, W±H 69681/69699,
+ZH 74652/74670), but they contain the full H→ℓℓγ decay including the Z pole. The decay is done by MadSpin with the
+H–Z–γ coupling on (kHza = 1). About half of the μμ events and a third of the ee events have m_ℓℓ > 50 GeV, which is
+exactly the region of our H→Zγ samples (37604, 68731, 70301, 71145, 74292). Avoiding this double count would need a new
+generator-level m_ℓℓ veto in the production code, and an ee normalisation for the low-mass part that is not published.
+The gain would be about 100 events before any selection, over all modes. ATLAS avoids the problem by separating the
+two by amplitude: its Dalitz samples are a Pythia γ* conversion with no Z interference.
 
 **N5 – VBF H→ZZ→ℓℓbb (ATLAS 450576).** CMS has no exclusive VBF H→ZZ→ℓℓbb sample. The only candidate, VBF H→ZZ→2ℓ2X
 (68833), also contains the decays H→ZZ→2ℓ2ν and H→ZZ→4ℓ, which are already in our set as 68741 and 68847. Adding it
@@ -106,10 +117,10 @@ a background below 0.1 % of the total.
 **tWℓℓ at LO only (CMS 64873).** It is normalised to the generator LO value, 0.01105 pb. This is the only value
 available: there is no NLO sample or published total for this phase space.
 
-**gg→ZH, H→ZZ→4ℓ (CMS 40062): filter efficiency estimated.** The sample is 4-lepton filtered and its filter
-efficiency is not published. The normalisation is 0.1227 pb (YR4) × BR(H→ZZ) 0.02619 × BR(Z→ℓℓ) 0.10099 × ε, with
-ε = 1 − (1 − 0.10099)² = 0.19178. This is an ESTIMATE: the probability that at least one of the two other Z bosons
-decays to leptons.
+**gg→ZH, H→ZZ→4ℓ (CMS 40062): normalisation corrected on 28 Nov 2026 (registry v6).** The 14 Nov delivery used an
+ESTIMATE: 0.1227 pb (YR4) × BR(H→ZZ) 0.02619 × BR(Z→ℓℓ) 0.10099 × ε, with ε = 1 − (1 − 0.10099)² = 0.19178, which
+gives 6.22e-5 pb. From registry v6 it is 0.1227 × 0.02619 × (2B − B²) × 0.1505 = 9.28e-5 pb (×1.49). Here 0.1505 is
+the McM 4-lepton filter efficiency, read the same way as for 74314 (value pending Matan's hand check).
 
 **Photons not included.** No γ+jets, V+γ or tt̄γ samples are in the CMS set, and the CMS selection does not use
 photons. On the ATLAS side, reconstructed photons are used in the object overlap removal (a jet within ΔR < 0.4 of a
@@ -131,25 +142,40 @@ HT = 100 GeV, so Z→νν with HT < 100 GeV is not covered.
 - H→ee (ATLAS 345876–345878; CMS 69343): BR ≈ 5 × 10⁻⁹.
 - Higgs decays without a prompt lepton: H→bb/cc with Z→νν, H→invisible with a hadronic V, and H→γγ (photons).
 
-## Caveats on the four added items (for the README once they are produced)
+## Caveats on the added items (for the README once they are produced)
 
-**N1 – no separate EW–QCD interference sample.** ATLAS's interference pieces 700591–700594 are about 6 % of its
-EW VV+2j total. Diagrams with triboson-like topologies (V→jj) are inside the EW VV+2j samples on both sides, which is
-a partial overlap with the triboson samples.
+**N1 – electroweak VV+2 jets: 75561 (ZZjj→4ℓ), 72648 (W⁺W⁻jj→ℓνℓν), 71636 (W±W±jj, both charges), 72720 (WZjj→ℓνℓℓ).**
+All four are normalised to the CMS generator (portal) value at LO. The CMS samples are generated with m_jj > 100 GeV
+and on-shell W/Z decays (|η_ℓ| < 3 except 72648). The ATLAS Sherpa samples (700587–700590) have no m_jj cut and are
+off-shell, including low-mass γ*→ℓℓ. So CMS / ATLAS is ≈ 0.07–0.63 per channel:
+- ZZjj 0.07;
+- WZjj 0.24;
+- W⁺W⁻jj 0.46;
+- W±W±jj 0.55.
 
-The CMS EW samples are generated with an m(jj) > 100 GeV cut (cards, `REPORT.md` section 3). This removes most of
-that region, but not all of it. The Higgs boson is part of the electroweak model on both sides, so s-channel Higgs
-diagrams (e.g. VBF H→WW) are expected inside the EW VV+2j samples. This is read from the cards only and its size was
-not measured:
-- CMS: the `sm-ckm_no_b_mass` model, with no `/ h` exclusion in the process cards;
-- ATLAS: `ACTIVE[25]=1` in 700588–700590.
+The difference is phase space, not normalisation.
 
-This would overlap our VBF/VH Higgs samples. In file 0 of 72648 (EW W⁺W⁻jj), 1.3 % of the events contain a Higgs
-boson.
+There is no separate EW–QCD interference sample (ATLAS's 700591–700594 are about 6 % of its EW VV+2j total).
+Triboson-like diagrams (V→jj) are inside the EW samples on both sides, which is a partial overlap with the triboson
+samples; the m_jj > 100 GeV cut removes most of that region on the CMS side.
 
-The CMS EW WZjj sample (69771) was generated without a top-quark exclusion: 62 % of its file-0 events contain a top
-quark. It therefore overlaps tZq-like production, including our 68325.
+The Higgs boson is part of the electroweak model on both sides. In file 0 of 72648, 1.3 % of the events contain a
+Higgs boson (s-channel H→WW), a tiny overlap with our VBF H→WW sample, accepted.
 
-**N3 – overlap with H→Zγ.** The CMS Dalitz samples contain the full H→ℓℓγ decay, including the Z peak: about 50 %
-(μμ) and 33 % (ee) of their events have m_ℓℓ > 50 GeV. Our H→Zγ samples (37604, 68731, 70301, 71145, 74292) contain
-the same region. The overlap must be settled before N3 is produced (`REPORT.md` section 2).
+**WZjj: 72720 replaces 69771.** The first CMS WZjj sample, 69771 (WLLJJ_WToLNu_EWK), was generated without a
+top-quark exclusion: 62 % of its file-0 events contain a top quark, which would double count our tZq sample 68325. It
+is not used. Its replacement, 72720 (WZ2JetsTo3LNu_MJJ-100toInf_EWKnotop), is top-excluded: `$ t t~` in its gridpack
+process card, and 0 of 5,586 file-0 events contain a top quark. It has W→ℓν, Z→ℓℓ (ℓ = e, μ, τ) and the same
+generator cuts as the other EW samples.
+
+The inclusive-polarisation sample 72728 was also checked. It has no top exclusion in its card, and 1.6 % of its
+events contain a top quark.
+
+**N2 – QCD W±W±jj (71640).** Normalised to the portal value, 0.02037 pb. This is 8 % below ATLAS 700603 (0.02221 pb).
+
+**N4 – qq→ZH, H→ZZ, 4-lepton filtered (74314).** This sample is broader than ATLAS 346645, which holds H→4ℓ only. Its
+4-lepton filter also keeps events where the associated Z decays to leptons and H→ZZ→ℓℓX: 63 % of the file-0 events.
+It is normalised as σ(qq→ZH) × BR(H→ZZ) × (2B − B²) × 0.1509, with B = BR(Z→ℓℓ). Here 0.1509 is the McM filter
+efficiency, read as the 4-lepton filter efficiency (an INTERPRETATION supported by the file-0 decay mix). None of our
+other ZH samples has H→ZZ, so there is no overlap with them. 40062 (gg→ZH, same decay card) uses the same construction
+from 28 Nov.
